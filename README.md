@@ -1,2 +1,2 @@
 # ip2-2025
-Test
+This is the README for the IP2 2025 project. 
