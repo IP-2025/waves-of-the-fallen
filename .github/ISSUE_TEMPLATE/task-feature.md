@@ -18,11 +18,13 @@ Example:
 
 ## Acceptance Criteria
 
+
+Example:
 List specific requirements that must be met for this issue to be considered complete.
 
-- [ ] Clearly visible health bar that updates with player damage
-- [ ] Works in both online and offline multiplayer
-- [ ] Health value is synced across clients
+> - [ ] Clearly visible health bar that updates with player damage
+> - [ ] Works in both online and offline multiplayer
+> - [ ] Health value is synced across clients
 
 ---
 
@@ -46,4 +48,5 @@ Example:
 
 ## Estimation
 
-> Leave this empty until the next sprint review
+> Leave this empty until the next sprint review.
+> Remember to add issue to Project 'IP-2025' after creation and select a possible parent issue.

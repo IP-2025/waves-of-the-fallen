@@ -18,31 +18,35 @@ Example:
 
 ## Steps to Reproduce
 
-1. Start a host session
-2. Join with a second client
-3. Spawn enemies
-4. Observe desync on the client
+Example:
+> 1. Start a host session
+> 2. Join with a second client
+> 3. Spawn enemies
+> 4. Observe desync on the client
 
 ---
 
 ## Expected Behavior
 
+Example:
 > Both players should see synchronized enemy movement and attacks.
 
 ---
 
 ## Actual Behavior
 
+Example:
 > Only the host sees enemies moving, clients do not.
 
 ---
 
 ## Environment Info
 
-- Platform: (Android / iOS / Desktop)
-- Branch or Commit: `main @ abc123`
-- Godot Version: 4.x.x
-- Backend (if relevant): e.g., local matchmaking, production
+Example:
+> - Platform: (Android / iOS / Desktop)
+> - Branch or Commit: `main @ abc123`
+> - Godot Version: 4.x.x
+> - Backend (if relevant): e.g., local matchmaking, production
 
 ---
 
@@ -55,3 +59,4 @@ Attach any relevant screenshots, video clips, or log output.
 ## Notes
 
 Any additional context that might help debug this.
+> Remember to add issue to Project 'IP-2025' after creation and select a possible parent issue.
