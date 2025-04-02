@@ -11,8 +11,7 @@ export_presets.cfg
 *.pdb
 *.dll
 .godot/
-
-
+*.env
 *.translation
 
 # === .NET build output ===
