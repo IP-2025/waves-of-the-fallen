@@ -1,0 +1,30 @@
+# === Godot Mono (For C#) ===
+*.csproj.user
+*.sln.DotSettings
+*.csproj.DotSettings
+.import/
+.export/
+export.cfg
+export_presets.cfg
+.mono/
+*.mono
+*.pdb
+*.dll
+.godot/
+
+
+*.translation
+
+# === .NET build output ===
+bin/
+obj/
+
+# === VS Code ===
+.vscode/
+*.code-workspace
+
+# === Rider ===
+.idea/
+
+# === Logs ===
+*.log
