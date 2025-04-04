@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cffgskcms870o"]
+
+[ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://Assets/Characters/happy_boo/happy_boo.tscn" id="1_c4u6g"]
+[ext_resource type="Script" uid="uid://bdkp0e6ivq2b5" path="res://Scripts/Characters/DefaultPlayer.cs" id="1_y2kgl"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y2kgl"]
+radius = 37.0
+height = 74.0
+
+[node name="DefaultPlayer" type="CharacterBody2D"]
+script = ExtResource("1_y2kgl")
+
+[node name="HappyBoo" parent="." instance=ExtResource("1_c4u6g")]
+position = Vector2(1, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -43)
+shape = SubResource("CapsuleShape2D_y2kgl")
+
+[node name="Camera2D" type="Camera2D" parent="."]
