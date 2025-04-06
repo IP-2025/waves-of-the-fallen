@@ -1,5 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 
-const prismaClient = new PrismaClient();
-export { prismaClient }
+let prismaClient = new PrismaClient();
 
+function setPrismaClient(prisma: PrismaClient) {
+  prismaClient = prisma
+}
+export { prismaClient, setPrismaClient }
