@@ -1,0 +1,10 @@
+### GET request to example server
+GET http://localhost:3000/api/healthz
+
+###
+
+POST http://localhost:3000/apiauth/login
+
+###
+
+POST http://localhost:3000/api/auth/register
