@@ -1,11 +1,2 @@
-node_modules/
-build/
-dist/
-Dockerfile
-docker-compose.yml
-*.log
-*.env
-*.env.*
-*.local
-README.md
-rest-testing.http
+/*
+!src/
