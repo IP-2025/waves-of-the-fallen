@@ -2,6 +2,14 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "dist/server.js",
+  "author": {
+    "name": "Kaprele"
+  },
+  "contributors": [
+    {
+      "name": "Pazl27"
+    }
+  ],
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
