@@ -1,1 +1,1 @@
-export { prismaClient } from './prismaClient'
+export { prismaClient } from './prismaClient';

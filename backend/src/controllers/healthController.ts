@@ -7,6 +7,8 @@ export async function healthCheck(_req: Request, res: Response) {
   if (isDbHealthy) {
     res.status(200).json({ status: 'ok' });
   } else {
-    res.status(500).json({ status: 'error', message: 'Database is not healthy' });
+    res
+      .status(500)
+      .json({ status: 'error', message: 'Database is not healthy' });
   }
 }
