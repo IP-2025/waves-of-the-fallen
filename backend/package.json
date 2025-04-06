@@ -6,7 +6,7 @@
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "type": "module",
   "dependencies": {
@@ -37,4 +37,3 @@
     }
   }
 }
-
