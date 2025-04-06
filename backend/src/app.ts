@@ -1,5 +1,5 @@
-import express from "express";
-import dotenv from 'dotenv';
+import express from 'express';
+import dotenv from "dotenv";
 import healthRouter from './routes/health';
 import authRouter from './routes/auth';
 
