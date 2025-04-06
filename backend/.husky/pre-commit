@@ -1,3 +1,4 @@
+cd backend
 npx prettier --write .
 
 exit 1
