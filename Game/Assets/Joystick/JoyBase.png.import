@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cidn1e7u8jdsp"
-path="res://.godot/imported/square_lower_leg.png-77df746be8c6fadc895e6f9f21f49cec.ctex"
+uid="uid://dord4aygupafg"
+path="res://.godot/imported/JoyBase.png-11b4992845e3e4e08832dcac4ac84076.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Characters/happy_boo/square_lower_leg.png"
-dest_files=["res://.godot/imported/square_lower_leg.png-77df746be8c6fadc895e6f9f21f49cec.ctex"]
+source_file="res://Assets/Joystick/JoyBase.png"
+dest_files=["res://.godot/imported/JoyBase.png-11b4992845e3e4e08832dcac4ac84076.ctex"]
 
 [params]
 

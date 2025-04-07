@@ -3,30 +3,42 @@ using System;
 
 public partial class DefaultPlayer : CharacterBody2D
 {
+	[Export]
+	public float Speed = 600.0f;
+
+	private Node2D _joystick;
+
+	public override void _Ready()
+	{
+		// Find the joystick
+		_joystick = GetNode<Node2D>("./Camera2D/Joystick");
+		
+	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		
-		// Get the input direction and handle the movement/deceleration.
-		Vector2 direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-		
-		Vector2 velocity = direction * 600;
-		
-		Velocity = velocity;
-		
-		MoveAndSlide();
-		
-		var happyBoo = GetNode<Node>("HappyBoo");
-		var animationPlayer = happyBoo.GetNode<AnimationPlayer>("AnimationPlayer");
+		Vector2 direction = Vector2.Zero;
 
-		if (Velocity.Length() > 0.0f)
+		// Check if joystick exists and if it's being used
+		if (_joystick != null)
 		{
-			animationPlayer.Play("walk");
+			Vector2 joystickDirection = (Vector2)_joystick.Get("PosVector");
+			if (joystickDirection != Vector2.Zero)
+			{
+				direction = joystickDirection;
+			}
 		}
-		else
+
+
+		// If no joystick input, fallback to keyboard
+		if (direction == Vector2.Zero)
 		{
-			animationPlayer.Play("idle");
+			direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		}
-		
+
+		Velocity = direction * Speed;
+		MoveAndSlide();
 	}
+	
 }
+

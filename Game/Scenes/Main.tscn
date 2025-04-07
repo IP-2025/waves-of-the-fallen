@@ -8,7 +8,7 @@
 script = ExtResource("1_r150o")
 
 [node name="DefaultMap" parent="." instance=ExtResource("2_kln2b")]
-position = Vector2(-805, -472)
+position = Vector2(-677, -366)
 
 [node name="DefaultPlayer" parent="." instance=ExtResource("3_rgh2o")]
-position = Vector2(584, 320)
+position = Vector2(575, 323)
