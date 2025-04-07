@@ -1,16 +1,17 @@
-name: Build and Test Backend 
+name: Build and Test Backend
+run-name: 🚀 Pipeline for Branch ${{ github.ref_name }}
 
 on:
   push:
   pull_request:
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: backend   
+        working-directory: backend
 
     steps:
       - name: Checkout code
@@ -26,7 +27,42 @@ jobs:
 
       - name: Build the project
         run: npm run build
-        
-      - name: Test the project
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-build
+          path: backend  
+
+  test:
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-build
+
+      - name: Run Tests
         run: npm run test
+
+      
+
 
