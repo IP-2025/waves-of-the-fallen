@@ -2,7 +2,6 @@ name: Build and Test Backend
 run-name: 🚀 Pipeline for Branch ${{ github.ref_name }}
 
 on:
-  push:
   pull_request:
 
 jobs:
