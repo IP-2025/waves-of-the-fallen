@@ -6,6 +6,8 @@ import { setPrismaClient } from "./src/libs/prismaClient";
 let prisma: PrismaClient;
 let container: StartedPostgreSqlContainer;
 
+jest.setTimeout(30000); // Set timeout to 30 seconds
+
 global.beforeAll(async () => {
   container = await new PostgreSqlContainer().start();
   prisma = new PrismaClient();
@@ -15,7 +17,7 @@ global.beforeAll(async () => {
 
   setPrismaClient(prisma);
 
-  execSync(`prisma migrate deploy`, {
+  execSync(`npx prisma migrate deploy`, {
     env: {
       ...process.env,
       DATABASE_URL: urlConnection,
@@ -35,7 +37,7 @@ global.afterEach(async () => {
   await prisma.$executeRawUnsafe(`CREATE SCHEMA public;`);
 
   // Re-apply schema
-  execSync(`prisma migrate deploy`, {
+  execSync(`npx prisma migrate deploy`, {
     env: {
       ...process.env,
       DATABASE_URL: container.getConnectionUri(),
