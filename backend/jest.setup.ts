@@ -30,18 +30,15 @@ global.afterAll(async () => {
 
 // clears testcontainer after each test
 global.afterEach(async () => {
-  const urlConnection = container.getConnectionUri();
-  execSync(`psql ${urlConnection} -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"`, {
-    env: {
-      ...process.env,
-      DATABASE_URL: urlConnection,
-    },
-  });
+  // Reset DB by dropping all tables
+  await prisma.$executeRawUnsafe(`DROP SCHEMA public CASCADE;`);
+  await prisma.$executeRawUnsafe(`CREATE SCHEMA public;`);
 
+  // Re-apply schema
   execSync(`prisma migrate deploy`, {
     env: {
       ...process.env,
-      DATABASE_URL: urlConnection,
+      DATABASE_URL: container.getConnectionUri(),
     },
   });
 });
