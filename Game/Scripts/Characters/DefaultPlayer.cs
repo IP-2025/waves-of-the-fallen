@@ -41,4 +41,3 @@ public partial class DefaultPlayer : CharacterBody2D
 	}
 	
 }
-
