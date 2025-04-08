@@ -17,7 +17,7 @@ position = Vector2(1, 38)
 position = Vector2(2, -30)
 shape = SubResource("RectangleShape2D_y2kgl")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Joystick" parent="." instance=ExtResource("3_kjvlq")]
+position = Vector2(-400, 160)
 
-[node name="Joystick" parent="Camera2D" instance=ExtResource("3_kjvlq")]
-position = Vector2(-456, 199)
+[node name="Camera2D" type="Camera2D" parent="."]

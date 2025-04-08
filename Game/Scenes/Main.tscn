@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cffgskcms870o" path="res://Scenes/Characters/default_player.tscn" id="3_rgh2o"]
 
 [node name="Node2D" type="Node2D"]
+scale = Vector2(1.00488, 1)
 script = ExtResource("1_r150o")
 
 [node name="DefaultMap" parent="." instance=ExtResource("2_kln2b")]
