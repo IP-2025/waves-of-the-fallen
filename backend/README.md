@@ -27,10 +27,11 @@
 - to run the tests run `npm test`
 - to interact with the database in your tests (writing, reading) do something like this:
 ```typescript
-import { prismaClient } from '../src/lib/'
+import { getPrismaClient } from '../src/lib/'
 
 describe('demo', () => {
   it('demo test', async () => {
+    const prisma = getPrismaClient()
     await prisma.$executeRawUnsafe(`add something to the table`);
   });
 });
