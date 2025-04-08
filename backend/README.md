@@ -24,6 +24,8 @@
 
 ## Testing 
 - the tests use testcontainers and jest
+- to run the tests you need to set up the prisma client
+- for that run: `npx prisma generate`
 - to run the tests run `npm test`
 - to interact with the database in your tests (writing, reading) do something like this:
 ```typescript
