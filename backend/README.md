@@ -21,3 +21,18 @@
 - you can check the db with the help of prisma studio
 - after running the docker containers
 - visit `http://localhost:5555` to see the db
+
+## Testing 
+- the tests use testcontainers and jest
+- to run the tests run `npm test`
+- to interact with the database in your tests (writing, reading) do something like this:
+```typescript
+import { prismaClient } from '../src/lib/'
+
+describe('demo', () => {
+  it('demo test', async () => {
+    await prisma.$executeRawUnsafe(`add something to the table`);
+  });
+});
+```
+

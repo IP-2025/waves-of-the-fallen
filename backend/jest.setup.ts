@@ -15,6 +15,13 @@ global.beforeAll(async () => {
   const urlConnection = container.getConnectionUri();
   process.env.DATABASE_URL = urlConnection;
 
+  execSync(`npx prisma migrate dev --name init`, {
+    env: {
+      ...process.env,
+      DATABASE_URL: urlConnection,
+    },
+  });
+
   setPrismaClient(prisma);
 
   execSync(`npx prisma migrate deploy`, {

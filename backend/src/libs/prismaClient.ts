@@ -1,8 +1,16 @@
 import { PrismaClient } from '@prisma/client';
 
-let prismaClient = new PrismaClient();
+let prismaClient: PrismaClient | null = null;
+
+function getPrismaClient(): PrismaClient {
+  if (!prismaClient) {
+    prismaClient = new PrismaClient();
+  }
+  return prismaClient;
+}
 
 function setPrismaClient(prisma: PrismaClient) {
   prismaClient = prisma;
 }
-export { prismaClient, setPrismaClient };
+
+export { getPrismaClient, setPrismaClient };
