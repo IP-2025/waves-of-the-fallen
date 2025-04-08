@@ -1,0 +1,138 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx52ebwx4p8lr"]
+
+[ext_resource type="Script" uid="uid://bjsq246r3h8w1" path="res://Scripts/Mainmenu.cs" id="1_pposm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pposm"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[node name="Mainmenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pposm")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.151276, 0.151276, 0.151276, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="CenterContainer3" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/CenterContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "Waves of the Fallen"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 220
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 220
+theme_override_constants/margin_bottom = 5
+
+[node name="Button_Play" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 100
+theme_override_styles/focus = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/normal = SubResource("StyleBoxFlat_pposm")
+text = "PLAY!
+"
+icon_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 350
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 350
+theme_override_constants/margin_bottom = 5
+
+[node name="Button_Charactermenu" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/normal = SubResource("StyleBoxFlat_pposm")
+text = "Charactermenu"
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 350
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 350
+theme_override_constants/margin_bottom = 5
+
+[node name="Button_Settings" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/normal = SubResource("StyleBoxFlat_pposm")
+text = "Settings
+"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MarginContainer/Button_Play" to="." method="_on_button_play_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/Button_Charactermenu" to="." method="_on_button_charactermenu_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/MarginContainer2/Button_Settings" to="." method="_on_button_settings_pressed"]
