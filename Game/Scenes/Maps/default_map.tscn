@@ -15,6 +15,7 @@ size = Vector2(66, 1645)
 [node name="DefaultMap" type="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(1328, -36)
