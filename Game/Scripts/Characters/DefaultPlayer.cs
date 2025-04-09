@@ -11,7 +11,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	public override void _Ready()
 	{
 		// Find the joystick
-		_joystick = GetNode<Node2D>("./Camera2D/Joystick");
+		_joystick = GetNode<Node2D>("./Joystick");
 		
 	}
 

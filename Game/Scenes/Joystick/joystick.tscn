@@ -10,12 +10,12 @@ scale = Vector2(2, 2)
 script = ExtResource("1_s6674")
 
 [node name="JoyBase" type="Sprite2D" parent="."]
-self_modulate = Color(0.336608, 0.336608, 0.336608, 1)
+self_modulate = Color(0.337255, 0.337255, 0.337255, 0.333333)
 position = Vector2(0, -1)
 texture = ExtResource("1_b3blk")
 
 [node name="JoyHandle" type="Sprite2D" parent="."]
-self_modulate = Color(0.336608, 0.336608, 0.336608, 1)
+self_modulate = Color(0.337255, 0.337255, 0.337255, 0.627451)
 position = Vector2(-1, -1)
 texture = ExtResource("2_s6674")
 script = ExtResource("4_fc7hi")
