@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwnakp2gye0pe"]
+
+[ext_resource type="PackedScene" uid="uid://tjcbxciq0uvf" path="res://Scenes/Maps/Test_Map.tscn" id="1_7tmfp"]
+[ext_resource type="PackedScene" uid="uid://cffgskcms870o" path="res://Scenes/Characters/default_player.tscn" id="2_j6xku"]
+
+[sub_resource type="Curve2D" id="Curve2D_7tmfp"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -934.664, -553, 0, 0, 0, 0, 2157.39, -559, 0, 0, 0, 0, 2152.23, 1313, 0, 0, 0, 0, -957.37, 1316, 0, 0, 0, 0, -936.728, -556)
+}
+point_count = 5
+
+[node name="Testing Scene" type="Node2D"]
+
+[node name="Test Map" parent="." instance=ExtResource("1_7tmfp")]
+
+[node name="DefaultPlayer" parent="." instance=ExtResource("2_j6xku")]
+position = Vector2(585, 330)
+scale = Vector2(0.1, 0.1)
+
+[node name="Camera2D" parent="DefaultPlayer" index="3"]
+zoom = Vector2(2, 2)
+
+[node name="Path2D" type="Path2D" parent="."]
+visible = false
+position = Vector2(72.6292, 0)
+scale = Vector2(0.968935, 1)
+curve = SubResource("Curve2D_7tmfp")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(-936.728, -555.999)
+rotation = -1.55977
+progress = 9945.82
+
+[editable path="DefaultPlayer"]
