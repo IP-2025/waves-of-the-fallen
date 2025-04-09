@@ -1,0 +1,28 @@
+name: Game CI/CD
+
+on:
+  pull_request:
+    paths:
+      - 'Game/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0'
+
+      - name: Restore dependencies
+        run: dotnet restore Game/Game.csproj
+
+      - name: Build the project
+        run: dotnet build Game/Game.csproj --configuration Release
+
+      - name: Run tests
+        run: dotnet test Game.Tests/Game.Tests.csproj --configuration Release
