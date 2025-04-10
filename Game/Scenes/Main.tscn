@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://byi3q6n3806ha"]
+[gd_scene load_steps=5 format=3 uid="uid://byi3q6n3806ha"]
 
 [ext_resource type="Script" uid="uid://bxjokqg5ld5u1" path="res://Scripts/Main.cs" id="1_r150o"]
 [ext_resource type="PackedScene" uid="uid://du20jt0cajs5p" path="res://Scenes/Maps/default_map.tscn" id="2_kln2b"]
@@ -27,7 +27,7 @@ curve = SubResource("Curve2D_pbw6q")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
 unique_name_in_owner = true
-position = Vector2(-936.728, -556)
+position = Vector2(-936.728, -555.999)
 rotation = -1.55977
 progress = 9945.82
 

@@ -1,92 +1,92 @@
-[gd_scene load_steps=13 format=3 uid="uid://b3t68y2ghoi8m"]
+[gd_scene load_steps=13 format=3 uid="uid://dexwf12qh2cp0"]
 
-[ext_resource type="Script" uid="uid://bm8n0iudjyswe" path="res://Scripts/Charactermenu.cs" id="1_ivr4t"]
+[ext_resource type="Script" uid="uid://ddbawkek1x7vd" path="res://Scripts/Menu/Local.cs" id="1_gol3u"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivr4t"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eyi13"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6o33e"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4geyq"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yfjqe"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i44u3"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_epp88"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhmql"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qyyj4"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aaqfp"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xvouo"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2dne"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wx72x"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6kysc"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bfkhe"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6vr2p"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5dc1l"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f60ng"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_45odv"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bismi"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p2y8r"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rgw85"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
 corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
-[node name="Charactermenu" type="Control"]
+[node name="Local" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ivr4t")
+script = ExtResource("1_gol3u")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -120,24 +120,44 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 40
-text = "Charactermenu"
+text = "Local"
 
 [node name="Button_Back" type="Button" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxFlat_ivr4t")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_6o33e")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_yfjqe")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_epp88")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_qyyj4")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_xvouo")
-theme_override_styles/hover = SubResource("StyleBoxFlat_wx72x")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_bfkhe")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_5dc1l")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_45odv")
-theme_override_styles/normal = SubResource("StyleBoxFlat_p2y8r")
+theme_override_styles/focus = SubResource("StyleBoxFlat_eyi13")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_4geyq")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_i44u3")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_lhmql")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_aaqfp")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_j2dne")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6kysc")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_6vr2p")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_f60ng")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_bismi")
+theme_override_styles/normal = SubResource("StyleBoxFlat_rgw85")
 text = "Back"
 
-[connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_charactermenu_pressed"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="join" type="Button" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 25
+text = "Join"
+
+[node name="host" type="Button" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 25
+text = "Host
+"
+
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_local_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/join" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/host" to="." method="_on_host_button_pressed"]
