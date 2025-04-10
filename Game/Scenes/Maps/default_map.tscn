@@ -1,4 +1,12 @@
-[gd_scene format=3 uid="uid://du20jt0cajs5p"]
+[gd_scene load_steps=3 format=3 uid="uid://du20jt0cajs5p"]
+
+[ext_resource type="Script" uid="uid://es7bohac6n7p" path="res://Scenes/SpawnEnemies.cs" id="1_x3uko"]
+
+[sub_resource type="Curve2D" id="Curve2D_fd10d"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -116.24, -43, 0, 0, 0, 0, 1175.9, -44, 0, 0, 0, 0, 1175.9, 680, 0, 0, 0, 0, -112.112, 688, 0, 0, 0, 0, -118.304, -43)
+}
+point_count = 5
 
 [node name="default map" type="Node2D"]
 
@@ -9,3 +17,20 @@ light_mask = 3
 visibility_layer = 2
 
 [node name="TileMapLayer Border" type="TileMapLayer" parent="."]
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(72.6292, 0)
+scale = Vector2(0.968935, 1)
+curve = SubResource("Curve2D_fd10d")
+script = ExtResource("1_x3uko")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+unique_name_in_owner = true
+position = Vector2(-118.304, -43)
+rotation = -1.57927
+progress = 9945.82
+
+[node name="SpawnTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="SpawnTimer" to="Path2D" method="_on_spawn_timer_timeout"]
