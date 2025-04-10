@@ -3,6 +3,8 @@ run-name: 🚀 Pipeline for Branch ${{ github.ref_name }}
 
 on:
   pull_request:
+      paths:
+      - 'backend/**'
 
 jobs:
   build:

@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://du20jt0cajs5p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5sdjl"]
+size = Vector2(2656, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x3uko"]
+size = Vector2(2655, 62)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fd10d"]
+size = Vector2(82, 1645)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mvdgh"]
+size = Vector2(66, 1645)
+
+[node name="DefaultMap" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1328, -36)
+shape = SubResource("RectangleShape2D_5sdjl")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1328.5, 1550)
+shape = SubResource("RectangleShape2D_x3uko")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-40, 758.5)
+shape = SubResource("RectangleShape2D_fd10d")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(2689, 758.5)
+shape = SubResource("RectangleShape2D_mvdgh")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 1.0
+offset_top = -7.0
+offset_right = 2656.0
+offset_bottom = 1519.0
+color = Color(0.744744, 1, 0.995554, 1)
