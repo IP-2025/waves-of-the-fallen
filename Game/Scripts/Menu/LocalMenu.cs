@@ -10,7 +10,8 @@ public partial class LocalMenu : Control
   }
   private void _on_join_button_pressed()
   {
-	//implement method
+	  var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Main.tscn");
+	  GetTree().ChangeSceneToPacked(scene);
   }
   private void _on_host_button_pressed()
   {

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class MainMenu : Control
+public partial class Mainmenu : Control
 {
   private void _on_button_charactermenu_pressed()
   {

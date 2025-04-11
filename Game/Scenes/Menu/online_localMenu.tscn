@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://cpsq8n5bs3xxw"]
 
-[ext_resource type="Script" uid="uid://mqcxtay42ey4" path="res://Scripts/Menu/OnlineLocal.cs" id="1_dpe8f"]
+[ext_resource type="Script" uid="uid://mqcxtay42ey4" path="res://Scripts/Menu/OnlineLocalMenu.cs" id="1_dpe8f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eyi13"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
@@ -161,4 +161,4 @@ text = "Online
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_onlineLocal_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/Button" to="." method="_on_button_local_pressed"]
-[connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/Button2" to="." method="_on_button_online_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/Button2" to="." method="_on_button_back_onlineLocal_pressed"]
