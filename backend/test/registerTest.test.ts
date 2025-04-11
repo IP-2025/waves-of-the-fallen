@@ -10,3 +10,14 @@ describe('POST /auth/register', () => {
     expect(response.body).toEqual({ error: 'Username or Password is required' });
   });
 });
+
+describe('POST /auth/login', () => {
+  it('should return 201 if user is registered properly', async () => {
+    const  response = await request(app)
+    .post('/api/v1/auth/register')
+    .send({ username: 'testUser', password: 'testPassword' });
+    expect(response.status).toBe(201);
+    expect(response.body).toEqual({message: 'User testUser registered'});
+  });
+
+})
