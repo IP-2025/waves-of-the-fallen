@@ -1,6 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://du20jt0cajs5p"]
+[gd_scene load_steps=6 format=3 uid="uid://du20jt0cajs5p"]
 
 [ext_resource type="Script" uid="uid://es7bohac6n7p" path="res://Scenes/SpawnEnemies.cs" id="1_x3uko"]
+
+[sub_resource type="TileSet" id="TileSet_gw5e3"]
+physics_layer_0/collision_layer = 1
+
+[sub_resource type="TileSet" id="TileSet_7ho5e"]
+physics_layer_0/collision_layer = 3
+physics_layer_0/collision_mask = 3
+
+[sub_resource type="TileSet" id="TileSet_efdo0"]
+physics_layer_0/collision_layer = 7
+physics_layer_0/collision_mask = 7
 
 [sub_resource type="Curve2D" id="Curve2D_fd10d"]
 _data = {
@@ -11,12 +22,17 @@ point_count = 5
 [node name="default map" type="Node2D"]
 
 [node name="TileMapLayer Ground" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_gw5e3")
 
 [node name="TileMapLayer Objects" type="TileMapLayer" parent="."]
 light_mask = 3
 visibility_layer = 2
+tile_set = SubResource("TileSet_7ho5e")
 
 [node name="TileMapLayer Border" type="TileMapLayer" parent="."]
+light_mask = 3
+visibility_layer = 3
+tile_set = SubResource("TileSet_efdo0")
 
 [node name="Path2D" type="Path2D" parent="."]
 position = Vector2(72.6292, 0)
