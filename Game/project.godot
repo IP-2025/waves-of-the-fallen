@@ -24,6 +24,10 @@ window/stretch/aspect="expand"
 
 project/assembly_name="Game"
 
+[global_group]
+
+PlayerSpawnPoints=""
+
 [input]
 
 move_left={

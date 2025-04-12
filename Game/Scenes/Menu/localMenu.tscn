@@ -158,6 +158,14 @@ theme_override_font_sizes/font_size = 25
 text = "Host
 "
 
+[node name="play" type="Button" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 25
+text = "Play"
+
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_local_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/join" to="." method="_on_join_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/host" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/play" to="." method="_on_play_button_pressed"]
