@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3odtgwxkrfnf"]
+
+[ext_resource type="AudioStream" uid="uid://ckx76lyu67bi5" path="res://Assets/Sounds/Financial-Obligations-PM-Music.wav" id="1_fww3n"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_fww3n"]
+script/source = "using Godot;
+using System;
+
+public partial class MenuBackgroundMusic : AudioStreamPlayer
+{
+ private HSlider sliderMusic;
+ private int menuBackgroundMusicBusIndex;
+
+	public override void _Ready()
+	{
+	sliderMusic = GetNode<HSlider>(\"MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3/HSliderMusic\");
+	menuBackgroundMusicBusIndex=AudioServer.GetBusIndex(\"MenuBackgroundMusicBus\");
+	AudioServer.SetBusVolumeDb(menuBackgroundMusicBusIndex,Mathf.LinearToDb(0));
+	}
+	
+	private void _on_h_slider_music_value_changed(float volumeSlider)
+	{ 
+	GD.Print(volumeSlider.ToString(\"0.00\"));
+	AudioServer.SetBusVolumeDb(menuBackgroundMusicBusIndex,Mathf.LinearToDb(volumeSlider));
+	}
+
+}
+"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_fww3n")
+autoplay = true
+script = SubResource("CSharpScript_fww3n")
