@@ -1,0 +1,38 @@
+# Node modules
+node_modules
+
+# Logs
+*.log
+
+# Dependency directories
+npm-debug.log
+yarn-error.log
+
+# Environment variables
+.env-*
+.env
+.env.template
+
+# Docker files
+Dockerfile
+docker-compose.yml
+
+# Git
+.git
+.gitignore
+
+# Testing
+jest.config.cjs
+jest.setup.ts
+test
+
+# Editor directories and files
+.vscode
+.idea
+*.swp
+
+# Miscellaneous
+*.md
+rest-testing.http
+.prettierignore
+.prettierrc
