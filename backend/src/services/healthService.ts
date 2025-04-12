@@ -1,4 +1,5 @@
 import { getPrismaClient } from '../libs/prismaClient';
+import logger from '../logger/logger';
 
 export async function checkDatabaseHealth(): Promise<boolean> {
   try {
@@ -7,7 +8,7 @@ export async function checkDatabaseHealth(): Promise<boolean> {
     await prisma.$queryRaw`SELECT 1`;
     return true;
   } catch (error) {
-    console.error('Database health check failed:', error);
+    logger.error('Database health check failed:', error)
     return false;
   }
 }
