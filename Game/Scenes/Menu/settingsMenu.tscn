@@ -168,6 +168,10 @@ size_flags_vertical = 1
 max_value = 1.0
 step = 0.005
 
+[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Music credits needed"
+
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
