@@ -153,7 +153,7 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 80
 
-[node name="Button2" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2"]
+[node name="Button_Online" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 80
@@ -171,7 +171,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_eyi13")
 text = "Online
 "
 
-[node name="Button" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2"]
+[node name="Button_Local" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 80
@@ -190,5 +190,5 @@ text = "Local
 "
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_onlineLocal_pressed"]
-[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2/Button2" to="." method="_on_button_back_onlineLocal_pressed"]
-[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2/Button" to="." method="_on_button_local_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2/Button_Online" to="." method="_on_button_online_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2/Button_Local" to="." method="_on_button_local_pressed"]
