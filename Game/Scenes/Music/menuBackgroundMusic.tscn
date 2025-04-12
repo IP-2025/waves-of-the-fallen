@@ -30,4 +30,5 @@ public partial class MenuBackgroundMusic : AudioStreamPlayer
 [node name="AudioStreamPlayer" type="AudioStreamPlayer"]
 stream = ExtResource("1_fww3n")
 autoplay = true
+bus = &"MenuBackgroundMusicBus"
 script = SubResource("CSharpScript_fww3n")
