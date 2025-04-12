@@ -51,6 +51,7 @@ public partial class BasicEnemy : CharacterBody2D
 	public void Attack() 
 	{
 		Debug.Print("attacking player");
+		player.GetNode<Health>("Health").Damage(damage);
 	}
 
 	public void OnAttackRangeBodyEnter(Node2D body) 
