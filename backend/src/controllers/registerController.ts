@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { BadRequestError } from '../errors';
+import { BadRequestError, InternalServerError } from '../errors';
 import { registerUser } from '../services/registerService';
 
 export async function registrateController(req: Request, res: Response, next: NextFunction) {
@@ -13,6 +13,10 @@ export async function registrateController(req: Request, res: Response, next: Ne
     await registerUser(username, password, mail);
     res.status(201).json({ message: `User ${username} registered` });
   } catch (error) {
-    next(error);
+    if (error instanceof Error) {
+      next(new InternalServerError('Failed to register user. Please try again later.'));
+    } else {
+      next(error);
+    }
   }
 }
