@@ -1,7 +1,7 @@
 import { PostgreSqlContainer, StartedPostgreSqlContainer } from "@testcontainers/postgresql";
 import { PrismaClient } from '@prisma/client';
 import { execSync } from 'child_process';
-import { setPrismaClient } from "./src/libs/prismaClient";
+import { setPrismaClient } from './src/libs';
 
 let prisma: PrismaClient;
 let container: StartedPostgreSqlContainer;
@@ -10,17 +10,18 @@ jest.setTimeout(30000); // Set timeout to 30 seconds
 
 global.beforeAll(async () => {
   container = await new PostgreSqlContainer().start();
-  prisma = new PrismaClient();
 
   const urlConnection = container.getConnectionUri();
   process.env.DATABASE_URL = urlConnection;
 
-  execSync(`npx prisma migrate dev --name init`, {
+  execSync(`npx prisma generate`, {
     env: {
       ...process.env,
       DATABASE_URL: urlConnection,
     },
   });
+
+  prisma = new PrismaClient();
 
   setPrismaClient(prisma);
 

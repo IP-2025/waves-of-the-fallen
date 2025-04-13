@@ -1,5 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { BadRequestError, UnauthorizedError } from '../errors';
+import { BadRequestError } from '../errors';
+import { registrateController } from '../controllers/registerController';
 
 const router = Router();
 
@@ -16,17 +17,6 @@ router.post('/login', (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-router.post('/register', (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { username, password } = req.body;
-    if (!username || !password) {
-      throw new BadRequestError('Username or Password is required');
-    }
-
-    res.status(201).json({ message: `User ${username} registered` });
-  } catch (error) {
-    next(error);
-  }
-});
+router.post('/register', registrateController)
 
 export default router;
