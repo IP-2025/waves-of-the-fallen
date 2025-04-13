@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import { InternalServerError } from '../errors';
 import { v4 as uuidv4 } from 'uuid';
 import logger from '../logger/logger';
-import { createNewPlayer } from '../repositories/usersRepository';
+import { createNewPlayer } from '../repositories/playerRepository';
 import { saveCredential } from '../repositories/credentialsRepository';
 
 export async function registerUser(username: string, password: string, mail: string): Promise<void> {

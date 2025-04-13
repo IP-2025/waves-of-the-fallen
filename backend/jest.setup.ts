@@ -1,5 +1,4 @@
 import { PostgreSqlContainer, StartedPostgreSqlContainer } from "@testcontainers/postgresql";
-import { execSync } from 'child_process';
 import { AppDataSource } from './src/libs/data-source';
 
 let container: StartedPostgreSqlContainer;
@@ -31,5 +30,5 @@ global.afterEach(async () => {
   await AppDataSource.query(`DROP SCHEMA public CASCADE; CREATE SCHEMA public;`);
 
   // Re-apply schema
-  await AppDataSource.runMigrations();
+  await AppDataSource.synchronize(true);
 });

@@ -1,9 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, PrimaryColumn } from 'typeorm';
 import { Player } from './Player';
 
 @Entity()
 export class Credential {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn()
   id!: string;
 
   @Column({

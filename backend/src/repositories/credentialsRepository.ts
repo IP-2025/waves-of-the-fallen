@@ -1,6 +1,7 @@
 import { AppDataSource } from "../libs/data-source";
 import { Credential } from "../libs/entities/Credential";
 import { Player } from "../libs/entities/Player";
+import { v4 as uuidv4 } from 'uuid';
 
 const credentialsRepo = AppDataSource.getRepository(Credential);
 
@@ -12,7 +13,13 @@ export interface NewCred {
 
 export async function saveCredential(newCred: NewCred): Promise<Credential> {
   try {
+    // Validate required fields
+    if (!newCred.player_id || !newCred.hashedEmail || !newCred.hashedPassword) {
+      throw new Error('Missing required fields');
+    }
+
     const credential = new Credential();
+    credential.id = uuidv4();
     credential.email = newCred.hashedEmail;
     credential.password = newCred.hashedPassword;
 
