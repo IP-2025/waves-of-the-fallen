@@ -15,7 +15,7 @@ describe('Check saveCredential', () => {
 
     const newCred: NewCred = {
       player_id: newPlayer.player_id,
-      hashedEmail: 'hashedemail@example.com',
+      email: 'hashedemail@example.com',
       hashedPassword: 'hashedpassword',
     };
 
@@ -23,12 +23,12 @@ describe('Check saveCredential', () => {
 
     // Verify that the credential was inserted correctly
     const foundCredential = await AppDataSource.getRepository(Credential).findOne({
-      where: { email: newCred.hashedEmail },
+      where: { email: newCred.email },
       relations: ['player'],
     });
 
     expect(foundCredential).not.toBeNull();
-    expect(foundCredential?.email).toBe(newCred.hashedEmail);
+    expect(foundCredential?.email).toBe(newCred.email);
     expect(foundCredential?.password).toBe(newCred.hashedPassword);
     expect(foundCredential?.player.player_id).toBe(newPlayer.player_id);
   });
@@ -43,7 +43,7 @@ describe('Check saveCredential', () => {
 
     const newCred: NewCred = {
       player_id: newPlayer.player_id,
-      hashedEmail: 'hashedemail@example.com',
+      email: 'hashedemail@example.com',
       hashedPassword: 'hashedpassword',
     };
 
@@ -52,7 +52,7 @@ describe('Check saveCredential', () => {
     // Try to save another credential with the same email
     const newCredDuplicate: NewCred = {
       player_id: newPlayer.player_id,
-      hashedEmail: 'hashedemail@example.com',
+      email: 'hashedemail@example.com',
       hashedPassword: 'anotherpassword',
     };
 
@@ -62,7 +62,7 @@ describe('Check saveCredential', () => {
   it('should throw an error when saving a credential for a non-existent player', async () => {
     const newCred: NewCred = {
       player_id: uuidv4(), // Non-existent player_id
-      hashedEmail: 'nonexistentplayer@example.com',
+      email: 'nonexistentplayer@example.com',
       hashedPassword: 'hashedpassword',
     };
 
@@ -79,7 +79,7 @@ describe('Check saveCredential', () => {
 
     const newCred: Partial<NewCred> = {
       player_id: newPlayer.player_id,
-      hashedEmail: 'missingpassword@example.com',
+      email: 'missingpassword@example.com',
       // Missing hashedPassword
     };
 

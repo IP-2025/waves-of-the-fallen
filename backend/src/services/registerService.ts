@@ -5,18 +5,25 @@ import logger from '../logger/logger';
 import { createNewPlayer } from '../repositories/playerRepository';
 import { saveCredential } from '../repositories/credentialsRepository';
 
-export async function registerUser(username: string, password: string, mail: string): Promise<void> {
+export async function registerUser(
+  username: string,
+  password: string,
+  mail: string
+): Promise<void> {
   try {
     // Hash the password and email
     const hashedPassword = await bcrypt.hash(password, 10);
-    const hashedMail = await bcrypt.hash(mail, 10);
     const playerId = uuidv4();
 
     // Create the player
     const createdPlayer = await createNewPlayer({ player_id: playerId, username: username });
 
     // Save the credential with reference to the created player
-    await saveCredential({ player_id: createdPlayer.player_id, hashedEmail: hashedMail, hashedPassword: hashedPassword });
+    await saveCredential({
+      player_id: createdPlayer.player_id,
+      email: mail,
+      hashedPassword: hashedPassword,
+    });
   } catch (error) {
     logger.error('Error registering user: ', error);
     throw new InternalServerError('Failed to register user. Please try again later.');

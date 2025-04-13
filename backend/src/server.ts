@@ -12,6 +12,6 @@ AppDataSource.initialize()
       logger.info(`🚀 Server screaming on port ${port}`);
     });
   })
-  .catch(error => {
+  .catch((error) => {
     logger.error(error);
-  })
+  });

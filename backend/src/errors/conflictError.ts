@@ -1,4 +1,4 @@
-import { CustomError } from "./customErorr";
+import { CustomError } from './customErorr';
 
 export class ConflictError extends CustomError {
   constructor(message: string) {

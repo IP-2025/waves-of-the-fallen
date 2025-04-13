@@ -23,3 +23,13 @@ export async function createNewPlayer(user: NewPlayer) {
     throw new InternalServerError('Error inserting new user');
   }
 }
+
+export async function userExists(playerId: string): Promise<boolean> {
+  try {
+    const player = await playersRepo.findOneBy({ player_id: playerId });
+    return player !== null;
+  } catch (error) {
+    logger.error('Error checking if user exists: ', error);
+    throw new InternalServerError('Error checking if user exists');
+  }
+}

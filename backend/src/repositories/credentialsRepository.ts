@@ -1,6 +1,6 @@
-import { AppDataSource } from "../libs/data-source";
-import { Credential } from "../libs/entities/Credential";
-import { Player } from "../libs/entities/Player";
+import { AppDataSource } from '../libs/data-source';
+import { Credential } from '../libs/entities/Credential';
+import { Player } from '../libs/entities/Player';
 import { v4 as uuidv4 } from 'uuid';
 import { BadRequestError, NotFoundError, ConflictError } from '../errors';
 
@@ -8,20 +8,20 @@ const credentialsRepo = AppDataSource.getRepository(Credential);
 
 export interface NewCred {
   player_id: string;
-  hashedEmail: string;
+  email: string;
   hashedPassword: string;
 }
 
 export async function saveCredential(newCred: NewCred): Promise<Credential> {
   try {
     // Validate required fields
-    if (!newCred.player_id || !newCred.hashedEmail || !newCred.hashedPassword) {
+    if (!newCred.player_id || !newCred.email || !newCred.hashedPassword) {
       throw new BadRequestError('Missing required fields');
     }
 
     const credential = new Credential();
     credential.id = uuidv4();
-    credential.email = newCred.hashedEmail;
+    credential.email = newCred.email;
     credential.password = newCred.hashedPassword;
 
     // Find the player by player_id
@@ -42,4 +42,12 @@ export async function saveCredential(newCred: NewCred): Promise<Credential> {
     }
     throw error;
   }
+}
+
+export async function getPwdByMail(email: string): Promise<Credential> {
+  const credential = await credentialsRepo.findOneBy({ email });
+  if (!credential) {
+    throw new NotFoundError('Credential not found for the given email.');
+  }
+  return credential;
 }
