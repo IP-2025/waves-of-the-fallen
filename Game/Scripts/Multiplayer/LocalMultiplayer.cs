@@ -1,33 +1,37 @@
-using Godot;
 using System;
-
+using System.Linq;
+using Godot;
+using System.Diagnostics;
 public partial class LocalMultiplayer : Control
 {
-	private int port = 9999; // multiplayer port
+    private int port = 9999; // multiplayer port
     private string address = "127.0.0.1"; // 127.0.0.1 = localhost
     private ENetMultiplayerPeer peer;
+    public bool enableDebug = false;
 
-	// Called when the node enters the scene tree for the first time.
-      public override void _Ready()
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
     {
-        GD.Print("Instantiating local multiplayer");
-		Multiplayer.PeerConnected += PeerConnected;
+        DebugIt("Instantiating local multiplayer");
+        Multiplayer.PeerConnected += PeerConnected;
         Multiplayer.PeerDisconnected += PeerDisconnected;
         Multiplayer.ConnectedToServer += ConnectedToServer;
         Multiplayer.ConnectionFailed += ConnectionFailed;
+        Name = Multiplayer.GetUniqueId().ToString();
     }
 
     // runs if connection fails, runs only on client
     private void ConnectionFailed()
     {
-        GD.Print("Connection failed!");
+        DebugIt("Connection failed!");
     }
 
     // runs if connection is successful, runs only on client
     private void ConnectedToServer()
     {
-        GD.Print("Connected to server");
+        DebugIt("Connected to server");
         // Rpc to Server (has allways id 1) for new players information, server will then spread it to everyone
+
         RpcId(
             1,
             "SendPlayerInformation",
@@ -40,13 +44,13 @@ public partial class LocalMultiplayer : Control
     // id = id of the player that disconnected
     private void PeerDisconnected(long id)
     {
-        GD.Print("Player disconnected: " + id.ToString());
+        DebugIt("Player disconnected: " + id.ToString());
     }
 
     // runs if a player connects, runs on all peers
     private void PeerConnected(long id)
     {
-        GD.Print("Player Connected: " + id.ToString());
+        DebugIt("Player Connected: " + id.ToString());
     }
 
     public void Join()
@@ -58,16 +62,17 @@ public partial class LocalMultiplayer : Control
         // RangeCoder good for smaller packages up to about 4 KB, larger packages = inefficient
         peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
         Multiplayer.MultiplayerPeer = peer;
-        GD.Print("Joining game");
+
+        DebugIt((GameManager.Players.Count, " Players connected").ToString());
     }
 
     public void Host()
     {
         peer = new ENetMultiplayerPeer();
-        var error = peer.CreateServer(port, 4); // 4 = max 4 players
+        var error = peer.CreateServer(port);
         if (error != Error.Ok)
         {
-            GD.Print("ERROR cannot host: " + error.ToString());
+            GD.PrintErr("ERROR cannot host: " + error.ToString());
             return; // to stop server execution ...
         }
 
@@ -75,7 +80,7 @@ public partial class LocalMultiplayer : Control
 
         // set self to multiplayer peer to actually connect to the server .. if not, server exists, but self is not connected (not peer)
         Multiplayer.MultiplayerPeer = peer;
-        GD.Print("Waiting for players...");
+        DebugIt("Waiting for players...");
         // Host has to send its player information to its self to be part of the game. No RPC needet because if host opens lobby, he is alone
         SendPlayerInformation(
             Multiplayer.GetUniqueId().ToString(), // later fill in users custom name from a LineEdit,
@@ -85,12 +90,19 @@ public partial class LocalMultiplayer : Control
 
     public void Play()
     {
+        foreach (var item in GameManager.Players)
+        {
+            // spreading active players information from host to everyone
+            if (Multiplayer.IsServer())
+            {
+                DebugIt(("Server -> Client: Transmitting player: Name=", item.Name.ToString(), " Id=", item.Id.ToString()).ToString());
+                Rpc("SendPlayerInformation", item.Name, item.Id); // sending it
+            }
+        }
+
         Rpc("StartGame");
-       //StartGame();
     }
 
-    // This (AnyPeer) makes sure that everyone (means all peers) recives / executes this.
-    // callLocal = true to make sure tat it is called by self
     // Reliable = TCP connection wit ACK send back ... larger round trip time because its waiting for ACK but
     // this makes sure that this important data is safely transmitted.
     [Rpc(
@@ -102,33 +114,35 @@ public partial class LocalMultiplayer : Control
     {
         // loading and instantiating world scene
         var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Main.tscn").Instantiate<Node>();
-	    // GetTree().ChangeSceneToPacked(scene);
+        // GetTree().ChangeSceneToPacked(scene);
         GetTree().Root.AddChild(scene); // add world as child
         this.Hide(); // hiding main menue..
 
-        GD.Print("Game started");
-        foreach (var item in GameManager.Players)
-        {
-            GD.Print(item.Name + " is playing");
-        }
+        DebugIt("Game started");
     }
 
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false)]
     private void SendPlayerInformation(string name, int id)
     {
+        DebugIt("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        DebugIt((Multiplayer.GetUniqueId().ToString(), " prints this:").ToString());
+
         PlayerInfo playerInfo = new PlayerInfo() { Name = name, Id = id };
-        if (!GameManager.Players.Contains(playerInfo))
+        if (!GameManager.Players.Any(player => player.Id == playerInfo.Id))
         {
-            GameManager.Players.Add(playerInfo); // if a new player joins, its information is added to GameManager
+            GameManager.Players.Add(playerInfo); // if a new player joins, its information is added to host s GameManager
+            DebugIt((Multiplayer.GetUniqueId().ToString(), " added -> Name: ", name, " id: ", id).ToString());
         }
 
-        // spreading every players information to everyone
-        if (Multiplayer.IsServer())
+        DebugIt(("Totale of ", GameManager.Players.Count, " players connected").ToString());
+        DebugIt("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    }
+
+    private void DebugIt(string message)
+    {
+        if (enableDebug)
         {
-            foreach (var item in GameManager.Players)
-            {
-                Rpc("SendPlayerInformation", item.Name, item.Id); // sending it
-            }
+            Debug.Print(message);
         }
     }
 }
