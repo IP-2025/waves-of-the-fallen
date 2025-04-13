@@ -3,7 +3,11 @@ import { Credential } from './Credential';
 
 @Entity()
 export class Player {
-  @PrimaryColumn()
+  @PrimaryColumn({
+      type: 'varchar',
+      nullable: false,
+      unique: true
+    })
   player_id!: string;
 
   @Column({
