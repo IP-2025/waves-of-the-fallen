@@ -1,22 +1,22 @@
-import { getPrismaClient } from '../libs';
+import { AppDataSource } from '../libs/data-source';
+import { Player } from '../libs/entities/Player';
 import logger from '../logger/logger';
 import { InternalServerError } from '../errors';
 
-const prisma = getPrismaClient();
+const playersRepo = AppDataSource.getRepository(Player);
 
-export interface NewCred {
+export interface NewPlayer {
   player_id: string;
-  username: string,
+  username: string;
 }
 
-export async function createNewUser(user: NewCred) {
+export async function createNewPlayer(user: NewPlayer) {
   try {
-    const createdUser = await prisma.player.create({
-      data: {
-        player_id: user.player_id,
-        username: user.username,
-      },
-    });
+    const player = new Player();
+    player.player_id = user.player_id;
+    player.username = user.username;
+
+    const createdUser = await playersRepo.save(player);
     return createdUser;
   } catch (error) {
     logger.error('Error inserting new user: ', error);

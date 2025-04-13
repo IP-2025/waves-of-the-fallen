@@ -8,6 +8,3 @@ dist
 
 # env file
 .env
-
-# Generated files by prisma
-prisma/app/

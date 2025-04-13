@@ -1,11 +1,10 @@
-import { getPrismaClient } from '../libs/prismaClient';
+import { AppDataSource } from '../libs/data-source';
 import logger from '../logger/logger';
 
 export async function checkDatabaseHealth(): Promise<boolean> {
   try {
-    const prisma = getPrismaClient();
     // Perform a simple query to check the database connection
-    await prisma.$queryRaw`SELECT 1`;
+    await AppDataSource.query('SELECT 1');
     return true;
   } catch (error) {
     logger.error('Database health check failed:', error);

@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
-import { insertNewCred } from '../repositories/credentialsRepository';
 import { InternalServerError } from '../errors';
 import { v4 as uuidv4 } from 'uuid';
 import logger from '../logger/logger';
-import { createNewUser } from '../repositories/usersRepository';
+import { createNewPlayer } from '../repositories/usersRepository';
+import { saveCredential } from '../repositories/credentialsRepository';
 
 export async function registerUser(username: string, password: string, mail: string): Promise<void> {
   try {
@@ -12,12 +12,13 @@ export async function registerUser(username: string, password: string, mail: str
     const hashedMail = await bcrypt.hash(mail, 10);
     const playerId = uuidv4();
 
-    const user = await insertNewCred({ player_id: playerId, email: hashedMail, password: hashedPassword });
+    // Create the player
+    const createdPlayer = await createNewPlayer({ player_id: playerId, username: username });
 
-    await createNewUser({ player_id: user.player_id, username: username})
+    // Save the credential with reference to the created player
+    await saveCredential({ player_id: createdPlayer.player_id, hashedEmail: hashedMail, hashedPassword: hashedPassword });
   } catch (error) {
     logger.error('Error registering user: ', error);
-
     throw new InternalServerError('Failed to register user. Please try again later.');
   }
 }

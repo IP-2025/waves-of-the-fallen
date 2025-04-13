@@ -1,31 +1,37 @@
-// repositories/userRepository.ts
-import { getPrismaClient } from '../libs';
-import { v4 as uuidv4 } from 'uuid';
-import logger from '../logger/logger';
-import { InternalServerError } from '../errors';
-import { Credential } from '../types/databaseEntries';
+import { AppDataSource } from "../libs/data-source";
+import { Credential } from "../libs/entities/Credential";
+import { Player } from "../libs/entities/Player";
 
-const prisma = getPrismaClient();
+const credentialsRepo = AppDataSource.getRepository(Credential);
 
 export interface NewCred {
   player_id: string;
-  email: string;
-  password: string;
+  hashedEmail: string;
+  hashedPassword: string;
 }
 
-export async function insertNewCred(user: NewCred): Promise<Credential> {
+export async function saveCredential(newCred: NewCred): Promise<Credential> {
   try {
-    const createdUser = await prisma.credentials.create({
-      data: {
-        player_id: user.player_id || uuidv4(),
-        email: user.email,
-        password: user.password,
-        created_at: new Date(),
-      },
-    });
-    return createdUser;
+    const credential = new Credential();
+    credential.email = newCred.hashedEmail;
+    credential.password = newCred.hashedPassword;
+
+    // Find the player by player_id
+    const playerRepo = AppDataSource.getRepository(Player);
+    const player = await playerRepo.findOneBy({ player_id: newCred.player_id });
+
+    if (!player) {
+      throw new Error('Player not found');
+    }
+
+    credential.player = player;
+
+    const savedCredential = await credentialsRepo.save(credential);
+    return savedCredential;
   } catch (error) {
-    logger.error('Error inserting new user: ', error);
-    throw new InternalServerError('Error inserting new user');
+    if (error instanceof Error && 'code' in error && error.code === '23505') {
+      throw new Error('Email already exists');
+    }
+    throw error;
   }
 }
