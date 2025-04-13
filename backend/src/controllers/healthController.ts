@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { checkDatabaseHealth } from '../services/healthService';
 import logger from '../logger/logger';
-import { InternalServerError } from '../errors/internalServerError';
+import { InternalServerError } from '../errors';
 
 export async function healthCheck(_req: Request, res: Response, next: NextFunction) {
   try {

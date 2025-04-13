@@ -11,7 +11,7 @@ export interface NewCred {
 
 export async function createNewUser(user: NewCred) {
   try {
-    const createdUser = await prisma.user.create({
+    const createdUser = await prisma.player.create({
       data: {
         player_id: user.player_id,
         username: user.username,
