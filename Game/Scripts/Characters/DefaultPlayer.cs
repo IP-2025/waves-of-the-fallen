@@ -14,9 +14,9 @@ public partial class DefaultPlayer : CharacterBody2D
 	{
 		_joystick = GetNode<Node2D>("./Joystick");
 		
-		_animationPlayer = GetNode<AnimationPlayer>("./Archer/ArcherAnimation");
+		_animationPlayer = GetNode<AnimationPlayer>("Archer/ArcherPictures/ArcherAnimation");
 		
-		_archerSprite = GetNode<Sprite2D>("./Archer");
+		_archerSprite = GetNode<Sprite2D>("Archer/ArcherPictures");
 		
 	}
 

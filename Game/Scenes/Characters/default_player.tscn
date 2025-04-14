@@ -1,24 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://cffgskcms870o"]
+[gd_scene load_steps=6 format=3 uid="uid://cffgskcms870o"]
 
 [ext_resource type="Script" uid="uid://bdkp0e6ivq2b5" path="res://Scripts/Characters/DefaultPlayer.cs" id="1_y2kgl"]
 [ext_resource type="PackedScene" uid="uid://56x8ud47qho" path="res://Scenes/Characters/archer.tscn" id="2_kjvlq"]
 [ext_resource type="PackedScene" uid="uid://bgdvq76tq2l1o" path="res://Scenes/Joystick/joystick.tscn" id="3_kjvlq"]
+[ext_resource type="PackedScene" uid="uid://dbqlns7qsgchl" path="res://Scenes/Weapons/crossbow.tscn" id="4_1h72i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2kgl"]
-size = Vector2(65.5, 109)
+size = Vector2(40, 64)
 
 [node name="DefaultPlayer" type="CharacterBody2D"]
-collision_mask = 2
+collision_mask = 3
 script = ExtResource("1_y2kgl")
 
 [node name="Archer" parent="." instance=ExtResource("2_kjvlq")]
-scale = Vector2(1, 1.017)
+scale = Vector2(0.6, 0.61)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3, 34)
+position = Vector2(3, 20)
 shape = SubResource("RectangleShape2D_y2kgl")
 
 [node name="Joystick" parent="." instance=ExtResource("3_kjvlq")]
 position = Vector2(-400, 160)
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Crossbow" parent="." instance=ExtResource("4_1h72i")]

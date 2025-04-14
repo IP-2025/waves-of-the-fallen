@@ -13,6 +13,7 @@ size = Vector2(128.188, 128)
 radius = 4826.92
 
 [node name="BasicEnemy" type="CharacterBody2D"]
+collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_fecjr")
 
