@@ -8,7 +8,7 @@
 size = Vector2(26, 148)
 
 [node name="DefaultPlayer" type="CharacterBody2D"]
-collision_mask = 14
+collision_mask = 8
 collision_priority = 2.0
 script = ExtResource("1_y2kgl")
 
