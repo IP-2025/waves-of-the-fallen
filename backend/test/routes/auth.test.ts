@@ -27,3 +27,37 @@ describe('Test POST /register', () => {
     expect(user?.username).toBe(userData.username);
   });
 });
+
+describe('Test POST /login', () => {
+  it('should insert a new user and login should be possible with it', async () => {
+    const userData = {
+      username: 'MaxMustermann',
+      email: 'MaxMustermann@gmail.com',
+      password: '123456',
+    };
+    const userCredentials = {
+      email: 'MaxMustermann@gmail.com',
+      password: '123456',
+    };
+
+    // Send the registration request
+    const registrateResponse = await request(app)
+      .post('/api/v1/auth/register')
+      .send(userData);
+
+    expect(registrateResponse.status).toBe(201);
+    expect(registrateResponse.body).toEqual({ message: `User ${userData.username} registered` });
+
+    const loginResponse = await request(app)
+      .post('/api/v1/auth/login')
+      .send(userCredentials);
+
+    expect(loginResponse.status).toBe(200);
+    expect(loginResponse.body).toEqual({
+      message: `Login successful for ${userData.email}`,
+      token: expect.any(String),
+    });
+  });
+});
+
+
