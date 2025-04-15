@@ -7,11 +7,11 @@ public partial class RangedEnemy : CharacterBody2D
 	[Export] public float speed = 200f;
 	[Export] public float stop_distance = 350f;
 
-	private Node2D player;
+	private DefaultPlayer player;
 
 	public override void _Ready()
 	{
-		player = GetNode<Node2D>("/root/Node2D/DefaultPlayer");
+		player = GetNode<DefaultPlayer>("/root/Node2D/DefaultPlayer");
 		AddToGroup("ranged_enemies");
 	}
 
