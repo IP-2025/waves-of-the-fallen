@@ -1,6 +1,5 @@
 [gd_scene load_steps=5 format=3 uid="uid://byi3q6n3806ha"]
 
-[ext_resource type="Script" uid="uid://bxjokqg5ld5u1" path="res://Scripts/Main.cs" id="1_r150o"]
 [ext_resource type="PackedScene" uid="uid://tjcbxciq0uvf" path="res://Scenes/Maps/Test_Map.tscn" id="2_kln2b"]
 [ext_resource type="PackedScene" uid="uid://cffgskcms870o" path="res://Scenes/Characters/default_player.tscn" id="3_rgh2o"]
 
@@ -12,7 +11,7 @@ point_count = 5
 
 [node name="Node2D" type="Node2D"]
 scale = Vector2(1.00488, 1)
-script = ExtResource("1_kln2b")
+
 
 [node name="Test Map" parent="." instance=ExtResource("2_kln2b")]
 
