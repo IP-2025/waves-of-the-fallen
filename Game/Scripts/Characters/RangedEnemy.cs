@@ -1,19 +1,9 @@
 using Godot;
 using System;
 
-// TODO: Implement base class for enemies
-public partial class RangedEnemy : CharacterBody2D
+public partial class RangedEnemy : EnemyBase
 {
-	[Export] public float speed = 200f;
-	[Export] public float stop_distance = 350f;
-
-	private DefaultPlayer player;
-
-	public override void _Ready()
-	{
-		player = GetNode<DefaultPlayer>("/root/Node2D/DefaultPlayer");
-		AddToGroup("ranged_enemies");
-	}
+	[Export] public float stopDistance = 350f;
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -27,7 +17,7 @@ public partial class RangedEnemy : CharacterBody2D
 		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
 		LookAt(player.GlobalPosition);
 
-		if (dist > stop_distance)
+		if (dist > stopDistance)
 		{
 			Vector2 toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
 			Velocity = toPlayer * speed;
@@ -40,8 +30,8 @@ public partial class RangedEnemy : CharacterBody2D
 		MoveAndSlide();
 	}
 
-	public void Attack()
+	public override void Attack()
 	{
-		GD.Print("Ranged attack!");
+		GD.Print("RangedEnemy attacks from distance!");
 	}
 }
