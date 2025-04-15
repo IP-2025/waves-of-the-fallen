@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Game"
+config/name="#65 Map - Branch"
 run/main_scene="uid://byi3q6n3806ha"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
 config/icon="res://Assets/Characters/place_holder/enemy_placeholder.svg"
