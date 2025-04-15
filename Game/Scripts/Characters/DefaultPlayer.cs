@@ -40,7 +40,7 @@ public partial class DefaultPlayer : CharacterBody2D
         {
             var spawner = spawnerScene.Instantiate<SpawnEnemies>();
             spawner.Player = this;
-            AddChild(spawner);
+            GetParent().AddChild(spawner);
         }
         else
         {
