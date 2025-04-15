@@ -51,3 +51,16 @@ export async function getPwdByMail(email: string): Promise<Credential> {
   }
   return credential;
 }
+
+export async function getPlayerIdFromCredential(credentialId: string): Promise<string | null> {
+  const credential = await credentialsRepo.findOne({
+    where: { id: credentialId },
+    relations: ['player'], // Load the related Player entity
+  });
+
+  if (!credential || !credential.player) {
+    return null; // Handle case where credential or player is not found
+  }
+
+  return credential.player.player_id; // Access the player_id
+}

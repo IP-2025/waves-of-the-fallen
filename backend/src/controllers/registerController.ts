@@ -4,13 +4,13 @@ import { registerUser } from '../services/registerService';
 
 export async function registrateController(req: Request, res: Response, next: NextFunction) {
   try {
-    const { username, password, mail } = req.body;
+    const { username, password, email: email } = req.body;
 
-    if (!username || !password || !mail) {
+    if (!username || !password || !email) {
       throw new BadRequestError('Mail, Username or Password is required');
     }
 
-    await registerUser(username, password, mail);
+    await registerUser(username, password, email);
     res.status(201).json({ message: `User ${username} registered` });
   } catch (error) {
     if (error instanceof Error) {

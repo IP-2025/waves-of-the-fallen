@@ -6,7 +6,7 @@ export async function loginController(req: Request, res: Response, next: NextFun
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      throw new BadRequestError('Username or Password is required');
+      throw new BadRequestError('Email or Password is required');
     }
     const token = await pwdCheck(email, password);
 
