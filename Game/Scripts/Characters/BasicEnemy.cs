@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 public partial class BasicEnemy : CharacterBody2D
 {
-	DefaultPlayer player;
+	public DefaultPlayer player { get; set; } // Player instance
 
 	[Export] float speed = 250f;
 	[Export] float damage = 10f;
@@ -16,7 +16,6 @@ public partial class BasicEnemy : CharacterBody2D
 
 	public override void _Ready()
 	{
-		player = GetNode<DefaultPlayer>("/root/Node2D/DefaultPlayer");
 		attack_speed = 1 / attacks_per_second;
 		time_until_attack = attack_speed;
 	}

@@ -3,6 +3,7 @@ using System;
 
 public partial class SpawnEnemies : Node2D
 {
+	public DefaultPlayer Player { get; set; } // player instance 
 	public override void _Ready()
 	{
 		Timer timer = GetNode<Timer>("SpawnTimer");
@@ -17,6 +18,7 @@ public partial class SpawnEnemies : Node2D
 	private void SpawnEnemy()
 	{
 		var enemy = GD.Load<PackedScene>("res://Scenes/Characters/default_enemy.tscn").Instantiate<BasicEnemy>();
+		enemy.player = Player; // give player instance to enemy
 		PathFollow2D spawnPath = GetNode<PathFollow2D>("Path2D/PathFollow2D");
 		spawnPath.ProgressRatio = GD.Randf();
 		enemy.GlobalPosition = spawnPath.GlobalPosition;
@@ -30,5 +32,4 @@ public partial class SpawnEnemies : Node2D
 		
 		AddChild(enemy);
 	}
-
 }

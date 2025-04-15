@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://ccgqwjwf623r2" path="res://Scripts/Joystick/JoyHandle.cs" id="4_fc7hi"]
 
 [node name="Joystick" type="Node2D"]
+position = Vector2(-400, 160)
 scale = Vector2(2, 2)
 script = ExtResource("1_s6674")
 

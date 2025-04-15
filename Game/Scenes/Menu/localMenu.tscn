@@ -186,6 +186,16 @@ theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
+[node name="REMOVE IN FINAL VERSION" type="Label" parent="MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 22
+text = "IMPORTANT: 
+1. Klick Host in one and only one window -> 2. Klick Join in all other windows (if exist) 
+-> 3. Klick Play in Host window  --> (this text will be fixed soon, this messge will then be removed :) )"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
 layout_mode = 2
 
@@ -264,6 +274,32 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_foon8")
 text = "Host
 "
 
+[node name="play" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 80
+theme_override_styles/focus = SubResource("StyleBoxFlat_ge6be")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_yhcoq")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ie2d6")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_kb0xi")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_02ksv")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_sr08f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rqo6w")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_g50u1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ij88o")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_bevv3")
+theme_override_styles/normal = SubResource("StyleBoxFlat_foon8")
+text = "Play
+"
+
+[node name="MarginContainer2_VBoxContainer_VBoxContainer#play" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 25
+text = "Play"
+
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_local_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/join" to="." method="_on_join_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/host" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/play" to="." method="_on_play_button_pressed"]

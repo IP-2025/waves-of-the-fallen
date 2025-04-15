@@ -8,4 +8,3 @@ public partial class Joystick : Node2D
 	[Export]
 	public float Deadzone { get; set; } = 15.0f;
 }
-
