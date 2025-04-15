@@ -1,10 +1,11 @@
-## General Graphics Styleguide:
+### General Graphics Styleguide:
 - Follow the games setting of medieval fantasy and use appropriate references when needed.
 - Low polygon vector design.
-- Low ammount of detail, with very sparse small decorations.
+- Low amount of detail, with very sparse small decorations.
 - One or two base colors with at maximum one additional color for small decorations.
 
-### Character Styleguide:
+
+#### Character Styleguide:
 - Color value/luminance variations for distance from viewpoint.
 - Graphics designed from an isometric view.
 - ArcherCharacter is the general character body base/proportion to expand on.
