@@ -14,20 +14,23 @@ public partial class SpawnEnemies : Node2D
 		SpawnEnemy();
 	}
 
-	private void SpawnEnemy()
+	private void SpawnEnemy() 
 	{
-		var enemy = GD.Load<PackedScene>("res://Scenes/Characters/default_enemy.tscn").Instantiate<BasicEnemy>();
+		if (GetTree().GetNodesInGroup("enemies").Count >= 30)
+			return;
+
+		bool isRanged = GD.Randf() < 0.4f;
+
+		PackedScene scene = isRanged
+			? GD.Load<PackedScene>("res://Scenes/Characters/ranged_enemy.tscn")
+			: GD.Load<PackedScene>("res://Scenes/Characters/default_enemy.tscn");
+
+		var enemy = scene.Instantiate<CharacterBody2D>();
 		PathFollow2D spawnPath = GetNode<PathFollow2D>("Path2D/PathFollow2D");
 		spawnPath.ProgressRatio = GD.Randf();
 		enemy.GlobalPosition = spawnPath.GlobalPosition;
-		
-		// following 5 lines only here to limit spawn rate, can be adapted later 
+
 		enemy.AddToGroup("enemies");
-		if (GetTree().GetNodesInGroup("enemies").Count >= 30)
-		{
-			return;
-		}
-		
 		AddChild(enemy);
 	}
 

@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Diagnostics;
 
+// TODO: Implement base class for enemies
 public partial class BasicEnemy : CharacterBody2D
 {
 	DefaultPlayer player;
