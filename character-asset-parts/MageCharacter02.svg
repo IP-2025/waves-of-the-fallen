@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   sodipodi:docname="MageCharacter02.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="2.0000001"
+     inkscape:cx="400.49999"
+     inkscape:cy="318.74999"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer2" />
+  <defs
+     id="defs1">
+    <rect
+       x="246.89869"
+       y="118.92867"
+       width="18.77821"
+       height="47.293271"
+       id="rect21" />
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Legs"
+     style="fill:#ffe6d5"
+     transform="matrix(1,0,0,0.86551845,-0.18708866,13.263904)">
+    <path
+       style="fill:#2b1100;fill-opacity:1;stroke-width:0.339664"
+       d="m 103.65698,81.9357 3.80718,14.267923 0.64018,12.140897 2.46055,1.61306 4.24049,2.18408 2.90781,-3.18526 -4.78655,-2.56944 0.72393,-10.228628 0.01,-9.441444"
+       id="path28-9"
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:label="Leg Background" />
+    <path
+       style="fill:#552200;fill-opacity:1;stroke-width:0.330636"
+       d="m 98.672634,85.870984 0.818666,11.574319 1.14404,11.330617 0.02,4.67312 8.02853,1.87509 3.39409,-3.13704 -6.75598,-3.08105 0.62515,-11.956656 2.04626,-10.758459"
+       id="path28"
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:label="Leg Foreground" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Body"
+     style="fill:#ffe6d5"
+     transform="matrix(0.87006763,0,0,0.5467131,13.754493,45.724677)">
+    <path
+       style="fill:#ffb380;fill-opacity:1;stroke-width:0.256852"
+       d="m 103.79405,60.036243 -2.37037,5.696214 1.21442,5.524693 8.61878,-0.444306 2.32543,-4.020441 -1.24808,-6.198595"
+       id="path25"
+       inkscape:label="Neck"
+       sodipodi:nodetypes="cccccc" />
+    <g
+       inkscape:groupmode="layer"
+       id="layer11"
+       inkscape:label="Arm Background"
+       style="fill:#ffe6d5">
+      <path
+         style="fill:#ffb380;stroke-width:0.285008"
+         d="m 119.2217,89.630353 3.69313,0.127666 0.9233,3.957679 -2.30821,1.532004 -3.53926,-1.659672"
+         id="path1-8"
+         inkscape:label="Hand Background" />
+      <path
+         style="fill:#000080;fill-opacity:1;stroke-width:0.383673"
+         d="m 120.30883,66.07562 0.0514,13.064461 3.76613,11.601646 -7.62339,1.927281 -3.14406,-13.496603 -0.69067,-15.321345 2.11287,-0.729638 3.12672,0.677792"
+         id="path27-7-5"
+         sodipodi:nodetypes="cccccccc"
+         inkscape:label="Arm Background" />
+    </g>
+    <path
+       style="fill:#0000ff;fill-opacity:1;stroke-width:0.264583"
+       d="m 112.7106,62.619684 3.2788,1.115137 1.30992,3.560276 -0.73577,6.849746 -0.68253,10.454441 2.90402,26.185266 -6.26087,5.02676 -11.71807,1.24489 -9.147737,-2.49819 5.762121,-31.147715 -2.301536,-10.677405 0.54096,-8.680293 3.937275,-1.830613 1.954517,0.05888 6.3065,1.214987 z"
+       id="path26"
+       sodipodi:nodetypes="cccccccccccccccc"
+       inkscape:label="Torso" />
+    <rect
+       style="fill:#552200;fill-opacity:1;stroke-width:0.207648"
+       id="rect5"
+       width="8.3537369"
+       height="12.53079"
+       x="121.13898"
+       y="33.539272"
+       transform="matrix(0.92965881,0.36842163,-0.31916765,0.94769827,0,0)"
+       inkscape:label="Book" />
+    <path
+       style="fill:#aa0000;fill-opacity:1;stroke-width:0.30262"
+       d="m 106.32721,78.194602 -0.67657,2.825322 0.16397,1.434715 0.88508,-1.25941 0.63316,-2.574734"
+       id="path6"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="Bookmark" />
+    <path
+       style="fill:#2b1100;stroke-width:0.339957"
+       d="m 115.95507,83.707559 -3.53032,0.212852 -9.13052,-0.438496 -6.227402,-1.431834 -0.330279,1.147789 6.472221,1.56274 9.59957,0.393259 3.08122,-0.28202"
+       id="path13"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:label="Belt" />
+    <g
+       inkscape:groupmode="layer"
+       id="layer10"
+       inkscape:label="Arm Foreground"
+       transform="matrix(1.149336,0,0,1.1382114,-15.808533,-7.8293048)">
+      <path
+         style="fill:#ffccaa;stroke-width:0.406776"
+         d="m 97.203951,91.018236 5.383769,0.178394 1.34597,5.530264 -3.36487,1.400229 -3.663963,-2.171033"
+         id="path1"
+         inkscape:label="Hand Foreground"
+         sodipodi:nodetypes="ccccc"
+         transform="matrix(0.87006759,0,0,0.87857142,13.754492,6.8786034)" />
+      <path
+         style="fill:#6464ff;fill-opacity:1;stroke-width:0.455704"
+         d="m 101.9521,65.666316 -0.24681,15.297213 3.21228,12.695598 -9.681206,-0.739158 -0.640026,-9.74129 -0.306452,-15.286519 1.267777,-4.455939 3.23717,-0.429153"
+         id="path27-7"
+         sodipodi:nodetypes="cccccccc"
+         inkscape:label="Arm Foreground"
+         transform="matrix(0.87006759,0,0,0.87857142,13.754492,6.8786034)" />
+    </g>
+  </g>
+  <g
+     inkscape:label="Head"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline;fill:#ffe6d5"
+     transform="matrix(0.7645119,0,0,0.69924121,24.523544,36.49997)">
+    <path
+       style="fill:#ffccaa;fill-opacity:1;stroke-width:0.237932"
+       d="m 100.30335,50.046613 14.0477,-2.548753 3.2075,4.983253 -1.51702,7.433541 -1.92118,2.51893 -8.25225,-0.486389 -2.21724,-2.562577 -2.84457,-2.648606 z"
+       id="path22"
+       inkscape:label="Face"
+       sodipodi:nodetypes="ccccccccc" />
+    <g
+       inkscape:groupmode="layer"
+       id="layer8"
+       inkscape:label="Hair"
+       style="display:inline"
+       transform="matrix(1,0,0,1.0578735,0,-2.4562599)">
+      <path
+         style="display:inline;fill:#c8beb7;fill-opacity:1;stroke-width:0.301959"
+         d="m 98.107859,48.84739 0.539519,1.99374 -0.592527,3.067552 2.041999,2.857026 0.64283,-0.08607 0.91052,1.080839 4.99886,-4.640403 3.12935,-0.137979 2.54185,0.183359 2.54404,-0.468227 1.90059,0.263329 2.21002,-0.160372 0.19438,-2.497375 -0.74556,-2.822487 -1.46288,-2.185451 -1.70602,-1.001139 -2.06685,-1.040833 -2.82951,-0.388437 -2.55035,0.02658 -2.81398,-0.449144 -4.06862,0.916646 -1.499486,2.154286"
+         id="path24"
+         inkscape:label="Hair"
+         sodipodi:nodetypes="cccccccccccccccccccccc" />
+      <path
+         style="display:inline;fill:#e3dedb;stroke-width:0.257033"
+         d="m 99.869244,56.304437 -0.937265,-1.456889 0.673273,-5.70522 -1.410999,-0.487292 -0.185173,5.341605 0.207315,2.197315 0.651842,1.536779 1.554663,-0.931654 0.71667,2.508662 2.80604,-2.119938 2.56325,-2.254745 2.55586,-0.620617 3.50587,-0.193787 2.01343,0.646113 1.88724,-0.764958 1.75496,2.782624 0.76562,-4.338873 -1.86952,0.185453 -2.12704,-0.744704 -2.7332,0.334758 -5.66703,0.908048 -2.38671,1.991312 -1.0671,-0.701264 -1.50296,3.142705 -0.61623,-2.252532"
+         id="path2"
+         sodipodi:nodetypes="ccccccccccccccccccccccccc"
+         inkscape:label="Hair Shadow" />
+      <path
+         style="display:none;fill:#ac9d93;fill-opacity:1;stroke-width:0.257244"
+         d="m 99.497372,50.69044 -0.233855,1.98949 2.713643,1.464027 0.33073,0.625272 0.62839,-0.78159 3.37344,-2.157189 -3.77032,-0.719062 z"
+         id="path7"
+         sodipodi:nodetypes="cccccccc" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer9"
+       inkscape:label="Eyes">
+      <path
+         style="display:inline;fill:#2b1100;stroke-width:0.425304"
+         d="m 109.62218,56.399251 1.37808,-0.642838 0.89137,0.838714 0.22275,1.204502 -1.13217,0.718594 -1.39741,-0.75512"
+         id="path14"
+         sodipodi:nodetypes="cccccc"
+         inkscape:label="Eye Front" />
+      <path
+         style="display:inline;fill:#2b1100;stroke-width:0.34643"
+         d="m 116.1354,56.152801 -0.91236,-0.353676 -0.62647,0.708891 -0.17037,0.984312 0.81311,0.541445 0.88838,-0.53837"
+         id="path14-1"
+         sodipodi:nodetypes="cccccc"
+         inkscape:label="Eye Back" />
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Hat"
+     style="display:inline;fill:#ffe6d5"
+     transform="matrix(0.66517706,0,0,0.48213428,34.871104,47.218222)">
+    <path
+       style="fill:#0000ff;stroke-width:0.333834"
+       d="m 93.064493,48.319549 10.088157,4.871796 12.00971,0.927961 9.60777,-2.087912 3.12252,-3.711843 -4.32349,-5.103785 -16.09302,-3.711842 -7.685113,0.58909 -6.239074,3.303281"
+       id="path3"
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:label="Hat Brim" />
+    <path
+       style="fill:#0000ff;stroke-width:0.333834"
+       d="m 100.19012,45.931773 4.50082,2.952752 8.91677,0.98425 5.09528,-1.06627 0.84923,-1.886482 L 108.83184,24.6639"
+       id="path4"
+       sodipodi:nodetypes="cccccc"
+       inkscape:label="Hat Cone Foreground" />
+    <path
+       style="fill:#000080;stroke-width:0.333834"
+       d="m 108.80923,24.668231 7.2612,24.708421 2.46273,-0.574147 1.01906,-2.050523"
+       id="path5"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="Hat Cone Background" />
+  </g>
+</svg>
