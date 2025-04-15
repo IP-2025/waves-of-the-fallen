@@ -4,18 +4,6 @@ import { AppDataSource } from '../../src/libs/data-source';
 import { Player } from '../../src/libs/entities/Player';
 
 describe('Test POST /register', () => {
-  beforeAll(async () => {
-    if (!AppDataSource.isInitialized) {
-      await AppDataSource.initialize();
-    }
-  });
-
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
-
   it('should insert a new user and retrieve it from the database', async () => {
     const userData = {
       username: 'MaxMustermann',
