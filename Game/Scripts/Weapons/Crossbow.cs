@@ -7,7 +7,7 @@ public partial class Crossbow : Area2D
     
     private AnimatedSprite2D _animatedSpride;
     private PackedScene _arrowScene = GD.Load<PackedScene>("res://Scenes/Weapons/crossbow_arrow.tscn");
-
+    
     public override void _Ready()
     {
         _animatedSpride = GetNode<AnimatedSprite2D>("./WeaponPivot/CrossbowSprite");
@@ -70,6 +70,7 @@ public partial class Crossbow : Area2D
     {
         _animatedSpride.Play("shoot");
         await ToSignal(GetTree().CreateTimer(0.27), "timeout");
+        
         Shoot();
     }
 

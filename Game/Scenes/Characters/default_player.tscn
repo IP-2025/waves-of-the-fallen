@@ -1,10 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cffgskcms870o"]
+[gd_scene load_steps=6 format=3 uid="uid://cffgskcms870o"]
 
-[ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://Assets/Characters/place_holder/place_holder.tscn" id="1_c4u6g"]
 [ext_resource type="Script" uid="uid://bdkp0e6ivq2b5" path="res://Scripts/Characters/DefaultPlayer.cs" id="1_y2kgl"]
+[ext_resource type="PackedScene" uid="uid://56x8ud47qho" path="res://Scenes/Characters/archer.tscn" id="2_kjvlq"]
+[ext_resource type="PackedScene" uid="uid://dbqlns7qsgchl" path="res://Scenes/Weapons/crossbow.tscn" id="4_1h72i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2kgl"]
-size = Vector2(26, 148)
+size = Vector2(53, 119)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kjvlq"]
 properties/0/path = NodePath(".:position")
@@ -16,14 +17,15 @@ collision_mask = 8
 collision_priority = 2.0
 script = ExtResource("1_y2kgl")
 
-[node name="PlaceHolder" parent="." instance=ExtResource("1_c4u6g")]
-position = Vector2(1, 38)
+[node name="Archer" parent="." instance=ExtResource("2_kjvlq")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, -35)
+position = Vector2(5.5, 30.5)
 shape = SubResource("RectangleShape2D_y2kgl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Crossbow" parent="." instance=ExtResource("4_1h72i")]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_kjvlq")
