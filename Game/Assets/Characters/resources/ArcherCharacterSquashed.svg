@@ -8,7 +8,7 @@
    version="1.1"
    id="svg1"
    inkscape:version="1.4 (86a8ad7, 2024-10-11)"
-   sodipodi:docname="ArcherSpreadsheet.svg"
+   sodipodi:docname="ArcherCharacterSquashed.svg"
    inkscape:export-filename="ArcherSpreadsheet.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
@@ -27,8 +27,8 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
      inkscape:zoom="1.4142136"
-     inkscape:cx="234.75944"
-     inkscape:cy="457.14451"
+     inkscape:cx="234.75945"
+     inkscape:cy="457.14452"
      inkscape:window-width="1368"
      inkscape:window-height="841"
      inkscape:window-x="-8"
@@ -748,30 +748,30 @@
        id="rect1-8"
        width="29.747095"
        height="5.425571"
-       x="45.895805"
+       x="50.65831"
        y="169.32867" />
     <path
        style="fill:#4d4d4d;stroke-width:0.264583"
-       d="m 50.385934,169.51579 v -25.06988 c 0,0 1.122531,-5.23848 10.476962,-4.8643 9.354434,0.37417 -0.187087,0 -0.187087,0 0,0 10.302462,-0.37739 10.289876,5.05139 -0.01301,5.60966 -0.187087,10.10278 -0.187087,10.10278 l -10e-7,14.9671 z"
+       d="m 55.148437,169.51579 v -25.06988 c 0,0 1.122531,-5.23848 10.476962,-4.8643 9.354434,0.37417 -0.187087,0 -0.187087,0 0,0 10.302462,-0.37739 10.289876,5.05139 -0.01301,5.60966 -0.187087,10.10278 -0.187087,10.10278 l -10e-7,14.9671 z"
        id="path3-8"
        sodipodi:nodetypes="ccscsccc" />
     <text
        xml:space="preserve"
        style="font-size:7.05556px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f9f9f9;stroke-width:0.264583"
-       x="54.501881"
+       x="59.264385"
        y="152.11652"
        id="text3-2"><tspan
          sodipodi:role="line"
          id="tspan3-4"
          style="fill:#f9f9f9;stroke-width:0.264583"
-         x="54.501881"
+         x="59.264385"
          y="152.11652">RIP</tspan></text>
     <rect
        style="fill:#4d4d4d;stroke-width:0.264583"
        id="rect3"
        width="3.7417731"
        height="25.06988"
-       x="67.19693"
+       x="71.959435"
        y="144.24536" />
     <g
        inkscape:groupmode="layer"
@@ -781,25 +781,25 @@
        style="display:inline">
       <path
          style="fill:#338000;stroke-width:0.264583"
-         d="m 3.2499742,31.345951 2.098112,-0.624808 13.5514668,-0.956277 2.94424,1.748141 2.94424,4.140334 -12.70673,-2.682739 z"
+         d="m 9.1644979,31.835956 2.0981121,-0.624808 13.551464,-0.956277 2.94424,1.748141 2.94424,4.140334 -12.70673,-2.682739 z"
          id="path6-2"
          inkscape:label="rim background"
          sodipodi:nodetypes="ccccccc" />
       <path
          style="display:inline;fill:#55d400;stroke-width:0.294223"
-         d="m 10.214073,21.634931 11.1754,12.157632 -18.2231868,0.04076"
+         d="m 16.128594,22.124936 11.1754,12.157632 -18.2231841,0.04076"
          id="path4-3"
          inkscape:label="hat frontside"
          sodipodi:nodetypes="ccc" />
       <path
          style="display:inline;fill:#44aa00;stroke-width:0.264583"
-         d="m 3.2582912,31.328992 -1.656133,2.760223 10.2128248,1.196096 13.24907,0.460037 -1.47212,-1.196097 -2.76021,-2.300185 -7.54462,0.460037 z"
+         d="m 9.1728149,31.818997 -1.656133,2.760223 10.2128221,1.196096 13.24907,0.460037 -1.47212,-1.196097 -2.76021,-2.300185 -7.54462,0.460037 z"
          id="path5-2"
          inkscape:label="rim foreground"
          sodipodi:nodetypes="cccccccc" />
       <path
          style="display:inline;fill:#338000;stroke-width:0.264583"
-         d="m 19.106573,29.994882 -8.89361,-8.361993 9.80769,10.670411 z"
+         d="m 25.021094,30.484887 -8.89361,-8.361993 9.80769,10.670411 z"
          id="path7-2"
          sodipodi:nodetypes="cccc"
          inkscape:label="hat backside" />

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://56x8ud47qho"]
 
-[ext_resource type="Texture2D" uid="uid://ccm0mmpsnk01s" path="res://Assets/Characters/Archer/ArcherSpreadsheet.png" id="1_rh6ln"]
+[ext_resource type="Texture2D" uid="uid://cjer8mprxmfy4" path="res://Assets/Characters/Archer/ArcherSpreadsheet.png" id="1_rh6ln"]
 
 [sub_resource type="Animation" id="Animation_1lwip"]
 length = 0.001
