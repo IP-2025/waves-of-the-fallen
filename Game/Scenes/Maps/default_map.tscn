@@ -379,4 +379,7 @@ position = Vector2(681, 356)
 
 [node name="SpawnEnemies" parent="." instance=ExtResource("2_fd10d")]
 
+[node name="PathFollow2D" parent="SpawnEnemies/Path2D" index="0"]
+position = Vector2(-148.234, -46)
+
 [editable path="SpawnEnemies"]

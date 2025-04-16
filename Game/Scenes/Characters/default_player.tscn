@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dbqlns7qsgchl" path="res://Scenes/Weapons/crossbow.tscn" id="4_1h72i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2kgl"]
-size = Vector2(60, 114)
+size = Vector2(26, 194)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kjvlq"]
 properties/0/path = NodePath(".:position")
@@ -14,7 +14,7 @@ properties/0/spawn = true
 properties/0/replication_mode = 1
 
 [node name="DefaultPlayer" type="CharacterBody2D"]
-collision_mask = 8
+collision_mask = 14
 collision_priority = 2.0
 script = ExtResource("1_y2kgl")
 
@@ -30,6 +30,7 @@ position = Vector2(6, 41)
 shape = SubResource("RectangleShape2D_y2kgl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_kjvlq")
