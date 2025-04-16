@@ -67,18 +67,6 @@ describe('Test POST /login', () => {
 
 
 describe('Test protected routes with token', () => {
-  beforeAll(async () => {
-    if (!AppDataSource.isInitialized) {
-      await AppDataSource.initialize();
-    }
-  });
-
-  afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      await AppDataSource.destroy();
-    }
-  });
-
   it('should access a protected route with a valid token', async () => {
     // Register a new user
     await request(app)
@@ -115,5 +103,4 @@ describe('Test protected routes with token', () => {
     });
   });
 });
-
 
