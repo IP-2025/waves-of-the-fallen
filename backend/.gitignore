@@ -1,3 +1,10 @@
+#IDE specific files
+.idea/
+.vscode/
+
+# node specific files
 node_modules
 dist
+
+# env file
 .env

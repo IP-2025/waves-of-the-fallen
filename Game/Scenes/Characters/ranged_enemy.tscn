@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://cpgem5lghshsj"]
+
+[ext_resource type="Script" uid="uid://5j7tqrkdib4s" path="res://Scripts/Characters/RangedEnemy.cs" id="1_1deiu"]
+[ext_resource type="Texture2D" uid="uid://5cbcok6lm35m" path="res://Assets/Characters/place_holder/ranged_enemy_placeholder.png" id="1_3wwps"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1deiu"]
+radius = 15.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2wu2"]
+size = Vector2(86, 72)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e5mcm"]
+radius = 5206.02
+
+[node name="RangedEnemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_1deiu")
+speed = 150.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("1_3wwps")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1deiu")
+
+[node name="AttackRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+shape = SubResource("RectangleShape2D_u2wu2")
+
+[node name="detection_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
+shape = SubResource("CircleShape2D_e5mcm")
