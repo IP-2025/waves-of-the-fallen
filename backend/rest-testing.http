@@ -3,8 +3,20 @@ GET http://localhost:3000/api/healthz
 
 ###
 
-POST http://localhost:3000/apiauth/login
+POST http://localhost:3000/api/v1/auth/register
+Content-Type: application/json
 
+{
+  "mail": "test´@mail.com",
+  "username": "newUser",
+  "password": "newPassword"
+}
 ###
 
-POST http://localhost:3000/api/auth/register
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "testUser",
+  "password": "testPassword"
+}

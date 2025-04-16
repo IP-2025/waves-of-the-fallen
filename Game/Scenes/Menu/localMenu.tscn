@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dexwf12qh2cp0"]
+[gd_scene load_steps=24 format=3 uid="uid://dexwf12qh2cp0"]
 
 [ext_resource type="Script" uid="uid://ddbawkek1x7vd" path="res://Scripts/Menu/LocalMenu.cs" id="1_gol3u"]
 
@@ -79,6 +79,83 @@ corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ge6be"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhcoq"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ie2d6"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kb0xi"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_02ksv"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sr08f"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rqo6w"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g50u1"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ij88o"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bevv3"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_foon8"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
 [node name="Local" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -109,6 +186,16 @@ theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
+[node name="REMOVE IN FINAL VERSION" type="Label" parent="MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 22
+text = "IMPORTANT: 
+1. Klick Host in one and only one window -> 2. Klick Join in all other windows (if exist) 
+-> 3. Klick Play in Host window  --> (this text will be fixed soon, this messge will then be removed :) )"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
 layout_mode = 2
 
@@ -119,14 +206,14 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 1
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 60
 text = "Local"
 
 [node name="Button_Back" type="Button" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 60
 theme_override_styles/focus = SubResource("StyleBoxFlat_eyi13")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_4geyq")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_i44u3")
@@ -140,24 +227,79 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_bismi")
 theme_override_styles/normal = SubResource("StyleBoxFlat_rgw85")
 text = "Back"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
 
-[node name="join" type="Button" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 25
+theme_override_constants/separation = 80
+
+[node name="join" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 80
+theme_override_styles/focus = SubResource("StyleBoxFlat_ge6be")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_yhcoq")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ie2d6")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_kb0xi")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_02ksv")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_sr08f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rqo6w")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_g50u1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ij88o")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_bevv3")
+theme_override_styles/normal = SubResource("StyleBoxFlat_foon8")
 text = "Join"
 
-[node name="host" type="Button" parent="MarginContainer2/VBoxContainer/VBoxContainer"]
+[node name="host" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 25
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 80
+theme_override_styles/focus = SubResource("StyleBoxFlat_ge6be")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_yhcoq")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ie2d6")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_kb0xi")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_02ksv")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_sr08f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rqo6w")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_g50u1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ij88o")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_bevv3")
+theme_override_styles/normal = SubResource("StyleBoxFlat_foon8")
 text = "Host
 "
 
+[node name="play" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 80
+theme_override_styles/focus = SubResource("StyleBoxFlat_ge6be")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_yhcoq")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ie2d6")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_kb0xi")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_02ksv")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_sr08f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rqo6w")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_g50u1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ij88o")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_bevv3")
+theme_override_styles/normal = SubResource("StyleBoxFlat_foon8")
+text = "Play
+"
+
+[node name="MarginContainer2_VBoxContainer_VBoxContainer#play" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 25
+text = "Play"
+
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_local_pressed"]
-[connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/join" to="." method="_on_join_button_pressed"]
-[connection signal="pressed" from="MarginContainer2/VBoxContainer/VBoxContainer/host" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/join" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/host" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/play" to="." method="_on_play_button_pressed"]

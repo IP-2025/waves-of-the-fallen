@@ -1,6 +1,6 @@
 services:
   server:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
@@ -18,7 +18,7 @@ services:
       db:
         condition: service_healthy
     networks:
-      - prisma-network
+      - docker-network
 
   db:
     image: postgres:latest
@@ -38,28 +38,24 @@ services:
       retries: 3
       start_period: 15s
     networks:
-      - prisma-network
+      - docker-network
 
-  prisma-studio:
-    image: node:lts-alpine3.17
-    working_dir: /usr/src/app
-    volumes:
-      - .:/usr/src/app
-    command: npx prisma studio --port 5555 --browser none
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports:
-      - "5555:5555"
-    env_file:
-      - .env
-    networks:
-      - prisma-network
+      - "5050:80"
     depends_on:
-      db:
-        condition: service_healthy
-      server:
-        condition: service_started
+      - db
+    networks:
+      - docker-network
+
 
 volumes:
   db_data:
 
 networks:
-  prisma-network:
+  docker-network:
