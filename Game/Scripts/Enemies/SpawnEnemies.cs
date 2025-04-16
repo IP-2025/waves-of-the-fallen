@@ -26,7 +26,7 @@ public partial class SpawnEnemies : Node2D
 			? GD.Load<PackedScene>("res://Scenes/Characters/ranged_enemy.tscn")
 			: GD.Load<PackedScene>("res://Scenes/Characters/default_enemy.tscn");
 
-		var enemy = scene.Instantiate<CharacterBody2D>();
+		var enemy = scene.Instantiate<EnemyBase>();
 		enemy.player = Player;
 		PathFollow2D spawnPath = GetNode<PathFollow2D>("Path2D/PathFollow2D");
 		spawnPath.ProgressRatio = GD.Randf();

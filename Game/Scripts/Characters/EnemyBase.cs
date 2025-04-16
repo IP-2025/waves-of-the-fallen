@@ -8,14 +8,13 @@ public abstract partial class EnemyBase : CharacterBody2D
 	[Export] public float damage = 10f;
 	[Export] public float attacksPerSecond = 1.5f;
 
-	protected DefaultPlayer player;
+	public DefaultPlayer player { get; set; }
 	protected float attackCooldown;
 	protected float timeUntilAttack;
 	protected bool withinAttackRange = false;
 
 	public override void _Ready()
 	{
-		player = GetNode<DefaultPlayer>("/root/Node2D/DefaultPlayer");
 		attackCooldown = 1f / attacksPerSecond;
 		timeUntilAttack = attackCooldown;
 	}
