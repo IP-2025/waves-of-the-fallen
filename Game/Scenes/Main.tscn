@@ -9,17 +9,3 @@ script = ExtResource("1_idj7w")
 
 [node name="DefaultMap" parent="." instance=ExtResource("2_kln2b")]
 position = Vector2(0.995117, 7)
-
-[node name="PlayerSpawnPoints" type="Node2D" parent="."]
-
-[node name="0" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(-557.281, 1037)
-
-[node name="1" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(-538.373, -248)
-
-[node name="2" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(1819.12, -224)
-
-[node name="3" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(1793.25, 1017)
