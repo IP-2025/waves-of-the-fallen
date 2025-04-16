@@ -52,4 +52,25 @@ public abstract partial class EnemyBase : CharacterBody2D
 			GD.Print("Player left range.");
 		}
 	}
+	
+	protected void FindNearestPlayer()
+	{
+		float closestDist = float.MaxValue;
+		DefaultPlayer closestPlayer = null;
+
+		foreach (Node node in GetTree().GetNodesInGroup("player"))
+		{
+			if (node is not DefaultPlayer dp) continue;
+
+			float dist = GlobalPosition.DistanceTo(dp.GlobalPosition);
+			if (dist < closestDist)
+			{
+				closestDist = dist;
+				closestPlayer = dp;
+			}
+		}
+
+		player = closestPlayer;
+	}
+
 }

@@ -11,6 +11,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	public bool enableDebug = false;
 	public override void _Ready()
 	{
+		AddToGroup("player");
 		// set MultiplayerSynchronizer as authority of this id and then check authority against this id to see if player is authority
 		// to later enable movement controlls and so on for the current player only
 		multiplayerSynchronizer = GetNodeOrNull<MultiplayerSynchronizer>("MultiplayerSynchronizer");

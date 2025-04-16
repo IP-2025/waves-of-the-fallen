@@ -6,6 +6,7 @@ public partial class BasicEnemy : EnemyBase
 {
 	public override void _PhysicsProcess(double delta)
 	{
+		FindNearestPlayer();
 		if (player != null)
 		{
 			LookAt(player.GlobalPosition);

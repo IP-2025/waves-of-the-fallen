@@ -7,6 +7,7 @@ public partial class RangedEnemy : EnemyBase
 
 	public override void _PhysicsProcess(double delta)
 	{
+		FindNearestPlayer();
 		if (player == null)
 		{
 			Velocity = Vector2.Zero;
