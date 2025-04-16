@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3odtgwxkrfnf"]
+
+[ext_resource type="AudioStream" uid="uid://ckx76lyu67bi5" path="res://Assets/Sounds/Financial-Obligations-PM-Music.wav" id="1_fww3n"]
+[ext_resource type="Script" uid="uid://ctu6r5u3ijsg6" path="res://Scripts/Menu/Music/MenuBackgroundMusic.cs" id="2_q3d37"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_fww3n")
+autoplay = true
+bus = &"MenuBackgroundMusicBus"
+script = ExtResource("2_q3d37")
