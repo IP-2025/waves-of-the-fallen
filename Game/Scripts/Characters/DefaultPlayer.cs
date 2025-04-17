@@ -84,6 +84,30 @@ public partial class DefaultPlayer : CharacterBody2D
 
 		Velocity = direction * Speed;
 		MoveAndSlide();
+		
+		// // Play Animations
+		// if (animationPlayer != null)
+		// {
+		// 	if (direction != Vector2.Zero)
+		// 	{
+		// 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "walk")
+		// 			animationPlayer.Play("walk");
+		// 	}
+		// 	else
+		// 	{
+		// 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "idle")
+		// 			
+		// 			animationPlayer.Play("idle");
+		// 			
+		// 			
+		// 	}
+		// }
+		//
+		// if (archerSprite != null && direction != Vector2.Zero)
+		// {
+		// 	archerSprite.FlipH = direction.X < 0;
+		// }
+		
 	}
 
 	public virtual void UseAbility()
@@ -98,4 +122,5 @@ public partial class DefaultPlayer : CharacterBody2D
 			Debug.Print(message);
 		}
 	}
+	
 }
