@@ -21,8 +21,10 @@ public partial class BasicEnemy : EnemyBase
 		MoveAndSlide();
 	}
 
-	public override void Attack()
+
+	public override void Attack() 
 	{
+		player.GetNode<Health>("Health").Damage(damage);
 		Debug.Print("BasicEnemy attacks (melee)!");
 	}
 }
