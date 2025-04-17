@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   sodipodi:docname="ArcherCharacterSquashed.svg"
+   inkscape:export-filename="ArcherSpreadsheet.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#acacac"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="234.75945"
+     inkscape:cy="457.14452"
+     inkscape:window-width="1368"
+     inkscape:window-height="841"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer4-4"
+     showgrid="true">
+    <inkscape:grid
+       id="grid1"
+       units="mm"
+       originx="0"
+       originy="0"
+       spacingx="0.99999998"
+       spacingy="1"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1">
+    <rect
+       x="246.89869"
+       y="118.92867"
+       width="18.77821"
+       height="47.293271"
+       id="rect21" />
+  </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="Quiver"
+     transform="matrix(0.98480775,-0.13219298,0.17364818,0.74970365,24.426769,36.008257)"
+     style="fill:#ffe6d5">
+    <g
+       inkscape:groupmode="layer"
+       id="layer12"
+       inkscape:label="Quiver"
+       transform="rotate(10,75.850859,-134.03205)"
+       style="fill:#ffe6d5">
+      <path
+         style="fill:#483737;stroke-width:0.264583"
+         d="m 11.959087,46.752369 1.545747,-3.972071 4.221241,-1.53707 15.304488,30.597018 -1.010277,1.763643 -3.210962,-0.226573"
+         id="path8"
+         inkscape:label="Quiver Outside"
+         inkscape:export-filename="ArcherCharacter_v01.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+      <path
+         style="fill:#241c1c;stroke-width:0.264583"
+         d="m 13.70641,43.174162 -1.025523,2.988495 2.615759,-1.650358 1.213864,-2.295012"
+         id="path9"
+         inkscape:label="Quiver Inside" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer6"
+       inkscape:label="Arrow3"
+       transform="rotate(-10,79.30337,257.40149)">
+      <path
+         style="fill:#483737;stroke-width:0.264583"
+         d="m 22.292212,14.694648 2.277066,5.59508 0.292766,-0.260235 -1.984303,-5.334844"
+         id="path10"
+         sodipodi:nodetypes="cccc"
+         inkscape:label="Arrow wood" />
+      <path
+         style="fill:#e6e6e6;stroke-width:0.221366"
+         d="m 23.261591,14.141646 -0.09108,1.626475 0.36433,0.455416 0.09108,-2.732481"
+         id="path11"
+         inkscape:label="Arrow feather 4" />
+      <path
+         style="fill:#e6e6e6;stroke-width:0.221366"
+         d="m 23.635085,15.065606 -0.09108,1.626475 0.36433,0.455415 0.09108,-2.732481"
+         id="path11-5"
+         inkscape:label="Arrow feather 3" />
+      <path
+         style="fill:#e6e6e6;stroke-width:0.224186"
+         d="m 22.845212,15.733091 0.03253,0.490446 -1.366238,-0.490447 -0.130125,-0.42038"
+         id="path12"
+         inkscape:label="Arrow feather 2" />
+      <path
+         style="fill:#e6e6e6;stroke-width:0.224186"
+         d="m 23.170896,16.516138 0.03253,0.490446 -1.366239,-0.490447 -0.130125,-0.42038"
+         id="path12-1"
+         inkscape:label="Arrow feather 1" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer6-2"
+       inkscape:label="Arrow2"
+       transform="rotate(10,101.6082,11.781543)">
+      <path
+         style="fill:#483737;stroke-width:0.264583"
+         d="m -11.344932,46.556479 2.2770657,5.59508 0.292765,-0.260235 -1.9843027,-5.334844"
+         id="path10-3"
+         sodipodi:nodetypes="cccc"
+         inkscape:label="Arrow wood" />
+      <path
+         style="fill:#e6e6e6;stroke-width:0.221366"
+         d="m -10.375553,46.003477 -0.09108,1.626476 0.36433,0.455415 0.09108,-2.732481"
+         id="path11-2"
+         inkscape:label="Arrow feather 4" />
+      <path
+         style="fill:#e6e6e6;stroke-width:0.221366"
+         d="m -10.002059,46.927437 -0.09108,1.626475 0.3643297,0.455416 0.09108,-2.732481"
+         id="path11-5-2"
+         inkscape:label="Arrow feather 3" />
+      <path
+         style="fill:#e6e6e6;stroke-width:0.224186"
+         d="m -10.791932,47.594922 0.03253,0.490446 -1.366238,-0.490446 -0.130126,-0.420381"
+         id="path12-16"
+         inkscape:label="Arrow feather 2" />
+      <path
+         style="fill:#e6e6e6;stroke-width:0.224186"
+         d="m -10.466249,48.377969 0.03253,0.490446 -1.366238,-0.490447 -0.130125,-0.42038"
+         id="path12-1-8"
+         inkscape:label="Arrow feather 1" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer6-2-1"
+       inkscape:label="Arrow1"
+       transform="translate(-9.4886483,-5.1206226)">
+      <path
+         style="fill:#483737;stroke-width:0.264583"
+         d="m -7.4030923,32.781039 2.277066,5.59508 0.292766,-0.260234 -1.984303,-5.334845"
+         id="path10-3-8"
+         sodipodi:nodetypes="cccc"
+         inkscape:label="Arrow wood" />
+      <path
+         style="fill:#e6e6e6;stroke-width:0.221366"
+         d="m -6.4337123,32.228038 -0.09108,1.626475 0.36433,0.455416 0.09108,-2.732481"
+         id="path11-2-9"
+         inkscape:label="Arrow feather 4" />
+      <path
+         style="fill:#e6e6e6;stroke-width:0.221366"
+         d="m -6.0602183,33.151997 -0.09108,1.626475 0.36433,0.455416 0.09108,-2.732481"
+         id="path11-5-2-2"
+         inkscape:label="Arrow feather 3" />
+      <path
+         style="fill:#e6e6e6;stroke-width:0.224186"
+         d="m -6.8500923,33.819483 0.03253,0.490445 -1.366239,-0.490446 -0.130125,-0.420381"
+         id="path12-16-7"
+         inkscape:label="Arrow feather 2" />
+      <path
+         style="fill:#e6e6e6;stroke-width:0.224186"
+         d="m -6.5244083,34.60253 0.03253,0.490445 -1.366238,-0.490446 -0.130125,-0.420381"
+         id="path12-1-8-9"
+         inkscape:label="Arrow feather 1" />
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Legs"
+     style="fill:#ffe6d5"
+     transform="matrix(1,0,0,0.69452704,0,35.228403)">
+    <path
+       style="fill:#2b1100;fill-opacity:1;stroke-width:0.339664"
+       d="m 22.959066,64.79274 3.80718,14.267923 0.64018,12.140897 2.46055,1.61306 4.24049,2.18408 2.90781,-3.18526 -4.78655,-2.56944 0.72393,-10.228628 0.01,-9.441444"
+       id="path28-9"
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:label="Leg Background" />
+    <path
+       style="fill:#552200;fill-opacity:1;stroke-width:0.330636"
+       d="m 17.97472,68.728024 0.818666,11.574319 1.14404,11.330617 0.02,4.67312 8.02853,1.87509 3.39409,-3.13704 -6.75598,-3.08105 0.62515,-11.956656 2.04626,-10.758459"
+       id="path28"
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:label="Leg Foreground" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Body"
+     style="fill:#ffe6d5"
+     transform="matrix(0.87006763,0,0,0.6101916,13.754493,40.005779)">
+    <path
+       style="fill:#ffb380;fill-opacity:1;stroke-width:0.256852"
+       d="m 11.045037,40.52393 -2.3703704,5.696214 1.21442,5.524693 8.6187804,-0.444306 2.32543,-4.020441 -1.24808,-6.198595"
+       id="path25"
+       inkscape:label="Neck"
+       sodipodi:nodetypes="cccccc" />
+    <g
+       inkscape:groupmode="layer"
+       id="layer11"
+       inkscape:label="Arm Background"
+       style="fill:#ffe6d5">
+      <path
+         style="fill:#225500;fill-opacity:1;stroke-width:0.383673"
+         d="m 27.559817,46.563307 -0.59369,12.425622 3.5511,13.518164 -5.04306,0.649602 -4.86428,-13.496603 -0.69067,-15.321345 2.11287,-0.729638 3.12672,0.677792"
+         id="path27-7-5"
+         sodipodi:nodetypes="cccccccc"
+         inkscape:label="Arm Background" />
+      <path
+         style="fill:#ffb380;stroke-width:0.285008"
+         d="m 26.472687,70.11804 3.69313,0.127666 0.9233,3.957679 -2.30821,1.532004 -3.53926,-1.659672"
+         id="path1-8"
+         inkscape:label="Hand Background" />
+    </g>
+    <path
+       style="fill:#338000;fill-opacity:1;stroke-width:0.264583"
+       d="m 19.961587,43.107371 3.2788,1.115137 2.06252,3.389173 -0.78953,6.849746 -2.45651,9.389709 0.86126,7.936506 -7.08093,3.393116 -12.4122644,-1.429703 1.246538,-4.316465 -2.301536,-16.214013 0.54096,-8.680293 3.937275,-1.830613 1.954517,0.05888 6.3065004,1.214987 z"
+       id="path26"
+       sodipodi:nodetypes="ccccccccccccccc"
+       inkscape:label="Torso" />
+    <path
+       style="fill:#2b1100;stroke-width:0.302619"
+       d="m 22.298247,63.185712 -4.80427,1.222386 -7.23501,-0.438496 -4.9345804,-1.431834 -0.261712,1.147789 5.1285724,1.56274 7.60669,0.393259 4.38816,-1.271027"
+       id="path13"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:label="Belt" />
+    <g
+       inkscape:groupmode="layer"
+       id="layer10"
+       inkscape:label="Arm Foreground"
+       transform="matrix(1.149336,0,0,1.1382114,-15.808533,-7.8293048)">
+      <path
+         style="fill:#55d400;fill-opacity:1;stroke-width:0.398426"
+         d="m 21.761799,47.428191 -1.150186,14.00096 2.046547,10.592724 -4.400896,-0.462314 -2.895475,-8.745508 -0.921444,-13.430299 1.757862,-3.91486 2.816557,-0.377042"
+         id="path27-7"
+         sodipodi:nodetypes="cccccccc"
+         inkscape:label="Arm Foreground" />
+      <path
+         style="fill:#ffccaa;stroke-width:0.355648"
+         d="m 17.630589,69.701664 4.684243,0.156732 1.171085,4.858732 -2.927665,1.230201 -3.187895,-1.907408"
+         id="path1"
+         inkscape:label="Hand Foreground"
+         sodipodi:nodetypes="ccccc" />
+    </g>
+  </g>
+  <g
+     inkscape:label="Head"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline;fill:#ffe6d5"
+     transform="matrix(1,0,0,0.69452704,0,35.228403)">
+    <path
+       style="fill:#ffccaa;fill-opacity:1;stroke-width:0.237932"
+       d="m 19.605436,32.903653 14.0477,-2.548753 3.2075,4.983253 -1.51702,7.433541 -1.92118,2.51893 -8.25225,-0.486389 -2.21724,-2.562577 -2.84457,-2.648606 z"
+       id="path22"
+       inkscape:label="Face"
+       sodipodi:nodetypes="ccccccccc" />
+    <g
+       inkscape:groupmode="layer"
+       id="layer8"
+       inkscape:label="Hair"
+       style="display:inline">
+      <path
+         style="display:inline;fill:#483e37;fill-opacity:1;stroke-width:0.301959"
+         d="m 17.409945,31.70443 0.142644,2.243849 -0.06336,1.12921 3.310797,0.842286 2.62442,-0.428835 2.5267,0.486174 3.12935,-0.137979 2.54185,0.183359 2.54404,-0.468227 1.90059,0.263329 2.21002,-0.160372 0.19438,-2.497375 -0.74556,-2.822487 -1.46288,-2.185451 -1.70602,-1.001139 -2.06685,-1.040833 -2.82951,-0.388437 -2.55035,0.02658 -2.81398,-0.449144 -4.06862,0.916646 -1.499486,2.154286"
+         id="path24"
+         inkscape:label="Hair"
+         sodipodi:nodetypes="ccccccccccccccccccccc" />
+      <path
+         style="display:inline;fill:#241f1c;stroke-width:0.257033"
+         d="m 19.039038,33.909195 -1.675334,1.024435 0.849301,1.084798 2.559371,0.08122 2.6076,1.694219 2.43096,-1.316838 2.55586,0.880035 3.50587,-0.193787 2.01343,0.646113 1.88724,-0.764958 1.88725,1.969771 0.63333,-3.52602 -1.86952,0.185453 -2.12704,-0.744704 -2.7332,0.334758 -2.76207,-1.102379 -2.98533,0.799388 -2.75973,-0.671451 -2.07144,0.99888"
+         id="path2"
+         sodipodi:nodetypes="ccccccccccccccccccc"
+         inkscape:label="Hair Shadow" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer9"
+       inkscape:label="Eyes">
+      <path
+         style="display:inline;fill:#2b1100;stroke-width:0.425304"
+         d="m 28.924266,39.256291 1.37808,-0.642838 0.89137,0.838714 0.22275,1.204502 -1.13217,0.718594 -1.39741,-0.75512"
+         id="path14"
+         sodipodi:nodetypes="cccccc"
+         inkscape:label="Eye Front" />
+      <path
+         style="display:inline;fill:#2b1100;stroke-width:0.34643"
+         d="m 35.437486,39.009841 -0.91236,-0.353676 -0.62647,0.708891 -0.17037,0.984312 0.81311,0.541445 0.88838,-0.53837"
+         id="path14-1"
+         sodipodi:nodetypes="cccccc"
+         inkscape:label="Eye Back" />
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Hat"
+     transform="matrix(0.86617812,0,0,0.9343681,16.210131,23.645285)"
+     style="display:inline">
+    <path
+       style="fill:#338000;stroke-width:0.264583"
+       d="m 3.2499742,31.345951 2.098112,-0.624808 13.5514668,-0.956277 2.94424,1.748141 2.94424,4.140334 -12.70673,-2.682739 z"
+       id="path6"
+       inkscape:label="rim background"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       style="display:inline;fill:#55d400;stroke-width:0.294223"
+       d="m 10.214073,21.634931 11.1754,12.157632 -18.2231868,0.04076"
+       id="path4"
+       inkscape:label="hat frontside"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="display:inline;fill:#44aa00;stroke-width:0.264583"
+       d="m 3.2582912,31.328992 -1.656133,2.760223 10.2128248,1.196096 13.24907,0.460037 -1.47212,-1.196097 -2.76021,-2.300185 -7.54462,0.460037 z"
+       id="path5"
+       inkscape:label="rim foreground"
+       sodipodi:nodetypes="cccccccc" />
+    <path
+       style="display:inline;fill:#338000;stroke-width:0.264583"
+       d="m 19.106573,29.994882 -8.89361,-8.361993 9.80769,10.670411 z"
+       id="path7"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="hat backside" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer7"
+     inkscape:label="walk1"
+     transform="translate(0.52916665,0.52916665)">
+    <path
+       style="display:inline;fill:#225500;fill-opacity:1;stroke-width:0.279557"
+       d="m 74.346341,70.113536 1.18351,7.506861 4.84769,7.354377 -4.1896,1.362788 -5.95867,-7.087301 -2.66614,-8.980861 1.69318,-0.843113 2.74428,-0.202128"
+       id="path27-7-5-8"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:label="Arm Background" />
+    <path
+       style="display:inline;fill:#483737;stroke-width:0.230851"
+       d="m 51.777621,62.783042 1.82775,-2.862187 4.31376,-0.761207 13.00758,24.649009 -1.13401,1.239879 -3.17976,-0.478669"
+       id="path8-8"
+       inkscape:label="Quiver Outside"
+       inkscape:export-filename="ArcherCharacter_v01.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="display:inline;fill:#241c1c;stroke-width:0.230851"
+       d="m 53.777361,60.238588 -1.23833,2.166585 2.72388,-1.00054 1.37534,-1.623071"
+       id="path9-8"
+       inkscape:label="Quiver Inside" />
+    <path
+       style="display:inline;fill:#483737;stroke-width:0.230851"
+       d="m 50.788801,59.271058 3.70884,3.781502 0.21034,-0.243392 -3.356909,-3.637264"
+       id="path10-2"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="Arrow wood" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.193144"
+       d="m 51.569228,58.695037 0.355033,1.226789 0.47377,0.277489 -0.65595,-2.050521"
+       id="path11-4"
+       inkscape:label="Arrow feather 4" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.193144"
+       d="m 52.179261,59.319936 0.35504,1.226791 0.47376,0.277488 -0.65595,-2.050521"
+       id="path11-5-5"
+       inkscape:label="Arrow feather 3" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.195604"
+       d="m 51.602361,59.950823 0.16467,0.359766 -1.445403,-0.133938 -0.239325,-0.291055"
+       id="path12-5"
+       inkscape:label="Arrow feather 2" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.195604"
+       d="m 52.128151,60.47887 0.16466,0.359765 -1.445395,-0.133937 -0.239325,-0.291055"
+       id="path12-1-1"
+       inkscape:label="Arrow feather 1" />
+    <path
+       style="display:inline;fill:#483737;stroke-width:0.230851"
+       d="m 53.896101,57.721934 1.85944,4.457545 0.31036,-0.169214 -1.58695,-4.232352"
+       id="path10-3-7"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="Arrow wood" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.193144"
+       d="m 54.901281,57.395553 -0.20903,1.223808 0.32951,0.379936 0.28954,-2.061917"
+       id="path11-2-1"
+       inkscape:label="Arrow feather 4" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.193144"
+       d="m 55.205821,58.13142 -0.20904,1.223808 0.32952,0.379935 0.28954,-2.061917"
+       id="path11-5-2-1"
+       inkscape:label="Arrow feather 3" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.195604"
+       d="m 54.370991,58.561717 -0.003,0.374756 -1.32428,-0.502266 -0.0989,-0.330997"
+       id="path12-16-5"
+       inkscape:label="Arrow feather 2" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.195604"
+       d="m 54.638191,59.18623 -0.003,0.374757 -1.32429,-0.502266 -0.0989,-0.330996"
+       id="path12-1-8-2"
+       inkscape:label="Arrow feather 1" />
+    <path
+       style="display:inline;fill:#483737;stroke-width:0.230851"
+       d="m 52.806641,58.718572 2.82709,4.183075 0.26437,-0.209487 -2.51006,-3.995508"
+       id="path10-3-8-7"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="Arrow wood" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.193144"
+       d="m 53.713221,58.260412 0.0741,1.2442 0.40784,0.333784 -0.18604,-2.087941"
+       id="path11-2-9-6"
+       inkscape:label="Arrow feather 4" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.193144"
+       d="m 54.177571,58.95129 0.0741,1.244201 0.40784,0.333784 -0.18603,-2.087941"
+       id="path11-5-2-2-1"
+       inkscape:label="Arrow feather 3" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.195604"
+       d="m 53.460801,59.490067 0.0819,0.372929 -1.4062,-0.322998 -0.17175,-0.315825"
+       id="path12-16-7-4"
+       inkscape:label="Arrow feather 2" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.195604"
+       d="m 53.863411,60.075238 0.0819,0.372928 -1.4062,-0.322998 -0.17174,-0.315823"
+       id="path12-1-8-9-2"
+       inkscape:label="Arrow feather 1" />
+    <path
+       style="display:inline;fill:#2b1100;fill-opacity:1;stroke-width:0.28307"
+       d="m 64.225607,76.006505 -2.075513,10.410778 -4.498866,9.262729 1.684443,1.189703 3.106729,2.826855 3.63992,-0.316676 -3.092913,-4.065636 4.407118,-5.618632 3.511544,-5.537853"
+       id="path28-9-3"
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:label="Leg Background" />
+    <path
+       style="display:inline;fill:#552200;fill-opacity:1;stroke-width:0.275546"
+       d="m 55.799721,84.133843 3.947462,10.287985 1.108408,5.33377 1.758046,2.315262 7.09036,-1.80424 1.901123,-2.98744 -6.455609,0.528926 -1.04572,-6.162337 -1.395777,-4.378008 -0.08367,-4.430094"
+       id="path28-2"
+       sodipodi:nodetypes="cccccccccc"
+       inkscape:label="Leg Foreground" />
+    <path
+       style="display:inline;fill:#ffb380;fill-opacity:1;stroke-width:0.187151"
+       d="m 62.976731,65.476606 -2.38522,3.262693 0.7295,3.456696 7.49049,0.447041 2.24855,-2.248574 -0.71934,-3.868822"
+       id="path25-2"
+       inkscape:label="Neck"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       style="display:inline;fill:#338000;fill-opacity:1;stroke-width:0.192784"
+       d="m 70.548501,67.787457 2.77465,0.950061 1.58861,2.230134 -1.08339,4.094841 -2.67528,5.498949 0.28294,4.892242 -6.33061,1.471981 -10.66664,-1.900857 1.33141,-2.518111 -1.04747,-10.039786 0.97488,-5.227384 3.5168,-0.784406 1.68933,0.198338 5.39108,1.262555 z"
+       id="path26-1"
+       sodipodi:nodetypes="ccccccccccccccc"
+       inkscape:label="Torso" />
+    <path
+       style="display:inline;fill:#2b1100;stroke-width:0.220499"
+       d="m 71.400951,80.177341 -4.23219,0.342852 -6.24054,-0.868149 -4.19023,-1.280148 -0.29361,0.675389 4.3506,1.375806 6.56508,0.871581 3.87465,-0.407003"
+       id="path13-6"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:label="Belt" />
+    <path
+       style="display:inline;fill:#ffb380;stroke-width:0.207666"
+       d="m 76.622361,84.336576 3.15005,-0.63906 1.32055,2.175647 -1.74993,1.358255 -3.22751,-0.302466"
+       id="path1-8-5"
+       inkscape:label="Hand Background" />
+    <path
+       style="display:inline;fill:#55d400;fill-opacity:1;stroke-width:0.332042"
+       d="m 61.812001,70.851112 -5.61626,8.02106 -1.67988,7.449214 -3.724577,-2.366111 0.324771,-6.720989 3.603846,-8.652597 2.83553,-1.562911 2.60495,1.102623"
+       id="path27-7-7"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:label="Arm Foreground" />
+    <path
+       style="display:inline;fill:#ffccaa;stroke-width:0.251593"
+       d="m 51.180343,83.953929 3.494762,1.677756 -0.56156,2.963242 -2.579762,-0.347582 -1.842131,-2.092256"
+       id="path1-6"
+       inkscape:label="Hand Foreground"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="display:inline;fill:#ffccaa;fill-opacity:1;stroke-width:0.198289"
+       d="m 57.373061,59.005915 13.89746,-2.707855 3.43228,3.238214 -1.16754,5.252873 -1.79958,1.874311 -8.25633,0.216122 -2.33155,-1.62715 -2.96149,-1.64471 z"
+       id="path22-1"
+       inkscape:label="Face"
+       sodipodi:nodetypes="ccccccccc" />
+    <path
+       style="display:inline;fill:#483e37;fill-opacity:1;stroke-width:0.251647"
+       d="m 55.126681,58.322065 0.24685,1.545336 -0.0106,0.786746 3.34254,0.361745 2.59857,-0.473086 2.54364,0.16753 3.11589,-0.305385 2.54468,-0.04333 2.5165,-0.495002 1.90859,0.05507 2.19758,-0.259276 0.0777,-1.743623 -0.87528,-1.905908 -1.56134,-1.416379 -1.7488,-0.579395 -2.11066,-0.582714 -2.84123,-0.0795 -2.54336,0.189378 -2.82858,-0.122612 -4.01679,0.907935 -1.39581,1.593359"
+       id="path24-8"
+       inkscape:label="Hair"
+       sodipodi:nodetypes="ccccccccccccccccccccc" />
+    <path
+       style="display:inline;fill:#241f1c;stroke-width:0.214207"
+       d="m 56.854771,59.740686 -1.62388,0.822199 0.89789,0.694797 2.5574,-0.11528 2.68061,0.999239 2.36418,-1.075477 2.59109,0.438507 3.48895,-0.369295 2.03899,0.312767 1.84737,-0.656595 1.97473,1.238474 0.46774,-2.485862 -1.85667,0.253826 -2.15694,-0.373471 -2.71146,0.415191 -2.80718,-0.578762 -2.94141,0.754065 -2.78478,-0.280301 -2.02028,0.831044"
+       id="path2-9"
+       sodipodi:nodetypes="ccccccccccccccccccc"
+       inkscape:label="Hair Shadow" />
+    <path
+       style="display:inline;fill:#2b1100;stroke-width:0.354441"
+       d="m 66.966691,62.783403 1.34506,-0.537841 0.92841,0.521447 0.27832,0.819747 -1.09617,0.573855 -1.42941,-0.429601"
+       id="path14-2"
+       sodipodi:nodetypes="cccccc"
+       inkscape:label="Eye Front" />
+    <path
+       style="display:inline;fill:#2b1100;stroke-width:0.288709"
+       d="m 73.453801,62.176021 -0.92679,-0.183926 -0.59206,0.533231 -0.12416,0.693513 0.8365,0.320698 0.86132,-0.432622"
+       id="path14-1-7"
+       sodipodi:nodetypes="cccccc"
+       inkscape:label="Eye Back" />
+    <path
+       style="display:inline;fill:#338000;stroke-width:0.238026"
+       d="m 56.449111,53.909449 1.77411,-0.70431 11.65168,-1.678332 2.65401,1.458783 2.80382,3.688944 -11.14957,-1.763244 z"
+       id="path6-9"
+       inkscape:label="rim background"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       style="display:inline;fill:#55d400;stroke-width:0.264691"
+       d="m 61.859461,44.451841 10.41958,10.685281 -15.74647,1.09608"
+       id="path4-5"
+       inkscape:label="hat frontside"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="display:inline;fill:#44aa00;stroke-width:0.238026"
+       d="m 56.455221,53.893156 -1.25839,2.669424 8.90115,0.522099 11.47905,-0.340395 -1.34716,-1.029608 -2.52953,-1.984119 -6.49147,0.866934 z"
+       id="path5-4"
+       inkscape:label="rim foreground"
+       sodipodi:nodetypes="cccccccc" />
+    <path
+       style="display:inline;fill:#338000;stroke-width:0.238026"
+       d="M 70.068231,51.729222 61.858371,44.45 l 9.14443,9.378208 z"
+       id="path7-3"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="hat backside" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer14"
+     inkscape:label="idle">
+    <path
+       style="fill:#483737;stroke-width:0.230851"
+       d="m 13.870806,132.24129 1.545747,-3.02382 4.221241,-1.17012 15.304487,23.29256 -1.010277,1.34261 -3.210962,-0.17248"
+       id="path8-1"
+       inkscape:label="Quiver Outside"
+       inkscape:export-filename="ArcherCharacter_v01.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:#241c1c;stroke-width:0.230851"
+       d="m 15.618129,129.51731 -1.025523,2.27505 2.615759,-1.25637 1.213864,-1.74712"
+       id="path9-84"
+       inkscape:label="Quiver Inside" />
+    <path
+       style="fill:#483737;stroke-width:0.230851"
+       d="m 12.550766,128.83992 4.053372,3.40962 0.186104,-0.26239 -3.689259,-3.29968"
+       id="path10-9"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="Arrow wood" />
+    <path
+       style="fill:#e6e6e6;stroke-width:0.193143"
+       d="m 13.272546,128.19193 0.4707,1.18723 0.49812,0.23092 -0.848977,-1.97842"
+       id="path11-6"
+       inkscape:label="Arrow feather 4" />
+    <path
+       style="fill:#e6e6e6;stroke-width:0.193143"
+       d="m 13.939529,128.75565 0.4707,1.18722 0.498119,0.23093 -0.848976,-1.97842"
+       id="path11-5-3"
+       inkscape:label="Arrow feather 3" />
+    <path
+       style="fill:#e6e6e6;stroke-width:0.195604"
+       d="m 13.425584,129.4388 0.198311,0.34237 -1.451587,0.005 -0.266057,-0.26686"
+       id="path12-7"
+       inkscape:label="Arrow feather 2" />
+    <path
+       style="fill:#e6e6e6;stroke-width:0.195604"
+       d="m 13.999445,129.91416 0.19831,0.34237 -1.451587,0.005 -0.266056,-0.26684"
+       id="path12-1-88"
+       inkscape:label="Arrow feather 1" />
+    <path
+       style="fill:#483737;stroke-width:0.230851"
+       d="m 15.49574,127.00083 2.277066,4.25937 0.292765,-0.19811 -1.984303,-4.06126"
+       id="path10-3-2"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="Arrow wood" />
+    <path
+       style="fill:#e6e6e6;stroke-width:0.193143"
+       d="m 16.838613,127.28323 -0.09108,1.23819 0.36433,0.34669 0.09108,-2.08015"
+       id="path11-5-2-3"
+       inkscape:label="Arrow feather 3" />
+    <path
+       style="fill:#e6e6e6;stroke-width:0.195604"
+       d="m 16.374423,128.38748 0.03253,0.37336 -1.366238,-0.37337 -0.130125,-0.32002"
+       id="path12-1-8-8"
+       inkscape:label="Arrow feather 1" />
+    <path
+       style="fill:#483737;stroke-width:0.230851"
+       d="m 14.506549,128.09706 3.214048,3.89364 0.243129,-0.2338 -2.880543,-3.73724"
+       id="path10-3-8-4"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="Arrow wood" />
+    <path
+       style="fill:#e6e6e6;stroke-width:0.193143"
+       d="m 15.365174,127.55433 0.192739,1.23141 0.437877,0.29327 -0.384794,-2.06059"
+       id="path11-2-9-0"
+       inkscape:label="Arrow feather 4" />
+    <path
+       style="fill:#e6e6e6;stroke-width:0.193143"
+       d="m 15.893438,128.19765 0.192738,1.23141 0.437877,0.29327 -0.384794,-2.06059"
+       id="path11-5-2-2-7"
+       inkscape:label="Arrow feather 3" />
+    <path
+       style="fill:#e6e6e6;stroke-width:0.195604"
+       d="m 15.231472,128.80248 0.1172,0.36339 -1.430647,-0.18708 -0.201147,-0.29796"
+       id="path12-16-7-6"
+       inkscape:label="Arrow feather 2" />
+    <path
+       style="fill:#e6e6e6;stroke-width:0.195604"
+       d="m 15.688183,129.34648 0.1172,0.36339 -1.430647,-0.18708 -0.201146,-0.29796"
+       id="path12-1-8-9-3"
+       inkscape:label="Arrow feather 1" />
+    <path
+       style="fill:#2b1100;fill-opacity:1;stroke-width:0.305377"
+       d="m 24.341615,149.08285 4.209962,10.42942 0.707908,8.87463 0.380264,2.8499 1.178214,4.38116 4.093168,-1.7714 -0.904319,-4.94132 0.215369,-8.86913 1.181357,-7.45835"
+       id="path28-9-6"
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:label="Leg Background" />
+    <path
+       style="fill:#552200;fill-opacity:1;stroke-width:0.275546"
+       d="m 19.886436,152.08059 0.818666,8.03868 1.14404,7.86942 0.02,4.30394 1.678531,3.41897 3.658673,-1.12043 -0.670564,-6.37321 0.62515,-8.30422 2.04626,-7.47204"
+       id="path28-1"
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:label="Leg Foreground" />
+    <path
+       style="fill:#ffb380;fill-opacity:1;stroke-width:0.187151"
+       d="m 25.276138,133.85186 -2.062382,3.47578 1.056627,3.37112 7.498922,-0.27111 2.023281,-2.45324 -1.085914,-3.78233"
+       id="path25-5"
+       inkscape:label="Neck"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       style="fill:#225500;fill-opacity:1;stroke-width:0.279557"
+       d="m 39.909697,138.85996 0.01261,6.25909 0.973031,7.45492 -3.32947,1.19013 -1.851002,-7.70634 -0.60093,-9.34896 1.309174,-1.76813 2.720457,0.94274"
+       id="path27-7-5-0"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:label="Arm Background" />
+    <path
+       style="fill:#338000;fill-opacity:1;stroke-width:0.192784"
+       d="m 33.03414,135.42825 2.852777,0.68045 0.471615,2.33263 -0.157777,3.91507 -1.34358,5.72953 0.749354,4.84278 -6.160888,2.07046 -10.799509,-0.8724 1.084572,-2.63387 -2.002492,-9.89365 0.470672,-5.29664 3.425696,-1.11703 1.700562,0.0359 5.487082,0.74137 z"
+       id="path26-4"
+       sodipodi:nodetypes="ccccccccccccccc"
+       inkscape:label="Torso" />
+    <path
+       style="fill:#2b1100;stroke-width:0.220499"
+       d="m 35.067192,147.67989 -4.18004,0.74589 -6.294948,-0.26757 -4.293419,-0.87369 -0.227707,0.70037 4.462205,0.95357 6.618335,0.23996 3.817996,-0.77557"
+       id="path13-2"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:label="Belt" />
+    <path
+       style="fill:#ffb380;stroke-width:0.186574"
+       d="m 37.640903,152.64715 3.047984,-0.65931 0.704038,2.22419 -1.760067,0.86099 -1.771253,-0.44536"
+       id="path1-8-9"
+       inkscape:label="Hand Background"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="fill:#55d400;fill-opacity:1;stroke-width:0.332041"
+       d="m 19.704766,138.08103 -0.885602,7.60738 0.988213,8.41527 -4.665479,-0.32109 -0.778808,-6.07399 0.136889,-9.3277 1.757862,-2.71898 2.816557,-0.26187"
+       id="path27-7-73"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:label="Arm Foreground" />
+    <path
+       style="fill:#ffccaa;stroke-width:0.296391"
+       d="m 15.308973,153.55056 4.684243,0.10886 -0.416415,3.6391 -1.340165,0.58983 -3.187895,-1.32475"
+       id="path1-7"
+       inkscape:label="Hand Foreground"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="display:inline;fill:#ffccaa;fill-opacity:1;stroke-width:0.198288"
+       d="m 21.517152,124.81835 11.66645,-0.44726 2.41375,3.461 -0.987853,4.36905 -1.656597,1.74947 -8.25225,0.45594 -1.42349,-2.04436 -0.992487,-2.10412 z"
+       id="path22-2"
+       inkscape:label="Face"
+       sodipodi:nodetypes="ccccccccc" />
+    <path
+       style="display:inline;fill:#483e37;fill-opacity:1;stroke-width:0.251647"
+       d="m 20.115411,122.66253 c -0.255514,1.04946 -0.215934,0.0197 0.07928,1.01977 l 1.19413,1.64332 0.772337,-0.29783 2.5267,0.33766 3.12935,-0.0958 2.54185,0.12735 2.54404,-0.3252 1.90059,0.18289 2.21002,-0.11138 0.19438,-1.7345 -0.74556,-1.96029 -1.46288,-1.51786 -1.70602,-0.69532 -2.06685,-0.72288 -2.82951,-0.26978 -2.55035,0.0185 -2.284813,0.74639 -1.951954,0.63663 -0.970319,0.96705"
+       id="path24-6"
+       inkscape:label="Hair"
+       sodipodi:nodetypes="cccccccccccccccccccc" />
+    <path
+       style="display:inline;fill:#241f1c;stroke-width:0.214207"
+       d="m 20.686171,124.98755 c 0.342546,0.43926 0.372188,1.90425 0.372188,1.90425 l 3.489293,-1.17916 2.55586,0.61121 3.50587,-0.13459 2.01343,0.44874 2.151823,0.26247 1.358084,1.63264 0.897913,-3.50725 -1.86952,0.1288 -2.12704,-0.51721 -2.7332,0.2325 -2.76207,-0.76564 -2.98533,0.5552 -2.75973,-0.46634"
+       id="path2-0"
+       sodipodi:nodetypes="ccccccccccccccc"
+       inkscape:label="Hair Shadow" />
+    <path
+       style="display:inline;fill:#2b1100;stroke-width:0.354441"
+       d="m 25.808898,128.1721 1.37808,-0.44647 0.89137,0.58251 0.22275,0.83656 -1.13217,0.49908 -1.39741,-0.52445"
+       id="path14-16"
+       sodipodi:nodetypes="cccccc"
+       inkscape:label="Eye Front" />
+    <path
+       style="display:inline;fill:#2b1100;stroke-width:0.354441"
+       d="m 31.258215,128.24022 1.37808,-0.44647 0.89137,0.58251 0.22275,0.83656 -1.13217,0.49908 -1.39741,-0.52445"
+       id="path14-16-4"
+       sodipodi:nodetypes="cccccc"
+       inkscape:label="Eye Front" />
+    <path
+       style="display:inline;fill:#55d400;stroke-width:0.264691"
+       d="m 28.118751,113.20687 2.113612,13.87366 -9.962712,-6.2655"
+       id="path4-54"
+       inkscape:label="hat frontside"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="display:inline;fill:#44aa00;stroke-width:0.238026"
+       d="m 21.375989,119.66349 -1.772327,1.19305 1.684577,1.31958 9.580461,6.33241 -0.508403,-1.61755 -0.396146,-2.54964 -6.335373,-3.55881 z"
+       id="path5-1"
+       inkscape:label="rim foreground"
+       sodipodi:nodetypes="cccccccc" />
+    <path
+       style="display:inline;fill:#338000;stroke-width:0.238026"
+       d="m 35.905137,120.36684 -7.594719,-6.86059 2.006586,13.79073 z"
+       id="path7-2-7"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="hat backside" />
+    <path
+       style="display:inline;fill:#44aa00;stroke-width:0.238026"
+       d="m 36.295216,120.10799 -2.230852,-1.25682 -1.868099,2.46298 -2.473802,3.15676 1.008416,3.91224 3.625625,-5.50626 z"
+       id="path5-1-9"
+       inkscape:label="rim foreground"
+       sodipodi:nodetypes="ccccccc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer15"
+     inkscape:label="death">
+    <rect
+       style="fill:#333333;stroke-width:0.284965"
+       id="rect1-8"
+       width="29.747095"
+       height="5.425571"
+       x="50.65831"
+       y="169.32867" />
+    <path
+       style="fill:#4d4d4d;stroke-width:0.264583"
+       d="m 55.148437,169.51579 v -25.06988 c 0,0 1.122531,-5.23848 10.476962,-4.8643 9.354434,0.37417 -0.187087,0 -0.187087,0 0,0 10.302462,-0.37739 10.289876,5.05139 -0.01301,5.60966 -0.187087,10.10278 -0.187087,10.10278 l -10e-7,14.9671 z"
+       id="path3-8"
+       sodipodi:nodetypes="ccscsccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:7.05556px;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#f9f9f9;stroke-width:0.264583"
+       x="59.264385"
+       y="152.11652"
+       id="text3-2"><tspan
+         sodipodi:role="line"
+         id="tspan3-4"
+         style="fill:#f9f9f9;stroke-width:0.264583"
+         x="59.264385"
+         y="152.11652">RIP</tspan></text>
+    <rect
+       style="fill:#4d4d4d;stroke-width:0.264583"
+       id="rect3"
+       width="3.7417731"
+       height="25.06988"
+       x="71.959435"
+       y="144.24536" />
+    <g
+       inkscape:groupmode="layer"
+       id="layer4-4"
+       inkscape:label="Hat"
+       transform="matrix(0.79955858,-0.06728769,0.06835022,0.81218426,48.256975,141.93568)"
+       style="display:inline">
+      <path
+         style="fill:#338000;stroke-width:0.264583"
+         d="m 9.1644979,31.835956 2.0981121,-0.624808 13.551464,-0.956277 2.94424,1.748141 2.94424,4.140334 -12.70673,-2.682739 z"
+         id="path6-2"
+         inkscape:label="rim background"
+         sodipodi:nodetypes="ccccccc" />
+      <path
+         style="display:inline;fill:#55d400;stroke-width:0.294223"
+         d="m 16.128594,22.124936 11.1754,12.157632 -18.2231841,0.04076"
+         id="path4-3"
+         inkscape:label="hat frontside"
+         sodipodi:nodetypes="ccc" />
+      <path
+         style="display:inline;fill:#44aa00;stroke-width:0.264583"
+         d="m 9.1728149,31.818997 -1.656133,2.760223 10.2128221,1.196096 13.24907,0.460037 -1.47212,-1.196097 -2.76021,-2.300185 -7.54462,0.460037 z"
+         id="path5-2"
+         inkscape:label="rim foreground"
+         sodipodi:nodetypes="cccccccc" />
+      <path
+         style="display:inline;fill:#338000;stroke-width:0.264583"
+         d="m 25.021094,30.484887 -8.89361,-8.361993 9.80769,10.670411 z"
+         id="path7-2"
+         sodipodi:nodetypes="cccc"
+         inkscape:label="hat backside" />
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer13"
+     inkscape:label="walk2">
+    <path
+       style="display:inline;fill:#225500;fill-opacity:1;stroke-width:0.279557"
+       d="m 113.36644,71.421362 -0.68308,7.568821 2.90763,8.314606 -4.39546,0.29982 -4.0502,-8.326546 -0.39527,-9.359911 1.84767,-0.404701 2.71071,0.473282"
+       id="path27-7-5-8-7"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:label="Arm Background" />
+    <path
+       style="display:inline;fill:#483737;stroke-width:0.230851"
+       d="m 90.406787,63.312209 1.82775,-2.862187 4.31376,-0.761207 13.007573,24.649009 -1.13401,1.23988 -3.17976,-0.47867"
+       id="path8-8-4"
+       inkscape:label="Quiver Outside"
+       inkscape:export-filename="ArcherCharacter_v01.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="display:inline;fill:#241c1c;stroke-width:0.230851"
+       d="m 92.406527,60.767755 -1.23833,2.166585 2.72388,-1.00054 1.37534,-1.623071"
+       id="path9-8-2"
+       inkscape:label="Quiver Inside" />
+    <path
+       style="display:inline;fill:#483737;stroke-width:0.230851"
+       d="m 89.417967,59.800225 3.70884,3.781502 0.21034,-0.243392 -3.356909,-3.637264"
+       id="path10-2-7"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="Arrow wood" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.193144"
+       d="m 90.198394,59.224204 0.355033,1.226789 0.47377,0.277489 -0.65595,-2.050521"
+       id="path11-4-7"
+       inkscape:label="Arrow feather 4" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.193144"
+       d="m 90.808427,59.849103 0.35504,1.226791 0.47376,0.277488 -0.65595,-2.050521"
+       id="path11-5-5-9"
+       inkscape:label="Arrow feather 3" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.195604"
+       d="m 90.231527,60.47999 0.16467,0.359766 -1.445403,-0.133938 -0.239325,-0.291055"
+       id="path12-5-3"
+       inkscape:label="Arrow feather 2" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.195604"
+       d="m 90.757317,61.008037 0.16466,0.359765 -1.445395,-0.133937 -0.239325,-0.291055"
+       id="path12-1-1-1"
+       inkscape:label="Arrow feather 1" />
+    <path
+       style="display:inline;fill:#483737;stroke-width:0.230851"
+       d="m 92.525267,58.251101 1.85944,4.457545 0.31036,-0.169214 -1.58695,-4.232352"
+       id="path10-3-7-9"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="Arrow wood" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.193144"
+       d="m 93.530447,57.92472 -0.20903,1.223808 0.32951,0.379936 0.28954,-2.061917"
+       id="path11-2-1-8"
+       inkscape:label="Arrow feather 4" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.193144"
+       d="m 93.834987,58.660587 -0.20904,1.223808 0.32952,0.379935 0.28954,-2.061917"
+       id="path11-5-2-1-6"
+       inkscape:label="Arrow feather 3" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.195604"
+       d="m 93.000157,59.090884 -0.003,0.374756 -1.32428,-0.502266 -0.0989,-0.330997"
+       id="path12-16-5-5"
+       inkscape:label="Arrow feather 2" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.195604"
+       d="m 93.267357,59.715397 -0.003,0.374757 -1.32429,-0.502266 -0.0989,-0.330996"
+       id="path12-1-8-2-0"
+       inkscape:label="Arrow feather 1" />
+    <path
+       style="display:inline;fill:#483737;stroke-width:0.230851"
+       d="m 91.435807,59.247739 2.82709,4.183075 0.26437,-0.209487 -2.51006,-3.995508"
+       id="path10-3-8-7-2"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="Arrow wood" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.193144"
+       d="m 92.342387,58.789579 0.0741,1.2442 0.40784,0.333784 -0.18604,-2.087941"
+       id="path11-2-9-6-8"
+       inkscape:label="Arrow feather 4" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.193144"
+       d="m 92.806737,59.480457 0.0741,1.244201 0.40784,0.333784 -0.18603,-2.087941"
+       id="path11-5-2-2-1-6"
+       inkscape:label="Arrow feather 3" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.195604"
+       d="m 92.089967,60.019234 0.0819,0.372929 -1.4062,-0.322998 -0.17175,-0.315825"
+       id="path12-16-7-4-0"
+       inkscape:label="Arrow feather 2" />
+    <path
+       style="display:inline;fill:#e6e6e6;stroke-width:0.195604"
+       d="m 92.492577,60.604405 0.0819,0.372928 -1.4062,-0.322998 -0.17174,-0.315823"
+       id="path12-1-8-9-2-2"
+       inkscape:label="Arrow feather 1" />
+    <path
+       style="display:inline;fill:#2b1100;fill-opacity:1;stroke-width:0.28307"
+       d="m 98.444637,83.771028 6.793413,8.157296 3.3195,7.77768 2.69019,0.26898 4.50306,0.0717 2.04127,-3.030276 -5.10619,-0.14938 -1.60059,-6.95915 -2.1006,-6.211785"
+       id="path28-9-3-4"
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:label="Leg Background" />
+    <path
+       style="display:inline;fill:#552200;fill-opacity:1;stroke-width:0.275546"
+       d="m 97.398147,81.023413 -2.41487,7.710971 -2.0491,7.6836 -1.26041,2.99095 6.86596,4.360246 3.977973,-0.66521 -5.366353,-4.628676 3.846513,-7.38616 4.82478,-6.06136"
+       id="path28-2-8"
+       sodipodi:nodetypes="ccccccccc"
+       inkscape:label="Leg Foreground" />
+    <path
+       style="display:inline;fill:#ffb380;fill-opacity:1;stroke-width:0.187151"
+       d="m 101.60589,66.005773 -2.385213,3.262693 0.729496,3.456696 7.490487,0.447041 2.24855,-2.248574 -0.71934,-3.868822"
+       id="path25-2-6"
+       inkscape:label="Neck"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       style="display:inline;fill:#338000;fill-opacity:1;stroke-width:0.192784"
+       d="m 109.17766,68.316624 2.77465,0.950061 1.58861,2.230134 -1.08339,4.094841 -2.67528,5.498949 0.28294,4.892245 -6.33061,1.47198 -10.666633,-1.90086 1.33141,-2.51811 -1.04747,-10.039786 0.97488,-5.227384 3.5168,-0.784406 1.689326,0.198338 5.391077,1.262555 z"
+       id="path26-1-5"
+       sodipodi:nodetypes="ccccccccccccccc"
+       inkscape:label="Torso" />
+    <path
+       style="display:inline;fill:#2b1100;stroke-width:0.220499"
+       d="m 110.03011,80.706508 -4.23219,0.342852 -6.240537,-0.868149 -4.190226,-1.280148 -0.29361,0.675389 4.3506,1.375806 6.565073,0.871581 3.87465,-0.407003"
+       id="path13-6-0"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:label="Belt" />
+    <path
+       style="display:inline;fill:#ffb380;stroke-width:0.207666"
+       d="m 112.10486,85.770005 3.21078,0.148507 0.75005,2.432023 -2.02835,0.890441 -3.05628,-1.080498"
+       id="path1-8-5-9"
+       inkscape:label="Hand Background" />
+    <path
+       style="display:inline;fill:#55d400;fill-opacity:1;stroke-width:0.332042"
+       d="m 99.82805,68.166791 1.4848,9.678588 3.93445,6.544689 -4.32714,0.864218 -4.41048,-5.081811 -3.375684,-8.744135 0.96907,-3.089308 2.644706,-1.003528"
+       id="path27-7-7-0"
+       sodipodi:nodetypes="cccccccc"
+       inkscape:label="Arm Foreground" />
+    <path
+       style="display:inline;fill:#ffccaa;stroke-width:0.296391"
+       d="m 100.69897,83.763493 4.54362,-1.144333 2.02863,2.939985 -2.59377,1.604245 -3.42575,-0.426583"
+       id="path1-6-0"
+       inkscape:label="Hand Foreground"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       style="display:inline;fill:#ffccaa;fill-opacity:1;stroke-width:0.198289"
+       d="m 96.002227,59.535082 13.897453,-2.707855 3.43228,3.238214 -1.16754,5.252873 -1.79958,1.874311 -8.25633,0.216122 -2.331547,-1.62715 -2.961486,-1.64471 z"
+       id="path22-1-6"
+       inkscape:label="Face"
+       sodipodi:nodetypes="ccccccccc" />
+    <path
+       style="display:inline;fill:#483e37;fill-opacity:1;stroke-width:0.251647"
+       d="m 93.755847,58.851232 0.24685,1.545336 -0.0106,0.786746 3.34254,0.361745 2.598566,-0.473086 2.543637,0.16753 3.11589,-0.305385 2.54468,-0.04333 2.5165,-0.495002 1.90859,0.05507 2.19758,-0.259276 0.0777,-1.743623 -0.87528,-1.905908 -1.56134,-1.416379 -1.7488,-0.579395 -2.11066,-0.582714 -2.84123,-0.0795 -2.54336,0.189378 -2.82858,-0.122612 -4.016783,0.907935 -1.39581,1.593359"
+       id="path24-8-1"
+       inkscape:label="Hair"
+       sodipodi:nodetypes="ccccccccccccccccccccc" />
+    <path
+       style="display:inline;fill:#241f1c;stroke-width:0.214207"
+       d="m 95.483937,60.269853 -1.62388,0.822199 0.89789,0.694797 2.5574,-0.11528 2.680606,0.999239 2.364177,-1.075477 2.59109,0.438507 3.48895,-0.369295 2.03899,0.312767 1.84737,-0.656595 1.97473,1.238474 0.46774,-2.485862 -1.85667,0.253826 -2.15694,-0.373471 -2.71146,0.415191 -2.80718,-0.578762 -2.94141,0.754065 -2.784777,-0.280301 -2.020276,0.831044"
+       id="path2-9-3"
+       sodipodi:nodetypes="ccccccccccccccccccc"
+       inkscape:label="Hair Shadow" />
+    <path
+       style="display:inline;fill:#2b1100;stroke-width:0.354441"
+       d="m 105.59585,63.31257 1.34506,-0.537841 0.92841,0.521447 0.27832,0.819747 -1.09617,0.573855 -1.42941,-0.429601"
+       id="path14-2-8"
+       sodipodi:nodetypes="cccccc"
+       inkscape:label="Eye Front" />
+    <path
+       style="display:inline;fill:#2b1100;stroke-width:0.288709"
+       d="m 112.08296,62.705188 -0.92679,-0.183926 -0.59206,0.533231 -0.12416,0.693513 0.8365,0.320698 0.86132,-0.432622"
+       id="path14-1-7-9"
+       sodipodi:nodetypes="cccccc"
+       inkscape:label="Eye Back" />
+    <path
+       style="display:inline;fill:#338000;stroke-width:0.238026"
+       d="m 95.078277,54.438616 1.77411,-0.70431 11.651673,-1.678332 2.65401,1.458783 2.80382,3.688944 -11.14957,-1.763244 z"
+       id="path6-9-3"
+       inkscape:label="rim background"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       style="display:inline;fill:#55d400;stroke-width:0.264691"
+       d="m 100.48862,44.981008 10.41958,10.685281 -15.746463,1.09608"
+       id="path4-5-4"
+       inkscape:label="hat frontside"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="display:inline;fill:#44aa00;stroke-width:0.238026"
+       d="m 95.084387,54.422323 -1.25839,2.669424 8.901143,0.522099 11.47905,-0.340395 -1.34716,-1.029608 -2.52953,-1.984119 -6.49147,0.866934 z"
+       id="path5-4-4"
+       inkscape:label="rim foreground"
+       sodipodi:nodetypes="cccccccc" />
+    <path
+       style="display:inline;fill:#338000;stroke-width:0.238026"
+       d="m 108.69739,52.258389 -8.20986,-7.279222 9.14443,9.378208 z"
+       id="path7-3-6"
+       sodipodi:nodetypes="cccc"
+       inkscape:label="hat backside" />
+  </g>
+</svg>
