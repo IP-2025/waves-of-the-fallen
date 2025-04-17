@@ -22,9 +22,9 @@ public partial class Main : Node2D
 			currentPlayer.Name = item.Id.ToString(); // id is unique so it should be the name
 			
 			/// <summary>
-			/// Instantiates the Mage class directly as a placeholder due to the absence of a class selection menu.
-			/// This is a temporary solution to test gameplay with the Mage class.
-			/// To test a different class, replace 'Mage' with the desired class name.
+			/// Instantiates the Mage class directly as a placeholder due to the absence of a class selection menu
+			/// This is a temporary solution to test gameplay with the Mage class
+			/// To test a different class, replace 'Mage' with the desired class name
 			/// </summary>
 			var mage = new Mage(); // Instantiate Mage
 			currentPlayer.Speed = mage.Speed; // Override DefaultPlayer's Speed with Mage's Speed
