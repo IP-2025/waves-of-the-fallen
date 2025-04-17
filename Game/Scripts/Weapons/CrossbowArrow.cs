@@ -27,9 +27,11 @@ public partial class CrossbowArrow : Area2D
 	{
 		QueueFree();
 		
-		if (body.HasMethod("TakeDamage"))
+		var healthNode = body.GetNodeOrNull<Health>("Health");
+
+		if (healthNode != null)
 		{
-			body.Call("TakeDamage");
+			healthNode.Damage(100);
 		}
 	}
 
