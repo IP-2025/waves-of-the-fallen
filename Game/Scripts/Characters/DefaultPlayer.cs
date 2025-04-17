@@ -4,8 +4,8 @@ using System.Diagnostics;
 public partial class DefaultPlayer : CharacterBody2D
 {
 	
-	[Export] public float Speed { get; set; } = 600.0f;
-	[Export] public int MaxHealth { get; set; } = 100;
+	[Export] public float Speed { get; set; }
+	[Export] public int MaxHealth { get; set; }
 	[Export] public int CurrentHealth { get; set; }
 
 	public Node2D Joystick { get; set; }

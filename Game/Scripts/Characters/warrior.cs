@@ -7,6 +7,12 @@ public partial class Warrior : DefaultPlayer
 		MaxHealth = 200; 
 		Speed = 400.0f;  
 	}
+	
+	public override void _Ready()
+	{
+		base._Ready();
+		CurrentHealth = MaxHealth;
+	}
 
 	public override void UseAbility()
 	{

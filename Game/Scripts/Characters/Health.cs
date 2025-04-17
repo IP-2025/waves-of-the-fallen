@@ -17,6 +17,7 @@ public partial class Health : Node2D
 
 		if (health <= 0)
 		{
+			GD.Print("Spieler ist verreckt");
 			GetParent().QueueFree();
 		}
 	}

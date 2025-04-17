@@ -8,6 +8,11 @@ public partial class Mage : DefaultPlayer
 		Speed = 20.0f;  //Sehr niedrig für Testzwecke
 	}
 
+	public override void _Ready()
+	{
+		base._Ready();
+		CurrentHealth = MaxHealth;
+	}
 	public override void UseAbility()
 	{
 		GD.Print("Platzhalter Fähigkeit Magier");
