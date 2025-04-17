@@ -50,7 +50,7 @@ _data = {
 
 [node name="Crossbow" type="Area2D"]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 6
 script = ExtResource("1_rf8ij")
 
 [node name="Range" type="CollisionShape2D" parent="."]
