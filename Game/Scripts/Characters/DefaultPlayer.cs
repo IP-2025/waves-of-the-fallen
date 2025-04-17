@@ -3,15 +3,20 @@ using System;
 using System.Diagnostics;
 public partial class DefaultPlayer : CharacterBody2D
 {
-	[Export]
-	public float Speed = 600.0f;
+	
+	[Export] public float Speed { get; set; } = 600.0f;
+	[Export] public int MaxHealth { get; set; } = 100;
+	[Export] public int CurrentHealth { get; set; }
+
 	public Node2D Joystick { get; set; }
 	private Camera2D camera;
 	private MultiplayerSynchronizer multiplayerSynchronizer;
 	public bool enableDebug = false;
+
 	public override void _Ready()
 	{
 		AddToGroup("player");
+		CurrentHealth = MaxHealth;
 		// set MultiplayerSynchronizer as authority of this id and then check authority against this id to see if player is authority
 		// to later enable movement controlls and so on for the current player only
 		multiplayerSynchronizer = GetNodeOrNull<MultiplayerSynchronizer>("MultiplayerSynchronizer");
@@ -81,7 +86,12 @@ public partial class DefaultPlayer : CharacterBody2D
 		MoveAndSlide();
 	}
 
-		private void DebugIt(string message)
+	public virtual void UseAbility()
+	{
+		GD.Print("Ability placeholder for all classes");
+	}
+
+	private void DebugIt(string message)
 	{
 		if (enableDebug)
 		{
