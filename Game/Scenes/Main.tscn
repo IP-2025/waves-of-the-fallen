@@ -9,3 +9,4 @@ script = ExtResource("1_idj7w")
 
 [node name="DefaultMap" parent="." instance=ExtResource("2_kln2b")]
 position = Vector2(0.995117, 7)
+scale = Vector2(3, 3)

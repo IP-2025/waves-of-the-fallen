@@ -16,6 +16,7 @@ properties/0/replication_mode = 1
 [node name="DefaultPlayer" type="CharacterBody2D"]
 collision_mask = 14
 collision_priority = 2.0
+platform_floor_layers = 4294967041
 script = ExtResource("1_y2kgl")
 
 [node name="Health" type="Node2D" parent="."]
