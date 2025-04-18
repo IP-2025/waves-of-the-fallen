@@ -46,7 +46,7 @@ public Vector2 AvoidObstacles(Vector2 desiredDirection)
 	{
 		From = GlobalPosition,
 		To = checkPosition,
-		CollisionMask = 1 << 1, // Layer 2
+		CollisionMask = (1 << 0) | (1 << 1),
 		CollideWithAreas = false,
 		CollideWithBodies = true
 	};
