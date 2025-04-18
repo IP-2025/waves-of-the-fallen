@@ -35,4 +35,33 @@ public partial class RangedEnemy : EnemyBase
 	{
 		GD.Print("RangedEnemy attacks from distance!");
 	}
+	
+	// New method to avoid obstacles on physics layer 2
+public Vector2 AvoidObstacles(Vector2 desiredDirection)
+{
+	float checkDistance = 32f; // how far ahead to check
+	Vector2 checkPosition = GlobalPosition + desiredDirection * checkDistance;
+
+	PhysicsRayQueryParameters2D query = new()
+	{
+		From = GlobalPosition,
+		To = checkPosition,
+		CollisionMask = 1 << 1, // Layer 2
+		CollideWithAreas = false,
+		CollideWithBodies = true
+	};
+
+	var spaceState = GetWorld2D().DirectSpaceState;
+	var result = spaceState.IntersectRay(query);
+
+	if (result.Count > 0)
+	{
+		// Obstacle detected – try to steer around it
+		Vector2 normal = (Vector2)result["normal"];
+		desiredDirection = desiredDirection.Bounce(normal).Normalized();
+	}
+
+	return desiredDirection;
+}
+	
 }
