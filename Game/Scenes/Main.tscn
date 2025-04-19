@@ -8,18 +8,18 @@ scale = Vector2(1.00488, 1)
 script = ExtResource("1_idj7w")
 
 [node name="DefaultMap" parent="." instance=ExtResource("2_kln2b")]
-position = Vector2(-677, -366)
+position = Vector2(5.97089, 3)
 
 [node name="PlayerSpawnPoints" type="Node2D" parent="."]
 
 [node name="0" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(-557.281, 1037)
+position = Vector2(581.164, 323)
 
 [node name="1" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(-538.373, -248)
+position = Vector2(551.31, 289)
 
 [node name="2" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(1819.12, -224)
+position = Vector2(583.154, 257)
 
 [node name="3" type="Node2D" parent="PlayerSpawnPoints" groups=["PlayerSpawnPoints"]]
-position = Vector2(1793.25, 1017)
+position = Vector2(614.999, 291)
