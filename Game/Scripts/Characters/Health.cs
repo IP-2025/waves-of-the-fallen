@@ -17,7 +17,6 @@ public partial class Health : Node2D
 
 		if (health <= 0)
 		{
-			GD.Print("The player died");
 			GetParent().QueueFree();
 		}
 	}
