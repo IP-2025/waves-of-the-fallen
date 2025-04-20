@@ -12,12 +12,12 @@ export class Settings {
   @Column({
     type: 'double',
   })
-  musicVolume!: string;
+  musicVolume!: number;
 
   @Column({
     type: 'double',
   })
-  soundVolume!: string;
+  soundVolume!: number;
 
   @OneToOne(() => Settings, (settings) => settings.player_id)
   @JoinColumn()
