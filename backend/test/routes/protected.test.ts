@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from '../../src/app';
-import { AppDataSource } from '../../src/libs/data-source';
+
 
 const userData = {
   username: 'MaxMustermann',
@@ -29,12 +29,12 @@ describe('Settings API Tests', () => {
 
     validToken = loginResponse.body.token;
   });
-
+// TODO Error handling Value Should be between 0 and 1
   it('should insert settings', async () => {
     const settingsData = {
-      player_id: userData.username, // or user ID if that's what your schema expects
-      musicVolume: 50,
-      soundVolume: 70,
+      player_id: userData.username,
+      musicVolume: 0.5,
+      soundVolume: 0.2,
     };
 
     const response = await request(app)
@@ -47,6 +47,7 @@ describe('Settings API Tests', () => {
   });
 
 
+// TODO fix error handling Unauthorized
   it('should fail with missing fields', async () => {
     const incompleteSettings = {
       player_id: userData.username,
