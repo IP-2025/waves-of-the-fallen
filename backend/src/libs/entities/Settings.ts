@@ -10,12 +10,12 @@ export class Settings {
   player_id!: string;
 
   @Column({
-    type: 'double',
+    type: 'double precision',
   })
   musicVolume!: number;
 
   @Column({
-    type: 'double',
+    type: 'double precision',
   })
   soundVolume!: number;
 
