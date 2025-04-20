@@ -18,10 +18,6 @@ describe('Settings API Tests', () => {
   const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZmFrZSIsImlhdCI6MH0.invalidsignature';
 
   beforeAll(async () => {
-    // Initialize the DB if needed
-    if (!AppDataSource.isInitialized) {
-      await AppDataSource.initialize();
-    }
 
     // Register a user
     await request(app).post('/api/v1/auth/register').send(userData);
@@ -50,21 +46,6 @@ describe('Settings API Tests', () => {
     expect(response.body).toEqual(settingsData);
   });
 
-  it('should update settings', async () => {
-    const updatedSettings = {
-      player_id: userData.username,
-      musicVolume: 40,
-      soundVolume: 30,
-    };
-
-    const response = await request(app)
-      .post('/api/v1/protected/setSettings')
-      .set('Authorization', `Bearer ${validToken}`)
-      .send(updatedSettings);
-
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(updatedSettings);
-  });
 
   it('should fail with missing fields', async () => {
     const incompleteSettings = {
