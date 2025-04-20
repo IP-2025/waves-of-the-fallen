@@ -1,11 +1,10 @@
 import express from "express";
 import { authenticationStep} from "../middleware/validateMiddleware";
-import { fetchSettings, setSettings } from '../controllers/settingsController';
-import { getSettingsByPlayerId } from '../repositories/settingsRepository';
+import { getSettings, setSettings } from '../controllers/settingsController';
 
 const protectedRouter = express.Router();
 
-//protectedRouter.post('/fetchSettings', fetchSettings )
+protectedRouter.post('/getSettings', authenticationStep, getSettings )
 protectedRouter.post('/setSettings', authenticationStep, setSettings);
 
 protectedRouter.get('/', authenticationStep, (req, res) => {
