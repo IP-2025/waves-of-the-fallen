@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import logger from '../logger/logger';
 import { createNewPlayer } from '../repositories/playerRepository';
 import { saveCredential } from '../repositories/credentialsRepository';
+import { Player } from '../libs/entities/Player';
 
 export async function registerUser(
   username: string,

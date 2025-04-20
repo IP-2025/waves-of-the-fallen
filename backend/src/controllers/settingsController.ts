@@ -3,7 +3,7 @@ import { getSettingsByPlayerId, upsertSettings } from '../repositories/settingsR
 import { BadRequestError, InternalServerError } from '../errors';
 
 
-export async function fetchSettings(req: Request, res: Response) {
+export async function getSettings(req: Request, res: Response) {
   const { player_id } = req.body;
 
   if (!player_id) {
@@ -13,9 +13,10 @@ export async function fetchSettings(req: Request, res: Response) {
   try {
     const settings = await getSettingsByPlayerId(player_id);
     if (!settings) {
-      return res.status(404).json({ message: 'Settings not found' });
+      res.status(404).json({ message: 'referring user not found' });
+      return;
     }
-    res.json(settings);
+    res.status(200).json(settings);
   } catch (err) {
     console.error(err);
     throw new InternalServerError('Failed to retrieve settings');
