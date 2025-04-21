@@ -20,6 +20,18 @@ public partial class Main : Node2D
 			DefaultPlayer currentPlayer = playerScene.Instantiate<DefaultPlayer>(); // spawning player
 																					//player.Joystick = GetNode<Node2D>("CanvasLayer/Joystick");
 			currentPlayer.Name = item.Id.ToString(); // id is unique so it should be the name
+			
+			/// <summary>
+			/// Instantiates the Mage class directly as a placeholder due to the absence of a class selection menu
+			/// This is a temporary solution to test gameplay with the Mage class
+			/// To test a different class, replace 'Mage' with the desired class name
+			/// </summary>
+			var mage = new Mage(); // Instantiate Mage
+			currentPlayer.Speed = mage.Speed; // Override DefaultPlayer's Speed with Mage's Speed
+			currentPlayer.MaxHealth = mage.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
+			currentPlayer.CurrentHealth = mage.CurrentHealth; // Set CurrentHealth to Mage's CurrentHealth
+			GD.Print($"Mage Speed applied: {currentPlayer.Speed}, Mage Health applied: {currentPlayer.MaxHealth}");
+			
 			AddChild(currentPlayer); // add it to the world as child node
 
 			// set players spawn pos to spawnpoint pos
