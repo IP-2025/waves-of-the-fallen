@@ -15,8 +15,6 @@ public partial class Main : Node2D
 
 		int index = 0;
 
-		// Adds WaveTimer scene to Main scene
-		AddChild(GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn").Instantiate<WaveTimer>());
 
 		foreach (var item in GameManager.Players) // adding all players to the game / map
 		{
@@ -49,6 +47,9 @@ public partial class Main : Node2D
 			}
 			index++; // next player
 		}
+		
+		// Adds WaveTimer scene to Main scene
+		AddChild(GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn").Instantiate<WaveTimer>());
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

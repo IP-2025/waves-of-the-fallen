@@ -11,6 +11,12 @@ public partial class WaveTimer : Node2D
 
 	public override void _Ready()
 	{
+		foreach (var player in GameManager.Players) {
+			if (player.Id != Multiplayer.GetUniqueId()) {
+				GetNode<Label>("/root/Node2D/" + player.Id + "/Camera2D/TimeLeft").QueueFree();
+				GetNode<Label>("/root/Node2D/" + player.Id + "/Camera2D/WaveCounter").QueueFree();
+			}
+		}
 		Timer wave_timer = GetNode<Timer>("WaveTimer");
 		wave_timer.Timeout += OnTimerTimeout;
 	}
@@ -45,7 +51,6 @@ public partial class WaveTimer : Node2D
 	private void IncreaseWaveCounter()
 	{
 		wave_counter++;
-		Debug.Print(GetTree().Root.GetTreeStringPretty());
 		GetNode<Label>("/root/Node2D/" + Multiplayer.GetUniqueId() + "/Camera2D/WaveCounter").Text = "Wave: " + wave_counter;
 	}
 }
