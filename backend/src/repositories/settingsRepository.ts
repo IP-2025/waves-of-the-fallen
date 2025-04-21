@@ -1,4 +1,4 @@
-import { AppDataSource } from '../libs/data-source';// adjust path as needed
+import { AppDataSource } from '../libs/data-source';
 import { Settings } from '../libs/entities/Settings';
 
 const settingsRepo = AppDataSource.getRepository(Settings);

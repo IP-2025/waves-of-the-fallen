@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getSettingsByPlayerId, insertSettings } from '../repositories/settingsRepository';
 import { BadRequestError, InternalServerError } from '../errors';
+import  logger  from '../logger/logger'
 
 
 export async function getSettings(req: Request, res: Response) {
@@ -18,7 +19,7 @@ export async function getSettings(req: Request, res: Response) {
     }
     res.status(200).json(settings);
   } catch (err) {
-    console.error(err);
+    logger.error("Failed to retrive settings", err)
     throw new InternalServerError('Failed to retrieve settings');
   }
 }
@@ -35,7 +36,7 @@ export async function setSettings(req: Request, res: Response) {
     const savedSettings = await insertSettings(player_id, musicVolume, soundVolume);
     res.status(200).json(savedSettings);
   } catch (err) {
-    console.error(err);
+    logger.error("Failed to save settings", err)
     throw new InternalServerError('Failed to save settings');
   }
 }
