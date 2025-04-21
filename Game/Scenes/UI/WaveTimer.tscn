@@ -6,3 +6,11 @@
 script = ExtResource("1_65k0p")
 
 [node name="WaveTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -142.0
+offset_top = -56.0
+offset_right = 145.0
+offset_bottom = 57.0
+color = Color(1, 0, 0, 1)

@@ -16,15 +16,23 @@ public partial class WaveTimer : Node2D
 	private void OnTimerTimeout()
 	{
 		second_counter++;
-		if (second_counter >= 15)
+		if (second_counter >= 5)
 		{
-			foreach (Node2D enemy in GetTree().GetNodesInGroup("Enemies"))
+			if (GetTree().GetNodesInGroup("Enemies") != null)
 			{
-				Debug.Print("Deleted enemy");
-				enemy.QueueFree();
+				Debug.Print("Starting enemy deletion");
+				foreach (Node2D enemy in GetTree().GetNodesInGroup("Enemies"))
+				{
+					Debug.Print("Deleted enemy");
+					enemy.QueueFree();
+				}
+				second_counter = 0;
+				wave_counter++;
 			}
-			second_counter = 0;
-			wave_counter++;
+			else
+			{
+				Debug.Print("No enemies found");
+			}
 		}
 	}
 

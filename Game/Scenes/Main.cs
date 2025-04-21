@@ -8,8 +8,6 @@ public partial class Main : Node2D
 	private PackedScene playerScene = (PackedScene)
 		ResourceLoader.Load("res://Scenes/Characters/default_player.tscn");
 
-	private PackedScene waveTimer = (PackedScene) ResourceLoader.Load("res://Scenes/UI/WaveTimer.tscn");
-
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -17,7 +15,8 @@ public partial class Main : Node2D
 
 		int index = 0;
 
-		waveTimer.Instantiate();
+		// Adds WaveTimer scene to Main scene
+		AddChild(GD.Load<PackedScene>("res://Scenes/UI/WaveTimer.tscn").Instantiate<WaveTimer>());
 
 		foreach (var item in GameManager.Players) // adding all players to the game / map
 		{
