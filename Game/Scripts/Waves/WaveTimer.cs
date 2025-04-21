@@ -16,7 +16,7 @@ public partial class WaveTimer : Node2D
 	private void OnTimerTimeout()
 	{
 		second_counter++;
-		if (second_counter >= 5)
+		if (second_counter >= 30)
 		{
 			if (GetTree().GetNodesInGroup("Enemies") != null)
 			{
