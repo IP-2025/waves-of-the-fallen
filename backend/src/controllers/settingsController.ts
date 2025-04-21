@@ -34,6 +34,14 @@ export async function setSettings(req: Request, res: Response) {
     throw new BadRequestError('Missing required fields');
   }
 
+  if (musicVolume > 100 || soundVolume > 100) {
+    throw new BadRequestError('Wrong values');
+  }
+
+  if (musicVolume < 0 || soundVolume < 0) {
+    throw new BadRequestError('Wrong values');
+  }
+
   try {
     const savedSettings = await insertSettings(player_id, musicVolume, soundVolume);
     res.status(200).json(savedSettings);
