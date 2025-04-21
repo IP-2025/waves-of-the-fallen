@@ -1,10 +1,13 @@
+using System;
 using System.Diagnostics;
+using System.Net.WebSockets;
 using Godot;
 
 public partial class WaveTimer : Node2D
 {
-	public int wave_counter = 0;
+	public int wave_counter = 1;
 	public int second_counter = 0;
+	public int max_time = 30;
 
 	public override void _Ready()
 	{
@@ -18,6 +21,7 @@ public partial class WaveTimer : Node2D
 		second_counter++;
 		if (second_counter >= 30)
 		{
+			IncreaseWaveCounter();
 			if (GetTree().GetNodesInGroup("Enemies") != null)
 			{
 				Debug.Print("Starting enemy deletion");
@@ -27,13 +31,21 @@ public partial class WaveTimer : Node2D
 					enemy.QueueFree();
 				}
 				second_counter = 0;
-				wave_counter++;
 			}
 			else
 			{
 				Debug.Print("No enemies found");
 			}
 		}
+		Label label = GetNode<Label>("/root/Node2D/" + Multiplayer.GetUniqueId() + "/Camera2D/TimeLeft");
+		var zeit = max_time - second_counter;
+		label.Text = zeit.ToString();
 	}
 
+	private void IncreaseWaveCounter()
+	{
+		wave_counter++;
+		Debug.Print(GetTree().Root.GetTreeStringPretty());
+		GetNode<Label>("/root/Node2D/" + Multiplayer.GetUniqueId() + "/Camera2D/WaveCounter").Text = "Wave: " + wave_counter;
+	}
 }
