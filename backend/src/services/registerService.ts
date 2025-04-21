@@ -10,23 +10,26 @@ export async function registerUser(
   username: string,
   password: string,
   mail: string
-): Promise<void> {
+): Promise<string> {
   try {
-    // Hash the password and email
     const hashedPassword = await bcrypt.hash(password, 10);
     const playerId = uuidv4();
 
-    // Create the player
-    const createdPlayer = await createNewPlayer({ player_id: playerId, username: username });
+    const createdPlayer = await createNewPlayer({
+      player_id: playerId,
+      username: username,
+    });
 
-    // Save the credential with reference to the created player
     await saveCredential({
       player_id: createdPlayer.player_id,
       email: mail,
       hashedPassword: hashedPassword,
     });
+
+    return createdPlayer.player_id; // <-- return the ID
   } catch (error) {
     logger.error('Error registering user: ', error);
     throw new InternalServerError('Failed to register user. Please try again later.');
   }
 }
+
