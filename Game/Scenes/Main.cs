@@ -16,7 +16,7 @@ public partial class Main : Node2D
 		int index = 0;
 
 		// Adds WaveTimer scene to Main scene
-		AddChild(GD.Load<PackedScene>("res://Scenes/UI/WaveTimer.tscn").Instantiate<WaveTimer>());
+		AddChild(GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn").Instantiate<WaveTimer>());
 
 		foreach (var item in GameManager.Players) // adding all players to the game / map
 		{
