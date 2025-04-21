@@ -2,10 +2,11 @@ import { Request, Response } from 'express';
 import { getSettingsByPlayerId, insertSettings } from '../repositories/settingsRepository';
 import { BadRequestError, InternalServerError } from '../errors';
 import  logger  from '../logger/logger'
+import { extractAndValidatePlayerId } from '../auth/jwt';
 
 
 export async function getSettings(req: Request, res: Response) {
-  const { player_id } = req.body;
+  const player_id = extractAndValidatePlayerId(req.headers['authorization'])
 
   if (!player_id) {
     throw new BadRequestError('Missing player_id');
@@ -26,7 +27,8 @@ export async function getSettings(req: Request, res: Response) {
 
 
 export async function setSettings(req: Request, res: Response) {
-  const { player_id, musicVolume, soundVolume } = req.body;
+  const player_id = extractAndValidatePlayerId(req.headers['authorization'])
+  const { musicVolume, soundVolume } = req.body;
 
   if (!player_id || musicVolume == null || soundVolume == null) {
     throw new BadRequestError('Missing required fields');
