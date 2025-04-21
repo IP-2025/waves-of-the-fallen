@@ -1,6 +1,6 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { JWT_SECRET } from '../core/config';
-import { InternalServerError } from '../errors';
+import { InternalServerError, UnauthorizedError } from '../errors';
 
 export function generateToken(userId: string): string {
   if (!JWT_SECRET) {
@@ -20,4 +20,21 @@ export function verifyToken(token: string): string | null {
   } catch (error) {
     return null;
   }
+}
+
+export function extractAndValidatePlayerId(authHeader?: string): string {
+  if (!authHeader) {
+    throw new UnauthorizedError('Unauthorized');
+  }
+
+  const token = authHeader.split(' ')[1];
+  if (!token) {
+    throw new UnauthorizedError('Unauthorized');
+  }
+
+  const playerId = verifyToken(token);
+  if (!playerId) {
+    throw new UnauthorizedError('Unauthorized');
+  }
+  return playerId;
 }
