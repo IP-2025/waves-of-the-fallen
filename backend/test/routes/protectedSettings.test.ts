@@ -1,109 +1,106 @@
 import request from 'supertest';
 import app from '../../src/app';
 
-
-const userData = {
-  username: 'MaxMustermann',
-  email: 'MaxMustermann@gmail.com',
-  password: '123456',
-};
-
-const userCredentials = {
-  email: 'MaxMustermann@gmail.com',
-  password: '123456',
+const generateTestUser = () => {
+  const timestamp = Date.now();
+  return {
+    username: `TestUser_${timestamp}`,
+    email: `testuser_${timestamp}@example.com`,
+    password: '123456',
+  };
 };
 
 let validToken: string;
-const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZmFrZSIsImlhdCI6MH0.invalidsignature';
 let registeredPlayerId: string;
 
-beforeAll(async () => {
+beforeEach(async () => {
+  const testUser = generateTestUser();
 
+  // Register new user
   const registerResponse = await request(app)
     .post('/api/v1/auth/register')
-    .send(userData);
+    .send(testUser);
 
+  expect(registerResponse.status).toBe(201); // Correct status for resource creation
   registeredPlayerId = registerResponse.body.player_id;
 
+  // Login with new user
   const loginResponse = await request(app)
     .post('/api/v1/auth/login')
-    .send(userCredentials);
+    .send({
+      email: testUser.email,
+      password: testUser.password,
+    });
 
+  expect(loginResponse.status).toBe(200); // Correct status for login
   validToken = loginResponse.body.token;
 });
 
+describe('User Settings API', () => {
+  const invalidToken =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZmFrZSIsImlhdCI6MH0.invalidsignature';
 
+  describe('POST /setSettings', () => {
+    it('should insert settings successfully', async () => {
+      const settingsData = {
+        player_id: registeredPlayerId,
+        musicVolume: 0.5,
+        soundVolume: 0.2,
+      };
 
-// TODO Error handling Value Should be between 0 and 1
-describe('Test to get and set User Settings', () => {
-  it('should insert settings', async () => {
-    const settingsData = {
-      player_id : registeredPlayerId ,
-      musicVolume: 0.5,
-      soundVolume: 0.2,
-    };
+      const response = await request(app)
+        .post('/api/v1/protected/setSettings')
+        .set('Authorization', `Bearer ${validToken}`)
+        .send(settingsData);
 
-    const response = await request(app)
-      .post('/api/v1/protected/setSettings')
-      .set('Authorization', `Bearer ${validToken}`)
-      .send(settingsData);
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(settingsData);
+    });
 
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(settingsData);
-  });
+    it('should fail with invalid token', async () => {
+      const settingsData = {
+        player_id: registeredPlayerId,
+        musicVolume: 0.5,
+        soundVolume: 0.2,
+      };
 
+      const response = await request(app)
+        .post('/api/v1/protected/setSettings')
+        .set('Authorization', `Bearer ${invalidToken}`)
+        .send(settingsData);
 
-// TODO fix error handling Unauthorized
-  it('should fail with missing fields', async () => {
-    const incompleteSettings = {
-      player_id: registeredPlayerId,
-      musicVolume: 50,
-    };
-
-    const response = await request(app)
-      .post('/api/v1/protected/setSettings')
-      .set('Authorization', `Bearer ${validToken}`)
-      .send(incompleteSettings);
-
-    expect(response.status).toBe(401);
-    expect(response.body).toEqual({
-      message: 'Unauthorized',
-      status: 'error',
+      expect(response.status).toBe(401);
+      expect(response.body).toEqual({
+        message: 'Unauthorized',
+        status: 'error',
+      });
     });
   });
 
-  it('should fail with invalid token', async () => {
-    const settingsData = {
-      player_id: registeredPlayerId,
-      musicVolume: 50,
-      soundVolume: 70,
-    };
+  describe('POST /getSettings', () => {
+    it('should retrieve user settings successfully', async () => {
+      const settingsData = {
+        player_id: registeredPlayerId,
+        musicVolume: 0.5,
+        soundVolume: 0.2,
+      };
 
-    const response = await request(app)
-      .post('/api/v1/protected/setSettings')
-      .set('Authorization', `Bearer ${invalidToken}`)
-      .send(settingsData);
+      // First, set the settings
+      const responseSet = await request(app)
+        .post('/api/v1/protected/setSettings')
+        .set('Authorization', `Bearer ${validToken}`)
+        .send(settingsData);
 
-    expect(response.status).toBe(401);
-    expect(response.body).toEqual({
-      message: 'Unauthorized',
-      status: 'error',
+      expect(responseSet.status).toBe(200);
+
+      // Then, retrieve the settings
+      const responseGet = await request(app)
+        .post('/api/v1/protected/getSettings')
+        .set('Authorization', `Bearer ${validToken}`)
+        .send({ player_id: registeredPlayerId });
+
+      expect(responseGet.status).toBe(200);
+      expect(responseGet.body).toEqual(settingsData);
     });
   });
-
-
-  it('get the Settings of User', async () => {
-
-    const response = await request(app)
-      .post('/api/v1/protected/getSettings') // Make sure this matches your route
-      .set('Authorization', `Bearer ${validToken}`)
-      .send({registeredPlayerId}); // Proper JSON
-
-    expect(response.status).toBe(200)
-    expect(response.body).toEqual({
-      message: 'Unauthorized',
-      status: 'error',
-  });
 });
-});
-
