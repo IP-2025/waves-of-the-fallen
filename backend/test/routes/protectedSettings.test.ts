@@ -18,9 +18,11 @@ describe('Settings API Tests', () => {
   const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZmFrZSIsImlhdCI6MH0.invalidsignature';
 
   beforeAll(async () => {
-
     // Register a user
-    await request(app).post('/api/v1/auth/register').send(userData);
+    const registerResponse = await request(app)
+      .post('/api/v1/auth/register')
+      .send(userData);
+
 
     // Log in and save token
     const loginResponse = await request(app)
@@ -85,7 +87,7 @@ describe('Settings API Tests', () => {
     });
   });
 
-  //
+
   // it('get the Settings of User', async () => {
   //
   //   const response = await request(app)
