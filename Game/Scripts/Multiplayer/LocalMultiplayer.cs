@@ -61,7 +61,7 @@ public partial class LocalMultiplayer : Control
     {
         this.address = address;
         peer = new ENetMultiplayerPeer();
-        GD.Print("Joining server...", address);
+        DebugIt("Joining server..." + address);
         peer.CreateClient(address, port); // be a client to ip and port (= server = host)
 
         // compressing packages to bring down bandwidth MUST BE SAME AS HOST / SERVER to be able to decompress
@@ -141,48 +141,57 @@ public partial class LocalMultiplayer : Control
             DebugIt((Multiplayer.GetUniqueId().ToString(), " added -> Name: ", name, " id: ", id).ToString());
         }
 
+
         DebugIt(("Totale of ", GameManager.Players.Count, " players connected").ToString());
         DebugIt("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+        // if host, show all players in the lobby in label in LocalMenu
+
+            var label =  GetParent().GetNode<RichTextLabel>("CurrentPlayers");
+            label.Text = "Start a game with:\n" + string.Join("\n", GameManager.Players.Select(player => $"Name: {player.Name} with ID: {player.Id}"));
+
+        
     }
 
-     private string GetThisIPAddress()
-  {
-    try
+    private string GetThisIPAddress()
     {
-      // Create a dummy UDP socket to determine the local IP address being used to access the internet
-      using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0)) // 0 = default protocol
-      {
-        // Set the socket to non blocking mode
-        socket.Blocking = false;
-
-        // Bind the socket to any available local IP address and a random port
-        socket.Bind(new IPEndPoint(IPAddress.Any, 0));
+        try
         {
-          // Connect to an external IP (doesnt have to be reachable), used only to let the OS determine the correct local IP
-          socket.Connect("8.8.8.8", 65530); // Googles public DNS IP
+            // Create a dummy UDP socket to determine the local IP address being used to access the internet
+            using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0)) // 0 = default protocol
+            {
+                // Set the socket to non blocking mode
+                socket.Blocking = false;
 
-          // Get the local endpoint (IP and port) of the socket after connecting
-          var endPoint = socket.LocalEndPoint as IPEndPoint;
+                // Bind the socket to any available local IP address and a random port
+                socket.Bind(new IPEndPoint(IPAddress.Any, 0));
+                {
+                    // Connect to an external IP (doesnt have to be reachable), used only to let the OS determine the correct local IP
+                    socket.Connect("8.8.8.8", 65530); // Googles public DNS IP
 
-          // Extract the local IP address from the endpoint
-          string ip = endPoint?.Address.ToString() ?? "127.0.0.1";
+                    // Get the local endpoint (IP and port) of the socket after connecting
+                    var endPoint = socket.LocalEndPoint as IPEndPoint;
 
-          DebugIt("Selected Active IP Address: " + ip);
-          return ip;
+                    // Extract the local IP address from the endpoint
+                    string ip = endPoint?.Address.ToString() ?? "127.0.0.1";
+
+                    DebugIt("Selected Active IP Address: " + ip);
+                    return ip;
+                }
+            }
         }
-      }
+        catch (Exception e)
+        {
+            GD.PrintErr("Error getting active IP address: " + e.Message);
+            // Fallback to localhost if something goes wrong
+            return "127.0.0.1";
+        }
     }
-    catch (Exception e)
-    {
-      GD.PrintErr("Error getting active IP address: " + e.Message);
-      // Fallback to localhost if something goes wrong
-      return "127.0.0.1";
-    }
-  }
 
-  public string getHostAddress(){
-    return address;
-  }
+    public string getHostAddress()
+    {
+        return address;
+    }
 
     private void DebugIt(string message)
     {

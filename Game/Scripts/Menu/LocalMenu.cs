@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -9,10 +11,12 @@ public partial class LocalMenu : Control
 {
   public bool enableDebug = false;
 
-  Button joinButton;
-  Button hostButton;
-  Button playButton;
-  LineEdit ipIO;
+  private Button joinButton;
+  private Button hostButton;
+  private Button playButton;
+  private LineEdit ipIO;
+
+  private RichTextLabel currentPlayers;
   private LocalMultiplayer LocalMultiplayer;
 
 
@@ -25,11 +29,11 @@ public partial class LocalMenu : Control
     hostButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/host");
     playButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/play");
     ipIO = GetNode<LineEdit>("IP_IO");
+    currentPlayers = GetNode<RichTextLabel>("CurrentPlayers");
 
     // disable play button by default
     playButton.Visible = false;
     playButton.Disabled = true;
-
   }
   private void _on_button_back_local_pressed()
   {

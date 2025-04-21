@@ -300,6 +300,16 @@ offset_right = 732.152
 offset_bottom = 545.896
 placeholder_text = "Enter IP to join"
 
+[node name="CurrentPlayers" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 445.0
+offset_top = 50.0
+offset_right = 915.0
+offset_bottom = 187.0
+text = "
+
+"
+
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_local_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/join" to="." method="_on_join_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/host" to="." method="_on_host_button_pressed"]
