@@ -7,7 +7,7 @@ export async function getSettingsByPlayerId(playerId: string) {
   return await settingsRepo.findOneBy({ player_id: playerId });
 }
 
-export async function upsertSettings(playerId: string, musicVolume: number, soundVolume: number) {
+export async function insertSettings(playerId: string, musicVolume: number, soundVolume: number) {
   const existing = await getSettingsByPlayerId(playerId);
 
   if (existing) {

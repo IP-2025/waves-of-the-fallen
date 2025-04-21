@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getSettingsByPlayerId, upsertSettings } from '../repositories/settingsRepository';
+import { getSettingsByPlayerId, insertSettings } from '../repositories/settingsRepository';
 import { BadRequestError, InternalServerError } from '../errors';
 
 
@@ -32,7 +32,7 @@ export async function setSettings(req: Request, res: Response) {
   }
 
   try {
-    const savedSettings = await upsertSettings(player_id, musicVolume, soundVolume);
+    const savedSettings = await insertSettings(player_id, musicVolume, soundVolume);
     res.status(200).json(savedSettings);
   } catch (err) {
     console.error(err);
