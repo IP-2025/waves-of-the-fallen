@@ -9,10 +9,11 @@
 size = Vector2(60, 114)
 
 [sub_resource type="LabelSettings" id="LabelSettings_1h72i"]
-font_size = 37
+font_size = 42
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_jig1i"]
+font_size = 42
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kjvlq"]
@@ -44,10 +45,10 @@ anchor_left = -9.675
 anchor_top = -6.85
 anchor_right = -9.675
 anchor_bottom = -6.85
-offset_left = -22.0
+offset_left = -23.0
 offset_top = -323.0
-offset_right = 20.0
-offset_bottom = -164.0
+offset_right = 25.0
+offset_bottom = -82.0
 text = "30
 
 
@@ -56,10 +57,10 @@ label_settings = SubResource("LabelSettings_1h72i")
 horizontal_alignment = 1
 
 [node name="WaveCounter" type="Label" parent="Camera2D"]
-offset_left = -563.0
+offset_left = -559.0
 offset_top = -323.0
-offset_right = -499.0
-offset_bottom = -286.0
+offset_right = -402.0
+offset_bottom = -265.0
 text = "Wave: 1"
 label_settings = SubResource("LabelSettings_jig1i")
 vertical_alignment = 1
