@@ -2,10 +2,12 @@ using System;
 using System.Linq;
 using Godot;
 using System.Diagnostics;
+using System.Net.Sockets;
+using System.Net;
 public partial class LocalMultiplayer : Control
 {
     private int port = 9999; // multiplayer port
-    private string address = "127.0.0.1"; // 127.0.0.1 = localhost
+    private string address;
     private ENetMultiplayerPeer peer;
     public bool enableDebug = false;
 
@@ -18,6 +20,8 @@ public partial class LocalMultiplayer : Control
         Multiplayer.ConnectedToServer += ConnectedToServer;
         Multiplayer.ConnectionFailed += ConnectionFailed;
         Name = Multiplayer.GetUniqueId().ToString();
+
+        MultiplayerSynchronizer multiplayerSynchronizer = new MultiplayerSynchronizer();
     }
 
     // runs if connection fails, runs only on client
@@ -53,9 +57,11 @@ public partial class LocalMultiplayer : Control
         DebugIt("Player Connected: " + id.ToString());
     }
 
-    public void Join()
+    public void Join(string address)
     {
+        this.address = address;
         peer = new ENetMultiplayerPeer();
+        GD.Print("Joining server...", address);
         peer.CreateClient(address, port); // be a client to ip and port (= server = host)
 
         // compressing packages to bring down bandwidth MUST BE SAME AS HOST / SERVER to be able to decompress
@@ -68,6 +74,7 @@ public partial class LocalMultiplayer : Control
 
     public void Host()
     {
+        address = GetThisIPAddress();
         peer = new ENetMultiplayerPeer();
         var error = peer.CreateServer(port);
         if (error != Error.Ok)
@@ -137,6 +144,45 @@ public partial class LocalMultiplayer : Control
         DebugIt(("Totale of ", GameManager.Players.Count, " players connected").ToString());
         DebugIt("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     }
+
+     private string GetThisIPAddress()
+  {
+    try
+    {
+      // Create a dummy UDP socket to determine the local IP address being used to access the internet
+      using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0)) // 0 = default protocol
+      {
+        // Set the socket to non blocking mode
+        socket.Blocking = false;
+
+        // Bind the socket to any available local IP address and a random port
+        socket.Bind(new IPEndPoint(IPAddress.Any, 0));
+        {
+          // Connect to an external IP (doesnt have to be reachable), used only to let the OS determine the correct local IP
+          socket.Connect("8.8.8.8", 65530); // Googles public DNS IP
+
+          // Get the local endpoint (IP and port) of the socket after connecting
+          var endPoint = socket.LocalEndPoint as IPEndPoint;
+
+          // Extract the local IP address from the endpoint
+          string ip = endPoint?.Address.ToString() ?? "127.0.0.1";
+
+          DebugIt("Selected Active IP Address: " + ip);
+          return ip;
+        }
+      }
+    }
+    catch (Exception e)
+    {
+      GD.PrintErr("Error getting active IP address: " + e.Message);
+      // Fallback to localhost if something goes wrong
+      return "127.0.0.1";
+    }
+  }
+
+  public string getHostAddress(){
+    return address;
+  }
 
     private void DebugIt(string message)
     {

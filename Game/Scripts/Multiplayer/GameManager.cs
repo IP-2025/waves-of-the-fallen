@@ -5,7 +5,7 @@ using Godot;
 // DO THIS!!!
 // go to Godot -> Project (top menu bar) -> Project settings -> Globals -> Autoload -> add GameManager.cs
 // This file is for centralized, global player management. Because thats what game managers do
-
+// This class manages the syncoronization of the game state between the server and clients
 
 public partial class GameManager : Node
 {
@@ -18,3 +18,7 @@ public partial class GameManager : Node
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta) { }
 }
+
+
+
+
