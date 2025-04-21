@@ -8,12 +8,17 @@ public partial class Main : Node2D
 	private PackedScene playerScene = (PackedScene)
 		ResourceLoader.Load("res://Scenes/Characters/default_player.tscn");
 
+	private PackedScene waveTimer = (PackedScene) ResourceLoader.Load("res://Scenes/UI/WaveTimer.tscn");
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		Engine.MaxFps = 60; // important! performance...
 
 		int index = 0;
+
+		waveTimer.Instantiate();
+
 		foreach (var item in GameManager.Players) // adding all players to the game / map
 		{
 			DebugIt(("Name: ", item.Name, " Multiplayer UniqueId: ", item.Id).ToString());
@@ -26,10 +31,10 @@ public partial class Main : Node2D
 			/// This is a temporary solution to test gameplay with the Mage class
 			/// To test a different class, replace 'Mage' with the desired class name
 			/// </summary>
-			var mage = new Mage(); // Instantiate Mage
-			currentPlayer.Speed = mage.Speed; // Override DefaultPlayer's Speed with Mage's Speed
-			currentPlayer.MaxHealth = mage.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
-			currentPlayer.CurrentHealth = mage.CurrentHealth; // Set CurrentHealth to Mage's CurrentHealth
+			var playerClass = new Assassin(); // Instantiate Mage
+			currentPlayer.Speed = playerClass.Speed; // Override DefaultPlayer's Speed with Mage's Speed
+			currentPlayer.MaxHealth = playerClass.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
+			currentPlayer.CurrentHealth = playerClass.CurrentHealth; // Set CurrentHealth to Mage's CurrentHealth
 			GD.Print($"Mage Speed applied: {currentPlayer.Speed}, Mage Health applied: {currentPlayer.MaxHealth}");
 			
 			AddChild(currentPlayer); // add it to the world as child node

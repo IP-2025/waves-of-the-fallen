@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://by74h3mjd51pu"]
+
+[ext_resource type="Script" uid="uid://b74ibi3h5i5ga" path="res://Scripts/UI/WaveTimer.cs" id="1_65k0p"]
+
+[node name="WaveTimer" type="Node2D"]
+script = ExtResource("1_65k0p")
+
+[node name="WaveTimer" type="Timer" parent="."]

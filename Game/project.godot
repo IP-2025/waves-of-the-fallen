@@ -18,6 +18,7 @@ config/icon="res://Assets/Characters/place_holder/enemy_placeholder.svg"
 [autoload]
 
 MenuBackgroundMusic="*res://Scenes/Music/menuBackgroundMusic.tscn"
+GameManager="*res://Scripts/Multiplayer/GameManager.cs"
 
 [display]
 
@@ -31,6 +32,7 @@ project/assembly_name="Game"
 [global_group]
 
 PlayerSpawnPoints=""
+Enemies=""
 
 [input]
 
