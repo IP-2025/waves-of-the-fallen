@@ -13,28 +13,32 @@ const userCredentials = {
   password: '123456',
 };
 
-describe('Settings API Tests', () => {
-  let validToken: string;
-  const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZmFrZSIsImlhdCI6MH0.invalidsignature';
+let validToken: string;
+const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZmFrZSIsImlhdCI6MH0.invalidsignature';
+let registeredPlayerId: string;
 
-  beforeAll(async () => {
-    // Register a user
-    const registerResponse = await request(app)
-      .post('/api/v1/auth/register')
-      .send(userData);
+beforeAll(async () => {
+
+  const registerResponse = await request(app)
+    .post('/api/v1/auth/register')
+    .send(userData);
+
+  registeredPlayerId = registerResponse.body.player_id;
+
+  const loginResponse = await request(app)
+    .post('/api/v1/auth/login')
+    .send(userCredentials);
+
+  validToken = loginResponse.body.token;
+});
 
 
-    // Log in and save token
-    const loginResponse = await request(app)
-      .post('/api/v1/auth/login')
-      .send(userCredentials);
 
-    validToken = loginResponse.body.token;
-  });
 // TODO Error handling Value Should be between 0 and 1
+describe('Test to get and set User Settings', () => {
   it('should insert settings', async () => {
     const settingsData = {
-      player_id: userData.username,
+      player_id : registeredPlayerId ,
       musicVolume: 0.5,
       soundVolume: 0.2,
     };
@@ -52,7 +56,7 @@ describe('Settings API Tests', () => {
 // TODO fix error handling Unauthorized
   it('should fail with missing fields', async () => {
     const incompleteSettings = {
-      player_id: userData.username,
+      player_id: registeredPlayerId,
       musicVolume: 50,
     };
 
@@ -70,7 +74,7 @@ describe('Settings API Tests', () => {
 
   it('should fail with invalid token', async () => {
     const settingsData = {
-      player_id: userData.username,
+      player_id: registeredPlayerId,
       musicVolume: 50,
       soundVolume: 70,
     };
@@ -88,15 +92,18 @@ describe('Settings API Tests', () => {
   });
 
 
-  // it('get the Settings of User', async () => {
-  //
-  //   const response = await request(app)
-  //     .post('/api/v1/protected/getSettings') // Make sure this matches your route
-  //     .set('Authorization', `Bearer ${validToken}`)
-  //     .send({}); // Proper JSON
-  //
-  //   expect(response.status).toBe(200);
-  //   expect(response.body).toEqual();
-  // });
+  it('get the Settings of User', async () => {
 
+    const response = await request(app)
+      .post('/api/v1/protected/getSettings') // Make sure this matches your route
+      .set('Authorization', `Bearer ${validToken}`)
+      .send({registeredPlayerId}); // Proper JSON
+
+    expect(response.status).toBe(200)
+    expect(response.body).toEqual({
+      message: 'Unauthorized',
+      status: 'error',
+  });
 });
+});
+
