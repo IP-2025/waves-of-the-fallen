@@ -2,6 +2,7 @@ import { DataSource } from 'typeorm';
 import { Player } from './entities/Player';
 import { Credential } from './entities/Credential';
 import { Settings } from './entities/Settings';
+import { Character } from './entities/Character';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -12,6 +13,6 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_DATABASE || 'backend_db',
   synchronize: true,
   logging: false,
-  entities: [Player, Credential, Settings], // Include your entities here
+  entities: [Player, Credential, Settings,Character], // Include your entities here
   migrations: [],
 });
