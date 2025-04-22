@@ -4,8 +4,18 @@ import fs from 'fs';
 
 export async function innitAllCharacters(): Promise<void> {
   const chars = readCharacters();
+  const allCharacters = await getAllCharactersRepo();
 
-  await insertAllCharacters(chars);
+  let equal = chars.every((item, i) => {
+    let keys = Object.keys(item) as (keyof Character)[];
+    return (
+      keys.length === Object.keys(allCharacters[i]).length &&
+      keys.every((key) => allCharacters[i][key] === item[key])
+    );
+  });
+  if (!equal) {
+    await insertAllCharacters(chars);
+  }
 }
 
 export async function getAllCharacters(): Promise<void> {
