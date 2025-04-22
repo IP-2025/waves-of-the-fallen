@@ -1,0 +1,32 @@
+{
+  "characters": [
+    {
+      "name": "Archer",
+      "Speed": 100,
+      "Health": 100,
+      "Dexterity": 100,
+      "Intelligence": 100
+    },
+    {
+      "name": "Assassin",
+      "Speed": 100,
+      "Health": 100,
+      "Dexterity": 100,
+      "Intelligence": 100
+    },
+    {
+      "name": "Knight",
+      "Speed": 100,
+      "Health": 100,
+      "Dexterity": 100,
+      "Intelligence": 100
+    },
+    {
+      "name": "Mage",
+      "Speed": 100,
+      "Health": 100,
+      "Dexterity": 100,
+      "Intelligence": 100
+    }
+  ]
+}
