@@ -2,24 +2,40 @@ import { Character } from '../libs/entities/Character';
 import { insertAllCharacters, getAllCharactersRepo } from '../repositories/characterRepository';
 import fs from 'fs';
 
-export async function innitAllCharacters(): Promise<void> {
-  const chars = readCharacters();
-  const allCharacters = await getAllCharactersRepo();
+export async function innitAllCharacters(chars?: Character[]): Promise<void> {
+  const characters = chars ?? readCharacters();
+  const allCharacters = await getAllCharactersRepo() || [];
 
-  let equal = chars.every((item, i) => {
-    let keys = Object.keys(item) as (keyof Character)[];
+  // 1) If DB has no rows yet, just insert all characters
+  if (allCharacters.length === 0) {
+    await insertAllCharacters(characters);
+    return;
+  }
+
+  // 2) If lengths differ, we know they're not equal, so insert
+  if (allCharacters.length !== characters.length) {
+    await insertAllCharacters(characters);
+    return;
+  }
+
+  // 3) Now safe to compare item‑by‑item
+  const equal = characters.every((item, i) => {
+    const src = allCharacters[i]!;
+    const keys = Object.keys(item) as (keyof Character)[];
     return (
-      keys.length === Object.keys(allCharacters[i]).length &&
-      keys.every((key) => allCharacters[i][key] === item[key])
+        keys.length === Object.keys(src).length &&
+        keys.every((key) => src[key] === item[key])
     );
   });
+
   if (!equal) {
-    await insertAllCharacters(chars);
+    await insertAllCharacters(characters);
   }
 }
 
-export async function getAllCharacters(): Promise<void> {
-  await getAllCharactersRepo();
+export async function getAllCharacters(): Promise<Character[]> {
+  const chars = await getAllCharactersRepo();
+  return chars;
 }
 
 function readCharacters(): Character[] {

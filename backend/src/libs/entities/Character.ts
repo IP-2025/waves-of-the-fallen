@@ -8,7 +8,7 @@ export class Character {
     nullable: false,
     unique: true,
   })
-  characterId!: string;
+  characterId!: number;
 
   @Column({
     type: 'varchar',
@@ -21,23 +21,23 @@ export class Character {
     type: 'int',
     nullable: false,
   })
-  speed!: string;
+  speed!: number;
 
   @Column({
     type: 'int',
     nullable: false,
   })
-  health!: string;
+  health!: number;
 
   @Column({
     type: 'int',
     nullable: false,
   })
-  dexterity!: string;
+  dexterity!: number;
 
   @Column({
     type: 'int',
     nullable: false,
   })
-  intelligence!: string;
+  intelligence!: number;
 }
