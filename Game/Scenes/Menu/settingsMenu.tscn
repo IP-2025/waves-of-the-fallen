@@ -151,6 +151,21 @@ theme_override_constants/margin_bottom = 50
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LabelMusicVolume" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Music"
+
+[node name="CheckBoxMusicEnabled" type="CheckBox" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
@@ -161,7 +176,8 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Music Volume"
 
-[node name="HSliderMusic" type="HSlider" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+[node name="SliderMusicVolume" type="HSlider" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -188,4 +204,5 @@ text = "button
 "
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_settings_pressed"]
-[connection signal="value_changed" from="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3/HSliderMusic" to="." method="_on_h_slider_music_value_changed"]
+[connection signal="toggled" from="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer4/CheckBoxMusicEnabled" to="." method="_on_check_box_music_enabled_toggled"]
+[connection signal="value_changed" from="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3/SliderMusicVolume" to="." method="_on_h_slider_music_value_changed"]
