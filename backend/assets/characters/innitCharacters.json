@@ -1,6 +1,7 @@
 {
   "characters": [
     {
+      "characterId": 1,
       "name": "Archer",
       "Speed": 100,
       "Health": 100,
@@ -8,6 +9,7 @@
       "Intelligence": 100
     },
     {
+      "characterId": 2,
       "name": "Assassin",
       "Speed": 100,
       "Health": 100,
@@ -15,6 +17,7 @@
       "Intelligence": 100
     },
     {
+      "characterId": 3,
       "name": "Knight",
       "Speed": 100,
       "Health": 100,
@@ -22,6 +25,7 @@
       "Intelligence": 100
     },
     {
+      "characterId": 4,
       "name": "Mage",
       "Speed": 100,
       "Health": 100,
