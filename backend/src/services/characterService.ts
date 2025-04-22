@@ -53,3 +53,7 @@ function readCharacters(): Character[] {
   }
   return toInsertList;
 }
+//TODO Implement Stuff
+function getAllUnlockedCharacters() {
+
+}
