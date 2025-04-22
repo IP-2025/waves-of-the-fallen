@@ -198,11 +198,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Language"
 
-[node name="Button" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="ButtonLanguage" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
-text = "button
-"
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_settings_pressed"]
 [connection signal="toggled" from="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer4/CheckBoxMusicEnabled" to="." method="_on_check_box_music_enabled_toggled"]
 [connection signal="value_changed" from="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3/SliderMusicVolume" to="." method="_on_h_slider_music_value_changed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/ButtonLanguage" to="." method="_on_button_language_pressed"]
