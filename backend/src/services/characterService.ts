@@ -1,10 +1,10 @@
 import { Character } from '../libs/entities/Character';
-import { insertAllCharacters, getAllCharactersRepo } from '../repositories/characterRepository';
+import { getAllCharactersRepo, insertAllCharacters } from '../repositories/characterRepository';
 import fs from 'fs';
 
 export async function innitAllCharacters(chars?: Character[]): Promise<void> {
   const characters = chars ?? readCharacters();
-  const allCharacters = await getAllCharactersRepo() || [];
+  const allCharacters = (await getAllCharactersRepo()) || [];
 
   // 1) If DB has no rows yet, just insert all characters
   if (allCharacters.length === 0) {
@@ -22,10 +22,7 @@ export async function innitAllCharacters(chars?: Character[]): Promise<void> {
   const equal = characters.every((item, i) => {
     const src = allCharacters[i]!;
     const keys = Object.keys(item) as (keyof Character)[];
-    return (
-        keys.length === Object.keys(src).length &&
-        keys.every((key) => src[key] === item[key])
-    );
+    return keys.length === Object.keys(src).length && keys.every((key) => src[key] === item[key]);
   });
 
   if (!equal) {
@@ -34,8 +31,7 @@ export async function innitAllCharacters(chars?: Character[]): Promise<void> {
 }
 
 export async function getAllCharacters(): Promise<Character[]> {
-  const chars = await getAllCharactersRepo();
-  return chars;
+  return await getAllCharactersRepo();
 }
 
 function readCharacters(): Character[] {
@@ -54,6 +50,4 @@ function readCharacters(): Character[] {
   return toInsertList;
 }
 //TODO Implement Stuff
-function getAllUnlockedCharacters() {
-
-}
+function getAllUnlockedCharacters() {}
