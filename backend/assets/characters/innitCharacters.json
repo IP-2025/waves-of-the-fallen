@@ -3,34 +3,34 @@
     {
       "characterId": 1,
       "name": "Archer",
-      "Speed": 100,
-      "Health": 100,
-      "Dexterity": 100,
-      "Intelligence": 100
+      "speed": 100,
+      "health": 100,
+      "dexterity": 100,
+      "intelligence": 100
     },
     {
       "characterId": 2,
       "name": "Assassin",
-      "Speed": 100,
-      "Health": 100,
-      "Dexterity": 100,
-      "Intelligence": 100
+      "speed": 100,
+      "health": 100,
+      "dexterity": 100,
+      "intelligence": 100
     },
     {
       "characterId": 3,
       "name": "Knight",
-      "Speed": 100,
-      "Health": 100,
-      "Dexterity": 100,
-      "Intelligence": 100
+      "speed": 100,
+      "health": 100,
+      "dexterity": 100,
+      "intelligence": 100
     },
     {
       "characterId": 4,
       "name": "Mage",
-      "Speed": 100,
-      "Health": 100,
-      "Dexterity": 100,
-      "Intelligence": 100
+      "speed": 100,
+      "health": 100,
+      "dexterity": 100,
+      "intelligence": 100
     }
   ]
 }
