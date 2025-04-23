@@ -14,13 +14,11 @@ size = Vector2(86, 72)
 radius = 5206.02
 
 [node name="RangedEnemy" type="CharacterBody2D"]
-collision_layer = 4
-collision_mask = 5
+collision_layer = 16
 script = ExtResource("1_1deiu")
 speed = 150.0
 
 [node name="Health" type="Node2D" parent="."]
-scale = Vector2(1, 1)
 script = ExtResource("2_u2wu2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

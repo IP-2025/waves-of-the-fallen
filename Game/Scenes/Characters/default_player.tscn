@@ -14,7 +14,7 @@ properties/0/spawn = true
 properties/0/replication_mode = 1
 
 [node name="DefaultPlayer" type="CharacterBody2D"]
-collision_mask = 8
+collision_mask = 272
 collision_priority = 2.0
 script = ExtResource("1_y2kgl")
 
