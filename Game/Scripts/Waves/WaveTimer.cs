@@ -1,14 +1,11 @@
-using System;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
-using System.Net.WebSockets;
 using Godot;
 
 public partial class WaveTimer : Node2D
 {
 	public int waveCounter = 1;
 	public int secondCounter = 0;
-	public int maxTime = 5;
+	public int maxTime = 30;
 	private Timer waveTimer;
 
 	public override void _Ready()
