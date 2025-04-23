@@ -11,7 +11,6 @@ public partial class MenuBackgroundMusic : AudioStreamPlayer
 		bool musicEnabled = (bool)settingsManager.LoadSettingSection("Audio")["Enabled"];
 		float musicVolume = (float)settingsManager.LoadSettingSection("Audio")["Volume"];
 		AudioServer.SetBusVolumeDb(menuBackgroundMusicBusIndex, Mathf.LinearToDb(musicVolume));
-		VolumeDb = Mathf.LinearToDb(musicVolume);
 		AudioServer.SetBusMute(menuBackgroundMusicBusIndex, !musicEnabled);
 		Play();
 		Autoplay = true;
