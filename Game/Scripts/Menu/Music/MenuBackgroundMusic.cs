@@ -14,5 +14,6 @@ public partial class MenuBackgroundMusic : AudioStreamPlayer
 		VolumeDb = Mathf.LinearToDb(musicVolume);
 		AudioServer.SetBusMute(menuBackgroundMusicBusIndex, !musicEnabled);
 		Play();
+		Autoplay = true;
 	}
 }
