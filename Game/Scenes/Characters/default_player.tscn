@@ -46,22 +46,19 @@ anchor_top = -6.85
 anchor_right = -9.675
 anchor_bottom = -6.85
 offset_left = -23.0
-offset_top = -323.0
+offset_top = -265.0
 offset_right = 25.0
-offset_bottom = -82.0
-text = "30
-
-
-"
+offset_bottom = -207.0
+grow_horizontal = 2
 label_settings = SubResource("LabelSettings_1h72i")
 horizontal_alignment = 1
 
 [node name="WaveCounter" type="Label" parent="Camera2D"]
-offset_left = -559.0
-offset_top = -323.0
-offset_right = -402.0
-offset_bottom = -265.0
-text = "Wave: 1"
+offset_left = -75.0
+offset_top = -319.0
+offset_right = 77.0
+offset_bottom = -261.0
+grow_horizontal = 2
 label_settings = SubResource("LabelSettings_jig1i")
 vertical_alignment = 1
 
