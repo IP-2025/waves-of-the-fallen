@@ -17,8 +17,8 @@ config/icon="res://Assets/Characters/place_holder/enemy_placeholder.svg"
 
 [autoload]
 
-SettingsManager="*res://Scripts/Settings/SettingsManager.cs"
 MenuBackgroundMusic="*res://Scenes/Music/menuBackgroundMusic.tscn"
+SettingsManager="*res://Scripts/Settings/SettingsManager.cs"
 
 [display]
 
@@ -59,6 +59,18 @@ move_down={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194322,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Weapons"
+2d_physics/layer_3="Projectiles Player"
+2d_physics/layer_4="Abilities Player"
+2d_physics/layer_5="Enemies"
+2d_physics/layer_6="Projectiles Enemies"
+2d_physics/layer_7="Map Ground"
+2d_physics/layer_8="Map Objects"
+2d_physics/layer_9="Map Border"
 
 [rendering]
 
