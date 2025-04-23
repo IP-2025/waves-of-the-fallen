@@ -5,7 +5,6 @@ using Godot;
 public partial class SettingsMenu : Control
 {
 	private SettingsManager settingsManager;
-	private HSlider sliderMusic;
 	private Button buttonLanguage;
 	private int menuBackgroundMusicBusIndex;
 
@@ -16,17 +15,16 @@ public partial class SettingsMenu : Control
 	public override void _Ready()
 	{
 		settingsManager = GetNode<SettingsManager>("/root/SettingsManager");
-		audioSettings = settingsManager.LoadSettingSection("Audio");
 		CheckBox musicEnabledCheckbox = GetNode<CheckBox>("%CheckBoxMusicEnabled");
-		sliderMusic = GetNode<HSlider>("%SliderMusicVolume");
+		HSlider sliderMusic = GetNode<HSlider>("%SliderMusicVolume");
+    buttonLanguage = GetNode<Button>("%ButtonLanguage");
+    audioSettings = settingsManager.LoadSettingSection("Audio");
 		menuBackgroundMusicBusIndex = AudioServer.GetBusIndex("MenuBackgroundMusicBus");
 		sliderMusic.Value = Mathf.DbToLinear(
 			AudioServer.GetBusVolumeDb(menuBackgroundMusicBusIndex)
 		);
 		musicEnabledCheckbox.ButtonPressed = (bool)audioSettings["Enabled"];
 		AudioServer.SetBusMute(menuBackgroundMusicBusIndex, !(bool)audioSettings["Enabled"]);
-
-		buttonLanguage = GetNode<Button>("%ButtonLanguage");
 		buttonLanguage.Text = (string)settingsManager.LoadSettingSection("General")["Language"];
 	}
 
