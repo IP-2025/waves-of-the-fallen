@@ -2,8 +2,8 @@
 *.csproj.user
 *.sln.DotSettings
 *.csproj.DotSettings
-.import/
-.export/
+*.import
+*.export
 export.cfg
 export_presets.cfg
 .mono/

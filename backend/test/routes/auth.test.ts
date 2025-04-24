@@ -24,9 +24,10 @@ describe('Test POST /register', () => {
       .send(userData);
 
     expect(response.status).toBe(201);
-    expect(response.body).toEqual({ message: `User ${userData.username} registered` });
+    expect(response.body).toMatchObject({ message: `User ${userData.username} registered` });
+    expect(response.body).toHaveProperty('player_id');
+    expect(typeof response.body.player_id).toBe('string');
 
-    // Retrieve the user from the database
     const playerRepo = AppDataSource.getRepository(Player);
     const user = await playerRepo.findOneBy({ username: userData.username });
 
@@ -36,34 +37,40 @@ describe('Test POST /register', () => {
 });
 
 describe('Test POST /login', () => {
-  it('should insert a new user and login should be possible with it', async () => {
-
-    // Send the registration request
+  it('should login a registered user and fail for invalid credentials', async () => {
+    // Register a new user
     const registrateResponse = await request(app)
       .post('/api/v1/auth/register')
       .send(userData);
 
+    expect(registrateResponse.status).toBe(201);
+    expect(registrateResponse.body).toHaveProperty('player_id');
+
+    // Login with valid credentials
     const loginResponse = await request(app)
       .post('/api/v1/auth/login')
       .send(userCredentials);
 
+    expect(loginResponse.status).toBe(200);
+    expect(loginResponse.body).toMatchObject({
+      message: `Login successful for ${userData.email}`,
+    });
+    expect(loginResponse.body).toHaveProperty('token');
+    expect(typeof loginResponse.body.token).toBe('string');
+
+    // Login with invalid credentials
     const errorLoginResponse = await request(app)
       .post('/api/v1/auth/login')
       .send(wrongCredentials);
 
-    expect(errorLoginResponse.status).toBe(404);
-    expect(errorLoginResponse.body).toEqual({
-        message: `Invalid password.`,
-        status: 'error'
-      }
-    );
-    expect(loginResponse.status).toBe(200);
-    expect(loginResponse.body).toEqual({
-      message: `Login successful for ${userData.email}`,
-      token: expect.any(String),
+    expect(errorLoginResponse.status).toBe(404); // Or whatever your app returns (401 is also common)
+    expect(errorLoginResponse.body).toMatchObject({
+      message: 'Invalid password.',
+      status: 'error',
     });
   });
 });
+
 
 
 describe('Test protected routes with token', () => {
