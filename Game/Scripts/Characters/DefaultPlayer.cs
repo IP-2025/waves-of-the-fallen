@@ -121,6 +121,10 @@ public partial class DefaultPlayer : CharacterBody2D
 		{
 			Debug.Print(message);
 		}
+	}	
+	public virtual void Die()
+	{
+		GD.Print("Default death behavior – no animation");
+		QueueFree();
 	}
-	
 }

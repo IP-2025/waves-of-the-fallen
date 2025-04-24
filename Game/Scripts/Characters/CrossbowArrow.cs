@@ -31,12 +31,7 @@ public partial class CrossbowArrow : Area2D
 
 		if (healthNode != null)
 		{
-			//Set in Coment because, it accesed the health class for the player.
-			//Temporarly no enemie kill possible.
-			//healthNode.Damage(100);
+			healthNode.Damage(100);
 		}
 	}
-
-	
-	
 }
