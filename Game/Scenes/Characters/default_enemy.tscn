@@ -15,6 +15,7 @@ radius = 4826.92
 
 [node name="BasicEnemy" type="CharacterBody2D"]
 collision_layer = 16
+collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_fecjr")
 
@@ -29,11 +30,13 @@ texture = ExtResource("2_lal1l")
 shape = SubResource("CircleShape2D_r4aor")
 
 [node name="AttackRange" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
 shape = SubResource("RectangleShape2D_6kac6")
 
 [node name="detection_area" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
 shape = SubResource("CircleShape2D_6cefa")
