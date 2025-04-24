@@ -8,10 +8,10 @@ import { innitAllCharacters } from './services/characterService';
 const port = PORT || 3000;
 
 AppDataSource.initialize()
-  .then(() => {
+  .then(async () => {
+    await innitAllCharacters()
     app.listen(port, () => {
       logger.info(`🚀 Server screaming on port ${port}`);
-      innitAllCharacters()
     });
   })
   .catch((error) => {
