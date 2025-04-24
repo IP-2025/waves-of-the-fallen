@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cffgskcms870o"]
+[gd_scene load_steps=9 format=3 uid="uid://cffgskcms870o"]
 
 [ext_resource type="Script" uid="uid://bdkp0e6ivq2b5" path="res://Scripts/Characters/DefaultPlayer.cs" id="1_y2kgl"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_kjvlq"]
@@ -7,6 +7,14 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2kgl"]
 size = Vector2(60, 114)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1h72i"]
+font_size = 42
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jig1i"]
+font_size = 42
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kjvlq"]
 properties/0/path = NodePath(".:position")
@@ -30,6 +38,29 @@ position = Vector2(6, 41)
 shape = SubResource("RectangleShape2D_y2kgl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="TimeLeft" type="Label" parent="Camera2D"]
+anchors_preset = -1
+anchor_left = -9.675
+anchor_top = -6.85
+anchor_right = -9.675
+anchor_bottom = -6.85
+offset_left = -23.0
+offset_top = -265.0
+offset_right = 25.0
+offset_bottom = -207.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_1h72i")
+horizontal_alignment = 1
+
+[node name="WaveCounter" type="Label" parent="Camera2D"]
+offset_left = -75.0
+offset_top = -319.0
+offset_right = 77.0
+offset_bottom = -261.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_jig1i")
+vertical_alignment = 1
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_kjvlq")
