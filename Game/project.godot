@@ -62,6 +62,18 @@ move_down={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Weapons"
+2d_physics/layer_3="Projectiles Player"
+2d_physics/layer_4="Abilities Player"
+2d_physics/layer_5="Enemies"
+2d_physics/layer_6="Projectiles Enemies"
+2d_physics/layer_7="Map Ground"
+2d_physics/layer_8="Map Objects"
+2d_physics/layer_9="Map Border"
+
 [rendering]
 
 renderer/rendering_method="mobile"
