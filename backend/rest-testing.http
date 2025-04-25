@@ -1,13 +1,12 @@
 ### GET request to example server
-GET http://localhost:3000/api/healthz
-
+GET http://localhost:3000/api/v1/healthz
 ###
 
 POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-  "mail": "test´@mail.com",
+  "mail": "test@mail.com",
   "username": "newUser",
   "password": "newPassword"
 }
@@ -20,3 +19,7 @@ Content-Type: application/json
   "username": "testUser",
   "password": "testPassword"
 }
+
+###
+
+POST http://localhost:3000/api/v1/protected/getAllCharacters
