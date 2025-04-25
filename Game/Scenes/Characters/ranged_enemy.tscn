@@ -14,8 +14,7 @@ size = Vector2(86, 72)
 radius = 5206.02
 
 [node name="RangedEnemy" type="CharacterBody2D" groups=["Enemies"]]
-collision_layer = 4
-collision_mask = 5
+collision_layer = 16
 script = ExtResource("1_1deiu")
 speed = 150.0
 
