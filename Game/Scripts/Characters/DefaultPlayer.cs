@@ -1,12 +1,17 @@
-using Godot;
 using System;
 using System.Diagnostics;
+using Godot;
+
 public partial class DefaultPlayer : CharacterBody2D
 {
-	
-	[Export] public float Speed { get; set; }
-	[Export] public int MaxHealth { get; set; }
-	[Export] public int CurrentHealth { get; set; }
+	[Export]
+	public float Speed { get; set; }
+
+	[Export]
+	public int MaxHealth { get; set; }
+
+	[Export]
+	public int CurrentHealth { get; set; }
 
 	public Node2D Joystick { get; set; }
 	private Camera2D camera;
@@ -40,20 +45,28 @@ public partial class DefaultPlayer : CharacterBody2D
 			GD.PrintErr("Multiplayer Node was not found");
 		}
 
+		if (Multiplayer.IsServer())
+		{
+			var spawnerScene = GD.Load<PackedScene>("res://Scenes/Enemies/SpawnEnemies.tscn");
+			if (spawnerScene != null)
+			{
+				var spawner = spawnerScene.Instantiate<SpawnEnemies>();
+				spawner.Player = this;
+				GetParent().AddChild(spawner);
+			}
+			else
+			{
+				GD.PrintErr("ERROR Failed to load SpawnEnemies-Scene");
+			}
+		}
+
 		// Enemie spawning setup
-		var spawnerScene = GD.Load<PackedScene>("res://Scenes/Enemies/SpawnEnemies.tscn");
-		if (spawnerScene != null)
-		{
-			var spawner = spawnerScene.Instantiate<SpawnEnemies>();
-			spawner.Player = this;
-			GetParent().AddChild(spawner);
-		}
-		else
-		{
-			GD.PrintErr("ERROR Failed to load SpawnEnemies-Scene");
-		}
 	}
 
+	public override void _Process(double delta)
+	{
+		
+	}
 	public override void _PhysicsProcess(double delta)
 	{
 		if (multiplayerSynchronizer.GetMultiplayerAuthority() != Multiplayer.GetUniqueId())
@@ -75,7 +88,6 @@ public partial class DefaultPlayer : CharacterBody2D
 			}
 		}
 
-
 		// If no joystick input, fallback to keyboard
 		if (direction == Vector2.Zero)
 		{
@@ -84,7 +96,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
 		Velocity = direction * Speed;
 		MoveAndSlide();
-		
+
 		// // Play Animations
 		// if (animationPlayer != null)
 		// {
@@ -96,10 +108,10 @@ public partial class DefaultPlayer : CharacterBody2D
 		// 	else
 		// 	{
 		// 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "idle")
-		// 			
+		//
 		// 			animationPlayer.Play("idle");
-		// 			
-		// 			
+		//
+		//
 		// 	}
 		// }
 		//
@@ -107,7 +119,6 @@ public partial class DefaultPlayer : CharacterBody2D
 		// {
 		// 	archerSprite.FlipH = direction.X < 0;
 		// }
-		
 	}
 
 	public virtual void UseAbility()
@@ -122,5 +133,4 @@ public partial class DefaultPlayer : CharacterBody2D
 			Debug.Print(message);
 		}
 	}
-	
 }
