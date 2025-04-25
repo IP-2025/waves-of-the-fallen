@@ -8,7 +8,7 @@ const protectedRouter = express.Router();
 
 protectedRouter.post('/getSettings', authenticationStep, getSettings);
 protectedRouter.post('/setSettings', authenticationStep, setSettings);
-protectedRouter.post('/getAllCharacters', authenticationStep,getAllCharacterController);
+protectedRouter.post('/getAllCharacters',authenticationStep,getAllCharacterController);
 
 protectedRouter.get('/', authenticationStep, (req, res) => {
   res.json({ authenticated: true });
