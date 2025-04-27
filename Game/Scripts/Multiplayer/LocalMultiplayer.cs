@@ -15,84 +15,19 @@ public partial class LocalMultiplayer : Control
     public override void _Ready()
     {
         DebugIt("Instantiating local multiplayer");
-        Multiplayer.PeerConnected += PeerConnected;
-        Multiplayer.PeerDisconnected += PeerDisconnected;
-        Multiplayer.ConnectedToServer += ConnectedToServer;
-        Multiplayer.ConnectionFailed += ConnectionFailed;
         Name = Multiplayer.GetUniqueId().ToString();
 
         MultiplayerSynchronizer multiplayerSynchronizer = new MultiplayerSynchronizer();
     }
 
-    // runs if connection fails, runs only on client
-    private void ConnectionFailed()
-    {
-        DebugIt("Connection failed!");
-    }
-
-    // runs if connection is successful, runs only on client
-    private void ConnectedToServer()
-    {
-        DebugIt("Connected to server");
-        // Rpc to Server (has allways id 1) for new players information, server will then spread it to everyone
-
-        RpcId(
-            1,
-            "SendPlayerInformation",
-            Multiplayer.GetUniqueId().ToString(), // later fill in users custom name from a LineEdit
-            Multiplayer.GetUniqueId()
-        );
-    }
-
-    // runs if a player disconnects, runs on all peers
-    // id = id of the player that disconnected
-    private void PeerDisconnected(long id)
-    {
-        DebugIt("Player disconnected: " + id.ToString());
-    }
-
-    // runs if a player connects, runs on all peers
-    private void PeerConnected(long id)
-    {
-        DebugIt("Player Connected: " + id.ToString());
-    }
-
-    public void Join(string address)
-    {
-        this.address = address;
-        peer = new ENetMultiplayerPeer();
-        DebugIt("Joining server..." + address);
-        peer.CreateClient(address, port); // be a client to ip and port (= server = host)
-
-        // compressing packages to bring down bandwidth MUST BE SAME AS HOST / SERVER to be able to decompress
-        // RangeCoder good for smaller packages up to about 4 KB, larger packages = inefficient
-        peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
-        Multiplayer.MultiplayerPeer = peer;
-
-        DebugIt((GameManager.Players.Count, " Players connected").ToString());
-    }
-
+    
     public void Host()
     {
-        address = GetThisIPAddress();
-        peer = new ENetMultiplayerPeer();
-        var error = peer.CreateServer(port);
-        if (error != Error.Ok)
-        {
-            GD.PrintErr("ERROR cannot host: " + error.ToString());
-            return; // to stop server execution ...
-        }
+        //Server server = new Server(port);
+        //address = server.getHostAddress();
 
-        peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder); //  MUST BE SAME AS CLIENT to be able to decompress
-
-        // set self to multiplayer peer to actually connect to the server .. if not, server exists, but self is not connected (not peer)
-        Multiplayer.MultiplayerPeer = peer;
-        DebugIt("Waiting for players...");
-        // Host has to send its player information to its self to be part of the game. No RPC needet because if host opens lobby, he is alone
-        SendPlayerInformation(
-            Multiplayer.GetUniqueId().ToString(), // later fill in users custom name from a LineEdit,
-            1
-        );
+        //Client client = new Client(port, address);
+        
     }
 
     public void Play()

@@ -15,15 +15,17 @@ public partial class LocalMenu : Control
   private Button hostButton;
   private Button playButton;
   private LineEdit ipIO;
+  private readonly int PORT = 9999;
 
   private RichTextLabel currentPlayers;
-  private LocalMultiplayer LocalMultiplayer;
+  private ClientBootstrapping client;
+  //private ServerBootstrapping server;
 
 
   public override void _Ready()
   {
-    LocalMultiplayer = new LocalMultiplayer();
-    AddChild(LocalMultiplayer); // fügt LocalMultiplayer als Child hinzu
+    //LocalMultiplayer = new LocalMultiplayer();
+    //AddChild(LocalMultiplayer); // fügt LocalMultiplayer als Child hinzu
 
     joinButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/join");
     hostButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/host");
@@ -35,28 +37,41 @@ public partial class LocalMenu : Control
     playButton.Visible = false;
     playButton.Disabled = true;
   }
+
+
   private void _on_button_back_local_pressed()
   {
     // TODO: disconect from server / host
     var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/online_localMenu.tscn");
     GetTree().ChangeSceneToPacked(scene);
   }
+
+
   private void _on_join_button_pressed()
   {
-    LocalMultiplayer.Join(ipIO.Text);
+    var scene = GD.Load<PackedScene>("res://Scenes/Multiplayer/Client.tscn");
+    var client = scene.Instantiate<ClientBootstrapping>();
+    GetTree().Root.AddChild(client);
+    client.Init(PORT, ipIO.Text); // set the ip input to display local ip address
 
     // disable join and host button
-
     joinButton.Visible = false;
     joinButton.Disabled = true;
 
     hostButton.Visible = false;
     hostButton.Disabled = true;
   }
+
+
   private void _on_host_button_pressed()
   {
-    LocalMultiplayer.Host();
-    ipIO.Text = "Lobby address is: " + LocalMultiplayer.getHostAddress().ToString(); // set the ip input to display local ip address
+    var scene = GD.Load<PackedScene>("res://Scenes/Multiplayer/Server.tscn");
+    var server = scene.Instantiate<ServerBootstrapping>();
+    GetTree().Root.AddChild(server);
+    server.Init(PORT);
+
+    // create a new server and host the game
+    //ipIO.Text = "Lobby address is: " + LocalMultiplayer.getHostAddress().ToString(); // set the ip input to display local ip address
 
     // disable host and join button and enable play button
     hostButton.Visible = false;
@@ -69,15 +84,19 @@ public partial class LocalMenu : Control
     playButton.Disabled = false;
 
   }
+
+
   private void _on_play_button_pressed()
   {
-    LocalMultiplayer.Play();
+    //LocalMultiplayer.Play();
   }
+
+
   private void DebugIt(string message)
   {
-    if (LocalMultiplayer.enableDebug)
-    {
-      Debug.Print(message);
-    }
+    //if (LocalMultiplayer.enableDebug)
+    //{
+    //  Debug.Print(message);
+    // }
   }
 }

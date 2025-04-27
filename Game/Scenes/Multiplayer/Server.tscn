@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbk3ecgo2rl50"]
+
+[ext_resource type="Script" uid="uid://ctcoa2qnwf0r0" path="res://Scripts/Multiplayer/ServerBootstrapping.cs" id="1_m8b8j"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_71xlt"]
+
+[node name="Server" type="Node"]
+script = ExtResource("1_m8b8j")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_71xlt")
