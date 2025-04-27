@@ -15,12 +15,12 @@ script = ExtResource("1_ghlcr")
 
 [node name="Pfeil" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0.225, -0.175)
-scale = Vector2(0.4, 0.424)
+scale = Vector2(0.1, 0.106)
 texture = ExtResource("1_kbfek")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(19.625, 1)
+position = Vector2(4, 0.5)
+scale = Vector2(0.33, 0.33)
 shape = SubResource("RectangleShape2D_ghlcr")
 
 [connection signal="body_entered" from="." to="." method="OnBodyEntered"]

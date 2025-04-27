@@ -5,7 +5,7 @@ public partial class Assassin : DefaultPlayer
 	public Assassin()
 	{
 		MaxHealth = 100; 
-		Speed = 1000.0f;  
+		Speed = 200.0f;  
 	}
 	
 	public override void _Ready()
