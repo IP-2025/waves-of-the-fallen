@@ -13,6 +13,7 @@ export_presets.cfg
 .godot/
 *.env
 *.translation
+./k8s/db-secret.yaml
 
 # === .NET build output ===
 bin/
