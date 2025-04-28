@@ -8,7 +8,7 @@ export class Character {
     nullable: false,
     unique: true,
   })
-  characterId!: number;
+  character_id!: number;
 
   @Column({
     type: 'varchar',

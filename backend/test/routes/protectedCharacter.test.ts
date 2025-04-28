@@ -35,7 +35,7 @@ beforeEach(async () => {
     validToken = loginResponse.body.token;
    // TODO Set Unlocked Charcters
 
-    await AppDataSource.getRepository(UnlockedCharacter).insert({player_id: registeredPlayerId, characterId: '1', level: 1});
+    await AppDataSource.getRepository(UnlockedCharacter).insert({player_id: registeredPlayerId, character_id: '1', level: 1});
 
 });
 

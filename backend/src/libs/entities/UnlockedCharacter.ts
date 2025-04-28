@@ -18,7 +18,7 @@ export class UnlockedCharacter {
     nullable: false,
     unique: true,
   })
-  characterId!: string;
+  character_id!: string;
 
   @Column({
     type: 'int',
