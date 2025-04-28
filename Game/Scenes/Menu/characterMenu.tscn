@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://bm8n0iudjyswe" path="res://Scripts/Menu/Charactermenu.cs" id="1_ivr4t"]
 [ext_resource type="Script" uid="uid://ufxb4011fikq" path="res://Scripts/Menu/ButtonsCharacterSelection.cs" id="2_ch0j6"]
-[ext_resource type="Texture2D" uid="uid://c3upnwqyjibe2" path="res://Assets/Characters/resources/ArcherCharacterPreview.png" id="2_u3wkp"]
-[ext_resource type="Texture2D" uid="uid://djbukphk1boj4" path="res://Assets/Characters/resources/KnightCharacterPreview.png" id="3_ch0j6"]
-[ext_resource type="Texture2D" uid="uid://bvk02kfsxydw4" path="res://Assets/Characters/resources/AssassinCharacterPreview.png" id="4_hqcu1"]
-[ext_resource type="Texture2D" uid="uid://bute447edr7qr" path="res://Assets/Characters/resources/MageCharacterPreview.png" id="5_frg03"]
+[ext_resource type="Texture2D" uid="uid://m7etjj28i2o0" path="res://Assets/Characters/resources/ArcherCharacterPreview.png" id="2_u3wkp"]
+[ext_resource type="Texture2D" uid="uid://cjfelyah5o4gs" path="res://Assets/Characters/resources/KnightCharacterPreview.png" id="3_ch0j6"]
+[ext_resource type="Texture2D" uid="uid://btau8suv2nloy" path="res://Assets/Characters/resources/AssassinCharacterPreview.png" id="4_hqcu1"]
+[ext_resource type="Texture2D" uid="uid://deqvjcjlokfkv" path="res://Assets/Characters/resources/MageCharacterPreview.png" id="5_frg03"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivr4t"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
@@ -174,11 +174,13 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Button_Character1" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/focus = SubResource("StyleBoxFlat_ch0j6")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ch0j6")
 theme_override_styles/normal = SubResource("StyleBoxFlat_hqcu1")
+text = "1"
 script = ExtResource("2_ch0j6")
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character1"]
@@ -198,6 +200,7 @@ size_flags_vertical = 3
 theme_override_styles/focus = SubResource("StyleBoxFlat_ch0j6")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ch0j6")
 theme_override_styles/normal = SubResource("StyleBoxFlat_hqcu1")
+text = "3"
 script = ExtResource("2_ch0j6")
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character2"]
@@ -211,25 +214,6 @@ texture = ExtResource("3_ch0j6")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Button_Character3" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/focus = SubResource("StyleBoxFlat_ch0j6")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ch0j6")
-theme_override_styles/normal = SubResource("StyleBoxFlat_hqcu1")
-script = ExtResource("2_ch0j6")
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character3"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_u3wkp")
-expand_mode = 1
-stretch_mode = 5
-
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -240,6 +224,7 @@ size_flags_vertical = 3
 theme_override_styles/focus = SubResource("StyleBoxFlat_ch0j6")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ch0j6")
 theme_override_styles/normal = SubResource("StyleBoxFlat_frg03")
+text = "2"
 script = ExtResource("2_ch0j6")
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character4"]
@@ -259,6 +244,7 @@ size_flags_vertical = 3
 theme_override_styles/focus = SubResource("StyleBoxFlat_ch0j6")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ch0j6")
 theme_override_styles/normal = SubResource("StyleBoxFlat_hqcu1")
+text = "4"
 script = ExtResource("2_ch0j6")
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character5"]
@@ -272,29 +258,10 @@ texture = ExtResource("5_frg03")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Button_Character6" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/focus = SubResource("StyleBoxFlat_ch0j6")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ch0j6")
-theme_override_styles/normal = SubResource("StyleBoxFlat_hqcu1")
-script = ExtResource("2_ch0j6")
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character6"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_u3wkp")
-expand_mode = 1
-stretch_mode = 5
-
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/margin_left = 10
+theme_override_constants/margin_left = 50
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
@@ -308,21 +275,27 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 40
-text = "Character test"
 
-[node name="Label_Label_SelectedCharacterStats" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="Label_intelligence" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
-text = "stat 1
-stat2 
-stat3
-stat4
-"
+
+[node name="Label_dexterity" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label_speed" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label_health" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 0
+theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 30
 
@@ -363,11 +336,12 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_ivr4t")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ivr4t")
 text = "select"
 
+[node name="HTTPRequest" type="HTTPRequest" parent="MarginContainer2"]
+unique_name_in_owner = true
+
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_charactermenu_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character1" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character1" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character2" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character2" method="_on_pressed"]
-[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character3" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character3" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character4" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character4" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character5" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character5" method="_on_pressed"]
-[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character6" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character6" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/Button_Select" to="." method="_on_button_select_pressed"]

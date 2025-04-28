@@ -22,7 +22,7 @@ public partial class ButtonsCharacterSelection : Button
 			node=node.GetParent();
 		}
 		
-		if(this.Name=="Button_Character6") //if Character is locked =true
+		if(this.Name=="Button_Character6"||this.Name=="Button_Character3") //if Character is locked =true
 		{
 			var icon = GetNode<TextureRect>("TextureRect");
 			var material=new ShaderMaterial();
