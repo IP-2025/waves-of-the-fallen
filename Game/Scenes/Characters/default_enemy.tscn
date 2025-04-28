@@ -5,17 +5,16 @@
 [ext_resource type="Texture2D" uid="uid://65seudsgrr8n" path="res://Assets/Characters/place_holder/enemy_placeholder.svg" id="2_lal1l"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r4aor"]
-radius = 18.0278
+radius = 17.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6kac6"]
-size = Vector2(66, 66)
+size = Vector2(40, 40)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6cefa"]
 radius = 4826.92
 
-[node name="BasicEnemy" type="CharacterBody2D"]
-collision_layer = 2
-collision_mask = 3
+[node name="BasicEnemy" type="CharacterBody2D" groups=["Enemies"]]
+collision_layer = 16
 motion_mode = 1
 script = ExtResource("1_fecjr")
 
@@ -23,18 +22,20 @@ script = ExtResource("1_fecjr")
 script = ExtResource("2_ihcfn")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_lal1l")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_r4aor")
 
 [node name="AttackRange" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
 shape = SubResource("RectangleShape2D_6kac6")
 
 [node name="detection_area" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
 shape = SubResource("CircleShape2D_6cefa")

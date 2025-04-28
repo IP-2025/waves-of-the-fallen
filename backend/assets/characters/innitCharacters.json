@@ -1,0 +1,36 @@
+{
+  "characters": [
+    {
+      "character_id": 1,
+      "name": "Archer",
+      "speed": 100,
+      "health": 100,
+      "dexterity": 100,
+      "intelligence": 100
+    },
+    {
+      "character_id": 2,
+      "name": "Assassin",
+      "speed": 100,
+      "health": 100,
+      "dexterity": 100,
+      "intelligence": 100
+    },
+    {
+      "character_id": 3,
+      "name": "Knight",
+      "speed": 100,
+      "health": 100,
+      "dexterity": 100,
+      "intelligence": 100
+    },
+    {
+      "character_id": 4,
+      "name": "Mage",
+      "speed": 100,
+      "health": 100,
+      "dexterity": 100,
+      "intelligence": 100
+    }
+  ]
+}

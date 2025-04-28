@@ -1,15 +1,18 @@
 using Godot;
-using System;
 
 public partial class MenuBackgroundMusic : AudioStreamPlayer
 {
- private int menuBackgroundMusicBusIndex;
+	private int menuBackgroundMusicBusIndex;
 
- public override void _Ready()
-{
-	menuBackgroundMusicBusIndex=AudioServer.GetBusIndex("MenuBackgroundMusicBus");
-	// Volume is temporarily set low so its not to annoying
-	AudioServer.SetBusVolumeDb(menuBackgroundMusicBusIndex,Mathf.LinearToDb(0.1f));
-}
-
+	public override void _Ready()
+	{
+		SettingsManager settingsManager = GetNode<SettingsManager>("/root/SettingsManager");
+		menuBackgroundMusicBusIndex = AudioServer.GetBusIndex("MenuBackgroundMusicBus");
+		bool musicEnabled = (bool)settingsManager.LoadSettingSection("Audio")["Enabled"];
+		float musicVolume = (float)settingsManager.LoadSettingSection("Audio")["Volume"];
+		AudioServer.SetBusVolumeDb(menuBackgroundMusicBusIndex, Mathf.LinearToDb(musicVolume));
+		AudioServer.SetBusMute(menuBackgroundMusicBusIndex, !musicEnabled);
+		Play();
+		Autoplay = true;
+	}
 }
