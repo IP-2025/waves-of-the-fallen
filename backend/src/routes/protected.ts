@@ -8,8 +8,9 @@ const protectedRouter = express.Router();
 
 protectedRouter.post('/getSettings', authenticationStep, getSettings);
 protectedRouter.post('/setSettings', authenticationStep, setSettings);
-protectedRouter.post('/getAllCharacters',authenticationStep,getAllCharacterController);
-protectedRouter.post('/getAllUnlockedCharacters',authenticationStep,getAllUnlockedCharacterController);
+//TODO : add authentication to this route (Just for Local Testing)
+protectedRouter.post('/getAllCharacters',getAllCharacterController);
+protectedRouter.post('/getAllUnlockedCharacters',getAllUnlockedCharacterController);
 
 protectedRouter.get('/', authenticationStep, (req, res) => {
   res.json({ authenticated: true });
