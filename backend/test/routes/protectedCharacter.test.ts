@@ -1,5 +1,7 @@
 import request from 'supertest';
 import app from '../../src/app';
+import {UnlockedCharacter} from "../../src/libs/entities/UnlockedCharacter";
+import {AppDataSource} from "../../src/libs/data-source";
 
 const generateTestUser = () => {
     return {
@@ -31,32 +33,31 @@ beforeEach(async () => {
         });
     expect(loginResponse.status).toBe(200); // Correct status for login
     validToken = loginResponse.body.token;
+   // TODO Set Unlocked Charcters
 
-    //TODO: insert unlocked characters
+    await AppDataSource.getRepository(UnlockedCharacter).insert({player_id: registeredPlayerId, characterId: '1', level: 1});
 
 });
 
-
-describe('POST /getAllCharacters', () => {
-    it('should return all Possible Charcters', async () => {
+describe('POST /getAllUnlockedCharacters', () => {
+    it('should return all Unlocked Characters', async () => {
 
 
         const AllCharacters = await request(app)
-            .post('/api/v1/protected/setSettings')
+            .post('/api/v1/protected/getAllUnlockedCharacters')
             //.set('Authorization', `Bearer ${validToken}`)
         expect(AllCharacters.status).toBe(200);
-    });
-});
-
-describe('POST /getAllCharacters', () => {
-    it('should return all unlocked Characters for a user', async () => {
-
-        const unlockedCharacter = await request(app)
-            .post('/api/v1/protected/getAllCharacters')
-            //.set('Authorization', `Bearer ${validToken}`)
-            .send(registeredPlayerId);
-        expect(unlockedCharacter.status).toBe(200);
+        expect(AllCharacters.body).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    player_id: registeredPlayerId,
+                    characterId: '1',
+                    level: 1,
+                }),
+            ])
+        );
 
     });
 });
+
 
