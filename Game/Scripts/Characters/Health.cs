@@ -3,21 +3,25 @@ using System;
 
 public partial class Health : Node2D
 {
-	[Export] float max_health = 100f;
-	float health;
-
+	[Export] float max_health= 100.0f;
+	float CurrentHealth;
+	public float CurHealth => CurrentHealth;
 	public override void _Ready()
 	{
-		health = max_health;
+		CurrentHealth = max_health;
 	}
-
 	public void Damage(float damage) 
 	{
-		health -= damage;
-
-		if (health <= 0)
+		CurrentHealth -= damage;
+		if (CurrentHealth <= 0)
 		{
-			GetParent().QueueFree();
+			if(GetParent() is DefaultPlayer){
+				((DefaultPlayer)GetParent()).Die();
+			}
+			else{
+				GetParent().QueueFree();	
+			}
+			
 		}
 	}
 }
