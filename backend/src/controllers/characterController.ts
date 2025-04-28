@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 import { getAllUnlockedCharactersRepo } from '../repositories/characterRepository';
-import { getAllCharacters } from '../services/characterService';
+import { getAllCharacters, getAllUnlockedCharacters } from '../services/characterService';
 
 export const getAllCharacterController: RequestHandler = async (req, res) => {
   try {
@@ -13,7 +13,7 @@ export const getAllCharacterController: RequestHandler = async (req, res) => {
 export const getAllUnlockedCharacterController: RequestHandler = async (req, res) => {
   try {
     const playerId = req.body.player_id;
-    const characters = await getAllUnlockedCharactersRepo(playerId);
+    const characters = await getAllUnlockedCharacters(playerId);
     res.json(characters).status(200);
   } catch (err) {
     res.status(500).send('Server error');

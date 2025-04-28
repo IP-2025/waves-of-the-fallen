@@ -1,7 +1,6 @@
 import express from 'express';
 import { authenticationStep } from '../middleware/validateMiddleware';
 import { getSettings, setSettings } from '../controllers/settingsController';
-import {getAllCharacters} from '../services/characterService';
 import { getAllCharacterController, getAllUnlockedCharacterController } from '../controllers/characterController';
 
 const protectedRouter = express.Router();

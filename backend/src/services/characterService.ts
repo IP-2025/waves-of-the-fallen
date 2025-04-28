@@ -1,5 +1,9 @@
 import { Character } from '../libs/entities/Character';
-import { getAllCharactersRepo, insertAllCharacters } from '../repositories/characterRepository';
+import {
+  getAllCharactersRepo,
+  getAllUnlockedCharactersRepo,
+  insertAllCharacters,
+} from '../repositories/characterRepository';
 import fs from 'fs';
 
 export async function innitAllCharacters(chars?: Character[]): Promise<void> {
@@ -39,7 +43,7 @@ function readCharacters(): Character[] {
   const toInsertList = new Array<Character>();
   for (const character of jsonData.characters) {
     const newCharacter = new Character();
-    newCharacter.characterId = character.characterId;
+    newCharacter.character_id = character.character_id;
     newCharacter.name = character.name;
     newCharacter.speed = character.speed;
     newCharacter.health = character.health;
@@ -50,4 +54,6 @@ function readCharacters(): Character[] {
   return toInsertList;
 }
 //TODO Implement Stuff
-function getAllUnlockedCharacters() {}
+export async function getAllUnlockedCharacters(id: any) {
+  return await getAllUnlockedCharactersRepo(id);
+}
