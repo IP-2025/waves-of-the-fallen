@@ -6,14 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://dbqlns7qsgchl" path="res://Scenes/Weapons/crossbow.tscn" id="4_1h72i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2kgl"]
-size = Vector2(60, 114)
+size = Vector2(25, 36.2188)
 
 [sub_resource type="LabelSettings" id="LabelSettings_1h72i"]
-font_size = 42
+font_size = 21
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_jig1i"]
-font_size = 42
+font_size = 21
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kjvlq"]
@@ -34,10 +34,11 @@ script = ExtResource("2_kjvlq")
 [node name="Crossbow" parent="." instance=ExtResource("4_1h72i")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(6, 41)
+position = Vector2(0, 15)
 shape = SubResource("RectangleShape2D_y2kgl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.75, 1.75)
 
 [node name="TimeLeft" type="Label" parent="Camera2D"]
 anchors_preset = -1
@@ -45,21 +46,21 @@ anchor_left = -9.675
 anchor_top = -6.85
 anchor_right = -9.675
 anchor_bottom = -6.85
-offset_left = -23.0
-offset_top = -265.0
-offset_right = 25.0
-offset_bottom = -207.0
+offset_left = -24.0
+offset_top = -148.0
+offset_right = 24.0
+offset_bottom = -90.0
 grow_horizontal = 2
 label_settings = SubResource("LabelSettings_1h72i")
 horizontal_alignment = 1
 
 [node name="WaveCounter" type="Label" parent="Camera2D"]
-offset_left = -75.0
-offset_top = -319.0
-offset_right = 77.0
-offset_bottom = -261.0
-grow_horizontal = 2
+offset_left = -76.0
+offset_top = -192.0
+offset_right = 76.0
+offset_bottom = -134.0
 label_settings = SubResource("LabelSettings_jig1i")
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
