@@ -7,7 +7,7 @@ describe('Character tests', () => {
 
         const mockCharacters: Character[] = [
             {
-                characterId: 1,
+                character_id: 1,
                 name: 'TestChar',
                 speed: 10,
                 health: 100,
@@ -21,7 +21,7 @@ describe('Character tests', () => {
         const allCharacters = await getAllCharacters();
 
         expect(allCharacters.length).toBe(mockCharacters.length);
-        expect(allCharacters[0].characterId).toBe(mockCharacters[0].characterId);
+        expect(allCharacters[0].character_id).toBe(mockCharacters[0].character_id);
         expect(allCharacters[0].name).toBe(mockCharacters[0].name);
         expect(allCharacters[0].speed).toBe(mockCharacters[0].speed);
         expect(allCharacters[0].health).toBe(mockCharacters[0].health);
@@ -32,7 +32,7 @@ describe('Character tests', () => {
     it('Load new Characters', async () => {
         let mockCharacters: Character[] = [
             {
-                characterId: 1,
+                character_id: 1,
                 name: 'TestChar',
                 speed: 10,
                 health: 100,
@@ -46,7 +46,7 @@ describe('Character tests', () => {
         const allCharacters = await getAllCharacters();
 
         expect(allCharacters.length).toBe(mockCharacters.length);
-        expect(allCharacters[0].characterId).toBe(mockCharacters[0].characterId);
+        expect(allCharacters[0].character_id).toBe(mockCharacters[0].character_id);
         expect(allCharacters[0].name).toBe(mockCharacters[0].name);
         expect(allCharacters[0].speed).toBe(mockCharacters[0].speed);
         expect(allCharacters[0].health).toBe(mockCharacters[0].health);
@@ -55,7 +55,7 @@ describe('Character tests', () => {
 
        mockCharacters = [
             {
-                characterId: 2,
+                character_id: 2,
                 name: 'TestChar2',
                 speed: 20,
                 health: 200,
@@ -69,7 +69,7 @@ describe('Character tests', () => {
         const allCharacters2 = await getAllCharacters();
 
         expect(allCharacters2.length).toBe(mockCharacters.length);
-        expect(allCharacters2[0].characterId).toBe(mockCharacters[0].characterId);
+        expect(allCharacters2[0].character_id).toBe(mockCharacters[0].character_id);
         expect(allCharacters2[0].name).toBe(mockCharacters[0].name);
         expect(allCharacters2[0].speed).toBe(mockCharacters[0].speed);
         expect(allCharacters2[0].health).toBe(mockCharacters[0].health);

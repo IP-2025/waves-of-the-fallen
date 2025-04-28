@@ -8,3 +8,6 @@ dist
 
 # env file
 .env
+
+# python
+dev/venv

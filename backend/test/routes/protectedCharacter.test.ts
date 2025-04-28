@@ -1,0 +1,63 @@
+import request from 'supertest';
+import app from '../../src/app';
+import {UnlockedCharacter} from "../../src/libs/entities/UnlockedCharacter";
+import {AppDataSource} from "../../src/libs/data-source";
+
+const generateTestUser = () => {
+    return {
+        username: `TestUser`,
+        email: `testuser@example.com`,
+        password: '123456',
+    };
+};
+
+let validToken: string;
+let registeredPlayerId: string;
+const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZmFrZSIsImlhdCI6MH0.invalidsignature';
+
+beforeEach(async () => {
+    const testUser = generateTestUser();
+
+    const registerResponse = await request(app)
+        .post('/api/v1/auth/register')
+        .send(testUser);
+    expect(registerResponse.status).toBe(201); // Correct status for resource creation
+    registeredPlayerId = registerResponse.body.player_id;
+
+
+    const loginResponse = await request(app)
+        .post('/api/v1/auth/login')
+        .send({
+            email: testUser.email,
+            password: testUser.password,
+        });
+    expect(loginResponse.status).toBe(200); // Correct status for login
+    validToken = loginResponse.body.token;
+   // TODO Set Unlocked Charcters
+
+    await AppDataSource.getRepository(UnlockedCharacter).insert({player_id: registeredPlayerId, character_id: '1', level: 1});
+
+});
+
+describe('POST /getAllUnlockedCharacters', () => {
+    it('should return all Unlocked Characters', async () => {
+
+
+        const AllCharacters = await request(app)
+            .post('/api/v1/protected/getAllUnlockedCharacters')
+            //.set('Authorization', `Bearer ${validToken}`)
+        expect(AllCharacters.status).toBe(200);
+        expect(AllCharacters.body).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    player_id: registeredPlayerId,
+                    character_id: '1',
+                    level: 1,
+                }),
+            ])
+        );
+
+    });
+});
+
+
