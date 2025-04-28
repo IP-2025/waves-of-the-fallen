@@ -9,21 +9,21 @@ using System.Net.Sockets;
 
 public partial class LocalMenu : Control
 {
-  public bool enableDebug = false;
+  public bool enableDebug = true;
 
   private Button joinButton;
   private Button hostButton;
   private Button playButton;
   private LineEdit ipIO;
-
+  private readonly int PORT = 9999;
   private RichTextLabel currentPlayers;
-  private LocalMultiplayer LocalMultiplayer;
+  //private ServerBootstrapping server;
 
 
   public override void _Ready()
   {
-    LocalMultiplayer = new LocalMultiplayer();
-    AddChild(LocalMultiplayer); // fügt LocalMultiplayer als Child hinzu
+    //LocalMultiplayer = new LocalMultiplayer();
+    //AddChild(LocalMultiplayer); // fügt LocalMultiplayer als Child hinzu
 
     joinButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/join");
     hostButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/host");
@@ -35,28 +35,33 @@ public partial class LocalMenu : Control
     playButton.Visible = false;
     playButton.Disabled = true;
   }
+
+
   private void _on_button_back_local_pressed()
   {
     // TODO: disconect from server / host
     var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/online_localMenu.tscn");
     GetTree().ChangeSceneToPacked(scene);
   }
+
+
   private void _on_join_button_pressed()
   {
-    LocalMultiplayer.Join(ipIO.Text);
+    NetworkManager.Instance.InitClient(ipIO.Text);
 
     // disable join and host button
-
     joinButton.Visible = false;
     joinButton.Disabled = true;
 
     hostButton.Visible = false;
     hostButton.Disabled = true;
   }
+
+
   private void _on_host_button_pressed()
   {
-    LocalMultiplayer.Host();
-    ipIO.Text = "Lobby address is: " + LocalMultiplayer.getHostAddress().ToString(); // set the ip input to display local ip address
+    NetworkManager.Instance.InitServer();
+    ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show server ip in input field
 
     // disable host and join button and enable play button
     hostButton.Visible = false;
@@ -69,15 +74,18 @@ public partial class LocalMenu : Control
     playButton.Disabled = false;
 
   }
-  private void _on_play_button_pressed()
-  {
-    LocalMultiplayer.Play();
-  }
+
+private void _on_play_button_pressed()
+{
+    // change scene to game
+    var gameScene = GD.Load<PackedScene>("res://Scenes/GameRoot/GameRoot.tscn");
+    gameScene.Instantiate<Node>();
+    GetTree().ChangeSceneToPacked(gameScene);
+}
+
+
   private void DebugIt(string message)
   {
-    if (LocalMultiplayer.enableDebug)
-    {
-      Debug.Print(message);
-    }
+    if (enableDebug) Debug.Print("Local Menue: " + message);
   }
 }

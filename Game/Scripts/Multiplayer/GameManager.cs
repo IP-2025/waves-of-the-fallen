@@ -1,24 +1,32 @@
-using System;
-using System.Collections.Generic;
 using Godot;
+using System.Collections.Generic;
+using System.Reflection.Metadata;
 
-// DO THIS!!!
-// go to Godot -> Project (top menu bar) -> Project settings -> Globals -> Autoload -> add GameManager.cs
-// This file is for centralized, global player management. Because thats what game managers do
-// This class manages the syncoronization of the game state between the server and clients
 
-public partial class GameManager : Node
-{
-    // List to store all player Infos in this lobby
+public partial class GameManager : Node {
+    public static GameManager Instance;
+    public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
+    private long _nextId = 1;
     public static List<PlayerInfo> Players = new List<PlayerInfo>();
 
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready() { }
+    public override void _Ready() {
+        Instance = this;
+    }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta) { }
+    public void ProcessCommand(Command cmd) {
+        if (!Entities.ContainsKey(cmd.EntityId)) return;
+        var entity = Entities[cmd.EntityId];
+        switch (cmd.Type) {
+            case CommandType.Move:
+                entity.Position += cmd.MoveDir.Value * 10f * NetworkManager.GetTickDelta();
+                break;
+            case CommandType.Shoot:
+                // handle shoot
+                break;
+        }
+    }
+
+    public long GetNextId() {
+        return _nextId++;
+    }
 }
-
-
-
-
