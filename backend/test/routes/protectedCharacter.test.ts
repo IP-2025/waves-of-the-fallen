@@ -51,7 +51,7 @@ describe('POST /getAllUnlockedCharacters', () => {
             expect.arrayContaining([
                 expect.objectContaining({
                     player_id: registeredPlayerId,
-                    characterId: '1',
+                    character_id: '1',
                     level: 1,
                 }),
             ])
