@@ -17,6 +17,7 @@ radius = 4826.92
 collision_layer = 16
 motion_mode = 1
 script = ExtResource("1_fecjr")
+speed = 180.0
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_ihcfn")
