@@ -194,7 +194,8 @@ texture = ExtResource("2_u3wkp")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Button_Character2" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Button_Character3" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/focus = SubResource("StyleBoxFlat_ch0j6")
@@ -203,7 +204,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_hqcu1")
 text = "3"
 script = ExtResource("2_ch0j6")
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character2"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character3"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -218,7 +219,8 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button_Character4" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="Button_Character2" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/focus = SubResource("StyleBoxFlat_ch0j6")
@@ -227,7 +229,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_frg03")
 text = "2"
 script = ExtResource("2_ch0j6")
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character4"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character2"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -238,7 +240,8 @@ texture = ExtResource("4_hqcu1")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Button_Character5" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="Button_Character4" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/focus = SubResource("StyleBoxFlat_ch0j6")
@@ -247,7 +250,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_hqcu1")
 text = "4"
 script = ExtResource("2_ch0j6")
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character5"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character4"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -341,7 +344,7 @@ unique_name_in_owner = true
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_charactermenu_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character1" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character1" method="_on_pressed"]
-[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character2" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character2" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character3" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character3" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character2" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character2" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character4" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character4" method="_on_pressed"]
-[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character5" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character5" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/Button_Select" to="." method="_on_button_select_pressed"]

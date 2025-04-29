@@ -17,8 +17,8 @@ public partial class SettingsMenu : Control
 		settingsManager = GetNode<SettingsManager>("/root/SettingsManager");
 		CheckBox musicEnabledCheckbox = GetNode<CheckBox>("%CheckBoxMusicEnabled");
 		HSlider sliderMusic = GetNode<HSlider>("%SliderMusicVolume");
-    buttonLanguage = GetNode<Button>("%ButtonLanguage");
-    audioSettings = settingsManager.LoadSettingSection("Audio");
+	buttonLanguage = GetNode<Button>("%ButtonLanguage");
+	audioSettings = settingsManager.LoadSettingSection("Audio");
 		menuBackgroundMusicBusIndex = AudioServer.GetBusIndex("MenuBackgroundMusicBus");
 		sliderMusic.Value = Mathf.DbToLinear(
 			AudioServer.GetBusVolumeDb(menuBackgroundMusicBusIndex)
