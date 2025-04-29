@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bdkp0e6ivq2b5" path="res://Scripts/Characters/DefaultPlayer.cs" id="1_y2kgl"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_kjvlq"]
 [ext_resource type="PackedScene" uid="uid://56x8ud47qho" path="res://Scenes/Characters/archer.tscn" id="3_kjvlq"]
-[ext_resource type="PackedScene" uid="uid://dbqlns7qsgchl" path="res://Scenes/Weapons/crossbow.tscn" id="4_1h72i"]
+[ext_resource type="PackedScene" path="res://Scenes/Weapons/bow.tscn" id="5_jig1i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2kgl"]
 size = Vector2(25, 36.2188)
@@ -31,11 +31,11 @@ script = ExtResource("2_kjvlq")
 
 [node name="Archer" parent="." instance=ExtResource("3_kjvlq")]
 
-[node name="Crossbow" parent="." instance=ExtResource("4_1h72i")]
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 15)
 shape = SubResource("RectangleShape2D_y2kgl")
+
+[node name="Bow" parent="." instance=ExtResource("5_jig1i")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.75, 1.75)
