@@ -147,11 +147,13 @@ public partial class Charactermenu : Control
 			{ //check if character is unlocken. locked=true
 				_ButtonUpgradeUnlock.Text = "Unlock";
 				_Button_Select.Disabled = true;
+				_Button_Select.Hide();
 			}
 			else
 			{
 				_ButtonUpgradeUnlock.Text = "Upgrade";
 				_Button_Select.Disabled = false;
+				_Button_Select.Show();
 			}
 		}
 	}
