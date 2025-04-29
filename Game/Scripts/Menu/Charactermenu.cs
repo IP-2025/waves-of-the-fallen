@@ -11,14 +11,56 @@ public partial class Charactermenu : Control
 	private Button _oldSelectedCharacter;
 	private Button _ButtonUpgradeUnlock;
 	private Button _Button_Select;
-	private Godot.Collections.Array allCharacters;
+	//private Godot.Collections.Array allCharacters;
 	
 	private Label _labelHealth;
 	private Label _labelSpeed;
 	private Label _labelDexterity;
 	private Label _labelIntelligence;
+	//das array wird hier mal temporär mit daten befüllt, falls die DB abfrage nicht geht
+	//generell sollten die Character stats nicht jedes mal abgefragt werden, da man dafür immer eine INternet verbingung braucht
+	//alos am besten Daten wie welche CHractere gibt es und welche sind auf welchen level freigeschaltet lokal speichern und nurm it internetverbindung aktualisieren
+private Godot.Collections.Array allCharacters = new Godot.Collections.Array
+	{
+		new Godot.Collections.Dictionary
+		{
+			{"character_id", 1},
+			{"name", "Archer"},
+			{"speed", 100},
+			{"health", 100},
+			{"dexterity", 100},
+			{"intelligence", 100}
+		},
+		new Godot.Collections.Dictionary
+		{
+			{"character_id", 2},
+			{"name", "Assassin"},
+			{"speed", 100},
+			{"health", 100},
+			{"dexterity", 100},
+			{"intelligence", 100}
+		},
+		new Godot.Collections.Dictionary
+		{
+			{"character_id", 3},
+			{"name", "Knight"},
+			{"speed", 100},
+			{"health", 100},
+			{"dexterity", 100},
+			{"intelligence", 100}
+		},
+		new Godot.Collections.Dictionary
+		{
+			{"character_id", 4},
+			{"name", "Mage"},
+			{"speed", 100},
+			{"health", 100},
+			{"dexterity", 100},
+			{"intelligence", 100}
+		}
+	};
 	
-
+	
 	public override void _Ready()
 	{
 		_labelHealth=GetNode<Label>("%Label_health");
@@ -34,7 +76,11 @@ public partial class Charactermenu : Control
 		httpRequest.RequestCompleted += OnRequestCompleted;
 		
 		string jsonData = "{\"user_id\": \"D465D2FD-092C-40A6-945D-E29E99FA524A\"}";
-		httpRequest.Request("http://localhost:3000/api/v1/protected/getAllCharacters", new string[] {"Content-Type: application/json"}, HttpClient.Method.Post, jsonData);
+		Error error = httpRequest.Request("http://localhost:3000/api/v1/protected/getAllCharacters", new string[] {"Content-Type: application/json"}, HttpClient.Method.Post, jsonData);
+		if (error != Error.Ok)
+  		{
+	   		GD.Print("Request nicht gesendet");
+		}
 		
 		
 		
@@ -45,7 +91,6 @@ public partial class Charactermenu : Control
 			GD.Print("Antwort empfangen: " + receivedString);
 			Variant receivedVar = Json.ParseString(receivedString);
 			allCharacters = receivedVar.AsGodotArray();
-			
 			
 			//hier wir bis jetzt einfach immer beim aufrufen charcter 1 ausgewählt. 
 			//Muss geändert werden, dass hier der beim letzten aufruf ausgewöhlte charcter zu beginn ausgewählt ist
@@ -59,19 +104,19 @@ public partial class Charactermenu : Control
 	{
 		foreach (Godot.Collections.Dictionary character in characters)
 		{
-			int character_id = (int) character["character_id"];
+			int character_id =(int)character["character_id"];
 			if(characterId==character_id){
-			string name = (string) character["name"];
-			int speed = (int) character["speed"];
-			int health = (int) character["health"];
-			int dexterity = (int) character["dexterity"];
-			int intelligence = (int) character["intelligence"];
+			string name =(string)character["name"];
+			int speed =(int)character["speed"];
+			int health =(int)character["health"];
+			int dexterity =(int) character["dexterity"];
+			int intelligence =(int) character["intelligence"];
 			
-			_labelCharacterName.Text = name;
-			_labelHealth.Text = $"Health {health}";
-			_labelSpeed.Text = $"Speed {speed}";
-			_labelDexterity.Text = $"Dexterity {dexterity}";
-			_labelIntelligence.Text = $"Intelligence {intelligence}";
+			_labelCharacterName.Text=name;
+			_labelHealth.Text=$"Health {health}";
+			_labelSpeed.Text=$"Speed {speed}";
+			_labelDexterity.Text=$"Dexterity {dexterity}";
+			_labelIntelligence.Text=$"Intelligence {intelligence}";
 			}
 		}
 		
