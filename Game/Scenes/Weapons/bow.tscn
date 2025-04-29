@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://blhx5vv32isw5"]
+
+[ext_resource type="Script" uid="uid://8yy2125a087n" path="res://Scripts/Weapons/Bow.cs" id="1_r4t6c"]
+[ext_resource type="Texture2D" uid="uid://cce3hkf6gvelr" path="res://Assets/Weapons/Bow/BowEmpty.png" id="2_nlqf0"]
+[ext_resource type="Texture2D" uid="uid://gcsv154co4xc" path="res://Assets/Weapons/Bow/BowDraw1.png" id="3_w8c72"]
+[ext_resource type="Texture2D" uid="uid://yw7x58cs5a71" path="res://Assets/Weapons/Bow/BowDraw2.png" id="4_yxbc2"]
+[ext_resource type="Texture2D" uid="uid://li72ryjg2448" path="res://Assets/Weapons/Bow/BowDraw3.png" id="5_7a073"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_emjpn"]
+radius = 616.001
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p3ld5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_nlqf0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_w8c72")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_yxbc2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_7a073")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_nlqf0")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 25.0
+}]
+
+[node name="Bow" type="Area2D"]
+script = ExtResource("1_r4t6c")
+
+[node name="Range" type="CollisionShape2D" parent="."]
+scale = Vector2(0.33, 0.33)
+shape = SubResource("CircleShape2D_emjpn")
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+rotation = 0.00792616
+scale = Vector2(0.33, 0.33)
+
+[node name="BowSprite" type="AnimatedSprite2D" parent="WeaponPivot"]
+position = Vector2(125, 0)
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_p3ld5")
+animation = &"shoot"
+frame = 4
+frame_progress = 1.0
+
+[node name="BowShootingPoint" type="Marker2D" parent="WeaponPivot/BowSprite"]
+unique_name_in_owner = true
+position = Vector2(44.9589, -5.35652)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.8
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutBow"]
