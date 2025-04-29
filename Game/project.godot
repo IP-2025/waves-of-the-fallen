@@ -17,7 +17,6 @@ config/icon="res://Assets/Characters/place_holder/enemy_placeholder.svg"
 
 [autoload]
 
-MenuBackgroundMusic="*res://Scenes/Music/menuBackgroundMusic.tscn"
 SettingsManager="*res://Scripts/Settings/SettingsManager.cs"
 MenuBackgroundMusic="*res://Scenes/Music/menuBackgroundMusic.tscn"
 GameManager="*res://Scripts/Multiplayer/GameManager.cs"
