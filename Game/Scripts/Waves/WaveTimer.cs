@@ -6,39 +6,51 @@ public partial class WaveTimer : Node2D
 	public int waveCounter = 1;
 	public int secondCounter = 0;
 	public int maxTime = 30;
-	private Timer waveTimer;
+	private Timer _waveTimer;
+	private Label _timeLeftLabel;
+	private Label _waveCounterLabel;
 
 	public override void _Ready()
 	{
+		// SORRY hat to change this because of the multiplayer stuff
 
-		foreach (var player in GameManager.Players)
-		{ // is for making the UI for the timer and wave counter only visible for one player and not for all players in the game
-			if (player.Id == Multiplayer.GetUniqueId())
-			{
-				GetNode<Label>("/root/Node2D/" + player.Id + "/Camera2D/TimeLeft").Text = maxTime.ToString();
-				GetNode<Label>("/root/Node2D/" + player.Id + "/Camera2D/WaveCounter").Text = "Wave: " + waveCounter;
-			}
+		// Find local player with entity map
+		var localId = Multiplayer.GetUniqueId();
+		if (!GameManager.Instance.Entities.TryGetValue(localId, out var playerNode))
+		{
+			GD.PrintErr($"WaveTimer: Cant find PlayerNode for ID {localId}");
+			return;
 		}
-		waveTimer = GetNode<Timer>("WaveTimer");
-		waveTimer.Timeout += OnTimerTimeout; // calls method every second
+
+		// Get cam from player node
+		var cam = playerNode.GetNode<Camera2D>("Camera2D");
+		_timeLeftLabel = cam.GetNode<Label>("TimeLeft");
+		_waveCounterLabel = cam.GetNode<Label>("WaveCounter");
+
+		// set values
+		_timeLeftLabel.Text = maxTime.ToString();
+		_waveCounterLabel.Text = $"Wave: {waveCounter}";
+
+		// get timer and callback
+		_waveTimer = GetNode<Timer>("WaveTimer");
+		_waveTimer.Timeout += OnTimerTimeout;
 	}
 
 
 	private void OnTimerTimeout()
 	{
 		secondCounter++; // counts the seconds until the max_time is reached and a new wave begins
-
 		if (secondCounter >= maxTime)
 		{
 			secondCounter = 0;
 			waveCounter++;
-			
-			GetNode<Label>("/root/Node2D/" + Multiplayer.GetUniqueId() + "/Camera2D/WaveCounter").Text = "Wave: " + waveCounter;
+
+			_waveCounterLabel.Text = $"Wave: {waveCounter}";
 			DeleteEnemies();
 		}
-		Label label = GetNode<Label>("/root/Node2D/" + Multiplayer.GetUniqueId() + "/Camera2D/TimeLeft");
-		var zeit = maxTime - secondCounter;
-		label.Text = zeit.ToString(); // changes text to the remaining time until the next wave
+
+		_waveCounterLabel.Text = $"Wave: {waveCounter}";
+		_timeLeftLabel.Text = (maxTime - secondCounter).ToString();
 	}
 
 	private void DeleteEnemies()
@@ -54,7 +66,7 @@ public partial class WaveTimer : Node2D
 		}
 		else
 		{
-			Debug.Print("No enemies found");
+			Debug.Print("No enemies found to be deleted");
 		}
 	}
 
@@ -62,9 +74,9 @@ public partial class WaveTimer : Node2D
 	{
 		if (Multiplayer.IsServer())
 		{
-			if (waveTimer.Paused) Debug.Print("WaveTimer unpaused");
+			if (_waveTimer.Paused) Debug.Print("WaveTimer unpaused");
 			else Debug.Print("WaveTimer paused");
-			waveTimer.Paused = !waveTimer.Paused;
+			_waveTimer.Paused = !_waveTimer.Paused;
 		}
 	}
 }

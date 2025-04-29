@@ -20,62 +20,24 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public override void _Ready()
 	{
+		// TODO: why not delete default player and just use mage ? or implement the same speed and health to default player
+		var playerClass = new Assassin(); // Instantiate Mage
+		Speed = playerClass.Speed; // Override DefaultPlayer's Speed with Mage's Speed
+		MaxHealth = playerClass.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
+		CurrentHealth = playerClass.CurrentHealth; // Set CurrentHealth to Mage's CurrentHealth
+		GD.Print($"Mage Speed applied: {Speed}, Mage Health applied: {MaxHealth}");
+
 		AddToGroup("player");
 		CurrentHealth = MaxHealth;
-		// set MultiplayerSynchronizer as authority of this id and then check authority against this id to see if player is authority
-		// to later enable movement controlls and so on for the current player only
-		multiplayerSynchronizer = GetNodeOrNull<MultiplayerSynchronizer>("MultiplayerSynchronizer");
-
-		if (multiplayerSynchronizer != null)
-		{
-			DebugIt(("Trying to parse Name as int: ", Name).ToString());
-
-			multiplayerSynchronizer.SetMultiplayerAuthority(int.Parse(Name));
-			// only show joystic if this player is local player / has authority
-			if (Multiplayer.GetUniqueId() == multiplayerSynchronizer.GetMultiplayerAuthority())
-			{
-				// find the joystic and load it
-				var joystickScene = GD.Load<PackedScene>("res://Scenes/Joystick/joystick.tscn");
-				Joystick = joystickScene.Instantiate<Node2D>();
-				AddChild(Joystick); // // so that its only visible for the local player and others cant see ur joystic
-			}
-		}
-		else
-		{
-			GD.PrintErr("Multiplayer Node was not found");
-		}
-
-		if (Multiplayer.IsServer())
-		{
-			var spawnerScene = GD.Load<PackedScene>("res://Scenes/Enemies/SpawnEnemies.tscn");
-			if (spawnerScene != null)
-			{
-				var spawner = spawnerScene.Instantiate<SpawnEnemies>();
-				spawner.Player = this;
-				GetParent().AddChild(spawner);
-			}
-			else
-			{
-				GD.PrintErr("ERROR Failed to load SpawnEnemies-Scene");
-			}
-		}
-
-		// Enemie spawning setup
+		Joystick = GetNode<Node2D>("Joystick");
 	}
 
 	public override void _Process(double delta)
 	{
-		
+
 	}
 	public override void _PhysicsProcess(double delta)
 	{
-		if (multiplayerSynchronizer.GetMultiplayerAuthority() != Multiplayer.GetUniqueId())
-		{
-			return; // player should not move, not in focus / not authority .. dont need to render physics
-		}
-		camera = GetNode<Camera2D>("Camera2D");
-		camera.MakeCurrent(); // enable camera if if player is authority
-
 		Vector2 direction = Vector2.Zero;
 
 		// Check if joystick exists and if it's being used
