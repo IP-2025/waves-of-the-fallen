@@ -17,9 +17,7 @@ public partial class Charactermenu : Control
 	private Label _labelSpeed;
 	private Label _labelDexterity;
 	private Label _labelIntelligence;
-	//das array wird hier mal temporär mit daten befüllt, falls die DB abfrage nicht geht
-	//generell sollten die Character stats nicht jedes mal abgefragt werden, da man dafür immer eine INternet verbingung braucht
-	//alos am besten Daten wie welche CHractere gibt es und welche sind auf welchen level freigeschaltet lokal speichern und nurm it internetverbindung aktualisieren
+	
 	private Godot.Collections.Array allCharacters = new Godot.Collections.Array
 	{
 		new Godot.Collections.Dictionary
@@ -99,8 +97,7 @@ public partial class Charactermenu : Control
 		Variant receivedVar = Json.ParseString(receivedString);
 		allCharacters = receivedVar.AsGodotArray();
 
-		//hier wir bis jetzt einfach immer beim aufrufen charcter 1 ausgewählt. 
-		//Muss geändert werden, dass hier der beim letzten aufruf ausgewöhlte charcter zu beginn ausgewählt ist
+	
 
 		int selectedId = characterManager.LoadLastSelectedCharacterID();
 		_currentlySelectedCharacter = GetNode<Button>($"%Button_Character{selectedId}");
@@ -108,7 +105,7 @@ public partial class Charactermenu : Control
 		SetCharacterPageValues(allCharacters, selectedId);
 	}
 
-	// Text der charctersite wird an den Text welcher in der DB unter dem chracter mit der nummer (characterId) hinterlegt ist 
+	// Text der charactersite wird an den Text welcher in der DB unter dem chracter mit der nummer (characterId) hinterlegt ist 
 	private void SetCharacterPageValues(Godot.Collections.Array characters, int characterId)
 	{
 		foreach (Godot.Collections.Dictionary character in characters)
