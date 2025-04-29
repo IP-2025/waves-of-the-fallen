@@ -29,6 +29,6 @@ public partial class CharacterManager : Node
 
 	public int LoadLastSelectedCharacterID()
 	{
-		return (int)config.GetValue(Section, Key, 1); // -1 falls nicht gesetzt
+		return (int)config.GetValue(Section, Key, 1);
 	}
 }

@@ -12,7 +12,6 @@ public partial class Charactermenu : Control
 	private Button _oldSelectedCharacter;
 	private Button _ButtonUpgradeUnlock;
 	private Button _Button_Select;
-	//private Godot.Collections.Array allCharacters;
 
 	private Label _labelHealth;
 	private Label _labelSpeed;
@@ -65,7 +64,6 @@ public partial class Charactermenu : Control
 	public override void _Ready()
 	{
 		characterManager = GetNode<CharacterManager>("/root/CharacterManager");
-		//characterManager.SaveLastSelectedCharacterID(3);
 		GD.Print(characterManager.LoadLastSelectedCharacterID());
 
 		_labelHealth = GetNode<Label>("%Label_health");
@@ -163,7 +161,6 @@ public partial class Charactermenu : Control
 		if (_currentlySelectedCharacter != null)
 		{
 			characterManager.SaveLastSelectedCharacterID(int.Parse(_currentlySelectedCharacter.Text));
-			//GD.Print(_oldSelectedCharacter+"  "+_currentlySelectedCharacter);
 			var style = new StyleBoxFlat();
 			style.BgColor = Color.Color8(0x4F, 0x4F, 0x4F);
 			style.BorderColor = new Color(1f, 0f, 0f);
