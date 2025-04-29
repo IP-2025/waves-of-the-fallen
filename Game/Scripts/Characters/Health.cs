@@ -9,6 +9,9 @@ public partial class Health : Node2D
 	[Export] float max_health = 100f;
 	float health;
 
+	// Öffentliche Eigenschaft, um max_health lesbar zu machen
+	public float MaxHealth => max_health;
+
 	public override void _Ready()
 	{
 		health = max_health;
@@ -20,10 +23,8 @@ public partial class Health : Node2D
 
 		if (health <= 0)
 		{
-			//GetTree().Paused = true;
 			EmitSignal(SignalName.HealthDepleted);
 			GetParent().QueueFree();
-			
 		}
 	}
 }
