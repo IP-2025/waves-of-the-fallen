@@ -1,7 +1,7 @@
 ## Backend
 ### Node.js / Express backend with typescript
 - create a `.env` file in the directory `backend` and use the `.env.template` as a template
-- complete kubernetes setup[](#kubernetes-setup-for-local-development)
+- complete [kubernetes setup](#kubernetes-setup-for-local-development)
 - check `http://localhost/api/healthz` for a health check
 
 ### Project structure
@@ -55,5 +55,3 @@ Check logs: `kubectl logs deployment/mngmt-depl`\
 Check ingress: `kubectl describe ingress app-ingress`
 
 If something breaks, u can message @kaprele
-
-```
