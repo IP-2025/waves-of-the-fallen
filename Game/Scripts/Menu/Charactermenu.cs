@@ -84,7 +84,11 @@ public partial class Charactermenu : Control
 		{
 			GD.Print("Request nicht gesendet");
 		}
-
+		
+		int selectedId = characterManager.LoadLastSelectedCharacterID();
+		_currentlySelectedCharacter = GetNode<Button>($"%Button_Character{selectedId}");
+		_on_button_select_pressed();
+		SetCharacterPageValues(allCharacters, selectedId);
 
 
 	}
