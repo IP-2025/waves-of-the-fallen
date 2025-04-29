@@ -4,7 +4,7 @@ using System;
 // GameRoot is the main entry point for the game. It is responsible for loading the map, spawning the player, starting the enemy spawner and so on.
 public partial class GameRoot : Node
 {
-	private Node2D _mainMap; // Store a reference to the main map
+	private Node2D _mainMap;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -89,7 +89,7 @@ public partial class GameRoot : Node
 		if (gameOverScreen != null)
 		{
 			gameOverScreen.Visible = true;
-			GetTree().Paused = true; // Optional: pause the game
+			//GetTree().Paused = true;
 		}
 		else
 		{

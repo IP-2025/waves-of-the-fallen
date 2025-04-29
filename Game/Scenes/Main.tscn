@@ -54,3 +54,12 @@ size_flags_horizontal = 4
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 50
 text = "GAME OVER"
+
+[node name="Button" type="Button" parent="GameOver"]
+offset_left = 494.0
+offset_top = 373.0
+offset_right = 673.0
+offset_bottom = 448.0
+text = "Main Menu"
+
+[connection signal="pressed" from="GameOver/Button" to="." method="_on_button_pressed"]
