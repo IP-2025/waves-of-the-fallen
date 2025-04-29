@@ -20,6 +20,7 @@ config/icon="res://Assets/Characters/place_holder/enemy_placeholder.svg"
 SettingsManager="*res://Scripts/Settings/SettingsManager.cs"
 MenuBackgroundMusic="*res://Scenes/Music/menuBackgroundMusic.tscn"
 GameManager="*res://Scripts/Multiplayer/GameManager.cs"
+CharacterManager="*res://Scripts/Characters/CharacterManager.cs"
 NetworkManager="*res://Scripts/Multiplayer/NetworkManager.cs"
 
 [display]
