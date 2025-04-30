@@ -53,3 +53,11 @@ offset_bottom = 535.0
 text = "Log In"
 
 [node name="HttpRequest" type="HTTPRequest" parent="Panel"]
+
+[node name="OfflineButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 1002.0
+offset_top = 18.0
+offset_right = 1134.0
+offset_bottom = 57.0
+text = "Play Offline"

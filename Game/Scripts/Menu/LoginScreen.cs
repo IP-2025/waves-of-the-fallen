@@ -11,6 +11,7 @@ public partial class LoginScreen : Control
 	private LineEdit _emailField;
 	private LineEdit _passwordField;
 	private Button _loginButton;
+	private Button _offlineButton;
 	private HttpRequest _httpRequest;
 
 	public override void _Ready()
@@ -19,11 +20,20 @@ public partial class LoginScreen : Control
 		_emailField = GetNode<LineEdit>("Panel/EmailField");
 		_passwordField = GetNode<LineEdit>("Panel/PasswordField");
 		_loginButton = GetNode<Button>("Panel/LoginButton");
+		_offlineButton = GetNode<Button>("Panel/OfflineButton");
 		_httpRequest = GetNode<HttpRequest>("Panel/HttpRequest");
 
 		// Connect signals using Callable
 		_loginButton.Connect("pressed", new Callable(this, nameof(OnLoginButtonPressed)));
+		_offlineButton.Connect("pressed", new Callable(this, nameof(OnOfflineButtonPressed)));
 		_httpRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
+	}
+	
+	private void OnOfflineButtonPressed()
+	{
+		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
+		if (scene == null) GD.PrintErr("Main Menu Scene not found");
+		GetTree().ChangeSceneToPacked(scene);
 	}
 
 	private void OnLoginButtonPressed()
@@ -95,9 +105,9 @@ public partial class LoginScreen : Control
 	private void OnLoginSuccess(Dictionary data)
 	{
 		//string token = data["token"].ToString();
-		//GD.Print($"Login successful, token: {token}");
-		// Store token as needed, then:
-		GetTree().ChangeSceneToFile("res://Scenes/mainMenu.tscn");
+		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
+		if (scene == null) GD.PrintErr("Main Menu Scene not found");
+		GetTree().ChangeSceneToPacked(scene);
 	}
 
 	private void ShowError(string message)
