@@ -1,10 +1,11 @@
 using Godot;
 using System;
 using Godot.Collections;
+using WavesOfTheFallen;
 
 public partial class LoginScreen : Control
 {
-	private const string LOGIN_URL = "http://localhost:3000/api/v1/auth/login";
+	private static readonly string LOGIN_URL = $"{Config.BaseUrl}/api/v1/auth/login";
 
 	private LineEdit _emailField;
 	private LineEdit _passwordField;
