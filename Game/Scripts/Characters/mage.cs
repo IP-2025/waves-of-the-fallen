@@ -4,13 +4,8 @@ public partial class Mage : DefaultPlayer
 {
 	public Mage()
 	{
-<<<<<<< HEAD
 		MaxHealth = 120;
 		Speed = 200.0f;
-=======
-		MaxHealth = 50;
-		Speed = 200.0f;  //Sehr niedrig für Testzwecke
->>>>>>> 3ba17a384a46bb450c850f3020d66250fdb953a0
 	}
 
 	public override void _Ready()

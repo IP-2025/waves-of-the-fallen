@@ -4,7 +4,7 @@ public partial class Assassin : DefaultPlayer
 {
 	public Assassin()
 	{
-		MaxHealth = 100; 
+		MaxHealth = 110; 
 		Speed = 200.0f;  
 	}
 	

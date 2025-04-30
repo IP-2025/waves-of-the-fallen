@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cffgskcms870o"]
+[gd_scene load_steps=10 format=3 uid="uid://cffgskcms870o"]
 
 [ext_resource type="Script" uid="uid://bdkp0e6ivq2b5" path="res://Scripts/Characters/DefaultPlayer.cs" id="1_y2kgl"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_kjvlq"]
+[ext_resource type="Script" uid="uid://c7yits36f8kyt" path="res://Scripts/Characters/HealthBar.cs" id="3_jig1i"]
 [ext_resource type="PackedScene" uid="uid://56x8ud47qho" path="res://Scenes/Characters/archer.tscn" id="3_kjvlq"]
 [ext_resource type="PackedScene" uid="uid://dbqlns7qsgchl" path="res://Scenes/Weapons/crossbow.tscn" id="4_1h72i"]
 
@@ -28,6 +29,14 @@ script = ExtResource("1_y2kgl")
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_kjvlq")
+
+[node name="HealthBar" type="ProgressBar" parent="Health"]
+offset_left = -318.0
+offset_top = -174.0
+offset_right = -220.0
+offset_bottom = -147.0
+show_percentage = false
+script = ExtResource("3_jig1i")
 
 [node name="Archer" parent="." instance=ExtResource("3_kjvlq")]
 
