@@ -44,13 +44,14 @@ offset_top = 354.0
 offset_right = 845.0
 offset_bottom = 437.0
 placeholder_text = "Password"
+secret = true
 
 [node name="LoginButton" type="Button" parent="Panel"]
 layout_mode = 0
-offset_left = 516.0
-offset_top = 504.0
-offset_right = 571.0
-offset_bottom = 535.0
+offset_left = 518.0
+offset_top = 497.0
+offset_right = 626.0
+offset_bottom = 551.0
 text = "Log In"
 
 [node name="HttpRequest" type="HTTPRequest" parent="Panel"]
