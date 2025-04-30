@@ -5,7 +5,7 @@ using Godot.Collections;
 public partial class LoginScreen : Control
 {
 	// API endpoint
-	private const string LOGIN_URL = "https://localhost:3000/api/v1/auth/login";
+	private const string LOGIN_URL = "http://localhost:3000/api/v1/auth/login";
 
 	// UI nodes
 	private LineEdit _emailField;
@@ -28,7 +28,7 @@ public partial class LoginScreen : Control
 		_offlineButton.Connect("pressed", new Callable(this, nameof(OnOfflineButtonPressed)));
 		_httpRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
 	}
-	
+
 	private void OnOfflineButtonPressed()
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
@@ -76,34 +76,35 @@ public partial class LoginScreen : Control
 		GD.Print($"Request completed with response code: {responseCode}");
 		GD.Print($"Response body: {System.Text.Encoding.UTF8.GetString(body)}");
 
-		// if (responseCode == 200)
-		// {
-		// 	string bodyText = System.Text.Encoding.UTF8.GetString(body);
+		if (responseCode == 200)
+		{
+			string bodyText = System.Text.Encoding.UTF8.GetString(body);
 
-		// 	// Parse JSON response
-		// 	var json = new Json();
-		// 	var parseErr = json.Parse(bodyText);
-		// 	if (parseErr == Error.Ok
-		// 		&& data.ContainsKey("token"))
-		// 	{
-		// 		OnLoginSuccess(null);
-		// 		return;
-		// 	}
+		 	var json = new Json();
+		 	var parseErr = json.Parse(bodyText);
+		 	if (parseErr == Error.Ok)
+		 	{
+				var response = json.GetData().AsGodotDictionary();
+		 		OnLoginSuccess(response);
+		 		return;
+		 	}
 
-		// 	ShowError("Unexpected server response.");
-		// }
-		// else if (responseCode == 401)
-		// {
-		// 	ShowError("Invalid credentials.");
-		// }
-		// else
-		// {
-		// 	ShowError($"Server error: {responseCode}");
-		// }
+		 	ShowError("Unexpected server response.");
+		 }
+		 else if (responseCode == 401)
+		 {
+		 	ShowError("Invalid credentials.");
+		 }
+		 else
+		 {
+		 	ShowError($"Server error: {responseCode}");
+		 }
 	}
 
-	private void OnLoginSuccess(Dictionary data)
+	private void OnLoginSuccess(Godot.Collections.Dictionary data)
 	{
+		GD.Print("Login successful!");
+		GD.Print("Token: " + data["token"].ToString());
 		//string token = data["token"].ToString();
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");

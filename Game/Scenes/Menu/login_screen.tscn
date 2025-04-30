@@ -38,6 +38,7 @@ offset_bottom = 250.0
 placeholder_text = "Email"
 
 [node name="PasswordField" type="LineEdit" parent="Panel"]
+layout_mode = 0
 offset_left = 309.0
 offset_top = 354.0
 offset_right = 845.0
