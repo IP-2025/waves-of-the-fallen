@@ -4,29 +4,29 @@ using Godot.Collections;
 
 public partial class LoginScreen : Control
 {
-	// API endpoint
 	private const string LOGIN_URL = "http://localhost:3000/api/v1/auth/login";
 
-	// UI nodes
 	private LineEdit _emailField;
 	private LineEdit _passwordField;
 	private Button _loginButton;
 	private Button _offlineButton;
 	private HttpRequest _httpRequest;
+	private Label _errorLabel;
 
 	public override void _Ready()
 	{
-		// Get node references
 		_emailField = GetNode<LineEdit>("Panel/EmailField");
 		_passwordField = GetNode<LineEdit>("Panel/PasswordField");
 		_loginButton = GetNode<Button>("Panel/LoginButton");
 		_offlineButton = GetNode<Button>("Panel/OfflineButton");
 		_httpRequest = GetNode<HttpRequest>("Panel/HttpRequest");
+		_errorLabel = GetNode<Label>("Panel/ErrorLabel");
 
-		// Connect signals using Callable
 		_loginButton.Connect("pressed", new Callable(this, nameof(OnLoginButtonPressed)));
 		_offlineButton.Connect("pressed", new Callable(this, nameof(OnOfflineButtonPressed)));
 		_httpRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
+		
+		_errorLabel.Visible = false;
 	}
 
 	private void OnOfflineButtonPressed()
@@ -47,12 +47,11 @@ public partial class LoginScreen : Control
 			return;
 		}
 
-		// Prepare JSON payload
 		string body = Json.Stringify(new Godot.Collections.Dictionary
-	{
-		{ "email", email },
-				{ "password", password }
-	});
+		{
+			{ "email", email },
+			{ "password", password }
+		});
 
 		// Send POST request
 		var headers = new[] { "Content-Type: application/json" };
@@ -72,9 +71,6 @@ public partial class LoginScreen : Control
 	private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
 	{
 		_loginButton.Disabled = false;
-
-		GD.Print($"Request completed with response code: {responseCode}");
-		GD.Print($"Response body: {System.Text.Encoding.UTF8.GetString(body)}");
 
 		if (responseCode == 200)
 		{
@@ -105,7 +101,6 @@ public partial class LoginScreen : Control
 	{
 		GD.Print("Login successful!");
 		GD.Print("Token: " + data["token"].ToString());
-		//string token = data["token"].ToString();
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
 		GetTree().ChangeSceneToPacked(scene);
@@ -114,6 +109,8 @@ public partial class LoginScreen : Control
 	private void ShowError(string message)
 	{
 		GD.PrintErr("Error: " + message);
-		// TODO: display this message in a Label on-screen
+		
+		_errorLabel.Text = message;
+		_errorLabel.Visible = true;
 	}
 }

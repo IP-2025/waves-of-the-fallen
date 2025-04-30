@@ -62,3 +62,12 @@ offset_top = 18.0
 offset_right = 1134.0
 offset_bottom = 57.0
 text = "Play Offline"
+
+[node name="ErrorLabel" type="Label" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_left = 315.0
+offset_top = 444.0
+offset_right = 841.0
+offset_bottom = 467.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
