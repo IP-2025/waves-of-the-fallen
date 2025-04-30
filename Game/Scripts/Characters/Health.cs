@@ -3,7 +3,7 @@ using System;
 
 public partial class Health : Node2D
 {
-	[Export] public float max_health= 110.0f;
+	[Export] public float max_health= 100.0f;
 	float CurrentHealth;
 	public float CurHealth => CurrentHealth;
 	public override void _Ready()
