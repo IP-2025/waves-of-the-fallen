@@ -18,47 +18,6 @@ public partial class Charactermenu : Control
 	private Label _labelDexterity;
 	private Label _labelIntelligence;
 	
-	private Godot.Collections.Array allCharacters = new Godot.Collections.Array
-	{
-		new Godot.Collections.Dictionary
-		{
-			{"character_id", 1},
-			{"name", "Archer"},
-			{"speed", 100},
-			{"health", 100},
-			{"dexterity", 100},
-			{"intelligence", 100}
-		},
-		new Godot.Collections.Dictionary
-		{
-			{"character_id", 2},
-			{"name", "Assassin"},
-			{"speed", 100},
-			{"health", 100},
-			{"dexterity", 100},
-			{"intelligence", 100}
-		},
-		new Godot.Collections.Dictionary
-		{
-			{"character_id", 3},
-			{"name", "Knight"},
-			{"speed", 100},
-			{"health", 100},
-			{"dexterity", 100},
-			{"intelligence", 100}
-		},
-		new Godot.Collections.Dictionary
-		{
-			{"character_id", 4},
-			{"name", "Mage"},
-			{"speed", 100},
-			{"health", 100},
-			{"dexterity", 100},
-			{"intelligence", 100}
-		}
-	};
-
-
 	public override void _Ready()
 	{
 		characterManager = GetNode<CharacterManager>("/root/CharacterManager");
@@ -86,7 +45,7 @@ public partial class Charactermenu : Control
 		int selectedId = characterManager.LoadLastSelectedCharacterID();
 		_currentlySelectedCharacter = GetNode<Button>($"%Button_Character{selectedId}");
 		_on_button_select_pressed();
-		SetCharacterPageValues(allCharacters, selectedId);
+		SetCharacterPageValuesFromFile(selectedId);
 
 
 	}
@@ -95,38 +54,25 @@ public partial class Charactermenu : Control
 		string receivedString = Encoding.UTF8.GetString(body);
 		GD.Print("Antwort empfangen: " + receivedString);
 		Variant receivedVar = Json.ParseString(receivedString);
-		allCharacters = receivedVar.AsGodotArray();
+		//allCharacters = receivedVar.AsGodotArray();
 
-	
 
 		int selectedId = characterManager.LoadLastSelectedCharacterID();
 		_currentlySelectedCharacter = GetNode<Button>($"%Button_Character{selectedId}");
 		_on_button_select_pressed();
-		SetCharacterPageValues(allCharacters, selectedId);
+		
+		SetCharacterPageValuesFromFile(selectedId);
 	}
 
-	// Text der charactersite wird an den Text welcher in der DB unter dem chracter mit der nummer (characterId) hinterlegt ist 
-	private void SetCharacterPageValues(Godot.Collections.Array characters, int characterId)
+	
+	// set stats and name to values from file (see CharacterManager.cs)
+	private void SetCharacterPageValuesFromFile(int characterId)
 	{
-		foreach (Godot.Collections.Dictionary character in characters)
-		{
-			int character_id = (int)character["character_id"];
-			if (characterId == character_id)
-			{
-				string name = (string)character["name"];
-				int speed = (int)character["speed"];
-				int health = (int)character["health"];
-				int dexterity = (int)character["dexterity"];
-				int intelligence = (int)character["intelligence"];
-
-				_labelCharacterName.Text = name;
-				_labelHealth.Text = $"Health {health}";
-				_labelSpeed.Text = $"Speed {speed}";
-				_labelDexterity.Text = $"Dexterity {dexterity}";
-				_labelIntelligence.Text = $"Intelligence {intelligence}";
-			}
-		}
-
+			_labelCharacterName.Text = $"{characterManager.LoadNameByID(characterId)} - Lvl.{characterManager.LoadLevelByID(characterId)}";
+			_labelHealth.Text = $"Health {characterManager.LoadHealthByID(characterId)}";
+			_labelSpeed.Text = $"Speed {characterManager.LoadSpeedByID(characterId)}";
+			_labelDexterity.Text = $"Dexterity {characterManager.LoadDexterityByID(characterId)}";
+			_labelIntelligence.Text = $"Intelligence {characterManager.LoadIntelligenceByID(characterId)}";
 	}
 
 
@@ -141,9 +87,9 @@ public partial class Charactermenu : Control
 	{
 		if (button != null && _labelCharacterName != null)
 		{
-			SetCharacterPageValues(allCharacters, int.Parse(button.Text));
+			SetCharacterPageValuesFromFile(int.Parse(button.Text));
 			_currentlySelectedCharacter = button;
-			if (button.Name == "Button_Character3")
+			if (!characterManager.LoadIsUnlocked(int.Parse(button.Text)))
 			{ //check if character is unlocken. locked=true
 				_ButtonUpgradeUnlock.Text = "Unlock";
 				_Button_Select.Disabled = true;
