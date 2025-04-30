@@ -1,5 +1,5 @@
 ### GET request to example server
-GET http://localhost:3000/api/v1/healthz
+GET http://localhost/api/v1/healthz
 ###
 
 POST http://localhost:3000/api/v1/auth/register
@@ -19,6 +19,10 @@ Content-Type: application/json
   "username": "testUser",
   "password": "testPassword"
 }
+
+###
+
+GET http://localhost/pgadmin
 
 ###
 
