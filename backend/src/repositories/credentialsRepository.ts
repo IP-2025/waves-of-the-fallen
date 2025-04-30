@@ -2,7 +2,7 @@ import { AppDataSource } from '../libs/data-source';
 import { Credential } from '../libs/entities/Credential';
 import { Player } from '../libs/entities/Player';
 import { v4 as uuidv4 } from 'uuid';
-import { BadRequestError, NotFoundError, ConflictError } from '../errors';
+import { BadRequestError, NotFoundError, ConflictError, UnauthorizedError } from '../errors';
 
 const credentialsRepo = AppDataSource.getRepository(Credential);
 
@@ -47,7 +47,7 @@ export async function saveCredential(newCred: NewCred): Promise<Credential> {
 export async function getPwdByMail(email: string): Promise<Credential> {
   const credential = await credentialsRepo.findOneBy({ email });
   if (!credential) {
-    throw new NotFoundError('Credential not found for the given email.');
+    throw new UnauthorizedError('Wrong email or password.');
   }
   return credential;
 }
