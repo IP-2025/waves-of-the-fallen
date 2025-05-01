@@ -17,8 +17,8 @@ public partial class SettingsMenu : Control
 		settingsManager = GetNode<SettingsManager>("/root/SettingsManager");
 		CheckBox musicEnabledCheckbox = GetNode<CheckBox>("%CheckBoxMusicEnabled");
 		HSlider sliderMusic = GetNode<HSlider>("%SliderMusicVolume");
-	buttonLanguage = GetNode<Button>("%ButtonLanguage");
-	audioSettings = settingsManager.LoadSettingSection("Audio");
+		buttonLanguage = GetNode<Button>("%ButtonLanguage");
+		audioSettings = settingsManager.LoadSettingSection("Audio");
 		menuBackgroundMusicBusIndex = AudioServer.GetBusIndex("MenuBackgroundMusicBus");
 		sliderMusic.Value = Mathf.DbToLinear(
 			AudioServer.GetBusVolumeDb(menuBackgroundMusicBusIndex)
@@ -37,7 +37,7 @@ public partial class SettingsMenu : Control
 	private void _on_h_slider_music_value_changed(float volumeSlider)
 	{
 		AudioServer.SetBusVolumeDb(menuBackgroundMusicBusIndex, Mathf.LinearToDb(volumeSlider));
-		settingsManager.SaveSetting("Audio","Volume", volumeSlider);
+		settingsManager.SaveSetting("Audio", "Volume", volumeSlider);
 	}
 
 	private void _on_check_box_music_enabled_toggled(bool toggled_on)

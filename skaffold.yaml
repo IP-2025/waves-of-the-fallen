@@ -1,0 +1,23 @@
+apiVersion: skaffold/v4beta12
+kind: Config
+metadata:
+  name: waves-of-the-fallen
+build:
+  local:
+    push: false
+  artifacts:
+    - image: kaprele/waves-of-the-fallen/backend
+      context: backend
+      docker:
+        dockerfile: Dockerfile
+manifests:
+  rawYaml:
+    - k8s/app-ingress.yaml
+    - k8s/db-secret.yaml
+    - k8s/mngmt-depl.yaml
+    - k8s/mngmt-svc.yaml
+    - k8s/pgadmin-depl.yaml
+    - k8s/pgadmin-svc.yaml
+    - k8s/postgres-depl.yaml
+    - k8s/postgres-pvc.yaml
+    - k8s/postgres-svc.yaml

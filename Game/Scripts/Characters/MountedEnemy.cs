@@ -8,7 +8,7 @@ public partial class MountedEnemy : EnemyBase
 	{
 		base._Ready();
 
-		// connect health depleted signal
+		// connect HealthDepleted signal
 		var health = GetNode<Health>("Health");
 		if (health != null)
 		{

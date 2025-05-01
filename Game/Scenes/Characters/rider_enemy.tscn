@@ -13,7 +13,8 @@ radius = 200.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_ksi4c"]
 radius = 600.0
 
-[node name="Rider" type="CharacterBody2D"]
+[node name="Rider" type="CharacterBody2D" groups=["Enemies"]]
+collision_layer = 16
 script = ExtResource("1_k7dvb")
 
 [node name="Health" type="Node2D" parent="."]
@@ -37,3 +38,6 @@ collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
 shape = SubResource("CircleShape2D_ksi4c")
+
+[connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
+[connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]

@@ -17,4 +17,9 @@ public partial class Mage : DefaultPlayer
 	{
 		GD.Print("Platzhalter Fähigkeit Magier");
 	}
+	public override void Die()
+	{
+		GD.Print("Mage death animation playing...");
+		//animationPlayer.Play("mage_death");
+	}
 }
