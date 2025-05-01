@@ -10,6 +10,9 @@ public partial class WaveTimer : Node2D
 	private Label _timeLeftLabel;
 	private Label _waveCounterLabel;
 
+	[Signal]
+	public delegate void WaveEndedEventHandler();
+
 	public override void _Ready()
 	{
 		// SORRY hat to change this because of the multiplayer stuff
@@ -46,6 +49,7 @@ public partial class WaveTimer : Node2D
 			waveCounter++;
 
 			_waveCounterLabel.Text = $"Wave: {waveCounter}";
+			EmitSignal(SignalName.WaveEnded);
 			DeleteEnemies();
 		}
 
@@ -53,7 +57,7 @@ public partial class WaveTimer : Node2D
 		_timeLeftLabel.Text = (maxTime - secondCounter).ToString();
 	}
 
-	private void DeleteEnemies()
+	public void DeleteEnemies()
 	{
 		if (GetTree().GetNodesInGroup("Enemies") != null)
 		{
