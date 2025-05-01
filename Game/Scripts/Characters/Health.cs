@@ -4,22 +4,20 @@ using System;
 public partial class Health : Node2D
 {
 	[Export] public float max_health= 100.0f;
-	float CurrentHealth;
-	public float CurHealth => CurrentHealth;
+	float health;
+	public float CurHealth => health;
 	[Signal]
 	public delegate void HealthDepletedEventHandler();
 	
-	[Export] float max_health = 100f;
-	float health;
 
 	public override void _Ready()
 	{
-		CurrentHealth = max_health;
+		health = max_health;
 	}
 	public void Damage(float damage) 
 	{
-		CurrentHealth -= damage;
-		if (CurrentHealth <= 0)
+		health -= damage;
+		if (health <= 0)
 		{
 			if(GetParent() is DefaultPlayer){
 				((DefaultPlayer)GetParent()).Die();
