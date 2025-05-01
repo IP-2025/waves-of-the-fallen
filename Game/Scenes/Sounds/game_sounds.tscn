@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cngr0y0eno8or"]
+
+[node name="GameSounds" type="Node2D"]
+
+[node name="MenuButtons" type="AudioStreamPlayer" parent="."]
+
+[node name="BowShoots" type="AudioStreamPlayer2D" parent="."]
+
+[node name="CrossbowShoots" type="AudioStreamPlayer2D" parent="."]
+
+[node name="EnemySpawns" type="AudioStreamPlayer2D" parent="."]
+
+[node name="EnemyHurt" type="AudioStreamPlayer2D" parent="."]
+
+[node name="CharacterHurt" type="AudioStreamPlayer2D" parent="."]
+
+[node name="CharacterWalks" type="AudioStreamPlayer2D" parent="."]
+
+[node name="CharacterDeath" type="AudioStreamPlayer2D" parent="."]
+
+[node name="GameOver" type="AudioStreamPlayer" parent="."]
