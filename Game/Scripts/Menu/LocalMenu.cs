@@ -75,13 +75,13 @@ public partial class LocalMenu : Control
 
   }
 
-private void _on_play_button_pressed()
-{
+  private void _on_play_button_pressed()
+  {
     // change scene to game
     var gameScene = GD.Load<PackedScene>("res://Scenes/GameRoot/GameRoot.tscn");
     gameScene.Instantiate<Node>();
     GetTree().ChangeSceneToPacked(gameScene);
-}
+  }
 
 
   private void DebugIt(string message)

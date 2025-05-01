@@ -7,8 +7,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_1deiu"]
 radius = 13.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2wu2"]
-size = Vector2(86, 72)
+[sub_resource type="CircleShape2D" id="CircleShape2D_u2wu2"]
+radius = 180.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e5mcm"]
 radius = 5206.02
@@ -16,6 +16,7 @@ radius = 5206.02
 [node name="RangedEnemy" type="CharacterBody2D" groups=["Enemies"]]
 collision_layer = 16
 script = ExtResource("1_1deiu")
+stopDistance = 180.0
 speed = 150.0
 
 [node name="Health" type="Node2D" parent="."]
@@ -32,7 +33,7 @@ shape = SubResource("CircleShape2D_1deiu")
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
-shape = SubResource("RectangleShape2D_u2wu2")
+shape = SubResource("CircleShape2D_u2wu2")
 
 [node name="detection_area" type="Area2D" parent="."]
 collision_layer = 0

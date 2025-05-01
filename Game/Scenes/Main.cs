@@ -23,4 +23,11 @@ public partial class Main : Node2D
 			Debug.Print(message);
 		}
 	}
+	
+	private void _on_button_pressed()
+	{
+		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
+		if (scene == null) Debug.Print("Uppsiii");
+		GetTree().ChangeSceneToPacked(scene);
+	}
 }

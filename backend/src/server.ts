@@ -11,7 +11,7 @@ AppDataSource.initialize()
   .then(async () => {
     await innitAllCharacters()
     app.listen(port, () => {
-      logger.info(`🚀 Server screaming on port ${port}`);
+      logger.info(`🚀 Server crying on port ${port}`);
     });
   })
   .catch((error) => {

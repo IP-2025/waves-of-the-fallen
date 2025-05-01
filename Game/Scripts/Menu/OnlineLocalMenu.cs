@@ -21,7 +21,7 @@ public partial class OnlineLocalMenu : Control
   private void _on_button_solo_pressed()
   {
     NetworkManager.Instance.InitServer();
-    
+
     var gameScene = GD.Load<PackedScene>("res://Scenes/GameRoot/GameRoot.tscn");
     gameScene.Instantiate<Node>();
     GetTree().ChangeSceneToPacked(gameScene);

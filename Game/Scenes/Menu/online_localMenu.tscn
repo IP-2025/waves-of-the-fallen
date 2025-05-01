@@ -154,6 +154,7 @@ size_flags_vertical = 3
 theme_override_constants/separation = 80
 
 [node name="Button_Online" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 80
@@ -172,6 +173,7 @@ text = "Online
 "
 
 [node name="Button_Local" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 80

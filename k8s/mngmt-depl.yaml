@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mngmt-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mngmt
+  template:
+    metadata:
+      labels:
+        app: mngmt
+    spec:
+      containers:
+        - name: mngmt
+          image: kaprele/waves-of-the-fallen/backend:latest # <<< Replace this with your built image name
+          ports:
+            - containerPort: 3000 # Or whatever your app uses
+          env:
+            - name: PORT
+              value: "3000"
+            - name: DB_HOST
+              value: "db" # Your postgres service
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_PASSWORD
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_DATABASE
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_URL
+          readinessProbe:
+            httpGet:
+              path: /api/v1/healthz
+              port: 3000
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/v1/healthz
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
