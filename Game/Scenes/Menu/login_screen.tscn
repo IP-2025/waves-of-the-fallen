@@ -1,0 +1,74 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2coob6g63jxs"]
+
+[ext_resource type="Script" uid="uid://bn60bm5gya3pn" path="res://Scripts/Menu/LoginScreen.cs" id="1_36i0f"]
+
+[node name="LoginScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_36i0f")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_top = -1.0
+offset_right = 1152.0
+offset_bottom = 650.0
+
+[node name="LoginText" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -65.5
+offset_right = 65.5
+offset_bottom = 69.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Login"
+
+[node name="EmailField" type="LineEdit" parent="Panel"]
+layout_mode = 0
+offset_left = 311.0
+offset_top = 167.0
+offset_right = 847.0
+offset_bottom = 250.0
+placeholder_text = "Email"
+
+[node name="PasswordField" type="LineEdit" parent="Panel"]
+layout_mode = 0
+offset_left = 309.0
+offset_top = 354.0
+offset_right = 845.0
+offset_bottom = 437.0
+placeholder_text = "Password"
+secret = true
+
+[node name="LoginButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 518.0
+offset_top = 497.0
+offset_right = 626.0
+offset_bottom = 551.0
+text = "Log In"
+
+[node name="HttpRequest" type="HTTPRequest" parent="Panel"]
+
+[node name="OfflineButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 1002.0
+offset_top = 18.0
+offset_right = 1134.0
+offset_bottom = 57.0
+text = "Play Offline"
+
+[node name="ErrorLabel" type="Label" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_left = 315.0
+offset_top = 444.0
+offset_right = 841.0
+offset_bottom = 467.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)

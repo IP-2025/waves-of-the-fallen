@@ -26,7 +26,6 @@ public partial class Main : Node2D
 	
 	private void _on_button_pressed()
 	{
-		Debug.Print("kiiiiiillll meeee");
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
 		if (scene == null) Debug.Print("Uppsiii");
 		GetTree().ChangeSceneToPacked(scene);
