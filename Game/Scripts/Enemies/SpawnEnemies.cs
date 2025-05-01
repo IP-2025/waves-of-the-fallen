@@ -8,58 +8,58 @@ public partial class SpawnEnemies : Node2D
 	public override void _Ready()
 	{
 		Timer timer = GetNode<Timer>("SpawnTimer");
-		timer.Timeout += OnTimerTimeout;
+		timer.Timeout += OnTimerTimeout; // timer event connected
 	}
 	
 	private void OnTimerTimeout()
 	{
-		SpawnEnemy();
+		SpawnEnemy(); // spawn enemy on timer timeout
 	}
 
 	private void SpawnEnemy() 
 	{
 		if (GetTree().GetNodesInGroup("enemies").Count >= 30)
-			return;
+			return; // limit reached, no more enemies
 
-		// Zufällige Auswahl des Gegnertyps
+		// random enemy type selection
 		float randomValue = GD.Randf();
 		GD.Print($"Random value: {randomValue}");
 
 		PackedScene scene;
 		string enemyType;
 
-		if (randomValue < 0.0001f)
+		if (randomValue < 0.4f)
 		{
-			// RangedEnemy spawnen
+			// spawn ranged enemy
 			scene = GD.Load<PackedScene>("res://Scenes/Characters/ranged_enemy.tscn");
 			enemyType = "RangedEnemy";
 		}
 		else if (randomValue < 0.7f)
 		{
-			// MountedEnemy spawnen
+			// spawn mounted enemy
 			scene = GD.Load<PackedScene>("res://Scenes/Characters/mounted_enemy.tscn");
 			enemyType = "MountedEnemy";
 		}
 		else
 		{
-			// BasicEnemy spawnen
+			// spawn basic enemy
 			scene = GD.Load<PackedScene>("res://Scenes/Characters/default_enemy.tscn");
 			enemyType = "BasicEnemy";
 		}
 
-		// Gegner instanziieren und konfigurieren
+		// instantiate and configure enemy
 		var enemy = scene.Instantiate<EnemyBase>();
 		enemy.player = Player;
 
-		// Spawn-Position festlegen
+		// spawn-position defined
 		PathFollow2D spawnPath = GetNode<PathFollow2D>("Path2D/PathFollow2D");
 		spawnPath.ProgressRatio = GD.Randf();
 		enemy.GlobalPosition = spawnPath.GlobalPosition;
 
-		enemy.AddToGroup("enemies");
-		AddChild(enemy);
+		enemy.AddToGroup("enemies"); // added to enemies group
+		AddChild(enemy); // added to scene
 
-		// Log-Ausgabe mit Feindtyp und Gesundheit
+		// log enemy type and health
 		var health = enemy.GetNode<Health>("Health");
 		GD.Print($"Spawned enemy: {enemyType} with {health.MaxHealth} health.");
 	}

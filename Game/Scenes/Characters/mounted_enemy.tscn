@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://mounted_enemy_uid"]
+[gd_scene load_steps=7 format=3 uid="uid://55ua147f3qds"]
 
-[ext_resource type="Script" uid="uid://mounted_enemy_script" path="res://Scripts/Characters/MountedEnemy.cs" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://5cbcok6lm35m" path="res://Assets/Characters/place_holder/ranged_enemy_placeholder.png" id="1_3wwps"]
-[ext_resource type="Script" uid="uid://health_script" path="res://Scripts/Characters/Health.cs" id="2_health"]
-[ext_resource type="PackedScene" uid="uid://basic_enemy_scene" path="res://Scenes/Characters/default_enemy.tscn" id="3_basic_enemy"]
+[ext_resource type="Script" uid="uid://ca4o6jn11ysi0" path="res://Scripts/Characters/MountedEnemy.cs" id="1_script"]
+[ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="3_health"]
+[ext_resource type="Texture2D" uid="uid://b7hv8o45r2s1g" path="res://Assets/Characters/place_holder/PlaceholderBody.png" id="5_6dmdw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
 radius = 15.0
@@ -17,15 +16,12 @@ radius = 600.0
 [node name="MountedEnemy" type="CharacterBody2D" groups=["Enemies"]]
 collision_layer = 16
 script = ExtResource("1_script")
-stopDistance = 200.0
-BasicEnemyScene = ExtResource("3_basic_enemy")
 
 [node name="Health" type="Node2D" parent="."]
-script = ExtResource("2_health")
+script = ExtResource("3_health")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(4.5, 4.5) # 3x größer als der RangedEnemy (1.5 * 3 = 4.5)
-texture = ExtResource("1_3wwps")
+texture = ExtResource("5_6dmdw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_body")
