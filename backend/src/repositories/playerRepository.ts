@@ -40,3 +40,12 @@ export async function userExists(playerId: string): Promise<boolean> {
     throw new InternalServerError('Error checking if user exists');
   }
 }
+
+export async function getGoldRepository(playerId: string): Promise<void> {
+
+}
+
+export async function setGoldRepository(playerId: string, gold: number): Promise<void> {
+
+}
+
