@@ -45,7 +45,7 @@ describe('POST /getAllUnlockedCharacters', () => {
 
         const AllCharacters = await request(app)
             .post('/api/v1/protected/getAllUnlockedCharacters')
-            //.set('Authorization', `Bearer ${validToken}`)
+            .set('Authorization', `Bearer ${validToken}`)
         expect(AllCharacters.status).toBe(200);
         expect(AllCharacters.body).toEqual(
             expect.arrayContaining([
