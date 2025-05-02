@@ -41,11 +41,30 @@ export async function userExists(playerId: string): Promise<boolean> {
   }
 }
 
-export async function getGoldRepository(playerId: string): Promise<void> {
-
+export async function getGoldRepository(playerId: string): Promise<number> {
+  try {
+    const player = await playersRepo.findOneBy({ player_id: playerId });
+    if (!player) {
+      throw new InternalServerError('Player not found');
+    }
+    return player.gold;
+  } catch (error) {
+    logger.error('Error retrieving gold: ', error);
+    throw new InternalServerError('Error retrieving gold');
+  }
 }
+
 
 export async function setGoldRepository(playerId: string, gold: number): Promise<void> {
-
+  try {
+    const player = await playersRepo.findOneBy({ player_id: playerId });
+    if (!player) {
+      throw new InternalServerError('Player not found');
+    }
+    player.gold = gold;
+    await playersRepo.save(player);
+  } catch (error) {
+    logger.error('Error setting gold: ', error);
+    throw new InternalServerError('Error setting gold');
+  }
 }
-
