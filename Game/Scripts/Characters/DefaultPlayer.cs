@@ -15,6 +15,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public Node2D Joystick { get; set; }
 	private Camera2D camera;
+	private MultiplayerSynchronizer multiplayerSynchronizer;
 	public bool enableDebug = false;
 
 	public override void _Ready()
@@ -24,11 +25,10 @@ public partial class DefaultPlayer : CharacterBody2D
 		Speed = playerClass.Speed; // Override DefaultPlayer's Speed with Mage's Speed
 		MaxHealth = playerClass.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
 		CurrentHealth = playerClass.CurrentHealth; // Set CurrentHealth to Mage's CurrentHealth
-		GD.Print($"Mage Speed applied: {Speed}, Mage Health applied: {MaxHealth}");
+		GD.Print($"Assassin Speed applied: {Speed}, Assasin Health applied: {MaxHealth}");
 
 		AddToGroup("player");
 		CurrentHealth = MaxHealth;
-		
 		Joystick = GetNode<Node2D>("Joystick");
 	}
 
@@ -94,5 +94,10 @@ public partial class DefaultPlayer : CharacterBody2D
 		{
 			Debug.Print(message);
 		}
+	}	
+	public virtual void Die()
+	{
+		GD.Print("Default death behavior – no animation");
+		QueueFree();
 	}
 }

@@ -16,6 +16,6 @@ public partial class EnemySpawner : Node {
         var scene = GD.Load<PackedScene>("res://Actors/Enemy.tscn");
         var e = scene.Instantiate<Node2D>();
         GetTree().Root.AddChild(e);
-        Server.Instance.Entities[Server.Instance.GetNextId()] = e;
+        GameManager.Instance.Entities[GameManager.Instance.GetNextId()] = e;
     }
 }

@@ -6,13 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 
-// Autoload-Node: manages network stuff, Tick-Loop
+// Autoload-Node: verwaltet Netzwerk, Tick-Loop
 public partial class NetworkManager : Node
 {
-    public bool enableDebug = true;
-    private readonly int PORT = 5000;
+    public bool enableDebug = false;
+    [Export] public int Port = 9999;
     private ENetMultiplayerPeer _peer;
-    private Queue<Command> _incomingCommand = new Queue<Command>();
+    private Queue<Command> _incoming = new Queue<Command>();
     private int _sequence = 0;
     private int _tick = 0;
     private double _accumulator = 0;
@@ -29,28 +29,17 @@ public partial class NetworkManager : Node
     public void InitServer()
     {
         _peer = new ENetMultiplayerPeer();
-        _peer.CreateServer(PORT, 4); // max 4 clients
+        _peer.CreateServer(Port, 4); // max 4 clients
         GetTree().GetMultiplayer().MultiplayerPeer = _peer;
-        DebugIt("Server startet on port: " + PORT + " IP: " + GetServerIPAddress());
+        DebugIt("Server startet on port: " + Port + " IP: " + GetServerIPAddress());
     }
 
     public void InitClient(string address)
     {
         _peer = new ENetMultiplayerPeer();
-
-        // test if address and port is valid / open
-        var err = _peer.CreateClient(address, PORT);
-        DebugIt($"ENet CreateClient: {err}");
-
-        if (err != Error.Ok)
-        {
-            DebugIt("Failed to create client, quitting game.");
-            GetTree().Quit();
-            return;
-        }
-
+        _peer.CreateClient(address, Port);
         GetTree().GetMultiplayer().MultiplayerPeer = _peer;
-        DebugIt("Client connecting to: " + address + ":" + PORT);
+        DebugIt("Client connecting to: " + address + ":" + Port);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -61,63 +50,46 @@ public partial class NetworkManager : Node
         while (_accumulator >= TickDelta)
         {
             _accumulator -= TickDelta;
-            ProcessNetwork(); // process incoming packets
+            ProcessNetwork();
             if (GetTree().GetMultiplayer().IsServer())
             {
                 UpdateGame();
-                SendSnapshot();
-            }
-            else
-            {
-                // TODO: SendCommand();
             }
 
+            SendSnapshot();
             _tick++;
         }
     }
 
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-    public void NotifyGameStart()
+    public void StartGame()
     {
-
-        StartGame();
-    }
-
-    private void StartGame()
-    {
-        if (GetTree().GetMultiplayer().IsServer())
-        {
-            Server.Instance.InitServer();
-        }
-
         _gameRunning = true;
     }
 
     private void ProcessNetwork()
     {
         var mp = GetTree().GetMultiplayer().GetMultiplayerPeer() as ENetMultiplayerPeer;
+        if (mp == null) return;
 
-        int cnt = mp.GetAvailablePacketCount();
-        DebugIt($"{GetTree().GetMultiplayer().GetUniqueId()} Incoming packets: {cnt}");
-
-        while (cnt > 0)
+        mp.SetTargetPeer((int)MultiplayerPeer.TargetPeerServer); // nur zur Sicherheit
+        while (mp.GetAvailablePacketCount() > 0)
         {
             var pkt = mp.GetPacket();
             if (GetTree().GetMultiplayer().IsServer())
             {
-                // Server only receives commands
+                // Server empfängt nur Commands
                 var cmd = Serializer.Deserialize<Command>(pkt);
-                _incomingCommand.Enqueue(cmd);
+                _incoming.Enqueue(cmd);
             }
             else
             {
-                // Client only receives snapshots
+                // Client empfängt nur Snapshots
                 var snap = Serializer.Deserialize<Snapshot>(pkt);
-                // handle snapshots to player manager
-                GetTree().Root
+                // Snapshot an den PlayerManager geben
+                var pm = GetTree().Root
                             .GetNode<GameRoot>("GameRoot")
-                            .GetNode<Client>("Client")
-                            .ApplySnapshot(snap);
+                            .GetNode<PlayerManager>("PlayerManager");
+                pm.ApplySnapshot(snap);
             }
         }
     }
@@ -125,40 +97,43 @@ public partial class NetworkManager : Node
 
     private void UpdateGame()
     {
-        while (_incomingCommand.Any())
+        while (_incoming.Any())
         {
-            var cmd = _incomingCommand.Dequeue();
-            Server.Instance.ProcessCommand(cmd);
+            var cmd = _incoming.Dequeue();
+            GameManager.Instance.ProcessCommand(cmd);
         }
     }
 
     private void SendSnapshot()
     {
         var snap = new Snapshot(_tick);
-        foreach (var kv in Server.Instance.Entities)
+        foreach (var kv in GameManager.Instance.Entities)
         {
-            snap.Entities.Add(new EntitySnapshot(kv.Key, kv.Value.Position, kv.Value.Rotation));
+            long netId = kv.Key;
+            Node2D entity = kv.Value;
+            snap.Entities.Add(new EntitySnapshot(netId,
+                entity.Position, entity.Rotation));
         }
 
-        //prodcast to all clients
-        var mp = GetTree().GetMultiplayer().GetMultiplayerPeer() as ENetMultiplayerPeer;
-        if (mp == null) return;
-        mp.SetTargetPeer((int)MultiplayerPeer.TargetPeerBroadcast);
-        mp.PutPacket(Serializer.Serialize(snap));
-        DebugIt($"Server: sending snapshot tick={_tick}");
+        var data = Serializer.Serialize(snap);
+        BroadcastMessage(data);
     }
 
     public void SendCommand(Command cmd)
     {
         cmd.Sequence = _sequence++;
+        var data = Serializer.Serialize(cmd);
+        BroadcastMessage(data); // 1 = Server ID
+    }
 
-        // prodcast to server only
+    void BroadcastMessage(byte[] data)
+    {
         var mp = GetTree().GetMultiplayer().GetMultiplayerPeer() as ENetMultiplayerPeer;
         if (mp == null) return;
-        mp.SetTargetPeer((int)MultiplayerPeer.TargetPeerServer);
-        mp.PutPacket(Serializer.Serialize(cmd));
-        DebugIt($"Client: Incoming packets: {mp.GetAvailablePacketCount()}");
+        mp.SetTargetPeer((int)MultiplayerPeer.TargetPeerBroadcast);
+        mp.PutPacket(data);
     }
+
 
     public static float GetTickDelta()
     {
