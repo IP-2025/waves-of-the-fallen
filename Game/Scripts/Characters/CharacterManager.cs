@@ -30,6 +30,19 @@ public partial class CharacterManager : Node
 		}
 	}
 	
+	public void UpgradeCharacter(string characterId)
+	{
+		config.SetValue(Section, Key, characterId);
+		
+		config.SetValue(characterId, "health", LoadHealthByID(characterId)+5);
+		config.SetValue(characterId, "speed", LoadSpeedByID(characterId)+5);
+		config.SetValue(characterId, "dexterity", LoadDexterityByID(characterId)+5);
+		config.SetValue(characterId, "intelligence", LoadIntelligenceByID(characterId)+5);
+		config.SetValue(characterId, "level", LoadLevelByID(characterId)+1);
+		
+		config.Save(SettingsPath);
+	}
+	
 	public void SaveCharacterData(int characterId, string name, int health, int speed, int dexterity, int intelligence, int level, int unlocked)
 	{
 		config.SetValue($"{characterId}", "name", name);
@@ -49,38 +62,43 @@ public partial class CharacterManager : Node
 		config.Save(SettingsPath);
 	}
 	
-	public string LoadNameByID(int id)
+	public string LoadNameByID(string id)
 	{
-		return (string)config.GetValue($"{id}", "name");
+		return (string)config.GetValue(id, "name");
 	}
 	
-	public int LoadHealthByID(int id)
+	public int LoadHealthByID(string id)
 	{
-		return (int)config.GetValue($"{id}", "health");
+		return (int)config.GetValue(id, "health");
 	}
 	
-	public int LoadSpeedByID(int id)
+	public int LoadSpeedByID(string id)
 	{
-		return (int)config.GetValue($"{id}", "speed");
+		return (int)config.GetValue(id, "speed");
 	}
 	
-	public int LoadDexterityByID(int id)
+	public int LoadDexterityByID(string id)
 	{
-		return (int)config.GetValue($"{id}", "dexterity");
+		return (int)config.GetValue(id, "dexterity");
 	}
 	
-	public int LoadIntelligenceByID(int id)
+	public int LoadIntelligenceByID(string id)
 	{
-		return (int)config.GetValue($"{id}", "intelligence");
+		return (int)config.GetValue(id, "intelligence");
 	}
-	public int LoadLevelByID(int id)
+	public int LoadLevelByID(string id)
 	{
-		return (int)config.GetValue($"{id}", "level");
+		return (int)config.GetValue(id, "level");
 	}
 	
-	public bool LoadIsUnlocked(int id)
+	public bool LoadIsUnlocked(string id)
 	{
-		return ((int)config.GetValue($"{id}", "unlocked") == 1);
+		return ((int)config.GetValue(id, "unlocked") == 1);
+	}
+	public void SetUnlocked(string id)
+	{
+		config.SetValue(id, "unlocked", 1);
+		config.Save(SettingsPath);
 	}
 
 	public int LoadLastSelectedCharacterID()

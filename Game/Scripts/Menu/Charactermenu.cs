@@ -21,7 +21,6 @@ public partial class Charactermenu : Control
 	public override void _Ready()
 	{
 		characterManager = GetNode<CharacterManager>("/root/CharacterManager");
-		GD.Print(characterManager.LoadLastSelectedCharacterID());
 
 		_labelHealth = GetNode<Label>("%Label_health");
 		_labelSpeed = GetNode<Label>("%Label_speed");
@@ -45,7 +44,7 @@ public partial class Charactermenu : Control
 		int selectedId = characterManager.LoadLastSelectedCharacterID();
 		_currentlySelectedCharacter = GetNode<Button>($"%Button_Character{selectedId}");
 		_on_button_select_pressed();
-		SetCharacterPageValuesFromFile(selectedId);
+		SetCharacterPageValuesFromFile($"{selectedId}");
 
 
 	}
@@ -61,12 +60,12 @@ public partial class Charactermenu : Control
 		_currentlySelectedCharacter = GetNode<Button>($"%Button_Character{selectedId}");
 		_on_button_select_pressed();
 		
-		SetCharacterPageValuesFromFile(selectedId);
+		SetCharacterPageValuesFromFile($"{selectedId}");
 	}
 
 	
 	// set stats and name to values from file (see CharacterManager.cs)
-	private void SetCharacterPageValuesFromFile(int characterId)
+	private void SetCharacterPageValuesFromFile(string characterId)
 	{
 			_labelCharacterName.Text = $"{characterManager.LoadNameByID(characterId)} - Lvl.{characterManager.LoadLevelByID(characterId)}";
 			_labelHealth.Text = $"Health {characterManager.LoadHealthByID(characterId)}";
@@ -87,18 +86,16 @@ public partial class Charactermenu : Control
 	{
 		if (button != null && _labelCharacterName != null)
 		{
-			SetCharacterPageValuesFromFile(int.Parse(button.Text));
+			SetCharacterPageValuesFromFile(button.Text);
 			_currentlySelectedCharacter = button;
-			if (!characterManager.LoadIsUnlocked(int.Parse(button.Text)))
+			if (!characterManager.LoadIsUnlocked(button.Text))
 			{ //check if character is unlocken. locked=true
 				_ButtonUpgradeUnlock.Text = "Unlock";
-				_Button_Select.Disabled = true;
 				_Button_Select.Hide();
 			}
 			else
 			{
 				_ButtonUpgradeUnlock.Text = "Upgrade";
-				_Button_Select.Disabled = false;
 				_Button_Select.Show();
 			}
 		}
@@ -135,7 +132,59 @@ public partial class Charactermenu : Control
 			button.AddThemeStyleboxOverride("normal", style);
 		}
 	}
-
-
+	
+	private void _on_button_upgrade_unlock_pressed()
+	{
+		string characterID=_currentlySelectedCharacter.Text;
+		if(characterManager.LoadIsUnlocked(characterID))
+		{
+			characterManager.UpgradeCharacter(characterID);
+			
+		}else
+		{
+			characterManager.SetUnlocked(characterID);
+			_ButtonUpgradeUnlock.Text = "Upgrade";
+			_Button_Select.Show();
+			var icon=_currentlySelectedCharacter.GetNode<TextureRect>("TextureRect");
+			icon.Material=null;
+		}
+		SetCharacterPageValuesFromFile(characterID);
+	}
+	
+	private void ResetCharacters()
+	{
+		ConfigFile config = new();
+		config.Load("user://character_settings.cfg");
+		
+		characterManager.SaveCharacterData(1, "Archer", 100, 100, 100, 100, 1, 1);
+		characterManager.SaveCharacterData(2, "Assassin", 100, 100, 100, 100, 1, 0);
+		characterManager.SaveCharacterData(3, "Knight", 100, 100, 100, 100, 1, 0);
+		characterManager.SaveCharacterData(4, "Mage", 100, 100, 100, 100, 1, 0);
+		
+		var button1 = GetNode<Button>("%Button_Character1");
+		var button2 = GetNode<Button>("%Button_Character2");
+		var button3 = GetNode<Button>("%Button_Character3");
+		var button4 = GetNode<Button>("%Button_Character4");
+		
+		var icon=button1.GetNode<TextureRect>("TextureRect");
+		icon.Material=null;
+		
+		Shader _blackAndWhiteShader = GD.Load<Shader>("res://Scenes/Menu/characterMenuIconShader.gdshader");
+		var material = new ShaderMaterial();
+		material.Shader = _blackAndWhiteShader;
+		
+		icon=button2.GetNode<TextureRect>("TextureRect");
+		icon.Material=material;
+		
+		icon=button3.GetNode<TextureRect>("TextureRect");
+		icon.Material=material;
+		
+		icon=button4.GetNode<TextureRect>("TextureRect");
+		icon.Material=material;
+		
+		
+		SetCharacterPageValuesFromFile(_currentlySelectedCharacter.Text);
+	}
+	
 
 }
