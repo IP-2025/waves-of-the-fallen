@@ -21,6 +21,7 @@ script = ExtResource("1_script")
 script = ExtResource("3_health")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("5_6dmdw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
