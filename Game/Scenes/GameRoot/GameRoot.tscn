@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://pl5pkn8u1v3w"]
+
+[ext_resource type="Script" uid="uid://c1kwytgc0tajq" path="res://Scripts/GameRoot/GameRoot.cs" id="1_qg15c"]
+[ext_resource type="Script" uid="uid://bqmmji7osak4j" path="res://Scripts/Multiplayer/Client.cs" id="2_tv655"]
+
+[node name="GameRoot" type="Node"]
+script = ExtResource("1_qg15c")
+
+[node name="PlayerManager" type="Node" parent="."]
+script = ExtResource("2_tv655")

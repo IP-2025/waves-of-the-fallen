@@ -116,7 +116,7 @@ _data = {
 
 [node name="Archer" type="Node2D"]
 texture_filter = 1
-scale = Vector2(1.00851, 1.02703)
+scale = Vector2(0.33, 0.336)
 
 [node name="ArcherPictures" type="Sprite2D" parent="."]
 texture = ExtResource("1_rh6ln")

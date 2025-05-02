@@ -9,16 +9,14 @@ using System.Net.Sockets;
 
 public partial class LocalMenu : Control
 {
-  public bool enableDebug = false;
+  public bool enableDebug = true;
 
   private Button joinButton;
   private Button hostButton;
   private Button playButton;
   private LineEdit ipIO;
   private readonly int PORT = 9999;
-
   private RichTextLabel currentPlayers;
-  private ClientBootstrapping client;
   //private ServerBootstrapping server;
 
 
@@ -49,10 +47,7 @@ public partial class LocalMenu : Control
 
   private void _on_join_button_pressed()
   {
-    var scene = GD.Load<PackedScene>("res://Scenes/Multiplayer/Client.tscn");
-    var client = scene.Instantiate<ClientBootstrapping>();
-    GetTree().Root.AddChild(client);
-    client.Init(PORT, ipIO.Text); // set the ip input to display local ip address
+    NetworkManager.Instance.InitClient(ipIO.Text);
 
     // disable join and host button
     joinButton.Visible = false;
@@ -65,13 +60,8 @@ public partial class LocalMenu : Control
 
   private void _on_host_button_pressed()
   {
-    var scene = GD.Load<PackedScene>("res://Scenes/Multiplayer/Server.tscn");
-    var server = scene.Instantiate<ServerBootstrapping>();
-    GetTree().Root.AddChild(server);
-    server.Init(PORT);
-
-    // create a new server and host the game
-    //ipIO.Text = "Lobby address is: " + LocalMultiplayer.getHostAddress().ToString(); // set the ip input to display local ip address
+    NetworkManager.Instance.InitServer();
+    ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show server ip in input field
 
     // disable host and join button and enable play button
     hostButton.Visible = false;
@@ -85,18 +75,14 @@ public partial class LocalMenu : Control
 
   }
 
-
-  private void _on_play_button_pressed()
-  {
-    //LocalMultiplayer.Play();
-  }
+private void _on_play_button_pressed()
+{
+    NetworkManager.Instance.Rpc("NotifyGameStart");
+}
 
 
   private void DebugIt(string message)
   {
-    //if (LocalMultiplayer.enableDebug)
-    //{
-    //  Debug.Print(message);
-    // }
+    if (enableDebug) Debug.Print("Local Menue: " + message);
   }
 }
