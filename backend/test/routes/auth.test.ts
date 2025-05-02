@@ -63,7 +63,7 @@ describe('Test POST /login', () => {
       .post('/api/v1/auth/login')
       .send(wrongCredentials);
 
-    expect(errorLoginResponse.status).toBe(404); // Or whatever your app returns (401 is also common)
+    expect(errorLoginResponse.status).toBe(401);
     expect(errorLoginResponse.body).toMatchObject({
       message: 'Invalid password.',
       status: 'error',
@@ -110,4 +110,3 @@ describe('Test protected routes with token', () => {
     });
   });
 });
-
