@@ -1,10 +1,14 @@
 using Godot;
 using System;
+using System.Diagnostics;
+using System.Linq;
 
 // GameRoot is the main entry point for the game. It is responsible for loading the map, spawning the player, starting the enemy spawner and so on.
 public partial class GameRoot : Node
 {
 	private Node2D _mainMap;
+	private int playerIndex = 0; // player index for spawning players
+	private bool enableDebug = false;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -14,18 +18,17 @@ public partial class GameRoot : Node
 		// Load map and store reference
 		SpawnMap("res://Scenes/Main.tscn");
 
-		// Spawn player
-		var peerId = GetTree().GetMultiplayer().GetUniqueId();
-		SpawnPlayer(peerId);
+		// spawn players
+		foreach (var peer in GetTree().GetMultiplayer().GetPeers())
+		{
+			SpawnPlayer(peer);
+		}
 
 		// Add wave timer
 		AddWaveTimer("res://Scenes/Waves/WaveTimer.tscn");
 
 		// Start enemy spawner
 		SpawnEnemySpawner("res://Scenes/Enemies/SpawnEnemies.tscn");
-
-		// Start game on server
-		NetworkManager.Instance.StartGame();
 	}
 
 	public override void _Process(double delta)
@@ -44,12 +47,26 @@ public partial class GameRoot : Node
 		var player = GD.Load<PackedScene>("res://Scenes/Characters/default_player.tscn").Instantiate<Node2D>();
 		player.Name = $"Player_{peerId}";
 
+		// Get spawn point from PlayerSpawnPoints group
+		player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
+			.OfType<Node2D>()
+			.ToList()
+			.FindAll(spawnPoint => int.Parse(spawnPoint.Name) == playerIndex)
+			.FirstOrDefault()?.GlobalPosition ?? Vector2.Zero;
+
 		// Add joystick to player
 		var joystick = GD.Load<PackedScene>("res://Scenes/Joystick/joystick.tscn").Instantiate<Node2D>();
 		player.AddChild(joystick);
-		
+
 		AddChild(player);
-		GameManager.Instance.Entities[peerId] = player;
+		Server.Instance.Entities[peerId] = player;
+		// Set the player's camera as current if this is the local player
+
+		if (GetTree().GetMultiplayer().GetUniqueId() == peerId)
+		{
+			var camera = player.GetNode<Camera2D>("Camera2D");
+			camera.MakeCurrent();
+		}
 
 		// Connect health signal
 		var healthNode = player.GetNodeOrNull<Health>("Health");
@@ -61,6 +78,8 @@ public partial class GameRoot : Node
 		{
 			GD.PrintErr("Health node not found on player!");
 		}
+
+		playerIndex++;
 	}
 
 	public void AddWaveTimer(string waveTimerPath)
@@ -77,7 +96,7 @@ public partial class GameRoot : Node
 
 	public void OnPlayerDied()
 	{
-		GD.Print("Player died! Showing Game Over screen.");
+		DebugIt("Player died! Showing Game Over screen.");
 
 		if (_mainMap == null)
 		{
@@ -95,5 +114,10 @@ public partial class GameRoot : Node
 		{
 			GD.PrintErr("GameOver screen not found in main map!");
 		}
+	}
+
+	private void DebugIt(string message)
+	{
+		if (enableDebug) Debug.Print("GameRoot: " + message);
 	}
 }

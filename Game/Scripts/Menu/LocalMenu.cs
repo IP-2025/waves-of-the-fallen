@@ -22,9 +22,6 @@ public partial class LocalMenu : Control
 
   public override void _Ready()
   {
-    //LocalMultiplayer = new LocalMultiplayer();
-    //AddChild(LocalMultiplayer); // fügt LocalMultiplayer als Child hinzu
-
     joinButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/join");
     hostButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/host");
     playButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/play");
