@@ -12,7 +12,7 @@ public partial class MountedEnemy : EnemyBase
 	/// </summary>
 	[Export] public float stopDistance = 15f;
 	[Export] public float attackRange = 10f;
-	[Export] public float damage = 7f;
+	[Export] public float damage = 2f;
 	[Export] public float attackCooldown = 1.5f;
 	[Export] public float speed = 100f;
 

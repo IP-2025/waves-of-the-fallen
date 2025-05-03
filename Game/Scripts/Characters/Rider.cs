@@ -18,6 +18,11 @@ public partial class Rider : EnemyBase
 
 	private float attackTimer = 0f;
 
+	public override void _Ready()
+	{
+		GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("Walk");
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
 		FindNearestPlayer();
