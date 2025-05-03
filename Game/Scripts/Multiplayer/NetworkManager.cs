@@ -26,8 +26,21 @@ public partial class NetworkManager : Node
     private Queue<Command> _incomingCommands = new();
     private int _tick = 0;
     private double _acc = 0;
-    private const float TICK_DELTA = 1f / 20f;
+    private const float TICK_DELTA = 1f / 60f;
     public static NetworkManager Instance { get; private set; }
+
+    private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
+{
+    { "res://Scenes/Characters/default_player.tscn", EntityType.DefaultPlayer },
+    { "res://Scenes/Characters/archer.tscn", EntityType.Archer },
+    { "res://Scenes/Characters/default_enemy.tscn", EntityType.DefaultEnemy },
+    { "res://Scenes/Characters/ranged_enemy.tscn", EntityType.RangedEnemy }
+};
+
+
+    Client client;
+    Server server;
+
 
     public override void _Ready()
     {
@@ -36,6 +49,10 @@ public partial class NetworkManager : Node
 
     public void InitServer()
     {
+        // add client node as child to NetworkManager
+        server = new Server();
+        AddChild(server);
+
         // RPC Server with ENet
         _rpcPeer = new ENetMultiplayerPeer();
         // test if address and port is valid / open
@@ -67,6 +84,11 @@ public partial class NetworkManager : Node
 
     public void InitClient(string address)
     {
+        // add client node as child to NetworkManager
+        client = new Client();
+        AddChild(client);
+
+
         // RPC Client with ENet
         _rpcPeer = new ENetMultiplayerPeer();
         _rpcPeer.CreateClient(address, RPC_PORT);
@@ -89,7 +111,7 @@ public partial class NetworkManager : Node
         DebugIt("Client connecting to: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + address);
     }
 
-public override void _PhysicsProcess(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         if (!_gameRunning)
             return;
@@ -155,7 +177,7 @@ public override void _PhysicsProcess(double delta)
         {
             var data = _udpClientPeer.GetPacket();
             var snap = Serializer.Deserialize<Snapshot>(data);
-            //GetNode<Client>("Client").ApplySnapshot(snap);
+            client.ApplySnapshot(snap);
             DebugIt($"Received snapshot tick={snap.Tick}, entities={snap.Entities.Count}");
         }
     }
@@ -197,11 +219,34 @@ public override void _PhysicsProcess(double delta)
 
         // serialize snapshot
         var snap = new Snapshot(_tick);
+        var toRemove = new List<long>();
         foreach (var kv in Server.Instance.Entities)
-            snap.Entities.Add(new EntitySnapshot(kv.Key, kv.Value.Position, kv.Value.Rotation));
+        {
+            var node = kv.Value;
+            if (node == null || !IsInstanceValid(node))
+            {
+                toRemove.Add(kv.Key);
+                continue;
+            }
+
+            string scenePath = node.SceneFilePath;
+            var id = kv.Key;
+
+            if (!ScenePathToEntityType.TryGetValue(scenePath, out var entityType))
+            {
+                GD.PrintErr($"Unknown ScenePath: {scenePath}");
+            }
+
+            snap.Entities.Add(new EntitySnapshot(id, node.Position, node.Rotation, entityType));
+        }
+
+        // remove invalid entities, for example killed enemies
+        foreach (var id in toRemove)
+        {
+            Server.Instance.Entities.Remove(id);
+        }
 
         byte[] bytes = Serializer.Serialize(snap);
-
         // send snapshot to all clients
         foreach (var peer in _udpPeers)
         {

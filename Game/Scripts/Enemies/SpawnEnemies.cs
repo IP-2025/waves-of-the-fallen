@@ -9,13 +9,13 @@ public partial class SpawnEnemies : Node2D
 		Timer timer = GetNode<Timer>("SpawnTimer");
 		timer.Timeout += OnTimerTimeout;
 	}
-	
+
 	private void OnTimerTimeout()
 	{
 		SpawnEnemy();
 	}
 
-	private void SpawnEnemy() 
+	private void SpawnEnemy()
 	{
 		if (GetTree().GetNodesInGroup("enemies").Count >= 30)
 			return;
@@ -31,13 +31,18 @@ public partial class SpawnEnemies : Node2D
 		PathFollow2D spawnPath = GetNode<PathFollow2D>("Path2D/PathFollow2D");
 		spawnPath.ProgressRatio = GD.Randf();
 		enemy.GlobalPosition = spawnPath.GlobalPosition;
-		
+
 		enemy.AddToGroup("enemies");
 		if (GetTree().GetNodesInGroup("enemies").Count >= 30)
 		{
 			return;
 		}
-		
+
+		ulong id = enemy.GetInstanceId();
+		enemy.Name = $"Enemy_{id}";
+
+		Server.Instance.Entities[(long)id] = enemy;
+
 		AddChild(enemy);
 	}
 

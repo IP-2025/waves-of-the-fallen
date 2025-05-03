@@ -14,7 +14,6 @@ public static class Serializer
         => JsonSerializer.SerializeToUtf8Bytes(obj, _opts);
 
     public static T Deserialize<T>(byte[] data)
-        => JsonSerializer.Deserialize<T>(data, _opts)
-           ?? throw new InvalidOperationException("Deserializing returned null");
+        => JsonSerializer.Deserialize<T>(data, _opts);
 }
 

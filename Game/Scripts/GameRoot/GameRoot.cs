@@ -74,8 +74,8 @@ public partial class GameRoot : Node
 
 		AddChild(player);
 		Server.Instance.Entities[peerId] = player;
+		
 		// Set the player's camera as current if this is the local player
-
 		if (GetTree().GetMultiplayer().GetUniqueId() == peerId)
 		{
 			var camera = player.GetNode<Camera2D>("Camera2D");

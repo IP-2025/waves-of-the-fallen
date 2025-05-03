@@ -1,15 +1,19 @@
 using Godot;
-using System;
 
-[Serializable]
-public class EntitySnapshot {
+public class EntitySnapshot
+{
     public long NetworkId;
-    public EntityType Type;
     public Vector2 Position;
     public float Rotation;
+    public EntityType Type;
 
-    public EntitySnapshot() {}
-    public EntitySnapshot(long id, Vector2 pos, float rot) {
-        NetworkId = id; Position = pos; Rotation = rot;
+    public EntitySnapshot(){}
+    
+    public EntitySnapshot(long id, Vector2 pos, float rot, EntityType type)
+    {
+        NetworkId = id;
+        Position = pos;
+        Rotation = rot;
+        Type = type;
     }
 }
