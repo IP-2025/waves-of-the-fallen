@@ -18,17 +18,13 @@ public partial class Rider : EnemyBase
 
 	private float attackTimer = 0f;
 
-	public override void _Ready()
-	{
-		GetNode<AnimatedSprite2D>("AnimatedSprite2D").Play("Walk");
-	}
-
 	public override void _PhysicsProcess(double delta)
 	{
 		FindNearestPlayer();
 		if (player == null)
 		{
 			Velocity = Vector2.Zero;
+			PauseAnimation(); // Pause Walk animation when no player is found
 			MoveAndSlide();
 			return;
 		}
@@ -41,10 +37,16 @@ public partial class Rider : EnemyBase
 		{
 			Vector2 toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
 			Velocity = toPlayer * speed;
+
+			// Play Walk animation when moving
+			PlayAnimation();
 		}
 		else
 		{
 			Velocity = Vector2.Zero;
+
+			// Pause Walk animation when stopping
+			PauseAnimation();
 
 			if (dist <= attackRange && attackTimer <= 0f)
 			{
@@ -70,6 +72,33 @@ public partial class Rider : EnemyBase
 		{
 			player.GetNode<Health>("Health").Damage(damage);
 			GD.Print($"Rider dealt {damage} damage to the player!");
+
+			// Pause Walk animation during attack (optional)
+			PauseAnimation();
+		}
+	}
+
+	/// <summary>
+	/// Plays the Walk animation on the AnimatedSprite2D node.
+	/// </summary>
+	private void PlayAnimation()
+	{
+		var animatedSprite = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
+		if (animatedSprite != null && !animatedSprite.IsPlaying())
+		{
+			animatedSprite.Play("Walk");
+		}
+	}
+
+	/// <summary>
+	/// Pauses the Walk animation on the AnimatedSprite2D node.
+	/// </summary>
+	private void PauseAnimation()
+	{
+		var animatedSprite = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
+		if (animatedSprite != null)
+		{
+			animatedSprite.Stop();
 		}
 	}
 }

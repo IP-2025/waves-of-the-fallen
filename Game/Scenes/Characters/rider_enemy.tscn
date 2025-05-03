@@ -483,7 +483,6 @@ script = ExtResource("1_k7dvb")
 script = ExtResource("2_ilr60")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_ilr60")
 
