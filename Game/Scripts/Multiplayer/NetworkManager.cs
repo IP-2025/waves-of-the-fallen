@@ -5,27 +5,28 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 
-// Autoload-Node: verwaltet Netzwerk, Tick-Loop
+// Autoload-Node: manages Netzwerk, Tick-Loop
 public partial class NetworkManager : Node
 {
     public bool enableDebug = true;
-    // portsorts
     [Export] public int RPC_PORT = 7777;   // ENet for RPC
     [Export] public int UDP_PORT = 3000;   // PacketPeerUDP for game data
+
     // peers
     private ENetMultiplayerPeer _rpcPeer;
-    private PacketPeerUdp _udpPeer;
+    private PacketPeerUdp _udpClientPeer;
+    private UdpServer _udpServer;
+    private List<PacketPeerUdp> _udpPeers = new();
+
     // state & queues
     private bool _isServer = false;
     private bool _gameRunning = false;
     private Queue<Command> _incomingCommands = new();
-    private HashSet<(string ip, int port)> _clients = new();
-    private int _sequence = 0;
     private int _tick = 0;
     private double _acc = 0;
     private const float TICK_DELTA = 1f / 20f;
-    private double _accumulator = 0;
     public static NetworkManager Instance { get; private set; }
 
     public override void _Ready()
@@ -51,8 +52,8 @@ public partial class NetworkManager : Node
         GetTree().GetMultiplayer().MultiplayerPeer = _rpcPeer;
 
         // UDP_PORT Server for game data
-        _udpPeer = new PacketPeerUdp();
-        err = _udpPeer.Bind(UDP_PORT);
+        _udpServer = new UdpServer();
+        err = _udpServer.Listen((ushort)UDP_PORT);
         if (err != Error.Ok)
         {
             DebugIt("Failed to bind UDP port: " + err);
@@ -72,113 +73,163 @@ public partial class NetworkManager : Node
         GetTree().GetMultiplayer().MultiplayerPeer = _rpcPeer;
 
         // UDP Client for game data
-        _udpPeer = new PacketPeerUdp();
-        var err = _udpPeer.ConnectToHost(address, UDP_PORT);
+        _udpClientPeer = new PacketPeerUdp();
+        var err = _udpClientPeer.ConnectToHost(address, UDP_PORT);
         if (err != Error.Ok)
         {
             GD.PrintErr($"UDP-Connect fehlgeschlagen: {err}");
             return;
         }
 
+        // send hello handshake to server
+        var hello = Encoding.UTF8.GetBytes("HELLO");
+        _udpClientPeer.PutPacket(hello);
+
         _isServer = false;
         DebugIt("Client connecting to: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + address);
     }
 
-    public override void _PhysicsProcess(double delta)
+public override void _PhysicsProcess(double delta)
     {
-        if (!_gameRunning) return;
-        // always process udp packets first rec
-        while (_udpPeer.GetAvailablePacketCount() > 0)
+        if (!_gameRunning)
+            return;
+
+        // UDP Networking
+        if (_isServer)
+            HandleServerUdp();
+        else
+            HandleClientUdp();
+
+        // fixed timestep game loop
+        HandleTickLoop(delta);
+    }
+
+    private void HandleServerUdp()
+    {
+        // poll for new connections
+        _udpServer.Poll();
+        AcceptNewUdpConnections();
+        // receive incoming commands
+        ReceiveServerCommands();
+    }
+
+    private void AcceptNewUdpConnections()
+    {
+        while (_udpServer.IsConnectionAvailable())
         {
-            byte[] data = _udpPeer.GetPacket();
-            if (_isServer)
+            var peer = _udpServer.TakeConnection();
+            if (peer != null)
             {
-                var cmd = Serializer.Deserialize<Command>(data);
-                _incomingCommands.Enqueue(cmd);
-                DebugIt($"CMD receiverd seq={cmd.Sequence}");
-            }
-            else
-            {
-                var snap = Serializer.Deserialize<Snapshot>(data);
-//                GetNode<Client>("Client").ApplySnapshot(snap);
-                DebugIt($"Snapshot receiverd tick={snap.Tick}");
+                // discard initial handshake
+                if (peer.GetAvailablePacketCount() > 0)
+                    peer.GetPacket();
+                _udpPeers.Add(peer);
             }
         }
+    }
 
-        // fixed timestep loop
+    private void ReceiveServerCommands()
+    {
+        foreach (var peer in _udpPeers)
+        {
+            while (peer.GetAvailablePacketCount() > 0)
+            {
+                var data = peer.GetPacket();
+                var text = Encoding.UTF8.GetString(data);
+                if (text == "HELLO")
+                {
+                    DebugIt($"Handshake von {peer.GetPacketIP()}:{peer.GetPacketPort()} erhalten");
+                    continue;
+                }
+
+                // deserialize command
+                var cmd = Serializer.Deserialize<Command>(data);
+                _incomingCommands.Enqueue(cmd);
+            }
+        }
+    }
+
+    private void HandleClientUdp()
+    {
+        while (_udpClientPeer.GetAvailablePacketCount() > 0)
+        {
+            var data = _udpClientPeer.GetPacket();
+            var snap = Serializer.Deserialize<Snapshot>(data);
+            //GetNode<Client>("Client").ApplySnapshot(snap);
+            DebugIt($"Received snapshot tick={snap.Tick}, entities={snap.Entities.Count}");
+        }
+    }
+
+    private void HandleTickLoop(double delta)
+    {
         _acc += delta;
         while (_acc >= TICK_DELTA)
         {
             _acc -= TICK_DELTA;
-
             if (_isServer)
                 ProcessServerTick();
             else
                 SendClientCommand();
-
             _tick++;
         }
     }
 
+
     [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
     public void NotifyGameStart()
     {
+        // change scene to game
+        var gameScene = GD.Load<PackedScene>("res://Scenes/GameRoot/GameRoot.tscn");
+        gameScene.Instantiate<Node>();
+        GetTree().ChangeSceneToPacked(gameScene);
+
         _gameRunning = true;
     }
 
     private void ProcessServerTick()
     {
-        // apply all incoming commands
+        // apply all commands
         while (_incomingCommands.Count > 0)
         {
-            string ip = _udpPeer.GetPacketIP();
-            int port = _udpPeer.GetPacketPort();
-            byte[] data = _udpPeer.GetPacket();
-
-            // save all clients because udp is stateless and later we need to send snapshots to all clients
-            if (!_clients.Contains((ip, port)))
-            {
-                _clients.Add((ip, port));
-            }
-
             var cmd = _incomingCommands.Dequeue();
             Server.Instance.ProcessCommand(cmd);
         }
 
-        // broadcast current state snapshot with UDP
+        // serialize snapshot
         var snap = new Snapshot(_tick);
         foreach (var kv in Server.Instance.Entities)
             snap.Entities.Add(new EntitySnapshot(kv.Key, kv.Value.Position, kv.Value.Rotation));
 
         byte[] bytes = Serializer.Serialize(snap);
 
-        foreach (var (ip, port) in _clients)
+        // send snapshot to all clients
+        foreach (var peer in _udpPeers)
         {
-            _udpPeer.SetDestAddress(ip, port);
-            _udpPeer.PutPacket(bytes);
+            peer.PutPacket(bytes);
         }
 
-        DebugIt($"Send snapshot tick={_tick}");
+        //DebugIt($"Snapshot tick={_tick} send to {_peers.Count} Clients");
     }
+
 
     // client tick: create and send commands
     private void SendClientCommand()
     {
         // exaample....
-        int seq = _sequence++;
-        long eid = 1; // entity id
-        CommandType type = CommandType.Move;
-        Vector2 dir = new Vector2(1, 0);  // example direction
+        /*         int seq = _sequence++;
+                long eid = 1; // entity id
+                CommandType type = CommandType.Move;
+                Vector2 dir = new Vector2(1, 0);  // example direction
 
-        // with direction
-        var cmdMove = new Command(seq, eid, type, dir);
-        _udpPeer.PutPacket(Serializer.Serialize(cmdMove));
-        DebugIt($"Send MOVE cmd seq={cmdMove.Sequence}");
+                // with direction
+                var cmdMove = new Command(seq, eid, type, dir);
+                _udpPeer.PutPacket(Serializer.Serialize(cmdMove));
+                DebugIt($"Send MOVE cmd seq={cmdMove.Sequence}");
 
-        // wthout direction
-        var cmdShoot = new Command(_sequence++, eid, CommandType.Shoot);
-        _udpPeer.PutPacket(Serializer.Serialize(cmdShoot));
-        DebugIt($"Send SHOOT cmd seq={cmdShoot.Sequence}");
+                // wthout direction
+                var cmdShoot = new Command(_sequence++, eid, CommandType.Shoot);
+                _udpPeer.PutPacket(Serializer.Serialize(cmdShoot));
+                DebugIt($"Send SHOOT cmd seq={cmdShoot.Sequence}"); */
     }
 
 

@@ -1,66 +1,74 @@
 using Godot;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 
 public partial class Client : Node
 {
-    // NetworkId → Node2D (Player-Instanzen)
-    private Dictionary<long, Node2D> _entities = new();
+    bool enableDebug = true;
+    // GameRoot container for entities
+    private Node2D _entitiesRoot;
+    private Dictionary<long, Node2D> _instances = new();
 
-    // Vom Server aufgerufen, um den Host-Player anzulegen
-    public void SpawnLocalPlayer()
+    // mapping per entity type
+    private Dictionary<EntityType, PackedScene> _prefabs = new()
     {
-        long myId = GetTree().GetMultiplayer().GetUniqueId();
-        CreateEntity(myId, Vector2.Zero, 0f, isLocal: true);
+        { EntityType.Player, GD.Load<PackedScene>("res://Scenes/Characters/default_player.tscn") },
+        { EntityType.Enemy,  GD.Load<PackedScene>("res://Scenes/Enemies/Enemy.tscn") },
+    };
+
+    public override void _Ready()
+    {
+        // create container under GameRoot
+        _entitiesRoot = new Node2D { Name = "Entities" };
+        GetParent().AddChild(_entitiesRoot);
     }
 
-    // Wird vom NetworkManager bei jedem Snapshot aufgerufen
     public void ApplySnapshot(Snapshot snap)
     {
-        long myId = GetTree().GetMultiplayer().GetUniqueId();
-        var activeIds = snap.Entities.Select(es => es.NetworkId).ToHashSet();
+        var seen = new HashSet<long>();
 
-        // Update oder Erstellen
+        // every entity in snapshot
         foreach (var es in snap.Entities)
         {
-            bool isLocal = es.NetworkId == myId;
-            if (_entities.TryGetValue(es.NetworkId, out var node))
+            seen.Add(es.NetworkId);
+
+            // instanciate entity if not already done
+            if (!_instances.TryGetValue(es.NetworkId, out var inst))
             {
-                // schon vorhanden: nur Position/Rotation updaten
-                node.Position = es.Position;
-                node.Rotation = es.Rotation;
+                if (!_prefabs.TryGetValue(es.Type, out var scene))
+                {
+                    GD.PrintErr($"Cant find path for {es.Type}");
+                    continue;
+                }
+
+                inst = scene.Instantiate<Node2D>();
+                inst.Name = $"E_{es.NetworkId}";
+                _entitiesRoot.AddChild(inst);
+                _instances[es.NetworkId] = inst;
+
+                DebugIt($"Instantiated entity of type {es.Type} with NetworkId {es.NetworkId}");
             }
-            else
-            {
-                // neu anlegen
-                //CreateEntity(es.NetworkId, es.Position, es.Rotation, isLocal);
-            }
+
+            // update and transform
+            inst.GlobalPosition = es.Position;
+            inst.Rotation = es.Rotation;
         }
 
-        // Entfernen nicht mehr existierender IDs
-        foreach (var stale in _entities.Keys.Except(activeIds).ToList())
+        // cleanup: remove entities not in snapshot
+        foreach (var id in new List<long>(_instances.Keys))
         {
-            _entities[stale].QueueFree();
-            _entities.Remove(stale);
+            if (!seen.Contains(id))
+            {
+                _instances[id].QueueFree();
+                _instances.Remove(id);
+            }
+            
+            DebugIt($"Deleted entity with NetworkId {id}");
         }
     }
 
-    private void CreateEntity(long id, Vector2 pos, float rot, bool isLocal)
+    private void DebugIt(string message)
     {
-        var player = GD.Load<PackedScene>("res://Scenes/Characters/default_player.tscn").Instantiate<Node2D>();
-        player.Name = id.ToString();
-        player.Name = $"Player_{id}";
-
-        // add joystick to player if this player is local player
-        if (isLocal)
-        {
-            var joystick = GD.Load<PackedScene>("res://Scenes/Joystick/joystick.tscn").Instantiate<Node2D>();
-            player.AddChild(joystick);
-        }
-
-        player.Position = pos;
-        player.Rotation = rot;
-        GetTree().Root.AddChild(player);
-        _entities[id] = player;
+        if (enableDebug) Debug.Print("Client: " + message);
     }
 }

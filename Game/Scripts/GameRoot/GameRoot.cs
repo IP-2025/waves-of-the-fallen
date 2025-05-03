@@ -8,6 +8,7 @@ public partial class GameRoot : Node
 {
 	private Node2D _mainMap;
 	private int playerIndex = 0; // player index for spawning players
+	bool isServer = false;
 	private bool enableDebug = false;
 
 	// Called when the node enters the scene tree for the first time.
@@ -15,20 +16,33 @@ public partial class GameRoot : Node
 	{
 		Engine.MaxFps = 60; // important! performance...
 
+		isServer = GetTree().GetMultiplayer().IsServer();
+
 		// Load map and store reference
 		SpawnMap("res://Scenes/Main.tscn");
 
 		// spawn players
-		foreach (var peer in GetTree().GetMultiplayer().GetPeers())
+		if (isServer)
 		{
-			SpawnPlayer(peer);
+			// Server spawns all players
+			foreach (var peerId in GetTree().GetMultiplayer().GetPeers())
+			{
+				DebugIt($"Server spawning player {peerId}");
+				SpawnPlayer(peerId);
+			}
+
+			// Start enemy spawner
+			SpawnEnemySpawner("res://Scenes/Enemies/SpawnEnemies.tscn");
+
+			// Add wave timer
+			AddWaveTimer("res://Scenes/Waves/WaveTimer.tscn");
 		}
-
-		// Add wave timer
-		AddWaveTimer("res://Scenes/Waves/WaveTimer.tscn");
-
-		// Start enemy spawner
-		SpawnEnemySpawner("res://Scenes/Enemies/SpawnEnemies.tscn");
+		else
+		{
+			/* 			// Client spawns only itself
+						SpawnPlayer(GetTree().GetMultiplayer().GetUniqueId());
+						DebugIt("Client spawning player"); */
+		}
 	}
 
 	public override void _Process(double delta)
