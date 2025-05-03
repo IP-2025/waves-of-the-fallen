@@ -7,6 +7,8 @@ public class EntitySnapshot {
     public EntityType Type;
     public Vector2 Position;
     public float Rotation;
+
+    public EntitySnapshot() {}
     public EntitySnapshot(long id, Vector2 pos, float rot) {
         NetworkId = id; Position = pos; Rotation = rot;
     }

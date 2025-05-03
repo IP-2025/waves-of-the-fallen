@@ -29,7 +29,7 @@ public partial class Server : Node
         switch (cmd.Type)
         {
             case CommandType.Move:
-                entity.Position += cmd.MoveDir.Value * 10f * NetworkManager.GetTickDelta();
+                //entity.Position += cmd.MoveDir.Value * 10f * NetworkManager.GetTickDelta();
                 break;
             case CommandType.Shoot:
                 // handle shoot and so on

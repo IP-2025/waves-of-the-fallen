@@ -77,6 +77,7 @@ public partial class LocalMenu : Control
     // change scene to game
     var gameScene = GD.Load<PackedScene>("res://Scenes/GameRoot/GameRoot.tscn");
     gameScene.Instantiate<Node>();
+    NetworkManager.Instance.Rpc("NotifyGameStart");
     GetTree().ChangeSceneToPacked(gameScene);
   }
 
