@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Game"
-run/main_scene="uid://d17y4cpyns6n8"
+run/main_scene="uid://cbnnxciy67iq5"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
 config/icon="res://Assets/Characters/place_holder/enemy_placeholder.svg"
 
