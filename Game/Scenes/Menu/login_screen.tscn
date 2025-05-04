@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://d2coob6g63jxs"]
+[gd_scene load_steps=2 format=3 uid="uid://cbnnxciy67iq5"]
 
 [ext_resource type="Script" uid="uid://bn60bm5gya3pn" path="res://Scripts/Menu/LoginScreen.cs" id="1_36i0f"]
 
