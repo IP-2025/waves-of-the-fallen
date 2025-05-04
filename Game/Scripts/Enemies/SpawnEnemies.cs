@@ -70,7 +70,7 @@ public partial class SpawnEnemies : Node2D
 			pattern.GlobalPosition = spawnPath.GlobalPosition;
 		}
 		AddChild(pattern); // pattern gets spawned
-		Debug.Print($"Spawned enemyPattern: {pattern.SceneFilePath.GetFile().Replace(".tscn", "")} with random value: {spawnValue:0.00}");
+		//Debug.Print($"Spawned enemyPattern: {pattern.SceneFilePath.GetFile().Replace(".tscn", "")} with random value: {spawnValue:0.00}");
 	}
 
 	private void LoadPatternPool() // loads patterns through the filepath below into the patternPool with their associated spawningCost
@@ -93,13 +93,12 @@ public partial class SpawnEnemies : Node2D
 
 	private async Task GraceTime() // time in which no additional enemies are spawned and the waveTimer gets paused
 	{
-		Debug.Print($"Starting {graceTime} seconds of grace time");
-		waveTimer.PauseUnpauseTimer();
+		//Debug.Print($"Starting {graceTime} seconds of grace time");
 		timer.Paused = true;
+		await waveTimer.PauseTimer(graceTime);
 		await ToSignal(GetTree().CreateTimer(graceTime), SceneTreeTimer.SignalName.Timeout);
-		waveTimer.PauseUnpauseTimer();
 		timer.Paused = false;
-		Debug.Print("Grace time has ended");
+		//Debug.Print("Grace time has ended");
 	}
 
 	private void DeleteEmptyPatterns() // cleans up EnemyPattern nodes, which don't have any children so the NodeTree doesn't get cluttered with them

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class WaveTimer : Node2D
@@ -54,20 +55,16 @@ public partial class WaveTimer : Node2D
 
 		_waveCounterLabel.Text = $"Wave: {waveCounter}";
 		_timeLeftLabel.Text = (maxTime - secondCounter).ToString();
+		if (_waveTimer.Paused) _timeLeftLabel.Text = "Grace Time";
 	}
 
-	public void PauseUnpauseTimer() // Flips the paused state of waveTimer
+	public async Task PauseTimer(int time) // Flips the paused state of waveTimer
 	{
-		_waveTimer.Paused = !_waveTimer.Paused;
+		_waveTimer.Paused = true;
+		Debug.Print("WaveTimer paused");
+		await ToSignal(GetTree().CreateTimer(time), SceneTreeTimer.SignalName.Timeout);
 
-		if (_waveTimer.Paused)
-		{
-			Debug.Print("WaveTimer paused");
-		}
-		else
-		{
-			Debug.Print("WaveTimer unpaused");
-		}
-
+		_waveTimer.Paused = false;
+		Debug.Print("WaveTimer unpaused");
 	}
 }
