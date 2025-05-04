@@ -114,9 +114,9 @@ public partial class MountedEnemy : EnemyBase
 			return;
 		}
 
-		riderInstance.GlobalPosition = GlobalPosition;
 		riderInstance.Visible = true;
 		GetParent().AddChild(riderInstance);
+		riderInstance.GlobalPosition = GlobalPosition;
 
 		if (riderInstance.GetParent() == null)
 		{
