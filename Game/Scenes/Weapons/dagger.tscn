@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvjyool0r7j0"]
+
+[ext_resource type="Texture2D" uid="uid://cpyxavt2ndhvx" path="res://Assets/Weapons/Dagger/Dagger.png" id="1_hjfan"]
+[ext_resource type="Texture2D" uid="uid://ic2gy2p77hqf" path="res://Assets/Weapons/Dagger/Dagger1.png" id="1_tnl4c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i6u1f"]
+radius = 100.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o7gox"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_hjfan")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_tnl4c")
+}],
+"loop": true,
+"name": &"stab",
+"speed": 5.0
+}]
+
+[node name="Dagger" type="Area2D"]
+
+[node name="MeleeRange" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_i6u1f")
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+
+[node name="Stab" type="AnimatedSprite2D" parent="WeaponPivot"]
+position = Vector2(100, 1)
+scale = Vector2(0.15, 0.15)
+sprite_frames = SubResource("SpriteFrames_o7gox")
+animation = &"stab"
+
+[node name="DaggerPoint" type="Marker2D" parent="WeaponPivot/Stab"]
+position = Vector2(5, 0)

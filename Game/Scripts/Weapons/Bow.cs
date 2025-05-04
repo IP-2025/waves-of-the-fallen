@@ -4,7 +4,7 @@ using System;
 public partial class Bow : RangedWeapon
 {
 	private PackedScene _arrowScene = GD.Load<PackedScene>("res://Scenes/Weapons/bow_arrow.tscn");
-    
+	
 	public override void _Ready()
 	{
 		_animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/BowSprite");
@@ -16,7 +16,7 @@ public partial class Bow : RangedWeapon
 		Marker2D shootingPoint = GetNode<Marker2D>("WeaponPivot/BowSprite/BowShootingPoint");
 		arrowInstance.GlobalPosition = shootingPoint.GlobalPosition;
 		arrowInstance.GlobalRotation = shootingPoint.GlobalRotation;
-        
+		
 		GetTree().CurrentScene.AddChild(arrowInstance);
 
 	}
