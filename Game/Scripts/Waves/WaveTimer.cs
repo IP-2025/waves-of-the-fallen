@@ -50,37 +50,24 @@ public partial class WaveTimer : Node2D
 
 			_waveCounterLabel.Text = $"Wave: {waveCounter}";
 			EmitSignal(SignalName.WaveEnded);
-			DeleteEnemies();
 		}
 
 		_waveCounterLabel.Text = $"Wave: {waveCounter}";
 		_timeLeftLabel.Text = (maxTime - secondCounter).ToString();
 	}
 
-	public void DeleteEnemies()
+	public void PauseUnpauseTimer() // Flips the paused state of waveTimer
 	{
-		if (GetTree().GetNodesInGroup("Enemies") != null)
+		_waveTimer.Paused = !_waveTimer.Paused;
+
+		if (_waveTimer.Paused)
 		{
-			Debug.Print("Deleting " + GetTree().GetNodeCountInGroup("Enemies") + " enemies");
-			foreach (Node2D enemy in GetTree().GetNodesInGroup("Enemies")) // deletes every enemy
-			{
-				//Debug.Print("Deleted enemy");
-				enemy.QueueFree();
-			}
+			Debug.Print("WaveTimer paused");
 		}
 		else
 		{
-			Debug.Print("No enemies found to be deleted");
+			Debug.Print("WaveTimer unpaused");
 		}
-	}
 
-	public void PauseUnpauseTimer() // Flips the paused state of waveTimer
-	{
-		if (Multiplayer.IsServer())
-		{
-			if (_waveTimer.Paused) Debug.Print("WaveTimer unpaused");
-			else Debug.Print("WaveTimer paused");
-			_waveTimer.Paused = !_waveTimer.Paused;
-		}
 	}
 }
