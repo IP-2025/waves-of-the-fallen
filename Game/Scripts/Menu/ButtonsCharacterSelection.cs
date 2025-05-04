@@ -25,7 +25,7 @@ public partial class ButtonsCharacterSelection : Button
 			node = node.GetParent();
 		}
 
-		if (!characterManager.LoadIsUnlocked(int.Parse(this.Text))) //if Character is locked =true
+		if (!characterManager.LoadIsUnlocked(this.Text)) //if Character is locked =true
 		{
 			var icon = GetNode<TextureRect>("TextureRect");
 			var material = new ShaderMaterial();
@@ -35,7 +35,7 @@ public partial class ButtonsCharacterSelection : Button
 
 	}
 
-	private void _on_pressed()
+	public void _on_pressed()
 	{
 		_controller._characterSelected(this);
 	}
