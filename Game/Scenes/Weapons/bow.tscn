@@ -44,7 +44,7 @@ rotation = 0.00792616
 scale = Vector2(0.33, 0.33)
 
 [node name="BowSprite" type="AnimatedSprite2D" parent="WeaponPivot"]
-position = Vector2(125, 0)
+position = Vector2(-12.1209, 0)
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_p3ld5")
 animation = &"shoot"
@@ -53,7 +53,7 @@ frame_progress = 1.0
 
 [node name="BowShootingPoint" type="Marker2D" parent="WeaponPivot/BowSprite"]
 unique_name_in_owner = true
-position = Vector2(44.9589, -5.35652)
+position = Vector2(44.9589, 0)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.8

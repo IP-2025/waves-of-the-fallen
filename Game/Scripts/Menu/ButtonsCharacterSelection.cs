@@ -5,9 +5,11 @@ public partial class ButtonsCharacterSelection : Button
 {
 	private Charactermenu _controller;
 	private Shader _blackAndWhiteShader;
+	private CharacterManager characterManager;
 
 	public override void _Ready()
 	{
+		characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 		if (_blackAndWhiteShader == null)
 		{
 			_blackAndWhiteShader = GD.Load<Shader>("res://Scenes/Menu/characterMenuIconShader.gdshader");
@@ -23,7 +25,7 @@ public partial class ButtonsCharacterSelection : Button
 			node = node.GetParent();
 		}
 
-		if (this.Name == "Button_Character6" || this.Name == "Button_Character3") //if Character is locked =true
+		if (!characterManager.LoadIsUnlocked(this.Text)) //if Character is locked =true
 		{
 			var icon = GetNode<TextureRect>("TextureRect");
 			var material = new ShaderMaterial();
@@ -33,7 +35,7 @@ public partial class ButtonsCharacterSelection : Button
 
 	}
 
-	private void _on_pressed()
+	public void _on_pressed()
 	{
 		_controller._characterSelected(this);
 	}

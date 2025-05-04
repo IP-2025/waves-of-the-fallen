@@ -3,35 +3,41 @@ using System;
 
 public partial class Health : Node2D
 {
-	public bool disable = false;
-	[Export] public float max_health= 100.0f;
-	public float health;
-	public float CurHealth => health;
+	public bool disable = false; // in multiplayer for clients, server handles health and stuff
+	[Export] public float max_health = 100.0f; // maximum health value
+	public float health; // current health value
+	public float CurHealth => health; // property to access current health
+
 	[Signal]
-	public delegate void HealthDepletedEventHandler();
-	
+	public delegate void HealthDepletedEventHandler(); // signal emitted when health is depleted
+
+	// property to access max health
+	public float MaxHealth => max_health;
 
 	public override void _Ready()
 	{
-		health = max_health;
+		health = max_health; // initialize health to max health
 	}
+
 	public void Damage(float damage) 
 	{
 		if (disable) return; // for client side.. server handles the damage
 
 		health -= damage;
+
 		if (health <= 0)
 		{
-			if(GetParent() is DefaultPlayer){
-				((DefaultPlayer)GetParent()).Die();
+			// check if parent is DefaultPlayer
+			if (GetParent() is DefaultPlayer player)
+			{
+				player.Die(); // call Die() method if parent is DefaultPlayer
 			}
-			else{
-				GetParent().QueueFree();	
+			else
+			{
+				GetParent().QueueFree(); // otherwise, free the parent node
 			}
-			//GetTree().Paused = true;
-			EmitSignal(SignalName.HealthDepleted);
-			GetParent().QueueFree();
-			
+
+			EmitSignal(SignalName.HealthDepleted); // emit signal when health is depleted
 		}
 	}
 }

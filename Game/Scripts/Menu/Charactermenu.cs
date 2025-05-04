@@ -18,51 +18,9 @@ public partial class Charactermenu : Control
 	private Label _labelDexterity;
 	private Label _labelIntelligence;
 	
-	private Godot.Collections.Array allCharacters = new Godot.Collections.Array
-	{
-		new Godot.Collections.Dictionary
-		{
-			{"character_id", 1},
-			{"name", "Archer"},
-			{"speed", 100},
-			{"health", 100},
-			{"dexterity", 100},
-			{"intelligence", 100}
-		},
-		new Godot.Collections.Dictionary
-		{
-			{"character_id", 2},
-			{"name", "Assassin"},
-			{"speed", 100},
-			{"health", 100},
-			{"dexterity", 100},
-			{"intelligence", 100}
-		},
-		new Godot.Collections.Dictionary
-		{
-			{"character_id", 3},
-			{"name", "Knight"},
-			{"speed", 100},
-			{"health", 100},
-			{"dexterity", 100},
-			{"intelligence", 100}
-		},
-		new Godot.Collections.Dictionary
-		{
-			{"character_id", 4},
-			{"name", "Mage"},
-			{"speed", 100},
-			{"health", 100},
-			{"dexterity", 100},
-			{"intelligence", 100}
-		}
-	};
-
-
 	public override void _Ready()
 	{
 		characterManager = GetNode<CharacterManager>("/root/CharacterManager");
-		GD.Print(characterManager.LoadLastSelectedCharacterID());
 
 		_labelHealth = GetNode<Label>("%Label_health");
 		_labelSpeed = GetNode<Label>("%Label_speed");
@@ -86,7 +44,7 @@ public partial class Charactermenu : Control
 		int selectedId = characterManager.LoadLastSelectedCharacterID();
 		_currentlySelectedCharacter = GetNode<Button>($"%Button_Character{selectedId}");
 		_on_button_select_pressed();
-		SetCharacterPageValues(allCharacters, selectedId);
+		SetCharacterPageValuesFromFile($"{selectedId}");
 
 
 	}
@@ -95,38 +53,25 @@ public partial class Charactermenu : Control
 		string receivedString = Encoding.UTF8.GetString(body);
 		GD.Print("Antwort empfangen: " + receivedString);
 		Variant receivedVar = Json.ParseString(receivedString);
-		allCharacters = receivedVar.AsGodotArray();
+		//allCharacters = receivedVar.AsGodotArray();
 
-	
 
 		int selectedId = characterManager.LoadLastSelectedCharacterID();
 		_currentlySelectedCharacter = GetNode<Button>($"%Button_Character{selectedId}");
 		_on_button_select_pressed();
-		SetCharacterPageValues(allCharacters, selectedId);
+		
+		SetCharacterPageValuesFromFile($"{selectedId}");
 	}
 
-	// Text der charactersite wird an den Text welcher in der DB unter dem chracter mit der nummer (characterId) hinterlegt ist 
-	private void SetCharacterPageValues(Godot.Collections.Array characters, int characterId)
+	
+	// set stats and name to values from file (see CharacterManager.cs)
+	private void SetCharacterPageValuesFromFile(string characterId)
 	{
-		foreach (Godot.Collections.Dictionary character in characters)
-		{
-			int character_id = (int)character["character_id"];
-			if (characterId == character_id)
-			{
-				string name = (string)character["name"];
-				int speed = (int)character["speed"];
-				int health = (int)character["health"];
-				int dexterity = (int)character["dexterity"];
-				int intelligence = (int)character["intelligence"];
-
-				_labelCharacterName.Text = name;
-				_labelHealth.Text = $"Health {health}";
-				_labelSpeed.Text = $"Speed {speed}";
-				_labelDexterity.Text = $"Dexterity {dexterity}";
-				_labelIntelligence.Text = $"Intelligence {intelligence}";
-			}
-		}
-
+			_labelCharacterName.Text = $"{characterManager.LoadNameByID(characterId)} - Lvl.{characterManager.LoadLevelByID(characterId)}";
+			_labelHealth.Text = $"Health {characterManager.LoadHealthByID(characterId)}";
+			_labelSpeed.Text = $"Speed {characterManager.LoadSpeedByID(characterId)}";
+			_labelDexterity.Text = $"Dexterity {characterManager.LoadDexterityByID(characterId)}";
+			_labelIntelligence.Text = $"Intelligence {characterManager.LoadIntelligenceByID(characterId)}";
 	}
 
 
@@ -141,20 +86,48 @@ public partial class Charactermenu : Control
 	{
 		if (button != null && _labelCharacterName != null)
 		{
-			SetCharacterPageValues(allCharacters, int.Parse(button.Text));
+			SetButtonStyle(_currentlySelectedCharacter,Color.Color8(0x4F, 0x4F, 0x4F),false);
+			
+			SetCharacterPageValuesFromFile(button.Text);
 			_currentlySelectedCharacter = button;
-			if (button.Name == "Button_Character3")
+			
+			SetButtonStyle(_currentlySelectedCharacter,Color.Color8(0x2C, 0xC7, 0xFF),false);
+			
+			if (!characterManager.LoadIsUnlocked(button.Text))
 			{ //check if character is unlocken. locked=true
 				_ButtonUpgradeUnlock.Text = "Unlock";
-				_Button_Select.Disabled = true;
 				_Button_Select.Hide();
 			}
 			else
 			{
 				_ButtonUpgradeUnlock.Text = "Upgrade";
-				_Button_Select.Disabled = false;
 				_Button_Select.Show();
 			}
+		}
+	}
+	
+	private void SetButtonStyle(Button button, Color color, bool addBorder){
+		var style = button.GetThemeStylebox("normal") as StyleBoxFlat;
+		if(style!=null){
+			
+			var newStyle=(StyleBoxFlat)style.Duplicate();
+			newStyle.BgColor=color;
+			newStyle.BorderColor = new Color(1f, 0f, 0f);
+			
+			if(addBorder){
+				newStyle.BorderColor = new Color(1f, 0f, 0f);
+				newStyle.SetBorderWidth(Side.Top, 3);
+				newStyle.SetBorderWidth(Side.Bottom, 3);
+				newStyle.SetBorderWidth(Side.Left, 3);
+				newStyle.SetBorderWidth(Side.Right, 3);
+			}
+		
+			
+			button.AddThemeStyleboxOverride("normal", newStyle);
+			button.AddThemeStyleboxOverride("hover", newStyle);
+			button.AddThemeStyleboxOverride("pressed", newStyle);
+			button.AddThemeStyleboxOverride("focus", newStyle);
+			
 		}
 	}
 
@@ -164,15 +137,8 @@ public partial class Charactermenu : Control
 		if (_currentlySelectedCharacter != null)
 		{
 			characterManager.SaveLastSelectedCharacterID(int.Parse(_currentlySelectedCharacter.Text));
-			var style = new StyleBoxFlat();
-			style.BgColor = Color.Color8(0x4F, 0x4F, 0x4F);
-			style.BorderColor = new Color(1f, 0f, 0f);
-			style.SetBorderWidth(Side.Top, 3);
-			style.SetBorderWidth(Side.Bottom, 3);
-			style.SetBorderWidth(Side.Left, 3);
-			style.SetBorderWidth(Side.Right, 3);
-			_currentlySelectedCharacter.AddThemeStyleboxOverride("normal", style);
-
+			SetButtonStyle(_currentlySelectedCharacter, Color.Color8(0x2C, 0xC7, 0xFF),true);
+			
 			if (_oldSelectedCharacter != _currentlySelectedCharacter)
 			{
 				_resetButton(_oldSelectedCharacter);
@@ -180,6 +146,8 @@ public partial class Charactermenu : Control
 			}
 		}
 	}
+	
+	// temp function for temp reset button to reset the character data 
 	private void _resetButton(Button button)
 	{
 		if (button != null)
@@ -187,9 +155,64 @@ public partial class Charactermenu : Control
 			var style = new StyleBoxFlat();
 			style.BgColor = Color.Color8(0x4F, 0x4F, 0x4F);
 			button.AddThemeStyleboxOverride("normal", style);
+			button.AddThemeStyleboxOverride("hover", style);
+			button.AddThemeStyleboxOverride("pressed", style);
+			button.AddThemeStyleboxOverride("focus", style);
 		}
 	}
-
-
+	
+	private void _on_button_upgrade_unlock_pressed()
+	{
+		string characterID=_currentlySelectedCharacter.Text;
+		if(characterManager.LoadIsUnlocked(characterID))
+		{
+			characterManager.UpgradeCharacter(characterID);
+			
+		}else
+		{
+			characterManager.SetUnlocked(characterID);
+			_ButtonUpgradeUnlock.Text = "Upgrade";
+			_Button_Select.Show();
+			var icon=_currentlySelectedCharacter.GetNode<TextureRect>("TextureRect");
+			icon.Material=null;
+		}
+		SetCharacterPageValuesFromFile(characterID);
+	}
+	
+	private void ResetCharacters()
+	{
+		ConfigFile config = new();
+		config.Load("user://character_settings.cfg");
+		
+		characterManager.SaveCharacterData(1, "Archer", 100, 100, 100, 100, 1, 1);
+		characterManager.SaveCharacterData(2, "Assassin", 100, 100, 100, 100, 1, 0);
+		characterManager.SaveCharacterData(3, "Knight", 100, 100, 100, 100, 1, 0);
+		characterManager.SaveCharacterData(4, "Mage", 100, 100, 100, 100, 1, 0);
+		
+		var button1 = GetNode<Button>("%Button_Character1");
+		var button2 = GetNode<Button>("%Button_Character2");
+		var button3 = GetNode<Button>("%Button_Character3");
+		var button4 = GetNode<Button>("%Button_Character4");
+		
+		var icon=button1.GetNode<TextureRect>("TextureRect");
+		icon.Material=null;
+		
+		Shader _blackAndWhiteShader = GD.Load<Shader>("res://Scenes/Menu/characterMenuIconShader.gdshader");
+		var material = new ShaderMaterial();
+		material.Shader = _blackAndWhiteShader;
+		
+		icon=button2.GetNode<TextureRect>("TextureRect");
+		icon.Material=material;
+		
+		icon=button3.GetNode<TextureRect>("TextureRect");
+		icon.Material=material;
+		
+		icon=button4.GetNode<TextureRect>("TextureRect");
+		icon.Material=material;
+		
+		
+		SetCharacterPageValuesFromFile(_currentlySelectedCharacter.Text);
+	}
+	
 
 }
