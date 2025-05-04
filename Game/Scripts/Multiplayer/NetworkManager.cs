@@ -10,7 +10,7 @@ using System.Text;
 // Autoload-Node: manages Netzwerk, Tick-Loop
 public partial class NetworkManager : Node
 {
-    public bool enableDebug = true;
+    public bool enableDebug = false;
     [Export] public int RPC_PORT = 9999;   // ENet for RPC
     [Export] public int UDP_PORT = 3000;   // PacketPeerUDP for game data
 
@@ -25,10 +25,13 @@ public partial class NetworkManager : Node
     public bool _isServer = false;
     public bool _isHost = false;
     private bool _gameRunning = false;
+    private bool _readyForUdp = false;
     private Queue<Command> _incomingCommands = new();
     private int _tick = 0;
     private double _acc = 0;
     private const float TICK_DELTA = 1f / 60f;
+    private Timer shutdownTimer; // for headless server if no one is connected
+    private const float ServerShutdownDelay = 30f; // seconds 
     public static NetworkManager Instance { get; private set; }
 
     private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
@@ -47,6 +50,16 @@ public partial class NetworkManager : Node
     public override void _Ready()
     {
         Instance = this;
+        // check if we are in headless server mode
+        var args = OS.GetCmdlineArgs();
+
+        if (args.Contains("--server-mode") || args.Contains("--headless"))
+        {
+            DebugIt("Headless Server, call InitServer()");
+            CallDeferred(nameof(InitServer));
+        }
+        GetTree().GetMultiplayer().PeerDisconnected += OnPeerDisconnected;
+        StartAutoShutdownTimer();
     }
 
     public void InitServer()
@@ -81,6 +94,8 @@ public partial class NetworkManager : Node
         }
 
         _isServer = true;
+        _readyForUdp = true;
+
         DebugIt("Server startet on port: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + GetServerIPAddress());
     }
 
@@ -110,6 +125,7 @@ public partial class NetworkManager : Node
         _udpClientPeer.PutPacket(hello);
 
         _isServer = false;
+        _readyForUdp = true;
         DebugIt("Client connecting to: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + address);
     }
 
@@ -173,12 +189,115 @@ public partial class NetworkManager : Node
 
         // we are now both server and client
         DebugIt("Host started (Server+Client) on localhost");
+
+        _readyForUdp = true;
     }
 
+    public void StartHeadlessServer(bool headless)
+    {
+        ProcessStartInfo startInfo;
+
+        if (headless)
+        {
+            startInfo = new ProcessStartInfo
+            {
+                FileName = OS.GetExecutablePath(),
+                Arguments = "--headless --server-mode",
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = true
+            };
+        }
+        else
+        {
+            startInfo = new ProcessStartInfo
+            {
+                FileName = OS.GetExecutablePath(),
+                Arguments = "--server-mode",
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                CreateNoWindow = false
+            };
+        }
+
+        var process = new Process();
+        process.StartInfo = startInfo;
+
+        process.OutputDataReceived += (sender, args) =>
+        {
+            if (!string.IsNullOrEmpty(args.Data))
+                GD.Print("HEADLESS STDOUT: " + args.Data);
+        };
+        process.ErrorDataReceived += (sender, args) =>
+        {
+            if (!string.IsNullOrEmpty(args.Data))
+                GD.PrintErr("HEADLESS STDERR: " + args.Data);
+        };
+
+        process.Start();
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();
+    }
+
+    private void StartAutoShutdownTimer()
+    {
+        if (shutdownTimer != null) return; // dont start twice
+
+        shutdownTimer = new Timer();
+        shutdownTimer.OneShot = true;
+        shutdownTimer.WaitTime = ServerShutdownDelay;
+        shutdownTimer.Timeout += () =>
+        {
+            if (GetTree().GetMultiplayer().GetPeers().Count() == 0)
+            {
+                DebugIt("No peers connected after 30 seconds. Shutting down server.");
+                GetTree().Quit();
+            }
+            else
+            {
+                DebugIt("Peers reconnected, shutdown cancelled.");
+            }
+
+            shutdownTimer.QueueFree();
+            shutdownTimer = null;
+        };
+        AddChild(shutdownTimer);
+        shutdownTimer.Start();
+
+        DebugIt("Shutdown timer gestartet (30s)...");
+    }
+
+    private void OnPeerDisconnected(long id)
+    {
+        DebugIt($"Peer disconnected: {id}");
+
+        // Wenn niemand mehr da ist, runterfahren einleiten
+        if (GetTree().GetMultiplayer().GetPeers().Count() == 0)
+        {
+            StartAutoShutdownTimer();
+        }
+    }
+
+    public bool IsPortOpen(string host, int port, int timeout = 500)
+    {
+        try
+        {
+            using var client = new TcpClient();
+            var result = client.BeginConnect(host, port, null, null);
+            var success = result.AsyncWaitHandle.WaitOne(timeout);
+            return success && client.Connected;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 
     public override void _PhysicsProcess(double delta)
     {
-        if (!_gameRunning) return;
+        if (!_readyForUdp) return;
 
         // UDP Networking
         if (_isHost)
@@ -187,12 +306,14 @@ public partial class NetworkManager : Node
             HandleServerUdp();
             HandleClientUdp();
         }
-        else if (_isServer)// client or server
+        else if (_isServer)
         {
             HandleServerUdp();
         }
         else
             HandleClientUdp();
+
+        if (!_gameRunning) return;
 
         // fixed timestep game loop
         HandleTickLoop(delta);
@@ -286,12 +407,14 @@ public partial class NetworkManager : Node
         var gameScene = GD.Load<PackedScene>("res://Scenes/GameRoot/GameRoot.tscn");
         gameScene.Instantiate<Node>();
         GetTree().ChangeSceneToPacked(gameScene);
-        DebugIt("NotifyGameStart called: Scene changed, game running set to true.");
+
+        var peerId = GetTree().GetMultiplayer().GetUniqueId();
+        DebugIt($"NotifyGameStart called by server? {_isServer} host? {_isHost} (PeerID: {peerId})");
 
         _gameRunning = true;
     }
 
-    public void BroadcastGameStartOverUDP()
+    public void NotifyGameStartUDP()
     {
         var startPacket = Encoding.UTF8.GetBytes("START");
         foreach (var peer in _udpPeers)

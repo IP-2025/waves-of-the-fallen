@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 public partial class LocalMenu : Control
 {
@@ -15,7 +16,6 @@ public partial class LocalMenu : Control
   private Button hostButton;
   private Button playButton;
   private LineEdit ipIO;
-  private readonly int PORT = 9999;
   private RichTextLabel currentPlayers;
   //private ServerBootstrapping server;
 
@@ -31,12 +31,6 @@ public partial class LocalMenu : Control
     // disable play button by default
     playButton.Visible = false;
     playButton.Disabled = true;
-
-    var mp = GetTree().GetMultiplayer();
-
-    // 2) Binde die richtigen Signale
-    mp.ConnectedToServer += OnConnectedToServer;
-    mp.ConnectionFailed += OnConnectionFailed;
   }
 
 
@@ -63,14 +57,23 @@ public partial class LocalMenu : Control
 
   private void _on_host_button_pressed()
   {
-    //NetworkManager.Instance.InitHost();
-    NetworkManager.Instance.InitServer();
-    /*     NetworkManager server = NetworkManager.Instance;
-        server.InitServer();
-        NetworkManager client = NetworkManager.Instance;
-        client.InitClient("127.0.0.1");
-     */
     ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show server ip in input field
+
+    NetworkManager.Instance.StartHeadlessServer(true);
+
+    if (NetworkManager.Instance.IsPortOpen(NetworkManager.Instance.GetServerIPAddress(), NetworkManager.Instance.RPC_PORT, 500))
+    {
+      NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
+    }
+    else
+    {
+      var timer = new Timer();
+      AddChild(timer);
+      timer.WaitTime = 1;
+      timer.OneShot = true;
+      timer.Timeout += () => NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
+      timer.Start();
+    }
 
     // disable host and join button and enable play button
     hostButton.Visible = false;
@@ -86,28 +89,8 @@ public partial class LocalMenu : Control
 
   private void _on_play_button_pressed()
   {
-
-    //NetworkManager.Instance.BroadcastGameStartOverUDP();
-
-    NetworkManager.Instance.Rpc(nameof(NetworkManager.NotifyGameStart));
-
+    NetworkManager.Instance.Rpc("NotifyGameStart");
   }
-
-  private void OnConnectedToServer()
-  {
-    DebugIt("Sucessfully conneted with srver");
-  }
-
-  private void OnConnectionFailed()
-  {
-    DebugIt("Connection to server failed");
-    // UI zurücksetzen
-    joinButton.Visible = true;
-    joinButton.Disabled = false;
-    hostButton.Visible = true;
-    hostButton.Disabled = false;
-  }
-
 
   private void DebugIt(string message)
   {
