@@ -17,25 +17,52 @@ public partial class DefaultPlayer : CharacterBody2D
 	private Camera2D camera;
 	private MultiplayerSynchronizer multiplayerSynchronizer;
 	public bool enableDebug = false;
+	
+	public PackedScene BowScene = GD.Load<PackedScene>("res://Scenes/Weapons/Bow.tscn");
+	private int weaponsEquipped = 0;
 
 	public override void _Ready()
 	{
 		// TODO: why not delete default player and just use mage ? or implement the same speed and health to default player
-		var playerClass = new Assassin(); // Instantiate Mage
+		var playerClass = new Ranger(); // Instantiate Mage
 		Speed = playerClass.Speed; // Override DefaultPlayer's Speed with Mage's Speed
 		MaxHealth = playerClass.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
 		CurrentHealth = playerClass.CurrentHealth; // Set CurrentHealth to Mage's CurrentHealth
-		GD.Print($"Mage Speed applied: {Speed}, Mage Health applied: {MaxHealth}");
+		GD.Print($"Assassin Speed applied: {Speed}, Assasin Health applied: {MaxHealth}");
 
 		AddToGroup("player");
 		CurrentHealth = MaxHealth;
 		Joystick = GetNode<Node2D>("Joystick");
+		
+		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
+		
+		Area2D weapon = CreateWeaponForClass(playerClass);
+		
+		if (weapon != null)
+		{
+			weaponSlot.AddChild(weapon);
+			weapon.Position = Vector2.Zero;
+			weaponsEquipped++;
+		}
+		
+		
 	}
 
+	private Area2D CreateWeaponForClass(object playerClass)
+	{
+		if (playerClass is Ranger)
+			return BowScene.Instantiate() as Area2D;
+    
+		// if (playerClass is Mage) return FireStaffScene.Instantiate() as Area2D;
+    
+		return null;
+	}
+	
 	public override void _Process(double delta)
 	{
 
 	}
+	
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 direction = Vector2.Zero;
@@ -94,5 +121,10 @@ public partial class DefaultPlayer : CharacterBody2D
 		{
 			Debug.Print(message);
 		}
+	}	
+	public virtual void Die()
+	{
+		GD.Print("Default death behavior – no animation");
+		QueueFree();
 	}
 }
