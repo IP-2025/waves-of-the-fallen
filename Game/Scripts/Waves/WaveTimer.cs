@@ -3,6 +3,7 @@ using Godot;
 
 public partial class WaveTimer : Node2D
 {
+	public bool disable	= false;
 	public int waveCounter = 1;
 	public int secondCounter = 0;
 	public int maxTime = 30;
@@ -12,10 +13,8 @@ public partial class WaveTimer : Node2D
 
 	public override void _Ready()
 	{
-		// Get cam from player node
-		var cam = GetViewport().GetCamera2D();
-		_timeLeftLabel = cam.GetNode<Label>("TimeLeft");
-		_waveCounterLabel = cam.GetNode<Label>("WaveCounter");
+		_timeLeftLabel = GetNode<Label>("TimeLeft");
+		_waveCounterLabel = GetNode<Label>("WaveCounter");
 
 		// set values
 		_timeLeftLabel.Text = maxTime.ToString();
@@ -29,6 +28,8 @@ public partial class WaveTimer : Node2D
 
 	private void OnTimerTimeout()
 	{
+		if (disable) return;
+		
 		secondCounter++; // counts the seconds until the max_time is reached and a new wave begins
 		if (secondCounter >= maxTime)
 		{
@@ -57,16 +58,6 @@ public partial class WaveTimer : Node2D
 		else
 		{
 			Debug.Print("No enemies found to be deleted");
-		}
-	}
-
-	public void PauseUnpauseTimer() // Flips the paused state of waveTimer
-	{
-		if (Multiplayer.IsServer())
-		{
-			if (_waveTimer.Paused) Debug.Print("WaveTimer unpaused");
-			else Debug.Print("WaveTimer paused");
-			_waveTimer.Paused = !_waveTimer.Paused;
 		}
 	}
 }

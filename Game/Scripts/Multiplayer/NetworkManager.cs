@@ -11,17 +11,19 @@ using System.Text;
 public partial class NetworkManager : Node
 {
     public bool enableDebug = true;
-    [Export] public int RPC_PORT = 7777;   // ENet for RPC
+    [Export] public int RPC_PORT = 9999;   // ENet for RPC
     [Export] public int UDP_PORT = 3000;   // PacketPeerUDP for game data
 
     // peers
-    private ENetMultiplayerPeer _rpcPeer;
     private PacketPeerUdp _udpClientPeer;
     private UdpServer _udpServer;
+    private ENetMultiplayerPeer _rpcServerPeer;
+    private ENetMultiplayerPeer _rpcClientPeer;
     private List<PacketPeerUdp> _udpPeers = new();
 
     // state & queues
-    private bool _isServer = false;
+    public bool _isServer = false;
+    public bool _isHost = false;
     private bool _gameRunning = false;
     private Queue<Command> _incomingCommands = new();
     private int _tick = 0;
@@ -38,8 +40,8 @@ public partial class NetworkManager : Node
 };
 
 
-    Client client;
-    Server server;
+    private Client client;
+    private Server server;
 
 
     public override void _Ready()
@@ -49,14 +51,14 @@ public partial class NetworkManager : Node
 
     public void InitServer()
     {
-        // add client node as child to NetworkManager
+        // add node as child to NetworkManager
         server = new Server();
         AddChild(server);
 
         // RPC Server with ENet
-        _rpcPeer = new ENetMultiplayerPeer();
+        _rpcServerPeer = new ENetMultiplayerPeer();
         // test if address and port is valid / open
-        var err = _rpcPeer.CreateServer(RPC_PORT, maxClients: 4); // max 4 clients
+        var err = _rpcServerPeer.CreateServer(RPC_PORT, maxClients: 4); // max 4 clients
         DebugIt($"ENet CreateClient: {err}");
 
         if (err != Error.Ok)
@@ -66,7 +68,7 @@ public partial class NetworkManager : Node
             return;
         }
 
-        GetTree().GetMultiplayer().MultiplayerPeer = _rpcPeer;
+        GetTree().GetMultiplayer().MultiplayerPeer = _rpcServerPeer;
 
         // UDP_PORT Server for game data
         _udpServer = new UdpServer();
@@ -90,9 +92,9 @@ public partial class NetworkManager : Node
 
 
         // RPC Client with ENet
-        _rpcPeer = new ENetMultiplayerPeer();
-        _rpcPeer.CreateClient(address, RPC_PORT);
-        GetTree().GetMultiplayer().MultiplayerPeer = _rpcPeer;
+        _rpcClientPeer = new ENetMultiplayerPeer();
+        _rpcClientPeer.CreateClient(address, RPC_PORT);
+        GetTree().GetMultiplayer().MultiplayerPeer = _rpcClientPeer;
 
         // UDP Client for game data
         _udpClientPeer = new PacketPeerUdp();
@@ -111,14 +113,84 @@ public partial class NetworkManager : Node
         DebugIt("Client connecting to: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + address);
     }
 
+    public void InitHost() // client and server for local multiplayer
+    {
+        _isHost = true;
+
+        server = new Server();
+        AddChild(server);
+        // start rpc
+        _rpcServerPeer = new ENetMultiplayerPeer();
+        // test if address and port is valid / open
+        var err = _rpcServerPeer.CreateServer(RPC_PORT, maxClients: 4); // max 4 clients
+        if (err != Error.Ok)
+        {
+            DebugIt("Failed to create RPC server, quitting game." + err);
+            GetTree().Quit();
+            return;
+        }
+
+        // start udp server
+        _udpServer = new UdpServer();
+        err = _udpServer.Listen((ushort)UDP_PORT);
+        if (err != Error.Ok)
+        {
+            DebugIt("Failed to bind UDP port: " + err);
+            GetTree().Quit();
+            return;
+        }
+        DebugIt("Server startet on port: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + "127.0.0.1");
+
+        // connect rpc client (localhost)
+        client = new Client();
+        AddChild(client);
+        _rpcClientPeer = new ENetMultiplayerPeer();
+        err = _rpcClientPeer.CreateClient("127.0.0.1", RPC_PORT);
+        if (err != Error.Ok)
+        {
+            DebugIt($"Host: ENet-Client failed: {err}");
+            GetTree().Quit();
+            return;
+        }
+        GetTree().GetMultiplayer().MultiplayerPeer = _rpcClientPeer;
+        GetTree().GetMultiplayer().PeerConnected += id => DebugIt($"PeerConnected: {id}");
+        DebugIt("Host: ENet-Client connected to: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + "127.0.0.1");
+
+
+        // connect udp client (localhost)
+        _udpClientPeer = new PacketPeerUdp();
+        err = _udpClientPeer.ConnectToHost("127.0.0.1", UDP_PORT);
+        if (err != Error.Ok)
+        {
+            GD.PrintErr($"UDP-Connect fehlgeschlagen: {err}");
+            return;
+        }
+
+
+        // send hello handshake to server
+        var hello = Encoding.UTF8.GetBytes("HELLO");
+        _udpClientPeer.PutPacket(hello);
+
+        // we are now both server and client
+        DebugIt("Host started (Server+Client) on localhost");
+    }
+
+
     public override void _PhysicsProcess(double delta)
     {
-        if (!_gameRunning)
-            return;
+        if (!_gameRunning) return;
 
         // UDP Networking
-        if (_isServer)
+        if (_isHost)
+        {
+            _rpcServerPeer.Poll();
             HandleServerUdp();
+            HandleClientUdp();
+        }
+        else if (_isServer)// client or server
+        {
+            HandleServerUdp();
+        }
         else
             HandleClientUdp();
 
@@ -176,6 +248,16 @@ public partial class NetworkManager : Node
         while (_udpClientPeer.GetAvailablePacketCount() > 0)
         {
             var data = _udpClientPeer.GetPacket();
+            var text = Encoding.UTF8.GetString(data);
+
+            if (text == "START")
+            {
+                DebugIt("Received START packet → switching to Game scene");
+                CallDeferred(nameof(NotifyGameStart)); // oder client.RpcLocal?
+                continue;
+            }
+
+
             var snap = Serializer.Deserialize<Snapshot>(data);
             client.ApplySnapshot(snap);
             DebugIt($"Received snapshot tick={snap.Tick}, entities={snap.Entities.Count}");
@@ -204,10 +286,19 @@ public partial class NetworkManager : Node
         var gameScene = GD.Load<PackedScene>("res://Scenes/GameRoot/GameRoot.tscn");
         gameScene.Instantiate<Node>();
         GetTree().ChangeSceneToPacked(gameScene);
+        DebugIt("NotifyGameStart called: Scene changed, game running set to true.");
 
         _gameRunning = true;
     }
 
+    public void BroadcastGameStartOverUDP()
+    {
+        var startPacket = Encoding.UTF8.GetBytes("START");
+        foreach (var peer in _udpPeers)
+            peer.PutPacket(startPacket);
+
+        CallDeferred(nameof(NotifyGameStart));
+    }
     private void ProcessServerTick()
     {
         // apply all commands
@@ -236,8 +327,14 @@ public partial class NetworkManager : Node
             {
                 GD.PrintErr($"Unknown ScenePath: {scenePath}");
             }
+            // Find WaveTimer as a child of the current camera
+            var cam = GetViewport().GetCamera2D();
+            var waveTimer = cam?.GetNode<WaveTimer>("WaveTimer");
 
-            snap.Entities.Add(new EntitySnapshot(id, node.Position, node.Rotation, entityType));
+            // Get health
+            var healthNode = node.GetNodeOrNull<Health>("Health");
+            float health = healthNode.health;
+            snap.Entities.Add(new EntitySnapshot(id, node.Position, node.Rotation, health, entityType, waveTimer.waveCounter, waveTimer.secondCounter));
         }
 
         // remove invalid entities, for example killed enemies
@@ -252,31 +349,18 @@ public partial class NetworkManager : Node
         {
             peer.PutPacket(bytes);
         }
-
-        //DebugIt($"Snapshot tick={_tick} send to {_peers.Count} Clients");
     }
 
-
-    // client tick: create and send commands
     private void SendClientCommand()
     {
-        // exaample....
-        /*         int seq = _sequence++;
-                long eid = 1; // entity id
-                CommandType type = CommandType.Move;
-                Vector2 dir = new Vector2(1, 0);  // example direction
+        if (_udpClientPeer == null) return;
 
-                // with direction
-                var cmdMove = new Command(seq, eid, type, dir);
-                _udpPeer.PutPacket(Serializer.Serialize(cmdMove));
-                DebugIt($"Send MOVE cmd seq={cmdMove.Sequence}");
+        Command cmd = client.GetCommand(_tick);
+        if (cmd == null) return;
 
-                // wthout direction
-                var cmdShoot = new Command(_sequence++, eid, CommandType.Shoot);
-                _udpPeer.PutPacket(Serializer.Serialize(cmdShoot));
-                DebugIt($"Send SHOOT cmd seq={cmdShoot.Sequence}"); */
+        _udpClientPeer.PutPacket(Serializer.Serialize(cmd));
+        DebugIt($"Send MOVE cmd tick={_tick}, dir={cmd.MoveDir}");
     }
-
 
     public string GetServerIPAddress()
     {

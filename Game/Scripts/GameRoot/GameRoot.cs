@@ -21,7 +21,6 @@ public partial class GameRoot : Node
 		// Load map and store reference
 		SpawnMap("res://Scenes/Main.tscn");
 
-		// spawn players
 		if (isServer)
 		{
 			// Server spawns all players
@@ -33,16 +32,9 @@ public partial class GameRoot : Node
 
 			// Start enemy spawner
 			SpawnEnemySpawner("res://Scenes/Enemies/SpawnEnemies.tscn");
+		}
 
-			// Add wave timer
-			AddWaveTimer("res://Scenes/Waves/WaveTimer.tscn");
-		}
-		else
-		{
-			/* 			// Client spawns only itself
-						SpawnPlayer(GetTree().GetMultiplayer().GetUniqueId());
-						DebugIt("Client spawning player"); */
-		}
+
 	}
 
 	public override void _Process(double delta)
@@ -71,16 +63,11 @@ public partial class GameRoot : Node
 		// Add joystick to player
 		var joystick = GD.Load<PackedScene>("res://Scenes/Joystick/joystick.tscn").Instantiate<Node2D>();
 		player.AddChild(joystick);
-
+		var WaveTimer = GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
+		player.GetNode<Camera2D>("Camera2D").AddChild(WaveTimer);
 		AddChild(player);
+
 		Server.Instance.Entities[peerId] = player;
-		
-		// Set the player's camera as current if this is the local player
-		if (GetTree().GetMultiplayer().GetUniqueId() == peerId)
-		{
-			var camera = player.GetNode<Camera2D>("Camera2D");
-			camera.MakeCurrent();
-		}
 
 		// Connect health signal
 		var healthNode = player.GetNodeOrNull<Health>("Health");
@@ -94,12 +81,6 @@ public partial class GameRoot : Node
 		}
 
 		playerIndex++;
-	}
-
-	public void AddWaveTimer(string waveTimerPath)
-	{
-		var waveTimer = GD.Load<PackedScene>(waveTimerPath).Instantiate<WaveTimer>();
-		AddChild(waveTimer);
 	}
 
 	public void SpawnEnemySpawner(string enemySpawnerPath)

@@ -3,8 +3,9 @@ using System;
 
 public partial class Health : Node2D
 {
+	public bool disable = false;
 	[Export] public float max_health= 100.0f;
-	float health;
+	public float health;
 	public float CurHealth => health;
 	[Signal]
 	public delegate void HealthDepletedEventHandler();
@@ -16,6 +17,8 @@ public partial class Health : Node2D
 	}
 	public void Damage(float damage) 
 	{
+		if (disable) return; // for client side.. server handles the damage
+
 		health -= damage;
 		if (health <= 0)
 		{

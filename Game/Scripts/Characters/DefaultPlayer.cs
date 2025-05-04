@@ -29,7 +29,10 @@ public partial class DefaultPlayer : CharacterBody2D
 
 		AddToGroup("player");
 		CurrentHealth = MaxHealth;
-		Joystick = GetNode<Node2D>("Joystick");
+		if (HasNode("Joystick"))
+			Joystick = GetNode<Node2D>("Joystick");
+		else
+			Joystick = null;
 	}
 
 	public override void _Process(double delta)

@@ -31,6 +31,12 @@ public partial class LocalMenu : Control
     // disable play button by default
     playButton.Visible = false;
     playButton.Disabled = true;
+
+    var mp = GetTree().GetMultiplayer();
+
+    // 2) Binde die richtigen Signale
+    mp.ConnectedToServer += OnConnectedToServer;
+    mp.ConnectionFailed += OnConnectionFailed;
   }
 
 
@@ -57,7 +63,13 @@ public partial class LocalMenu : Control
 
   private void _on_host_button_pressed()
   {
+    //NetworkManager.Instance.InitHost();
     NetworkManager.Instance.InitServer();
+    /*     NetworkManager server = NetworkManager.Instance;
+        server.InitServer();
+        NetworkManager client = NetworkManager.Instance;
+        client.InitClient("127.0.0.1");
+     */
     ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show server ip in input field
 
     // disable host and join button and enable play button
@@ -74,7 +86,26 @@ public partial class LocalMenu : Control
 
   private void _on_play_button_pressed()
   {
-    NetworkManager.Instance.Rpc("NotifyGameStart");
+
+    //NetworkManager.Instance.BroadcastGameStartOverUDP();
+
+    NetworkManager.Instance.Rpc(nameof(NetworkManager.NotifyGameStart));
+
+  }
+
+  private void OnConnectedToServer()
+  {
+    DebugIt("Sucessfully conneted with srver");
+  }
+
+  private void OnConnectionFailed()
+  {
+    DebugIt("Connection to server failed");
+    // UI zurücksetzen
+    joinButton.Visible = true;
+    joinButton.Disabled = false;
+    hostButton.Visible = true;
+    hostButton.Disabled = false;
   }
 
 

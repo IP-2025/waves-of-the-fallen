@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cffgskcms870o"]
+[gd_scene load_steps=7 format=3 uid="uid://cffgskcms870o"]
 
 [ext_resource type="Script" uid="uid://bdkp0e6ivq2b5" path="res://Scripts/Characters/DefaultPlayer.cs" id="1_y2kgl"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_kjvlq"]
@@ -8,14 +8,6 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2kgl"]
 size = Vector2(25, 36.2188)
-
-[sub_resource type="LabelSettings" id="LabelSettings_1h72i"]
-font_size = 21
-font_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_jig1i"]
-font_size = 21
-font_color = Color(0, 0, 0, 1)
 
 [node name="DefaultPlayer" type="CharacterBody2D"]
 collision_mask = 256
@@ -32,6 +24,7 @@ offset_right = -220.0
 offset_bottom = -147.0
 show_percentage = false
 script = ExtResource("3_jig1i")
+metadata/_edit_use_anchors_ = true
 
 [node name="HealthLabel" type="Label" parent="Health/HealthBar"]
 layout_mode = 1
@@ -60,26 +53,3 @@ shape = SubResource("RectangleShape2D_y2kgl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.75, 1.75)
-
-[node name="TimeLeft" type="Label" parent="Camera2D"]
-anchors_preset = -1
-anchor_left = -9.675
-anchor_top = -6.85
-anchor_right = -9.675
-anchor_bottom = -6.85
-offset_left = -24.0
-offset_top = -148.0
-offset_right = 24.0
-offset_bottom = -90.0
-grow_horizontal = 2
-label_settings = SubResource("LabelSettings_1h72i")
-horizontal_alignment = 1
-
-[node name="WaveCounter" type="Label" parent="Camera2D"]
-offset_left = -76.0
-offset_top = -192.0
-offset_right = 76.0
-offset_bottom = -134.0
-label_settings = SubResource("LabelSettings_jig1i")
-horizontal_alignment = 1
-vertical_alignment = 1

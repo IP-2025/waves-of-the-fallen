@@ -6,6 +6,8 @@ using System.Reflection.Metadata;
 public partial class Server : Node
 {
     public static Server Instance;
+
+    private bool enableDebug = true;
     public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
     public override void _Ready()
     {
@@ -14,16 +16,38 @@ public partial class Server : Node
 
     public void ProcessCommand(Command cmd)
     {
-        if (!Entities.ContainsKey(cmd.EntityId)) return;
-        var entity = Entities[cmd.EntityId];
-        switch (cmd.Type)
+        if (!Entities.TryGetValue(cmd.EntityId, out var entity))
         {
-            case CommandType.Move:
-                //entity.Position += cmd.MoveDir.Value * 10f * NetworkManager.GetTickDelta();
-                break;
-            case CommandType.Shoot:
-                // handle shoot and so on
-                break;
+            DebugIt($"Entity {cmd.EntityId} not found in Entities dictionary");
+            return;
         }
+
+        if (cmd.Type == CommandType.Move && cmd.MoveDir.HasValue)
+        {
+            // get move vector from command
+            var dir = cmd.MoveDir.Value;
+            if (dir.Length() > 1f)
+            {
+                dir = dir.Normalized();
+            }
+
+            // try to get the joystick node from the active player
+            var joystick = entity.GetNodeOrNull<Joystick>("Joystick");
+            if (joystick != null)
+            {
+                joystick.PosVector = dir;
+                DebugIt($"Set Joystick.PosVector = {dir} on Entity {cmd.EntityId}");
+            }
+        }
+        else if (cmd.Type == CommandType.Shoot)
+        {
+            // Tmaybe we need, maybe we don't
+        }
+    }
+
+    private void DebugIt(string message)
+    {
+        if (enableDebug)
+            GD.Print($"Server: {message}");
     }
 }
