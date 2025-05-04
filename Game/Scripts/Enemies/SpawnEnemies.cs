@@ -16,6 +16,7 @@ public partial class SpawnEnemies : Node2D
 	private int enemyLimitIncrease = 10; // how much the enemyLimit increases per wave
 	private const int EnemyLimitMax = 30; // the maximum the enemy limit can reach
 	public DefaultPlayer Player { get; set; } // player instance 
+
 	public override void _Ready()
 	{
 		timer = GetNode<Timer>("SpawnTimer");
@@ -34,7 +35,7 @@ public partial class SpawnEnemies : Node2D
 
 	private void OnTimerTimeout()
 	{
-		SpawnEnemy();
+		SpawnEnemy(); // spawn enemy on timer timeout
 	}
 
 	private void SpawnEnemy()
