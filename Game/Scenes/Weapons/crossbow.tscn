@@ -50,7 +50,7 @@ rotation = 0.00792616
 scale = Vector2(0.33, 0.33)
 
 [node name="CrossbowSprite" type="AnimatedSprite2D" parent="WeaponPivot"]
-position = Vector2(125, 0)
+position = Vector2(-15.127, 0)
 scale = Vector2(0.33, 0.33)
 sprite_frames = SubResource("SpriteFrames_b7gdf")
 animation = &"shoot"
@@ -59,7 +59,7 @@ frame_progress = 1.0
 
 [node name="CrossbowShootingPoint" type="Marker2D" parent="WeaponPivot/CrossbowSprite"]
 unique_name_in_owner = true
-position = Vector2(44.9589, -5.35652)
+position = Vector2(44.9589, 0)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
