@@ -3,5 +3,11 @@ public enum EntityType
     DefaultPlayer,
     Archer,
     DefaultEnemy,
-    RangedEnemy, 
+    RangedEnemy,
+    MountedEnemy,
+    RiderEnemy,
+    Bow,
+    BowArrow,
+    Crossbow,
+    CrossbowArrow
 }

@@ -21,13 +21,19 @@ public partial class Client : Node
         { EntityType.Archer, GD.Load<PackedScene>("res://Scenes/Characters/archer.tscn") },
         { EntityType.DefaultEnemy,  GD.Load<PackedScene>("res://Scenes/Characters/default_enemy.tscn") },
         { EntityType.RangedEnemy,  GD.Load<PackedScene>("res://Scenes/Characters/ranged_enemy.tscn") },
+        { EntityType.MountedEnemy,  GD.Load<PackedScene>("res://Scenes/Characters/mounted_enemy.tscn") },
+        { EntityType.RiderEnemy,  GD.Load<PackedScene>("res://Scenes/Characters/rider_enemy.tscn") },
+        { EntityType.Bow,  GD.Load<PackedScene>("res://Scenes/Weapons/bow.tscn") },
+        { EntityType.BowArrow,  GD.Load<PackedScene>("res://Scenes/Weapons/bow_arrow.tscn") },
+        { EntityType.Crossbow,  GD.Load<PackedScene>("res://Scenes/Weapons/crossbow.tscn") },
+        { EntityType.CrossbowArrow,  GD.Load<PackedScene>("res://Scenes/Weapons/crossbow_arrow.tscn") },
     };
 
     public override void _Ready()
     {
     }
 
-    public Command GetCommand(int tick)
+    public Command GetCommand(ulong tick)
     {
         long eid = Multiplayer.GetUniqueId();
 
@@ -77,7 +83,8 @@ public partial class Client : Node
 
     private void InstantiateOrUpdateEntities(IEnumerable<EntitySnapshot> entities)
     {
-        foreach (var entity in entities)
+        // first all not a weapon things (no OwnerID & SlotIndex)
+        foreach (var entity in entities.Where(e => !e.OwnerId.HasValue || !e.SlotIndex.HasValue))
         {
             // HUD / WaveCounter stuff
             if (!_waveTimerReady && _camera != null)
@@ -122,30 +129,96 @@ public partial class Client : Node
 
             UpdateTransform(inst, entity);
         }
+
+        foreach (var entity in entities.Where(e => e.OwnerId.HasValue && e.SlotIndex.HasValue))
+        {
+            if (_instances.ContainsKey(entity.NetworkId))
+                continue;
+
+            var inst = CreateInstance(entity);
+            if (inst == null)
+                continue; // cant find owner / slot
+
+            _instances[entity.NetworkId] = inst;
+            DebugIt($"Instantiated weapon {entity.Type} with ID {entity.NetworkId} under owner {entity.OwnerId.Value}");
+        }
     }
 
     private Node2D CreateInstance(EntitySnapshot entity)
     {
-        if (!_prefabs.TryGetValue(entity.Type, out var scene))
+        if (!entity.OwnerId.HasValue)
         {
-            GD.PrintErr($"Cant find path for {entity.Type}");
-            return null;
+            if (!_prefabs.TryGetValue(entity.Type, out var scene))
+            {
+                GD.PrintErr($"Cant find path for {entity.Type}");
+                return null;
+            }
+
+            var inst = scene.Instantiate<Node2D>();
+
+            // sisable health for enemies because server handles it
+            if (entity.Type == EntityType.DefaultEnemy
+                || entity.Type == EntityType.RangedEnemy
+                || entity.Type == EntityType.MountedEnemy
+                || entity.Type == EntityType.RiderEnemy
+                || entity.Type == EntityType.DefaultPlayer
+                || entity.Type == EntityType.Archer)
+            {
+                var helthNode = inst.GetNodeOrNull<Health>("Health");
+                helthNode.disable = true;
+                helthNode.health = entity.Health * 100; // high value so that client cant kill and cant be killed. Server handles it
+            }
+
+            inst.Name = $"E_{entity.NetworkId}";
+            GetNode<GameRoot>("/root/GameRoot").AddChild(inst);
+            return inst;
         }
 
-        var inst = scene.Instantiate<Node2D>();
-
-        // sisable health for enemies because server handles it
-        if (entity.Type == EntityType.DefaultEnemy || entity.Type == EntityType.RangedEnemy || entity.Type == EntityType.DefaultPlayer || entity.Type == EntityType.Archer)
+        // weapons
+        // if it has OwnerId and SlotIndex, it is a weapon
+        if (entity.OwnerId.HasValue && entity.SlotIndex.HasValue)
         {
-            var helthNode = inst.GetNodeOrNull<Health>("Health");
-            helthNode.disable = true;
-            helthNode.health = entity.Health * 100; // high value so that client cant kill and cant be killed. Server handles it
+            if (!_prefabs.TryGetValue(entity.Type, out var scene))
+            {
+                GD.PrintErr($"Cant find weapon path for {entity.Type}");
+                return null;
+            }
+
+            var inst = scene.Instantiate<Node2D>();
+            inst.Name = $"E_{entity.NetworkId}";
+            inst.Position = Vector2.Zero;
+
+            // find owner node
+            var ownerNode = GetTree()
+              .Root
+              .GetNode<GameRoot>("GameRoot")
+              .GetNode<Node2D>($"E_{entity.OwnerId.Value}");
+
+            if (ownerNode == null)
+            {
+                GD.PrintErr($"Owner E_{entity.OwnerId.Value} cant be found, waiting for next snapshot");
+                return null;
+            }
+            // slot container / slots for weapons
+            var slots = ownerNode.GetNodeOrNull<Node2D>("WeaponSpawnPoints");
+            if (slots == null)
+            {
+                GD.PrintErr($"Cant find WeaponSpawnPoints {ownerNode.Name}");
+                return null;
+            }
+
+            int idx = entity.SlotIndex.Value;
+            if (idx < 0 || idx >= slots.GetChildCount())
+            {
+                GD.PrintErr($"Invalid SlotIndex {idx} on {ownerNode.Name}");
+                return null;
+            }
+            var slot = slots.GetChild<Node2D>(idx);
+            slot.AddChild(inst);
+            return inst;
         }
 
-        inst.Name = $"E_{entity.NetworkId}";
-
-        GetNode<GameRoot>("/root/GameRoot").AddChild(inst);
-        return inst;
+        return null; // no OwnerID & SlotIndex? f this
     }
 
     private void UpdateTransform(Node2D inst, EntitySnapshot entity)

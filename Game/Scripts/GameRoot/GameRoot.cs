@@ -50,8 +50,10 @@ public partial class GameRoot : Node
 
 	public void SpawnPlayer(long peerId)
 	{
-		var player = GD.Load<PackedScene>("res://Scenes/Characters/default_player.tscn").Instantiate<Node2D>();
+		var player = GD.Load<PackedScene>("res://Scenes/Characters/default_player.tscn").Instantiate<DefaultPlayer>();
+		player.OwnerPeerId = peerId;
 		player.Name = $"Player_{peerId}";
+		
 
 		// Get spawn point from PlayerSpawnPoints group
 		player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")

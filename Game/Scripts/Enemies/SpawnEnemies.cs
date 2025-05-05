@@ -1,14 +1,19 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class SpawnEnemies : Node2D
 {
 	public DefaultPlayer Player { get; set; } // player instance 
+	private Timer timer;
+	private int players;
 
 	public override void _Ready()
 	{
-		Timer timer = GetNode<Timer>("SpawnTimer");
+		timer = GetNode<Timer>("SpawnTimer");
 		timer.Timeout += OnTimerTimeout; // timer event connected
+		players = GetTree().GetMultiplayer().GetPeers().Count();
+		timer.WaitTime = timer.WaitTime / (players / players > 1 ? 2 : 1 ); // scale with players
 	}
 
 	private void OnTimerTimeout()
@@ -18,7 +23,8 @@ public partial class SpawnEnemies : Node2D
 
 	private void SpawnEnemy()
 	{
-		if (GetTree().GetNodesInGroup("enemies").Count >= 30)
+		// scaling with players
+		if (GetTree().GetNodesInGroup("enemies").Count >= 30 * players)
 			return; // limit reached, no more enemies
 
 		// random enemy type selection

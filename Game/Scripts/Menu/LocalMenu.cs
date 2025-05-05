@@ -7,10 +7,11 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 public partial class LocalMenu : Control
 {
-  public bool enableDebug = true;
+  public bool enableDebug = false;
 
   private Button joinButton;
   private Button hostButton;
@@ -33,6 +34,13 @@ public partial class LocalMenu : Control
     playButton.Disabled = true;
   }
 
+  public override void _Process(double delta)
+  {
+    var peers = Multiplayer.GetPeers().ToList();
+
+    currentPlayers.Text = $"players: {peers.Count}\n" +
+                          string.Join("\n", peers.Select(id => $"ID {id}"));
+  }
 
   private void _on_button_back_local_pressed()
   {
@@ -44,6 +52,9 @@ public partial class LocalMenu : Control
 
   private void _on_join_button_pressed()
   {
+    string ipv4Pattern = @"^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$";
+    if (!Regex.IsMatch(ipIO.Text, ipv4Pattern)) return;
+
     NetworkManager.Instance.InitClient(ipIO.Text);
 
     // disable join and host button

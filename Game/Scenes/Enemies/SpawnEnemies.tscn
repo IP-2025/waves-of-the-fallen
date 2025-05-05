@@ -21,6 +21,7 @@ unique_name_in_owner = true
 position = Vector2(-936.728, -555.999)
 rotation = -1.55977
 progress = 9945.82
+cubic_interp = false
 
 [node name="SpawnTimer" type="Timer" parent="."]
 autostart = true

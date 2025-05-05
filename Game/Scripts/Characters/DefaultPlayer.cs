@@ -12,6 +12,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	[Export]
 	public int CurrentHealth { get; set; }
+	public long OwnerPeerId { get; set; }
 
 	public Node2D Joystick { get; set; }
 	private Camera2D camera;
@@ -23,7 +24,6 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public override void _Ready()
 	{
-		// TODO: why not delete default player and just use mage ? or implement the same speed and health to default player
 		var playerClass = new Ranger(); // Instantiate Mage
 		Speed = playerClass.Speed; // Override DefaultPlayer's Speed with Mage's Speed
 		MaxHealth = playerClass.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
@@ -43,7 +43,15 @@ public partial class DefaultPlayer : CharacterBody2D
 			{
 				weaponSlot.AddChild(weapon);
 				weapon.Position = Vector2.Zero;
+				// for multiplayer
+				ulong id = weapon.GetInstanceId();
+				weapon.Name = $"Weapon_{id}";
+				weapon.SetMeta("OwnerId", OwnerPeerId );
+				weapon.SetMeta("SlotIndex", weaponsEquipped);
+				Server.Instance.Entities.Add((long)id, weapon);
+
 				weaponsEquipped++;
+
 			}
 		}
 		else

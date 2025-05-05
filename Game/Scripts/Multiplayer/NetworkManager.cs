@@ -27,22 +27,12 @@ public partial class NetworkManager : Node
     private bool _gameRunning = false;
     private bool _readyForUdp = false;
     private Queue<Command> _incomingCommands = new();
-    private int _tick = 0;
+    private ulong _tick = 0;
     private double _acc = 0;
     private const float TICK_DELTA = 1f / 60f;
     private Timer shutdownTimer; // for headless server if no one is connected
     private const float ServerShutdownDelay = 30f; // seconds 
     public static NetworkManager Instance { get; private set; }
-
-    private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
-{
-    { "res://Scenes/Characters/default_player.tscn", EntityType.DefaultPlayer },
-    { "res://Scenes/Characters/archer.tscn", EntityType.Archer },
-    { "res://Scenes/Characters/default_enemy.tscn", EntityType.DefaultEnemy },
-    { "res://Scenes/Characters/ranged_enemy.tscn", EntityType.RangedEnemy }
-};
-
-
     private Client client;
     private Server server;
 
@@ -53,13 +43,37 @@ public partial class NetworkManager : Node
         // check if we are in headless server mode
         var args = OS.GetCmdlineArgs();
 
-        if (args.Contains("--server-mode") || args.Contains("--headless"))
+        if (args.Contains("--server-mode"))
         {
             DebugIt("Headless Server, call InitServer()");
             CallDeferred(nameof(InitServer));
         }
         GetTree().GetMultiplayer().PeerDisconnected += OnPeerDisconnected;
         StartAutoShutdownTimer();
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        if (!_readyForUdp) return;
+
+        // UDP Networking
+        if (_isHost)
+        {
+            _rpcServerPeer.Poll();
+            HandleServerUdp();
+            HandleClientUdp();
+        }
+        else if (_isServer)
+        {
+            HandleServerUdp();
+        }
+        else
+            HandleClientUdp();
+
+        if (!_gameRunning) return;
+
+        // fixed timestep game loop
+        HandleTickLoop(delta);
     }
 
     public void InitServer()
@@ -129,7 +143,7 @@ public partial class NetworkManager : Node
         DebugIt("Client connecting to: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + address);
     }
 
-    public void InitHost() // client and server for local multiplayer
+  /*   public void InitHost() // client and server for local multiplayer
     {
         _isHost = true;
 
@@ -191,7 +205,7 @@ public partial class NetworkManager : Node
         DebugIt("Host started (Server+Client) on localhost");
 
         _readyForUdp = true;
-    }
+    } */
 
     public void StartHeadlessServer(bool headless)
     {
@@ -228,7 +242,7 @@ public partial class NetworkManager : Node
         process.OutputDataReceived += (sender, args) =>
         {
             if (!string.IsNullOrEmpty(args.Data))
-                GD.Print("HEADLESS STDOUT: " + args.Data);
+                DebugIt("HEADLESS STDOUT: " + args.Data);
         };
         process.ErrorDataReceived += (sender, args) =>
         {
@@ -293,30 +307,6 @@ public partial class NetworkManager : Node
         {
             return false;
         }
-    }
-
-    public override void _PhysicsProcess(double delta)
-    {
-        if (!_readyForUdp) return;
-
-        // UDP Networking
-        if (_isHost)
-        {
-            _rpcServerPeer.Poll();
-            HandleServerUdp();
-            HandleClientUdp();
-        }
-        else if (_isServer)
-        {
-            HandleServerUdp();
-        }
-        else
-            HandleClientUdp();
-
-        if (!_gameRunning) return;
-
-        // fixed timestep game loop
-        HandleTickLoop(delta);
     }
 
     private void HandleServerUdp()
@@ -431,46 +421,10 @@ public partial class NetworkManager : Node
             Server.Instance.ProcessCommand(cmd);
         }
 
-        // serialize snapshot
-        var snap = new Snapshot(_tick);
-        var toRemove = new List<long>();
-        foreach (var kv in Server.Instance.Entities)
-        {
-            var node = kv.Value;
-            if (node == null || !IsInstanceValid(node))
-            {
-                toRemove.Add(kv.Key);
-                continue;
-            }
-
-            string scenePath = node.SceneFilePath;
-            var id = kv.Key;
-
-            if (!ScenePathToEntityType.TryGetValue(scenePath, out var entityType))
-            {
-                GD.PrintErr($"Unknown ScenePath: {scenePath}");
-            }
-            // Find WaveTimer as a child of the current camera
-            var cam = GetViewport().GetCamera2D();
-            var waveTimer = cam?.GetNode<WaveTimer>("WaveTimer");
-
-            // Get health
-            var healthNode = node.GetNodeOrNull<Health>("Health");
-            float health = healthNode.health;
-            snap.Entities.Add(new EntitySnapshot(id, node.Position, node.Rotation, health, entityType, waveTimer.waveCounter, waveTimer.secondCounter));
-        }
-
-        // remove invalid entities, for example killed enemies
-        foreach (var id in toRemove)
-        {
-            Server.Instance.Entities.Remove(id);
-        }
-
-        byte[] bytes = Serializer.Serialize(snap);
         // send snapshot to all clients
         foreach (var peer in _udpPeers)
         {
-            peer.PutPacket(bytes);
+            peer.PutPacket(Server.Instance.GetSnapshot(_tick));
         }
     }
 

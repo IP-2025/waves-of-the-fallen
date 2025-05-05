@@ -14,9 +14,24 @@ public class EntitySnapshot
 
     // Health
     public float Health;
+
+    // Weapons
+    public long? OwnerId;
+    public int? SlotIndex;
+
     public EntitySnapshot() { }
 
-    public EntitySnapshot(long id, Vector2 pos, float rot, float health, EntityType type, int waveCount = 0, float waveTimeLeft = 0)
+    public EntitySnapshot(
+        long id, 
+        Vector2 pos, 
+        float rot, 
+        float health, 
+        EntityType type, 
+        int waveCount = 0, 
+        float waveTimeLeft = 0, 
+        long? ownerId = null, 
+        int? slotIndex = null
+    )
     {
 
         NetworkId = id;
@@ -26,5 +41,7 @@ public class EntitySnapshot
         WaveCount = waveCount;
         WaveTimeLeft = waveTimeLeft;
         Health = health;
+        OwnerId = ownerId;
+        SlotIndex = slotIndex;
     }
 }
