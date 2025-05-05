@@ -17,6 +17,7 @@ public partial class LocalMenu : Control
   private Button hostButton;
   private Button playButton;
   private LineEdit ipIO;
+  private bool isHost = false;
   private RichTextLabel currentPlayers;
   //private ServerBootstrapping server;
 
@@ -36,10 +37,11 @@ public partial class LocalMenu : Control
 
   public override void _Process(double delta)
   {
+    if (!isHost) return;
+    
     var peers = Multiplayer.GetPeers().ToList();
 
-    currentPlayers.Text = $"players: {peers.Count}\n" +
-                          string.Join("\n", peers.Select(id => $"ID {id}"));
+    currentPlayers.Text = $"Players: {peers.Count}\n" + string.Join("\n", peers.Select(id => $"ID {id}"));
   }
 
   private void _on_button_back_local_pressed()
@@ -68,8 +70,8 @@ public partial class LocalMenu : Control
 
   private void _on_host_button_pressed()
   {
+    isHost = true;
     ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show server ip in input field
-
     NetworkManager.Instance.StartHeadlessServer(true);
 
     if (NetworkManager.Instance.IsPortOpen(NetworkManager.Instance.GetServerIPAddress(), NetworkManager.Instance.RPC_PORT, 500))

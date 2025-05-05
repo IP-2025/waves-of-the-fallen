@@ -13,7 +13,7 @@ public partial class SpawnEnemies : Node2D
 		timer = GetNode<Timer>("SpawnTimer");
 		timer.Timeout += OnTimerTimeout; // timer event connected
 		players = GetTree().GetMultiplayer().GetPeers().Count();
-		timer.WaitTime = timer.WaitTime / (players / players > 1 ? 2 : 1 ); // scale with players
+		timer.WaitTime = timer.WaitTime / players; // scale with players
 	}
 
 	private void OnTimerTimeout()
@@ -24,7 +24,7 @@ public partial class SpawnEnemies : Node2D
 	private void SpawnEnemy()
 	{
 		// scaling with players
-		if (GetTree().GetNodesInGroup("enemies").Count >= 30 * players)
+		if (GetTree().GetNodesInGroup("enemies").Count >= 30)
 			return; // limit reached, no more enemies
 
 		// random enemy type selection

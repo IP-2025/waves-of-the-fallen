@@ -31,7 +31,7 @@ public partial class NetworkManager : Node
     private double _acc = 0;
     private const float TICK_DELTA = 1f / 60f;
     private Timer shutdownTimer; // for headless server if no one is connected
-    private const float ServerShutdownDelay = 30f; // seconds 
+    private const float ServerShutdownDelay = 5f; // seconds 
     public static NetworkManager Instance { get; private set; }
     private Client client;
     private Server server;
@@ -47,9 +47,9 @@ public partial class NetworkManager : Node
         {
             DebugIt("Headless Server, call InitServer()");
             CallDeferred(nameof(InitServer));
+            StartAutoShutdownTimer();
         }
         GetTree().GetMultiplayer().PeerDisconnected += OnPeerDisconnected;
-        StartAutoShutdownTimer();
     }
 
     public override void _PhysicsProcess(double delta)
