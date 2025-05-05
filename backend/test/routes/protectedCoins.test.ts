@@ -32,7 +32,11 @@ beforeEach(async () => {
   expect(loginResponse.status).toBe(200); // Correct status for login
   validToken = loginResponse.body.token;
 
-  await AppDataSource.getRepository(UnlockedCharacter).insert({player_id: registeredPlayerId, character_id: '1', level: 1});
+  await AppDataSource.getRepository(UnlockedCharacter).insert({
+    player_id: registeredPlayerId,
+    character_id: '1',
+    level: 1,
+  });
 
 });
 
@@ -46,16 +50,16 @@ describe('POST /setGold', () => {
     const coinsResponse = await request(app)
       .post('/api/v1/protected/setGold')
       .send(param)
-      .set('Authorization', `Bearer ${validToken}`)
+      .set('Authorization', `Bearer ${validToken}`);
 
 
     expect(coinsResponse.status).toBe(200);
     expect(coinsResponse.body).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          gold: 0
+          gold: 0,
         }),
-      ])
+      ]),
     );
 
   });
@@ -66,18 +70,9 @@ describe('POST /getGold', () => {
     const coinsResponse = await request(app)
       .post('/api/v1/protected/getGold')
       .send(registeredPlayerId)
-      .set('Authorization', `Bearer ${validToken}`)
-
-
+      .set('Authorization', `Bearer ${validToken}`);
     expect(coinsResponse.status).toBe(200);
-    expect(coinsResponse.body).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          gold: 0
-        }),
-      ])
-    );
-
+    expect(coinsResponse.body).toEqual(0);
   });
 });
 
