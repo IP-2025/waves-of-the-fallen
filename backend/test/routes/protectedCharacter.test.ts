@@ -33,7 +33,6 @@ beforeEach(async () => {
         });
     expect(loginResponse.status).toBe(200); // Correct status for login
     validToken = loginResponse.body.token;
-   // TODO Set Unlocked Charcters
 
     await AppDataSource.getRepository(UnlockedCharacter).insert({player_id: registeredPlayerId, character_id: '1', level: 1});
 

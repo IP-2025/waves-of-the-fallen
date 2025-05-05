@@ -14,11 +14,11 @@ export const getGoldController: RequestHandler = async (req, res) => {
 
 export async function setGoldController(req: Request, res: Response, next: NextFunction) {
   try {
-    const { playerid, gold } = req.body;
-    if (!playerid || !gold) {
+    const { player_id, gold } = req.body;
+    if (!player_id || !gold) {
       throw new BadRequestError('Email or Password is required');
     }
-    await setGoldService(playerid, gold);
+    await setGoldService(player_id, gold);
     res.status(200);
   } catch (err) {
     res.status(500).send('Server error');
