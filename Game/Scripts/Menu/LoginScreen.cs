@@ -12,6 +12,7 @@ public partial class LoginScreen : Control
 	private Button _loginButton;
 	private Button _offlineButton;
 	private HttpRequest _httpRequest;
+	private HttpRequest _authRequest;
 	private Label _errorLabel;
 
 	public override void _Ready()
@@ -20,14 +21,42 @@ public partial class LoginScreen : Control
 		_passwordField = GetNode<LineEdit>("Panel/PasswordField");
 		_loginButton = GetNode<Button>("Panel/LoginButton");
 		_offlineButton = GetNode<Button>("Panel/OfflineButton");
-		_httpRequest = GetNode<HttpRequest>("Panel/HttpRequest");
+		_httpRequest = GetNode<HttpRequest>("Panel/LoginRequest");
+		_authRequest = GetNode<HttpRequest>("Panel/AuthRequest");
 		_errorLabel = GetNode<Label>("Panel/ErrorLabel");
 
 		_loginButton.Connect("pressed", new Callable(this, nameof(OnLoginButtonPressed)));
 		_offlineButton.Connect("pressed", new Callable(this, nameof(OnOfflineButtonPressed)));
 		_httpRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
+		_authRequest.Connect("request_completed",   new Callable(this, nameof(OnAuthRequestCompleted)));
+
 		
 		_errorLabel.Visible = false;
+		
+		var token = SecureStorage.LoadToken();
+		if (!string.IsNullOrEmpty(token))
+		{
+			var url = $"{Config.BaseUrl}/api/v1/protected/";
+			var headers = new[] { $"Authorization: Bearer {token}" };
+			var err = _authRequest.Request(url, headers, Godot.HttpClient.Method.Get);
+			if (err != Error.Ok)
+				GD.PrintErr($"AuthRequest error: {err}");
+		}
+	}
+	
+	private void OnAuthRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
+	{
+		// If our saved token is still valid, go straight to main menu:
+		if (responseCode == 200)
+		{
+			var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
+			GetTree().ChangeSceneToPacked(scene);
+		}
+		else
+		{
+			// invalid/expired token → stay on login screen
+			SecureStorage.DeleteToken();
+		}
 	}
 
 	private void OnOfflineButtonPressed()
@@ -102,6 +131,13 @@ public partial class LoginScreen : Control
 	{
 		GD.Print("Login successful!");
 		GD.Print("Token: " + data["token"].ToString());
+		
+		var prevToken = SecureStorage.LoadToken();
+		if(!string.IsNullOrEmpty(prevToken)){
+			SecureStorage.DeleteToken();
+		}
+		SecureStorage.SaveToken(data["token"].ToString());
+		
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
 		GetTree().ChangeSceneToPacked(scene);

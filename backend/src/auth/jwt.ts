@@ -17,7 +17,10 @@ export function verifyToken(token: string): string | null {
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
     return decoded.id as string;
-  } catch (error) {
+  } catch (error: any) {
+    if (error.name === 'TokenExpiredError') {
+      throw new UnauthorizedError('Token has expired');
+    }
     return null;
   }
 }
