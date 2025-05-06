@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {Player} from './Player';
 import {Character} from './Character';
 
@@ -8,11 +8,15 @@ export class UnlockedCharacter {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @ManyToOne(() => Player, (player) => player.player_id, { nullable: false,  onDelete: 'CASCADE' })
+  @OneToOne(() => Player)
+  @JoinColumn({ name: 'player_id' })
   player!: Player;
 
-  @ManyToOne(() => Character, (character) => character.character_id, { nullable: false,  onDelete: 'CASCADE' })
-  character!: Character;
+  @Column({
+    type: 'int',
+    nullable: false,
+  })
+  character_id!: number;
 
   @Column({
     type: 'int',

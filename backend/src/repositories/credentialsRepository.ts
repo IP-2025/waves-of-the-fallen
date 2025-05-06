@@ -1,8 +1,8 @@
-import { AppDataSource } from '../libs/data-source';
-import { Credential } from '../libs/entities/Credential';
-import { Player } from '../libs/entities/Player';
-import { v4 as uuidv4 } from 'uuid';
-import { BadRequestError, NotFoundError, ConflictError } from '../errors';
+import {AppDataSource} from '../libs/data-source';
+import {Credential} from '../libs/entities/Credential';
+import {Player} from '../libs/entities/Player';
+import {v4 as uuidv4} from 'uuid';
+import {BadRequestError, ConflictError, NotFoundError} from '../errors';
 
 const credentialsRepo = AppDataSource.getRepository(Credential);
 
@@ -34,8 +34,7 @@ export async function saveCredential(newCred: NewCred): Promise<Credential> {
 
     credential.player = player;
 
-    const savedCredential = await credentialsRepo.save(credential);
-    return savedCredential;
+    return await credentialsRepo.save(credential);
   } catch (error) {
     if (error instanceof Error && 'code' in error && error.code === '23505') {
       throw new ConflictError('Email already exists');
