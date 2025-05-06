@@ -1,8 +1,8 @@
 using Godot;
 
-public partial class Warrior : DefaultPlayer
+public partial class Knight : DefaultPlayer
 {
-	public Warrior()
+	public Knight()
 	{
 		MaxHealth = 200; 
 		Speed = 400.0f;  
