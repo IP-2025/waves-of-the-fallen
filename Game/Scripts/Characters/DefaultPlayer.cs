@@ -23,29 +23,42 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public override void _Ready()
 	{
-		// TODO: why not delete default player and just use mage ? or implement the same speed and health to default player
-		var playerClass = new Archer(); // Instantiate Mage
-		Speed = playerClass.Speed; // Override DefaultPlayer's Speed with Mage's Speed
-		MaxHealth = playerClass.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
-		CurrentHealth = playerClass.CurrentHealth; // Set CurrentHealth to Mage's CurrentHealth
-		GD.Print($"Assassin Speed applied: {Speed}, Assasin Health applied: {MaxHealth}");
+		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
+		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+
+		object playerClass = selectedCharacterId switch
+		{
+			1 => new Archer(),
+			2 => new Assassin(),
+			3 => new Knight(),
+			4 => new Mage(),
+			_ => new DefaultPlayer()
+		};
+
+		GD.Print($"Selected Character: {playerClass.GetType().Name}");
+
+		// Set attributes based on the selected class
+		if (playerClass is DefaultPlayer defaultPlayer)
+		{
+			Speed = defaultPlayer.Speed;
+			MaxHealth = defaultPlayer.MaxHealth;
+			CurrentHealth = defaultPlayer.MaxHealth;
+		}
 
 		AddToGroup("player");
 		CurrentHealth = MaxHealth;
 		Joystick = GetNode<Node2D>("Joystick");
-		
+
+		// Equip weapon for the selected class
 		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
-		
 		Area2D weapon = CreateWeaponForClass(playerClass);
-		
+
 		if (weapon != null)
 		{
 			weaponSlot.AddChild(weapon);
 			weapon.Position = Vector2.Zero;
 			weaponsEquipped++;
 		}
-		
-		
 	}
 
 	private Area2D CreateWeaponForClass(object playerClass)

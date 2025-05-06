@@ -12,10 +12,11 @@ public partial class Knight : DefaultPlayer
 	{
 		base._Ready();
 		CurrentHealth = MaxHealth;
+		GD.Print($"Knight _Ready called. Speed: {Speed}, MaxHealth: {MaxHealth}");
 	}
 
 	public override void UseAbility()
 	{
-		GD.Print("Platzhalter Fähigkeit Krieger");
+		GD.Print("Placeholder ability for Knight");
 	}
 }

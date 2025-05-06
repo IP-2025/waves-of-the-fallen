@@ -1,28 +1,28 @@
-[gd_scene load_steps=9 format=3 uid="uid://56x8ud47qho"]
+[gd_scene load_steps=9 format=3 uid="uid://ck57oq6miqlwo"]
 
-[ext_resource type="Script" uid="uid://c57f4u4nj7ffr" path="res://Scripts/Characters/Archer.cs" id="1_rpbpn"]
-[ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_3bcig"]
-[ext_resource type="Script" uid="uid://c7yits36f8kyt" path="res://Scripts/Characters/HealthBar.cs" id="3_ledbc"]
-[ext_resource type="Texture2D" uid="uid://m7etjj28i2o0" path="res://Assets/Characters/resources/ArcherCharacterPreview.png" id="4_uajqq"]
+[ext_resource type="Script" uid="uid://byr5typku6cs3" path="res://Scripts/Characters/assassin.cs" id="1_y3eth"]
+[ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_health"]
+[ext_resource type="Script" uid="uid://c7yits36f8kyt" path="res://Scripts/Characters/HealthBar.cs" id="3_healthbar"]
+[ext_resource type="Texture2D" uid="uid://btau8suv2nloy" path="res://Assets/Characters/resources/AssassinCharacterPreview.png" id="4_assassin_texture"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_assassin"]
 size = Vector2(25, 36.2188)
 
-[sub_resource type="LabelSettings" id="LabelSettings_8chs8"]
+[sub_resource type="LabelSettings" id="LabelSettings_assassin_health"]
 font_size = 21
 font_color = Color(0, 0, 0, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_31ney"]
+[sub_resource type="LabelSettings" id="LabelSettings_assassin_wave"]
 font_size = 21
 font_color = Color(0, 0, 0, 1)
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_tvdwm"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_assassin"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[node name="Archer" type="CharacterBody2D"]
-script = ExtResource("1_rpbpn")
+[node name="Assassin" type="CharacterBody2D"]
+script = ExtResource("1_y3eth")
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 
@@ -39,8 +39,7 @@ position = Vector2(25, 15)
 position = Vector2(-25, 15)
 
 [node name="Health" type="Node2D" parent="."]
-script = ExtResource("2_3bcig")
-max_health = 150.0
+script = ExtResource("2_health")
 
 [node name="HealthBar" type="ProgressBar" parent="Health"]
 offset_left = -318.0
@@ -48,7 +47,7 @@ offset_top = -174.0
 offset_right = -220.0
 offset_bottom = -147.0
 show_percentage = false
-script = ExtResource("3_ledbc")
+script = ExtResource("3_healthbar")
 metadata/_edit_use_anchors_ = true
 
 [node name="HealthLabel" type="Label" parent="Health/HealthBar"]
@@ -71,7 +70,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 15)
-shape = SubResource("RectangleShape2D_vh0fs")
+shape = SubResource("RectangleShape2D_assassin")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.75, 1.75)
@@ -87,7 +86,7 @@ offset_top = -148.0
 offset_right = 24.0
 offset_bottom = -90.0
 grow_horizontal = 2
-label_settings = SubResource("LabelSettings_8chs8")
+label_settings = SubResource("LabelSettings_assassin_health")
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -96,16 +95,16 @@ offset_left = -76.0
 offset_top = -192.0
 offset_right = 76.0
 offset_bottom = -134.0
-label_settings = SubResource("LabelSettings_31ney")
+label_settings = SubResource("LabelSettings_assassin_wave")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_tvdwm")
+replication_config = SubResource("SceneReplicationConfig_assassin")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
-texture = ExtResource("4_uajqq")
+texture = ExtResource("4_assassin_texture")
 
 [connection signal="HealthDepleted" from="Health" to="." method="_on_health_health_depleted"]
