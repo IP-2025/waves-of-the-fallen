@@ -5,6 +5,7 @@ import {
   insertAllCharacters,
 } from '../repositories/characterRepository';
 import fs from 'fs';
+import {unlockCharacter} from "../repositories/unlockedCharacterRepository";
 
 export async function innitAllCharacters(chars?: Character[]): Promise<void> {
   const characters = chars ?? readCharacters();
@@ -53,7 +54,11 @@ function readCharacters(): Character[] {
   }
   return toInsertList;
 }
-//TODO Implement Stuff
+
 export async function getAllUnlockedCharacters(id: any) {
   return await getAllUnlockedCharactersRepo(id);
+}
+
+export async function saveCharChanges(playerId: string, charId: number) {
+  await unlockCharacter(playerId, charId);
 }

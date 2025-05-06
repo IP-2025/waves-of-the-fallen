@@ -6,7 +6,7 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-  "mail": "test@mail.com",
+  "email": "test@mail.com",
   "username": "newUser",
   "password": "newPassword"
 }
@@ -16,8 +16,8 @@ POST http://localhost:3000/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "username": "testUser",
-  "password": "testPassword"
+  "email": "test@mail.com",
+  "password": "newPassword"
 }
 
 ###
@@ -31,4 +31,14 @@ Content-Type: application/json
 
 {
   "user_id": "D465D2FD-092C-40A6-945D-E29E99FA524A"
+}
+
+###
+
+POST http://localhost:3000/api/v1/protected/character/unlock
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMxMDUxOGIzLTYyMzgtNDgzMC1hZDFmLTI2NjExYzRkN2RjMiIsImlhdCI6MTc0NjU2NDY0OSwiZXhwIjoxNzQ3MTY5NDQ5fQ.NnnCxShR_8zXPoQ0Nn74XHfT5JfCyTUK3HT-20snFNg
+
+{
+  "character_id": "1"
 }
