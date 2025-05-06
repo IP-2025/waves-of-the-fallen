@@ -85,7 +85,7 @@ public partial class LoginScreen : Control
 		var err = _httpRequest.Request(
 			LoginUrl,
 			headers,
-			Godot.HttpClient.Method.Post,
+			HttpClient.Method.Post,
 			body
 		);
 

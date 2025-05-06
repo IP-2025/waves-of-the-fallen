@@ -4,7 +4,7 @@ using Godot;
 
 namespace Game.Scripts.Menu;
 
-public partial class CharacterMenu : Control
+public partial class Charactermenu : Control
 {
 	private CharacterManager _characterManager;
 	private Label _labelCharacterName;
@@ -43,22 +43,16 @@ public partial class CharacterMenu : Control
 
 
 	}
+
 	private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
 	{
 		var receivedString = Encoding.UTF8.GetString(body);
 		GD.Print("Antwort empfangen: " + receivedString);
-		var receivedVar = Json.ParseString(receivedString);
-		//allCharacters = receivedVar.AsGodotArray();
 
-
-		var selectedId = _characterManager.LoadLastSelectedCharacterID();
-		_currentlySelectedCharacter = GetNode<Button>($"%Button_Character{selectedId}");
-		_on_button_select_pressed();
-		
-		SetCharacterPageValuesFromFile($"{selectedId}");
+		GD.Print(responseCode == 200 ? "Character unlocked" : "Error unlocking character");
 	}
 
-	
+
 	// set stats and name to values from file (see CharacterManager.cs)
 	private void SetCharacterPageValuesFromFile(string characterId)
 	{
@@ -153,8 +147,19 @@ public partial class CharacterMenu : Control
 		{
 			_characterManager.UpgradeCharacter(characterId);
 			
+			
+		}else
+		{
+			_characterManager.SetUnlocked(characterId);
+			_buttonUpgradeUnlock.Text = "Upgrade";
+			_buttonSelect.Show();
+			var icon=_currentlySelectedCharacter.GetNode<TextureRect>("TextureRect");
+			icon.Material=null;
+			
+			GD.Print("unlcoked char local");
 			if (GameState.CurrentState == ConnectionState.Online)
 			{
+				GD.Print("try to unlock char online");
 				var body = Json.Stringify(new Godot.Collections.Dictionary
 				{
 					{ "character_id", characterId }
@@ -177,14 +182,6 @@ public partial class CharacterMenu : Control
 				if (err != Error.Ok)
 					GD.PrintErr($"AuthRequest error: {err}");
 			}
-			
-		}else
-		{
-			_characterManager.SetUnlocked(characterId);
-			_buttonUpgradeUnlock.Text = "Upgrade";
-			_buttonSelect.Show();
-			var icon=_currentlySelectedCharacter.GetNode<TextureRect>("TextureRect");
-			icon.Material=null;
 		}
 		SetCharacterPageValuesFromFile(characterId);
 

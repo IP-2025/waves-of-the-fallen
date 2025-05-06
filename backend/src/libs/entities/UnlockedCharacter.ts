@@ -1,6 +1,5 @@
-import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
 import {Player} from './Player';
-import {Character} from './Character';
 
 @Entity()
 export class UnlockedCharacter {
@@ -8,7 +7,7 @@ export class UnlockedCharacter {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @OneToOne(() => Player)
+  @ManyToOne(() => Player)
   @JoinColumn({ name: 'player_id' })
   player!: Player;
 
