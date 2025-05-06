@@ -24,7 +24,11 @@ public partial class Health : Node2D
 		if(!GetParent().Name.ToString().Contains("Player")) 
 		{
 			//Debug.Print(GetParent().Name);
-			SoundManager.Instance.PlaySFX(GD.Load<AudioStream>("res://Assets/Sounds/test.wav"));
+			Node2D entity = (Node2D)GetParent();
+			SoundManager.Instance.PlaySoundAtPosition(GD.Load<AudioStream>("res://Assets/Sounds/test.wav"), entity.Position);
+			//SoundManager.Instance.PlaySFX(GD.Load<AudioStream>("res://Assets/Sounds/test.wav"));
+			
+			
 			//EmitSignal(SignalName.EnemyDamage);
 			/*var player = GetNode<AudioStreamPlayer2D>("EnemyHurt");
 			Debug.Print("hit");

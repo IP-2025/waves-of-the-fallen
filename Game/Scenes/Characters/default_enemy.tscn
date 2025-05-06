@@ -41,5 +41,7 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
 shape = SubResource("CircleShape2D_6cefa")
 
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
 [connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]

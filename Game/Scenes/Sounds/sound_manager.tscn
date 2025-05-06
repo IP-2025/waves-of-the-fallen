@@ -9,3 +9,4 @@ script = ExtResource("1_1u08g")
 [node name="EnemyHurt" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_olkkv")
 volume_db = -6.003
+bus = &"SoundEffectBus"

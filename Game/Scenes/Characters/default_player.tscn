@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bdkp0e6ivq2b5" path="res://Scripts/Characters/DefaultPlayer.cs" id="1_y2kgl"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_kjvlq"]
 [ext_resource type="PackedScene" uid="uid://56x8ud47qho" path="res://Scenes/Characters/archer.tscn" id="3_kjvlq"]
-[ext_resource type="PackedScene" path="res://Scenes/Weapons/bow.tscn" id="5_jig1i"]
+[ext_resource type="PackedScene" uid="uid://blhx5vv32isw5" path="res://Scenes/Weapons/bow.tscn" id="5_jig1i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2kgl"]
 size = Vector2(25, 36.2188)
@@ -65,3 +65,6 @@ vertical_alignment = 1
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_kjvlq")
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+current = true
