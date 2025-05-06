@@ -4,6 +4,7 @@
 *.csproj.DotSettings
 *.import
 *.export
+*.uid
 export.cfg
 export_presets.cfg
 .mono/
