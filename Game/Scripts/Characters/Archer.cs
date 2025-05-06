@@ -13,22 +13,15 @@ public partial class Archer : DefaultPlayer
 		base._Ready();
 
 		// Synchronize MaxHealth with the Health node
-		var healthNode = GetNodeOrNull<Health>("Health");
-		if (healthNode != null)
-		{
-			healthNode.max_health = MaxHealth; // Set the max_health value in the Health node
-			healthNode.ResetHealth(); // Reset current health to max_health
-		}
-		else
-		{
-			GD.PrintErr("Health node not found on Archer!");
-		}
+		var healthNode = GetNode<Health>("Health");
+		healthNode.max_health = MaxHealth; // Set the max_health value in the Health node
+		healthNode.ResetHealth(); // Reset current health to max_health
 
 		GD.Print($"Archer initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
 	}
 
 	public override void UseAbility()
 	{
-		GD.Print("Platzhsalter Fähigkeit Ranger");
+		GD.Print("Platzhalter Fähigkeit Ranger");
 	}
 }
