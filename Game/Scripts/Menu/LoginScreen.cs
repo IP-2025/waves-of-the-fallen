@@ -3,7 +3,7 @@ using Game.Scripts.Config;
 
 public partial class LoginScreen : Control
 {
-	private static readonly string LOGIN_URL = $"{Server.BaseUrl}/api/v1/auth/login";
+	private const string LoginUrl = $"{Server.BaseUrl}/api/v1/auth/login";
 
 	private LineEdit _emailField;
 	private LineEdit _passwordField;
@@ -32,14 +32,12 @@ public partial class LoginScreen : Control
 		_errorLabel.Visible = false;
 		
 		var token = SecureStorage.LoadToken();
-		if (!string.IsNullOrEmpty(token))
-		{
-			var url = $"{Server.BaseUrl}/api/v1/protected/";
-			var headers = new[] { $"Authorization: Bearer {token}" };
-			var err = _authRequest.Request(url, headers, Godot.HttpClient.Method.Get);
-			if (err != Error.Ok)
-				GD.PrintErr($"AuthRequest error: {err}");
-		}
+		if (string.IsNullOrEmpty(token)) return;
+		const string url = $"{Server.BaseUrl}/api/v1/protected/";
+		var headers = new[] { $"Authorization: Bearer {token}" };
+		var err = _authRequest.Request(url, headers, Godot.HttpClient.Method.Get);
+		if (err != Error.Ok)
+			GD.PrintErr($"AuthRequest error: {err}");
 	}
 	
 	private void OnAuthRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
@@ -67,8 +65,8 @@ public partial class LoginScreen : Control
 
 	private void OnLoginButtonPressed()
 	{
-		string email = _emailField.Text.Trim();
-		string password = _passwordField.Text;
+		var email = _emailField.Text.Trim();
+		var password = _passwordField.Text;
 
 		if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
 		{
@@ -76,7 +74,7 @@ public partial class LoginScreen : Control
 			return;
 		}
 
-		string body = Json.Stringify(new Godot.Collections.Dictionary
+		var body = Json.Stringify(new Godot.Collections.Dictionary
 		{
 			{ "email", email },
 			{ "password", password }
@@ -85,7 +83,7 @@ public partial class LoginScreen : Control
 		// Send POST request
 		var headers = new[] { "Content-Type: application/json" };
 		var err = _httpRequest.Request(
-			LOGIN_URL,
+			LoginUrl,
 			headers,
 			Godot.HttpClient.Method.Post,
 			body
@@ -101,28 +99,30 @@ public partial class LoginScreen : Control
 	{
 		_loginButton.Disabled = false;
 
-		if (responseCode == 200)
+		switch (responseCode)
 		{
-			string bodyText = System.Text.Encoding.UTF8.GetString(body);
+			case 200:
+			{
+				var bodyText = System.Text.Encoding.UTF8.GetString(body);
 
-		 	var json = new Json();
-		 	var parseErr = json.Parse(bodyText);
-		 	if (parseErr == Error.Ok)
-		 	{
-				var response = json.GetData().AsGodotDictionary();
-		 		OnLoginSuccess(response);
-		 		return;
-		 	}
+				var json = new Json();
+				var parseErr = json.Parse(bodyText);
+				if (parseErr == Error.Ok)
+				{
+					var response = json.GetData().AsGodotDictionary();
+					OnLoginSuccess(response);
+					return;
+				}
 
-		 	ShowError("Unexpected server response.");
-		}
-		else if (responseCode == 401)
-		{
-			ShowError("Invalid credentials.");
-		}
-		else
-		{
-			ShowError($"Server error: {responseCode}");
+				ShowError("Unexpected server response.");
+				break;
+			}
+			case 401:
+				ShowError("Invalid credentials.");
+				break;
+			default:
+				ShowError($"Server error: {responseCode}");
+				break;
 		}
 	}
 

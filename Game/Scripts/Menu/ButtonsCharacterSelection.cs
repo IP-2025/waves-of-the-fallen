@@ -3,7 +3,7 @@ using System;
 
 public partial class ButtonsCharacterSelection : Button
 {
-	private Charactermenu _controller;
+	private Game.Scripts.Menu.CharacterMenu _controller;
 	private Shader _blackAndWhiteShader;
 	private CharacterManager characterManager;
 
@@ -17,9 +17,9 @@ public partial class ButtonsCharacterSelection : Button
 		Node node = GetParent();
 		while (_controller == null && node != null)
 		{
-			if (node is Charactermenu)
+			if (node is Game.Scripts.Menu.CharacterMenu)
 			{
-				_controller = (Charactermenu)node;
+				_controller = (Game.Scripts.Menu.CharacterMenu)node;
 				break;
 			}
 			node = node.GetParent();
