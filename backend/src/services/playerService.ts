@@ -7,7 +7,5 @@ export async function getGoldService(id: string): Promise<number> {
 }
 
 export async function setGoldService(id: string, gold: number): Promise<void> {
-
-  return setGoldRepository(id, gold);
-
+  return await setGoldRepository(id, gold);
 }

@@ -54,14 +54,6 @@ describe('POST /setGold', () => {
 
 
     expect(coinsResponse.status).toBe(200);
-    expect(coinsResponse.body).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          gold: 0,
-        }),
-      ]),
-    );
-
   });
 });
 

@@ -57,12 +57,11 @@ export async function getGoldRepository(playerId: string): Promise<number> {
 
 export async function setGoldRepository(playerId: string, gold: number): Promise<void> {
   try {
-    const player = await playersRepo.findOneBy({ player_id: playerId });
-    if (!player) {
+    const result = await playersRepo.update({ player_id: playerId }, { gold });
+    if (result.affected === 0) {
       throw new InternalServerError('Player not found');
     }
-    player.gold = gold;
-    await playersRepo.save(player);
+    logger.debug(`Gold updated for player_id: ${playerId}, new gold: ${gold}`);
   } catch (error) {
     logger.error('Error setting gold: ', error);
     throw new InternalServerError('Error setting gold');
