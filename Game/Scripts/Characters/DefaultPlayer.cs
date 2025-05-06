@@ -24,7 +24,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	public override void _Ready()
 	{
 		// TODO: why not delete default player and just use mage ? or implement the same speed and health to default player
-		var playerClass = new Ranger(); // Instantiate Mage
+		var playerClass = new Archer(); // Instantiate Mage
 		Speed = playerClass.Speed; // Override DefaultPlayer's Speed with Mage's Speed
 		MaxHealth = playerClass.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
 		CurrentHealth = playerClass.CurrentHealth; // Set CurrentHealth to Mage's CurrentHealth
@@ -50,11 +50,11 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	private Area2D CreateWeaponForClass(object playerClass)
 	{
-		if (playerClass is Ranger)
+		if (playerClass is Archer)
 			return BowScene.Instantiate() as Area2D;
-    
+	
 		// if (playerClass is Mage) return FireStaffScene.Instantiate() as Area2D;
-    
+	
 		return null;
 	}
 	

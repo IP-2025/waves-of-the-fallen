@@ -1,8 +1,8 @@
 using Godot;
 
-public partial class Ranger : DefaultPlayer
+public partial class Archer : DefaultPlayer
 {
-	public Ranger()
+	public Archer()
 	{
 		MaxHealth = 150;
 		Speed = 500.0f;  
