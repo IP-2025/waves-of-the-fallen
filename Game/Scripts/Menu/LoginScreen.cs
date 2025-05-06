@@ -1,11 +1,9 @@
 using Godot;
-using System;
-using Godot.Collections;
-using WavesOfTheFallen;
+using Game.Scripts.Config;
 
 public partial class LoginScreen : Control
 {
-	private static readonly string LOGIN_URL = $"{Config.BaseUrl}/api/v1/auth/login";
+	private static readonly string LOGIN_URL = $"{Server.BaseUrl}/api/v1/auth/login";
 
 	private LineEdit _emailField;
 	private LineEdit _passwordField;
@@ -36,7 +34,7 @@ public partial class LoginScreen : Control
 		var token = SecureStorage.LoadToken();
 		if (!string.IsNullOrEmpty(token))
 		{
-			var url = $"{Config.BaseUrl}/api/v1/protected/";
+			var url = $"{Server.BaseUrl}/api/v1/protected/";
 			var headers = new[] { $"Authorization: Bearer {token}" };
 			var err = _authRequest.Request(url, headers, Godot.HttpClient.Method.Get);
 			if (err != Error.Ok)
@@ -61,6 +59,7 @@ public partial class LoginScreen : Control
 
 	private void OnOfflineButtonPressed()
 	{
+		GameState.CurrentState = ConnectionState.Offline;
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
 		GetTree().ChangeSceneToPacked(scene);
@@ -116,15 +115,15 @@ public partial class LoginScreen : Control
 		 	}
 
 		 	ShowError("Unexpected server response.");
-		 }
-		 else if (responseCode == 401)
-		 {
-		 	ShowError("Invalid credentials.");
-		 }
-		 else
-		 {
-		 	ShowError($"Server error: {responseCode}");
-		 }
+		}
+		else if (responseCode == 401)
+		{
+			ShowError("Invalid credentials.");
+		}
+		else
+		{
+			ShowError($"Server error: {responseCode}");
+		}
 	}
 
 	private void OnLoginSuccess(Godot.Collections.Dictionary data)
