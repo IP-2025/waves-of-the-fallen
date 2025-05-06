@@ -23,6 +23,8 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public override void _Ready()
 	{
+		base._Ready();
+
 		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
 
@@ -48,6 +50,18 @@ public partial class DefaultPlayer : CharacterBody2D
 		AddToGroup("player");
 		CurrentHealth = MaxHealth;
 		Joystick = GetNode<Node2D>("Joystick");
+
+		 // Synchronize MaxHealth with the Health node
+		var healthNode = GetNodeOrNull<Health>("Health");
+		if (healthNode != null)
+		{
+			healthNode.max_health = MaxHealth;
+			healthNode.ResetHealth(); // Reset health to max_health
+		}
+		else
+		{
+			GD.PrintErr("Health node not found!");
+		}
 
 		// Equip weapon for the selected class
 		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;

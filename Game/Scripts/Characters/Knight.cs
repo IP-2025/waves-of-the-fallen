@@ -12,13 +12,12 @@ public partial class Knight : DefaultPlayer
 	{
 		base._Ready();
 
+		// Synchronize MaxHealth with the Health node
 		var healthNode = GetNodeOrNull<Health>("Health");
 		if (healthNode != null)
 		{
-			GD.Print($"Before sync: Health Node MaxHealth: {healthNode.max_health}, Knight MaxHealth: {MaxHealth}");
-			healthNode.max_health = MaxHealth;
-			healthNode.ResetHealth();
-			GD.Print($"After sync: Health Node MaxHealth: {healthNode.max_health}, CurrentHealth: {healthNode.CurHealth}");
+			healthNode.max_health = MaxHealth; // Set the max_health value in the Health node
+			healthNode.ResetHealth(); // Reset current health to max_health
 		}
 		else
 		{
