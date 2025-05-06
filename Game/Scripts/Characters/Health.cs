@@ -36,4 +36,9 @@ public partial class Health : Node2D
 			EmitSignal(SignalName.HealthDepleted); // emit signal when health is depleted
 		}
 	}
+
+	public void ResetHealth()
+	{
+		health = max_health;
+	}
 }
