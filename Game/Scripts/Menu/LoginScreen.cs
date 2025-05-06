@@ -55,7 +55,7 @@ public partial class LoginScreen : Control
 		else
 		{
 			// invalid/expired token → stay on login screen
-			SecureStorageAES.ClearToken();
+			SecureStorageAES.DeleteToken();
 		}
 	}
 
