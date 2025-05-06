@@ -131,6 +131,13 @@ public partial class LoginScreen : Control
 	{
 		GD.Print("Login successful!");
 		GD.Print("Token: " + data["token"].ToString());
+		
+		var prevToken SecureStorage.Instance().LoadToken();
+		if(!string.IsNullOrEmpty(prevToken)){
+			SecureStorage.Instance().DeleteToken();
+		}
+		SecureStorage.Instance().SaveToken(data["token"]);
+		
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
 		GetTree().ChangeSceneToPacked(scene);
