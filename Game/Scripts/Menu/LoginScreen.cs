@@ -55,7 +55,7 @@ public partial class LoginScreen : Control
 		else
 		{
 			// invalid/expired token → stay on login screen
-			SecureStorageAES.DeleteToken();
+			SecureStorage.DeleteToken();
 		}
 	}
 
@@ -132,11 +132,11 @@ public partial class LoginScreen : Control
 		GD.Print("Login successful!");
 		GD.Print("Token: " + data["token"].ToString());
 		
-		var prevToken SecureStorage.Instance().LoadToken();
+		var prevToken = SecureStorage.LoadToken();
 		if(!string.IsNullOrEmpty(prevToken)){
-			SecureStorage.Instance().DeleteToken();
+			SecureStorage.DeleteToken();
 		}
-		SecureStorage.Instance().SaveToken(data["token"]);
+		SecureStorage.SaveToken(data["token"].ToString());
 		
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");

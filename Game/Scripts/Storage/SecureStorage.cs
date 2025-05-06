@@ -1,62 +1,72 @@
-// SecureStorage.cs
+#nullable disable
 using Godot;
 using System;
 
-public partial class SecureStorage : Node
+public static class SecureStorage
 {
-	private const string TokenPath = "user://token.txt";
-	private string _cachedToken = null;
+	private const string TokenFileName = "token.txt";
+	private const string TokenPath     = "user://" + TokenFileName;
+	private static string _cachedToken;
 
-	public bool SaveToken(string token)
+	public static bool SaveToken(string token)
 	{
-		var file = new File();
-		var err = file.Open(TokenPath, File.ModeFlags.Write);
-		if (err != Error.Ok)
+		try
 		{
-			GD.PrintErr($"SecureStorage: Cannot open to write: {err}");
+			using var file = FileAccess.Open(TokenPath, FileAccess.ModeFlags.Write);
+			file.StoreString(token);
+			_cachedToken = token;
+			return true;
+		}
+		catch (Exception e)
+		{
+			GD.PrintErr($"SecureStorage: write error: {e.Message}");
 			return false;
 		}
-		file.StoreString(token);
-		file.Close();
-		_cachedToken = token;
-		return true;
 	}
 
-	public string LoadToken()
+	public static string LoadToken()
 	{
 		if (_cachedToken != null)
 			return _cachedToken;
 
-		var file = new File();
-		if (!file.FileExists(TokenPath))
-			return null;
+		if (!FileAccess.FileExists(TokenPath))
+			return null;  // null is allowed because nullable is disabled
 
-		var err = file.Open(TokenPath, File.ModeFlags.Read);
-		if (err != Error.Ok)
+		try
 		{
-			GD.PrintErr($"SecureStorage: Cannot open to read: {err}");
+			using var file = FileAccess.Open(TokenPath, FileAccess.ModeFlags.Read);
+			var token = file.GetAsText().Trim();
+			_cachedToken = token;
+			return token;
+		}
+		catch (Exception e)
+		{
+			GD.PrintErr($"SecureStorage: read error: {e.Message}");
 			return null;
 		}
-		var token = file.GetAsText().Trim();
-		file.Close();
-		_cachedToken = token;
-		return token;
 	}
 
-	public bool DeleteToken()
+	public static bool DeleteToken()
 	{
-		var file = new File();
-		if (file.FileExists(TokenPath))
+		try
 		{
-			var err = file.Remove(TokenPath);
-			if (err != Error.Ok)
+			var dir = DirAccess.Open("user://");
+			if (dir.FileExists(TokenFileName))
 			{
-				GD.PrintErr($"SecureStorage: Failed to delete: {err}");
-				return false;
+				var err = dir.Remove(TokenFileName);
+				if (err != Error.Ok)
+				{
+					GD.PrintErr($"SecureStorage: delete error: {err}");
+					return false;
+				}
 			}
+			_cachedToken = null;
+			return true;
 		}
-		_cachedToken = null;
-		return true;
+		catch (Exception e)
+		{
+			GD.PrintErr($"SecureStorage: delete exception: {e.Message}");
+			return false;
+		}
 	}
-
 }
