@@ -54,7 +54,9 @@ offset_right = 626.0
 offset_bottom = 551.0
 text = "Log In"
 
-[node name="HttpRequest" type="HTTPRequest" parent="Panel"]
+[node name="AuthRequest" type="HTTPRequest" parent="Panel"]
+
+[node name="LoginRequest" type="HTTPRequest" parent="Panel"]
 
 [node name="OfflineButton" type="Button" parent="Panel"]
 layout_mode = 0
