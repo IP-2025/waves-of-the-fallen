@@ -16,7 +16,6 @@ public partial class SpawnEnemies : Node2D
 	private int enemyLimitIncrease = 10; // how much the enemyLimit increases per wave
 	private const int EnemyLimitMax = 30; // the maximum the enemy limit can reach
 	public DefaultPlayer Player { get; set; } // player instance 
-	private Timer timer;
 	private int players;
 
 	public override void _Ready()
@@ -29,11 +28,25 @@ public partial class SpawnEnemies : Node2D
 		foreach (KeyValuePair<PackedScene, float> pattern in patternPool)
 			Debug.Print("Pattern loaded: " + pattern.Key.Instantiate<Node2D>().SceneFilePath.GetFile() + " with spawningCost: " + pattern.Value);
 
-		waveTimer = GetTree().Root.GetNode<WaveTimer>("GameRoot/WaveTimer"); // loads waveTimer for current wave
+		waveTimer = FindNodeByType<WaveTimer>(GetTree().Root);
+		//waveTimer = GetTree().Root.GetNode<WaveTimer>("GameRoot/WaveTimer"); // loads waveTimer for current wave
 		waveTimer.WaveEnded += OnWaveEnd;
 		currentWave = waveTimer.waveCounter;
 
 		enemyLimit = Math.Min(enemyLimitIncrease * currentWave, EnemyLimitMax); // sets enemy limit, so a custom starting wave can be used at the beginning
+	}
+
+	private T FindNodeByType<T>(Node parent) where T : Node
+	{
+		foreach (Node child in parent.GetChildren())
+		{
+			if (child is T t)
+				return t;
+			var found = FindNodeByType<T>(child);
+			if (found != null)
+				return found;
+		}
+		return null;
 	}
 
 	private void OnTimerTimeout()
