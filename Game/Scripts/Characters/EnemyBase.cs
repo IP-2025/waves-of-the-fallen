@@ -13,9 +13,9 @@ public abstract partial class EnemyBase : CharacterBody2D
 	protected float attackCooldown;
 	protected float timeUntilAttack;
 	protected bool withinAttackRange = false;
-	protected AnimatedSprite2D animation;
-	protected enum EnemyAnimationState { IdleOrWalk, Attack, Hit, Die }
-	protected EnemyAnimationState currentState = EnemyAnimationState.IdleOrWalk;
+	
+	private AnimationHandler animationHandler;
+	private AnimatedSprite2D animation;
 
 	public abstract void Attack(); 
 
@@ -27,13 +27,18 @@ public abstract partial class EnemyBase : CharacterBody2D
 		if (animationPath != null)
 		{
 			animation = GetNode<AnimatedSprite2D>(animationPath);
-			animation.AnimationFinished += OnAnimationFinished;
+			animationHandler = new AnimationHandler(animation);
+			animationHandler.OnDeathAnimationFinished += () => QueueFree();
+		}
+		else
+		{
+			GD.PushError($"{Name} has no animationPath set!");
 		}
 	}
 
 	public override void _Process(double delta)
 	{
-		if (currentState == EnemyAnimationState.Die)
+		if (animationHandler.IsDying)
 		{
 			Velocity = Vector2.Zero;
 			MoveAndSlide();
@@ -68,10 +73,10 @@ public abstract partial class EnemyBase : CharacterBody2D
 			timeUntilAttack -= (float)delta;
 		}
 		
-		HandleMovement(direction);
+		HandleMovement(direction.Normalized());
 		MoveAndSlide();
-		// For choosing right animation:
-		UpdateAnimationState();
+		// Update Animations
+		animationHandler.UpdateAnimationState(withinAttackRange, Velocity);
 	}
 	
 	protected virtual void HandleMovement(Vector2 direction)
@@ -99,6 +104,17 @@ public abstract partial class EnemyBase : CharacterBody2D
 		}
 	}
 	
+	public void OnHit()
+	{
+		animationHandler.SetHit();
+	}
+
+	public void OnDeath()
+	{
+		Velocity = Vector2.Zero;
+		animationHandler.SetDeath();
+	}
+	
 	protected void FindNearestPlayer()
 	{
 		float closestDist = float.MaxValue;
@@ -117,96 +133,5 @@ public abstract partial class EnemyBase : CharacterBody2D
 		}
 
 		player = closestPlayer;
-	}
-	
-	/// Animation stuff
-	
-	protected void PlayIfNotPlaying(string animName)
-	{
-		if (animation.Animation != animName)
-		{
-			animation.Play(animName);
-		}	
-	}
-	
-	protected void PlayWalkOrIdle()
-	{
-		if (Velocity.Length() > 0.1f)
-		{
-			PlayIfNotPlaying("walk");
-		}
-		else
-		{
-			PlayIfNotPlaying("idle");
-		}
-	}
-	
-	public virtual void OnHit()
-	{
-		if (currentState == EnemyAnimationState.Die)
-		{
-			return;
-		}
-			
-		currentState = EnemyAnimationState.Hit;
-		PlayIfNotPlaying("hit");
-	}
-
-	public virtual void OnDeath()
-	{
-		if (currentState == EnemyAnimationState.Die)
-		{
-			return;
-		}
-			
-		currentState = EnemyAnimationState.Die;
-		Velocity = Vector2.Zero; 
-		PlayIfNotPlaying("death");
-	}
-	
-	protected virtual void OnAnimationFinished()
-	{
-		if (animation.Animation == "hit")
-		{
-			currentState = EnemyAnimationState.IdleOrWalk;
-		}
-		else if (animation.Animation == "death")
-		{
-			QueueFree(); 
-		}
-	}
-	
-	protected void HandleAnimations()
-	{
-		switch (currentState)
-		{
-			case EnemyAnimationState.Die:
-			case EnemyAnimationState.Hit:
-				break;
-			case EnemyAnimationState.Attack:
-				PlayIfNotPlaying("attack");
-				break;
-			case EnemyAnimationState.IdleOrWalk:
-				PlayWalkOrIdle();
-				break;
-		}
-	}
-	
-	protected void UpdateAnimationState()
-	{
-		if (currentState == EnemyAnimationState.Hit || currentState == EnemyAnimationState.Die)
-		{
-			return;
-		}
-		
-		if (withinAttackRange)
-		{
-			currentState = EnemyAnimationState.Attack;
-		}
-		else
-		{
-			currentState = EnemyAnimationState.IdleOrWalk;
-		}
-		HandleAnimations();
 	}
 }
