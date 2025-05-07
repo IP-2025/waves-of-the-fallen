@@ -7,7 +7,9 @@ public abstract partial class EnemyBase : CharacterBody2D
 	[Export] public float speed = 200f;
 	[Export] public float damage = 10f;
 	[Export] public float attacksPerSecond = 1.5f;
-
+	[Export] private NodePath animationPath;
+	
+	protected AnimatedSprite2D animation;
 	public DefaultPlayer player { get; set; }
 	protected float attackCooldown;
 	protected float timeUntilAttack;
@@ -17,6 +19,11 @@ public abstract partial class EnemyBase : CharacterBody2D
 	{
 		attackCooldown = 1f / attacksPerSecond;
 		timeUntilAttack = attackCooldown;
+		
+		if (animationPath != null)
+		{
+			animation = GetNode<AnimatedSprite2D>(animationPath);
+		}
 	}
 
 	public override void _Process(double delta)
@@ -71,6 +78,26 @@ public abstract partial class EnemyBase : CharacterBody2D
 		}
 
 		player = closestPlayer;
+	}
+	
+	protected void PlayIfNotPlaying(string animName)
+	{
+		if (animation.Animation != animName)
+		{
+			animation.Play(animName);
+		}	
+	}
+	
+	protected void PlayWalkOrIdle()
+	{
+		if (Velocity.Length() > 0.1f)
+		{
+			PlayIfNotPlaying("walk");
+		}
+		else
+		{
+			PlayIfNotPlaying("idle");
+		}
 	}
 
 }
