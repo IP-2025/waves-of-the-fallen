@@ -9,11 +9,13 @@ public abstract partial class EnemyBase : CharacterBody2D
 	[Export] public float attacksPerSecond = 1.5f;
 	[Export] private NodePath animationPath;
 	
-	protected AnimatedSprite2D animation;
 	public DefaultPlayer player { get; set; }
 	protected float attackCooldown;
 	protected float timeUntilAttack;
 	protected bool withinAttackRange = false;
+	protected AnimatedSprite2D animation;
+	protected enum EnemyAnimationState { IdleOrWalk, Attack, Hit, Die }
+	protected EnemyAnimationState currentState = EnemyAnimationState.IdleOrWalk;
 
 	public override void _Ready()
 	{
@@ -23,6 +25,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 		if (animationPath != null)
 		{
 			animation = GetNode<AnimatedSprite2D>(animationPath);
+			animation.AnimationFinished += OnAnimationFinished;
 		}
 	}
 
@@ -80,6 +83,8 @@ public abstract partial class EnemyBase : CharacterBody2D
 		player = closestPlayer;
 	}
 	
+	/// Animation stuff
+	
 	protected void PlayIfNotPlaying(string animName)
 	{
 		if (animation.Animation != animName)
@@ -97,6 +102,57 @@ public abstract partial class EnemyBase : CharacterBody2D
 		else
 		{
 			PlayIfNotPlaying("idle");
+		}
+	}
+	
+	public virtual void OnHit()
+	{
+		if (currentState == EnemyAnimationState.Die)
+		{
+			return;
+		}
+			
+		currentState = EnemyAnimationState.Hit;
+		PlayIfNotPlaying("hit");
+	}
+
+	public virtual void OnDeath()
+	{
+		if (currentState == EnemyAnimationState.Die)
+		{
+			return;
+		}
+			
+		currentState = EnemyAnimationState.Die;
+		Velocity = Vector2.Zero; 
+		PlayIfNotPlaying("death");
+	}
+	
+	protected virtual void OnAnimationFinished()
+	{
+		if (animation.Animation == "hit")
+		{
+			currentState = EnemyAnimationState.IdleOrWalk;
+		}
+		else if (animation.Animation == "death")
+		{
+			QueueFree(); 
+		}
+	}
+	
+	protected void HandleAnimations()
+	{
+		switch (currentState)
+		{
+			case EnemyAnimationState.Die:
+			case EnemyAnimationState.Hit:
+				break;
+			case EnemyAnimationState.Attack:
+				PlayIfNotPlaying("attack");
+				break;
+			case EnemyAnimationState.IdleOrWalk:
+				PlayWalkOrIdle();
+				break;
 		}
 	}
 

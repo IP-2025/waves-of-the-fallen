@@ -20,14 +20,19 @@ public partial class BasicEnemy : EnemyBase
 
 		MoveAndSlide();
 		
-		if (withinAttackRange)
+		if (currentState != EnemyAnimationState.Hit && currentState != EnemyAnimationState.Die)
 		{
-			PlayIfNotPlaying("attack");
+			if (withinAttackRange)
+			{
+				currentState = EnemyAnimationState.Attack;
+			}
+			else
+			{
+				currentState = EnemyAnimationState.IdleOrWalk;
+			}
 		}
-		else
-		{
-			PlayWalkOrIdle();
-		}
+
+		HandleAnimations();
 	}
 
 	public override void Attack() 

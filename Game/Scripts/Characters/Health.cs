@@ -12,6 +12,7 @@ public partial class Health : Node2D
 
 	// property to access max health
 	public float MaxHealth => max_health;
+	private bool isDead = false;
 
 	public override void _Ready()
 	{
@@ -21,12 +22,23 @@ public partial class Health : Node2D
 	public void Damage(float damage) 
 	{
 		health -= damage; // reduce health by damage amount
+		GD.Print($"Took damage: {damage}, current health: {health}");
+		
+		if (GetParent() is EnemyBase enemy)
+		{
+			enemy.OnHit();
+		}
+		
 		if (health <= 0)
 		{
 			// check if parent is DefaultPlayer
 			if (GetParent() is DefaultPlayer player)
 			{
 				player.Die(); // call Die() method if parent is DefaultPlayer
+			}
+			else if (GetParent() is EnemyBase deadEnemy)
+			{
+				deadEnemy.OnDeath(); 
 			}
 			else
 			{
