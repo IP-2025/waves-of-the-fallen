@@ -19,14 +19,14 @@ public partial class DefaultPlayer : CharacterBody2D
 	private MultiplayerSynchronizer multiplayerSynchronizer;
 	public bool enableDebug = false;
 	
-	public PackedScene BowScene = GD.Load<PackedScene>("res://Scenes/Weapons/Bow.tscn");
-	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Scenes/Weapons/Crossbow.tscn");
-	public PackedScene KunaiScene = GD.Load<PackedScene>("res://Scenes/Weapons/Kunai.tscn");
+	public PackedScene BowScene = GD.Load<PackedScene>("res://Scenes/Weapons/bow.tscn");
+	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Scenes/Weapons/crossbow.tscn");
+	public PackedScene KunaiScene = GD.Load<PackedScene>("res://Scenes/Weapons/kunai.tscn");
 	private int weaponsEquipped = 0;
 
 	public override void _Ready()
 	{
-		var playerClass = new Ranger(); // Instantiate Mage
+		var playerClass = new Assassin(); // Instantiate Mage
 		Speed = playerClass.Speed; // Override DefaultPlayer's Speed with Mage's Speed
 		MaxHealth = playerClass.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
 		CurrentHealth = playerClass.CurrentHealth; // Set CurrentHealth to Mage's CurrentHealth
