@@ -3,6 +3,7 @@ import { Player } from '../libs/entities/Player';
 import logger from '../logger/logger';
 import { InternalServerError } from '../errors';
 import { Settings } from '../libs/entities/Settings';
+import { log } from 'node:util';
 
 const playersRepo = AppDataSource.getRepository(Player);
 const settingRepo = AppDataSource.getRepository(Settings);

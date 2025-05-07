@@ -1,6 +1,7 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { getGoldService, setGoldService } from '../services/playerService';
 import { BadRequestError } from '../errors';
+import logger from '../logger/logger';
 
 export const getGoldController: RequestHandler = async (req, res) => {
   try {
@@ -19,7 +20,7 @@ export async function setGoldController(req: Request, res: Response, next: NextF
       throw new BadRequestError('Email or Password is required');
     }
     await setGoldService(player_id, gold);
-    res.status(200);
+    res.status(200).send('OK');
   } catch (err) {
     res.status(500).send('Server error');
   }
