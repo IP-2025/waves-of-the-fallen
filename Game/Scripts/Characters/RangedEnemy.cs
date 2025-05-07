@@ -15,6 +15,7 @@ public partial class RangedEnemy : EnemyBase
 	[Export] public float damage = 1f;
 	[Export] public float attackCooldown = 2.0f;
 	[Export] public float speed = 120f;
+	[Export] public PackedScene EnemyProjectileScene;
 
 	private float attackTimer = 0f;
 
@@ -49,7 +50,7 @@ public partial class RangedEnemy : EnemyBase
 			if (dist <= attackRange && attackTimer <= 0f)
 			{
 				Attack();
-				attackTimer = attackCooldown;
+				attackTimer = attackCooldown; // Setze den Timer korrekt zurück
 			}
 		}
 
@@ -57,6 +58,10 @@ public partial class RangedEnemy : EnemyBase
 		if (attackTimer > 0f)
 		{
 			attackTimer -= (float)delta;
+		}
+		else
+		{
+			attackTimer = 0f; // Stelle sicher, dass der Timer nicht negativ wird
 		}
 
 		// Apply movement
@@ -68,10 +73,15 @@ public partial class RangedEnemy : EnemyBase
 	/// </summary>
 	public override void Attack()
 	{
-		if (player != null)
+		if (EnemyProjectileScene != null && player != null)
 		{
-			player.GetNode<Health>("Health").Damage(damage);
-			GD.Print($"RangedEnemy dealt {damage} damage to the player!");
+			var projectile = (EnemyProjectile)EnemyProjectileScene.Instantiate();
+			GetParent().AddChild(projectile);
+
+			projectile.GlobalPosition = GlobalPosition;
+			projectile.Initialize(player.GlobalPosition - GlobalPosition);
+
+			GD.Print("Enemy fired a projectile!");
 		}
 	}
 }
