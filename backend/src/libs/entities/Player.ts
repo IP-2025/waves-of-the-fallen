@@ -19,5 +19,4 @@ export class Player {
 
   @Column({ type: 'int', default: 0 })
   gold: number = 0;
-
 }
