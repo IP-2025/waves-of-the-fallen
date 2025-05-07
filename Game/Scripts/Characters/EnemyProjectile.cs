@@ -1,28 +1,35 @@
 using Godot;
 
+/// <summary>
+/// Represents an enemy projectile that moves in a given direction,
+/// detects collisions, and applies damage to the player.
+/// </summary>
 public partial class EnemyProjectile : Area2D
 {
-    [Export] public float Speed = 10f; // Geschwindigkeit des Projektils
-    [Export] public float Damage = 1f; // Schaden, den das Projektil verursacht
+    [Export] public float Speed = 25f;
+    [Export] public float Damage = 1f;
 
     private Vector2 direction;
 
     /// <summary>
-    /// Initialisiert das Projektil mit einer Richtung.
+    /// Initializes the projectile with a direction to the player.
     /// </summary>
-    /// <param name="dir">Die Richtung, in die das Projektil fliegen soll.</param>
+    /// <param name="dir">The direction in which the projectile should move.</param>
     public void Initialize(Vector2 dir)
     {
         direction = dir.Normalized();
         GD.Print($"Projectile initialized with direction: {direction}");
     }
 
+    public override void _Ready()
+    {
+        Connect("body_entered", new Callable(this, nameof(_on_EnemyProjectile_body_entered)));
+    }
+
     public override void _PhysicsProcess(double delta)
     {
-        // Bewege das Projektil
         Position += direction * Speed * (float)delta;
 
-        // Entferne das Projektil, wenn es den Bildschirm verlässt
         if (!GetViewportRect().HasPoint(GlobalPosition))
         {
             QueueFree();
@@ -33,12 +40,11 @@ public partial class EnemyProjectile : Area2D
     {
         GD.Print($"Collision detected with: {body.Name}");
 
-        if (body is DefaultPlayer player) // Überprüfe, ob der Spieler getroffen wurde
+        if (body is DefaultPlayer player)
         {
             GD.Print("Player detected! Applying damage...");
-            
-            // Versuche, den Health-Node zu finden
             var health = player.GetNodeOrNull<Health>("Health");
+
             if (health != null)
             {
                 health.Damage(Damage);
@@ -49,7 +55,6 @@ public partial class EnemyProjectile : Area2D
                 GD.Print("Health node not found on player!");
             }
 
-            // Zerstöre das Projektil nach dem Treffer
             QueueFree();
         }
         else
