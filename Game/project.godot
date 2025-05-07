@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Game"
-run/main_scene="uid://d2coob6g63jxs"
+run/main_scene="uid://cbnnxciy67iq5"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
 config/icon="res://Assets/Characters/place_holder/enemy_placeholder.svg"
 
@@ -22,6 +22,7 @@ MenuBackgroundMusic="*res://Scenes/Music/menuBackgroundMusic.tscn"
 GameManager="*res://Scripts/Multiplayer/GameManager.cs"
 CharacterManager="*res://Scripts/Characters/CharacterManager.cs"
 NetworkManager="*res://Scripts/Multiplayer/NetworkManager.cs"
+Server="*res://Scripts/Multiplayer/Server.cs"
 SoundManager="*res://Scenes/Sounds/sound_manager.tscn"
 
 [display]
