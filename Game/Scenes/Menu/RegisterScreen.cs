@@ -11,6 +11,7 @@ public partial class RegisterScreen : Control
 	private Button _registerButton;
 	private Button _backButton;
 	private HttpRequest _registerRequest;
+	private Label _errorLabel;
 
 	public override void _Ready()
 	{
@@ -20,6 +21,7 @@ public partial class RegisterScreen : Control
 		_registerButton = GetNode<Button>("Panel/RegisterButton");
 		_backButton = GetNode<Button>("Panel/BackButton");
 		_registerRequest = GetNode<HttpRequest>("Panel/RegisterRequest");
+		_errorLabel = GetNode<Label>("Panel/ErrorLabel");
 
 		_registerButton.Connect("pressed", new Callable(this, nameof(OnRegisterButtonPressed)));
 		_backButton.Connect("pressed", new Callable(this, nameof(OnBackButtonPressed)));
@@ -39,6 +41,12 @@ public partial class RegisterScreen : Control
 			ShowError("Please fill in all fields.");
 			return;
 		}
+		
+		if (!IsValidEmail(email))
+		{
+			ShowError("Please enter a valid email address.");
+			return;
+		}	
 
 		var body = Json.Stringify(
 			new Godot.Collections.Dictionary
@@ -112,6 +120,18 @@ public partial class RegisterScreen : Control
 
 	private void ShowError(string message)
 	{
-		//TODO
+		GD.PrintErr("Error: " + message);
+		
+		_errorLabel.Text = message;
+		_errorLabel.Visible = true;
+	}
+	
+	private bool IsValidEmail(string email)
+	{
+		var emailRegex = new System.Text.RegularExpressions.Regex(
+			@"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+			System.Text.RegularExpressions.RegexOptions.Compiled
+		);
+		return emailRegex.IsMatch(email);
 	}
 }
