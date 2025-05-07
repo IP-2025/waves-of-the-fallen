@@ -7,6 +7,13 @@ public partial class RangedEnemy : EnemyBase
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if (currentState == EnemyAnimationState.Die)
+		{
+			Velocity = Vector2.Zero;
+			MoveAndSlide();
+			return;
+		}
+		
 		FindNearestPlayer();
 		if (player == null)
 		{
