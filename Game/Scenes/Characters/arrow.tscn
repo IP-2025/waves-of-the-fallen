@@ -8,7 +8,7 @@
 [node name="Arrow" type="Area2D"]
 collision_layer = 6
 script = ExtResource("1_v7l71")
-Speed = 20.0
+Speed = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_v7l71")

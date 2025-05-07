@@ -1,16 +1,24 @@
 using Godot;
 using System;
 
+/// <summary>
+/// Base class for all enemy types in the game.
+/// Handles movement, attack cooldowns, and player detection.
+/// 
+/// Configuration:
+/// - speed: Movement speed of the enemy.
+/// - damage: Damage dealt by the enemy on attack.
+/// - attacksPerSecond: Number of attacks the enemy can perform per second.
+/// </summary>
 public abstract partial class EnemyBase : CharacterBody2D
 {
-	// Can be adapted in inspector for each deriving enemy
 	[Export] public float speed = 200f;
 	[Export] public float damage = 10f;
-	[Export] public float attacksPerSecond = 1.5f;
+	[Export] public float attacksPerSecond = 5f;
 
 	public DefaultPlayer player { get; set; }
-	protected float attackCooldown;
-	protected float timeUntilAttack;
+	protected virtual float attackCooldown { get; set; }
+	protected virtual float timeUntilAttack { get; set; }
 	protected bool withinAttackRange = false;
 
 	public override void _Ready()
@@ -32,7 +40,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 		}
 	}
 
-	public abstract void Attack(); 
+	public abstract void Attack();
 
 	public virtual void OnAttackRangeBodyEnter(Node2D body)
 	{
@@ -52,7 +60,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 			GD.Print("Player left range.");
 		}
 	}
-	
+
 	protected void FindNearestPlayer()
 	{
 		float closestDist = float.MaxValue;
@@ -72,5 +80,4 @@ public abstract partial class EnemyBase : CharacterBody2D
 
 		player = closestPlayer;
 	}
-
 }

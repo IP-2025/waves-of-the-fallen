@@ -3,22 +3,28 @@ using Godot;
 /// <summary>
 /// Represents an enemy projectile that moves in a given direction,
 /// detects collisions, and applies damage to the player.
+/// 
+/// Configuration:
+/// - Speed: Movement speed of the projectile.
+/// - Damage: Damage dealt to the player upon collision.
+/// 
+/// Behavior:
+/// - Moves in the initialized direction.
+/// - Detects collisions with the player and applies damage.
+/// - Removes itself after hitting the player.
 /// </summary>
 public partial class EnemyProjectile : Area2D
 {
-    [Export] public float Speed = 25f;
-    [Export] public float Damage = 1f;
+    [Export] public float Speed = 1000f;
+    private float Damage;
 
     private Vector2 direction;
 
-    /// <summary>
-    /// Initializes the projectile with a direction to the player.
-    /// </summary>
-    /// <param name="dir">The direction in which the projectile should move.</param>
-    public void Initialize(Vector2 dir)
+    public void Initialize(Vector2 dir, float damage)
     {
         direction = dir.Normalized();
-        GD.Print($"Projectile initialized with direction: {direction}");
+        Damage = damage; // Damage from specific enemy type
+        GD.Print($"Projectile initialized with direction: {direction} and damage: {Damage}");
     }
 
     public override void _Ready()
@@ -29,13 +35,13 @@ public partial class EnemyProjectile : Area2D
     public override void _PhysicsProcess(double delta)
     {
         Position += direction * Speed * (float)delta;
-
-        if (!GetViewportRect().HasPoint(GlobalPosition))
-        {
-            QueueFree();
-        }
     }
 
+    /// <summary>
+    /// Handles collision with other objects.
+    /// Applies damage to the player if hit and removes the projectile.
+    /// </summary>
+    /// <param name="body">The object the projectile collided with.</param>
     private void _on_EnemyProjectile_body_entered(Node body)
     {
         GD.Print($"Collision detected with: {body.Name}");

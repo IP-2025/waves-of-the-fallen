@@ -1,27 +1,41 @@
 using Godot;
 
+/// <summary>
+/// Represents a ranged enemy that moves towards the player until a certain distance
+/// and attacks the player with projectiles when in range.
+/// 
+/// Configuration:
+/// - stopDistance: Distance at which RangedEnemy stops moving.
+/// - attackRange: Short range distance for RangedEnemy's attack.
+/// - damage: Damage dealt by the RangedEnemy.
+/// - rangedAttackCooldown: Time interval (in seconds) between attacks.
+/// - speed: Movement speed of the RangedEnemy.
+/// </summary>
 public partial class RangedEnemy : EnemyBase
 {
-	/// <summary>
-	/// Configuration for the RangedEnemy:
-	/// - stopDistance: Distance at which RangedEnemy stops moving.
-	/// - attackRange: Short range distance for RangedEnemy's attack.
-	/// - damage: Damage dealt by the RangedEnemy.
-	/// - attackCooldown: Cooldown time between attacks (in seconds).
-	/// - speed: Movement speed of the RangedEnemy.
-	/// </summary>
 	[Export] public float stopDistance = 50f;
-	[Export] public float attackRange = 30f;
-	[Export] public float damage = 1f;
-	[Export] public float attackCooldown = 2.0f;
+	[Export] public float attackRange = 70f;
+	[Export] public float damage = 2.5f;
+	[Export] public float rangedAttackCooldown = 2.0f;
 	[Export] public float speed = 120f;
 	[Export] public PackedScene EnemyProjectileScene;
 
-	private float attackTimer = 0f;
+	private float cooldownTimer = 0f;
+
+	protected override float attackCooldown
+	{
+		get => rangedAttackCooldown;
+		set => cooldownTimer = value;
+	}
+
+	protected override float timeUntilAttack
+	{
+		get => cooldownTimer;
+		set => cooldownTimer = value;
+	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		// Find the nearest player
 		FindNearestPlayer();
 		if (player == null)
 		{
@@ -30,13 +44,9 @@ public partial class RangedEnemy : EnemyBase
 			return;
 		}
 
-		// Calculate distance to the player
 		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
-
-		// Face the player
 		LookAt(player.GlobalPosition);
 
-		// Move towards the player if outside stopDistance
 		if (dist > stopDistance)
 		{
 			Vector2 toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
@@ -46,30 +56,24 @@ public partial class RangedEnemy : EnemyBase
 		{
 			Velocity = Vector2.Zero;
 
-			// Attack the player if within attackRange and cooldown is over
-			if (dist <= attackRange && attackTimer <= 0f)
+			if (cooldownTimer > 0f)
+			{
+				cooldownTimer -= (float)delta;
+			}
+
+			if (dist <= attackRange && cooldownTimer <= 0f)
 			{
 				Attack();
-				attackTimer = attackCooldown; // Setze den Timer korrekt zurück
+				cooldownTimer = rangedAttackCooldown;
 			}
 		}
 
-		// Reduce the attack cooldown timer
-		if (attackTimer > 0f)
-		{
-			attackTimer -= (float)delta;
-		}
-		else
-		{
-			attackTimer = 0f; // Stelle sicher, dass der Timer nicht negativ wird
-		}
-
-		// Apply movement
 		MoveAndSlide();
 	}
 
 	/// <summary>
-	/// Performs an attack on the player if in range.
+	/// Instantiates and fires a projectile towards the player.
+	/// Ensures the projectile is initialized with the correct direction.
 	/// </summary>
 	public override void Attack()
 	{
@@ -79,9 +83,9 @@ public partial class RangedEnemy : EnemyBase
 			GetParent().AddChild(projectile);
 
 			projectile.GlobalPosition = GlobalPosition;
-			projectile.Initialize(player.GlobalPosition - GlobalPosition);
+			projectile.Initialize(player.GlobalPosition - GlobalPosition, damage); // Übergabe des Schadens
 
-			GD.Print("Enemy fired a projectile!");
+			GD.Print($"RangedEnemy fired a projectile with {damage} damage!");
 		}
 	}
 }
