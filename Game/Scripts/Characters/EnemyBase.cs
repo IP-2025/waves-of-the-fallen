@@ -1,8 +1,10 @@
 using Godot;
 using System;
+using System.Diagnostics;
 
 public abstract partial class EnemyBase : CharacterBody2D
 {
+	public bool enableDebug = false;
 	// Can be adapted in inspector for each deriving enemy
 	[Export] public float speed = 200f;
 	[Export] public float damage = 10f;
@@ -39,7 +41,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 		if (body.IsInGroup("player"))
 		{
 			withinAttackRange = true;
-			GD.Print("Player entered range.");
+			DebugIt("Player entered range.");
 		}
 	}
 
@@ -49,7 +51,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 		{
 			withinAttackRange = false;
 			timeUntilAttack = attackCooldown;
-			GD.Print("Player left range.");
+			DebugIt("Player left range.");
 		}
 	}
 	
@@ -73,4 +75,8 @@ public abstract partial class EnemyBase : CharacterBody2D
 		player = closestPlayer;
 	}
 
+	    private void DebugIt(string message)
+    {
+        if (enableDebug) Debug.Print("EnemyBase: " + message);
+    }
 }
