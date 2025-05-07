@@ -19,12 +19,14 @@ public partial class DefaultPlayer : CharacterBody2D
 	public bool enableDebug = false;
 	
 	public PackedScene BowScene = GD.Load<PackedScene>("res://Scenes/Weapons/Bow.tscn");
+	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Scenes/Weapons/Crossbow.tscn");
+	public PackedScene KunaiScene = GD.Load<PackedScene>("res://Scenes/Weapons/Kunai.tscn");
 	private int weaponsEquipped = 0;
 
 	public override void _Ready()
 	{
 		// TODO: why not delete default player and just use mage ? or implement the same speed and health to default player
-		var playerClass = new Ranger(); // Instantiate Mage
+		var playerClass = new Assassin(); // Instantiate Mage
 		Speed = playerClass.Speed; // Override DefaultPlayer's Speed with Mage's Speed
 		MaxHealth = playerClass.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
 		CurrentHealth = playerClass.CurrentHealth; // Set CurrentHealth to Mage's CurrentHealth
@@ -52,7 +54,9 @@ public partial class DefaultPlayer : CharacterBody2D
 	{
 		if (playerClass is Ranger)
 			return BowScene.Instantiate() as Area2D;
-	
+		
+		if (playerClass is Assassin)
+			return KunaiScene.Instantiate() as Area2D;
 		// if (playerClass is Mage) return FireStaffScene.Instantiate() as Area2D;
 	
 		return null;

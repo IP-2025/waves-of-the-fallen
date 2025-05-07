@@ -23,8 +23,6 @@ public abstract partial class Projectile : Area2D
             QueueFree();
         }
     
-        
-    
         var healthNode = body.GetNodeOrNull<Health>("Health");
         if (healthNode != null)
         {
