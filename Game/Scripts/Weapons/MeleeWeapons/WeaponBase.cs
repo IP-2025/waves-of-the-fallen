@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Linq;
 
-public abstract partial class RangedWeapon : Area2D
+public abstract partial class WeaponBase : Area2D
 {
 	protected AnimatedSprite2D _animatedSprite;
 
@@ -58,8 +58,3 @@ public abstract partial class RangedWeapon : Area2D
 		}
 		return false;
 	}
-
-	protected abstract void Shoot();
-
-	
-}

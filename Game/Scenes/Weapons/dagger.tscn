@@ -28,10 +28,10 @@ shape = SubResource("CircleShape2D_i6u1f")
 [node name="WeaponPivot" type="Marker2D" parent="."]
 
 [node name="Stab" type="AnimatedSprite2D" parent="WeaponPivot"]
-position = Vector2(100, 1)
+position = Vector2(2, 0)
 scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_o7gox")
 animation = &"stab"
 
 [node name="DaggerPoint" type="Marker2D" parent="WeaponPivot/Stab"]
-position = Vector2(5, 0)
+position = Vector2(-13.3333, 0)
