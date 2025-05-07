@@ -22,6 +22,7 @@ MenuBackgroundMusic="*res://Scenes/Music/menuBackgroundMusic.tscn"
 GameManager="*res://Scripts/Multiplayer/GameManager.cs"
 CharacterManager="*res://Scripts/Characters/CharacterManager.cs"
 NetworkManager="*res://Scripts/Multiplayer/NetworkManager.cs"
+Server="*res://Scripts/Multiplayer/Server.cs"
 
 [display]
 
