@@ -105,10 +105,16 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_yxiby")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxiby")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yxiby")
 }],
 "loop": false,
 "name": &"death",
-"speed": 8.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -184,7 +190,9 @@ shape = SubResource("CircleShape2D_6cefa")
 position = Vector2(1.90735e-06, 1.90735e-06)
 scale = Vector2(0.171794, 0.171794)
 sprite_frames = SubResource("SpriteFrames_paric")
-animation = &"attack"
+animation = &"death"
+frame = 5
+frame_progress = 1.0
 
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
 [connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]
