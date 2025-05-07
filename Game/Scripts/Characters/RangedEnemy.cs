@@ -29,6 +29,7 @@ public partial class RangedEnemy : EnemyBase
 		}
 
 		MoveAndSlide();
+		UpdateAnimationState();
 	}
 
 	public override void Attack()

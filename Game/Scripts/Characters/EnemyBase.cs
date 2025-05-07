@@ -155,5 +155,22 @@ public abstract partial class EnemyBase : CharacterBody2D
 				break;
 		}
 	}
-
+	
+	protected void UpdateAnimationState()
+	{
+		if (currentState == EnemyAnimationState.Hit || currentState == EnemyAnimationState.Die)
+		{
+			return;
+		}
+		
+		if (withinAttackRange)
+		{
+			currentState = EnemyAnimationState.Attack;
+		}
+		else
+		{
+			currentState = EnemyAnimationState.IdleOrWalk;
+		}
+		HandleAnimations();
+	}
 }
