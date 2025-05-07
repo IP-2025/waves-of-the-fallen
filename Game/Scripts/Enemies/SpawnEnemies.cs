@@ -81,21 +81,27 @@ public partial class SpawnEnemies : Node2D
 
 		foreach (EnemyBase enemy in pattern.GetChildren()) // goes through all enemies in the pattern and assigns the player, speed, health and globalposition
 		{
-			enemy.AddToGroup("enemies"); // added to enemies group
+			//enemy.player = Player;
+			enemy.player = Player;
+			enemy.speed = enemy.speed * pattern.speedMultiplier;
+			enemy.GetNode<Health>("Health").max_health = enemy.GetNode<Health>("Health").max_health * pattern.healthMultiplier;
+			//pattern.GlobalPosition = spawnPath.GlobalPosition;
+			enemy.GlobalPosition += spawnPath.GlobalPosition;
 
 			ulong id = enemy.GetInstanceId();
 			enemy.Name = $"Enemy_{id}";
 			Server.Instance.Entities[(long)id] = enemy;
 
+			var oldParent = enemy.GetParent();
+			oldParent.RemoveChild(enemy);
+			enemy.Owner = null;
+			
 
-			//enemy.player = Player;
-			enemy.speed = enemy.speed * pattern.speedMultiplier;
-			enemy.GetNode<Health>("Health").max_health = enemy.GetNode<Health>("Health").max_health * pattern.healthMultiplier;
-			pattern.GlobalPosition = spawnPath.GlobalPosition;
+			AddChild(enemy);
+			enemy.AddToGroup("enemies"); // added to enemies group
+
 		}
-		// AddChild(enemy); // added to scene
-		AddChild(pattern); // pattern gets spawned
-						   //Debug.Print($"Spawned enemyPattern: {pattern.SceneFilePath.GetFile().Replace(".tscn", "")} with random value: {spawnValue:0.00}");
+		pattern.QueueRedraw();
 	}
 
 	private void LoadPatternPool() // loads patterns through the filepath below into the patternPool with their associated spawningCost
@@ -112,7 +118,6 @@ public partial class SpawnEnemies : Node2D
 	{
 		currentWave = waveTimer.waveCounter;
 		enemyLimit = Math.Min(enemyLimit + enemyLimitIncrease, EnemyLimitMax);
-		DeleteEmptyPatterns();
 		_ = GraceTime();
 	}
 

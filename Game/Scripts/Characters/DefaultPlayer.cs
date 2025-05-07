@@ -19,7 +19,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	private MultiplayerSynchronizer multiplayerSynchronizer;
 	public bool enableDebug = false;
 
-	public PackedScene BowScene = GD.Load<PackedScene>("res://Scenes/Weapons/Bow.tscn");
+	public PackedScene BowScene = GD.Load<PackedScene>("res://Scenes/Weapons/bow.tscn");
 	private int weaponsEquipped = 0;
 
 	public override void _Ready()

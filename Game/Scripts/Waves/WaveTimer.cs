@@ -8,6 +8,7 @@ public partial class WaveTimer : Node2D
 	public int waveCounter = 1;
 	public int secondCounter = 0;
 	public int maxTime = 30;
+	public bool isPaused;
 	private Timer _waveTimer;
 	private Label _timeLeftLabel;
 	private Label _waveCounterLabel;
@@ -46,7 +47,13 @@ public partial class WaveTimer : Node2D
 
 		_waveCounterLabel.Text = $"Wave: {waveCounter}";
 		_timeLeftLabel.Text = (maxTime - secondCounter).ToString();
-		if (_waveTimer.Paused) _timeLeftLabel.Text = "Grace Time";
+		if (_waveTimer.Paused) 
+		{
+			_timeLeftLabel.Text = "Grace Time";
+			isPaused = true;
+		} else{
+			isPaused = false;
+		}
 	}
 
 	public async Task PauseTimer(int time) // Flips the paused state of waveTimer

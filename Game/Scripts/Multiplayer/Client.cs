@@ -2,6 +2,7 @@ using Godot;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security;
 
 public partial class Client : Node
 {
@@ -104,6 +105,7 @@ public partial class Client : Node
                 var waveCounterLabel = timer.GetNodeOrNull<Label>("WaveCounter");
                 if (waveCounterLabel != null)
                     waveCounterLabel.Text = $"Wave: {entity.WaveCount}";
+                if (entity.GraceTime) timeLeftLabel.Text = $"Grace Time";
             }
 
             // Player stuff
@@ -169,7 +171,17 @@ public partial class Client : Node
                 helthNode.health = entity.Health * 100; // high value so that client cant kill and cant be killed. Server handles it
             }
 
+            if (entity.Type == EntityType.DefaultEnemy
+                || entity.Type == EntityType.RangedEnemy
+                || entity.Type == EntityType.MountedEnemy
+                || entity.Type == EntityType.RiderEnemy)
+            {
+                inst.AddToGroup("enemies");
+            }
+
+
             inst.Name = $"E_{entity.NetworkId}";
+            inst.Scale = entity.Scale;
             GetNode<GameRoot>("/root/GameRoot").AddChild(inst);
             return inst;
         }
@@ -227,6 +239,7 @@ public partial class Client : Node
         {
             inst.GlobalPosition = entity.Position;
             inst.Rotation = entity.Rotation;
+            inst.Scale = entity.Scale;
             inst.GetNodeOrNull<Health>("Health").health = entity.Health;
         }
     }

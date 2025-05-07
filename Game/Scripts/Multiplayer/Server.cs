@@ -17,7 +17,7 @@ public partial class Server : Node
         { "res://Scenes/Characters/mounted_enemy.tscn", EntityType.MountedEnemy },
         { "res://Scenes/Characters/ranged_enemy.tscn", EntityType.RangedEnemy },
         { "res://Scenes/Characters/rider_enemy.tscn", EntityType.RiderEnemy },
-        { "res://Scenes/Weapons/Bow.tscn", EntityType.Bow },
+        { "res://Scenes/Weapons/bow.tscn", EntityType.Bow },
         { "res://Scenes/Weapons/bow_arrow.tscn", EntityType.BowArrow },
         { "res://Scenes/Weapons/crossbow.tscn", EntityType.Crossbow },
         { "res://Scenes/Weapons/crossbow_arrow.tscn", EntityType.CrossbowArrow },
@@ -89,6 +89,7 @@ public partial class Server : Node
             // Find WaveTimer as a child of the current camera
             int waveCount = 0;
             int secondsLeft = 0;
+            bool graceTime = false;
             var cam = GetViewport().GetCamera2D();
             if (cam != null)
             {
@@ -97,6 +98,7 @@ public partial class Server : Node
                 {
                     waveCount = waveTimer.waveCounter;
                     secondsLeft = waveTimer.secondCounter;
+                    graceTime = waveTimer.isPaused;
                 }
             }
 
@@ -117,10 +119,12 @@ public partial class Server : Node
                 id,
                 node.Position,
                 node.Rotation,
+                node.Scale,
                 health,
                 entityType,
                 waveCount,
                 secondsLeft,
+                graceTime,
                 owner, // nullable
                 slotIx // nullable
             ));
