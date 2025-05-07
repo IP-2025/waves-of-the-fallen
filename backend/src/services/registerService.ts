@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { InternalServerError } from '../errors';
+import {ConflictError, InternalServerError} from '../errors';
 import { v4 as uuidv4 } from 'uuid';
 import logger from '../logger/logger';
 import {createNewPlayer, deletePlayer} from '../repositories/playerRepository';
@@ -30,7 +30,8 @@ export async function registerUser(
   } catch (error) {
     logger.error('Error registering user: ', error);
     await deletePlayer(playerId);
-    throw new InternalServerError('Failed to register user. Please try again later.');
+
+    throw error
   }
 }
 

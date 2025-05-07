@@ -99,13 +99,13 @@ public partial class RegisterScreen : Control
 
 			ShowError("Unexpected server response.");
 		}
-		else if (responseCode == 401)
+		else if (responseCode == 409)
 		{
-			ShowError("Invalid credentials.");
+			ShowError("User already exists.");
 		}
 		else
 		{
-			ShowError($"Server error: {responseCode}");
+			ShowError($"Server error: {responseCode} Internal Server Error");
 		}
 	}
 
