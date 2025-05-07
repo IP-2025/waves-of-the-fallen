@@ -51,20 +51,28 @@ describe('POST /setGold', () => {
       .post('/api/v1/protected/setGold')
       .send(param)
       .set('Authorization', `Bearer ${validToken}`);
-
-
     expect(coinsResponse.status).toBe(200);
   });
-});
 
-describe('POST /getGold', () => {
+
   it('should return the amount of Gold', async () => {
+
+    const gold = 10;
+    const param = {
+      player_id: registeredPlayerId,
+      gold: gold,
+    };
+    await request(app)
+      .post('/api/v1/protected/setGold')
+      .send(param)
+      .set('Authorization', `Bearer ${validToken}`);
+
     const coinsResponse = await request(app)
       .post('/api/v1/protected/getGold')
       .send(registeredPlayerId)
       .set('Authorization', `Bearer ${validToken}`);
     expect(coinsResponse.status).toBe(200);
-    expect(coinsResponse.body).toEqual(0);
+    expect(coinsResponse.body).toEqual(10);
   });
 });
 
