@@ -22,7 +22,7 @@ public abstract partial class RangedWeapon : Area2D
         float closestDist = float.MaxValue;
         Node closestEnemy = null;
 
-        foreach (Node node in GetTree().GetNodesInGroup("Enemies"))
+        foreach (Node node in GetTree().GetNodesInGroup("enemies"))
         {
             if (node is not EnemyBase enemyNode)
                 continue;
