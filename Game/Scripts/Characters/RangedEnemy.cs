@@ -5,29 +5,8 @@ public partial class RangedEnemy : EnemyBase
 {
 	[Export] public float stopDistance = 350f;
 
-	public override void _PhysicsProcess(double delta)
+	protected override void HandleMovement(Vector2 direction)
 	{
-		if (currentState == EnemyAnimationState.Die)
-		{
-			Velocity = Vector2.Zero;
-			MoveAndSlide();
-			return;
-		}
-		
-		FindNearestPlayer();
-		if (player == null)
-		{
-			Velocity = Vector2.Zero;
-			MoveAndSlide();
-			return;
-		}
-
-		Vector2 direction = (player.GlobalPosition - GlobalPosition).Normalized();
-		if (animation != null)
-		{
-			animation.FlipH = direction.X < 0;
-		}
-		
 		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
 		if (dist > stopDistance)
 		{
@@ -38,9 +17,6 @@ public partial class RangedEnemy : EnemyBase
 		{
 			Velocity = Vector2.Zero;
 		}
-
-		MoveAndSlide();
-		UpdateAnimationState();
 	}
 
 	public override void Attack()

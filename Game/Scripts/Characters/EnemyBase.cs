@@ -17,6 +17,8 @@ public abstract partial class EnemyBase : CharacterBody2D
 	protected enum EnemyAnimationState { IdleOrWalk, Attack, Hit, Die }
 	protected EnemyAnimationState currentState = EnemyAnimationState.IdleOrWalk;
 
+	public abstract void Attack(); 
+
 	public override void _Ready()
 	{
 		attackCooldown = 1f / attacksPerSecond;
@@ -31,6 +33,31 @@ public abstract partial class EnemyBase : CharacterBody2D
 
 	public override void _Process(double delta)
 	{
+		if (currentState == EnemyAnimationState.Die)
+		{
+			Velocity = Vector2.Zero;
+			MoveAndSlide();
+			return;
+		}
+		
+		FindNearestPlayer();
+		
+		if (player == null)
+		{
+			Velocity = Vector2.Zero;
+			MoveAndSlide();
+			return;
+		}
+		
+		Vector2 direction = (player.GlobalPosition - GlobalPosition).Normalized();
+		if (player != null)
+		{
+			if (animation != null)
+			{
+				animation.FlipH = direction.X < 0;
+			}
+		}
+		
 		if (withinAttackRange && timeUntilAttack <= 0f)
 		{
 			Attack();
@@ -40,9 +67,18 @@ public abstract partial class EnemyBase : CharacterBody2D
 		{
 			timeUntilAttack -= (float)delta;
 		}
+		
+		HandleMovement(direction);
+		MoveAndSlide();
+		// For choosing right animation:
+		UpdateAnimationState();
 	}
-
-	public abstract void Attack(); 
+	
+	protected virtual void HandleMovement(Vector2 direction)
+	{
+		// normal behavior: Meele-enemy, other classes can adapt
+		Velocity = direction.Normalized() * speed;
+	}
 
 	public virtual void OnAttackRangeBodyEnter(Node2D body)
 	{
