@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://55ua147f3qds"]
+
+[ext_resource type="Script" uid="uid://ca4o6jn11ysi0" path="res://Scripts/Characters/MountedEnemy.cs" id="1_script"]
+[ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="3_health"]
+[ext_resource type="Texture2D" uid="uid://b7hv8o45r2s1g" path="res://Assets/Characters/place_holder/PlaceholderBody.png" id="5_6dmdw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 15.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_attack"]
+radius = 200.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
+radius = 600.0
+
+[node name="MountedEnemy" type="CharacterBody2D" groups=["Enemies"]]
+collision_layer = 16
+script = ExtResource("1_script")
+
+[node name="Health" type="Node2D" parent="."]
+script = ExtResource("3_health")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("5_6dmdw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_body")
+
+[node name="AttackRange" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+visible = false
+shape = SubResource("CircleShape2D_attack")
+
+[node name="detection_area" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
+visible = false
+shape = SubResource("CircleShape2D_detection")
+
+[connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
+[connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]

@@ -52,9 +52,9 @@ public partial class DefaultPlayer : CharacterBody2D
 	{
 		if (playerClass is Ranger)
 			return BowScene.Instantiate() as Area2D;
-    
+	
 		// if (playerClass is Mage) return FireStaffScene.Instantiate() as Area2D;
-    
+	
 		return null;
 	}
 	

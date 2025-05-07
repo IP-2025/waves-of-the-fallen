@@ -15,6 +15,7 @@ radius = 4826.92
 
 [node name="BasicEnemy" type="CharacterBody2D" groups=["Enemies"]]
 collision_layer = 16
+collision_mask = 17
 motion_mode = 1
 script = ExtResource("1_fecjr")
 speed = 180.0
@@ -39,6 +40,7 @@ shape = SubResource("RectangleShape2D_6kac6")
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
+visible = false
 shape = SubResource("CircleShape2D_6cefa")
 
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
