@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class WaveTimer : Node2D
@@ -10,6 +11,9 @@ public partial class WaveTimer : Node2D
 	private Timer _waveTimer;
 	private Label _timeLeftLabel;
 	private Label _waveCounterLabel;
+
+	[Signal]
+	public delegate void WaveEndedEventHandler();
 
 	public override void _Ready()
 	{
@@ -37,27 +41,21 @@ public partial class WaveTimer : Node2D
 			waveCounter++;
 
 			_waveCounterLabel.Text = $"Wave: {waveCounter}";
-			DeleteEnemies();
+			EmitSignal(SignalName.WaveEnded);
 		}
 
 		_waveCounterLabel.Text = $"Wave: {waveCounter}";
 		_timeLeftLabel.Text = (maxTime - secondCounter).ToString();
+		if (_waveTimer.Paused) _timeLeftLabel.Text = "Grace Time";
 	}
 
-	private void DeleteEnemies()
+	public async Task PauseTimer(int time) // Flips the paused state of waveTimer
 	{
-		if (GetTree().GetNodesInGroup("Enemies") != null)
-		{
-			Debug.Print("Deleting " + GetTree().GetNodeCountInGroup("Enemies") + " enemies");
-			foreach (Node2D enemy in GetTree().GetNodesInGroup("Enemies")) // deletes every enemy
-			{
-				//Debug.Print("Deleted enemy");
-				enemy.QueueFree();
-			}
-		}
-		else
-		{
-			Debug.Print("No enemies found to be deleted");
-		}
+		_waveTimer.Paused = true;
+		Debug.Print("WaveTimer paused");
+		await ToSignal(GetTree().CreateTimer(time), SceneTreeTimer.SignalName.Timeout);
+
+		_waveTimer.Paused = false;
+		Debug.Print("WaveTimer unpaused");
 	}
 }
