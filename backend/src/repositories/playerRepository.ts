@@ -1,9 +1,8 @@
-import { AppDataSource } from '../libs/data-source';
-import { Player } from '../libs/entities/Player';
+import {AppDataSource} from '../libs/data-source';
+import {Player} from '../libs/entities/Player';
 import logger from '../logger/logger';
-import { InternalServerError } from '../errors';
-import { Settings } from '../libs/entities/Settings';
-import { log } from 'node:util';
+import {InternalServerError} from '../errors';
+import {Settings} from '../libs/entities/Settings';
 
 const playersRepo = AppDataSource.getRepository(Player);
 const settingRepo = AppDataSource.getRepository(Settings);
@@ -24,8 +23,7 @@ export async function createNewPlayer(user: NewPlayer) {
     setting.musicVolume = 0;
     setting.soundVolume = 0;
     await settingRepo.save(setting);
-    const createdUser = await playersRepo.save(player);
-    return createdUser;
+    return await playersRepo.save(player);
   } catch (error) {
     logger.error('Error inserting new user: ', error);
     throw new InternalServerError('Error inserting new user');
@@ -66,5 +64,18 @@ export async function setGoldRepository(playerId: string, gold: number): Promise
   } catch (error) {
     logger.error('Error setting gold: ', error);
     throw new InternalServerError('Error setting gold');
+  }
+}
+
+export async function deletePlayer(playerId: string): Promise<void> {
+  try {
+    await AppDataSource.transaction(async (transactionalEntityManager) => {
+      await transactionalEntityManager.delete(Settings, { player_id: playerId });
+      await transactionalEntityManager.delete(Player, { player_id: playerId });
+    });
+    logger.info(`Player with ID ${playerId} deleted successfully.`);
+  } catch (error) {
+    logger.error('Error deleting player: ', error);
+    throw new InternalServerError('Error deleting player');
   }
 }

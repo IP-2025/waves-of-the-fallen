@@ -1,8 +1,8 @@
-import { AppDataSource } from '../libs/data-source';
-import { Credential } from '../libs/entities/Credential';
-import { Player } from '../libs/entities/Player';
-import { v4 as uuidv4 } from 'uuid';
-import { BadRequestError, NotFoundError, ConflictError } from '../errors';
+import {AppDataSource} from '../libs/data-source';
+import {Credential} from '../libs/entities/Credential';
+import {Player} from '../libs/entities/Player';
+import {v4 as uuidv4} from 'uuid';
+import {BadRequestError, ConflictError, NotFoundError} from '../errors';
 
 const credentialsRepo = AppDataSource.getRepository(Credential);
 
@@ -14,9 +14,14 @@ export interface NewCred {
 
 export async function saveCredential(newCred: NewCred): Promise<Credential> {
   try {
-    // Validate required fields
     if (!newCred.player_id || !newCred.email || !newCred.hashedPassword) {
       throw new BadRequestError('Missing required fields');
+    }
+
+    // Check if email already exists
+    const existingCredential = await credentialsRepo.findOneBy({ email: newCred.email });
+    if (existingCredential) {
+      throw new ConflictError('Email already exists');
     }
 
     const credential = new Credential();
@@ -34,8 +39,7 @@ export async function saveCredential(newCred: NewCred): Promise<Credential> {
 
     credential.player = player;
 
-    const savedCredential = await credentialsRepo.save(credential);
-    return savedCredential;
+    return await credentialsRepo.save(credential);
   } catch (error) {
     if (error instanceof Error && 'code' in error && error.code === '23505') {
       throw new ConflictError('Email already exists');
