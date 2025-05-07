@@ -3,13 +3,13 @@ import { getGoldService, setGoldService } from '../services/playerService';
 import { BadRequestError } from '../errors';
 import logger from '../logger/logger';
 
-export const getGoldController: RequestHandler = async (req, res) => {
+export const getGoldController: RequestHandler = async (req, res,next) => {
   try {
     const playerId = req.body.player_id;
     const gold = await getGoldService(playerId);
     res.json(gold).status(200);
   } catch (err) {
-    res.status(500).send('Server error');
+    next(err)
   }
 };
 
@@ -22,6 +22,6 @@ export async function setGoldController(req: Request, res: Response, next: NextF
     await setGoldService(player_id, gold);
     res.status(200).send('OK');
   } catch (err) {
-    res.status(500).send('Server error');
+    next(err)
   }
 }
