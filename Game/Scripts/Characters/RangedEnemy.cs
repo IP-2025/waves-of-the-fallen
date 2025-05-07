@@ -15,9 +15,13 @@ public partial class RangedEnemy : EnemyBase
 			return;
 		}
 
+		Vector2 direction = (player.GlobalPosition - GlobalPosition).Normalized();
+		if (animation != null)
+		{
+			animation.FlipH = direction.X < 0;
+		}
+		
 		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
-		LookAt(player.GlobalPosition);
-
 		if (dist > stopDistance)
 		{
 			Vector2 toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();

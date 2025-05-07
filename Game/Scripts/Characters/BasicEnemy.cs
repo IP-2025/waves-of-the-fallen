@@ -7,11 +7,15 @@ public partial class BasicEnemy : EnemyBase
 	public override void _PhysicsProcess(double delta)
 	{
 		FindNearestPlayer();
+		
 		if (player != null)
 		{
-			LookAt(player.GlobalPosition);
 			Vector2 direction = (player.GlobalPosition - GlobalPosition).Normalized();
 			Velocity = direction * speed;
+			if (animation != null)
+			{
+				animation.FlipH = direction.X < 0;
+			}
 		}
 		else
 		{
