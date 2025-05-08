@@ -9,5 +9,7 @@ public enum EntityType
     Bow,
     BowArrow,
     Crossbow,
-    CrossbowArrow
+    CrossbowArrow,
+    Kunai,
+    KunaiProjectile
 }

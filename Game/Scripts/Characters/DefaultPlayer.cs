@@ -18,13 +18,15 @@ public partial class DefaultPlayer : CharacterBody2D
 	private Camera2D camera;
 	private MultiplayerSynchronizer multiplayerSynchronizer;
 	public bool enableDebug = false;
-
+	
 	public PackedScene BowScene = GD.Load<PackedScene>("res://Scenes/Weapons/bow.tscn");
+	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Scenes/Weapons/crossbow.tscn");
+	public PackedScene KunaiScene = GD.Load<PackedScene>("res://Scenes/Weapons/kunai.tscn");
 	private int weaponsEquipped = 0;
 
 	public override void _Ready()
 	{
-		var playerClass = new Ranger(); // Instantiate Mage
+		var playerClass = new Assassin(); // Instantiate Mage
 		Speed = playerClass.Speed; // Override DefaultPlayer's Speed with Mage's Speed
 		MaxHealth = playerClass.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
 		CurrentHealth = playerClass.CurrentHealth; // Set CurrentHealth to Mage's CurrentHealth
@@ -64,7 +66,9 @@ public partial class DefaultPlayer : CharacterBody2D
 	{
 		if (playerClass is Ranger)
 			return BowScene.Instantiate() as Area2D;
-
+		
+		if (playerClass is Assassin)
+			return KunaiScene.Instantiate() as Area2D;
 		// if (playerClass is Mage) return FireStaffScene.Instantiate() as Area2D;
 
 		return null;
