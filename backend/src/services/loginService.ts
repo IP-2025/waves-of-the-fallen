@@ -1,4 +1,4 @@
-import { getPwdByMail, getPlayerIdFromCredential } from 'repositories/credentialsRepository';
+import { getPwdByMail, getPlayerIdFromCredential } from 'repositories';
 import { InternalServerError, NotFoundError, UnauthorizedError } from 'errors';
 import bcrypt from 'bcrypt';
 import { generateToken } from 'auth/jwt';

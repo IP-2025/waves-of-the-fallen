@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { BadRequestError } from 'errors';
-import { registerUser } from 'services/registerService';
+import { registerUser } from 'services';
 
 export async function registrateController(req: Request, res: Response, next: NextFunction) {
   try {

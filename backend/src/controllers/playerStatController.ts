@@ -1,5 +1,5 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
-import { getGoldService, setGoldService } from 'services/playerService';
+import { getGoldService, setGoldService } from 'services';
 import { BadRequestError } from 'errors';
 
 export const getGoldController: RequestHandler = async (req, res, next) => {

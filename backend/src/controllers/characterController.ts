@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { getAllCharacters, getAllUnlockedCharacters } from 'services/characterService';
+import { getAllCharacters, getAllUnlockedCharacters } from 'services';
 
 export const getAllCharacterController: RequestHandler = async (req, res) => {
   try {

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { checkDatabaseHealth } from 'services/healthService';
+import { checkDatabaseHealth } from 'services';
 import { termLogger as logger } from 'logger';
 import { InternalServerError } from 'errors';
 
