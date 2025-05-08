@@ -1,5 +1,18 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@auth/*": ["auth/*"],
+      "@controllers/*": ["controllers/*"],
+      "@core/*": ["core/*"],
+      "@database/*": ["database/*"],
+      "@errors/*": ["errors/*"],
+      "@logger/*": ["logger/*"],
+      "@middleware/*": ["middleware/*"],
+      "@repositories/*": ["repositories/*"],
+      "@routers/*": ["routers/*"],
+      "@services/*": ["services/*"],
+    },
     "outDir": "./dist",
     "rootDir": "./src",
     "module": "ESNext",
