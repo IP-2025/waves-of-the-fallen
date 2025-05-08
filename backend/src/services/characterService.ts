@@ -1,5 +1,5 @@
-import { Character } from '../database/entities';
-import { getAllCharactersRepo, getAllUnlockedCharactersRepo, insertAllCharacters } from '../repositories/characterRepository';
+import { Character } from 'database/entities';
+import { getAllCharactersRepo, getAllUnlockedCharactersRepo, insertAllCharacters } from 'repositories/characterRepository';
 import fs from 'fs';
 
 export async function innitAllCharacters(chars?: Character[]): Promise<void> {

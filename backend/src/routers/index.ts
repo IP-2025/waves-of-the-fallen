@@ -2,7 +2,7 @@ import { Application } from 'express';
 import healthRouter from './health';
 import authRouter from './auth';
 import protectedRouter from './protected';
-import { PREFIX_ROUTE } from '../core/url';
+import { PREFIX_ROUTE } from 'core/url';
 
 export default function createRoutes(app: Application): void {
   app.use(`${PREFIX_ROUTE}/protected`, protectedRouter);

@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { getSettingsByPlayerId, insertSettings } from '../repositories/settingsRepository';
-import { BadRequestError, InternalServerError } from '../errors';
-import { termLogger as logger } from '../logger';
-import { extractAndValidatePlayerId } from '../auth/jwt';
+import { getSettingsByPlayerId, insertSettings } from 'repositories/settingsRepository';
+import { BadRequestError, InternalServerError } from 'errors';
+import { termLogger as logger } from 'logger';
+import { extractAndValidatePlayerId } from 'auth/jwt';
 
 export async function getSettings(req: Request, res: Response) {
   const player_id = extractAndValidatePlayerId(req.headers['authorization']);

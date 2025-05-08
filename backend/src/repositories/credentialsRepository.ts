@@ -1,7 +1,7 @@
-import { AppDataSource } from '../database/dataSource';
+import { AppDataSource } from 'database/dataSource';
 import { v4 as uuidv4 } from 'uuid';
-import { BadRequestError, ConflictError, NotFoundError } from '../errors';
-import { Player, Credential } from '../database/entities';
+import { BadRequestError, ConflictError, NotFoundError } from 'errors';
+import { Player, Credential } from 'database/entities';
 
 const credentialsRepo = AppDataSource.getRepository(Credential);
 

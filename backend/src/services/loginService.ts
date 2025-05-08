@@ -1,7 +1,7 @@
-import { getPwdByMail, getPlayerIdFromCredential } from '../repositories/credentialsRepository';
-import { InternalServerError, NotFoundError, UnauthorizedError } from '../errors';
+import { getPwdByMail, getPlayerIdFromCredential } from 'repositories/credentialsRepository';
+import { InternalServerError, NotFoundError, UnauthorizedError } from 'errors';
 import bcrypt from 'bcrypt';
-import { generateToken } from '../auth/jwt';
+import { generateToken } from 'auth/jwt';
 
 export async function pwdCheck(email: string, password: string): Promise<string> {
   try {

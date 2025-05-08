@@ -1,6 +1,6 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { InternalServerError, UnauthorizedError } from '../errors';
-import { AppConfig } from '../core/config';
+import { InternalServerError, UnauthorizedError } from 'errors';
+import { AppConfig } from 'core/config';
 
 export function generateToken(userId: string): string {
   if (!AppConfig.JWT_SECRET) {

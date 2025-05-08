@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import { termLogger as logger } from '../logger';
-import { createNewPlayer, deletePlayer } from '../repositories/playerRepository';
-import { saveCredential } from '../repositories/credentialsRepository';
+import { termLogger as logger } from 'logger';
+import { createNewPlayer, deletePlayer } from 'repositories/playerRepository';
+import { saveCredential } from 'repositories/credentialsRepository';
 
 export async function registerUser(username: string, password: string, mail: string): Promise<string> {
   const playerId = uuidv4();
