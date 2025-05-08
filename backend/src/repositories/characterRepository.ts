@@ -13,6 +13,8 @@ export async function insertAllCharacters(chars: Character[]): Promise<void> {
 export async function getAllCharactersRepo(): Promise<Character[]> {
   return await AppDataSource.getRepository(Character).find();
 }
-export async function getAllUnlockedCharactersRepo(playerId:string): Promise<UnlockedCharacter[]> {
-return await AppDataSource.getRepository(UnlockedCharacter).find({ where: { player_id: playerId } });
+export async function getAllUnlockedCharactersRepo(playerId: string): Promise<UnlockedCharacter[]> {
+  return await AppDataSource.getRepository(UnlockedCharacter).find({
+    where: { player_id: playerId },
+  });
 }

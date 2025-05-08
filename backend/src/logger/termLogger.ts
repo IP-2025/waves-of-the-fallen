@@ -9,9 +9,7 @@ const termLogger = createLogger({
       return `${timestamp} [${level}]: ${message}`;
     })
   ),
-  transports: [
-    new transports.Console(),
-  ],
+  transports: [new transports.Console()],
 });
 
 export default termLogger;

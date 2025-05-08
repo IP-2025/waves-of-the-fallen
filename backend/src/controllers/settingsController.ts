@@ -1,12 +1,11 @@
 import { Request, Response } from 'express';
 import { getSettingsByPlayerId, insertSettings } from '../repositories/settingsRepository';
 import { BadRequestError, InternalServerError } from '../errors';
-import { termLogger as logger }  from '../logger'
+import { termLogger as logger } from '../logger';
 import { extractAndValidatePlayerId } from '../auth/jwt';
 
-
 export async function getSettings(req: Request, res: Response) {
-  const player_id = extractAndValidatePlayerId(req.headers['authorization'])
+  const player_id = extractAndValidatePlayerId(req.headers['authorization']);
 
   if (!player_id) {
     throw new BadRequestError('Missing player_id');
@@ -20,14 +19,13 @@ export async function getSettings(req: Request, res: Response) {
     }
     res.status(200).json(settings);
   } catch (err) {
-    logger.error("Failed to retrive settings", err)
+    logger.error('Failed to retrive settings', err);
     throw new InternalServerError('Failed to retrieve settings');
   }
 }
 
-
 export async function setSettings(req: Request, res: Response) {
-  const player_id = extractAndValidatePlayerId(req.headers['authorization'])
+  const player_id = extractAndValidatePlayerId(req.headers['authorization']);
   const { musicVolume, soundVolume } = req.body;
 
   if (!player_id || musicVolume == null || soundVolume == null) {
@@ -46,7 +44,7 @@ export async function setSettings(req: Request, res: Response) {
     const savedSettings = await insertSettings(player_id, musicVolume, soundVolume);
     res.status(200).json(savedSettings);
   } catch (err) {
-    logger.error("Failed to save settings", err)
+    logger.error('Failed to save settings', err);
     throw new InternalServerError('Failed to save settings');
   }
 }

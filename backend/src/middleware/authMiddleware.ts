@@ -16,6 +16,6 @@ export async function authenticationStep(req: Request, res: Response, next: Next
 
     next();
   } catch (error) {
-    next(error)
+    next(error);
   }
 }

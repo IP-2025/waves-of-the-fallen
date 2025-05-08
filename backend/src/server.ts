@@ -9,7 +9,7 @@ const port = AppConfig.PORT || 3000;
 
 AppDataSource.initialize()
   .then(async () => {
-    await innitAllCharacters()
+    await innitAllCharacters();
     app.listen(port, () => {
       logger.info(`🚀 Server crying on port ${port}`);
     });

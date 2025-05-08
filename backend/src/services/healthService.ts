@@ -1,5 +1,5 @@
 import { AppDataSource } from '../database/dataSource';
-import { termLogger as logger } from '../logger'
+import { termLogger as logger } from '../logger';
 
 export async function checkDatabaseHealth(): Promise<boolean> {
   try {

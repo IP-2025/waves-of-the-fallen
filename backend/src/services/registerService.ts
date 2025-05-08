@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import { termLogger as logger } from '../logger';
-import {createNewPlayer, deletePlayer} from '../repositories/playerRepository';
+import { createNewPlayer, deletePlayer } from '../repositories/playerRepository';
 import { saveCredential } from '../repositories/credentialsRepository';
 
 export async function registerUser(
@@ -29,6 +29,6 @@ export async function registerUser(
     logger.error('Error registering user: ', error);
     await deletePlayer(playerId);
 
-    throw error
+    throw error;
   }
 }
