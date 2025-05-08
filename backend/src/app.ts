@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import registerRoutes from './routes';
+import createRoutes from './routers';
 import { errorHandler } from './middleware/errorMiddleware';
 
 dotenv.config();
@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json());
 
-registerRoutes(app);
+createRoutes(app);
 
 app.use(errorHandler);
 
