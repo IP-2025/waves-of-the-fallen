@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 import app from './app';
-import { PORT } from './core/config';
-import { AppDataSource } from './libs/data-source';
-import logger from './logger/logger';
+import logger from './logger/termLogger';
 import { innitAllCharacters } from './services/characterService';
+import { AppDataSource } from './database/data-source';
+import { AppConfig } from './core/config';
 
-const port = PORT || 3000;
+const port = AppConfig.PORT || 3000;
 
 AppDataSource.initialize()
   .then(async () => {
