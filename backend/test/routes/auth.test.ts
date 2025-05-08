@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../../src/app';
-import { AppDataSource } from '../../src/libs/data-source';
-import { Player } from '../../src/libs/entities/Player';
+import { AppDataSource } from '../../src/database/dataSource';
+import { Player } from '../../src/database/entities/Player';
 
 const userData = {
   username: 'MaxMustermann',

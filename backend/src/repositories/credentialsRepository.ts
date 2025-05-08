@@ -1,6 +1,6 @@
-import {AppDataSource} from '../libs/data-source';
-import {Credential} from '../libs/entities/Credential';
-import {Player} from '../libs/entities/Player';
+import {AppDataSource} from '../database/dataSource';
+import {Credential} from '../database/entities/Credential';
+import {Player} from '../database/entities/Player';
 import {v4 as uuidv4} from 'uuid';
 import {BadRequestError, ConflictError, NotFoundError} from '../errors';
 

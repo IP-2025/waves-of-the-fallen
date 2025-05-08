@@ -1,10 +1,8 @@
 import bcrypt from 'bcrypt';
-import {ConflictError, InternalServerError} from '../errors';
 import { v4 as uuidv4 } from 'uuid';
-import logger from '../logger/logger';
+import { termLogger as logger } from '../logger';
 import {createNewPlayer, deletePlayer} from '../repositories/playerRepository';
 import { saveCredential } from '../repositories/credentialsRepository';
-import { Player } from '../libs/entities/Player';
 
 export async function registerUser(
   username: string,
@@ -34,4 +32,3 @@ export async function registerUser(
     throw error
   }
 }
-

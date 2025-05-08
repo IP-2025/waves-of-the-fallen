@@ -1,5 +1,5 @@
 import express from 'express';
-import { authenticationStep } from '../middleware/validateMiddleware';
+import { authenticationStep } from '../middleware/authMiddleware';
 import { getSettings, setSettings } from '../controllers/settingsController';
 import { getAllCharacterController, getAllUnlockedCharacterController } from '../controllers/characterController';
 import { setGoldController, getGoldController } from '../controllers/playerStatController';

@@ -1,5 +1,5 @@
 import { PostgreSqlContainer, StartedPostgreSqlContainer } from "@testcontainers/postgresql";
-import { AppDataSource } from './src/libs/data-source';
+import { AppDataSource } from './src/database/dataSource';
 
 let container: StartedPostgreSqlContainer;
 

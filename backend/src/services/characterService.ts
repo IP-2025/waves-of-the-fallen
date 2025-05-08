@@ -1,4 +1,4 @@
-import { Character } from '../libs/entities/Character';
+import { Character } from '../database/entities/Character';
 import {
   getAllCharactersRepo,
   getAllUnlockedCharactersRepo,

@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response} from 'express';
-import {BadRequestError, InternalServerError} from '../errors';
+import {BadRequestError} from '../errors';
 import {registerUser} from '../services/registerService';
 
 export async function registrateController(

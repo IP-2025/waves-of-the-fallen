@@ -1,7 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { getGoldService, setGoldService } from '../services/playerService';
 import { BadRequestError } from '../errors';
-import logger from '../logger/logger';
 
 export const getGoldController: RequestHandler = async (req, res,next) => {
   try {

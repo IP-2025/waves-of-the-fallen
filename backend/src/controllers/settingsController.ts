@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getSettingsByPlayerId, insertSettings } from '../repositories/settingsRepository';
 import { BadRequestError, InternalServerError } from '../errors';
-import  logger  from '../logger/logger'
+import { termLogger as logger }  from '../logger'
 import { extractAndValidatePlayerId } from '../auth/jwt';
 
 

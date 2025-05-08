@@ -1,8 +1,9 @@
 import { createLogger, format, transports } from 'winston';
 
-const logger = createLogger({
+const termLogger = createLogger({
   level: 'info',
   format: format.combine(
+    format.colorize(),
     format.timestamp(),
     format.printf(({ timestamp, level, message }) => {
       return `${timestamp} [${level}]: ${message}`;
@@ -10,8 +11,7 @@ const logger = createLogger({
   ),
   transports: [
     new transports.Console(),
-    // new transports.File({ filename: 'app.log' })
   ],
 });
 
-export default logger;
+export default termLogger;

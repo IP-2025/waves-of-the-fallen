@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import app from './app';
-import logger from './logger/termLogger';
+import { termLogger as logger } from './logger';
 import { innitAllCharacters } from './services/characterService';
-import { AppDataSource } from './database/data-source';
+import { AppDataSource } from './database/dataSource';
 import { AppConfig } from './core/config';
 
 const port = AppConfig.PORT || 3000;

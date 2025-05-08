@@ -1,5 +1,4 @@
 import { RequestHandler } from 'express';
-import { getAllUnlockedCharactersRepo } from '../repositories/characterRepository';
 import { getAllCharacters, getAllUnlockedCharacters } from '../services/characterService';
 
 export const getAllCharacterController: RequestHandler = async (req, res) => {

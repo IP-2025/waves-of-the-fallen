@@ -1,2 +1,2 @@
-export { AppConfig } from './app.config';
-export { DbConfig } from './db.config';
+export { AppConfig } from './appConfig';
+export { DbConfig } from './dbConfig';
