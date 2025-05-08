@@ -4,11 +4,7 @@ import { termLogger as logger } from '../logger';
 import { createNewPlayer, deletePlayer } from '../repositories/playerRepository';
 import { saveCredential } from '../repositories/credentialsRepository';
 
-export async function registerUser(
-  username: string,
-  password: string,
-  mail: string
-): Promise<string> {
+export async function registerUser(username: string, password: string, mail: string): Promise<string> {
   const playerId = uuidv4();
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
