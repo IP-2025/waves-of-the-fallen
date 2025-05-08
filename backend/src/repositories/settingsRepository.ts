@@ -1,5 +1,5 @@
 import { AppDataSource } from '../database/dataSource';
-import { Settings } from '../database/entities/Settings';
+import { Settings } from '../database/entities';
 
 const settingsRepo = AppDataSource.getRepository(Settings);
 

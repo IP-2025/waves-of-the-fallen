@@ -1,10 +1,6 @@
 import { DataSource } from 'typeorm';
 import { DbConfig } from '../core/config';
-import { Player } from './entities/Player';
-import { Credential } from './entities/Credential';
-import { Settings } from './entities/Settings';
-import { Character } from './entities/Character';
-import { UnlockedCharacter } from './entities/UnlockedCharacter';
+import { Character, Player, Settings, UnlockedCharacter, Credential } from './entities';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',

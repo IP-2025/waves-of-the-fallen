@@ -1,8 +1,7 @@
 import { AppDataSource } from '../database/dataSource';
-import { Player } from '../database/entities/Player';
 import { termLogger as logger } from '../logger';
 import { ConflictError, InternalServerError } from '../errors';
-import { Settings } from '../database/entities/Settings';
+import { Player, Settings } from '../database/entities';
 
 const playersRepo = AppDataSource.getRepository(Player);
 const settingRepo = AppDataSource.getRepository(Settings);

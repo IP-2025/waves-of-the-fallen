@@ -1,6 +1,5 @@
 import { AppDataSource } from '../database/dataSource';
-import { Character } from '../database/entities/Character';
-import { UnlockedCharacter } from '../database/entities/UnlockedCharacter';
+import { Character, UnlockedCharacter } from '../database/entities';
 
 async function deleteAll() {
   await AppDataSource.getRepository(Character).clear();
