@@ -82,6 +82,7 @@ collision_mask = 17
 script = ExtResource("1_1deiu")
 stopDistance = 180.0
 speed = 150.0
+damage = 5.0
 animationPath = NodePath("RangedEnemyAnimation")
 
 [node name="Health" type="Node2D" parent="."]

@@ -24,6 +24,8 @@ public abstract partial class EnemyBase : CharacterBody2D
 		attackCooldown = 1f / attacksPerSecond;
 		timeUntilAttack = attackCooldown;
 		
+		// Notice: AnimationPath HAS to be set for every enemy in its inspektor
+		// Animations needed: walk, idle, death, attack, hit
 		if (animationPath != null)
 		{
 			animation = GetNode<AnimatedSprite2D>(animationPath);
