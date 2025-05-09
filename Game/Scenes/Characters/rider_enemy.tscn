@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://m5nyfymvipg6" path="res://Scripts/Characters/Rider.cs" id="1_k7dvb"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_ilr60"]
-[ext_resource type="Texture2D" uid="uid://bl26kqduj1jpt" path="res://Assets/Characters/Enemies/Rider.png" id="3_ilr60"]
-[ext_resource type="Texture2D" uid="uid://bu5puvkvsp7v" path="res://Assets/Characters/Enemies/RiderWalkSheet.png" id="4_3ubfh"]
+[ext_resource type="Texture2D" uid="uid://cc8uyo27fu35k" path="res://Assets/Characters/Enemies/Rider.png" id="3_ilr60"]
+[ext_resource type="Texture2D" uid="uid://d1lnlbclv2a8j" path="res://Assets/Characters/Enemies/RiderWalkSheet.png" id="4_3ubfh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2xkst"]
 radius = 15.0
