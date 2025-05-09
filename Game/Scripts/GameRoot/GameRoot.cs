@@ -1,128 +1,120 @@
 using Godot;
 using System;
+using System.Diagnostics;
+using System.Linq;
 
-/// <summary>
-/// GameRoot is the main entry point for the game. It handles:
-/// - Loading the map
-/// - Spawning the player
-/// - Adding the wave timer
-/// - Starting the enemy spawner
-/// - Handling player death
-/// </summary>
+// GameRoot is the main entry point for the game. It is responsible for loading the map, spawning the player, starting the enemy spawner and so on.
 public partial class GameRoot : Node
 {
-    private Node2D _mainMap;
+	private Node2D _mainMap;
+	private int playerIndex = 0; // player index for spawning players
+	bool isServer = false;
+	private bool enableDebug = false;
 
-    public override void _Ready()
-    {
-        Engine.MaxFps = 60; // important! performance...
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+		Engine.MaxFps = 60; // important! performance...
 
-        // Initialize the game components
-        SpawnMap("res://Scenes/Main.tscn");
-        SpawnPlayer(GetTree().GetMultiplayer().GetUniqueId());
-        AddWaveTimer("res://Scenes/Waves/WaveTimer.tscn");
-        SpawnEnemySpawner("res://Scenes/Enemies/SpawnEnemies.tscn");
+		isServer = GetTree().GetMultiplayer().IsServer();
 
-        // Start the game on the server
-        NetworkManager.Instance.StartGame();
-    }
+		// Load map and store reference
+		SpawnMap("res://Scenes/Main.tscn");
 
-    public override void _Process(double delta)
-    {
-        // Optional per-frame game logic
-    }
+		if (isServer)
+		{
+			// Server spawns all players
+			foreach (var peerId in GetTree().GetMultiplayer().GetPeers())
+			{
+				DebugIt($"Server spawning player {peerId}");
+				SpawnPlayer(peerId);
+			}
 
-    /// <summary>
-    /// Loads and adds the main map to the scene.
-    /// </summary>
-    /// <param name="mapPath">Path to the map scene.</param>
-    public void SpawnMap(string mapPath)
-    {
-        _mainMap = GD.Load<PackedScene>(mapPath).Instantiate<Node2D>();
-        AddChild(_mainMap);
-    }
+			// Start enemy spawner
+			SpawnEnemySpawner("res://Scenes/Enemies/SpawnEnemies.tscn");
+		}
 
-    /// <summary>
-    /// Spawns the player based on the selected character ID.
-    /// </summary>
-    /// <param name="peerId">The unique ID of the player.</param>
-    public void SpawnPlayer(long peerId)
-    {
-        var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
-        int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
 
-        string characterScenePath = selectedCharacterId switch
-        {
-            1 => "res://Scenes/Characters/archer.tscn",
-            2 => "res://Scenes/Characters/assassin.tscn",
-            3 => "res://Scenes/Characters/knight.tscn",
-            4 => "res://Scenes/Characters/mage.tscn",
-            _ => "res://Scenes/Characters/default_player.tscn"
-        };
+	}
 
-        var player = GD.Load<PackedScene>(characterScenePath).Instantiate<Node2D>();
-        player.Name = $"Player_{peerId}";
+	public override void _Process(double delta)
+	{
+		// Game logic per frame (optional)
+	}
 
-        // Attach a joystick to the player
-        var joystick = GD.Load<PackedScene>("res://Scenes/Joystick/joystick.tscn").Instantiate<Node2D>();
-        player.AddChild(joystick);
+	public void SpawnMap(string mapPath)
+	{
+		_mainMap = GD.Load<PackedScene>(mapPath).Instantiate<Node2D>();
+		AddChild(_mainMap);
+	}
 
-        AddChild(player);
-        GameManager.Instance.Entities[peerId] = player;
+	public void SpawnPlayer(long peerId)
+	{
+		var player = GD.Load<PackedScene>("res://Scenes/Characters/default_player.tscn").Instantiate<DefaultPlayer>();
+		player.OwnerPeerId = peerId;
+		player.Name = $"Player_{peerId}";
+		
 
-        // Connect the health depleted signal
-        var healthNode = player.GetNodeOrNull<Health>("Health");
-        if (healthNode != null)
-        {
-            healthNode.Connect(Health.SignalName.HealthDepleted, new Callable(this, nameof(OnPlayerDied)));
-        }
-        else
-        {
-            GD.PrintErr("Health node not found on player!");
-        }
-    }
+		// Get spawn point from PlayerSpawnPoints group
+		player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
+			.OfType<Node2D>()
+			.ToList()
+			.FindAll(spawnPoint => int.Parse(spawnPoint.Name) == playerIndex)
+			.FirstOrDefault()?.GlobalPosition ?? Vector2.Zero;
 
-    /// <summary>
-    /// Adds the wave timer to the scene.
-    /// </summary>
-    /// <param name="waveTimerPath">Path to the wave timer scene.</param>
-    public void AddWaveTimer(string waveTimerPath)
-    {
-        var waveTimer = GD.Load<PackedScene>(waveTimerPath).Instantiate<WaveTimer>();
-        AddChild(waveTimer);
-    }
+		// Add joystick to player
+		var joystick = GD.Load<PackedScene>("res://Scenes/Joystick/joystick.tscn").Instantiate<Node2D>();
+		player.AddChild(joystick);
+		var WaveTimer = GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
+		player.GetNode<Camera2D>("Camera2D").AddChild(WaveTimer);
+		AddChild(player);
 
-    /// <summary>
-    /// Spawns the enemy spawner in the scene.
-    /// </summary>
-    /// <param name="enemySpawnerPath">Path to the enemy spawner scene.</param>
-    public void SpawnEnemySpawner(string enemySpawnerPath)
-    {
-        var spawner = GD.Load<PackedScene>(enemySpawnerPath).Instantiate<SpawnEnemies>();
-        AddChild(spawner);
-    }
+		Server.Instance.Entities[peerId] = player;
 
-    /// <summary>
-    /// Handles the player's death and displays the Game Over screen.
-    /// </summary>
-    public void OnPlayerDied()
-    {
-        GD.Print("Player died! Showing Game Over screen.");
+		// Connect health signal
+		var healthNode = player.GetNodeOrNull<Health>("Health");
+		if (healthNode != null)
+		{
+			healthNode.Connect(Health.SignalName.HealthDepleted, new Callable(this, nameof(OnPlayerDied)));
+		}
+		else
+		{
+			GD.PrintErr("Health node not found on player!");
+		}
 
-        if (_mainMap == null)
-        {
-            GD.PrintErr("Main map is null!");
-            return;
-        }
+		playerIndex++;
+	}
 
-        var gameOverScreen = _mainMap.GetNodeOrNull<CanvasLayer>("GameOver");
-        if (gameOverScreen != null)
-        {
-            gameOverScreen.Visible = true;
-        }
-        else
-        {
-            GD.PrintErr("GameOver screen not found in main map!");
-        }
-    }
+	public void SpawnEnemySpawner(string enemySpawnerPath)
+	{
+		var spawner = GD.Load<PackedScene>(enemySpawnerPath).Instantiate<SpawnEnemies>();
+		AddChild(spawner);
+	}
+
+	public void OnPlayerDied()
+	{
+		DebugIt("Player died! Showing Game Over screen.");
+
+		if (_mainMap == null)
+		{
+			GD.PrintErr("Main map is null!");
+			return;
+		}
+
+		var gameOverScreen = _mainMap.GetNodeOrNull<CanvasLayer>("GameOver");
+		if (gameOverScreen != null)
+		{
+			gameOverScreen.Visible = true;
+			//GetTree().Paused = true;
+		}
+		else
+		{
+			GD.PrintErr("GameOver screen not found in main map!");
+		}
+	}
+
+	private void DebugIt(string message)
+	{
+		if (enableDebug) Debug.Print("GameRoot: " + message);
+	}
 }

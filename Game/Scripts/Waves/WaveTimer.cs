@@ -4,9 +4,11 @@ using Godot;
 
 public partial class WaveTimer : Node2D
 {
+	public bool disable	= false;
 	public int waveCounter = 1;
 	public int secondCounter = 0;
 	public int maxTime = 30;
+	public bool isPaused;
 	private Timer _waveTimer;
 	private Label _timeLeftLabel;
 	private Label _waveCounterLabel;
@@ -16,20 +18,8 @@ public partial class WaveTimer : Node2D
 
 	public override void _Ready()
 	{
-		// SORRY hat to change this because of the multiplayer stuff
-
-		// Find local player with entity map
-		var localId = Multiplayer.GetUniqueId();
-		if (!GameManager.Instance.Entities.TryGetValue(localId, out var playerNode))
-		{
-			GD.PrintErr($"WaveTimer: Cant find PlayerNode for ID {localId}");
-			return;
-		}
-
-		// Get cam from player node
-		var cam = playerNode.GetNode<Camera2D>("Camera2D");
-		_timeLeftLabel = cam.GetNode<Label>("TimeLeft");
-		_waveCounterLabel = cam.GetNode<Label>("WaveCounter");
+		_timeLeftLabel = GetNode<Label>("TimeLeft");
+		_waveCounterLabel = GetNode<Label>("WaveCounter");
 
 		// set values
 		_timeLeftLabel.Text = maxTime.ToString();
@@ -43,6 +33,8 @@ public partial class WaveTimer : Node2D
 
 	private void OnTimerTimeout()
 	{
+		if (disable) return;
+		
 		secondCounter++; // counts the seconds until the max_time is reached and a new wave begins
 		if (secondCounter >= maxTime)
 		{
@@ -55,7 +47,13 @@ public partial class WaveTimer : Node2D
 
 		_waveCounterLabel.Text = $"Wave: {waveCounter}";
 		_timeLeftLabel.Text = (maxTime - secondCounter).ToString();
-		if (_waveTimer.Paused) _timeLeftLabel.Text = "Grace Time";
+		if (_waveTimer.Paused) 
+		{
+			_timeLeftLabel.Text = "Grace Time";
+			isPaused = true;
+		} else{
+			isPaused = false;
+		}
 	}
 
 	public async Task PauseTimer(int time) // Flips the paused state of waveTimer

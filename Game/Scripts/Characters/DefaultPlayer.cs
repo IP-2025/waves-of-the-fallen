@@ -12,19 +12,23 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	[Export]
 	public int CurrentHealth { get; set; }
+	public long OwnerPeerId { get; set; }
 
 	public Node2D Joystick { get; set; }
 	private Camera2D camera;
 	private MultiplayerSynchronizer multiplayerSynchronizer;
 	public bool enableDebug = false;
 	
-	public PackedScene BowScene = GD.Load<PackedScene>("res://Scenes/Weapons/Bow.tscn");
+	public PackedScene BowScene = GD.Load<PackedScene>("res://Scenes/Weapons/bow.tscn");
+	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Scenes/Weapons/crossbow.tscn");
+	public PackedScene KunaiScene = GD.Load<PackedScene>("res://Scenes/Weapons/kunai.tscn");
 	private int weaponsEquipped = 0;
 
 	public override void _Ready()
 	{
 		base._Ready();
 
+		// Dynamische Charakterauswahl
 		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
 
@@ -49,9 +53,8 @@ public partial class DefaultPlayer : CharacterBody2D
 
 		AddToGroup("player");
 		CurrentHealth = MaxHealth;
-		Joystick = GetNode<Node2D>("Joystick");
 
-		 // Synchronize MaxHealth with the Health node
+		// Synchronize MaxHealth with the Health node
 		var healthNode = GetNodeOrNull<Health>("Health");
 		if (healthNode != null)
 		{
@@ -71,6 +74,14 @@ public partial class DefaultPlayer : CharacterBody2D
 		{
 			weaponSlot.AddChild(weapon);
 			weapon.Position = Vector2.Zero;
+
+			// for multiplayer
+			ulong id = weapon.GetInstanceId();
+			weapon.Name = $"Weapon_{id}";
+			weapon.SetMeta("OwnerId", OwnerPeerId);
+			weapon.SetMeta("SlotIndex", weaponsEquipped);
+			Server.Instance.Entities.Add((long)id, weapon);
+
 			weaponsEquipped++;
 		}
 	}
@@ -79,17 +90,19 @@ public partial class DefaultPlayer : CharacterBody2D
 	{
 		if (playerClass is Archer)
 			return BowScene.Instantiate() as Area2D;
-	
+		
+		if (playerClass is Assassin)
+			return KunaiScene.Instantiate() as Area2D;
 		// if (playerClass is Mage) return FireStaffScene.Instantiate() as Area2D;
-	
+
 		return null;
 	}
-	
+
 	public override void _Process(double delta)
 	{
 
 	}
-	
+
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 direction = Vector2.Zero;
@@ -148,7 +161,7 @@ public partial class DefaultPlayer : CharacterBody2D
 		{
 			Debug.Print(message);
 		}
-	}	
+	}
 	public virtual void Die()
 	{
 		GD.Print("Default death behavior – no animation");

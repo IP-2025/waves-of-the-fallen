@@ -25,6 +25,9 @@ properties/0/replication_mode = 1
 collision_mask = 256
 collision_priority = 2.0
 script = ExtResource("1_shc7e")
+Speed = null
+MaxHealth = null
+CurrentHealth = null
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 

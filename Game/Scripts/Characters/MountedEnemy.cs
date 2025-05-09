@@ -115,12 +115,17 @@ public partial class MountedEnemy : EnemyBase
 		}
 
 		riderInstance.Visible = true;
-		GetParent().AddChild(riderInstance);
+		// add rider deffered in next frame to prevent errors
+		GetParent().CallDeferred("add_child", riderInstance);
+		// check deffered if rider was added in next frame
+		CallDeferred(nameof(CheckRiderAdded), riderInstance);
 		riderInstance.GlobalPosition = GlobalPosition;
+	}
+		
 
-		if (riderInstance.GetParent() == null)
-		{
+	private void CheckRiderAdded(CharacterBody2D rider)
+	{
+		if (rider.GetParent() == null)
 			GD.PrintErr("Rider was not added to the scene!");
-		}
 	}
 }
