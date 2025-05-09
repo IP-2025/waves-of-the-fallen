@@ -20,34 +20,32 @@ public partial class Health : Node2D
 		health = max_health; // initialize health to max health
 	}
 
-	public void Damage(float damage) 
+	public void Damage(float damage)
 	{
-		if (disable) return; // for client side.. server handles the damage
+		doAnimation(); // client has to do damage animations
+
+		if (disable) return; // Client cant do damage to enemies... server handles the damage
+
 		health -= damage; // reduce health by damage amount
 		GD.Print($"Took damage: {damage}, current health: {health}");
-		
+	}
+
+	private void doAnimation()
+	{
+		// hit animation
 		if (GetParent() is EnemyBase enemy)
-		{
 			enemy.OnHit();
-		}
-		
+
+		// death animation
 		if (health <= 0)
-		{
 			// check if parent is DefaultPlayer
 			if (GetParent() is DefaultPlayer player)
-			{
 				player.Die(); // call Die() method if parent is DefaultPlayer
-			}
 			else if (GetParent() is EnemyBase deadEnemy)
-			{
-				deadEnemy.OnDeath(); 
-			}
+				deadEnemy.OnDeath();
 			else
-			{
 				GetParent().QueueFree(); // otherwise, free the parent node
-			}
 
 			EmitSignal(SignalName.HealthDepleted); // emit signal when health is depleted
-		}
 	}
 }
