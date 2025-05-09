@@ -1,0 +1,77 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0g5sdnvkhnoc"]
+
+[ext_resource type="Script" uid="uid://dp7ujpdjcjgbf" path="res://Scenes/Menu/RegisterScreen.cs" id="1_vqvvg"]
+
+[node name="RegisterScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vqvvg")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 651.0
+
+[node name="RegisterText" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -99.5
+offset_top = 15.0
+offset_right = 97.5
+offset_bottom = 84.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Register"
+
+[node name="NameField" type="LineEdit" parent="Panel"]
+offset_left = 310.0
+offset_top = 145.0
+offset_right = 846.0
+offset_bottom = 228.0
+placeholder_text = "Username"
+
+[node name="EmailField" type="LineEdit" parent="Panel"]
+offset_left = 312.0
+offset_top = 246.0
+offset_right = 848.0
+offset_bottom = 329.0
+placeholder_text = "Email"
+
+[node name="PasswordField" type="LineEdit" parent="Panel"]
+offset_left = 309.0
+offset_top = 354.0
+offset_right = 845.0
+offset_bottom = 437.0
+placeholder_text = "Password"
+secret = true
+
+[node name="RegisterButton" type="Button" parent="Panel"]
+offset_left = 518.0
+offset_top = 497.0
+offset_right = 626.0
+offset_bottom = 551.0
+text = "Register"
+
+[node name="RegisterRequest" type="HTTPRequest" parent="Panel"]
+
+[node name="BackButton" type="Button" parent="Panel"]
+offset_left = 24.0
+offset_top = 21.0
+offset_right = 156.0
+offset_bottom = 58.0
+text = "Back"
+
+[node name="ErrorLabel" type="Label" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_left = 318.0
+offset_top = 455.0
+offset_right = 843.0
+offset_bottom = 478.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)

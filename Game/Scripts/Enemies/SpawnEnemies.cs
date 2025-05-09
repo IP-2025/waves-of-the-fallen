@@ -16,21 +16,37 @@ public partial class SpawnEnemies : Node2D
 	private int enemyLimitIncrease = 10; // how much the enemyLimit increases per wave
 	private const int EnemyLimitMax = 30; // the maximum the enemy limit can reach
 	public DefaultPlayer Player { get; set; } // player instance 
+	private int players;
 
 	public override void _Ready()
 	{
 		timer = GetNode<Timer>("SpawnTimer");
-		timer.Timeout += OnTimerTimeout;
-
+		timer.Timeout += OnTimerTimeout; // timer event connected
+		players = GetTree().GetMultiplayer().GetPeers().Count();
+		timer.WaitTime = timer.WaitTime / players; // scale with players
 		LoadPatternPool(); // loads the pattern pool see method LoadPatternPool() and debug prints every found pattern and the associated spawning cost
 		foreach (KeyValuePair<PackedScene, float> pattern in patternPool)
 			Debug.Print("Pattern loaded: " + pattern.Key.Instantiate<Node2D>().SceneFilePath.GetFile() + " with spawningCost: " + pattern.Value);
 
-		waveTimer = GetTree().Root.GetNode<WaveTimer>("GameRoot/WaveTimer"); // loads waveTimer for current wave
+		waveTimer = FindNodeByType<WaveTimer>(GetTree().Root);
+		//waveTimer = GetTree().Root.GetNode<WaveTimer>("GameRoot/WaveTimer"); // loads waveTimer for current wave
 		waveTimer.WaveEnded += OnWaveEnd;
 		currentWave = waveTimer.waveCounter;
 
 		enemyLimit = Math.Min(enemyLimitIncrease * currentWave, EnemyLimitMax); // sets enemy limit, so a custom starting wave can be used at the beginning
+	}
+
+	private T FindNodeByType<T>(Node parent) where T : Node
+	{
+		foreach (Node child in parent.GetChildren())
+		{
+			if (child is T t)
+				return t;
+			var found = FindNodeByType<T>(child);
+			if (found != null)
+				return found;
+		}
+		return null;
 	}
 
 	private void OnTimerTimeout()
@@ -40,7 +56,7 @@ public partial class SpawnEnemies : Node2D
 
 	private void SpawnEnemy()
 	{
-		if (GetTree().GetNodesInGroup("Enemies").Count >= enemyLimit) // Checks if the enemy limit is reached and returns if too many enemies are spawned
+		if (GetTree().GetNodesInGroup("enemies").Count >= enemyLimit) // Checks if the enemy limit is reached and returns if too many enemies are spawned
 			return;
 
 		float spawnValue = GD.Randf() * currentWave; // generate a random spawnValue to determine the difficulty of the selected enemies
@@ -65,13 +81,27 @@ public partial class SpawnEnemies : Node2D
 
 		foreach (EnemyBase enemy in pattern.GetChildren()) // goes through all enemies in the pattern and assigns the player, speed, health and globalposition
 		{
+			//enemy.player = Player;
 			enemy.player = Player;
 			enemy.speed = enemy.speed * pattern.speedMultiplier;
 			enemy.GetNode<Health>("Health").max_health = enemy.GetNode<Health>("Health").max_health * pattern.healthMultiplier;
-			pattern.GlobalPosition = spawnPath.GlobalPosition;
+			//pattern.GlobalPosition = spawnPath.GlobalPosition;
+			enemy.GlobalPosition += spawnPath.GlobalPosition;
+
+			ulong id = enemy.GetInstanceId();
+			enemy.Name = $"Enemy_{id}";
+			Server.Instance.Entities[(long)id] = enemy;
+
+			var oldParent = enemy.GetParent();
+			oldParent.RemoveChild(enemy);
+			enemy.Owner = null;
+			
+
+			AddChild(enemy);
+			enemy.AddToGroup("enemies"); // added to enemies group
+
 		}
-		AddChild(pattern); // pattern gets spawned
-		//Debug.Print($"Spawned enemyPattern: {pattern.SceneFilePath.GetFile().Replace(".tscn", "")} with random value: {spawnValue:0.00}");
+		pattern.QueueRedraw();
 	}
 
 	private void LoadPatternPool() // loads patterns through the filepath below into the patternPool with their associated spawningCost
@@ -88,7 +118,6 @@ public partial class SpawnEnemies : Node2D
 	{
 		currentWave = waveTimer.waveCounter;
 		enemyLimit = Math.Min(enemyLimit + enemyLimitIncrease, EnemyLimitMax);
-		DeleteEmptyPatterns();
 		_ = GraceTime();
 	}
 
