@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b552j1ibqgcwt"]
+[gd_scene load_steps=9 format=3 uid="uid://dty50xa782ety"]
 
 [ext_resource type="Script" uid="uid://c2yj5jdve5wqt" path="res://Scripts/Characters/Assassin.cs" id="1_y3eth"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_slb6w"]

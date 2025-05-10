@@ -28,9 +28,34 @@ public partial class DefaultPlayer : CharacterBody2D
 	{
 		base._Ready();
 
-		// Dynamische Charakterauswahl
 		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+
+		GetNodeOrNull<Node2D>("Archer")?.Hide();
+		GetNodeOrNull<Node2D>("Assassin")?.Hide();
+		GetNodeOrNull<Node2D>("Knight")?.Hide();
+		GetNodeOrNull<Node2D>("Mage")?.Hide();
+
+		// Zeige nur den ausgewählten Charakter
+		string selectedClassNodeName = selectedCharacterId switch
+		{
+			1 => "Archer",
+			2 => "Assassin",
+			3 => "Knight",
+			4 => "Mage",
+			_ => "Archer" // Standardwert
+		};
+
+		var selectedClassNode = GetNodeOrNull<Node2D>(selectedClassNodeName);
+		if (selectedClassNode != null)
+		{
+			selectedClassNode.Show();
+			GD.Print($"Selected class: {selectedClassNodeName}");
+		}
+		else
+		{
+			GD.PrintErr($"Class node '{selectedClassNodeName}' not found!");
+		}
 
 		object playerClass = selectedCharacterId switch
 		{
@@ -53,6 +78,9 @@ public partial class DefaultPlayer : CharacterBody2D
 
 		AddToGroup("player");
 		CurrentHealth = MaxHealth;
+
+		OwnerPeerId = Multiplayer.GetUniqueId();
+		GD.Print($"OwnerPeerId set to: {OwnerPeerId}");
 
 		// Synchronize MaxHealth with the Health node
 		var healthNode = GetNodeOrNull<Health>("Health");

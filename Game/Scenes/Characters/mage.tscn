@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c41wl7gac2qcu"]
+[gd_scene load_steps=9 format=3 uid="uid://brtwb3l1ej7at"]
 
 [ext_resource type="Script" uid="uid://biegdkfmesh02" path="res://Scripts/Characters/Mage.cs" id="1_shc7e"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_55mar"]
@@ -25,9 +25,6 @@ properties/0/replication_mode = 1
 collision_mask = 256
 collision_priority = 2.0
 script = ExtResource("1_shc7e")
-Speed = null
-MaxHealth = null
-CurrentHealth = null
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 

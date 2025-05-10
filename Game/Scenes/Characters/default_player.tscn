@@ -1,9 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://cffgskcms870o"]
+[gd_scene load_steps=9 format=3 uid="uid://cffgskcms870o"]
 
 [ext_resource type="Script" uid="uid://bdkp0e6ivq2b5" path="res://Scripts/Characters/DefaultPlayer.cs" id="1_y2kgl"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_kjvlq"]
 [ext_resource type="Script" uid="uid://c7yits36f8kyt" path="res://Scripts/Characters/HealthBar.cs" id="3_jig1i"]
 [ext_resource type="PackedScene" uid="uid://56x8ud47qho" path="res://Scenes/Characters/archer.tscn" id="3_kjvlq"]
+[ext_resource type="PackedScene" uid="uid://dty50xa782ety" path="res://Scenes/Characters/assassin.tscn" id="5_jig1i"]
+[ext_resource type="PackedScene" uid="uid://brnmi011d55l7" path="res://Scenes/Characters/knight.tscn" id="6_ajyao"]
+[ext_resource type="PackedScene" uid="uid://brtwb3l1ej7at" path="res://Scenes/Characters/mage.tscn" id="7_bdmc5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2kgl"]
 size = Vector2(25, 36.2188)
@@ -65,3 +68,9 @@ shape = SubResource("RectangleShape2D_y2kgl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.75, 1.75)
+
+[node name="Assassin" parent="." instance=ExtResource("5_jig1i")]
+
+[node name="Knight" parent="." instance=ExtResource("6_ajyao")]
+
+[node name="Mage" parent="." instance=ExtResource("7_bdmc5")]
