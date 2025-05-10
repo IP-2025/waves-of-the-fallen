@@ -4,17 +4,21 @@ using System.Linq;
 
 public abstract partial class WeaponBase : Area2D
 {
-	protected AnimatedSprite2D _animatedSprite;
-
+	protected AnimatedSprite2D animatedSprite;
+	public override void _Ready()
+	{
+		//_animatedSprite = GetNodeOrNull<AnimatedSprite2D>("%Sprite");
+	}
 	public override void _PhysicsProcess(double delta)
 	{
 		var target = FindNearestEnemy();
 		if (target != null && TryGetPosition(target, out var position))
 		{
 			LookAt(position);
+			OnTargetInSight(target,position);
 		}
 	}
-	
+	protected abstract void OnTargetInSight(Node target, Vector2 targetPos);
 	protected Node FindNearestEnemy()
 	{
 		float closestDist = float.MaxValue;
@@ -48,7 +52,6 @@ public abstract partial class WeaponBase : Area2D
 				position = (Vector2)globalPosVariant;
 				return true;
 			}
-
 			Variant posVariant = obj.Get("position");
 			if (posVariant.VariantType == Variant.Type.Vector2)
 			{
@@ -58,3 +61,4 @@ public abstract partial class WeaponBase : Area2D
 		}
 		return false;
 	}
+}
