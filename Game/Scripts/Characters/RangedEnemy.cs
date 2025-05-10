@@ -34,19 +34,9 @@ public partial class RangedEnemy : EnemyBase
 		set => cooldownTimer = value;
 	}
 
-	public override void _PhysicsProcess(double delta)
+	protected override void HandleMovement(Vector2 direction)
 	{
-		FindNearestPlayer();
-		if (player == null)
-		{
-			Velocity = Vector2.Zero;
-			MoveAndSlide();
-			return;
-		}
-
 		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
-		LookAt(player.GlobalPosition);
-
 		if (dist > stopDistance)
 		{
 			Vector2 toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
@@ -67,8 +57,6 @@ public partial class RangedEnemy : EnemyBase
 				cooldownTimer = rangedAttackCooldown;
 			}
 		}
-
-		MoveAndSlide();
 	}
 
 	/// <summary>
