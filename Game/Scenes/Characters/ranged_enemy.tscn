@@ -1,7 +1,9 @@
 [gd_scene load_steps=13 format=3 uid="uid://cpgem5lghshsj"]
 
+
 [ext_resource type="Script" uid="uid://5j7tqrkdib4s" path="res://Scripts/Characters/RangedEnemy.cs" id="1_1deiu"]
 [ext_resource type="Texture2D" uid="uid://5cbcok6lm35m" path="res://Assets/Characters/place_holder/ranged_enemy_placeholder.png" id="1_3wwps"]
+[ext_resource type="PackedScene" uid="uid://cthg4llu6u25n" path="res://Scenes/Characters/arrow.tscn" id="2_e5mcm"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_u2wu2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1deiu"]
@@ -81,6 +83,8 @@ collision_layer = 16
 collision_mask = 17
 script = ExtResource("1_1deiu")
 stopDistance = 180.0
+damage = 3.0
+rangedAttackCooldown = 1.5
 speed = 150.0
 damage = 5.0
 animationPath = NodePath("RangedEnemyAnimation")

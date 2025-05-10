@@ -3,8 +3,8 @@ using System;
 
 public partial class JoystickControl : Control
 {
-    public Vector2 PosVector { get; set; } = Vector2.Zero;
+	public Vector2 PosVector { get; set; } = Vector2.Zero;
 
-    [Export]
-    public float Deadzone { get; set; } = 15.0f;
+	[Export]
+	public float Deadzone { get; set; } = 15.0f;
 }

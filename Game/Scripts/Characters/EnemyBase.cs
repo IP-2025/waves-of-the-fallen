@@ -2,18 +2,29 @@ using Godot;
 using System;
 using System.Diagnostics;
 
+/// <summary>
+/// Base class for all enemy types in the game.
+/// Handles movement, attack cooldowns, and player detection.
+/// 
+/// Configuration:
+/// - speed: Movement speed of the enemy.
+/// - damage: Damage dealt by the enemy on attack.
+/// - attacksPerSecond: Number of attacks the enemy can perform per second.
+/// </summary>
 public abstract partial class EnemyBase : CharacterBody2D
 {
+
 	public bool enableDebug = false;
-	// Can be adapted in inspector for each deriving enemy
+
 	[Export] public float speed = 200f;
 	[Export] public float damage = 10f;
 	[Export] public float attacksPerSecond = 1.5f;
 	[Export] private NodePath animationPath;
 	
+
 	public DefaultPlayer player { get; set; }
-	protected float attackCooldown;
-	protected float timeUntilAttack;
+	protected virtual float attackCooldown { get; set; }
+	protected virtual float timeUntilAttack { get; set; }
 	protected bool withinAttackRange = false;
 	
 	private AnimationHandler animationHandler;
@@ -89,6 +100,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 		Velocity = direction.Normalized() * speed;
 	}
 
+
 	public virtual void OnAttackRangeBodyEnter(Node2D body)
 	{
 		if (body.IsInGroup("player"))
@@ -107,7 +119,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 			DebugIt("Player left range.");
 		}
 	}
-	
+
 	public void OnHit()
 	{
 		animationHandler.SetHit();
@@ -118,7 +130,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 		Velocity = Vector2.Zero;
 		animationHandler.SetDeath();
 	}
-	
+
 	protected void FindNearestPlayer()
 	{
 		float closestDist = float.MaxValue;
@@ -139,8 +151,8 @@ public abstract partial class EnemyBase : CharacterBody2D
 		player = closestPlayer;
 	}
 
-	    private void DebugIt(string message)
+private void DebugIt(string message)
     {
-        if (enableDebug) Debug.Print("EnemyBase: " + message);
+    if (enableDebug) Debug.Print("EnemyBase: " + message);
     }
 }
