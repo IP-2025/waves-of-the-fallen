@@ -52,7 +52,6 @@ public partial class CharacterManager : Node
 		config.SetValue($"{characterId}", "intelligence", intelligence);
 		config.SetValue($"{characterId}", "level", level);
 		config.SetValue($"{characterId}", "unlocked", unlocked);
-		
 		config.Save(SettingsPath);
 	}
 
@@ -104,5 +103,17 @@ public partial class CharacterManager : Node
 	public int LoadLastSelectedCharacterID()
 	{
 		return (int)config.GetValue(Section, Key, 1);
+	}
+
+	public void SaveSelectedCharacter(string characterName)
+	{
+		config.SetValue(Section, "SelectedCharacter", characterName);
+		config.Save(SettingsPath);
+		GD.Print($"Charakter gespeichert: {characterName}");
+	}
+
+	public string LoadSelectedCharacter()
+	{
+		return (string)config.GetValue(Section, "SelectedCharacter", "DefaultPlayer");
 	}
 }

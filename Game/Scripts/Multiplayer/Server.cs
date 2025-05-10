@@ -13,6 +13,9 @@ public partial class Server : Node
     {
         { "res://Scenes/Characters/default_player.tscn", EntityType.DefaultPlayer },
         { "res://Scenes/Characters/archer.tscn", EntityType.Archer },
+        { "res://Scenes/Characters/knight.tscn", EntityType.Knight },
+        { "res://Scenes/Characters/assassin.tscn", EntityType.Assassin }, // Hinzugefügt
+        { "res://Scenes/Characters/mage.tscn", EntityType.Mage },         // Hinzugefügt
         { "res://Scenes/Characters/default_enemy.tscn", EntityType.DefaultEnemy },
         { "res://Scenes/Characters/mounted_enemy.tscn", EntityType.MountedEnemy },
         { "res://Scenes/Characters/ranged_enemy.tscn", EntityType.RangedEnemy },
@@ -21,8 +24,8 @@ public partial class Server : Node
         { "res://Scenes/Weapons/bow_arrow.tscn", EntityType.BowArrow },
         { "res://Scenes/Weapons/crossbow.tscn", EntityType.Crossbow },
         { "res://Scenes/Weapons/crossbow_arrow.tscn", EntityType.CrossbowArrow },
-        { "res://Scenes/Weapons/kunai.tscn", EntityType.Kunai},
-        { "res://Scenes/Weapons/kunai_projectile.tscn", EntityType.KunaiProjectile},
+        { "res://Scenes/Weapons/kunai.tscn", EntityType.Kunai },
+        { "res://Scenes/Weapons/kunai_projectile.tscn", EntityType.KunaiProjectile },
     };
     public override void _Ready()
     {
