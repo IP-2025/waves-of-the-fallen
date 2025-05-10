@@ -4,7 +4,9 @@ using System.Linq;
 
 public abstract partial class RangedWeapon : Area2D
 {
-    protected AnimatedSprite2D _animatedSprite;
+    protected AnimatedSprite2D animatedSprite;
+    protected float WeaponRange = 800f;
+    protected PackedScene projectileScene = null;
 
     public override void _PhysicsProcess(double delta)
     {
@@ -20,13 +22,14 @@ public abstract partial class RangedWeapon : Area2D
         float closestDist = float.MaxValue;
         Node closestEnemy = null;
 
-        foreach (Node node in GetTree().GetNodesInGroup("Enemies"))
+        foreach (Node node in GetTree().GetNodesInGroup("enemies"))
         {
             if (node is not EnemyBase enemyNode)
                 continue;
 
             float dist = GlobalPosition.DistanceTo(enemyNode.GlobalPosition);
-            if (dist < closestDist)
+
+            if (dist < closestDist && dist <= WeaponRange)
             {
                 closestDist = dist;
                 closestEnemy = enemyNode;
@@ -59,7 +62,16 @@ public abstract partial class RangedWeapon : Area2D
         return false;
     }
 
-    protected abstract void Shoot();
+    protected void Shoot()
+    {
+        Area2D projectileInstance = projectileScene.Instantiate() as Area2D;
+        Marker2D shootingPoint = GetNode<Marker2D>("ShootingPoint");
+        projectileInstance.GlobalPosition = shootingPoint.GlobalPosition;
+        projectileInstance.GlobalRotation = shootingPoint.GlobalRotation;
+        
+        GetTree().CurrentScene.AddChild(projectileInstance);
+
+    }
 
     
 }

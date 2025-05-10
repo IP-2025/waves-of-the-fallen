@@ -282,13 +282,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_foon8")
 text = "Play
 "
 
-[node name="MarginContainer2_VBoxContainer_VBoxContainer#play" type="Button" parent="."]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 25
-text = "Play"
-
 [node name="IP_IO" type="LineEdit" parent="."]
 layout_mode = 1
 anchors_preset = -1

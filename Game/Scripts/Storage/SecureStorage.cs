@@ -2,7 +2,7 @@
 using Godot;
 using System;
 
-public static class SecureStorage
+public partial class SecureStorage: Node
 {
 	private const string TokenFileName = "token.txt";
 	private const string TokenPath     = "user://" + TokenFileName;

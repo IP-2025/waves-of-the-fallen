@@ -1,10 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import healthRouter from './routes/health';
-import authRouter from './routes/auth';
-import { PREFIX_ROUTE } from './core/url';
+import registerRoutes from './routes';
 import { errorHandler } from './middleware/errorHandler';
-import protectedRouter from './routes/protected';
 
 dotenv.config();
 
@@ -12,10 +9,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use(`${PREFIX_ROUTE}/protected`, protectedRouter);
-
-app.use(`${PREFIX_ROUTE}/healthz`, healthRouter);
-app.use(`${PREFIX_ROUTE}/auth`, authRouter);
+registerRoutes(app);
 
 app.use(errorHandler);
 

@@ -64,7 +64,7 @@ public partial class JoyHandle : Sprite2D
 		SetJoystickPosVector(posVector);
 	}
 
-	private void SetJoystickPosVector(Vector2 posVector)
+	public void SetJoystickPosVector(Vector2 posVector)
 	{
 		if (_parent is Joystick joystick)
 		{

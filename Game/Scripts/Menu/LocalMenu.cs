@@ -6,25 +6,24 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 public partial class LocalMenu : Control
 {
-  public bool enableDebug = true;
+  public bool enableDebug = false;
 
   private Button joinButton;
   private Button hostButton;
   private Button playButton;
   private LineEdit ipIO;
-  private readonly int PORT = 9999;
+  private bool isHost = false;
   private RichTextLabel currentPlayers;
   //private ServerBootstrapping server;
 
 
   public override void _Ready()
   {
-    //LocalMultiplayer = new LocalMultiplayer();
-    //AddChild(LocalMultiplayer); // fügt LocalMultiplayer als Child hinzu
-
     joinButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/join");
     hostButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/host");
     playButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/play");
@@ -36,6 +35,14 @@ public partial class LocalMenu : Control
     playButton.Disabled = true;
   }
 
+  public override void _Process(double delta)
+  {
+    if (!isHost) return;
+    
+    var peers = Multiplayer.GetPeers().ToList();
+
+    currentPlayers.Text = $"Players: {peers.Count}\n" + string.Join("\n", peers.Select(id => $"ID {id}"));
+  }
 
   private void _on_button_back_local_pressed()
   {
@@ -47,6 +54,9 @@ public partial class LocalMenu : Control
 
   private void _on_join_button_pressed()
   {
+    string ipv4Pattern = @"^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$";
+    if (!Regex.IsMatch(ipIO.Text, ipv4Pattern)) return;
+
     NetworkManager.Instance.InitClient(ipIO.Text);
 
     // disable join and host button
@@ -60,8 +70,23 @@ public partial class LocalMenu : Control
 
   private void _on_host_button_pressed()
   {
-    NetworkManager.Instance.InitServer();
+    isHost = true;
     ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show server ip in input field
+    NetworkManager.Instance.StartHeadlessServer(true);
+
+    if (NetworkManager.Instance.IsPortOpen(NetworkManager.Instance.GetServerIPAddress(), NetworkManager.Instance.RPC_PORT, 500))
+    {
+      NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
+    }
+    else
+    {
+      var timer = new Timer();
+      AddChild(timer);
+      timer.WaitTime = 1;
+      timer.OneShot = true;
+      timer.Timeout += () => NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
+      timer.Start();
+    }
 
     // disable host and join button and enable play button
     hostButton.Visible = false;
@@ -77,12 +102,8 @@ public partial class LocalMenu : Control
 
   private void _on_play_button_pressed()
   {
-    // change scene to game
-    var gameScene = GD.Load<PackedScene>("res://Scenes/GameRoot/GameRoot.tscn");
-    gameScene.Instantiate<Node>();
-    GetTree().ChangeSceneToPacked(gameScene);
+    NetworkManager.Instance.Rpc("NotifyGameStart");
   }
-
 
   private void DebugIt(string message)
   {

@@ -33,7 +33,6 @@ beforeEach(async () => {
         });
     expect(loginResponse.status).toBe(200); // Correct status for login
     validToken = loginResponse.body.token;
-   // TODO Set Unlocked Charcters
 
     await AppDataSource.getRepository(UnlockedCharacter).insert({player_id: registeredPlayerId, character_id: '1', level: 1});
 
@@ -45,7 +44,7 @@ describe('POST /getAllUnlockedCharacters', () => {
 
         const AllCharacters = await request(app)
             .post('/api/v1/protected/getAllUnlockedCharacters')
-            //.set('Authorization', `Bearer ${validToken}`)
+            .set('Authorization', `Bearer ${validToken}`)
         expect(AllCharacters.status).toBe(200);
         expect(AllCharacters.body).toEqual(
             expect.arrayContaining([

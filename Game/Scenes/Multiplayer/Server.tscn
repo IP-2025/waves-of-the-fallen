@@ -1,11 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dbk3ecgo2rl50"]
+[gd_scene load_steps=2 format=3 uid="uid://bty6yxlw5ygya"]
 
-[ext_resource type="Script" path="res://Scripts/Multiplayer/ServerBootstrapping.cs" id="1_m8b8j"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_71xlt"]
+[ext_resource type="Script" uid="uid://iolihk8tjxty" path="res://Scripts/Multiplayer/Server.cs" id="1_m8b8j"]
 
 [node name="Server" type="Node"]
 script = ExtResource("1_m8b8j")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_71xlt")
