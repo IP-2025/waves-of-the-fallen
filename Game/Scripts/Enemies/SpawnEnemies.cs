@@ -14,16 +14,16 @@ public partial class SpawnEnemies : Node2D
 	private int graceTime = 10; // graceTime after each wave
 	private int enemyLimit = 10; // enemyLimit, which can scale with currentWave
 	private int enemyLimitIncrease = 10; // how much the enemyLimit increases per wave
-	private const int EnemyLimitMax = 30; // the maximum the enemy limit can reach
+	private int enemyLimitMax = 30; // the maximum the enemy limit can reach
 	public DefaultPlayer Player { get; set; } // player instance 
-	private int players;
+	private int playerCount;
 
 	public override void _Ready()
 	{
 		timer = GetNode<Timer>("SpawnTimer");
 		timer.Timeout += OnTimerTimeout; // timer event connected
-		players = GetTree().GetMultiplayer().GetPeers().Count();
-		timer.WaitTime = timer.WaitTime / players; // scale with players
+		playerCount = GetTree().GetMultiplayer().GetPeers().Count();
+		timer.WaitTime = timer.WaitTime / playerCount; // scale with players
 		LoadPatternPool(); // loads the pattern pool see method LoadPatternPool() and debug prints every found pattern and the associated spawning cost
 		foreach (KeyValuePair<PackedScene, float> pattern in patternPool)
 			Debug.Print("Pattern loaded: " + pattern.Key.Instantiate<Node2D>().SceneFilePath.GetFile() + " with spawningCost: " + pattern.Value);
@@ -33,7 +33,8 @@ public partial class SpawnEnemies : Node2D
 		waveTimer.WaveEnded += OnWaveEnd;
 		currentWave = waveTimer.waveCounter;
 
-		enemyLimit = Math.Min(enemyLimitIncrease * currentWave, EnemyLimitMax); // sets enemy limit, so a custom starting wave can be used at the beginning
+		enemyLimit = Math.Min(enemyLimitIncrease * currentWave, enemyLimitMax); // sets enemy limit, so a custom starting wave can be used at the beginning
+		enemyLimitMax += 5 * (playerCount - 1); // increase max ammount of enemies with playerCount
 	}
 
 	private T FindNodeByType<T>(Node parent) where T : Node
@@ -59,23 +60,10 @@ public partial class SpawnEnemies : Node2D
 		if (GetTree().GetNodesInGroup("enemies").Count >= enemyLimit) // Checks if the enemy limit is reached and returns if too many enemies are spawned
 			return;
 
-		float spawnValue = GD.Randf() * currentWave; // generate a random spawnValue to determine the difficulty of the selected enemies
-
 		PathFollow2D spawnPath = GetNode<PathFollow2D>("Path2D/PathFollow2D"); // gets a random starting position, where the enemies are spawned
 		spawnPath.ProgressRatio = GD.Randf();
 
-		Dictionary<PackedScene, float> patternPoolCopy = patternPool; // copy of patternPool so the loaded patterns don't get removed
-		patternPoolCopy = patternPoolCopy.
-			Where(i => i.Key.Instantiate<EnemyPattern>().minWave <= currentWave && i.Key.Instantiate<EnemyPattern>().maxWave >= currentWave). // look for patterns in the correct wave number range
-			ToDictionary(i => i.Key, i => i.Value);
-
-		patternPoolCopy = patternPoolCopy.
-			Where(i => i.Value == patternPoolCopy.FirstOrDefault(i => i.Value > spawnValue, patternPoolCopy.Last()).Value). // looks the next hightest spawncost above spawnValue, if none are found the highest in patternPoolCopy is used
-			ToDictionary(i => i.Key, i => i.Value);
-
-		EnemyPattern pattern = patternPoolCopy. // instantiates the found pattern as EnemyPattern
-			ElementAt((int)(GD.Randf() * patternPoolCopy.Count())). // gets a random remaining pattern from the remaining ones (e.g. if 2 patterns with spawningCost 1 are remaining a random one will be drawn)
-			Key.Instantiate<EnemyPattern>();
+		EnemyPattern pattern = getPatternFromPool();
 
 		pattern.AddToGroup("EnemyPattern"); // adds the pattern to EnemyPattern group, so it can be cleaned up later on
 
@@ -95,7 +83,7 @@ public partial class SpawnEnemies : Node2D
 			var oldParent = enemy.GetParent();
 			oldParent.RemoveChild(enemy);
 			enemy.Owner = null;
-			
+
 
 			AddChild(enemy);
 			enemy.AddToGroup("enemies"); // added to enemies group
@@ -117,7 +105,7 @@ public partial class SpawnEnemies : Node2D
 	private void OnWaveEnd() // refreshes the current wave value, calculates the enemy limit, deletes empty patterns and starts a grace time
 	{
 		currentWave = waveTimer.waveCounter;
-		enemyLimit = Math.Min(enemyLimit + enemyLimitIncrease, EnemyLimitMax);
+		enemyLimit = Math.Min(enemyLimit + enemyLimitIncrease, enemyLimitMax);
 		_ = GraceTime();
 	}
 
@@ -126,12 +114,31 @@ public partial class SpawnEnemies : Node2D
 		//Debug.Print($"Starting {graceTime} seconds of grace time");
 		timer.Paused = true;
 		await waveTimer.PauseTimer(graceTime);
-		await ToSignal(GetTree().CreateTimer(graceTime), SceneTreeTimer.SignalName.Timeout);
 		timer.Paused = false;
 		//Debug.Print("Grace time has ended");
 	}
 
-	private void DeleteEmptyPatterns() // cleans up EnemyPattern nodes, which don't have any children so the NodeTree doesn't get cluttered with them
+	private EnemyPattern getPatternFromPool() {
+
+		float spawnValue = GD.Randf() * currentWave; // generate a random spawnValue to determine the difficulty of the selected enemies
+
+		Dictionary<PackedScene, float> patternPoolCopy = patternPool; // copy of patternPool so the loaded patterns don't get removed
+		patternPoolCopy = patternPoolCopy.
+			Where(i => i.Key.Instantiate<EnemyPattern>().minWave <= currentWave && i.Key.Instantiate<EnemyPattern>().maxWave >= currentWave). // look for patterns in the correct wave number range
+			ToDictionary(i => i.Key, i => i.Value);
+
+		patternPoolCopy = patternPoolCopy.
+			Where(i => i.Value == patternPoolCopy.FirstOrDefault(i => i.Value > spawnValue, patternPoolCopy.Last()).Value). // looks the next hightest spawncost above spawnValue, if none are found the highest in patternPoolCopy is used
+			ToDictionary(i => i.Key, i => i.Value);
+
+		return patternPoolCopy. // instantiates the found pattern as EnemyPattern
+			ElementAt((int)(GD.Randf() * patternPoolCopy.Count())). // gets a random remaining pattern from the remaining ones (e.g. if 2 patterns with spawningCost 1 are remaining a random one will be drawn)
+			Key.Instantiate<EnemyPattern>();
+	}
+
+
+	// has to be tested if enemypattern nodes exist, can be removed if they never get added to the gameroot
+	private void deleteEmptyPatterns() // cleans up EnemyPattern nodes, which don't have any children so the NodeTree doesn't get cluttered with them
 	{
 		if (GetTree().GetNodesInGroup("EnemyPattern") != null)
 		{
