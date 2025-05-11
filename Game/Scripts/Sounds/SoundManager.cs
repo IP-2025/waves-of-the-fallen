@@ -5,7 +5,7 @@ public partial class SoundManager : Node2D
 {
 	public static SoundManager Instance;
 
-	private AudioStreamPlayer2D _sfxPlayer;
+	//private AudioStreamPlayer2D _sfxPlayer;
 	private AudioStreamPlayer2D _musicPlayer;
 	private AudioStreamPlayer2D _buttonPlayer;
 
@@ -15,24 +15,17 @@ public partial class SoundManager : Node2D
 		{
 			Instance = this;
 		}
-		_sfxPlayer = GetNode<AudioStreamPlayer2D>("EnemyHurt");
 		_musicPlayer = GetNode<AudioStreamPlayer2D>("MusicPlayer");
 		_buttonPlayer = GetNode<AudioStreamPlayer2D>("ButtonSound");
 	}
 
-	public void PlaySFX(AudioStream stream)
-	{
-		_sfxPlayer.Stream = stream;
-		_sfxPlayer.Play();
-	}
-
-	public void PlaySoundAtPosition(AudioStream stream, Vector2 position, float volumeDb = 0.0f)
+	public void PlaySoundAtPosition(String name, Vector2 position, float volumeDb = 0.0f)
 	{
 		AudioStreamPlayer2D player = new AudioStreamPlayer2D();
 		AddChild(player); 
 
 		player.Position = position;
-		player.Stream = stream;
+		player.Stream = GD.Load<AudioStream>("res://Assets/Sounds/" +  name +".wav");
 		player.VolumeDb = volumeDb;
 
 		player.Play();

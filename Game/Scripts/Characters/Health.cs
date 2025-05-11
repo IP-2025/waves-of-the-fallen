@@ -29,7 +29,7 @@ public partial class Health : Node2D
 		{
 			//Debug.Print(GetParent().Name);
 			Node2D entity = (Node2D)GetParent();
-			SoundManager.Instance.PlaySoundAtPosition(GD.Load<AudioStream>("res://Assets/Sounds/test.wav"), entity.Position);
+			SoundManager.Instance.PlaySoundAtPosition("enemyHurt", entity.Position);
 			//SoundManager.Instance.PlaySFX(GD.Load<AudioStream>("res://Assets/Sounds/test.wav"));
 			
 			
