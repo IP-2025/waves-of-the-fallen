@@ -10,7 +10,7 @@ using System.Text;
 // Autoload-Node: manages Netzwerk, Tick-Loop
 public partial class NetworkManager : Node
 {
-    public bool enableDebug = false;
+    public bool enableDebug = true;
     [Export] public int RPC_PORT = 9999;   // ENet for RPC
     [Export] public int UDP_PORT = 3000;   // PacketPeerUDP for game data
 
@@ -35,6 +35,9 @@ public partial class NetworkManager : Node
     public static NetworkManager Instance { get; private set; }
     private Client client;
     private Server server;
+    // Server ready signal
+    [Signal]
+    public delegate void HeadlessServerInitializedEventHandler();
 
 
     public override void _Ready()
@@ -143,69 +146,69 @@ public partial class NetworkManager : Node
         DebugIt("Client connecting to: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + address);
     }
 
-  /*   public void InitHost() // client and server for local multiplayer
-    {
-        _isHost = true;
+    /*   public void InitHost() // client and server for local multiplayer
+      {
+          _isHost = true;
 
-        server = new Server();
-        AddChild(server);
-        // start rpc
-        _rpcServerPeer = new ENetMultiplayerPeer();
-        // test if address and port is valid / open
-        var err = _rpcServerPeer.CreateServer(RPC_PORT, maxClients: 4); // max 4 clients
-        if (err != Error.Ok)
-        {
-            DebugIt("Failed to create RPC server, quitting game." + err);
-            GetTree().Quit();
-            return;
-        }
+          server = new Server();
+          AddChild(server);
+          // start rpc
+          _rpcServerPeer = new ENetMultiplayerPeer();
+          // test if address and port is valid / open
+          var err = _rpcServerPeer.CreateServer(RPC_PORT, maxClients: 4); // max 4 clients
+          if (err != Error.Ok)
+          {
+              DebugIt("Failed to create RPC server, quitting game." + err);
+              GetTree().Quit();
+              return;
+          }
 
-        // start udp server
-        _udpServer = new UdpServer();
-        err = _udpServer.Listen((ushort)UDP_PORT);
-        if (err != Error.Ok)
-        {
-            DebugIt("Failed to bind UDP port: " + err);
-            GetTree().Quit();
-            return;
-        }
-        DebugIt("Server startet on port: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + "127.0.0.1");
+          // start udp server
+          _udpServer = new UdpServer();
+          err = _udpServer.Listen((ushort)UDP_PORT);
+          if (err != Error.Ok)
+          {
+              DebugIt("Failed to bind UDP port: " + err);
+              GetTree().Quit();
+              return;
+          }
+          DebugIt("Server startet on port: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + "127.0.0.1");
 
-        // connect rpc client (localhost)
-        client = new Client();
-        AddChild(client);
-        _rpcClientPeer = new ENetMultiplayerPeer();
-        err = _rpcClientPeer.CreateClient("127.0.0.1", RPC_PORT);
-        if (err != Error.Ok)
-        {
-            DebugIt($"Host: ENet-Client failed: {err}");
-            GetTree().Quit();
-            return;
-        }
-        GetTree().GetMultiplayer().MultiplayerPeer = _rpcClientPeer;
-        GetTree().GetMultiplayer().PeerConnected += id => DebugIt($"PeerConnected: {id}");
-        DebugIt("Host: ENet-Client connected to: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + "127.0.0.1");
-
-
-        // connect udp client (localhost)
-        _udpClientPeer = new PacketPeerUdp();
-        err = _udpClientPeer.ConnectToHost("127.0.0.1", UDP_PORT);
-        if (err != Error.Ok)
-        {
-            GD.PrintErr($"UDP-Connect fehlgeschlagen: {err}");
-            return;
-        }
+          // connect rpc client (localhost)
+          client = new Client();
+          AddChild(client);
+          _rpcClientPeer = new ENetMultiplayerPeer();
+          err = _rpcClientPeer.CreateClient("127.0.0.1", RPC_PORT);
+          if (err != Error.Ok)
+          {
+              DebugIt($"Host: ENet-Client failed: {err}");
+              GetTree().Quit();
+              return;
+          }
+          GetTree().GetMultiplayer().MultiplayerPeer = _rpcClientPeer;
+          GetTree().GetMultiplayer().PeerConnected += id => DebugIt($"PeerConnected: {id}");
+          DebugIt("Host: ENet-Client connected to: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + "127.0.0.1");
 
 
-        // send hello handshake to server
-        var hello = Encoding.UTF8.GetBytes("HELLO");
-        _udpClientPeer.PutPacket(hello);
+          // connect udp client (localhost)
+          _udpClientPeer = new PacketPeerUdp();
+          err = _udpClientPeer.ConnectToHost("127.0.0.1", UDP_PORT);
+          if (err != Error.Ok)
+          {
+              GD.PrintErr($"UDP-Connect fehlgeschlagen: {err}");
+              return;
+          }
 
-        // we are now both server and client
-        DebugIt("Host started (Server+Client) on localhost");
 
-        _readyForUdp = true;
-    } */
+          // send hello handshake to server
+          var hello = Encoding.UTF8.GetBytes("HELLO");
+          _udpClientPeer.PutPacket(hello);
+
+          // we are now both server and client
+          DebugIt("Host started (Server+Client) on localhost");
+
+          _readyForUdp = true;
+      } */
 
     public void StartHeadlessServer(bool headless)
     {
@@ -253,6 +256,8 @@ public partial class NetworkManager : Node
         process.Start();
         process.BeginOutputReadLine();
         process.BeginErrorReadLine();
+
+        EmitSignal(nameof(HeadlessServerInitialized));
     }
 
     private void StartAutoShutdownTimer()
@@ -402,6 +407,15 @@ public partial class NetworkManager : Node
         DebugIt($"NotifyGameStart called by server? {_isServer} host? {_isHost} (PeerID: {peerId})");
 
         _gameRunning = true;
+    }
+
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+    public void SelectCharacter(int selectedCharacterId)
+    {
+        DebugIt("Player selectged: " + selectedCharacterId);
+        long peerId = Multiplayer.GetRemoteSenderId();
+        Server.Instance.PlayerSelections[peerId] = selectedCharacterId;
+
     }
 
     public void NotifyGameStartUDP()

@@ -20,28 +20,41 @@ public partial class OnlineLocalMenu : Control
 
   private void _on_button_solo_pressed()
   {
+    Button soloButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2/Button_Solo");
+    soloButton.Disabled = true;
     NetworkManager.Instance.StartHeadlessServer(true);
+  }
 
-    if (NetworkManager.Instance.IsPortOpen(NetworkManager.Instance.GetServerIPAddress(), NetworkManager.Instance.RPC_PORT, 500))
+  private void OnHeadlessServerInitialized()
+  {
+    var timer = new Timer();
+    AddChild(timer);
+    timer.WaitTime = 0.5f;
+    timer.OneShot = true;
+
+    timer.Timeout += () =>
     {
       NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
-    }
-    else
-    {
-      var timer = new Timer();
-      AddChild(timer);
-      timer.WaitTime = 0.5f;
-      timer.OneShot = true;
-      timer.Timeout += () => NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
-      timer.Start();
-    }
 
-    var timer2 = new Timer();
-      AddChild(timer2);
-      timer2.WaitTime = 1;
-      timer2.OneShot = true;
-      timer2.Timeout += () => NetworkManager.Instance.Rpc("NotifyGameStart");
-      timer2.Start();
-    
+      var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
+      int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+
+      Timer gameStartTimer = new Timer();
+      AddChild(gameStartTimer);
+      gameStartTimer.WaitTime = 0.5f;
+      gameStartTimer.OneShot = true;
+      gameStartTimer.Timeout += () => {
+        NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
+        NetworkManager.Instance.Rpc("NotifyGameStart");
+      };
+      gameStartTimer.Start();
+    };
+
+    timer.Start();
+  }
+
+  public override void _ExitTree()
+  {
+    NetworkManager.Instance.HeadlessServerInitialized -= OnHeadlessServerInitialized;
   }
 }
