@@ -50,7 +50,7 @@ public partial class GameRoot : Node
 
 	public void SpawnPlayer(long peerId)
 	{
-		var player = GD.Load<PackedScene>("res://Scenes/Characters/default_player.tscn").Instantiate<DefaultPlayer>();
+		var player = GD.Load<PackedScene>("res://Scenes/Characters/mage.tscn").Instantiate<DefaultPlayer>();
 
 		int characterId = Server.Instance.PlayerSelections[peerId];
 		switch (characterId)
@@ -89,6 +89,7 @@ public partial class GameRoot : Node
 			// Add joystick to player
 			var joystick = GD.Load<PackedScene>("res://Scenes/Joystick/joystick.tscn").Instantiate<Node2D>();
 			player.AddChild(joystick);
+			player.Joystick = joystick;
 			var WaveTimer = GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
 			player.GetNode<Camera2D>("Camera2D").AddChild(WaveTimer);
 			AddChild(player);

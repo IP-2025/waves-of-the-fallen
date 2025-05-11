@@ -6,7 +6,7 @@ using System.Security;
 
 public partial class Client : Node
 {
-    bool enableDebug = false;
+    bool enableDebug = true;
     private Camera2D _camera;
     private bool _hasJoystick = false;
     private bool _waveTimerReady = false;
@@ -243,7 +243,7 @@ public partial class Client : Node
 
     private void UpdateTransform(Node2D inst, EntitySnapshot entity)
     {
-        if (GodotObject.IsInstanceValid(inst))
+        if (IsInstanceValid(inst))
         {
             inst.GlobalPosition = entity.Position;
             inst.Rotation = entity.Rotation;
@@ -272,8 +272,13 @@ public partial class Client : Node
 
     private void ChangeCamera(Node2D inst, EntitySnapshot entity)
     {
+        bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
+                            || entity.Type == EntityType.Archer
+                            || entity.Type == EntityType.Knight
+                            || entity.Type == EntityType.Mage
+                            || entity.Type == EntityType.Assassin;
         // only for local / this clients player
-        if (entity.Type != EntityType.DefaultPlayer && entity.Type != EntityType.Archer)
+        if (!isPlayerType || entity.NetworkId != Multiplayer.GetUniqueId())
             return;
 
         if (entity.NetworkId == Multiplayer.GetUniqueId())

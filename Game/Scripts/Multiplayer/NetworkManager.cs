@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 // Autoload-Node: manages Netzwerk, Tick-Loop
 public partial class NetworkManager : Node
 {
-    public bool enableDebug = true;
+    public bool enableDebug = false;
     [Export] public int RPC_PORT = 9999;   // ENet for RPC
     [Export] public int UDP_PORT = 3000;   // PacketPeerUDP for game data
 
@@ -369,13 +369,12 @@ public partial class NetworkManager : Node
         _gameRunning = true;
     }
 
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false)]
     public void SelectCharacter(int selectedCharacterId)
     {
-        DebugIt("Player selectged: " + selectedCharacterId);
         long peerId = Multiplayer.GetRemoteSenderId();
         Server.Instance.PlayerSelections[peerId] = selectedCharacterId;
-
+        DebugIt("Player selectged: " + selectedCharacterId + " By PlayerID: " + peerId);
     }
 
     public void NotifyGameStartUDP()

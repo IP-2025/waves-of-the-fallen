@@ -7,7 +7,7 @@ public partial class Server : Node
 {
     public static Server Instance;
 
-    private bool enableDebug = true;
+    private bool enableDebug = false;
     public Dictionary<long, int> PlayerSelections = new Dictionary<long, int>();
     public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
     private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
@@ -55,7 +55,8 @@ public partial class Server : Node
             if (joystick != null)
             {
                 joystick.PosVector = dir;
-                DebugIt($"Set Joystick.PosVector = {dir} on Entity {cmd.EntityId}");
+                
+                DebugIt($"Set Joystick.PosVector = {dir} on EntityID {cmd.EntityId}");
             }
         }
         else if (cmd.Type == CommandType.Shoot)
@@ -120,7 +121,7 @@ public partial class Server : Node
                 owner = (long)node.GetMeta("OwnerId");
                 slotIx = (int)node.GetMeta("SlotIndex");
             }
-
+            DebugIt($"Snapshot: Entity Name: {node.Name}, Position: {node.Position}, ID: {id}");
             snap.Entities.Add(new EntitySnapshot(
                 id,
                 node.Position,

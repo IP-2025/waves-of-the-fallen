@@ -26,12 +26,13 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public override void _Ready()
 	{
-		base._Ready();
-
-		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
-		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
-
-		GetNodeOrNull<Node2D>("Archer")?.Hide();
+		AddToGroup("player");
+/* 		base._Ready(); */
+/* 
+		var characterManager = GetNode<CharacterManager>("/root/CharacterManager"); */
+/* 		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+ */
+/* 		GetNodeOrNull<Node2D>("Archer")?.Hide();
 		GetNodeOrNull<Node2D>("Assassin")?.Hide();
 		GetNodeOrNull<Node2D>("Knight")?.Hide();
 		GetNodeOrNull<Node2D>("Mage")?.Hide();
@@ -44,9 +45,9 @@ public partial class DefaultPlayer : CharacterBody2D
 			3 => "Knight",
 			4 => "Mage",
 			_ => "Archer" // Standardwert
-		};
+		}; */
 
-		var selectedClassNode = GetNodeOrNull<Node2D>(selectedClassNodeName);
+/*  		var selectedClassNode = GetNodeOrNull<Node2D>(selectedClassNodeName);
 		if (selectedClassNode != null)
 		{
 			selectedClassNode.Show();
@@ -65,18 +66,20 @@ public partial class DefaultPlayer : CharacterBody2D
 			4 => new Mage(),
 			_ => new DefaultPlayer()
 		};
-
-		GD.Print($"Selected Character: {playerClass.GetType().Name}");
+ */
+/* 		GD.Print($"Selected Character: {playerClass.GetType().Name}"); */
 
 		// Set attributes based on the selected class
-		if (playerClass is DefaultPlayer defaultPlayer)
+
+		//------------------
+/* 		if (playerClass is DefaultPlayer defaultPlayer)
 		{
 			Speed = defaultPlayer.Speed;
 			MaxHealth = defaultPlayer.MaxHealth;
 			CurrentHealth = defaultPlayer.MaxHealth;
 		}
-
-		AddToGroup("player");
+ */
+/* 		AddToGroup("player");
 		CurrentHealth = MaxHealth;
 
 		OwnerPeerId = Multiplayer.GetUniqueId();
@@ -92,10 +95,10 @@ public partial class DefaultPlayer : CharacterBody2D
 		else
 		{
 			GD.PrintErr("Health node not found!");
-		}
+		} */
 
 		// Equip weapon for the selected class
-		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
+/* 		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
 		Area2D weapon = CreateWeaponForClass(playerClass);
 
 		if (weapon != null)
@@ -111,7 +114,7 @@ public partial class DefaultPlayer : CharacterBody2D
 			Server.Instance.Entities.Add((long)id, weapon);
 
 			weaponsEquipped++;
-		}
+		} */
 	}
 
 	private Area2D CreateWeaponForClass(object playerClass)
