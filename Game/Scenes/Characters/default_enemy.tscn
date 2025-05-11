@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c8vf1rsu474lm" path="res://Scripts/Characters/BasicEnemy.cs" id="1_fecjr"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_ihcfn"]
-[ext_resource type="Texture2D" uid="uid://bcupo30ot7ngo" path="res://Assets/Characters/spritesheets/Goblin_spritesheet.png" id="3_ihcfn"]
+[ext_resource type="Texture2D" uid="uid://bgu3f86w8o3ul" path="res://Assets/Characters/spritesheets/Goblin_spritesheet.png" id="3_ihcfn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r4aor"]
 radius = 26.0192
@@ -159,7 +159,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="BasicEnemy" type="CharacterBody2D" groups=["Enemies"]]
+[node name="BasicEnemy" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 16
 collision_mask = 17
 motion_mode = 1

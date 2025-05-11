@@ -37,7 +37,7 @@ public partial class Health : Node2D
 			enemy.OnHit();
 
 		// death animation
-		if (health <= 0)
+		if (health <= 0) {
 			// check if parent is DefaultPlayer
 			if (GetParent() is DefaultPlayer player)
 				player.Die(); // call Die() method if parent is DefaultPlayer
@@ -47,5 +47,6 @@ public partial class Health : Node2D
 				GetParent().QueueFree(); // otherwise, free the parent node
 
 			EmitSignal(SignalName.HealthDepleted); // emit signal when health is depleted
+			}
 	}
 }
