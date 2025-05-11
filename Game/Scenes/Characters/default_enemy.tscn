@@ -165,12 +165,9 @@ collision_mask = 17
 motion_mode = 1
 script = ExtResource("1_fecjr")
 speed = 180.0
-damage = null
-attacksPerSecond = null
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_ihcfn")
-max_health = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_r4aor")
