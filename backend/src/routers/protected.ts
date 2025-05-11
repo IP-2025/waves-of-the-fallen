@@ -1,8 +1,8 @@
 import express from 'express';
-import { authenticationStep } from 'middleware/authMiddleware';
-import { getSettings, setSettings } from 'controllers/settingsController';
-import { getAllCharacterController, getAllUnlockedCharacterController } from 'controllers/characterController';
-import { setGoldController, getGoldController } from 'controllers/playerStatController';
+import { authenticationStep } from 'middleware';
+import { getSettings, setSettings } from 'controllers';
+import { getAllCharacterController, getAllUnlockedCharacterController } from 'controllers';
+import { setGoldController, getGoldController } from 'controllers';
 
 const protectedRouter = express.Router();
 
