@@ -56,7 +56,7 @@ public partial class GameRoot : Node
 		switch (characterId)
 		{
 			case 1:
-			    player = GD.Load<PackedScene>("res://Scenes/Characters/archer.tscn").Instantiate<DefaultPlayer>();
+				player = GD.Load<PackedScene>("res://Scenes/Characters/archer.tscn").Instantiate<DefaultPlayer>();
 				break;
 
 			case 2:

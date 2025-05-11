@@ -1,8 +1,21 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class OnlineLocalMenu : Control
 {
+  bool _headlessIsReady = false;
+
+  public override void _Ready()
+  {
+    NetworkManager.Instance.HeadlessServerInitialized += OnHeadlessServerInitialized;
+  }
+
+  private void HeadlessServerInitializedEventHandler()
+  {
+    throw new NotImplementedException();
+  }
+
   private void _on_button_back_onlineLocal_pressed()
   {
     var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
