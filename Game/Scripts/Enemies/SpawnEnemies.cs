@@ -63,7 +63,7 @@ public partial class SpawnEnemies : Node2D
 		PathFollow2D spawnPath = GetNode<PathFollow2D>("Path2D/PathFollow2D"); // gets a random starting position, where the enemies are spawned
 		spawnPath.ProgressRatio = GD.Randf();
 
-		EnemyPattern pattern = getPatternFromPool();
+		EnemyPattern pattern = GetPatternFromPool();
 
 		pattern.AddToGroup("EnemyPattern"); // adds the pattern to EnemyPattern group, so it can be cleaned up later on
 
@@ -118,7 +118,7 @@ public partial class SpawnEnemies : Node2D
 		//Debug.Print("Grace time has ended");
 	}
 
-	private EnemyPattern getPatternFromPool() {
+	private EnemyPattern GetPatternFromPool() {
 
 		float spawnValue = GD.Randf() * currentWave; // generate a random spawnValue to determine the difficulty of the selected enemies
 
@@ -138,7 +138,7 @@ public partial class SpawnEnemies : Node2D
 
 
 	// has to be tested if enemypattern nodes exist, can be removed if they never get added to the gameroot
-	private void deleteEmptyPatterns() // cleans up EnemyPattern nodes, which don't have any children so the NodeTree doesn't get cluttered with them
+	private void DeleteEmptyPatterns() // cleans up EnemyPattern nodes, which don't have any children so the NodeTree doesn't get cluttered with them
 	{
 		if (GetTree().GetNodesInGroup("EnemyPattern") != null)
 		{
