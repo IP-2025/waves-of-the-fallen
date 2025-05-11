@@ -1,20 +1,25 @@
-import { RequestHandler } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { getAllCharacters, getAllUnlockedCharacters } from 'services/characterService';
 
-export const getAllCharacterController: RequestHandler = async (req, res) => {
+export async function getAllCharacterController(req: Request, res: Response, next: NextFunction) {
   try {
     const characters = await getAllCharacters();
-    res.json(characters).status(200);
+    res.status(200).json(characters);
   } catch (err) {
-    res.status(500).send('Server error');
+    next(err);
   }
-};
-export const getAllUnlockedCharacterController: RequestHandler = async (req, res) => {
+}
+
+export async function getAllUnlockedCharacterController(req: Request, res: Response, next: NextFunction) {
   try {
-    const playerId = req.body.player_id;
+    const playerId = req.body?.player_id;
+    if (!playerId) {
+      return res.status(400).json({ message: 'Player ID is required' });
+    }
+
     const characters = await getAllUnlockedCharacters(playerId);
-    res.json(characters).status(200);
+    res.status(200).json(characters);
   } catch (err) {
-    res.status(500).send('Server error');
+    next(err);
   }
-};
+}

@@ -2,7 +2,7 @@ import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { getGoldService, setGoldService } from 'services/playerService';
 import { BadRequestError } from 'errors';
 
-export const getGoldController: RequestHandler = async (req, res, next) => {
+export async function getGoldController(req: Request, res: Response, next: NextFunction) {
   try {
     const playerId = req.body.player_id;
     const gold = await getGoldService(playerId);
@@ -10,7 +10,7 @@ export const getGoldController: RequestHandler = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-};
+}
 
 export async function setGoldController(req: Request, res: Response, next: NextFunction) {
   try {
