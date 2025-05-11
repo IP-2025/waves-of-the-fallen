@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { getAllCharacters, getAllUnlockedCharacters } from 'services/characterService';
+import { BadRequestError } from '../errors';
 
 export async function getAllCharacterController(req: Request, res: Response, next: NextFunction) {
   try {
@@ -14,7 +15,7 @@ export async function getAllUnlockedCharacterController(req: Request, res: Respo
   try {
     const playerId = req.body?.player_id;
     if (!playerId) {
-      return res.status(400).json({ message: 'Player ID is required' });
+      throw new BadRequestError('Player ID is required');
     }
 
     const characters = await getAllUnlockedCharacters(playerId);

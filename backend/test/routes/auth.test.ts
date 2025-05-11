@@ -65,7 +65,7 @@ describe('Test POST /login', () => {
 
     expect(errorLoginResponse.status).toBe(401);
     expect(errorLoginResponse.body).toMatchObject({
-      message: 'Invalid password.',
+      message: 'email or password is incorrect.',
       status: 'error',
     });
   });
