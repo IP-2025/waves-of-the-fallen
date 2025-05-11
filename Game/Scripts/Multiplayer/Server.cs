@@ -8,6 +8,7 @@ public partial class Server : Node
     public static Server Instance;
 
     private bool enableDebug = true;
+    public Dictionary<long, int> PlayerSelections = new Dictionary<long, int>();
     public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
     private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
     {

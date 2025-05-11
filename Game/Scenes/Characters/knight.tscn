@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://brnmi011d55l7"]
+[gd_scene load_steps=6 format=3 uid="uid://brnmi011d55l7"]
 
 [ext_resource type="Script" uid="uid://cd2h3gcsnimsr" path="res://Scripts/Characters/Knight.cs" id="1_wbc0s"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_7stuo"]
@@ -7,19 +7,6 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
-
-[sub_resource type="LabelSettings" id="LabelSettings_8chs8"]
-font_size = 21
-font_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_31ney"]
-font_size = 21
-font_color = Color(0, 0, 0, 1)
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_tvdwm"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
 
 [node name="Knight" type="CharacterBody2D"]
 collision_mask = 256
@@ -77,34 +64,6 @@ shape = SubResource("RectangleShape2D_vh0fs")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.75, 1.75)
-
-[node name="TimeLeft" type="Label" parent="Camera2D"]
-anchors_preset = -1
-anchor_left = -9.675
-anchor_top = -6.85
-anchor_right = -9.675
-anchor_bottom = -6.85
-offset_left = -24.0
-offset_top = -148.0
-offset_right = 24.0
-offset_bottom = -90.0
-grow_horizontal = 2
-label_settings = SubResource("LabelSettings_8chs8")
-horizontal_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="WaveCounter" type="Label" parent="Camera2D"]
-offset_left = -76.0
-offset_top = -192.0
-offset_right = 76.0
-offset_bottom = -134.0
-label_settings = SubResource("LabelSettings_31ney")
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_tvdwm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
