@@ -29,6 +29,7 @@ public partial class LocalMenu : Control
     playButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/play");
     ipIO = GetNode<LineEdit>("IP_IO");
     currentPlayers = GetNode<RichTextLabel>("CurrentPlayers");
+    NetworkManager.Instance.HeadlessServerInitialized += OnHeadlessServerInitialized;
 
     // disable play button by default
     playButton.Visible = false;
@@ -38,7 +39,7 @@ public partial class LocalMenu : Control
   public override void _Process(double delta)
   {
     if (!isHost) return;
-    
+
     var peers = Multiplayer.GetPeers().ToList();
 
     currentPlayers.Text = $"Players: {peers.Count}\n" + string.Join("\n", peers.Select(id => $"ID {id}"));
@@ -70,34 +71,14 @@ public partial class LocalMenu : Control
 
   private void _on_host_button_pressed()
   {
-    isHost = true;
-    ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show server ip in input field
-    NetworkManager.Instance.StartHeadlessServer(true);
-
-    if (NetworkManager.Instance.IsPortOpen(NetworkManager.Instance.GetServerIPAddress(), NetworkManager.Instance.RPC_PORT, 500))
-    {
-      NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
-    }
-    else
-    {
-      var timer = new Timer();
-      AddChild(timer);
-      timer.WaitTime = 1;
-      timer.OneShot = true;
-      timer.Timeout += () => NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
-      timer.Start();
-    }
-
-    // disable host and join button and enable play button
-    hostButton.Visible = false;
     hostButton.Disabled = true;
 
     joinButton.Visible = false;
     joinButton.Disabled = true;
 
-    playButton.Visible = true;
-    playButton.Disabled = false;
+    isHost = true;
 
+    NetworkManager.Instance.StartHeadlessServer(true);
   }
 
   private void _on_play_button_pressed()
@@ -108,5 +89,39 @@ public partial class LocalMenu : Control
   private void DebugIt(string message)
   {
     if (enableDebug) Debug.Print("Local Menue: " + message);
+  }
+
+private void OnHeadlessServerInitialized()
+{
+    var timer = new Timer();
+    AddChild(timer);
+    timer.WaitTime = 0.5f;
+    timer.OneShot = true;
+    timer.Timeout += () =>
+    {
+        NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
+        ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show Server IP
+
+        var timer2 = new Timer();
+        AddChild(timer2);
+        timer2.WaitTime = 0.5f;
+        timer2.OneShot = true;
+        timer2.Timeout += () =>
+        {
+            hostButton.Visible = false;
+            playButton.Visible = true;
+            playButton.Disabled = false;
+        };
+        
+        timer2.Start();
+    };
+
+    timer.Start();
+}
+
+
+  public override void _ExitTree()
+  {
+    NetworkManager.Instance.HeadlessServerInitialized -= OnHeadlessServerInitialized;
   }
 }
