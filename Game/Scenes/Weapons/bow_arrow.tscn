@@ -12,12 +12,8 @@ position = Vector2(1, 0)
 collision_layer = 4
 collision_mask = 272
 script = ExtResource("1_ukiom")
-Damage = null
-Piercing = null
-Speed = null
-MaxRange = null
 
-[node name="Pfeil" type="Sprite2D" parent="."]
+[node name="Arrow" type="Sprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(0.1, 0.106)
 texture = ExtResource("2_lma6p")

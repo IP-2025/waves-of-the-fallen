@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b3t68y2ghoi8m"]
+[gd_scene load_steps=19 format=3 uid="uid://b3t68y2ghoi8m"]
 
 [ext_resource type="Script" uid="uid://bm8n0iudjyswe" path="res://Scripts/Menu/Charactermenu.cs" id="1_ivr4t"]
 [ext_resource type="Script" uid="uid://ufxb4011fikq" path="res://Scripts/Menu/ButtonsCharacterSelection.cs" id="2_ch0j6"]
@@ -85,13 +85,8 @@ corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ch0j6"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hqcu1"]
-bg_color = Color(0.310617, 0.310617, 0.310617, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_frg03"]
-bg_color = Color(0.310617, 0.310617, 0.310617, 1)
+bg_color = Color(0.309804, 0.309804, 0.309804, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
 
 [node name="Charactermenu" type="Control"]
 layout_mode = 3
@@ -136,6 +131,10 @@ size_flags_vertical = 1
 theme_override_font_sizes/font_size = 40
 text = "Charactermenu"
 
+[node name="TempResetButton" type="Button" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "reset data"
+
 [node name="Button_Back" type="Button" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
@@ -178,8 +177,16 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/focus = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_ch0j6")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ch0j6")
-theme_override_styles/normal = SubResource("StyleBoxFlat_hqcu1")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ch0j6")
 text = "1"
 script = ExtResource("2_ch0j6")
 
@@ -199,8 +206,16 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/focus = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_ch0j6")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ch0j6")
-theme_override_styles/normal = SubResource("StyleBoxFlat_hqcu1")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ch0j6")
 text = "3"
 script = ExtResource("2_ch0j6")
 
@@ -224,8 +239,16 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/focus = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_ch0j6")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ch0j6")
-theme_override_styles/normal = SubResource("StyleBoxFlat_frg03")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ch0j6")
 text = "2"
 script = ExtResource("2_ch0j6")
 
@@ -245,8 +268,16 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/focus = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_ch0j6")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ch0j6")
-theme_override_styles/normal = SubResource("StyleBoxFlat_hqcu1")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_ch0j6")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ch0j6")
 text = "4"
 script = ExtResource("2_ch0j6")
 
@@ -342,9 +373,11 @@ text = "select"
 [node name="HTTPRequest" type="HTTPRequest" parent="MarginContainer2"]
 unique_name_in_owner = true
 
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/TempResetButton" to="." method="ResetCharacters"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_charactermenu_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character1" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character1" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character3" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character3" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character2" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character2" method="_on_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character4" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character4" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer/Button_UpgradeUnlock" to="." method="_on_button_upgrade_unlock_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer2/Button_Select" to="." method="_on_button_select_pressed"]

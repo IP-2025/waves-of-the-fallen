@@ -1,33 +1,61 @@
-[gd_scene load_steps=9 format=3 uid="uid://cffgskcms870o"]
+[gd_scene load_steps=6 format=3 uid="uid://cffgskcms870o"]
 
 [ext_resource type="Script" uid="uid://bdkp0e6ivq2b5" path="res://Scripts/Characters/DefaultPlayer.cs" id="1_y2kgl"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_kjvlq"]
+[ext_resource type="Script" uid="uid://c7yits36f8kyt" path="res://Scripts/Characters/HealthBar.cs" id="3_jig1i"]
 [ext_resource type="PackedScene" uid="uid://56x8ud47qho" path="res://Scenes/Characters/archer.tscn" id="3_kjvlq"]
-[ext_resource type="PackedScene" uid="uid://blhx5vv32isw5" path="res://Scenes/Weapons/bow.tscn" id="5_jig1i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2kgl"]
 size = Vector2(25, 36.2188)
-
-[sub_resource type="LabelSettings" id="LabelSettings_1h72i"]
-font_size = 21
-font_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_jig1i"]
-font_size = 21
-font_color = Color(0, 0, 0, 1)
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kjvlq"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
 
 [node name="DefaultPlayer" type="CharacterBody2D"]
 collision_mask = 256
 collision_priority = 2.0
 script = ExtResource("1_y2kgl")
 
+[node name="WeaponSpawnPoints" type="Node2D" parent="."]
+
+[node name="Weapon_0" type="Node2D" parent="WeaponSpawnPoints" groups=["WeaponSpawnPoints"]]
+position = Vector2(25, -10)
+
+[node name="Weapon_1" type="Node2D" parent="WeaponSpawnPoints" groups=["WeaponSpawnPoints"]]
+position = Vector2(-25, -10)
+
+[node name="Weapon_2" type="Node2D" parent="WeaponSpawnPoints" groups=["WeaponSpawnPoints"]]
+position = Vector2(25, 15)
+
+[node name="Weapon_3" type="Node2D" parent="WeaponSpawnPoints" groups=["WeaponSpawnPoints"]]
+position = Vector2(-25, 15)
+
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_kjvlq")
+
+[node name="HealthBar" type="ProgressBar" parent="Health"]
+offset_left = -48.0
+offset_top = -72.0
+offset_right = 50.0
+offset_bottom = -45.0
+show_percentage = false
+script = ExtResource("3_jig1i")
+metadata/_edit_use_anchors_ = true
+
+[node name="HealthLabel" type="Label" parent="Health/HealthBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -12.5
+offset_right = 48.0
+offset_bottom = 12.5
+theme_type_variation = &"GraphNodeTitleLabel"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Archer" parent="." instance=ExtResource("3_kjvlq")]
 
@@ -35,36 +63,8 @@ script = ExtResource("2_kjvlq")
 position = Vector2(0, 15)
 shape = SubResource("RectangleShape2D_y2kgl")
 
-[node name="Bow" parent="." instance=ExtResource("5_jig1i")]
-
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.75, 1.75)
-
-[node name="TimeLeft" type="Label" parent="Camera2D"]
-anchors_preset = -1
-anchor_left = -9.675
-anchor_top = -6.85
-anchor_right = -9.675
-anchor_bottom = -6.85
-offset_left = -24.0
-offset_top = -148.0
-offset_right = 24.0
-offset_bottom = -90.0
-grow_horizontal = 2
-label_settings = SubResource("LabelSettings_1h72i")
-horizontal_alignment = 1
-
-[node name="WaveCounter" type="Label" parent="Camera2D"]
-offset_left = -76.0
-offset_top = -192.0
-offset_right = 76.0
-offset_bottom = -134.0
-label_settings = SubResource("LabelSettings_jig1i")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_kjvlq")
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true

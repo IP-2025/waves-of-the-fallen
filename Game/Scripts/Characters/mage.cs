@@ -17,4 +17,15 @@ public partial class Mage : DefaultPlayer
 	{
 		GD.Print("Platzhalter Fähigkeit Magier");
 	}
+	public override void Die()
+	{
+		if (GetTree().GetMultiplayer().IsServer())
+		{
+			long peerId = GetMultiplayerAuthority();
+			Server.Instance.Entities.Remove(peerId);
+		}
+
+		GD.Print("Mage death animation playing...");
+		//animationPlayer.Play("mage_death");
+	}
 }

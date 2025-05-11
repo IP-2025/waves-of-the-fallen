@@ -1,31 +1,25 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class WaveTimer : Node2D
 {
+	public bool disable	= false;
 	public int waveCounter = 1;
 	public int secondCounter = 0;
 	public int maxTime = 30;
+	public bool isPaused;
 	private Timer _waveTimer;
 	private Label _timeLeftLabel;
 	private Label _waveCounterLabel;
 
+	[Signal]
+	public delegate void WaveEndedEventHandler();
+
 	public override void _Ready()
 	{
-		// SORRY hat to change this because of the multiplayer stuff
-
-		// Find local player with entity map
-		var localId = Multiplayer.GetUniqueId();
-		if (!GameManager.Instance.Entities.TryGetValue(localId, out var playerNode))
-		{
-			GD.PrintErr($"WaveTimer: Cant find PlayerNode for ID {localId}");
-			return;
-		}
-
-		// Get cam from player node
-		var cam = playerNode.GetNode<Camera2D>("Camera2D");
-		_timeLeftLabel = cam.GetNode<Label>("TimeLeft");
-		_waveCounterLabel = cam.GetNode<Label>("WaveCounter");
+		_timeLeftLabel = GetNode<Label>("TimeLeft");
+		_waveCounterLabel = GetNode<Label>("WaveCounter");
 
 		// set values
 		_timeLeftLabel.Text = maxTime.ToString();
@@ -39,6 +33,8 @@ public partial class WaveTimer : Node2D
 
 	private void OnTimerTimeout()
 	{
+		if (disable) return;
+		
 		secondCounter++; // counts the seconds until the max_time is reached and a new wave begins
 		if (secondCounter >= maxTime)
 		{
@@ -46,37 +42,27 @@ public partial class WaveTimer : Node2D
 			waveCounter++;
 
 			_waveCounterLabel.Text = $"Wave: {waveCounter}";
-			DeleteEnemies();
+			EmitSignal(SignalName.WaveEnded);
 		}
 
 		_waveCounterLabel.Text = $"Wave: {waveCounter}";
 		_timeLeftLabel.Text = (maxTime - secondCounter).ToString();
-	}
-
-	private void DeleteEnemies()
-	{
-		if (GetTree().GetNodesInGroup("Enemies") != null)
+		if (_waveTimer.Paused) 
 		{
-			Debug.Print("Deleting " + GetTree().GetNodeCountInGroup("Enemies") + " enemies");
-			foreach (Node2D enemy in GetTree().GetNodesInGroup("Enemies")) // deletes every enemy
-			{
-				//Debug.Print("Deleted enemy");
-				enemy.QueueFree();
-			}
-		}
-		else
-		{
-			Debug.Print("No enemies found to be deleted");
+			_timeLeftLabel.Text = "Grace Time";
+			isPaused = true;
+		} else{
+			isPaused = false;
 		}
 	}
 
-	public void PauseUnpauseTimer() // Flips the paused state of waveTimer
+	public async Task PauseTimer(int time) // Flips the paused state of waveTimer
 	{
-		if (Multiplayer.IsServer())
-		{
-			if (_waveTimer.Paused) Debug.Print("WaveTimer unpaused");
-			else Debug.Print("WaveTimer paused");
-			_waveTimer.Paused = !_waveTimer.Paused;
-		}
+		_waveTimer.Paused = true;
+		Debug.Print("WaveTimer paused");
+		await ToSignal(GetTree().CreateTimer(time), SceneTreeTimer.SignalName.Timeout);
+
+		_waveTimer.Paused = false;
+		Debug.Print("WaveTimer unpaused");
 	}
 }
