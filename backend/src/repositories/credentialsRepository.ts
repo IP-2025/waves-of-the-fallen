@@ -1,6 +1,6 @@
 import { AppDataSource } from 'database/dataSource';
 import { v4 as uuidv4 } from 'uuid';
-import { BadRequestError, ConflictError, NotFoundError } from 'errors';
+import {BadRequestError, ConflictError, NotFoundError, UnauthorizedError} from 'errors';
 import { Player, Credential } from 'database/entities';
 
 const credentialsRepo = AppDataSource.getRepository(Credential);
@@ -43,7 +43,7 @@ export async function saveCredential(newCred: NewCred): Promise<Credential> {
 export async function getPwdByMail(email: string): Promise<Credential> {
   const credential = await credentialsRepo.findOneBy({ email });
   if (!credential) {
-    throw new NotFoundError('Credential not found for the given email.');
+    throw new UnauthorizedError('email or password is incorrect.');
   }
   return credential;
 }
@@ -51,12 +51,12 @@ export async function getPwdByMail(email: string): Promise<Credential> {
 export async function getPlayerIdFromCredential(credentialId: string): Promise<string | null> {
   const credential = await credentialsRepo.findOne({
     where: { id: credentialId },
-    relations: ['player'], // Load the related Player entity
+    relations: ['player'],
   });
 
   if (!credential || !credential.player) {
-    return null; // Handle case where credential or player is not found
+    return null;
   }
 
-  return credential.player.player_id; // Access the player_id
+  return credential.player.player_id;
 }
