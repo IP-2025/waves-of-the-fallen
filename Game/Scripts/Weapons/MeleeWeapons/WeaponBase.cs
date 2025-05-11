@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using System.Linq;
-
+//no use for now
 public abstract partial class WeaponBase : Area2D
 {
 	protected AnimatedSprite2D animatedSprite;

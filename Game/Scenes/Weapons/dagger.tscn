@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dvjyool0r7j0"]
+[gd_scene load_steps=6 format=3 uid="uid://dvjyool0r7j0"]
 
 [ext_resource type="Texture2D" uid="uid://cpyxavt2ndhvx" path="res://Assets/Weapons/Dagger/Dagger.png" id="1_hjfan"]
 [ext_resource type="Script" uid="uid://ovccsntxxhkt" path="res://Scripts/Weapons/MeleeWeapons/Dagger.cs" id="1_o7gox"]
@@ -18,11 +18,12 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o7gox"]
+radius = 3.0
+height = 22.2707
+
 [node name="Dagger" type="Area2D"]
 script = ExtResource("1_o7gox")
-Damage = null
-AttackCooldown = null
-MeleeRange = null
 
 [node name="WeaponPivot" type="Marker2D" parent="."]
 
@@ -32,5 +33,10 @@ scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_o7gox")
 animation = &"stab"
 
-[node name="DaggerPoint" type="Marker2D" parent="WeaponPivot/Stab"]
-position = Vector2(-13.3333, 0)
+[node name="DaggerPoint" type="Marker2D" parent="."]
+scale = Vector2(0.15, 0.15)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(6, -3)
+rotation = 1.0174
+shape = SubResource("CapsuleShape2D_o7gox")

@@ -1,29 +1,70 @@
 using Godot;
 using System;
+using System.Linq;
 
-public abstract partial class MeleeWeapon : WeaponBase
+public abstract partial class MeleeWeapon : Area2D
 {
-	[Export] public float AttackCooldown = 0.5f;
-	[Export] public float MeleeRange = 30f;
-	private float cooldown = 0f;
-	// Called when the node enters the scene tree for the first time.
-	protected override void OnTargetInSight(Node target, Vector2 enemyPosition)
-	{
-		if(cooldown <= 0 && IsInRange(enemyPosition))
-		{
-			MeleeAttack(target);
-			cooldown = AttackCooldown;
-		}
-	}
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	protected AnimatedSprite2D animatedSprite;
+	protected float WeaponRange = 100f;
+	[Export] public int Damage = 50;
+	//protected PackedScene projectileScene = null;
+
 	public override void _PhysicsProcess(double delta)
 	{
-		cooldown -= (float) delta;
-		base._PhysicsProcess(delta);
+		var target = FindNearestEnemy();
+		if (target != null && TryGetPosition(target, out var position))
+		{
+			LookAt(position);
+		}
 	}
-	protected bool IsInRange(Vector2 targetPos)
+	protected Node FindNearestEnemy()
 	{
-		return GlobalPosition.DistanceTo(targetPos) <= MeleeRange;
+		float closestDist = float.MaxValue;
+		Node closestEnemy = null;
+
+		foreach (Node node in GetTree().GetNodesInGroup("enemies"))
+		{
+			if (node is not EnemyBase enemyNode)
+				continue;
+
+			float dist = GlobalPosition.DistanceTo(enemyNode.GlobalPosition);
+
+			if (dist < closestDist && dist <= WeaponRange)
+			{
+				closestDist = dist;
+				closestEnemy = enemyNode;
+			}
+		}
+		return closestEnemy;
 	}
-	protected abstract void MeleeAttack(Node target);
+	protected bool TryGetPosition(object body, out Vector2 position)
+	{
+		position = Vector2.Zero;
+		if (body is GodotObject obj)
+		{
+			Variant globalPosVariant = obj.Get("global_position");
+			if (globalPosVariant.VariantType == Variant.Type.Vector2)
+			{
+				position = (Vector2)globalPosVariant;
+				return true;
+			}
+
+			Variant posVariant = obj.Get("position");
+			if (posVariant.VariantType == Variant.Type.Vector2)
+			{
+				position = (Vector2)posVariant;
+				return true;
+			}
+		}
+		return false;
+	}
+	protected void MeleeAttack(int damage)
+	{
+		var target = FindNearestEnemy();
+		var healthNode = target.GetNodeOrNull<Health>("Health");
+		if (healthNode != null)
+		{
+			healthNode.Damage(damage);
+		}
+	}
 }

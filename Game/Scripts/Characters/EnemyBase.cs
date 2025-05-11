@@ -75,8 +75,8 @@ public abstract partial class EnemyBase : CharacterBody2D
 		player = closestPlayer;
 	}
 
-	    private void DebugIt(string message)
-    {
-        if (enableDebug) Debug.Print("EnemyBase: " + message);
-    }
+		private void DebugIt(string message)
+	{
+		if (enableDebug) Debug.Print("EnemyBase: " + message);
+	}
 }

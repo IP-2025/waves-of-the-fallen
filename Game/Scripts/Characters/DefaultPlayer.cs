@@ -22,18 +22,19 @@ public partial class DefaultPlayer : CharacterBody2D
 	public PackedScene BowScene = GD.Load<PackedScene>("res://Scenes/Weapons/bow.tscn");
 	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Scenes/Weapons/crossbow.tscn");
 	public PackedScene KunaiScene = GD.Load<PackedScene>("res://Scenes/Weapons/kunai.tscn");
-	public PackedScene daggerScene = GD.Load<PackedScene>("res://Scenes/Weapons/dagger.tscn");
-
+	public PackedScene DaggerScene = GD.Load<PackedScene>("res://Scenes/Weapons/dagger.tscn");
+	public PackedScene SwordScene = GD.Load<PackedScene>("res://Scenes/Weapons/Sword.tscn");
+	public PackedScene SwordTest = GD.Load<PackedScene>("res://Scenes/Weapons/testsword.tscn");
 	private int weaponsEquipped = 0;
 
 	public override void _Ready()
 	{
+		GD.Print(SwordTest != null ? "Scene loaded!" : "Scene NOT found!");
 		var playerClass = new Assassin(); // Instantiate Mage
 		Speed = playerClass.Speed; // Override DefaultPlayer's Speed with Mage's Speed
 		MaxHealth = playerClass.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
 		CurrentHealth = playerClass.CurrentHealth; // Set CurrentHealth to Mage's CurrentHealth
 		GD.Print($"Assassin Speed applied: {Speed}, Assasin Health applied: {MaxHealth}");
-
 		AddToGroup("player");
 		CurrentHealth = MaxHealth;
 
@@ -42,7 +43,7 @@ public partial class DefaultPlayer : CharacterBody2D
 			Joystick = GetNode<Node2D>("Joystick");
 			var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
 			Area2D weapon = CreateWeaponForClass(playerClass);
-
+			GD.Print($"Instantiated weapon: {weapon}");
 			if (weapon != null)
 			{
 				weaponSlot.AddChild(weapon);
@@ -55,7 +56,7 @@ public partial class DefaultPlayer : CharacterBody2D
 				Server.Instance.Entities.Add((long)id, weapon);
 
 				weaponsEquipped++;
-
+				GD.Print($"Instantiated weapon: {weapon.Name}, at {weapon.GlobalPosition}");
 			}
 		}
 		else
@@ -70,8 +71,11 @@ public partial class DefaultPlayer : CharacterBody2D
 			return BowScene.Instantiate() as Area2D;
 		
 		if (playerClass is Assassin)
+			//GD.Print(daggerScene != null ? "OK" : "NOT FOUND");
 			//return KunaiScene.Instantiate() as Area2D;
-			return daggerScene.Instantiate() as Area2D;
+			return SwordTest.Instantiate() as Area2D;
+			//return DaggerScene.Instantiate() as Area2D;
+			//return SwordScene.Instantiate() as Area2D;
 		// if (playerClass is Mage) return FireStaffScene.Instantiate() as Area2D;
 
 		return null;

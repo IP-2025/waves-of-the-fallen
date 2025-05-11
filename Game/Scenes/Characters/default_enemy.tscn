@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_ihcfn"]
 [ext_resource type="Texture2D" uid="uid://65seudsgrr8n" path="res://Assets/Characters/place_holder/enemy_placeholder.svg" id="2_lal1l"]
 
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_r4aor"]
 radius = 17.0
 
@@ -20,9 +19,12 @@ collision_mask = 17
 motion_mode = 1
 script = ExtResource("1_fecjr")
 speed = 180.0
+damage = null
+attacksPerSecond = null
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_ihcfn")
+max_health = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
