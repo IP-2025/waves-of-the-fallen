@@ -6,9 +6,9 @@ public abstract partial class EnemyBase : CharacterBody2D
 {
 	public bool enableDebug = true;
 
-	[Export] public float speed = 200f;
-	[Export] public float damage = 10f;
-	[Export] public float attacksPerSecond = 1.5f;
+	[Export] public float speed;
+	[Export] public float damage;
+	[Export] public float attacksPerSecond;
 	[Export] private NodePath animationPath;
 
 	public DefaultPlayer player { get; set; }
