@@ -1,15 +1,19 @@
 using Godot;
-using System;
 
 public partial class RangedEnemy : EnemyBase
 {
 	[Export] public float stopDistance = 350f;
 	[Export] public float attackRange = 300f;
-	[Export] public float damage = 2.5f;
-	[Export] public float rangedAttackCooldown = 2.0f;
 	[Export] public PackedScene EnemyProjectileScene;
 
 	private float cooldownTimer = 0f;
+
+	public RangedEnemy()
+	{
+		speed = 100f;
+		damage = 2.5f;
+		attacksPerSecond = 0.8f;
+	}
 
 	protected override void HandleMovement(Vector2 direction)
 	{
@@ -17,13 +21,10 @@ public partial class RangedEnemy : EnemyBase
 
 		if (dist > stopDistance)
 		{
-			// Move towards the player
-			Vector2 toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
-			Velocity = toPlayer * speed;
+			Velocity = (player.GlobalPosition - GlobalPosition).Normalized() * speed;
 		}
 		else
 		{
-			// Stop moving and handle attack logic
 			Velocity = Vector2.Zero;
 
 			if (cooldownTimer > 0f)
@@ -34,23 +35,28 @@ public partial class RangedEnemy : EnemyBase
 			if (dist <= attackRange && cooldownTimer <= 0f)
 			{
 				Attack();
-				cooldownTimer = rangedAttackCooldown;
+				cooldownTimer = attackCooldown;
 			}
 		}
 	}
 
+	/// <summary>
+	/// Spawns and fires a projectile towards the player.
+	/// </summary>
 	public override void Attack()
 	{
 		if (EnemyProjectileScene != null && player != null)
 		{
-			// Instantiate and fire a projectile
 			var projectile = (EnemyProjectile)EnemyProjectileScene.Instantiate();
 			GetParent().AddChild(projectile);
 
 			projectile.GlobalPosition = GlobalPosition;
-
-			// Initialize the projectile with direction and damage
 			projectile.Initialize(player.GlobalPosition - GlobalPosition, damage);
+
+			if (enableDebug)
+			{
+				GD.Print($"RangedEnemy attacks with damage: {damage}");
+			}
 		}
 	}
 }
