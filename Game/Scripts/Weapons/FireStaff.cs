@@ -3,12 +3,12 @@ using System;
 
 public partial class FireStaff : RangedWeapon
 {
-	private PackedScene arrowScene = GD.Load<PackedScene>("res://Scenes/Weapons/bow_arrow.tscn");
+	private PackedScene fireBallScene = GD.Load<PackedScene>("res://Scenes/Weapons/fireball.tscn");
 	
 	public override void _Ready()
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/FireStaffSprite");
-		projectileScene = arrowScene;
+		projectileScene = fireBallScene;
 		WeaponRange = 600f;
 
 	}
@@ -20,7 +20,7 @@ public partial class FireStaff : RangedWeapon
 			return;
 
 		animatedSprite.Play("shoot");
-		await ToSignal(GetTree().CreateTimer(0.4), "timeout");
+		await ToSignal(GetTree().CreateTimer(2), "timeout");
 		Shoot();
 	}
 	

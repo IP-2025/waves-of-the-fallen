@@ -12,5 +12,6 @@ public enum EntityType
     CrossbowArrow,
     Kunai,
     KunaiProjectile,
-    FireStaff
+    FireStaff,
+    FireBall
 }
