@@ -19,18 +19,18 @@ public partial class SoundManager : Node2D
 		_buttonPlayer = GetNode<AudioStreamPlayer2D>("ButtonSound");
 	}
 
-	public void PlaySoundAtPosition(String name, Vector2 position, float volumeDb = 0.0f)
+	public void PlaySoundAtPosition(string name, Vector2 position, float volumeDb = 0.0f)
 	{
 		AudioStreamPlayer2D player = new AudioStreamPlayer2D();
-		AddChild(player); 
+		AddChild(player);
 
-		player.Position = position;
-		player.Stream = GD.Load<AudioStream>("res://Assets/Sounds/" +  name +".wav");
-		player.VolumeDb = volumeDb;
+		player.Position = position;															//Gibt die Position weiter, um von dort aus ein Sound abzuspielen
+		player.Stream = GD.Load<AudioStream>("res://Assets/Sounds/" + name + ".wav");		//Nimmt von dem Sounds Ordner den richtigen Sound
+		player.VolumeDb = volumeDb;															//(Optional) Stellt die Lautstärke bei Verlangen um
 
-		player.Play();
+		player.Play();																		//Spielt den Sound
 
-		player.Finished += player.QueueFree;
+		player.Finished += player.QueueFree;												//Löscht den Player nachdem der Sound fertig abgespielt ist
 	}
 
 	public void PlayUI(AudioStream stream)
