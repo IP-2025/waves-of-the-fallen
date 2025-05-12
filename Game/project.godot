@@ -13,16 +13,16 @@ config_version=5
 config/name="Game"
 run/main_scene="uid://d2coob6g63jxs"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
-config/icon="res://Assets/Characters/place_holder/enemy_placeholder.svg"
+config/icon="res://Assets/Icons/Characters/place_holder/enemy_placeholder.svg"
 
 [autoload]
 
-SettingsManager="*res://Scripts/Settings/SettingsManager.cs"
-MenuBackgroundMusic="*res://Scenes/Music/menuBackgroundMusic.tscn"
-CharacterManager="*res://Scripts/Characters/CharacterManager.cs"
-NetworkManager="*res://Scripts/Multiplayer/NetworkManager.cs"
-SecureStorage="*res://Scripts/Storage/SecureStorage.cs"
-Server="*res://Scripts/Multiplayer/Server.cs"
+MenuBackgroundMusic="*res://Audio/Music/MenuBackground/menuBackgroundMusic.tscn"
+CharacterManager="*res://Entities/Characters/Util/Manager/CharacterManager.cs"
+NetworkManager="*res://Utilities/Multiplayer/NetworkManager.cs"
+SecureStorage="*res://Utilities/SecureStorage/SecureStorage.cs"
+Server="*res://Utilities/Multiplayer/Server.cs"
+SettingsManager="*res://Menu/Settings/Manager/SettingsManager.cs"
 
 [display]
 
