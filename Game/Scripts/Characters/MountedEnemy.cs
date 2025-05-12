@@ -22,10 +22,9 @@ public partial class MountedEnemy : EnemyBase
 		}
 	}
 
-	public override void _PhysicsProcess(double delta)
+	protected override void HandleMovement(Vector2 direction)
 	{
 		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
-
 		if (dist > stopDistance)
 		{
 			Vector2 toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
