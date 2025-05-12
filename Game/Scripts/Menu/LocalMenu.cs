@@ -60,6 +60,16 @@ public partial class LocalMenu : Control
 
     NetworkManager.Instance.InitClient(ipIO.Text);
 
+    var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
+    int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+
+    var timer2 = new Timer();
+    AddChild(timer2);
+    timer2.WaitTime = 0.5f;
+    timer2.OneShot = true;
+    timer2.Timeout += () => NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
+    timer2.Start();
+    
     // disable join and host button
     joinButton.Visible = false;
     joinButton.Disabled = true;
@@ -83,6 +93,10 @@ public partial class LocalMenu : Control
 
   private void _on_play_button_pressed()
   {
+
+    var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
+    int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+    NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
     NetworkManager.Instance.Rpc("NotifyGameStart");
   }
 
@@ -91,33 +105,33 @@ public partial class LocalMenu : Control
     if (enableDebug) Debug.Print("Local Menue: " + message);
   }
 
-private void OnHeadlessServerInitialized()
-{
+  private void OnHeadlessServerInitialized()
+  {
     var timer = new Timer();
     AddChild(timer);
     timer.WaitTime = 0.5f;
     timer.OneShot = true;
     timer.Timeout += () =>
     {
-        NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
-        ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show Server IP
+      NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
+      ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show Server IP
 
-        var timer2 = new Timer();
-        AddChild(timer2);
-        timer2.WaitTime = 0.5f;
-        timer2.OneShot = true;
-        timer2.Timeout += () =>
-        {
-            hostButton.Visible = false;
-            playButton.Visible = true;
-            playButton.Disabled = false;
-        };
-        
-        timer2.Start();
+      var timer2 = new Timer();
+      AddChild(timer2);
+      timer2.WaitTime = 0.5f;
+      timer2.OneShot = true;
+      timer2.Timeout += () =>
+      {
+        hostButton.Visible = false;
+        playButton.Visible = true;
+        playButton.Disabled = false;
+      };
+
+      timer2.Start();
     };
 
     timer.Start();
-}
+  }
 
 
   public override void _ExitTree()
