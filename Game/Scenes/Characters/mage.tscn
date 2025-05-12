@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://brtwb3l1ej7at"]
+[gd_scene load_steps=6 format=3 uid="uid://dsncgbos1x7l"]
 
 [ext_resource type="Script" uid="uid://biegdkfmesh02" path="res://Scripts/Characters/Mage.cs" id="1_shc7e"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_55mar"]
@@ -29,7 +29,6 @@ position = Vector2(-25, 15)
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_55mar")
-max_health = 150.0
 
 [node name="HealthBar" type="ProgressBar" parent="Health"]
 offset_left = -47.0

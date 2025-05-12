@@ -5,14 +5,13 @@ public partial class Assassin : DefaultPlayer
 	public Assassin()
 	{
 		MaxHealth = 75;
-		Speed = 1000.0f;
+		Speed = 500.0f;
 	}
 
 	public override void _Ready()
 	{
 		base._Ready();
 
-		// Synchronize MaxHealth with the Health node
 		var healthNode = GetNode<Health>("Health");
 		healthNode.max_health = MaxHealth;
 		healthNode.ResetHealth();
@@ -22,6 +21,6 @@ public partial class Assassin : DefaultPlayer
 
 	public override void UseAbility()
 	{
-		GD.Print("Platzhalter Fähigkeit Assassine");
+		//TODO: Implement Assassin's ability
 	}
 }

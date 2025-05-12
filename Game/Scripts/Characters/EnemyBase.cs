@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 public abstract partial class EnemyBase : CharacterBody2D
 {
-	public bool enableDebug = true;
+	public bool enableDebug = false;
 
 	[Export] public float speed;
 	[Export] public float damage;
