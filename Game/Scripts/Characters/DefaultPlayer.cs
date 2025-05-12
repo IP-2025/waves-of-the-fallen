@@ -28,10 +28,10 @@ public partial class DefaultPlayer : CharacterBody2D
 	{
 		AddToGroup("player");
 /* 		base._Ready(); */
-/* 
-		var characterManager = GetNode<CharacterManager>("/root/CharacterManager"); */
-/* 		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
- */
+
+		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
+		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+ 
 /* 		GetNodeOrNull<Node2D>("Archer")?.Hide();
 		GetNodeOrNull<Node2D>("Assassin")?.Hide();
 		GetNodeOrNull<Node2D>("Knight")?.Hide();
@@ -47,7 +47,7 @@ public partial class DefaultPlayer : CharacterBody2D
 			_ => "Archer" // Standardwert
 		}; */
 
-/*  		var selectedClassNode = GetNodeOrNull<Node2D>(selectedClassNodeName);
+ /* 		var selectedClassNode = GetNodeOrNull<Node2D>(selectedClassNodeName);
 		if (selectedClassNode != null)
 		{
 			selectedClassNode.Show();
@@ -56,7 +56,7 @@ public partial class DefaultPlayer : CharacterBody2D
 		else
 		{
 			GD.PrintErr($"Class node '{selectedClassNodeName}' not found!");
-		}
+		}*/
 
 		object playerClass = selectedCharacterId switch
 		{
@@ -66,7 +66,7 @@ public partial class DefaultPlayer : CharacterBody2D
 			4 => new Mage(),
 			_ => new DefaultPlayer()
 		};
- */
+ 
 /* 		GD.Print($"Selected Character: {playerClass.GetType().Name}"); */
 
 		// Set attributes based on the selected class
@@ -98,7 +98,7 @@ public partial class DefaultPlayer : CharacterBody2D
 		} */
 
 		// Equip weapon for the selected class
-/* 		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
+ 		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
 		Area2D weapon = CreateWeaponForClass(playerClass);
 
 		if (weapon != null)
@@ -114,7 +114,7 @@ public partial class DefaultPlayer : CharacterBody2D
 			Server.Instance.Entities.Add((long)id, weapon);
 
 			weaponsEquipped++;
-		} */
+		} 
 	}
 
 	private Area2D CreateWeaponForClass(object playerClass)
