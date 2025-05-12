@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bdkp0e6ivq2b5" path="res://Scripts/Characters/DefaultPlayer.cs" id="1_y2kgl"]
 [ext_resource type="PackedScene" uid="uid://56x8ud47qho" path="res://Scenes/Characters/archer.tscn" id="3_kjvlq"]
-[ext_resource type="PackedScene" uid="uid://dty50xa782ety" path="res://Scenes/Characters/assassin.tscn" id="5_jig1i"]
-[ext_resource type="PackedScene" uid="uid://brnmi011d55l7" path="res://Scenes/Characters/knight.tscn" id="6_ajyao"]
-[ext_resource type="PackedScene" uid="uid://brtwb3l1ej7at" path="res://Scenes/Characters/mage.tscn" id="7_bdmc5"]
+[ext_resource type="PackedScene" uid="uid://bichqwbvl1iwh" path="res://Scenes/Characters/assassin.tscn" id="5_jig1i"]
+[ext_resource type="PackedScene" path="res://Scenes/Characters/knight.tscn" id="6_ajyao"]
+[ext_resource type="PackedScene" path="res://Scenes/Characters/mage.tscn" id="7_bdmc5"]
 
 [node name="DefaultPlayer" type="CharacterBody2D"]
 collision_mask = 256
