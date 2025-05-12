@@ -1,21 +1,8 @@
 using Godot;
 using System;
-using System.Threading.Tasks;
 
 public partial class OnlineLocalMenu : Control
 {
-  bool _headlessIsReady = false;
-
-  public override void _Ready()
-  {
-    NetworkManager.Instance.HeadlessServerInitialized += OnHeadlessServerInitialized;
-  }
-
-  private void HeadlessServerInitializedEventHandler()
-  {
-    throw new NotImplementedException();
-  }
-
   private void _on_button_back_onlineLocal_pressed()
   {
     var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
@@ -33,35 +20,28 @@ public partial class OnlineLocalMenu : Control
 
   private void _on_button_solo_pressed()
   {
-    Button soloButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2/Button_Solo");
-    soloButton.Disabled = true;
     NetworkManager.Instance.StartHeadlessServer(true);
-  }
 
-  private void OnHeadlessServerInitialized()
-  {
-    var timer = new Timer();
-    AddChild(timer);
-    timer.WaitTime = 0.5f;
-    timer.OneShot = true;
-
-    timer.Timeout += () =>
+    if (NetworkManager.Instance.IsPortOpen(NetworkManager.Instance.GetServerIPAddress(), NetworkManager.Instance.RPC_PORT, 500))
     {
       NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
+    }
+    else
+    {
+      var timer = new Timer();
+      AddChild(timer);
+      timer.WaitTime = 0.5f;
+      timer.OneShot = true;
+      timer.Timeout += () => NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
+      timer.Start();
+    }
 
-      Timer gameStartTimer = new Timer();
-      AddChild(gameStartTimer);
-      gameStartTimer.WaitTime = 0.5f;
-      gameStartTimer.OneShot = true;
-      gameStartTimer.Timeout += () => NetworkManager.Instance.Rpc("NotifyGameStart");
-      gameStartTimer.Start();
-    };
-
-    timer.Start();
-  }
-
-  public override void _ExitTree()
-  {
-    NetworkManager.Instance.HeadlessServerInitialized -= OnHeadlessServerInitialized;
+    var timer2 = new Timer();
+      AddChild(timer2);
+      timer2.WaitTime = 1;
+      timer2.OneShot = true;
+      timer2.Timeout += () => NetworkManager.Instance.Rpc("NotifyGameStart");
+      timer2.Start();
+    
   }
 }

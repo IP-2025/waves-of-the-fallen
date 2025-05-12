@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 
 // Autoload-Node: manages Netzwerk, Tick-Loop
 public partial class NetworkManager : Node
@@ -36,9 +35,6 @@ public partial class NetworkManager : Node
     public static NetworkManager Instance { get; private set; }
     private Client client;
     private Server server;
-    // Server ready signal
-    [Signal]
-    public delegate void HeadlessServerInitializedEventHandler();
 
 
     public override void _Ready()
@@ -147,6 +143,70 @@ public partial class NetworkManager : Node
         DebugIt("Client connecting to: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + address);
     }
 
+  /*   public void InitHost() // client and server for local multiplayer
+    {
+        _isHost = true;
+
+        server = new Server();
+        AddChild(server);
+        // start rpc
+        _rpcServerPeer = new ENetMultiplayerPeer();
+        // test if address and port is valid / open
+        var err = _rpcServerPeer.CreateServer(RPC_PORT, maxClients: 4); // max 4 clients
+        if (err != Error.Ok)
+        {
+            DebugIt("Failed to create RPC server, quitting game." + err);
+            GetTree().Quit();
+            return;
+        }
+
+        // start udp server
+        _udpServer = new UdpServer();
+        err = _udpServer.Listen((ushort)UDP_PORT);
+        if (err != Error.Ok)
+        {
+            DebugIt("Failed to bind UDP port: " + err);
+            GetTree().Quit();
+            return;
+        }
+        DebugIt("Server startet on port: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + "127.0.0.1");
+
+        // connect rpc client (localhost)
+        client = new Client();
+        AddChild(client);
+        _rpcClientPeer = new ENetMultiplayerPeer();
+        err = _rpcClientPeer.CreateClient("127.0.0.1", RPC_PORT);
+        if (err != Error.Ok)
+        {
+            DebugIt($"Host: ENet-Client failed: {err}");
+            GetTree().Quit();
+            return;
+        }
+        GetTree().GetMultiplayer().MultiplayerPeer = _rpcClientPeer;
+        GetTree().GetMultiplayer().PeerConnected += id => DebugIt($"PeerConnected: {id}");
+        DebugIt("Host: ENet-Client connected to: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + "127.0.0.1");
+
+
+        // connect udp client (localhost)
+        _udpClientPeer = new PacketPeerUdp();
+        err = _udpClientPeer.ConnectToHost("127.0.0.1", UDP_PORT);
+        if (err != Error.Ok)
+        {
+            GD.PrintErr($"UDP-Connect fehlgeschlagen: {err}");
+            return;
+        }
+
+
+        // send hello handshake to server
+        var hello = Encoding.UTF8.GetBytes("HELLO");
+        _udpClientPeer.PutPacket(hello);
+
+        // we are now both server and client
+        DebugIt("Host started (Server+Client) on localhost");
+
+        _readyForUdp = true;
+    } */
+
     public void StartHeadlessServer(bool headless)
     {
         ProcessStartInfo startInfo;
@@ -193,9 +253,6 @@ public partial class NetworkManager : Node
         process.Start();
         process.BeginOutputReadLine();
         process.BeginErrorReadLine();
-
-        EmitSignal(nameof(HeadlessServerInitialized));
-
     }
 
     private void StartAutoShutdownTimer()
@@ -237,41 +294,19 @@ public partial class NetworkManager : Node
         }
     }
 
-    private bool IsPortOpen(string host, int port, int timeout = 500)
+    public bool IsPortOpen(string host, int port, int timeout = 500)
     {
         try
         {
-            using var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            var result = socket.BeginConnect(host, port, null, null);
-            bool success = result.AsyncWaitHandle.WaitOne(timeout, true);
-            if (!success)
-                return false;
-
-            // erst hier das Ende des Connect-Versuchs abwarten
-            socket.EndConnect(result);
-            return socket.Connected;
+            using var client = new TcpClient();
+            var result = client.BeginConnect(host, port, null, null);
+            var success = result.AsyncWaitHandle.WaitOne(timeout);
+            return success && client.Connected;
         }
         catch
         {
             return false;
         }
-    }
-
-    public async Task WaitForServerAsync()
-    {
-        var timeout = Stopwatch.StartNew();
-        while (!IsPortOpen(GetServerIPAddress(), RPC_PORT, 500))
-        {
-            if (timeout.Elapsed.TotalSeconds > 10)
-            {
-                GD.PrintErr("Timeout: Server unreachable after 10 seconds.");
-                throw new TimeoutException();
-            }
-            // pause to avoid maxing out CPU
-            await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
-        }
-
-        DebugIt("Connection established successfully!");
     }
 
     private void HandleServerUdp()
@@ -441,10 +476,5 @@ public partial class NetworkManager : Node
     private void DebugIt(string message)
     {
         if (enableDebug) Debug.Print("Network Manager: " + message);
-    }
-
-    internal void Connect(string v1, OnlineLocalMenu onlineLocalMenu, string v2)
-    {
-        throw new NotImplementedException();
     }
 }

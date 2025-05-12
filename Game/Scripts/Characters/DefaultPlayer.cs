@@ -23,6 +23,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Scenes/Weapons/crossbow.tscn");
 	public PackedScene KunaiScene = GD.Load<PackedScene>("res://Scenes/Weapons/kunai.tscn");
 	public PackedScene DaggerScene = GD.Load<PackedScene>("res://Scenes/Weapons/dagger.tscn");
+	public PackedScene SwordScene = GD.Load<PackedScene>("res://Scenes/Weapons/Sword.tscn");
 	private int weaponsEquipped = 0;
 
 	public override void _Ready()
@@ -73,9 +74,8 @@ public partial class DefaultPlayer : CharacterBody2D
 			//return KunaiScene.Instantiate() as Area2D;
 			return KunaiScene.Instantiate() as Area2D;
 		if (playerClass is Warrior)
-			return DaggerScene.Instantiate() as Area2D;
 			//return DaggerScene.Instantiate() as Area2D;
-			//return SwordScene.Instantiate() as Area2D;
+			return SwordScene.Instantiate() as Area2D;
 		// if (playerClass is Mage) return FireStaffScene.Instantiate() as Area2D;
 
 		return null;

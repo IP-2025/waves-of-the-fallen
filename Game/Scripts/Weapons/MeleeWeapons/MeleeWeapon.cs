@@ -5,8 +5,8 @@ using System.Linq;
 public abstract partial class MeleeWeapon : Area2D
 {
 	protected AnimatedSprite2D animatedSprite;
-	protected float WeaponRange = 100f;
-	[Export] public int Damage = 50;
+	protected float WeaponRange = 50f;
+	[Export] public int MeleeDamage = 50;
 	//protected PackedScene projectileScene = null;
 
 	public override void _PhysicsProcess(double delta)
@@ -58,13 +58,13 @@ public abstract partial class MeleeWeapon : Area2D
 		}
 		return false;
 	}
-	protected void MeleeAttack(int damage)
+	protected void MeleeAttack()
 	{
 		var target = FindNearestEnemy();
 		var healthNode = target.GetNodeOrNull<Health>("Health");
 		if (healthNode != null)
 		{
-			healthNode.Damage(damage);
+			healthNode.Damage(MeleeDamage);
 		}
 	}
 }

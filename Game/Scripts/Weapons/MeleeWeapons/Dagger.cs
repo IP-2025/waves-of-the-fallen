@@ -3,11 +3,11 @@ using System;
 
 public partial class Dagger : MeleeWeapon
 {
-	private PackedScene daggerScene = GD.Load<PackedScene>("res://Scenes/Weapons/dagger.tscn");
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/Stab");
+		MeleeDamage = 50;
 		//Standard Dagger Animation or use nothing.
 	}
 
@@ -20,9 +20,10 @@ public partial class Dagger : MeleeWeapon
 			target.Call("TakeDamage", Damage);
 		}
 	}*/
-	public override void _Process(double delta)
+	public async void OnTimerTimeoutDagger()
 	{
 		animatedSprite.Play("Stab");
-	}
-	
+		await ToSignal(GetTree().CreateTimer(0.13), "timeout");
+		MeleeAttack();
+	}	
 }
