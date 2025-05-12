@@ -14,9 +14,9 @@ public partial class Server : Node
 		{ "res://Scenes/Characters/default_player.tscn", EntityType.DefaultPlayer },
 		{ "res://Scenes/Characters/archer.tscn", EntityType.Archer },
 		{ "res://Scenes/Characters/default_enemy.tscn", EntityType.DefaultEnemy },
-		//{ "res://Scenes/Characters/mounted_enemy.tscn", EntityType.MountedEnemy },
+		{ "res://Scenes/Characters/mounted_enemy.tscn", EntityType.MountedEnemy },
 		{ "res://Scenes/Characters/ranged_enemy.tscn", EntityType.RangedEnemy },
-		//{ "res://Scenes/Characters/rider_enemy.tscn", EntityType.RiderEnemy },
+		{ "res://Scenes/Characters/rider_enemy.tscn", EntityType.RiderEnemy },
 		{ "res://Scenes/Weapons/bow.tscn", EntityType.Bow },
 		{ "res://Scenes/Weapons/bow_arrow.tscn", EntityType.BowArrow },
 		{ "res://Scenes/Weapons/crossbow.tscn", EntityType.Crossbow },
@@ -92,16 +92,15 @@ public partial class Server : Node
 			int waveCount = 0;
 			int secondsLeft = 0;
 			bool graceTime = false;
-			var cam = GetViewport().GetCamera2D();
-			if (cam != null)
+			
+			var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
+			var waveTimer = gameRoot?.GetNodeOrNull<WaveTimer>("GlobalWaveTimer");
+
+			if (waveTimer != null)
 			{
-				var waveTimer = cam.GetNodeOrNull<WaveTimer>("WaveTimer");
-				if (waveTimer != null)
-				{
-					waveCount = waveTimer.waveCounter;
-					secondsLeft = waveTimer.secondCounter;
-					graceTime = waveTimer.isPaused;
-				}
+				waveCount = waveTimer.waveCounter;
+				secondsLeft = waveTimer.secondCounter;
+				graceTime = waveTimer.isPaused;
 			}
 
 			// Get health

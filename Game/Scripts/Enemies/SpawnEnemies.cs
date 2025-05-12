@@ -97,9 +97,6 @@ public partial class SpawnEnemies : Node2D
 		string patternFilepath = "res://Scenes/Enemies/Patterns/";
 		foreach (string patternName in DirAccess.GetFilesAt(patternFilepath))
 		{
-			
-			if (patternName.Contains("mounted") || patternName.Contains("rider"))
-			continue;
 			PackedScene pattern = GD.Load<PackedScene>(patternFilepath + patternName);
 			patternPool.Add(pattern, pattern.Instantiate<EnemyPattern>().spawningCost);
 		}

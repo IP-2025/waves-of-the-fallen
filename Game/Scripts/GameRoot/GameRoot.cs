@@ -10,6 +10,7 @@ public partial class GameRoot : Node
 	private int playerIndex = 0; // player index for spawning players
 	bool isServer = false;
 	private bool enableDebug = false;
+	private WaveTimer globalWaveTimer;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -21,6 +22,14 @@ public partial class GameRoot : Node
 		// Load map and store reference
 		SpawnMap("res://Scenes/Main.tscn");
 
+		// Instantiate one global WaveTimer for server-wide access
+		if (isServer)
+		{
+			var waveTimerScene = GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn");
+			globalWaveTimer = waveTimerScene.Instantiate<WaveTimer>();
+			globalWaveTimer.Name = "GlobalWaveTimer";
+			AddChild(globalWaveTimer);
+		}
 		if (isServer)
 		{
 			// Server spawns all players
