@@ -29,7 +29,6 @@ position = Vector2(-25, 15)
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_3bcig")
-max_health = 150.0
 
 [node name="HealthBar" type="ProgressBar" parent="Health"]
 offset_left = -50.0

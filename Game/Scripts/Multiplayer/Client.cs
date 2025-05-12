@@ -6,7 +6,7 @@ using System.Security;
 
 public partial class Client : Node
 {
-    bool enableDebug = true;
+    bool enableDebug = false;
     private Camera2D _camera;
     private bool _hasJoystick = false;
     private bool _waveTimerReady = false;
