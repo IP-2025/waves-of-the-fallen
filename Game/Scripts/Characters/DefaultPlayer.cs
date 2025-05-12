@@ -22,11 +22,12 @@ public partial class DefaultPlayer : CharacterBody2D
 	public PackedScene BowScene = GD.Load<PackedScene>("res://Scenes/Weapons/bow.tscn");
 	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Scenes/Weapons/crossbow.tscn");
 	public PackedScene KunaiScene = GD.Load<PackedScene>("res://Scenes/Weapons/kunai.tscn");
+	public PackedScene FireStaffScene = GD.Load<PackedScene>("res://Scenes/Weapons/firestaff.tscn");
 	private int weaponsEquipped = 0;
 
 	public override void _Ready()
 	{
-		var playerClass = new Assassin(); // Instantiate Mage
+		var playerClass = new Mage(); // Instantiate Mage
 		Speed = playerClass.Speed; // Override DefaultPlayer's Speed with Mage's Speed
 		MaxHealth = playerClass.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
 		CurrentHealth = playerClass.CurrentHealth; // Set CurrentHealth to Mage's CurrentHealth
@@ -69,7 +70,9 @@ public partial class DefaultPlayer : CharacterBody2D
 		
 		if (playerClass is Assassin)
 			return KunaiScene.Instantiate() as Area2D;
-		// if (playerClass is Mage) return FireStaffScene.Instantiate() as Area2D;
+
+		if (playerClass is Mage) 
+			return FireStaffScene.Instantiate() as Area2D;
 
 		return null;
 	}

@@ -30,6 +30,7 @@ public partial class Client : Node
         { EntityType.CrossbowArrow,  GD.Load<PackedScene>("res://Scenes/Weapons/crossbow_arrow.tscn") },
         { EntityType.Kunai, GD.Load<PackedScene>("res://Scenes/Weapons/kunai.tscn") },
         { EntityType.KunaiProjectile, GD.Load<PackedScene>("res://Scenes/Weapons/kunai_projectile.tscn")},
+        { EntityType.FireStaff, GD.Load<PackedScene>("res://Scenes/Weapons/firestaff.tscn")}
     };
 
     public override void _Ready()

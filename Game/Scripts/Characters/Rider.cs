@@ -10,7 +10,7 @@ public partial class Rider : EnemyBase
 	[Export] public float stopDistance = 20f;
 	[Export] public float attackRange = 10f;
 
-	public override void _PhysicsProcess(double delta)
+	protected override void HandleMovement(Vector2 direction)
 	{
 		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
 		if (dist > stopDistance)
