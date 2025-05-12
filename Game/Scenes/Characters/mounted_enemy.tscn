@@ -76,7 +76,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="MountedEnemy" type="CharacterBody2D" groups=["Enemies"]]
+[node name="MountedEnemy" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 16
 script = ExtResource("1_script")
 speed = 130.0

@@ -37,7 +37,7 @@ project/assembly_name="Game"
 [global_group]
 
 PlayerSpawnPoints=""
-Enemies=""
+enemies=""
 
 [input]
 
