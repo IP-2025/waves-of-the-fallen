@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbnnxciy67iq5"]
+[gd_scene load_steps=2 format=3 uid="uid://d2coob6g63jxs"]
 
 [ext_resource type="Script" uid="uid://bn60bm5gya3pn" path="res://Scripts/Menu/LoginScreen.cs" id="1_36i0f"]
 
@@ -54,7 +54,9 @@ offset_right = 626.0
 offset_bottom = 551.0
 text = "Log In"
 
-[node name="HttpRequest" type="HTTPRequest" parent="Panel"]
+[node name="AuthRequest" type="HTTPRequest" parent="Panel"]
+
+[node name="LoginRequest" type="HTTPRequest" parent="Panel"]
 
 [node name="OfflineButton" type="Button" parent="Panel"]
 layout_mode = 0
@@ -72,3 +74,11 @@ offset_top = 444.0
 offset_right = 841.0
 offset_bottom = 467.0
 theme_override_colors/font_color = Color(1, 0, 0, 1)
+
+[node name="RegisterButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 21.0
+offset_right = 156.0
+offset_bottom = 58.0
+text = "Create Account"

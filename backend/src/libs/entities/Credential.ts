@@ -28,7 +28,7 @@ export class Credential {
   })
   password!: string;
 
-  @OneToOne(() => Player, (player) => player.credential)
-  @JoinColumn()
+  @OneToOne(() => Player)
+  @JoinColumn({ name: 'player_id' })
   player!: Player;
 }
