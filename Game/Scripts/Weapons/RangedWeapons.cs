@@ -72,6 +72,4 @@ public abstract partial class RangedWeapon : Area2D
 		GetTree().CurrentScene.AddChild(projectileInstance);
 
 	}
-
-	
 }

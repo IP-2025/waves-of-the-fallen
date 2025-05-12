@@ -13,7 +13,8 @@ public partial class DefaultPlayer : CharacterBody2D
 	[Export]
 	public int CurrentHealth { get; set; }
 	public long OwnerPeerId { get; set; }
-
+	
+	public Node2D weaponSlot { get; set; }
 	public Node2D Joystick { get; set; }
 	private Camera2D camera;
 	private MultiplayerSynchronizer multiplayerSynchronizer;
@@ -28,7 +29,6 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public override void _Ready()
 	{
-		GD.Print(DaggerScene != null ? "Scene loaded!" : "Scene NOT found!");
 		var playerClass = new Warrior(); // Instantiate Mage
 		Speed = playerClass.Speed; // Override DefaultPlayer's Speed with Mage's Speed
 		MaxHealth = playerClass.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
@@ -40,7 +40,7 @@ public partial class DefaultPlayer : CharacterBody2D
 		if (HasNode("Joystick"))
 		{
 			Joystick = GetNode<Node2D>("Joystick");
-			var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
+			weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
 			Area2D weapon = CreateWeaponForClass(playerClass);
 			GD.Print($"Instantiated weapon: {weapon}");
 			if (weapon != null)

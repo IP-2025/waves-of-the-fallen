@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="3_health"]
 [ext_resource type="Texture2D" uid="uid://b7hv8o45r2s1g" path="res://Assets/Characters/place_holder/PlaceholderBody.png" id="5_6dmdw"]
 
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
 radius = 15.0
 

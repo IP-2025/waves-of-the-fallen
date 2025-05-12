@@ -5,13 +5,17 @@ using System.Linq;
 public abstract partial class MeleeWeapon : Area2D
 {
 	protected AnimatedSprite2D animatedSprite;
-	protected float WeaponRange = 50f;
+	[Export] public float WeaponRange = 50f;
 	[Export] public int MeleeDamage = 50;
+	Node target;
 	//protected PackedScene projectileScene = null;
-
+	public override void _Ready()
+	{
+	}
+		
 	public override void _PhysicsProcess(double delta)
 	{
-		var target = FindNearestEnemy();
+		target = FindNearestEnemy();
 		if (target != null && TryGetPosition(target, out var position))
 		{
 			LookAt(position);
@@ -60,11 +64,34 @@ public abstract partial class MeleeWeapon : Area2D
 	}
 	protected void MeleeAttack()
 	{
-		var target = FindNearestEnemy();
 		var healthNode = target.GetNodeOrNull<Health>("Health");
+		
 		if (healthNode != null)
 		{
 			healthNode.Damage(MeleeDamage);
+			GD.Print("Error");
+		}
+	}
+	protected void ShootMeleeVisual()
+	{
+		if (TryGetPosition(target, out var position))
+		{
+			var tween = CreateTween();
+			//move forward
+			tween.TweenProperty(this, "global_position", position, 0.1)
+				.SetTrans(Tween.TransitionType.Sine)
+				.SetEase(Tween.EaseType.Out);
+
+			//Call method for attack
+			tween.TweenCallback(Callable.From(() => {
+				GD.Print("Execute Attack");
+				MeleeAttack(); 
+			}));
+			//go back
+			tween.TweenProperty(this, "position", Vector2.Zero, 0.1)
+				.SetDelay(0.1)
+				.SetTrans(Tween.TransitionType.Sine)
+				.SetEase(Tween.EaseType.In);
 		}
 	}
 }

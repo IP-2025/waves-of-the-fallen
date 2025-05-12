@@ -8,13 +8,14 @@ public partial class Sword : MeleeWeapon
 	{
 		SwordAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		MeleeDamage = 100;
+		WeaponRange = 100;
 	}
 
 	private async void OnTimerTimeoutAttack()
-	{
-		SwordAnimationPlayer.Play("SwordAttack"); 
-		await ToSignal(GetTree().CreateTimer(0.2), "timeout");
-		MeleeAttack();
+	{ 
+		ShootMeleeVisual();
+		SwordAnimationPlayer.Play("SwordAttack");
+		await ToSignal(GetTree().CreateTimer(0.2), "timeout");		
 	}
 	
 }
