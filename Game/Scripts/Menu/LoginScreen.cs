@@ -66,6 +66,7 @@ public partial class LoginScreen : Control
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
+		SoundManager.Instance.PlayUI("buttonPress");
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
@@ -94,17 +95,19 @@ public partial class LoginScreen : Control
 			Godot.HttpClient.Method.Post,
 			body
 		);
-
 		if (err != Error.Ok)
 			ShowError($"Request error: {err}");
 		else
 			_loginButton.Disabled = true;
+	
+		SoundManager.Instance.PlayUI("buttonPress");
 	}
 
 	private void OnRegisterButtonPressed()
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/register_screen.tscn");
 		if (scene == null) GD.PrintErr("Register Scene not found");
+		SoundManager.Instance.PlayUI("buttonPress");
 		GetTree().ChangeSceneToPacked(scene);
 	}
 

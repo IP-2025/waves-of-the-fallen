@@ -19,11 +19,13 @@ public partial class OnlineLocalMenu : Control
   private void _on_button_back_onlineLocal_pressed()
   {
     var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
+    SoundManager.Instance.PlayUI("buttonPress");
     GetTree().ChangeSceneToPacked(scene);
   }
   private void _on_button_local_pressed()
   {
     var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/localMenu.tscn");
+    SoundManager.Instance.PlayUI("buttonPress");
     GetTree().ChangeSceneToPacked(scene);
   }
   private void _on_button_online_pressed()
@@ -35,6 +37,7 @@ public partial class OnlineLocalMenu : Control
   {
     Button soloButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2/Button_Solo");
     soloButton.Disabled = true;
+    SoundManager.Instance.PlayUI("buttonPress");
     NetworkManager.Instance.StartHeadlessServer(true);
   }
 
