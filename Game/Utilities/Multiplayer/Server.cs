@@ -27,7 +27,9 @@ public partial class Server : Node
         { "res://Scenes/Characters/default_player.tscn", EntityType.DefaultPlayer },
         { "res://Entities/Characters/Knight/knight.tscn", EntityType.Knight },
         { "res://Entities/Characters/Assassin/assassin.tscn", EntityType.Assassin },
-        { "res://Entities/Characters/Mage/mage.tscn", EntityType.Mage }         
+        { "res://Entities/Characters/Mage/mage.tscn", EntityType.Mage },
+        { "res://Scenes/Weapons/firestaff.tscn", EntityType.FireStaff},
+        { "res://Scenes/Weapons/fireball.tscn", EntityType.FireBall}         
     };
     public override void _Ready()
     {

@@ -22,6 +22,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	public PackedScene BowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
 	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
 	public PackedScene KunaiScene = GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn");
+	public PackedScene FireStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn");
 	private int weaponsEquipped = 0;
 
 	public override void _Ready()
@@ -124,7 +125,9 @@ public partial class DefaultPlayer : CharacterBody2D
 		
 		if (playerClass is Assassin)
 			return KunaiScene.Instantiate() as Area2D;
-		// if (playerClass is Mage) return FireStaffScene.Instantiate() as Area2D;
+
+		if (playerClass is Mage) 
+			return FireStaffScene.Instantiate() as Area2D;
 
 		return null;
 	}

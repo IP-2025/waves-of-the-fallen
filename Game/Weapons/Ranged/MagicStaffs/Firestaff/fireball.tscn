@@ -1,0 +1,86 @@
+[gd_scene load_steps=13 format=3 uid="uid://bg8lc8o2mf0sw"]
+
+[ext_resource type="Texture2D" uid="uid://d0iwb2p02ow1w" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Ressources/Fireball1.png" id="1_bympj"]
+[ext_resource type="Script" uid="uid://dbgnq1xrpvxt3" path="res://Scripts/Weapons/FireBall.cs" id="1_ldwc5"]
+[ext_resource type="Texture2D" uid="uid://ckxup7gurb0xf" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Ressources/Fireball2.png" id="2_ldwc5"]
+[ext_resource type="Texture2D" uid="uid://cj0w3bqfl1nik" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Ressources/Fireball3.png" id="3_jic63"]
+[ext_resource type="Texture2D" uid="uid://pyx8mpk6e14i" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Ressources/Explosion1.png" id="5_o6375"]
+[ext_resource type="Texture2D" uid="uid://cs65f4nwo7k74" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Ressources/Explosion2.png" id="6_4dy7c"]
+[ext_resource type="Texture2D" uid="uid://0ceytunogtdu" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Ressources/Explosion3.png" id="7_j033g"]
+[ext_resource type="Texture2D" uid="uid://cb0j3cs3h1wce" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Ressources/Explosion4.png" id="8_opg4t"]
+[ext_resource type="Texture2D" uid="uid://fvcvn0vnpmd8" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Ressources/Explosion5.png" id="9_0pktg"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d58m4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_bympj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ldwc5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_jic63")
+}],
+"loop": true,
+"name": &"projectile",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hhg2a"]
+radius = 7.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8f8e6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_o6375")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_4dy7c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_j033g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_opg4t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_0pktg")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"explosion",
+"speed": 15.0
+}]
+
+[node name="Fireball" type="Area2D"]
+position = Vector2(-9, 0)
+collision_layer = 4
+collision_mask = 16
+script = ExtResource("1_ldwc5")
+
+[node name="FireballAnimation" type="AnimatedSprite2D" parent="."]
+position = Vector2(2, 0)
+rotation = -0.47822
+scale = Vector2(0.06, 0.06)
+sprite_frames = SubResource("SpriteFrames_d58m4")
+animation = &"projectile"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(9, 0)
+shape = SubResource("CircleShape2D_hhg2a")
+
+[node name="Explosion" type="AnimatedSprite2D" parent="."]
+position = Vector2(9, -1)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_8f8e6")
+animation = &"explosion"
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
+[connection signal="animation_finished" from="Explosion" to="." method="OnExplosionAnimationFinished"]

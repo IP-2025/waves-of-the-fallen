@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://dl4t3wdofnojk"]
+
+[ext_resource type="Script" uid="uid://cjqev3qu08iqe" path="res://Scripts/Weapons/FireStaff.cs" id="1_2yg4u"]
+[ext_resource type="Texture2D" uid="uid://d0o0qmge44uty" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Ressources/FireStaff2.png" id="1_3eoh8"]
+[ext_resource type="Texture2D" uid="uid://cjtrhw80rjrol" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Ressources/FireStaff3.png" id="2_2yg4u"]
+[ext_resource type="Texture2D" uid="uid://cmepspgpbdws7" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Ressources/FireStaff4.png" id="3_l7jeu"]
+[ext_resource type="Texture2D" uid="uid://c7ljkhgs0lqco" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Ressources/FireStaff1.png" id="4_cx528"]
+[ext_resource type="Texture2D" uid="uid://df24mp3gyb1k4" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Ressources/FireStaff5.png" id="5_xtmck"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_55g3s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_cx528")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_3eoh8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_2yg4u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_l7jeu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_xtmck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_cx528")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 3.1
+}]
+
+[node name="FireStaff" type="Area2D"]
+script = ExtResource("1_2yg4u")
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+
+[node name="FireStaffSprite" type="AnimatedSprite2D" parent="WeaponPivot"]
+position = Vector2(0, 3)
+rotation = 1.5708
+scale = Vector2(0.12, 0.12)
+sprite_frames = SubResource("SpriteFrames_55g3s")
+animation = &"shoot"
+frame = 5
+frame_progress = 1.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.7
+autostart = true
+
+[node name="ShootingPoint" type="Marker2D" parent="."]
+position = Vector2(34, 2)
+
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutIFirestaff"]
