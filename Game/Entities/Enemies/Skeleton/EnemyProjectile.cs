@@ -16,55 +16,55 @@ using Godot;
 /// </summary>
 public partial class EnemyProjectile : Area2D
 {
-    [Export] public float Speed = 300.0f;
-    [Export] public float Lifetime = 5.0f;
-    private float Damage;
-    private Vector2 direction;
-    private float lifetimeTimer = 0.0f;
+	[Export] public float Speed = 300.0f;
+	[Export] public float Lifetime = 5.0f;
+	private float Damage;
+	private Vector2 direction;
+	private float lifetimeTimer = 0.0f;
 
-    public void Initialize(Vector2 dir, float damage)
-    {
-        direction = dir.Normalized();
-        Damage = damage;
+	public void Initialize(Vector2 dir, float damage)
+	{
+		direction = dir.Normalized();
+		Damage = damage;
 
-        // Set rotation based on direction
-        Rotation = direction.Angle();
-    }
+		// Set rotation based on direction
+		Rotation = direction.Angle();
+	}
 
-    public override void _Ready()
-    {
-        Connect("body_entered", new Callable(this, nameof(_on_EnemyProjectile_body_entered)));
-    }
+	public override void _Ready()
+	{
+		Connect("body_entered", new Callable(this, nameof(_on_EnemyProjectile_body_entered)));
+	}
 
-    public override void _PhysicsProcess(double delta)
-    {
-        Position += direction * Speed * (float)delta;
-        lifetimeTimer += (float)delta;
+	public override void _PhysicsProcess(double delta)
+	{
+		Position += direction * Speed * (float)delta;
+		lifetimeTimer += (float)delta;
 
-        if (lifetimeTimer >= Lifetime)
-        {
-            QueueFree();
-        }
-    }
+		if (lifetimeTimer >= Lifetime)
+		{
+			QueueFree();
+		}
+	}
 
-    /// <summary>
-    /// Handles collision with other objects.
-    /// Applies damage to the player if hit and removes the projectile.
-    /// </summary>
-    private void _on_EnemyProjectile_body_entered(Node body)
-    {
-        if (body is DefaultPlayer player)
-        {
-            var health = player.GetNodeOrNull<Health>("Health");
-            if (health != null)
-            {
-                health.Damage(Damage);
-            }
-            QueueFree();
-        }
-        else if (body is StaticBody2D || body is TileMap)
-        {
-            QueueFree();
-        }
-    }
+	/// <summary>
+	/// Handles collision with other objects.
+	/// Applies damage to the player if hit and removes the projectile.
+	/// </summary>
+	private void _on_EnemyProjectile_body_entered(Node body)
+	{
+		if (body is DefaultPlayer player)
+		{
+			var health = player.GetNodeOrNull<Health>("Health");
+			if (health != null)
+			{
+				health.Damage(Damage);
+			}
+			QueueFree();
+		}
+		else if (body is StaticBody2D || body is TileMap)
+		{
+			QueueFree();
+		}
+	}
 }

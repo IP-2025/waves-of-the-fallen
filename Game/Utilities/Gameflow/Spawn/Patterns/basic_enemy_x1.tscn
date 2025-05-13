@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cbilno5vku3ea"]
 
-[ext_resource type="Script" uid="uid://bnatxtje2bk2d" path="res://Utilities/Gameflow/Spawn/EnemyPattern.cs" id="1_cmgye"]
+[ext_resource type="Script" uid="uid://bdvsfh2fwgtja" path="res://Utilities/Gameflow/Spawn/EnemyPattern.cs" id="1_cmgye"]
 [ext_resource type="PackedScene" uid="uid://di4l7nv7umbjw" path="res://Entities/Enemies/Goblin/default_enemy.tscn" id="2_cjn6m"]
 
 [node name="BasicEnemyX1" type="Node2D"]

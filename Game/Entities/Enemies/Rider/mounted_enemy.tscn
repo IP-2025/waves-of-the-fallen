@@ -79,11 +79,8 @@ animations = [{
 [node name="MountedEnemy" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 16
 script = ExtResource("1_script")
-stopDistance = null
-attackRange = null
 speed = 130.0
 damage = 5.0
-attacksPerSecond = null
 animationPath = NodePath("AnimatedSprite2D")
 
 [node name="Health" type="Node2D" parent="."]

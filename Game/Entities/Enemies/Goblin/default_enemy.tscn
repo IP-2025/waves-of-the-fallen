@@ -164,9 +164,6 @@ collision_layer = 16
 collision_mask = 17
 motion_mode = 1
 script = ExtResource("1_fecjr")
-speed = null
-damage = null
-attacksPerSecond = null
 animationPath = NodePath("GoblinAnimation")
 
 [node name="Health" type="Node2D" parent="."]

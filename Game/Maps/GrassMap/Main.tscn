@@ -8,7 +8,7 @@ scale = Vector2(1.00488, 1)
 script = ExtResource("1_idj7w")
 
 [node name="DefaultMap" parent="." instance=ExtResource("2_kln2b")]
-position = Vector2(5.97089, 3)
+position = Vector2(5.97083, -1)
 
 [node name="PlayerSpawnPoints" type="Node2D" parent="."]
 

@@ -12,9 +12,6 @@ size = Vector2(25, 36.2188)
 collision_mask = 256
 collision_priority = 2.0
 script = ExtResource("1_y3eth")
-Speed = null
-MaxHealth = null
-CurrentHealth = null
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 
