@@ -6,6 +6,7 @@ using System.Linq;
 public partial class Health : Node2D
 {
 	public bool disable = false; // in multiplayer for clients, server handles health and stuff
+	[Export]
 	public float max_health;
 	public float health; // current health value
 	public float CurHealth => health; // property to access current health
@@ -24,14 +25,15 @@ public partial class Health : Node2D
 
 	public void Damage(float damage)
 	{
+		health -= damage; // reduce health by damage amount
+		
 		doAnimation(); // client has to do damage animations
 		
 		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("enemyHurt"), ((Node2D)GetParent()).Position);
 
 		if (disable) return; // Client cant do damage to enemies... server handles the damage
 
-		health -= damage; // reduce health by damage amount
-		GD.Print($"Took damage: {damage}, current health: {health}");
+		// GD.Print($"Took damage: {damage}, current health: {health}");
 	}
 
 	private void doAnimation()

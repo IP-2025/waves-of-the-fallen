@@ -440,7 +440,6 @@ animations = [{
 
 [node name="Rider" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 16
-collision_mask = 17
 script = ExtResource("1_k7dvb")
 speed = 100.0
 damage = 5.0
@@ -448,6 +447,7 @@ animationPath = NodePath("AnimatedSprite2D")
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_ilr60")
+max_health = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_2xkst")
