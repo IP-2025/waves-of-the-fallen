@@ -86,7 +86,7 @@ public partial class LoginScreen : Control
 			{ "email", email },
 			{ "password", password }
 		});
-
+		SoundManager.Instance.PlayUI();
 		// Send POST request
 		var headers = new[] { "Content-Type: application/json" };
 		var err = _httpRequest.Request(
@@ -100,7 +100,6 @@ public partial class LoginScreen : Control
 		else
 			_loginButton.Disabled = true;
 	
-		SoundManager.Instance.PlayUI();
 	}
 
 	private void OnRegisterButtonPressed()

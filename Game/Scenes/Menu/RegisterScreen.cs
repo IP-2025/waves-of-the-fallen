@@ -32,6 +32,7 @@ public partial class RegisterScreen : Control
 	private void OnRegisterButtonPressed()
 	{
 		GD.Print("Button pressed!");
+		SoundManager.Instance.PlayUI();
 		var username = _usernameField.Text;
 		var email = _emailField.Text.Trim();
 		var password = _passwordField.Text;
@@ -77,6 +78,7 @@ public partial class RegisterScreen : Control
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/login_screen.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
+		SoundManager.Instance.PlayUI();
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
