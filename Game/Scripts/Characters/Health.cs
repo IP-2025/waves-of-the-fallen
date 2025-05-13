@@ -25,12 +25,8 @@ public partial class Health : Node2D
 	public void Damage(float damage)
 	{
 		doAnimation(); // client has to do damage animations
-
-		if(true) 
-		{
-			//SoundManager.Instance.PlaySoundAtPosition("enemyHurt", ((Node2D)GetParent()).Position);
-			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("enemyHurt"), ((Node2D)GetParent()).Position);
-		}
+		
+		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("enemyHurt"), ((Node2D)GetParent()).Position);
 
 		if (disable) return; // Client cant do damage to enemies... server handles the damage
 
