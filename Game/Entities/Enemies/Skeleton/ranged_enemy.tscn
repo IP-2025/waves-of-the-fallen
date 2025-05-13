@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cpgem5lghshsj"]
+[gd_scene load_steps=33 format=3 uid="uid://cpgem5lghshsj"]
 
 [ext_resource type="Script" uid="uid://b3kmmcqb7a5mn" path="res://Entities/Enemies/Skeleton/RangedEnemy.cs" id="1_1deiu"]
 [ext_resource type="Script" uid="uid://b5844vj7n6dqt" path="res://Entities/Shared/Health.cs" id="2_u2wu2"]
@@ -214,9 +214,7 @@ animations = [{
 collision_layer = 16
 collision_mask = 17
 script = ExtResource("1_1deiu")
-stopDistance = 180.0
-speed = 150.0
-damage = 5.0
+EnemyProjectileScene = ExtResource("2_e5mcm")
 animationPath = NodePath("RangedEnemyAnimation")
 
 [node name="Health" type="Node2D" parent="."]

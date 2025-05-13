@@ -26,45 +26,100 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public override void _Ready()
 	{
-		var playerClass = new Assassin(); // Instantiate Mage
-		Speed = playerClass.Speed; // Override DefaultPlayer's Speed with Mage's Speed
-		MaxHealth = playerClass.MaxHealth; // Override DefaultPlayer's MaxHealth with Mage's MaxHealth
-		CurrentHealth = playerClass.CurrentHealth; // Set CurrentHealth to Mage's CurrentHealth
-		GD.Print($"Assassin Speed applied: {Speed}, Assasin Health applied: {MaxHealth}");
-
 		AddToGroup("player");
-		CurrentHealth = MaxHealth;
+/* 		base._Ready(); */
 
-		if (HasNode("Joystick"))
+		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
+		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+ 
+/* 		GetNodeOrNull<Node2D>("Archer")?.Hide();
+		GetNodeOrNull<Node2D>("Assassin")?.Hide();
+		GetNodeOrNull<Node2D>("Knight")?.Hide();
+		GetNodeOrNull<Node2D>("Mage")?.Hide();
+
+		// Zeige nur den ausgewählten Charakter
+		string selectedClassNodeName = selectedCharacterId switch
 		{
-			Joystick = GetNode<Node2D>("Joystick");
-			var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
-			Area2D weapon = CreateWeaponForClass(playerClass);
+			1 => "Archer",
+			2 => "Assassin",
+			3 => "Knight",
+			4 => "Mage",
+			_ => "Archer" // Standardwert
+		}; */
 
-			if (weapon != null)
-			{
-				weaponSlot.AddChild(weapon);
-				weapon.Position = Vector2.Zero;
-				// for multiplayer
-				ulong id = weapon.GetInstanceId();
-				weapon.Name = $"Weapon_{id}";
-				weapon.SetMeta("OwnerId", OwnerPeerId );
-				weapon.SetMeta("SlotIndex", weaponsEquipped);
-				Server.Instance.Entities.Add((long)id, weapon);
-
-				weaponsEquipped++;
-
-			}
+ /* 		var selectedClassNode = GetNodeOrNull<Node2D>(selectedClassNodeName);
+		if (selectedClassNode != null)
+		{
+			selectedClassNode.Show();
+			GD.Print($"Selected class: {selectedClassNodeName}");
 		}
 		else
 		{
-			Joystick = null;
+			GD.PrintErr($"Class node '{selectedClassNodeName}' not found!");
+		}*/
+
+		object playerClass = selectedCharacterId switch
+		{
+			1 => new Archer(),
+			2 => new Assassin(),
+			3 => new Knight(),
+			4 => new Mage(),
+			_ => new DefaultPlayer()
+		};
+ 
+/* 		GD.Print($"Selected Character: {playerClass.GetType().Name}"); */
+
+		// Set attributes based on the selected class
+
+		//------------------
+/* 		if (playerClass is DefaultPlayer defaultPlayer)
+		{
+			Speed = defaultPlayer.Speed;
+			MaxHealth = defaultPlayer.MaxHealth;
+			CurrentHealth = defaultPlayer.MaxHealth;
 		}
+ */
+/* 		AddToGroup("player");
+		CurrentHealth = MaxHealth;
+
+		OwnerPeerId = Multiplayer.GetUniqueId();
+		GD.Print($"OwnerPeerId set to: {OwnerPeerId}");
+
+		// Synchronize MaxHealth with the Health node
+		var healthNode = GetNodeOrNull<Health>("Health");
+		if (healthNode != null)
+		{
+			healthNode.max_health = MaxHealth;
+			healthNode.ResetHealth(); // Reset health to max_health
+		}
+		else
+		{
+			GD.PrintErr("Health node not found!");
+		} */
+
+		// Equip weapon for the selected class
+ 		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
+		Area2D weapon = CreateWeaponForClass(playerClass);
+
+		if (weapon != null)
+		{
+			weaponSlot.AddChild(weapon);
+			weapon.Position = Vector2.Zero;
+
+			// for multiplayer
+			ulong id = weapon.GetInstanceId();
+			weapon.Name = $"Weapon_{id}";
+			weapon.SetMeta("OwnerId", OwnerPeerId);
+			weapon.SetMeta("SlotIndex", weaponsEquipped);
+			Server.Instance.Entities.Add((long)id, weapon);
+
+			weaponsEquipped++;
+		} 
 	}
 
 	private Area2D CreateWeaponForClass(object playerClass)
 	{
-		if (playerClass is Ranger)
+		if (playerClass is Archer)
 			return BowScene.Instantiate() as Area2D;
 		
 		if (playerClass is Assassin)

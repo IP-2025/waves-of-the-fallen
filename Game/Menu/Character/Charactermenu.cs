@@ -81,20 +81,22 @@ public partial class Charactermenu : Control
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
-	//wenn ein character button angeklickt wird
+	/// <summary>
+	/// Handles character button selection. Updates the UI and checks if the character is unlocked.
+	/// </summary>
 	public void _characterSelected(ButtonsCharacterSelection button)
 	{
 		if (button != null && _labelCharacterName != null)
 		{
-			SetButtonStyle(_currentlySelectedCharacter,Color.Color8(0x4F, 0x4F, 0x4F),false);
-			
+			SetButtonStyle(_currentlySelectedCharacter, Color.Color8(0x4F, 0x4F, 0x4F), false);
+
 			SetCharacterPageValuesFromFile(button.Text);
 			_currentlySelectedCharacter = button;
-			
-			SetButtonStyle(_currentlySelectedCharacter,Color.Color8(0x2C, 0xC7, 0xFF),false);
-			
+
+			SetButtonStyle(_currentlySelectedCharacter, Color.Color8(0x2C, 0xC7, 0xFF), false);
+
 			if (!characterManager.LoadIsUnlocked(button.Text))
-			{ //check if character is unlocken. locked=true
+			{
 				_ButtonUpgradeUnlock.Text = "Unlock";
 				_Button_Select.Hide();
 			}
@@ -103,6 +105,8 @@ public partial class Charactermenu : Control
 				_ButtonUpgradeUnlock.Text = "Upgrade";
 				_Button_Select.Show();
 			}
+
+			GD.Print($"[Charactermenu] Selected Character: {GetCharacterNameById()}");
 		}
 	}
 	
@@ -131,14 +135,20 @@ public partial class Charactermenu : Control
 		}
 	}
 
-	//wenn bei einem ausgewöhlten charcter der "select"- button gedrückt wird 
+	/// <summary>
+	/// Handles the "Select" button press for the currently selected character.
+	/// Saves the selected character ID and updates button styles.
+	/// </summary>
 	private void _on_button_select_pressed()
 	{
 		if (_currentlySelectedCharacter != null)
 		{
-			characterManager.SaveLastSelectedCharacterID(int.Parse(_currentlySelectedCharacter.Text));
-			SetButtonStyle(_currentlySelectedCharacter, Color.Color8(0x2C, 0xC7, 0xFF),true);
-			
+			string characterId = _currentlySelectedCharacter.Text.ToString();
+			characterManager.SaveLastSelectedCharacterID(int.Parse(characterId));
+			GD.Print($"[Charactermenu] Selected Character ID: {characterId}");
+
+			SetButtonStyle(_currentlySelectedCharacter, Color.Color8(0x2C, 0xC7, 0xFF), true);
+
 			if (_oldSelectedCharacter != _currentlySelectedCharacter)
 			{
 				_resetButton(_oldSelectedCharacter);
@@ -179,40 +189,64 @@ public partial class Charactermenu : Control
 		SetCharacterPageValuesFromFile(characterID);
 	}
 	
+	/// <summary>
+	/// Resets character data and locks characters that are not unlocked.
+	/// </summary>
 	private void ResetCharacters()
 	{
-		ConfigFile config = new();
-		config.Load("user://character_settings.cfg");
-		
 		characterManager.SaveCharacterData(1, "Archer", 100, 100, 100, 100, 1, 1);
 		characterManager.SaveCharacterData(2, "Assassin", 100, 100, 100, 100, 1, 0);
 		characterManager.SaveCharacterData(3, "Knight", 100, 100, 100, 100, 1, 0);
 		characterManager.SaveCharacterData(4, "Mage", 100, 100, 100, 100, 1, 0);
-		
-		var button1 = GetNode<Button>("%Button_Character1");
-		var button2 = GetNode<Button>("%Button_Character2");
-		var button3 = GetNode<Button>("%Button_Character3");
-		var button4 = GetNode<Button>("%Button_Character4");
-		
-		var icon=button1.GetNode<TextureRect>("TextureRect");
-		icon.Material=null;
-		
-		Shader _blackAndWhiteShader = GD.Load<Shader>("res://Menu/Character/characterMenuIconShader.gdshader");
-		var material = new ShaderMaterial();
-		material.Shader = _blackAndWhiteShader;
-		
-		icon=button2.GetNode<TextureRect>("TextureRect");
-		icon.Material=material;
-		
-		icon=button3.GetNode<TextureRect>("TextureRect");
-		icon.Material=material;
-		
-		icon=button4.GetNode<TextureRect>("TextureRect");
-		icon.Material=material;
-		
-		
+
+		Shader blackAndWhiteShader = GD.Load<Shader>("res://Scenes/Menu/characterMenuIconShader.gdshader");
+		var material = new ShaderMaterial { Shader = blackAndWhiteShader };
+
+		// Lock characters by applying the shader material
+		LockCharacter("%Button_Character2", material); // Assassin
+		LockCharacter("%Button_Character3", material); // Knight
+		LockCharacter("%Button_Character4", material); // Mage
+
+		// Unlock Archer
+		UnlockCharacter("%Button_Character1");
+
 		SetCharacterPageValuesFromFile(_currentlySelectedCharacter.Text);
 	}
-	
 
+	/// <summary>
+	/// Locks a character button by applying a shader material.
+	/// </summary>
+	private void LockCharacter(string buttonPath, ShaderMaterial material)
+	{
+		var button = GetNode<Button>(buttonPath);
+		var icon = button.GetNode<TextureRect>("TextureRect");
+		icon.Material = material;
+	}
+
+	/// <summary>
+	/// Unlocks a character button by removing the shader material.
+	/// </summary>
+	private void UnlockCharacter(string buttonPath)
+	{
+		var button = GetNode<Button>(buttonPath);
+		var icon = button.GetNode<TextureRect>("TextureRect");
+		icon.Material = null;
+	}
+
+	/// <summary>
+	/// Returns the character name based on the character ID.
+	/// </summary>
+	private string GetCharacterNameById()
+	{
+		string characterId = _currentlySelectedCharacter.Text.ToString();
+
+		return characterId switch
+		{
+			"1" => "Archer",
+			"2" => "Assassin",
+			"3" => "Knight",
+			"4" => "Mage",
+			_ => "DefaultPlayer"
+		};
+	}
 }

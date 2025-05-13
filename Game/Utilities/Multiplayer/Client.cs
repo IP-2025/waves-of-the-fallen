@@ -30,6 +30,9 @@ public partial class Client : Node
         { EntityType.CrossbowArrow,  GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow_arrow.tscn") },
         { EntityType.Kunai, GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn") },
         { EntityType.KunaiProjectile, GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai_projectile.tscn")},
+        { EntityType.Mage, GD.Load<PackedScene>("res://Entities/Characters/Mage/mage.tscn") },
+        { EntityType.Knight, GD.Load<PackedScene>("res://Entities/Characters/Knight/knight.tscn") },
+        { EntityType.Assassin, GD.Load<PackedScene>("res://Entities/Characters/Assassin/assassin.tscn") }
     };
 
     public override void _Ready()
@@ -166,11 +169,14 @@ public partial class Client : Node
                 || entity.Type == EntityType.MountedEnemy
                 || entity.Type == EntityType.RiderEnemy
                 || entity.Type == EntityType.DefaultPlayer
-                || entity.Type == EntityType.Archer)
+                || entity.Type == EntityType.Archer
+                || entity.Type == EntityType.Assassin
+                || entity.Type == EntityType.Knight
+                || entity.Type == EntityType.Mage)
             {
-                var helthNode = inst.GetNodeOrNull<Health>("Health");
-                helthNode.disable = true;
-                helthNode.health = entity.Health * 100; // high value so that client cant kill and cant be killed. Server handles it
+                var healthNode = inst.GetNodeOrNull<Health>("Health");
+                healthNode.disable = true;
+                healthNode.health = entity.Health * 100; // high value so that client cant kill and cant be killed. Server handles it
             }
 
             if (entity.Type == EntityType.DefaultEnemy
@@ -237,7 +243,7 @@ public partial class Client : Node
 
     private void UpdateTransform(Node2D inst, EntitySnapshot entity)
     {
-        if (GodotObject.IsInstanceValid(inst))
+        if (IsInstanceValid(inst))
         {
             inst.GlobalPosition = entity.Position;
             inst.Rotation = entity.Rotation;
@@ -249,7 +255,11 @@ public partial class Client : Node
     private void AttachJoystick(Node2D inst, EntitySnapshot entity)
     {
         // only for local / this clients player
-        bool isPlayerType = entity.Type == EntityType.DefaultPlayer || entity.Type == EntityType.Archer;
+        bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
+                            || entity.Type == EntityType.Archer
+                            || entity.Type == EntityType.Knight
+                            || entity.Type == EntityType.Mage
+                            || entity.Type == EntityType.Assassin;
         if (!isPlayerType || entity.NetworkId != Multiplayer.GetUniqueId())
         {
             return;
@@ -262,8 +272,13 @@ public partial class Client : Node
 
     private void ChangeCamera(Node2D inst, EntitySnapshot entity)
     {
+        bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
+                            || entity.Type == EntityType.Archer
+                            || entity.Type == EntityType.Knight
+                            || entity.Type == EntityType.Mage
+                            || entity.Type == EntityType.Assassin;
         // only for local / this clients player
-        if (entity.Type != EntityType.DefaultPlayer && entity.Type != EntityType.Archer)
+        if (!isPlayerType || entity.NetworkId != Multiplayer.GetUniqueId())
             return;
 
         if (entity.NetworkId == Multiplayer.GetUniqueId())

@@ -7,7 +7,8 @@ public partial class Server : Node
 {
     public static Server Instance;
 
-    private bool enableDebug = true;
+    private bool enableDebug = false;
+    public Dictionary<long, int> PlayerSelections = new Dictionary<long, int>();
     public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
     private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
     {
@@ -23,12 +24,10 @@ public partial class Server : Node
         { "res://Weapons/Ranged/Crossbow/crossbow_arrow.tscn", EntityType.CrossbowArrow },
         { "res://Weapons/Ranged/Kunai/kunai.tscn", EntityType.Kunai },
         { "res://Weapons/Ranged/Kunai/kunai_projectile.tscn", EntityType.KunaiProjectile },
-        // Corrected paths for crossbow-related resources
-        { "res://Weapons/Ranged/Crossbow/ArmbrustLeer.png", EntityType.Crossbow },
-        { "res://Weapons/Ranged/Crossbow/ArmbrustSpannen1.png", EntityType.Crossbow },
-        { "res://Weapons/Ranged/Crossbow/ArmbrustSpannen2.png", EntityType.Crossbow },
-        { "res://Weapons/Ranged/Crossbow/ArmbrustSpannen3.png", EntityType.Crossbow },
-        { "res://Weapons/Ranged/Crossbow/ArmbrustSpannen4.png", EntityType.Crossbow },
+        { "res://Scenes/Characters/default_player.tscn", EntityType.DefaultPlayer },
+        { "res://Entities/Characters/Knight/knight.tscn", EntityType.Knight },
+        { "res://Entities/Characters/Assassin/assassin.tscn", EntityType.Assassin },
+        { "res://Entities/Characters/Mage/mage.tscn", EntityType.Mage }         
     };
     public override void _Ready()
     {
@@ -57,7 +56,8 @@ public partial class Server : Node
             if (joystick != null)
             {
                 joystick.PosVector = dir;
-                DebugIt($"Set Joystick.PosVector = {dir} on Entity {cmd.EntityId}");
+                
+                DebugIt($"Set Joystick.PosVector = {dir} on EntityID {cmd.EntityId}");
             }
         }
         else if (cmd.Type == CommandType.Shoot)
@@ -122,7 +122,7 @@ public partial class Server : Node
                 owner = (long)node.GetMeta("OwnerId");
                 slotIx = (int)node.GetMeta("SlotIndex");
             }
-
+            DebugIt($"Snapshot: Entity Name: {node.Name}, Position: {node.Position}, ID: {id}");
             snap.Entities.Add(new EntitySnapshot(
                 id,
                 node.Position,
