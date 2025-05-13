@@ -1,6 +1,0 @@
-- [ ] imported k8s-demo
-- [ ] test skaffold dev
-- [ ] make headless programm runnable
-- [ ] change server to websocket client
-- [ ] run server instance with docker 
-- [ ] connect from client via websocket
