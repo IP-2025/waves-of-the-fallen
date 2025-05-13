@@ -1,8 +1,8 @@
 [gd_scene load_steps=63 format=3 uid="uid://dnne18q2ir07d"]
 
-[ext_resource type="Script" uid="uid://ce57c0glbuneq" path="res://Entities/Enemies/Rider/Rider.cs" id="1_k7dvb"]
-[ext_resource type="Script" uid="uid://b5844vj7n6dqt" path="res://Entities/Shared/Health.cs" id="2_ilr60"]
-[ext_resource type="Texture2D" uid="uid://0q6os5psk5fh" path="res://Entities/Enemies/Rider/Resources/RiderWalkSheet.png" id="4_3ubfh"]
+[ext_resource type="Script" uid="uid://cwl1w7n2se2wd" path="res://Entities/Enemies/Rider/Rider.cs" id="1_k7dvb"]
+[ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_ilr60"]
+[ext_resource type="Texture2D" uid="uid://b64ns4poeyr8y" path="res://Entities/Enemies/Rider/Resources/RiderWalkSheet.png" id="4_3ubfh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2xkst"]
 radius = 15.0
@@ -442,8 +442,11 @@ animations = [{
 collision_layer = 16
 collision_mask = 17
 script = ExtResource("1_k7dvb")
+stopDistance = null
+attackRange = null
 speed = 100.0
 damage = 5.0
+attacksPerSecond = null
 animationPath = NodePath("AnimatedSprite2D")
 
 [node name="Health" type="Node2D" parent="."]

@@ -87,10 +87,10 @@ public partial class GameRoot : Node
 				.FirstOrDefault()?.GlobalPosition ?? Vector2.Zero;
 
 			// Add joystick to player
-			var joystick = GD.Load<PackedScene>("res://Scenes/Joystick/joystick.tscn").Instantiate<Node2D>();
+			var joystick = GD.Load<PackedScene>("res://UI/Joystick/joystick.tscn").Instantiate<Node2D>();
 			player.AddChild(joystick);
 			player.Joystick = joystick;
-			var WaveTimer = GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
+			var WaveTimer = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
 			player.GetNode<Camera2D>("Camera2D").AddChild(WaveTimer);
 			AddChild(player);
 

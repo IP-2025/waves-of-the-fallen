@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://bichqwbvl1iwh"]
 
-[ext_resource type="Script" uid="uid://c2yj5jdve5wqt" path="res://Entities/Characters/Assassin/Assassin.cs" id="1_y3eth"]
-[ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Entities/Shared/Health/Health.cs" id="2_slb6w"]
-[ext_resource type="Script" uid="uid://c7yits36f8kyt" path="res://UI/Heath/HealthBar.cs" id="3_pgiys"]
-[ext_resource type="Texture2D" uid="uid://btau8suv2nloy" path="res://Entities/Characters/Assassin/Resources/AssassinCharacterPreview.png" id="4_slb6w"]
+[ext_resource type="Script" uid="uid://70abqg7ujgbf" path="res://Entities/Characters/Assassin/Assassin.cs" id="1_y3eth"]
+[ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_slb6w"]
+[ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="3_pgiys"]
+[ext_resource type="Texture2D" uid="uid://cmulbokpwupui" path="res://Entities/Characters/Assassin/Resources/AssassinCharacterPreview.png" id="4_slb6w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
@@ -12,6 +12,9 @@ size = Vector2(25, 36.2188)
 collision_mask = 256
 collision_priority = 2.0
 script = ExtResource("1_y3eth")
+Speed = null
+MaxHealth = null
+CurrentHealth = null
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 
@@ -67,5 +70,3 @@ zoom = Vector2(1.75, 1.75)
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_slb6w")
-
-[connection signal="HealthDepleted" from="Health" to="." method="_on_health_health_depleted"]

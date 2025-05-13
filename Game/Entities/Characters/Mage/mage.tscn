@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://dsncgbos1x7l"]
 
-[ext_resource type="Script" uid="uid://biegdkfmesh02" path="res://Scripts/Characters/Mage.cs" id="1_shc7e"]
-[ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_55mar"]
-[ext_resource type="Script" uid="uid://c7yits36f8kyt" path="res://Scripts/Characters/HealthBar.cs" id="3_dt24r"]
-[ext_resource type="Texture2D" uid="uid://deqvjcjlokfkv" path="res://Assets/Characters/resources/MageCharacterPreview.png" id="4_55mar"]
+[ext_resource type="Script" uid="uid://dnv3ypcus8nxr" path="res://Entities/Characters/Mage/Mage.cs" id="1_shc7e"]
+[ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_55mar"]
+[ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="3_dt24r"]
+[ext_resource type="Texture2D" uid="uid://lepee6xgikgv" path="res://Entities/Characters/Mage/Resources/MageCharacterPreview.png" id="4_55mar"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
@@ -12,6 +12,9 @@ size = Vector2(25, 36.2188)
 collision_mask = 256
 collision_priority = 2.0
 script = ExtResource("1_shc7e")
+Speed = null
+MaxHealth = null
+CurrentHealth = null
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 
@@ -67,5 +70,3 @@ zoom = Vector2(1.75, 1.75)
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_55mar")
-
-[connection signal="HealthDepleted" from="Health" to="." method="_on_health_health_depleted"]

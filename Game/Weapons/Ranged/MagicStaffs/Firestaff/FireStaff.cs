@@ -3,7 +3,7 @@ using System;
 
 public partial class FireStaff : RangedWeapon
 {
-	private PackedScene fireBallScene = GD.Load<PackedScene>("res://Scenes/Weapons/fireball.tscn");
+	private PackedScene fireBallScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/fireball.tscn");
 	
 	public override void _Ready()
 	{

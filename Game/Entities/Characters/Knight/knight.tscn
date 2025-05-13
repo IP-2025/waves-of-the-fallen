@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://brnmi011d55l7"]
 
-[ext_resource type="Script" uid="uid://cd2h3gcsnimsr" path="res://Scripts/Characters/Knight.cs" id="1_wbc0s"]
-[ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_7stuo"]
-[ext_resource type="Script" uid="uid://c7yits36f8kyt" path="res://Scripts/Characters/HealthBar.cs" id="3_e8lxy"]
-[ext_resource type="Texture2D" uid="uid://cjfelyah5o4gs" path="res://Assets/Characters/resources/KnightCharacterPreview.png" id="4_v1ffd"]
+[ext_resource type="Script" uid="uid://cydobr6cu0ytl" path="res://Entities/Characters/Knight/Knight.cs" id="1_wbc0s"]
+[ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_7stuo"]
+[ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="3_e8lxy"]
+[ext_resource type="Texture2D" uid="uid://bvtjy868he78n" path="res://Entities/Characters/Knight/Resources/KnightCharacterPreview.png" id="4_v1ffd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
@@ -12,6 +12,9 @@ size = Vector2(25, 36.2188)
 collision_mask = 256
 collision_priority = 2.0
 script = ExtResource("1_wbc0s")
+Speed = null
+MaxHealth = null
+CurrentHealth = null
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 
@@ -30,7 +33,6 @@ position = Vector2(-25, 15)
 [node name="Health" type="Node2D" parent="."]
 position = Vector2(-3, 1)
 script = ExtResource("2_7stuo")
-max_health = 150.0
 
 [node name="HealthBar" type="ProgressBar" parent="Health"]
 offset_left = -45.0
@@ -69,5 +71,3 @@ zoom = Vector2(1.75, 1.75)
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_v1ffd")
-
-[connection signal="HealthDepleted" from="Health" to="." method="_on_health_health_depleted"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://by74h3mjd51pu"]
 
-[ext_resource type="Script" uid="uid://hir4c82w5ilw" path="res://Utilities/Gameflow/Waves/WaveTimer.cs" id="1_65k0p"]
+[ext_resource type="Script" uid="uid://cfdfevsg6dfej" path="res://Utilities/Gameflow/Waves/WaveTimer.cs" id="1_65k0p"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wv62o"]
 font_size = 21

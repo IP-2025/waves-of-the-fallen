@@ -1,15 +1,18 @@
 [gd_scene load_steps=6 format=3 uid="uid://cffgskcms870o"]
 
-[ext_resource type="Script" path="res://Entities/Characters/Base/DefaultPlayer.cs" id="1_y2kgl"]
-[ext_resource type="PackedScene" path="res://Entities/Characters/Archer/archer.tscn" id="3_kjvlq"]
-[ext_resource type="PackedScene" path="res://Entities/Characters/Assassin/assassin.tscn" id="5_jig1i"]
-[ext_resource type="PackedScene" path="res://Entities/Characters/Knight/knight.tscn" id="6_ajyao"]
-[ext_resource type="PackedScene" path="res://Entities/Characters/Mage/mage.tscn" id="7_bdmc5"]
+[ext_resource type="Script" uid="uid://cykgi8xeol8ej" path="res://Entities/Characters/Base/DefaultPlayer.cs" id="1_y2kgl"]
+[ext_resource type="PackedScene" uid="uid://56x8ud47qho" path="res://Entities/Characters/Archer/archer.tscn" id="3_kjvlq"]
+[ext_resource type="PackedScene" uid="uid://bichqwbvl1iwh" path="res://Entities/Characters/Assassin/assassin.tscn" id="5_jig1i"]
+[ext_resource type="PackedScene" uid="uid://brnmi011d55l7" path="res://Entities/Characters/Knight/knight.tscn" id="6_ajyao"]
+[ext_resource type="PackedScene" uid="uid://dsncgbos1x7l" path="res://Entities/Characters/Mage/mage.tscn" id="7_bdmc5"]
 
 [node name="DefaultPlayer" type="CharacterBody2D"]
 collision_mask = 256
 collision_priority = 2.0
 script = ExtResource("1_y2kgl")
+Speed = null
+MaxHealth = null
+CurrentHealth = null
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 
@@ -26,9 +29,21 @@ position = Vector2(25, 15)
 position = Vector2(-25, 15)
 
 [node name="Archer" parent="." instance=ExtResource("3_kjvlq")]
+Speed = null
+MaxHealth = null
+CurrentHealth = null
 
 [node name="Assassin" parent="." instance=ExtResource("5_jig1i")]
+Speed = null
+MaxHealth = null
+CurrentHealth = null
 
 [node name="Knight" parent="." instance=ExtResource("6_ajyao")]
+Speed = null
+MaxHealth = null
+CurrentHealth = null
 
 [node name="Mage" parent="." instance=ExtResource("7_bdmc5")]
+Speed = null
+MaxHealth = null
+CurrentHealth = null

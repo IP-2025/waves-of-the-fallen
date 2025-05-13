@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://vk7b8kke3pxu"]
 
-[ext_resource type="Script" uid="uid://cjtt0r0pd0ww8" path="res://Weapons/Ranged/Bow/BowArrow.cs" id="1_ukiom"]
-[ext_resource type="Texture2D" uid="uid://dyrd0yoc8any3" path="res://Weapons/Ranged/Bow/Resources/Arrow.png" id="2_lma6p"]
+[ext_resource type="Script" uid="uid://njt3feb8f6v7" path="res://Weapons/Ranged/Bow/BowArrow.cs" id="1_ukiom"]
+[ext_resource type="Texture2D" uid="uid://d3dlt7nk3keju" path="res://Weapons/Ranged/Bow/Resources/Arrow.png" id="2_lma6p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ghlcr"]
 size = Vector2(31.25, 7)

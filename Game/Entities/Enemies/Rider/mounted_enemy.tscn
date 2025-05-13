@@ -1,8 +1,8 @@
 [gd_scene load_steps=13 format=3 uid="uid://55ua147f3qds"]
 
-[ext_resource type="Script" uid="uid://d0arj1wp2txv2" path="res://Entities/Enemies/Rider/MountedEnemy.cs" id="1_script"]
-[ext_resource type="Script" uid="uid://b5844vj7n6dqt" path="res://Entities/Shared/Health.cs" id="3_health"]
-[ext_resource type="Texture2D" uid="uid://bw3elg76bj11" path="res://Entities/Enemies/Rider/Resources/PlaceholderBody.png" id="5_6dmdw"]
+[ext_resource type="Script" uid="uid://4v08bsts05xi" path="res://Entities/Enemies/Rider/MountedEnemy.cs" id="1_script"]
+[ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="3_health"]
+[ext_resource type="Texture2D" uid="uid://6txj8oes0rnn" path="res://Entities/Enemies/Rider/Resources/PlaceholderBody.png" id="5_6dmdw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
 radius = 18.0
@@ -79,8 +79,11 @@ animations = [{
 [node name="MountedEnemy" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 16
 script = ExtResource("1_script")
+stopDistance = null
+attackRange = null
 speed = 130.0
 damage = 5.0
+attacksPerSecond = null
 animationPath = NodePath("AnimatedSprite2D")
 
 [node name="Health" type="Node2D" parent="."]

@@ -15,7 +15,7 @@ public abstract partial class Projectile : Area2D
 
 	}
 	
-	public void OnBodyEntered(Node2D body) 
+	public virtual void OnBodyEntered(Node2D body) 
 	{
 		Piercing--;
 		if (Piercing < 1)

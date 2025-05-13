@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=4 uid="uid://du20jt0cajs5p"]
 
-[ext_resource type="Texture2D" uid="uid://cof7py20d533d" path="res://Maps/GrassMap/Ressources/Tiles/TX Tileset Grass.png" id="1_7lqbt"]
-[ext_resource type="Texture2D" uid="uid://b32l5oluejhlv" path="res://Maps/GrassMap/Ressources/Objects/TX Plant.png" id="2_6t7tr"]
-[ext_resource type="Texture2D" uid="uid://b5r1esh5ajw7w" path="res://Maps/GrassMap/Ressources/Objects/TX Props.png" id="3_xgmxs"]
-[ext_resource type="Texture2D" uid="uid://ctvm5xmooqiam" path="res://Maps/GrassMap/Ressources/Tiles/TX Tileset Wall.png" id="4_ytq2g"]
+[ext_resource type="Texture2D" uid="uid://cjxq0v3ih5q1" path="res://Maps/GrassMap/Ressources/Tiles/TX Tileset Grass.png" id="1_7lqbt"]
+[ext_resource type="Texture2D" uid="uid://wbi0ejsc5hmy" path="res://Maps/GrassMap/Ressources/Objects/TX Plant.png" id="2_6t7tr"]
+[ext_resource type="Texture2D" uid="uid://6a5jk16lrgas" path="res://Maps/GrassMap/Ressources/Objects/TX Props.png" id="3_xgmxs"]
+[ext_resource type="Texture2D" uid="uid://bucu07to1lwue" path="res://Maps/GrassMap/Ressources/Tiles/TX Tileset Wall.png" id="4_ytq2g"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mdxho"]
 texture = ExtResource("1_7lqbt")

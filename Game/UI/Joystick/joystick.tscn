@@ -1,14 +1,16 @@
 [gd_scene load_steps=5 format=3 uid="uid://bgdvq76tq2l1o"]
 
-[ext_resource type="Texture2D" uid="uid://xnl6e45teso4" path="res://UI/Joystick/Ressources/JoyBase.png" id="1_b3blk"]
-[ext_resource type="Script" uid="uid://coixi3t1nuscy" path="res://UI/Joystick/Joystick.cs" id="1_s6674"]
-[ext_resource type="Texture2D" uid="uid://d3rvrhrun4mef" path="res://UI/Joystick/Ressources/JoyHandle.png" id="2_s6674"]
-[ext_resource type="Script" uid="uid://b43r3s6wsvjsg" path="res://UI/Joystick/JoyHandle.cs" id="4_fc7hi"]
+[ext_resource type="Texture2D" uid="uid://h5mmnsy6wjji" path="res://UI/Joystick/Ressources/JoyBase.png" id="1_b3blk"]
+[ext_resource type="Script" uid="uid://lxkxojr07wx5" path="res://UI/Joystick/Joystick.cs" id="1_s6674"]
+[ext_resource type="Texture2D" uid="uid://bugfohtwu33co" path="res://UI/Joystick/Ressources/JoyHandle.png" id="2_s6674"]
+[ext_resource type="Script" uid="uid://d3c1yc1fix2yy" path="res://UI/Joystick/JoyHandle.cs" id="4_fc7hi"]
 
 [node name="Joystick" type="Node2D"]
 position = Vector2(-234, 96)
 scale = Vector2(2, 2)
 script = ExtResource("1_s6674")
+PosVector = null
+Deadzone = null
 
 [node name="JoyBase" type="Sprite2D" parent="."]
 self_modulate = Color(0.337255, 0.337255, 0.337255, 0.333333)
@@ -21,6 +23,7 @@ self_modulate = Color(0.337255, 0.337255, 0.337255, 0.627451)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_s6674")
 script = ExtResource("4_fc7hi")
+MaxLength = null
 
 [node name="Button" type="Button" parent="."]
 self_modulate = Color(1, 1, 1, 0)

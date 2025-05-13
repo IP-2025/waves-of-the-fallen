@@ -1,10 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://56x8ud47qho"]
+[gd_scene load_steps=5 format=3 uid="uid://56x8ud47qho"]
 
-[ext_resource type="Texture2D" path="res://Entities/Characters/Archer/Resources/ArcherSpreadsheet.png" id="1_rh6ln"]
-[ext_resource type="Script" path="res://Entities/Characters/Archer/Archer.cs" id="1_rpbpn"]
-[ext_resource type="Script" path="res://Entities/Shared/Health/Health.cs" id="2_3bcig"]
-[ext_resource type="Script" path="res://UI/Heath/HealthBar.cs" id="3_ledbc"]
-[ext_resource type="Texture2D" path="res://Entities/Characters/Archer/Resources/ArcherCharacterPreview.png" id="4_uajqq"]
+[ext_resource type="Script" uid="uid://fhtm3161dyce" path="res://Entities/Characters/Archer/Archer.cs" id="1_rpbpn"]
+[ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="3_ledbc"]
+[ext_resource type="Texture2D" uid="uid://bycjxbchsafog" path="res://Entities/Characters/Archer/Resources/ArcherCharacterPreview.png" id="4_uajqq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
@@ -13,6 +11,9 @@ size = Vector2(25, 36.2188)
 collision_mask = 256
 collision_priority = 2.0
 script = ExtResource("1_rpbpn")
+Speed = null
+MaxHealth = null
+CurrentHealth = null
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 
@@ -29,7 +30,7 @@ position = Vector2(25, 15)
 position = Vector2(-25, 15)
 
 [node name="Health" type="Node2D" parent="."]
-script = ExtResource("2_3bcig")
+script = ExtResource("3_ledbc")
 
 [node name="HealthBar" type="ProgressBar" parent="Health"]
 offset_left = -50.0
@@ -68,5 +69,3 @@ zoom = Vector2(1.75, 1.75)
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_uajqq")
-
-[connection signal="HealthDepleted" from="Health" to="." method="_on_health_health_depleted"]

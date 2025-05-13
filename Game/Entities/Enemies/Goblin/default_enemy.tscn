@@ -1,8 +1,8 @@
 [gd_scene load_steps=24 format=3 uid="uid://di4l7nv7umbjw"]
 
-[ext_resource type="Script" uid="uid://wh3t627xeq3x" path="res://Entities/Enemies/Goblin/BasicEnemy.cs" id="1_fecjr"]
-[ext_resource type="Script" uid="uid://b5844vj7n6dqt" path="res://Entities/Shared/Health.cs" id="2_ihcfn"]
-[ext_resource type="Texture2D" uid="uid://hk8uenos5w5m" path="res://Entities/Enemies/Goblin/Resources/Goblin_spritesheet.png" id="3_ihcfn"]
+[ext_resource type="Script" uid="uid://ckw0iqrsdcp5k" path="res://Entities/Enemies/Goblin/BasicEnemy.cs" id="1_fecjr"]
+[ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_ihcfn"]
+[ext_resource type="Texture2D" uid="uid://l06upbjknstb" path="res://Entities/Enemies/Goblin/Resources/Goblin_spritesheet.png" id="3_ihcfn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r4aor"]
 radius = 26.0192
@@ -164,6 +164,9 @@ collision_layer = 16
 collision_mask = 17
 motion_mode = 1
 script = ExtResource("1_fecjr")
+speed = null
+damage = null
+attacksPerSecond = null
 animationPath = NodePath("GoblinAnimation")
 
 [node name="Health" type="Node2D" parent="."]

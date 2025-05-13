@@ -1,11 +1,11 @@
 [gd_scene load_steps=19 format=3 uid="uid://b3t68y2ghoi8m"]
 
-[ext_resource type="Script" uid="uid://5m5rjs72cgmm" path="res://Menu/Character/Charactermenu.cs" id="1_ivr4t"]
-[ext_resource type="Script" uid="uid://r85vsts5uuip" path="res://Menu/Character/ButtonsCharacterSelection.cs" id="2_ch0j6"]
-[ext_resource type="Texture2D" uid="uid://btkrpdehmhlod" path="res://Entities/Characters/Archer/Resources/ArcherCharacterPreview.png" id="2_u3wkp"]
-[ext_resource type="Texture2D" uid="uid://btof4mcsdqrhb" path="res://Entities/Characters/Knight/Resources/KnightCharacterPreview.png" id="3_ch0j6"]
-[ext_resource type="Texture2D" uid="uid://bulibac8owmox" path="res://Entities/Characters/Assassin/Resources/AssassinCharacterPreview.png" id="4_hqcu1"]
-[ext_resource type="Texture2D" uid="uid://bv0cjpwiocsxc" path="res://Entities/Characters/Mage/Resources/MageCharacterPreview.png" id="5_frg03"]
+[ext_resource type="Script" uid="uid://dnwh8qvd8j2y7" path="res://Menu/Character/Charactermenu.cs" id="1_ivr4t"]
+[ext_resource type="Script" uid="uid://c57s2i06pw35o" path="res://Menu/Character/ButtonsCharacterSelection.cs" id="2_ch0j6"]
+[ext_resource type="Texture2D" uid="uid://bycjxbchsafog" path="res://Entities/Characters/Archer/Resources/ArcherCharacterPreview.png" id="2_u3wkp"]
+[ext_resource type="Texture2D" uid="uid://bvtjy868he78n" path="res://Entities/Characters/Knight/Resources/KnightCharacterPreview.png" id="3_ch0j6"]
+[ext_resource type="Texture2D" uid="uid://cmulbokpwupui" path="res://Entities/Characters/Assassin/Resources/AssassinCharacterPreview.png" id="4_hqcu1"]
+[ext_resource type="Texture2D" uid="uid://lepee6xgikgv" path="res://Entities/Characters/Mage/Resources/MageCharacterPreview.png" id="5_frg03"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivr4t"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
