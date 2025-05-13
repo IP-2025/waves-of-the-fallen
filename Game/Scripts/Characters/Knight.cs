@@ -1,13 +1,13 @@
 using Godot;
 
-public partial class Assassin : DefaultPlayer
+public partial class Knight : DefaultPlayer
 {
-	public Assassin()
+	public Knight()
 	{
-		MaxHealth = 75;
-		Speed = 500.0f;
+		MaxHealth = 250; 
+		Speed = 175.0f;  
 	}
-
+	
 	public override void _Ready()
 	{
 		base._Ready();
@@ -16,11 +16,11 @@ public partial class Assassin : DefaultPlayer
 		healthNode.max_health = MaxHealth;
 		healthNode.ResetHealth();
 
-		GD.Print($"Assassin initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
+		GD.Print($"Knight initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
 	}
 
 	public override void UseAbility()
 	{
-		//TODO: Implement Assassin's ability
+		//TODO: Implement Knight's ability
 	}
 }

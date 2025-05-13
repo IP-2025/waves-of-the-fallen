@@ -50,40 +50,65 @@ public partial class GameRoot : Node
 
 	public void SpawnPlayer(long peerId)
 	{
-		var player = GD.Load<PackedScene>("res://Scenes/Characters/default_player.tscn").Instantiate<DefaultPlayer>();
-		player.OwnerPeerId = peerId;
-		player.Name = $"Player_{peerId}";
-		
+		var player = GD.Load<PackedScene>("res://Scenes/Characters/mage.tscn").Instantiate<DefaultPlayer>();
 
-		// Get spawn point from PlayerSpawnPoints group
-		player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
-			.OfType<Node2D>()
-			.ToList()
-			.FindAll(spawnPoint => int.Parse(spawnPoint.Name) == playerIndex)
-			.FirstOrDefault()?.GlobalPosition ?? Vector2.Zero;
-
-		// Add joystick to player
-		var joystick = GD.Load<PackedScene>("res://Scenes/Joystick/joystick.tscn").Instantiate<Node2D>();
-		player.AddChild(joystick);
-		var WaveTimer = GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
-		player.GetNode<Camera2D>("Camera2D").AddChild(WaveTimer);
-		AddChild(player);
-
-		Server.Instance.Entities[peerId] = player;
-
-		// Connect health signal
-		var healthNode = player.GetNodeOrNull<Health>("Health");
-		if (healthNode != null)
+		int characterId = Server.Instance.PlayerSelections[peerId];
+		switch (characterId)
 		{
-			healthNode.Connect(Health.SignalName.HealthDepleted, new Callable(this, nameof(OnPlayerDied)));
-		}
-		else
-		{
-			GD.PrintErr("Health node not found on player!");
+			case 1:
+				player = GD.Load<PackedScene>("res://Scenes/Characters/archer.tscn").Instantiate<DefaultPlayer>();
+				break;
+
+			case 2:
+				player = GD.Load<PackedScene>("res://Scenes/Characters/assassin.tscn").Instantiate<DefaultPlayer>();
+				break;
+
+			case 3:
+				player = GD.Load<PackedScene>("res://Scenes/Characters/knight.tscn").Instantiate<DefaultPlayer>();
+				break;
+
+			case 4:
+				player = GD.Load<PackedScene>("res://Scenes/Characters/mage.tscn").Instantiate<DefaultPlayer>();
+				break;
+
+			default:
+				break;
 		}
 
-		playerIndex++;
-	}
+			player.OwnerPeerId = peerId;
+			player.Name = $"Player_{peerId}";
+
+
+			// Get spawn point from PlayerSpawnPoints group
+			player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
+				.OfType<Node2D>()
+				.ToList()
+				.FindAll(spawnPoint => int.Parse(spawnPoint.Name) == playerIndex)
+				.FirstOrDefault()?.GlobalPosition ?? Vector2.Zero;
+
+			// Add joystick to player
+			var joystick = GD.Load<PackedScene>("res://Scenes/Joystick/joystick.tscn").Instantiate<Node2D>();
+			player.AddChild(joystick);
+			player.Joystick = joystick;
+			var WaveTimer = GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
+			player.GetNode<Camera2D>("Camera2D").AddChild(WaveTimer);
+			AddChild(player);
+
+			Server.Instance.Entities[peerId] = player;
+
+			// Connect health signal
+			var healthNode = player.GetNodeOrNull<Health>("Health");
+			if (healthNode != null)
+			{
+				healthNode.Connect(Health.SignalName.HealthDepleted, new Callable(this, nameof(OnPlayerDied)));
+			}
+			else
+			{
+				GD.PrintErr("Health node not found on player!");
+			}
+
+			playerIndex++;
+		}
 
 	public void SpawnEnemySpawner(string enemySpawnerPath)
 	{

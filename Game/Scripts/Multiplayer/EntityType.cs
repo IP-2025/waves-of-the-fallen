@@ -2,6 +2,9 @@ public enum EntityType
 {
 	DefaultPlayer,
 	Archer,
+	Assassin,
+	Knight,
+	Mage,
 	DefaultEnemy,
 	RangedEnemy,
 	MountedEnemy,

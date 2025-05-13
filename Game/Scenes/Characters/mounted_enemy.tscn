@@ -13,7 +13,7 @@ radius = 200.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
 radius = 600.0
 
-[node name="MountedEnemy" type="CharacterBody2D" groups=["Enemies"]]
+[node name="MountedEnemy" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 16
 script = ExtResource("1_script")
 
