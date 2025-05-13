@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://2yr16yyrrnto"]
+[gd_scene load_steps=8 format=3 uid="uid://2yr16yyrrnto"]
 
 [ext_resource type="Script" uid="uid://d3qtxl5t5i32q" path="res://Scripts/Sounds/SoundManager.cs" id="1_1u08g"]
 [ext_resource type="AudioStream" uid="uid://ccqxibhmo5ve4" path="res://Assets/Sounds/EnemyHurt.wav" id="2_olkkv"]
+[ext_resource type="AudioStream" uid="uid://crokyfyibph2o" path="res://Assets/Sounds/enemySpawn.wav" id="3_578fl"]
 [ext_resource type="AudioStream" uid="uid://cuo87885ex126" path="res://Assets/Sounds/bowString.wav" id="3_cr6xc"]
+[ext_resource type="AudioStream" uid="uid://tht8ynih67o6" path="res://Assets/Sounds/footstepsGrass.wav" id="4_c5u0d"]
 [ext_resource type="AudioStream" uid="uid://lp4hhlb7hdal" path="res://Assets/Sounds/swingWoosh.wav" id="4_sfxm6"]
 [ext_resource type="AudioStream" uid="uid://dcymsxxqh4lvj" path="res://Assets/Sounds/crossbowString.wav" id="4_xjrsk"]
 
@@ -13,13 +15,19 @@ script = ExtResource("1_1u08g")
 stream = ExtResource("2_olkkv")
 bus = &"SoundEffectBus"
 
+[node name="enemySpawn" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_578fl")
+bus = &"SoundEffectBus"
+
 [node name="playerWalk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_c5u0d")
 bus = &"SoundEffectBus"
 
 [node name="playerHit" type="AudioStreamPlayer2D" parent="."]
 bus = &"SoundEffectBus"
 
 [node name="swordSwings" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_sfxm6")
 bus = &"SoundEffectBus"
 
 [node name="bowFires" type="AudioStreamPlayer2D" parent="."]
@@ -38,5 +46,3 @@ bus = &"SoundEffectBus"
 [node name="crossbowFires" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_xjrsk")
 bus = &"SoundEffectBus"
-
-[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="."]
