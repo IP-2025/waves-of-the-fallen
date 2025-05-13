@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 public abstract partial class EnemyBase : CharacterBody2D
 {
-	public bool enableDebug = true;
+	public bool enableDebug = false;
 
 	[Export] public float speed;
 	[Export] public float damage;
@@ -126,6 +126,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 			float dist = GlobalPosition.DistanceTo(dp.GlobalPosition);
 			if (dist < closestDist)
 			{
+				DebugIt($"Found player candidate: {dp.Name}, Distance: {dist}, Position: {dp.GlobalPosition}");
 				closestDist = dist;
 				closestPlayer = dp;
 			}

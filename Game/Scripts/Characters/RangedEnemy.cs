@@ -8,7 +8,7 @@ using Godot;
 /// </summary>
 public partial class RangedEnemy : EnemyBase
 {
-	[Export] public float stopDistance = 350f;
+	[Export] public float stopDistance = 150f;
 	[Export] public float attackRange = 300f;
 	[Export] public PackedScene EnemyProjectileScene;
 
@@ -16,7 +16,7 @@ public partial class RangedEnemy : EnemyBase
 
 	public RangedEnemy()
 	{
-		speed = 100f;
+		speed = 250;
 		damage = 2.5f;
 		attacksPerSecond = 0.8f;
 	}

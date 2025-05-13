@@ -52,11 +52,17 @@ public partial class OnlineLocalMenu : Control
     {
       NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
 
+      var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
+      int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+
       Timer gameStartTimer = new Timer();
       AddChild(gameStartTimer);
       gameStartTimer.WaitTime = 0.5f;
       gameStartTimer.OneShot = true;
-      gameStartTimer.Timeout += () => NetworkManager.Instance.Rpc("NotifyGameStart");
+      gameStartTimer.Timeout += () => {
+        NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
+        NetworkManager.Instance.Rpc("NotifyGameStart");
+      };
       gameStartTimer.Start();
     };
 

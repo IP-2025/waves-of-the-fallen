@@ -6,7 +6,7 @@ using System.Linq;
 public partial class Health : Node2D
 {
 	public bool disable = false; // in multiplayer for clients, server handles health and stuff
-	[Export] public float max_health = 100.0f; // maximum health value
+	public float max_health;
 	public float health; // current health value
 	public float CurHealth => health; // property to access current health
 
@@ -52,5 +52,10 @@ public partial class Health : Node2D
 
 			EmitSignal(SignalName.HealthDepleted); // emit signal when health is depleted
 			}
+	}
+
+	public void ResetHealth()
+	{
+		health = max_health;
 	}
 }
