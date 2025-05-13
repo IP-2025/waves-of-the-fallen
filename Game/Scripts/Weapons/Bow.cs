@@ -4,7 +4,7 @@ using System;
 public partial class Bow : RangedWeapon
 {
 	private PackedScene arrowScene = GD.Load<PackedScene>("res://Scenes/Weapons/bow_arrow.tscn");
-	private int bowReleaseFrame = 2;
+	private int bowFiresFrame = 2;
 
 	public override void _Ready()
 	{
@@ -27,7 +27,7 @@ public partial class Bow : RangedWeapon
 	}
 	
 	public void _on_bow_sprite_frame_changed() {
-		if(bowReleaseFrame == GetNode<AnimatedSprite2D>("WeaponPivot/BowSprite").Frame) {
+		if(bowFiresFrame == GetNode<AnimatedSprite2D>("WeaponPivot/BowSprite").Frame) {
 			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("bowFires"), GlobalPosition);
 		}
 	}

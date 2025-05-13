@@ -4,6 +4,7 @@ using System;
 public partial class FireStaff : RangedWeapon
 {
 	private PackedScene fireBallScene = GD.Load<PackedScene>("res://Scenes/Weapons/fireball.tscn");
+	private int staffFiresFrame = 3;
 	
 	public override void _Ready()
 	{
@@ -24,4 +25,9 @@ public partial class FireStaff : RangedWeapon
 		Shoot();
 	}
 	
+	public void _on_fire_staff_sprite_frame_changed() {
+		if(staffFiresFrame == GetNode<AnimatedSprite2D>("WeaponPivot/FireStaffSprite").Frame) {
+			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("firestaffFires"), GlobalPosition);
+		}
+	}
 }
