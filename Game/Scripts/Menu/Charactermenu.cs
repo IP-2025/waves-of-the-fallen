@@ -9,7 +9,6 @@ namespace Game.Scripts.Menu;
 
 class UnlockedCharacter
 {
-	public int Id { get; set; }
 	public int CharacterId { get; set; }
 	public int Level { get; set; }
 }
@@ -44,13 +43,13 @@ public partial class Charactermenu : Control
 		_labelCharacterName = GetNode<Label>("%Label_SelectedCharacterName");
 		_buttonUpgradeUnlock = GetNode<Button>("%Button_UpgradeUnlock");
 		_buttonSelect = GetNode<Button>("%Button_Select");
-		
+
 		_unlockRequest = GetNode<HttpRequest>("%HTTPRequest");
 		_levelUpRequest = GetNode<HttpRequest>("%LevelUpRequest");
 		_progressCheckRequest = GetNode<HttpRequest>("%ProgressCheckRequest");
-		
+
 		_unlockRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
-		_levelUpRequest.Connect("request_completed", new Callable(this, nameof(OnLevelUpRequestCompleted)));	
+		_levelUpRequest.Connect("request_completed", new Callable(this, nameof(OnLevelUpRequestCompleted)));
 		_progressCheckRequest.Connect("request_completed", new Callable(this, nameof(OnProgressCheckRequestCompleted)));
 
 		var selectedId = _characterManager.LoadLastSelectedCharacterID();
@@ -58,15 +57,13 @@ public partial class Charactermenu : Control
 		_on_button_select_pressed();
 		SetCharacterPageValuesFromFile($"{selectedId}");
 
-		
-		
+
 		// Check for mismatch between server and local character data if online
 		if (GameState.CurrentState != ConnectionState.Online) return;
 		var headers = new[]
 		{
 			"Content-Type: application/json",
 			"Authorization: Bearer " + SecureStorage.LoadToken()
-
 		};
 		GD.Print(SecureStorage.LoadToken());
 		var err = _progressCheckRequest.Request(
@@ -77,7 +74,6 @@ public partial class Charactermenu : Control
 
 		if (err != Error.Ok)
 			GD.PrintErr($"AuthRequest error: {err}");
-
 	}
 
 	private void OnProgressCheckRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
@@ -100,20 +96,18 @@ public partial class Charactermenu : Control
 				var root = (Dictionary)json.Data;
 
 				var unlockedVariant = root["unlocked_characters"];
-				var unlockedArray   = (Godot.Collections.Array)unlockedVariant;  
-				
+				var unlockedArray = (Godot.Collections.Array)unlockedVariant;
+
 				var onlineProgress = new List<UnlockedCharacter>();
 
 				foreach (var element in unlockedArray)
 				{
 					var character = (Dictionary)element;
-					var id = (int)character["id"];
 					var characterId = (int)character["character_id"];
 					var level = (int)character["level"];
 
 					var unlockedCharacter = new UnlockedCharacter
 					{
-						Id = id,
 						CharacterId = characterId,
 						Level = level
 					};
@@ -121,7 +115,7 @@ public partial class Charactermenu : Control
 				}
 
 				var localProgress = LoadLocalProgress();
-				// CompareProgress(localProgress, onlineProgress);
+				CompareProgress(localProgress, onlineProgress);
 			}
 			catch (Exception ex)
 			{
@@ -134,7 +128,7 @@ public partial class Charactermenu : Control
 		}
 	}
 
-	
+
 	private void OnLevelUpRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
 	{
 		var receivedString = Encoding.UTF8.GetString(body);
@@ -155,7 +149,8 @@ public partial class Charactermenu : Control
 	// set stats and name to values from file (see CharacterManager.cs)
 	private void SetCharacterPageValuesFromFile(string characterId)
 	{
-		_labelCharacterName.Text = $"{_characterManager.LoadNameByID(characterId)} - Lvl.{_characterManager.LoadLevelByID(characterId)}";
+		_labelCharacterName.Text =
+			$"{_characterManager.LoadNameByID(characterId)} - Lvl.{_characterManager.LoadLevelByID(characterId)}";
 		_labelHealth.Text = $"Health {_characterManager.LoadHealthByID(characterId)}";
 		_labelSpeed.Text = $"Speed {_characterManager.LoadSpeedByID(characterId)}";
 		_labelDexterity.Text = $"Dexterity {_characterManager.LoadDexterityByID(characterId)}";
@@ -173,15 +168,16 @@ public partial class Charactermenu : Control
 	public void _characterSelected(ButtonsCharacterSelection button)
 	{
 		if (button == null || _labelCharacterName == null) return;
-		SetButtonStyle(_currentlySelectedCharacter,Color.Color8(0x4F, 0x4F, 0x4F),false);
+		SetButtonStyle(_currentlySelectedCharacter, Color.Color8(0x4F, 0x4F, 0x4F), false);
 
 		SetCharacterPageValuesFromFile(button.Text);
 		_currentlySelectedCharacter = button;
 
-		SetButtonStyle(_currentlySelectedCharacter,Color.Color8(0x2C, 0xC7, 0xFF),false);
+		SetButtonStyle(_currentlySelectedCharacter, Color.Color8(0x2C, 0xC7, 0xFF), false);
 
 		if (!_characterManager.LoadIsUnlocked(button.Text))
-		{ //check if character is unlocken. locked=true
+		{
+			//check if character is unlocken. locked=true
 			_buttonUpgradeUnlock.Text = "Unlock";
 			_buttonSelect.Hide();
 		}
@@ -191,23 +187,25 @@ public partial class Charactermenu : Control
 			_buttonSelect.Show();
 		}
 	}
-	
-	private void SetButtonStyle(Button button, Color color, bool addBorder){
+
+	private void SetButtonStyle(Button button, Color color, bool addBorder)
+	{
 		var style = button.GetThemeStylebox("normal") as StyleBoxFlat;
 		if (style == null) return;
-		var newStyle=(StyleBoxFlat)style.Duplicate();
-		newStyle.BgColor=color;
+		var newStyle = (StyleBoxFlat)style.Duplicate();
+		newStyle.BgColor = color;
 		newStyle.BorderColor = new Color(1f, 0f, 0f);
-			
-		if(addBorder){
+
+		if (addBorder)
+		{
 			newStyle.BorderColor = new Color(1f, 0f, 0f);
 			newStyle.SetBorderWidth(Side.Top, 3);
 			newStyle.SetBorderWidth(Side.Bottom, 3);
 			newStyle.SetBorderWidth(Side.Left, 3);
 			newStyle.SetBorderWidth(Side.Right, 3);
 		}
-		
-			
+
+
 		button.AddThemeStyleboxOverride("normal", newStyle);
 		button.AddThemeStyleboxOverride("hover", newStyle);
 		button.AddThemeStyleboxOverride("pressed", newStyle);
@@ -232,7 +230,7 @@ public partial class Charactermenu : Control
 			}
 		}
 	}
-	
+
 	// temp function for temp reset button to reset the character data 
 	private void _resetButton(Button button)
 	{
@@ -244,11 +242,11 @@ public partial class Charactermenu : Control
 		button.AddThemeStyleboxOverride("pressed", style);
 		button.AddThemeStyleboxOverride("focus", style);
 	}
-	
+
 	private void _on_button_upgrade_unlock_pressed()
 	{
-		var characterId =_currentlySelectedCharacter.Text;
-		if(_characterManager.LoadIsUnlocked(characterId))
+		var characterId = _currentlySelectedCharacter.Text;
+		if (_characterManager.LoadIsUnlocked(characterId))
 		{
 			_characterManager.UpgradeCharacter(characterId);
 
@@ -258,12 +256,11 @@ public partial class Charactermenu : Control
 				{
 					{ "character_id", characterId }
 				});
-				
+
 				var headers = new[]
 				{
 					"Content-Type: application/json",
 					"Authorization: Bearer " + SecureStorage.LoadToken()
-
 				};
 				var err = _unlockRequest.Request(
 					$"{Config.Server.BaseUrl}/api/v1/protected/character/levelUp",
@@ -275,13 +272,14 @@ public partial class Charactermenu : Control
 				if (err != Error.Ok)
 					GD.PrintErr($"AuthRequest error: {err}");
 			}
-		}else
+		}
+		else
 		{
 			_characterManager.SetUnlocked(characterId);
 			_buttonUpgradeUnlock.Text = "Upgrade";
 			_buttonSelect.Show();
-			var icon=_currentlySelectedCharacter.GetNode<TextureRect>("TextureRect");
-			icon.Material=null;
+			var icon = _currentlySelectedCharacter.GetNode<TextureRect>("TextureRect");
+			icon.Material = null;
 
 			GD.Print("unlcoked char local");
 			if (GameState.CurrentState == ConnectionState.Online)
@@ -297,7 +295,6 @@ public partial class Charactermenu : Control
 				{
 					"Content-Type: application/json",
 					"Authorization: Bearer " + SecureStorage.LoadToken()
-
 				};
 				var err = _unlockRequest.Request(
 					$"{Config.Server.BaseUrl}/api/v1/protected/character/unlock",
@@ -310,10 +307,10 @@ public partial class Charactermenu : Control
 					GD.PrintErr($"AuthRequest error: {err}");
 			}
 		}
-		SetCharacterPageValuesFromFile(characterId);
 
+		SetCharacterPageValuesFromFile(characterId);
 	}
-	
+
 	private void ResetCharacters()
 	{
 		_characterManager.SaveCharacterData(1, "Archer", 100, 100, 100, 100, 1, 1);
@@ -371,7 +368,7 @@ public partial class Charactermenu : Control
 			_ => "DefaultPlayer"
 		};
 	}
-	
+
 	private List<UnlockedCharacter> LoadLocalProgress()
 	{
 		var unlockedCharacters = new List<UnlockedCharacter>();
@@ -382,7 +379,6 @@ public partial class Charactermenu : Control
 			if (!_characterManager.LoadIsUnlocked(characterId)) continue;
 			var character = new UnlockedCharacter
 			{
-				Id = i,
 				CharacterId = i,
 				Level = _characterManager.LoadLevelByID(characterId)
 			};
@@ -390,7 +386,40 @@ public partial class Charactermenu : Control
 			unlockedCharacters.Add(character);
 		}
 
-		GD.Print($"Lokal geladene Charaktere: {unlockedCharacters.Count}");
 		return unlockedCharacters;
+	}
+
+	private void CompareProgress(List<UnlockedCharacter> localProgress, List<UnlockedCharacter> onlineProgress)
+	{
+		// Listen nach CharacterId sortieren
+		localProgress.Sort((a, b) => a.CharacterId.CompareTo(b.CharacterId));
+		onlineProgress.Sort((a, b) => a.CharacterId.CompareTo(b.CharacterId));
+
+		// Vergleich der Listen
+		for (var i = 0; i < Math.Max(localProgress.Count, onlineProgress.Count); i++)
+		{
+			if (i >= localProgress.Count)
+			{
+				GD.Print(
+					$"Charakter nur online vorhanden: CharacterId={onlineProgress[i].CharacterId}, Level={onlineProgress[i].Level}");
+				continue;
+			}
+
+			if (i >= onlineProgress.Count)
+			{
+				GD.Print(
+					$"Charakter nur lokal vorhanden: CharacterId={localProgress[i].CharacterId}, Level={localProgress[i].Level}");
+				continue;
+			}
+
+			var local = localProgress[i];
+			var online = onlineProgress[i];
+
+			if (local.CharacterId != online.CharacterId || local.Level != online.Level)
+			{
+				GD.Print($"Unterschied gefunden: Lokal (CharacterId={local.CharacterId}, Level={local.Level}) " +
+						 $"vs. Online (CharacterId={online.CharacterId}, Level={online.Level})");
+			}
+		}
 	}
 }

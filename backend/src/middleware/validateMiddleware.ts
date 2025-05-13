@@ -7,6 +7,7 @@ export async function authenticationStep(req: Request, res: Response, next: Next
   try {
     // get token and validate
     const authHeader = req.headers['authorization'];
+    console.log('authHeader', authHeader);
     const playerId = extractAndValidatePlayerId(authHeader);
 
     const result = await userExists(playerId);
