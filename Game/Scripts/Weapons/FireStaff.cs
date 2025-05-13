@@ -20,7 +20,7 @@ public partial class FireStaff : RangedWeapon
 			return;
 
 		animatedSprite.Play("shoot");
-		await ToSignal(GetTree().CreateTimer(2), "timeout");
+		await ToSignal(GetTree().CreateTimer(1.7), "timeout");
 		Shoot();
 	}
 	

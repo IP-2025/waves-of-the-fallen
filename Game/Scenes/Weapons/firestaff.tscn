@@ -30,7 +30,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"shoot",
-"speed": 2.5
+"speed": 3.1
 }]
 
 [node name="FireStaff" type="Area2D"]
@@ -45,9 +45,10 @@ scale = Vector2(0.12, 0.12)
 sprite_frames = SubResource("SpriteFrames_55g3s")
 animation = &"shoot"
 frame = 5
+frame_progress = 1.0
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 2.7
 autostart = true
 
 [node name="ShootingPoint" type="Marker2D" parent="."]
