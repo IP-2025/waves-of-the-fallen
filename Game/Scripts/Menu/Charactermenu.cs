@@ -78,6 +78,7 @@ public partial class Charactermenu : Control
 	private void _on_button_back_charactermenu_pressed()
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
+		SoundManager.Instance.PlayUI();
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
@@ -155,6 +156,7 @@ public partial class Charactermenu : Control
 				_oldSelectedCharacter = _currentlySelectedCharacter;
 			}
 		}
+		SoundManager.Instance.PlayUI();
 	}
 	
 	// temp function for temp reset button to reset the character data 
@@ -187,6 +189,7 @@ public partial class Charactermenu : Control
 			icon.Material=null;
 		}
 		SetCharacterPageValuesFromFile(characterID);
+		SoundManager.Instance.PlayUI();
 	}
 	
 	/// <summary>
