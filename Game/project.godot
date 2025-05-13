@@ -42,7 +42,7 @@ ui/toolbar/run_overall=true
 [global_group]
 
 PlayerSpawnPoints=""
-enemies=""
+Enemies=""
 
 [input]
 

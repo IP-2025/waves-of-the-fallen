@@ -1,71 +1,130 @@
-[gd_scene load_steps=6 format=3 uid="uid://56x8ud47qho"]
+[gd_scene load_steps=8 format=3 uid="uid://56x8ud47qho"]
 
-[ext_resource type="Script" uid="uid://c57f4u4nj7ffr" path="res://Scripts/Characters/Archer.cs" id="1_rpbpn"]
-[ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_3bcig"]
-[ext_resource type="Script" uid="uid://c7yits36f8kyt" path="res://Scripts/Characters/HealthBar.cs" id="3_ledbc"]
-[ext_resource type="Texture2D" uid="uid://m7etjj28i2o0" path="res://Assets/Characters/resources/ArcherCharacterPreview.png" id="4_uajqq"]
+[ext_resource type="Texture2D" uid="uid://cjer8mprxmfy4" path="res://Assets/Characters/Archer/ArcherSpreadsheet.png" id="1_rh6ln"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
-size = Vector2(25, 36.2188)
+[sub_resource type="Animation" id="Animation_1lwip"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ArcherPictures:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ArcherPictures:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
-[node name="Archer" type="CharacterBody2D"]
-collision_mask = 256
-collision_priority = 2.0
-script = ExtResource("1_rpbpn")
+[sub_resource type="Animation" id="Animation_3bcig"]
+resource_name = "death"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ArcherPictures:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ArcherPictures:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
 
-[node name="WeaponSpawnPoints" type="Node2D" parent="."]
+[sub_resource type="Animation" id="Animation_rpbpn"]
+resource_name = "hurt"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ArcherPictures:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
 
-[node name="Weapon_0" type="Node2D" parent="WeaponSpawnPoints" groups=["WeaponSpawnPoints"]]
-position = Vector2(25, -10)
+[sub_resource type="Animation" id="Animation_rh6ln"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ArcherPictures:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
 
-[node name="Weapon_1" type="Node2D" parent="WeaponSpawnPoints" groups=["WeaponSpawnPoints"]]
-position = Vector2(-25, -10)
+[sub_resource type="Animation" id="Animation_yu3y6"]
+resource_name = "walk"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ArcherPictures:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 0, 2, 0]
+}
 
-[node name="Weapon_2" type="Node2D" parent="WeaponSpawnPoints" groups=["WeaponSpawnPoints"]]
-position = Vector2(25, 15)
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rpbpn"]
+_data = {
+&"RESET": SubResource("Animation_1lwip"),
+&"death": SubResource("Animation_3bcig"),
+&"hurt": SubResource("Animation_rpbpn"),
+&"idle": SubResource("Animation_rh6ln"),
+&"walk": SubResource("Animation_yu3y6")
+}
 
-[node name="Weapon_3" type="Node2D" parent="WeaponSpawnPoints" groups=["WeaponSpawnPoints"]]
-position = Vector2(-25, 15)
+[node name="Archer" type="Node2D"]
+texture_filter = 1
+scale = Vector2(0.33, 0.336)
 
-[node name="Health" type="Node2D" parent="."]
-script = ExtResource("2_3bcig")
+[node name="ArcherPictures" type="Sprite2D" parent="."]
+texture = ExtResource("1_rh6ln")
+hframes = 3
+vframes = 2
+frame = 1
 
-[node name="HealthBar" type="ProgressBar" parent="Health"]
-offset_left = -50.0
-offset_top = -58.0
-offset_right = 48.0
-offset_bottom = -31.0
-show_percentage = false
-script = ExtResource("3_ledbc")
-metadata/_edit_use_anchors_ = true
-
-[node name="HealthLabel" type="Label" parent="Health/HealthBar"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -48.0
-offset_top = -12.5
-offset_right = 48.0
-offset_bottom = 12.5
-theme_type_variation = &"GraphNodeTitleLabel"
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-horizontal_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 15)
-shape = SubResource("RectangleShape2D_vh0fs")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.75, 1.75)
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("4_uajqq")
-
-[connection signal="HealthDepleted" from="Health" to="." method="_on_health_health_depleted"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_rpbpn")
+}

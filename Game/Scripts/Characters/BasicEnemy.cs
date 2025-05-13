@@ -4,19 +4,27 @@ using System.Diagnostics;
 
 public partial class BasicEnemy : EnemyBase
 {
-	public BasicEnemy()
+	public override void _PhysicsProcess(double delta)
 	{
-		speed = 150f;
-		damage = 5f;
-		attacksPerSecond = 1f;
+		FindNearestPlayer();
+		if (player != null)
+		{
+			LookAt(player.GlobalPosition);
+			Vector2 direction = (player.GlobalPosition - GlobalPosition).Normalized();
+			Velocity = direction * speed;
+		}
+		else
+		{
+			Velocity = Vector2.Zero;
+		}
+
+		MoveAndSlide();
 	}
+
+
 	public override void Attack() 
 	{
 		player.GetNode<Health>("Health").Damage(damage);
-
-		if (enableDebug)
-		{
-			Debug.Print($"BasicEnemy attacks (melee) with speed: {speed}, damage: {damage}, attacksPerSecond: {attacksPerSecond}!");
-		}
+		Debug.Print("BasicEnemy attacks (melee)!");
 	}
 }

@@ -11,16 +11,21 @@ public partial class Mage : DefaultPlayer
 	public override void _Ready()
 	{
 		base._Ready();
-
-		var healthNode = GetNode<Health>("Health");
-		healthNode.max_health = MaxHealth;
-		healthNode.ResetHealth();
-
-		GD.Print($"Mage initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
+		CurrentHealth = MaxHealth;
 	}
-
 	public override void UseAbility()
 	{
-		//TODO: Implement Mage's ability
+		GD.Print("Platzhalter Fähigkeit Magier");
+	}
+	public override void Die()
+	{
+		if (GetTree().GetMultiplayer().IsServer())
+		{
+			long peerId = GetMultiplayerAuthority();
+			Server.Instance.Entities.Remove(peerId);
+		}
+
+		GD.Print("Mage death animation playing...");
+		//animationPlayer.Play("mage_death");
 	}
 }

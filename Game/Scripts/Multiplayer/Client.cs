@@ -20,19 +20,16 @@ public partial class Client : Node
 	{
 		{ EntityType.DefaultPlayer, GD.Load<PackedScene>("res://Scenes/Characters/default_player.tscn") },
 		{ EntityType.Archer, GD.Load<PackedScene>("res://Scenes/Characters/archer.tscn") },
-		{ EntityType.Knight, GD.Load<PackedScene>("res://Scenes/Characters/knight.tscn") }, // Hinzugefügt
-		{ EntityType.Assassin, GD.Load<PackedScene>("res://Scenes/Characters/assassin.tscn") }, // Hinzugefügt
-		{ EntityType.DefaultEnemy, GD.Load<PackedScene>("res://Scenes/Characters/default_enemy.tscn") },
-		{ EntityType.RangedEnemy, GD.Load<PackedScene>("res://Scenes/Characters/ranged_enemy.tscn") },
-		{ EntityType.MountedEnemy, GD.Load<PackedScene>("res://Scenes/Characters/mounted_enemy.tscn") },
-		{ EntityType.RiderEnemy, GD.Load<PackedScene>("res://Scenes/Characters/rider_enemy.tscn") },
-		{ EntityType.Bow, GD.Load<PackedScene>("res://Scenes/Weapons/bow.tscn") },
-		{ EntityType.BowArrow, GD.Load<PackedScene>("res://Scenes/Weapons/bow_arrow.tscn") },
-		{ EntityType.Crossbow, GD.Load<PackedScene>("res://Scenes/Weapons/crossbow.tscn") },
-		{ EntityType.CrossbowArrow, GD.Load<PackedScene>("res://Scenes/Weapons/crossbow_arrow.tscn") },
+		{ EntityType.DefaultEnemy,  GD.Load<PackedScene>("res://Scenes/Characters/default_enemy.tscn") },
+		{ EntityType.RangedEnemy,  GD.Load<PackedScene>("res://Scenes/Characters/ranged_enemy.tscn") },
+		{ EntityType.MountedEnemy,  GD.Load<PackedScene>("res://Scenes/Characters/mounted_enemy.tscn") },
+		{ EntityType.RiderEnemy,  GD.Load<PackedScene>("res://Scenes/Characters/rider_enemy.tscn") },
+		{ EntityType.Bow,  GD.Load<PackedScene>("res://Scenes/Weapons/bow.tscn") },
+		{ EntityType.BowArrow,  GD.Load<PackedScene>("res://Scenes/Weapons/bow_arrow.tscn") },
+		{ EntityType.Crossbow,  GD.Load<PackedScene>("res://Scenes/Weapons/crossbow.tscn") },
+		{ EntityType.CrossbowArrow,  GD.Load<PackedScene>("res://Scenes/Weapons/crossbow_arrow.tscn") },
 		{ EntityType.Kunai, GD.Load<PackedScene>("res://Scenes/Weapons/kunai.tscn") },
-		{ EntityType.KunaiProjectile, GD.Load<PackedScene>("res://Scenes/Weapons/kunai_projectile.tscn") },
-		{ EntityType.Mage, GD.Load<PackedScene>("res://Scenes/Characters/mage.tscn") },
+		{ EntityType.KunaiProjectile, GD.Load<PackedScene>("res://Scenes/Weapons/kunai_projectile.tscn")},
 		{ EntityType.Dagger, GD.Load<PackedScene>("res://Scenes/Weapons/dagger.tscn")},
 		{ EntityType.Sword, GD.Load<PackedScene>("res://Scenes/Weapons/Sword.tscn")},
 	};
@@ -171,14 +168,11 @@ public partial class Client : Node
 				|| entity.Type == EntityType.MountedEnemy
 				|| entity.Type == EntityType.RiderEnemy
 				|| entity.Type == EntityType.DefaultPlayer
-				|| entity.Type == EntityType.Archer
-				|| entity.Type == EntityType.Assassin
-				|| entity.Type == EntityType.Knight
-				|| entity.Type == EntityType.Mage)
+				|| entity.Type == EntityType.Archer)
 			{
-				var healthNode = inst.GetNodeOrNull<Health>("Health");
-				healthNode.disable = true;
-				healthNode.health = entity.Health * 100; // high value so that client cant kill and cant be killed. Server handles it
+				var helthNode = inst.GetNodeOrNull<Health>("Health");
+				helthNode.disable = true;
+				helthNode.health = entity.Health * 100; // high value so that client cant kill and cant be killed. Server handles it
 			}
 
 			if (entity.Type == EntityType.DefaultEnemy
@@ -245,7 +239,7 @@ public partial class Client : Node
 
 	private void UpdateTransform(Node2D inst, EntitySnapshot entity)
 	{
-		if (IsInstanceValid(inst))
+		if (GodotObject.IsInstanceValid(inst))
 		{
 			inst.GlobalPosition = entity.Position;
 			inst.Rotation = entity.Rotation;
@@ -257,11 +251,7 @@ public partial class Client : Node
 	private void AttachJoystick(Node2D inst, EntitySnapshot entity)
 	{
 		// only for local / this clients player
-		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
-							|| entity.Type == EntityType.Archer
-							|| entity.Type == EntityType.Knight
-							|| entity.Type == EntityType.Mage
-							|| entity.Type == EntityType.Assassin;
+		bool isPlayerType = entity.Type == EntityType.DefaultPlayer || entity.Type == EntityType.Archer;
 		if (!isPlayerType || entity.NetworkId != Multiplayer.GetUniqueId())
 		{
 			return;
@@ -274,13 +264,8 @@ public partial class Client : Node
 
 	private void ChangeCamera(Node2D inst, EntitySnapshot entity)
 	{
-		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
-							|| entity.Type == EntityType.Archer
-							|| entity.Type == EntityType.Knight
-							|| entity.Type == EntityType.Mage
-							|| entity.Type == EntityType.Assassin;
 		// only for local / this clients player
-		if (!isPlayerType || entity.NetworkId != Multiplayer.GetUniqueId())
+		if (entity.Type != EntityType.DefaultPlayer && entity.Type != EntityType.Archer)
 			return;
 
 		if (entity.NetworkId == Multiplayer.GetUniqueId())

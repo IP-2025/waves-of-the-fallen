@@ -4,7 +4,7 @@ using System;
 public partial class Health : Node2D
 {
 	public bool disable = false; // in multiplayer for clients, server handles health and stuff
-	public float max_health;
+	[Export] public float max_health = 100.0f; // maximum health value
 	public float health; // current health value
 	public float CurHealth => health; // property to access current health
 
@@ -25,18 +25,8 @@ public partial class Health : Node2D
 
 		health -= damage;
 
-		health -= damage; // reduce health by damage amount
-		GD.Print($"Took damage: {damage}, current health: {health}");
-	}
-
-	private void doAnimation()
-	{
-		// hit animation
-		if (GetParent() is EnemyBase enemy)
-			enemy.OnHit();
-
-		// death animation
-		if (health <= 0) {
+		if (health <= 0)
+		{
 			// check if parent is DefaultPlayer
 			if (GetParent() is DefaultPlayer player)
 			{
@@ -48,11 +38,6 @@ public partial class Health : Node2D
 			}
 
 			EmitSignal(SignalName.HealthDepleted); // emit signal when health is depleted
-			}
-	}
-
-	public void ResetHealth()
-	{
-		health = max_health;
+		}
 	}
 }

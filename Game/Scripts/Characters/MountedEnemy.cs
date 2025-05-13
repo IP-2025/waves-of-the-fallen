@@ -37,7 +37,7 @@ public partial class MountedEnemy : EnemyBase
 		}
 	}
 
-	protected override void HandleMovement(Vector2 direction)
+	public override void _PhysicsProcess(double delta)
 	{
 		FindNearestPlayer();
 		if (player == null)
@@ -48,6 +48,9 @@ public partial class MountedEnemy : EnemyBase
 		}
 
 		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
+
+		LookAt(player.GlobalPosition);
+
 		if (dist > stopDistance)
 		{
 			Vector2 toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
