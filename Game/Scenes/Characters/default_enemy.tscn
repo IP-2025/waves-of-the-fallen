@@ -1,14 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://di4l7nv7umbjw"]
+[gd_scene load_steps=24 format=3 uid="uid://di4l7nv7umbjw"]
 
 [ext_resource type="Script" uid="uid://c8vf1rsu474lm" path="res://Scripts/Characters/BasicEnemy.cs" id="1_fecjr"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_ihcfn"]
 [ext_resource type="Texture2D" uid="uid://8vahawjptqrq" path="res://Assets/Characters/spritesheets/Goblin_spritesheet.png" id="3_ihcfn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r4aor"]
-radius = 17.0
+radius = 26.0192
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6kac6"]
-size = Vector2(40, 40)
+size = Vector2(56, 56)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6cefa"]
 radius = 4826.92
@@ -169,10 +169,6 @@ animationPath = NodePath("GoblinAnimation")
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_ihcfn")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("2_lal1l")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_r4aor")
 
@@ -188,6 +184,14 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
 visible = false
 shape = SubResource("CircleShape2D_6cefa")
+
+[node name="GoblinAnimation" type="AnimatedSprite2D" parent="."]
+position = Vector2(1.90735e-06, 1.90735e-06)
+scale = Vector2(0.171794, 0.171794)
+sprite_frames = SubResource("SpriteFrames_paric")
+animation = &"death"
+frame = 5
+frame_progress = 1.0
 
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
 [connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]

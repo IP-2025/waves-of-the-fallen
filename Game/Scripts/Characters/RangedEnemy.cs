@@ -31,16 +31,8 @@ public partial class RangedEnemy : EnemyBase
 		}
 	}
 
-	public override void _PhysicsProcess(double delta)
+	protected override void HandleMovement(Vector2 direction)
 	{
-		FindNearestPlayer();
-		if (player == null)
-		{
-			Velocity = Vector2.Zero;
-			MoveAndSlide();
-			return;
-		}
-
 		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
 
 		if (dist > stopDistance)
@@ -53,8 +45,6 @@ public partial class RangedEnemy : EnemyBase
 
 			// Attack is only executed in the base class
 		}
-
-		MoveAndSlide();
 	}
 
 	public override void Attack()

@@ -35,7 +35,7 @@ public partial class Client : Node
 		{ EntityType.Mage, GD.Load<PackedScene>("res://Scenes/Characters/mage.tscn") },
 		{ EntityType.FireStaff, GD.Load<PackedScene>("res://Scenes/Weapons/firestaff.tscn")},
 		{ EntityType.FireBall, GD.Load<PackedScene>("res://Scenes/Weapons/fireball.tscn")},
-				{ EntityType.Dagger, GD.Load<PackedScene>("res://Scenes/Weapons/dagger.tscn")},
+		{ EntityType.Dagger, GD.Load<PackedScene>("res://Scenes/Weapons/dagger.tscn")},
 		{ EntityType.Sword, GD.Load<PackedScene>("res://Scenes/Weapons/Sword.tscn")}
 	};
 

@@ -13,8 +13,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	[Export]
 	public int CurrentHealth { get; set; }
 	public long OwnerPeerId { get; set; }
-	
-	public Node2D weaponSlot { get; set; }
+
 	public Node2D Joystick { get; set; }
 	private Camera2D camera;
 	private MultiplayerSynchronizer multiplayerSynchronizer;
@@ -23,9 +22,9 @@ public partial class DefaultPlayer : CharacterBody2D
 	public PackedScene BowScene = GD.Load<PackedScene>("res://Scenes/Weapons/bow.tscn");
 	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Scenes/Weapons/crossbow.tscn");
 	public PackedScene KunaiScene = GD.Load<PackedScene>("res://Scenes/Weapons/kunai.tscn");
+	public PackedScene FireStaffScene = GD.Load<PackedScene>("res://Scenes/Weapons/firestaff.tscn");
 	public PackedScene DaggerScene = GD.Load<PackedScene>("res://Scenes/Weapons/dagger.tscn");
 	public PackedScene SwordScene = GD.Load<PackedScene>("res://Scenes/Weapons/Sword.tscn");
-	public PackedScene FireStaffScene = GD.Load<PackedScene>("res://Scenes/Weapons/firestaff.tscn");
 	private int weaponsEquipped = 0;
 
 	public override void _Ready()
@@ -124,20 +123,18 @@ public partial class DefaultPlayer : CharacterBody2D
 	private Area2D CreateWeaponForClass(object playerClass)
 	{
 		if (playerClass is Archer)
-			return BowScene.Instantiate() as Area2D;
+			//return BowScene.Instantiate() as Area2D;
+			return SwordScene.Instantiate() as Area2D;
 		
 		if (playerClass is Assassin)
-			//GD.Print(daggerScene != null ? "OK" : "NOT FOUND");
-			//return KunaiScene.Instantiate() as Area2D;
 			return KunaiScene.Instantiate() as Area2D;
-		if (playerClass is Warrior)
-			//return DaggerScene.Instantiate() as Area2D;
-			return SwordScene.Instantiate() as Area2D;
-		// if (playerClass is Mage) return FireStaffScene.Instantiate() as Area2D;
 
 		if (playerClass is Mage) 
 			return FireStaffScene.Instantiate() as Area2D;
-
+		if (playerClass is Knight)
+		//return DaggerScene.Instantiate() as Area2D;
+		return SwordScene.Instantiate() as Area2D;
+		
 		return null;
 	}
 

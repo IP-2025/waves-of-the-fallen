@@ -5,8 +5,9 @@
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_u2wu2"]
 [ext_resource type="Texture2D" uid="uid://bhrncdbnlwv8t" path="res://Assets/Characters/spritesheets/skeleton_Spreadsheet.png" id="3_u2wu2"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1deiu"]
-radius = 13.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u2wu2"]
+radius = 18.0
+height = 52.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u2wu2"]
 radius = 180.0
@@ -220,12 +221,9 @@ animationPath = NodePath("RangedEnemyAnimation")
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_u2wu2")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("1_3wwps")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_1deiu")
+position = Vector2(-2, 1)
+shape = SubResource("CapsuleShape2D_u2wu2")
 
 [node name="AttackRange" type="Area2D" parent="."]
 collision_layer = 0
@@ -240,6 +238,11 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
 visible = false
 shape = SubResource("CircleShape2D_e5mcm")
+
+[node name="RangedEnemyAnimation" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_721ht")
+animation = &"attack"
 
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
 [connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]

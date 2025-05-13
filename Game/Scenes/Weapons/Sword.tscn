@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6gp6cacn1k5j"]
+[gd_scene load_steps=8 format=3 uid="uid://bewmpi3vhr67l"]
 
 [ext_resource type="Script" uid="uid://bdb05bu362bd0" path="res://Scripts/Weapons/Sword.cs" id="1_6nwni"]
 [ext_resource type="Texture2D" uid="uid://cuy2ysc8janl4" path="res://Assets/Weapons/MasterSword/MasterSword.png" id="1_l8vww"]
