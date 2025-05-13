@@ -7,12 +7,16 @@ public partial class Server : Node
 {
 	public static Server Instance;
 
-	private bool enableDebug = true;
+	private bool enableDebug = false;
+	public Dictionary<long, int> PlayerSelections = new Dictionary<long, int>();
 	public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
 	private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
 	{
 		{ "res://Scenes/Characters/default_player.tscn", EntityType.DefaultPlayer },
 		{ "res://Scenes/Characters/archer.tscn", EntityType.Archer },
+		{ "res://Scenes/Characters/knight.tscn", EntityType.Knight },
+		{ "res://Scenes/Characters/assassin.tscn", EntityType.Assassin }, // Hinzugefügt
+		{ "res://Scenes/Characters/mage.tscn", EntityType.Mage },         // Hinzugefügt
 		{ "res://Scenes/Characters/default_enemy.tscn", EntityType.DefaultEnemy },
 		{ "res://Scenes/Characters/mounted_enemy.tscn", EntityType.MountedEnemy },
 		{ "res://Scenes/Characters/ranged_enemy.tscn", EntityType.RangedEnemy },
@@ -21,8 +25,10 @@ public partial class Server : Node
 		{ "res://Scenes/Weapons/bow_arrow.tscn", EntityType.BowArrow },
 		{ "res://Scenes/Weapons/crossbow.tscn", EntityType.Crossbow },
 		{ "res://Scenes/Weapons/crossbow_arrow.tscn", EntityType.CrossbowArrow },
-		{ "res://Scenes/Weapons/kunai.tscn", EntityType.Kunai},
-		{ "res://Scenes/Weapons/kunai_projectile.tscn", EntityType.KunaiProjectile},
+		{ "res://Scenes/Weapons/kunai.tscn", EntityType.Kunai },
+		{ "res://Scenes/Weapons/kunai_projectile.tscn", EntityType.KunaiProjectile },
+		{ "res://Scenes/Weapons/firestaff.tscn", EntityType.FireStaff},
+		{ "res://Scenes/Weapons/fireball.tscn", EntityType.FireBall}
 	};
 	public override void _Ready()
 	{
@@ -116,6 +122,7 @@ public partial class Server : Node
 				slotIx = (int)node.GetMeta("SlotIndex");
 			}
 
+			DebugIt($"Snapshot: Entity Name: {node.Name}, Position: {node.Position}, ID: {id}");
 			snap.Entities.Add(new EntitySnapshot(
 				id,
 				node.Position,
@@ -129,12 +136,6 @@ public partial class Server : Node
 				owner, // nullable
 				slotIx // nullable
 			));
-		}
-
-		// remove invalid entities, for example killed enemies
-		foreach (var id in toRemove)
-		{
-			Entities.Remove(id);
 		}
 
 		return Serializer.Serialize(snap);

@@ -369,6 +369,14 @@ public partial class NetworkManager : Node
         _gameRunning = true;
     }
 
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false)]
+    public void SelectCharacter(int selectedCharacterId)
+    {
+        long peerId = Multiplayer.GetRemoteSenderId();
+        Server.Instance.PlayerSelections[peerId] = selectedCharacterId;
+        DebugIt("Player selectged: " + selectedCharacterId + " By PlayerID: " + peerId);
+    }
+
     public void NotifyGameStartUDP()
     {
         var startPacket = Encoding.UTF8.GetBytes("START");
