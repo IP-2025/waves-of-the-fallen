@@ -12,7 +12,8 @@ public partial class LoginScreen : Control
 	private HttpRequest _httpRequest;
 	private HttpRequest _authRequest;
 	private Label _errorLabel;
-
+	private Button _registerButton;
+	
 	public override void _Ready()
 	{
 		_emailField = GetNode<LineEdit>("Panel/EmailField");
@@ -22,11 +23,13 @@ public partial class LoginScreen : Control
 		_httpRequest = GetNode<HttpRequest>("Panel/LoginRequest");
 		_authRequest = GetNode<HttpRequest>("Panel/AuthRequest");
 		_errorLabel = GetNode<Label>("Panel/ErrorLabel");
+		_registerButton = GetNode<Button>("Panel/RegisterButton");
 
 		_loginButton.Connect("pressed", new Callable(this, nameof(OnLoginButtonPressed)));
 		_offlineButton.Connect("pressed", new Callable(this, nameof(OnOfflineButtonPressed)));
 		_httpRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
 		_authRequest.Connect("request_completed",   new Callable(this, nameof(OnAuthRequestCompleted)));
+		_registerButton.Connect("pressed", new Callable(this, nameof(OnRegisterButtonPressed)));
 
 		
 		_errorLabel.Visible = false;
@@ -93,6 +96,13 @@ public partial class LoginScreen : Control
 			ShowError($"Request error: {err}");
 		else
 			_loginButton.Disabled = true;
+	}
+
+	private void OnRegisterButtonPressed()
+	{
+		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/register_screen.tscn");
+		if (scene == null) GD.PrintErr("Register Scene not found");
+		GetTree().ChangeSceneToPacked(scene);
 	}
 
 	private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)

@@ -1,6 +1,7 @@
 import express from 'express';
 import { authenticationStep } from '../middleware/validateMiddleware';
 import { getSettings, setSettings } from '../controllers/settingsController';
+import { setGoldController, getGoldController } from '../controllers/playerStatController';
 import {
   getAllCharacterController,
   getAllUnlockedCharacterController,
@@ -14,9 +15,11 @@ protectedRouter.get('/', authenticationStep, (req, res) => {
 });
 protectedRouter.post('/getSettings', authenticationStep, getSettings);
 protectedRouter.post('/setSettings', authenticationStep, setSettings);
-//TODO : add authentication to this route (Just for Local Testing)
-protectedRouter.get('/character',getAllCharacterController);
-protectedRouter.post('/getAllUnlockedCharacters',getAllUnlockedCharacterController);
+protectedRouter.post('/getAllCharacters',authenticationStep,getAllCharacterController);
+protectedRouter.post('/setGold',authenticationStep,setGoldController);
+protectedRouter.post('/getGold',authenticationStep,getGoldController);
+protectedRouter.get('/character',authenticationStep, getAllCharacterController);
+protectedRouter.post('/getAllUnlockedCharacters',authenticationStep, getAllUnlockedCharacterController);
 protectedRouter.post('/character/unlock', authenticationStep, unlockCharController)
 
 

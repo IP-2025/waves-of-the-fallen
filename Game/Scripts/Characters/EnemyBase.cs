@@ -1,26 +1,68 @@
 using Godot;
 using System;
+using System.Diagnostics;
 
 public abstract partial class EnemyBase : CharacterBody2D
 {
-	// Can be adapted in inspector for each deriving enemy
-	[Export] public float speed = 200f;
-	[Export] public float damage = 10f;
-	[Export] public float attacksPerSecond = 1.5f;
+	public bool enableDebug = false;
+
+	[Export] public float speed;
+	[Export] public float damage;
+	[Export] public float attacksPerSecond;
+	[Export] private NodePath animationPath;
 
 	public DefaultPlayer player { get; set; }
-	protected float attackCooldown;
-	protected float timeUntilAttack;
+	protected virtual float attackCooldown { get; set; }
+	protected virtual float timeUntilAttack { get; set; }
 	protected bool withinAttackRange = false;
+
+	private AnimationHandler animationHandler;
+	private AnimatedSprite2D animation;
+
+	public abstract void Attack();
 
 	public override void _Ready()
 	{
 		attackCooldown = 1f / attacksPerSecond;
 		timeUntilAttack = attackCooldown;
+
+		if (animationPath != null)
+		{
+			animation = GetNode<AnimatedSprite2D>(animationPath);
+			animationHandler = new AnimationHandler(animation);
+			animationHandler.OnDeathAnimationFinished += () => QueueFree();
+		}
+		else
+		{
+			GD.PushError($"{Name} has no animationPath set!");
+		}
 	}
 
 	public override void _Process(double delta)
 	{
+		if (animationHandler.IsDying)
+		{
+			Velocity = Vector2.Zero;
+			MoveAndSlide();
+			return;
+		}
+
+		FindNearestPlayer();
+
+		if (player == null)
+		{
+			Velocity = Vector2.Zero;
+			MoveAndSlide();
+			return;
+		}
+
+		Vector2 direction = (player.GlobalPosition - GlobalPosition).Normalized();
+
+		if (animation != null)
+		{
+			animation.FlipH = direction.X < 0;
+		}
+
 		if (withinAttackRange && timeUntilAttack <= 0f)
 		{
 			Attack();
@@ -30,16 +72,24 @@ public abstract partial class EnemyBase : CharacterBody2D
 		{
 			timeUntilAttack -= (float)delta;
 		}
+
+		HandleMovement(direction);
+		MoveAndSlide();
+
+		animationHandler.UpdateAnimationState(withinAttackRange, Velocity);
 	}
 
-	public abstract void Attack(); 
+	protected virtual void HandleMovement(Vector2 direction)
+	{
+		Velocity = direction.Normalized() * speed;
+	}
 
 	public virtual void OnAttackRangeBodyEnter(Node2D body)
 	{
 		if (body.IsInGroup("player"))
 		{
 			withinAttackRange = true;
-			GD.Print("Player entered range.");
+			DebugIt("Player entered range.");
 		}
 	}
 
@@ -49,10 +99,21 @@ public abstract partial class EnemyBase : CharacterBody2D
 		{
 			withinAttackRange = false;
 			timeUntilAttack = attackCooldown;
-			GD.Print("Player left range.");
+			DebugIt("Player left range.");
 		}
 	}
-	
+
+	public void OnHit()
+	{
+		animationHandler.SetHit();
+	}
+
+	public void OnDeath()
+	{
+		Velocity = Vector2.Zero;
+		animationHandler.SetDeath();
+	}
+
 	protected void FindNearestPlayer()
 	{
 		float closestDist = float.MaxValue;
@@ -65,6 +126,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 			float dist = GlobalPosition.DistanceTo(dp.GlobalPosition);
 			if (dist < closestDist)
 			{
+				DebugIt($"Found player candidate: {dp.Name}, Distance: {dist}, Position: {dp.GlobalPosition}");
 				closestDist = dist;
 				closestPlayer = dp;
 			}
@@ -73,4 +135,11 @@ public abstract partial class EnemyBase : CharacterBody2D
 		player = closestPlayer;
 	}
 
+	private void DebugIt(string message)
+	{
+		if (enableDebug)
+		{
+			GD.Print("EnemyBase: " + message);
+		}
+	}
 }

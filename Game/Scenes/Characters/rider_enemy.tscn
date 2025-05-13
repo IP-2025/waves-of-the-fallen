@@ -1,18 +1,17 @@
-[gd_scene load_steps=73 format=3 uid="uid://dnne18q2ir07d"]
+[gd_scene load_steps=63 format=3 uid="uid://dnne18q2ir07d"]
 
 [ext_resource type="Script" uid="uid://m5nyfymvipg6" path="res://Scripts/Characters/Rider.cs" id="1_k7dvb"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_ilr60"]
-[ext_resource type="Texture2D" uid="uid://r6fky127hh38" path="res://Assets/Characters/Enemies/Rider.png" id="3_ilr60"]
-[ext_resource type="Texture2D" uid="uid://bu5puvkvsp7v" path="res://Assets/Characters/Enemies/RiderWalkSheet.png" id="4_3ubfh"]
+[ext_resource type="Texture2D" uid="uid://bpwqau0js8exb" path="res://Assets/Characters/Enemies/RiderWalkSheet.png" id="4_3ubfh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2xkst"]
 radius = 15.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_svs67"]
-radius = 200.0
+radius = 42.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ksi4c"]
-radius = 600.0
+radius = 58.9406
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ilr60"]
 atlas = ExtResource("4_3ubfh")
@@ -234,44 +233,40 @@ region = Rect2(1280, 1536, 256, 256)
 atlas = ExtResource("4_3ubfh")
 region = Rect2(1536, 1536, 256, 256)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_er503"]
-atlas = ExtResource("4_3ubfh")
-region = Rect2(1792, 1536, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ihqwh"]
-atlas = ExtResource("4_3ubfh")
-region = Rect2(0, 1792, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g6caf"]
-atlas = ExtResource("4_3ubfh")
-region = Rect2(256, 1792, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_434ud"]
-atlas = ExtResource("4_3ubfh")
-region = Rect2(512, 1792, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_81hbv"]
-atlas = ExtResource("4_3ubfh")
-region = Rect2(768, 1792, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f0qkm"]
-atlas = ExtResource("4_3ubfh")
-region = Rect2(1024, 1792, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_60whu"]
-atlas = ExtResource("4_3ubfh")
-region = Rect2(1280, 1792, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a3fbo"]
-atlas = ExtResource("4_3ubfh")
-region = Rect2(1536, 1792, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vky6m"]
-atlas = ExtResource("4_3ubfh")
-region = Rect2(1792, 1792, 256, 256)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_2xkst"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ilr60")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ilr60")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ilr60")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ilr60")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ilr60")
@@ -437,54 +432,22 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5dpjg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_er503")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ihqwh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_g6caf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_434ud")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_81hbv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f0qkm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_60whu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a3fbo")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vky6m")
 }],
 "loop": true,
-"name": &"Walk",
-"speed": 30.0
-}, {
-"frames": [],
-"loop": true,
-"name": &"new_animation",
-"speed": 5.0
+"name": &"walk",
+"speed": 57.0
 }]
 
-[node name="Rider" type="CharacterBody2D" groups=["Enemies"]]
+[node name="Rider" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 16
+collision_mask = 17
 script = ExtResource("1_k7dvb")
+speed = 100.0
+damage = 5.0
+animationPath = NodePath("AnimatedSprite2D")
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_ilr60")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("3_ilr60")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_2xkst")
@@ -502,9 +465,9 @@ collision_layer = 0
 shape = SubResource("CircleShape2D_ksi4c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(2, 2)
+scale = Vector2(1.22656, 1.22656)
 sprite_frames = SubResource("SpriteFrames_2xkst")
-animation = &"Walk"
+animation = &"attack"
 
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
 [connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]
