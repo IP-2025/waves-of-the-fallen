@@ -24,11 +24,11 @@ public partial class Server : Node
         { "res://Weapons/Ranged/Kunai/kunai.tscn", EntityType.Kunai },
         { "res://Weapons/Ranged/Kunai/kunai_projectile.tscn", EntityType.KunaiProjectile },
         // Corrected paths for crossbow-related resources
-        { "res://Assets/Weapons/Crossbow/ArmbrustLeer.png", EntityType.Crossbow },
-        { "res://Assets/Weapons/Crossbow/ArmbrustSpannen1.png", EntityType.Crossbow },
-        { "res://Assets/Weapons/Crossbow/ArmbrustSpannen2.png", EntityType.Crossbow },
-        { "res://Assets/Weapons/Crossbow/ArmbrustSpannen3.png", EntityType.Crossbow },
-        { "res://Assets/Weapons/Crossbow/ArmbrustSpannen4.png", EntityType.Crossbow },
+        { "res://Weapons/Ranged/Crossbow/ArmbrustLeer.png", EntityType.Crossbow },
+        { "res://Weapons/Ranged/Crossbow/ArmbrustSpannen1.png", EntityType.Crossbow },
+        { "res://Weapons/Ranged/Crossbow/ArmbrustSpannen2.png", EntityType.Crossbow },
+        { "res://Weapons/Ranged/Crossbow/ArmbrustSpannen3.png", EntityType.Crossbow },
+        { "res://Weapons/Ranged/Crossbow/ArmbrustSpannen4.png", EntityType.Crossbow },
     };
     public override void _Ready()
     {
