@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import {getAllCharacters, getAllUnlockedCharacters, saveCharChanges} from '../services/characterService';
+import { getAllCharacters, getAllUnlockedCharacters, levelUpChar, saveCharChanges } from '../services/characterService';
 import {extractAndValidatePlayerId} from "../auth/jwt";
 import {BadRequestError} from "../errors";
 import logger from "../logger/logger";
@@ -35,6 +35,24 @@ export const unlockCharController = async (req: Request, res: Response, next: Ne
     }
 
     await saveCharChanges(playerId, charId);
+
+    res.status(200).json({ message: 'Character unlocked successfully'});
+
+  } catch (err) {
+    next(err)
+  }
+}
+export const levelUpCharController = async (req: Request, res: Response, next: NextFunction) => {
+  logger.info("POST: /character/levelUpCharController")
+  try {
+    const playerId = extractAndValidatePlayerId(req.headers['authorization'])
+    const { character_id: charId } = req.body as { character_id: number };
+
+    if (!playerId || !charId) {
+      throw new BadRequestError('Missing required fields');
+    }
+
+    await levelUpChar(playerId, charId);
 
     res.status(200).json({ message: 'Character unlocked successfully'});
 

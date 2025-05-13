@@ -373,6 +373,9 @@ text = "select"
 [node name="HTTPRequest" type="HTTPRequest" parent="MarginContainer2"]
 unique_name_in_owner = true
 
+[node name="LevelUpRequest" type="HTTPRequest" parent="MarginContainer2"]
+unique_name_in_owner = true
+
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/TempResetButton" to="." method="ResetCharacters"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_charactermenu_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character1" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character1" method="_on_pressed"]

@@ -5,7 +5,7 @@ import {
   insertAllCharacters,
 } from '../repositories/characterRepository';
 import fs from 'fs';
-import {unlockCharacter} from "../repositories/unlockedCharacterRepository";
+import { levelUpCharacter, unlockCharacter } from '../repositories/unlockedCharacterRepository';
 
 export async function innitAllCharacters(chars?: Character[]): Promise<void> {
   const characters = chars ?? readCharacters();
@@ -61,4 +61,7 @@ export async function getAllUnlockedCharacters(id: any) {
 
 export async function saveCharChanges(playerId: string, charId: number) {
   await unlockCharacter(playerId, charId);
+}
+export async function levelUpChar(playerId: string, charId: number) {
+  await levelUpCharacter(playerId, charId);
 }

@@ -58,5 +58,3 @@ describe('POST /getAllUnlockedCharacters', () => {
 
     });
 });
-
-

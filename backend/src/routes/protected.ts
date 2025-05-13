@@ -4,8 +4,8 @@ import { getSettings, setSettings } from '../controllers/settingsController';
 import { setGoldController, getGoldController } from '../controllers/playerStatController';
 import {
   getAllCharacterController,
-  getAllUnlockedCharacterController,
-  unlockCharController
+  getAllUnlockedCharacterController, levelUpCharController,
+  unlockCharController,
 } from '../controllers/characterController';
 
 const protectedRouter = express.Router();
@@ -21,6 +21,6 @@ protectedRouter.post('/getGold',authenticationStep,getGoldController);
 protectedRouter.get('/character',authenticationStep, getAllCharacterController);
 protectedRouter.post('/getAllUnlockedCharacters',authenticationStep, getAllUnlockedCharacterController);
 protectedRouter.post('/character/unlock', authenticationStep, unlockCharController)
-
+protectedRouter.post('/character/levelUp', authenticationStep, levelUpCharController)
 
 export default protectedRouter;

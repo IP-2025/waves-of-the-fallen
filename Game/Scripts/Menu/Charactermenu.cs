@@ -17,7 +17,8 @@ public partial class Charactermenu : Control
 	private Label _labelDexterity;
 	private Label _labelIntelligence;
 
-	private HttpRequest _httpRequest;
+	private HttpRequest _unlockRequest;
+	private HttpRequest _levelUpRequest;
 
 	public override void _Ready()
 	{
@@ -31,9 +32,11 @@ public partial class Charactermenu : Control
 		_labelCharacterName = GetNode<Label>("%Label_SelectedCharacterName");
 		_buttonUpgradeUnlock = GetNode<Button>("%Button_UpgradeUnlock");
 		_buttonSelect = GetNode<Button>("%Button_Select");
-
-		_httpRequest = GetNode<HttpRequest>("%HTTPRequest");
-		_httpRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
+		_unlockRequest = GetNode<HttpRequest>("%HTTPRequest");
+		_levelUpRequest = GetNode<HttpRequest>("%LevelUpRequest");
+		
+		_unlockRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
+		_levelUpRequest.Connect("request_completed", new Callable(this, nameof(OnLevelUpRequestCompleted)));	
 
 		var selectedId = _characterManager.LoadLastSelectedCharacterID();
 		_currentlySelectedCharacter = GetNode<Button>($"%Button_Character{selectedId}");
@@ -41,6 +44,14 @@ public partial class Charactermenu : Control
 		SetCharacterPageValuesFromFile($"{selectedId}");
 
 
+	}
+
+	private void OnLevelUpRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
+	{
+		var receivedString = Encoding.UTF8.GetString(body);
+		GD.Print("Antwort empfangen: " + receivedString);
+
+		GD.Print(responseCode == 200 ? "Character unlocked" : "Error unlocking character");
 	}
 
 	private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
@@ -145,7 +156,6 @@ public partial class Charactermenu : Control
 		button.AddThemeStyleboxOverride("focus", style);
 	}
 	
-	// TODO: need to work here
 	private void _on_button_upgrade_unlock_pressed()
 	{
 		var characterId =_currentlySelectedCharacter.Text;
@@ -153,7 +163,29 @@ public partial class Charactermenu : Control
 		{
 			_characterManager.UpgradeCharacter(characterId);
 
-			
+			if (GameState.CurrentState == ConnectionState.Online)
+			{
+				var body = Json.Stringify(new Godot.Collections.Dictionary
+				{
+					{ "character_id", characterId }
+				});
+				
+				var headers = new[]
+				{
+					"Content-Type: application/json",
+					"Authorization: Bearer " + SecureStorage.LoadToken()
+
+				};
+				var err = _unlockRequest.Request(
+					$"{Config.Server.BaseUrl}/api/v1/protected/character/levelUp",
+					headers,
+					HttpClient.Method.Post,
+					body
+				);
+
+				if (err != Error.Ok)
+					GD.PrintErr($"AuthRequest error: {err}");
+			}
 		}else
 		{
 			_characterManager.SetUnlocked(characterId);
@@ -178,7 +210,7 @@ public partial class Charactermenu : Control
 					"Authorization: Bearer " + SecureStorage.LoadToken()
 
 				};
-				var err = _httpRequest.Request(
+				var err = _unlockRequest.Request(
 					$"{Config.Server.BaseUrl}/api/v1/protected/character/unlock",
 					headers,
 					HttpClient.Method.Post,
