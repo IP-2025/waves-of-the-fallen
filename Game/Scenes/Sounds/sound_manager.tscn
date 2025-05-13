@@ -1,6 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://bhy2ygfbsoxby"]
+[gd_scene load_steps=3 format=3 uid="uid://2yr16yyrrnto"]
 
 [ext_resource type="Script" uid="uid://d3qtxl5t5i32q" path="res://Scripts/Sounds/SoundManager.cs" id="1_1u08g"]
+[ext_resource type="AudioStream" uid="uid://ccqxibhmo5ve4" path="res://Assets/Sounds/EnemyHurt.wav" id="2_olkkv"]
 
 [node name="SoundManager" type="Node2D"]
 script = ExtResource("1_1u08g")
+
+[node name="enemyHurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_olkkv")
+bus = &"SoundEffectBus"
+
+[node name="playerWalk" type="AudioStreamPlayer2D" parent="."]
+bus = &"SoundEffectBus"
+
+[node name="playerHit" type="AudioStreamPlayer2D" parent="."]
+bus = &"SoundEffectBus"
+
+[node name="swordSwings" type="AudioStreamPlayer2D" parent="."]
+bus = &"SoundEffectBus"
+
+[node name="bowFires" type="AudioStreamPlayer2D" parent="."]
+bus = &"SoundEffectBus"
+
+[node name="kunaiThrows" type="AudioStreamPlayer2D" parent="."]
+bus = &"SoundEffectBus"
+
+[node name="staffFires" type="AudioStreamPlayer2D" parent="."]
+bus = &"SoundEffectBus"

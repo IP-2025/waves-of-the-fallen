@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Diagnostics;
+using System.Linq;
 
 public partial class Health : Node2D
 {
@@ -27,7 +28,8 @@ public partial class Health : Node2D
 
 		if(true) 
 		{
-			SoundManager.Instance.PlaySoundAtPosition("enemyHurt", ((Node2D)GetParent()).Position);
+			//SoundManager.Instance.PlaySoundAtPosition("enemyHurt", ((Node2D)GetParent()).Position);
+			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("enemyHurt"), ((Node2D)GetParent()).Position);
 		}
 
 		if (disable) return; // Client cant do damage to enemies... server handles the damage

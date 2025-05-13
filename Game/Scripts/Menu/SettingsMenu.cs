@@ -31,7 +31,7 @@ public partial class SettingsMenu : Control
 	private void _on_button_back_settings_pressed()
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
-		SoundManager.Instance.PlayUI("buttonPress");
+		SoundManager.Instance.PlayUI();
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
@@ -56,6 +56,6 @@ public partial class SettingsMenu : Control
 		string nextLanguage = languages[nextLanguageIndex];
 		settingsManager.SaveSetting("General", "Language", nextLanguage);
 		buttonLanguage.Text = nextLanguage;
-		SoundManager.Instance.PlayUI("buttonPress");
+		SoundManager.Instance.PlayUI();
 	}
 }

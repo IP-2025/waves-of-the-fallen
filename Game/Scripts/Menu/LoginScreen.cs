@@ -66,7 +66,7 @@ public partial class LoginScreen : Control
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
-		SoundManager.Instance.PlayUI("buttonPress");
+		SoundManager.Instance.PlayUI();
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
@@ -100,14 +100,14 @@ public partial class LoginScreen : Control
 		else
 			_loginButton.Disabled = true;
 	
-		SoundManager.Instance.PlayUI("buttonPress");
+		SoundManager.Instance.PlayUI();
 	}
 
 	private void OnRegisterButtonPressed()
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/register_screen.tscn");
 		if (scene == null) GD.PrintErr("Register Scene not found");
-		SoundManager.Instance.PlayUI("buttonPress");
+		SoundManager.Instance.PlayUI();
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
