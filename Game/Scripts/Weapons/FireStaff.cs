@@ -4,7 +4,7 @@ using System;
 public partial class FireStaff : RangedWeapon
 {
 	private PackedScene fireBallScene = GD.Load<PackedScene>("res://Scenes/Weapons/fireball.tscn");
-	private int staffFiresFrame = 3;
+	private int staffFiresFrame = 5;
 	
 	public override void _Ready()
 	{
