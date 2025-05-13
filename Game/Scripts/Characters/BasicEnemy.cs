@@ -24,7 +24,7 @@ public partial class BasicEnemy : EnemyBase
 
 	public override void Attack() 
 	{
-		player.GetNode<Health>("Health").Damage(0);
+		player.GetNode<Health>("Health").Damage(damage);
 		Debug.Print("BasicEnemy attacks (melee)!");
 	}
 }

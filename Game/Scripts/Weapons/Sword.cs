@@ -13,9 +13,12 @@ public partial class Sword : MeleeWeapon
 
 	private async void OnTimerTimeoutAttack()
 	{ 
-		ShootMeleeVisual();
+		ShootMeleeVisual(() =>
+	{
+		//GD.Print("Start SwordAnimation");
 		SwordAnimationPlayer.Play("SwordAttack");
-		await ToSignal(GetTree().CreateTimer(0.2), "timeout");		
+	});
+		await ToSignal(GetTree().CreateTimer(0.2), "timeout");
 	}
 	
 }

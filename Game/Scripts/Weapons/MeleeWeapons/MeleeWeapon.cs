@@ -7,12 +7,7 @@ public abstract partial class MeleeWeapon : Area2D
 	protected AnimatedSprite2D animatedSprite;
 	[Export] public float WeaponRange = 50f;
 	[Export] public int MeleeDamage = 50;
-	Node target;
-	//protected PackedScene projectileScene = null;
-	public override void _Ready()
-	{
-	}
-		
+	Node target;	
 	public override void _PhysicsProcess(double delta)
 	{
 		target = FindNearestEnemy();
@@ -69,11 +64,12 @@ public abstract partial class MeleeWeapon : Area2D
 		if (healthNode != null)
 		{
 			healthNode.Damage(MeleeDamage);
-			GD.Print("Error");
 		}
 	}
-	protected void ShootMeleeVisual()
+	protected void ShootMeleeVisual(Action onAttackComplete = null)
 	{
+		if (target == null)
+		return;
 		if (TryGetPosition(target, out var position))
 		{
 			var tween = CreateTween();
@@ -84,8 +80,12 @@ public abstract partial class MeleeWeapon : Area2D
 
 			//Call method for attack
 			tween.TweenCallback(Callable.From(() => {
-				GD.Print("Execute Attack");
-				MeleeAttack(); 
+				//GD.Print("Execute Attack");
+				onAttackComplete?.Invoke();
+				var timer = GetTree().CreateTimer(0.2);
+				timer.Timeout += () => {
+				MeleeAttack();
+				};
 			}));
 			//go back
 			tween.TweenProperty(this, "position", Vector2.Zero, 0.1)

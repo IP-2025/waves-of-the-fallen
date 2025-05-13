@@ -24,6 +24,6 @@ public partial class Dagger : MeleeWeapon
 	{
 		animatedSprite.Play("Stab");
 		await ToSignal(GetTree().CreateTimer(0.13), "timeout");
-		MeleeAttack();
+		//MeleeAttack(target);
 	}	
 }
