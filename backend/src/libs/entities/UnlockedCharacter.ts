@@ -8,7 +8,9 @@ export class UnlockedCharacter {
   id!: number;
 
   @ManyToOne(() => Player)
-  @JoinColumn({ name: 'player_id' })
+  @JoinColumn({
+    name: 'player_id' ,
+  })
   player!: Player;
 
   @Column({

@@ -1,6 +1,7 @@
 import { AppDataSource } from '../libs/data-source';
 import { Character } from '../libs/entities/Character';
 import { UnlockedCharacter } from '../libs/entities/UnlockedCharacter';
+import { Player } from '../libs/entities/Player';
 
 async function deleteAll() {
   await AppDataSource.getRepository(Character).clear();
@@ -13,6 +14,13 @@ export async function insertAllCharacters(chars: Character[]): Promise<void> {
 export async function getAllCharactersRepo(): Promise<Character[]> {
   return await AppDataSource.getRepository(Character).find();
 }
-export async function getAllUnlockedCharactersRepo(playerId:string): Promise<UnlockedCharacter[]> {
-return await AppDataSource.getRepository(UnlockedCharacter).find({ where: { player_id: playerId } });
+export async function getAllUnlockedCharactersRepo(playerId: string): Promise<UnlockedCharacter[]> {
+  return await AppDataSource.getRepository(UnlockedCharacter).find({
+    where: {
+      player: {
+        player_id: playerId,
+      },
+    },
+  });
 }
+

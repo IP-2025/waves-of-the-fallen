@@ -1,7 +1,18 @@
+using System;
+using System.Collections.Generic;
 using Godot;
 using System.Text;
 using Game.Scripts.Config;
+using Godot.Collections;
+
 namespace Game.Scripts.Menu;
+
+class UnlockedCharacter
+{
+	public int Id { get; set; }
+	public int CharacterId { get; set; }
+	public int Level { get; set; }
+}
 
 public partial class Charactermenu : Control
 {
@@ -19,6 +30,7 @@ public partial class Charactermenu : Control
 
 	private HttpRequest _unlockRequest;
 	private HttpRequest _levelUpRequest;
+	private HttpRequest _progressCheckRequest;
 
 	public override void _Ready()
 	{
@@ -32,20 +44,97 @@ public partial class Charactermenu : Control
 		_labelCharacterName = GetNode<Label>("%Label_SelectedCharacterName");
 		_buttonUpgradeUnlock = GetNode<Button>("%Button_UpgradeUnlock");
 		_buttonSelect = GetNode<Button>("%Button_Select");
+		
 		_unlockRequest = GetNode<HttpRequest>("%HTTPRequest");
 		_levelUpRequest = GetNode<HttpRequest>("%LevelUpRequest");
+		_progressCheckRequest = GetNode<HttpRequest>("%ProgressCheckRequest");
 		
 		_unlockRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
 		_levelUpRequest.Connect("request_completed", new Callable(this, nameof(OnLevelUpRequestCompleted)));	
+		_progressCheckRequest.Connect("request_completed", new Callable(this, nameof(OnProgressCheckRequestCompleted)));
 
 		var selectedId = _characterManager.LoadLastSelectedCharacterID();
 		_currentlySelectedCharacter = GetNode<Button>($"%Button_Character{selectedId}");
 		_on_button_select_pressed();
 		SetCharacterPageValuesFromFile($"{selectedId}");
 
+		
+		
+		// Check for mismatch between server and local character data if online
+		if (GameState.CurrentState != ConnectionState.Online) return;
+		var headers = new[]
+		{
+			"Content-Type: application/json",
+			"Authorization: Bearer " + SecureStorage.LoadToken()
+
+		};
+		GD.Print(SecureStorage.LoadToken());
+		var err = _progressCheckRequest.Request(
+			$"{Config.Server.BaseUrl}/api/v1/protected/getAllUnlockedCharacters",
+			headers,
+			HttpClient.Method.Post
+		);
+
+		if (err != Error.Ok)
+			GD.PrintErr($"AuthRequest error: {err}");
 
 	}
 
+	private void OnProgressCheckRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
+	{
+		var receivedString = Encoding.UTF8.GetString(body);
+		GD.Print("Antwort empfangen: " + receivedString);
+
+		if (responseCode == 200)
+		{
+			try
+			{
+				var json = new Json();
+				if (json.Parse(receivedString) != Error.Ok)
+				{
+					GD.PrintErr("Failed to parse JSON!");
+					return;
+				}
+
+				// 2) Pull the root dictionary out of the Variant:
+				var root = (Dictionary)json.Data;
+
+				var unlockedVariant = root["unlocked_characters"];
+				var unlockedArray   = (Godot.Collections.Array)unlockedVariant;  
+				
+				var onlineProgress = new List<UnlockedCharacter>();
+
+				foreach (var element in unlockedArray)
+				{
+					var character = (Dictionary)element;
+					var id = (int)character["id"];
+					var characterId = (int)character["character_id"];
+					var level = (int)character["level"];
+
+					var unlockedCharacter = new UnlockedCharacter
+					{
+						Id = id,
+						CharacterId = characterId,
+						Level = level
+					};
+					onlineProgress.Add(unlockedCharacter);
+				}
+
+				var localProgress = LoadLocalProgress();
+				// CompareProgress(localProgress, onlineProgress);
+			}
+			catch (Exception ex)
+			{
+				GD.PrintErr("Fehler beim Verarbeiten der Antwort: " + ex.Message);
+			}
+		}
+		else
+		{
+			GD.Print("Fehler beim Abrufen der Charakterdaten: " + responseCode);
+		}
+	}
+
+	
 	private void OnLevelUpRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
 	{
 		var receivedString = Encoding.UTF8.GetString(body);
@@ -281,5 +370,27 @@ public partial class Charactermenu : Control
 			"4" => "Mage",
 			_ => "DefaultPlayer"
 		};
+	}
+	
+	private List<UnlockedCharacter> LoadLocalProgress()
+	{
+		var unlockedCharacters = new List<UnlockedCharacter>();
+
+		for (var i = 1; i <= 4; i++) // Angenommen, es gibt 4 Charaktere
+		{
+			var characterId = i.ToString();
+			if (!_characterManager.LoadIsUnlocked(characterId)) continue;
+			var character = new UnlockedCharacter
+			{
+				Id = i,
+				CharacterId = i,
+				Level = _characterManager.LoadLevelByID(characterId)
+			};
+
+			unlockedCharacters.Add(character);
+		}
+
+		GD.Print($"Lokal geladene Charaktere: {unlockedCharacters.Count}");
+		return unlockedCharacters;
 	}
 }

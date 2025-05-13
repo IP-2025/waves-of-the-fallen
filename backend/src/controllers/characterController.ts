@@ -16,9 +16,12 @@ export const getAllCharacterController = async (req: Request, res: Response, nex
 export const getAllUnlockedCharacterController = async (req: Request, res: Response, next: NextFunction) => {
   logger.info("POST: /getAllUnlockedCharacters")
   try {
-    const playerId = req.body.player_id;
+    const playerId = extractAndValidatePlayerId(req.headers['authorization'])
+    if (!playerId) {
+      throw new BadRequestError('Missing required fields');
+    }
     const characters = await getAllUnlockedCharacters(playerId);
-    res.json(characters).status(200);
+    res.status(200).json({ unlocked_characters: characters });
   } catch (err) {
     next(err)
   }
@@ -28,6 +31,9 @@ export const unlockCharController = async (req: Request, res: Response, next: Ne
   logger.info("POST: /character/unlock")
   try {
     const playerId = extractAndValidatePlayerId(req.headers['authorization'])
+    if (!playerId) {
+      throw new BadRequestError('Missing required fields');
+    }
     const { character_id: charId } = req.body as { character_id: number };
 
     if (!playerId || !charId) {

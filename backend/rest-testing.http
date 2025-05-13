@@ -42,3 +42,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMyYTkxMWVkL
 {
   "character_id": 1
 }
+
+###
+
+POST http://localhost:3000/api/v1/protected/getAllUnlockedCharacters
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3ZGFmYTI5LWIyOWUtNGNlMS04ZjM4LThiZmRmNmFjMjQ0OSIsImlhdCI6MTc0NzE0OTQyMSwiZXhwIjoxNzQ3NzU0MjIxfQ.Jp56V3oHCWYkdS-RE0i5W927ybz8QADLPJdQv3pKNw0

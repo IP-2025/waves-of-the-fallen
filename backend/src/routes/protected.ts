@@ -23,4 +23,5 @@ protectedRouter.post('/getAllUnlockedCharacters',authenticationStep, getAllUnloc
 protectedRouter.post('/character/unlock', authenticationStep, unlockCharController)
 protectedRouter.post('/character/levelUp', authenticationStep, levelUpCharController)
 
+
 export default protectedRouter;

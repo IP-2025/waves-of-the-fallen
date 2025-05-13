@@ -6,7 +6,6 @@ import {Character} from "../libs/entities/Character";
 
 const unlockCharRepo = AppDataSource.getRepository(UnlockedCharacter);
 const playerRepo = AppDataSource.getRepository(Player);
-const characterRepo = AppDataSource.getRepository(Character);
 
 export async function unlockCharacter(playerId: string, characterId: number) {
     const unlockedCharacter = new UnlockedCharacter();

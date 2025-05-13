@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b3t68y2ghoi8m"]
+[gd_scene load_steps=20 format=3 uid="uid://b3t68y2ghoi8m"]
 
 [ext_resource type="Script" uid="uid://boq1stdkvoyj3" path="res://Scripts/Menu/Charactermenu.cs" id="1_ivr4t"]
 [ext_resource type="Script" uid="uid://ufxb4011fikq" path="res://Scripts/Menu/ButtonsCharacterSelection.cs" id="2_ch0j6"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cjfelyah5o4gs" path="res://Assets/Characters/resources/KnightCharacterPreview.png" id="3_ch0j6"]
 [ext_resource type="Texture2D" uid="uid://btau8suv2nloy" path="res://Assets/Characters/resources/AssassinCharacterPreview.png" id="4_hqcu1"]
 [ext_resource type="Texture2D" uid="uid://deqvjcjlokfkv" path="res://Assets/Characters/resources/MageCharacterPreview.png" id="5_frg03"]
+[ext_resource type="Script" uid="uid://crws2j8s2e4ip" path="res://Scenes/Menu/ProgressCheckRequest.cs" id="7_hqcu1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivr4t"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
@@ -375,6 +376,10 @@ unique_name_in_owner = true
 
 [node name="LevelUpRequest" type="HTTPRequest" parent="MarginContainer2"]
 unique_name_in_owner = true
+
+[node name="ProgressCheckRequest" type="HTTPRequest" parent="MarginContainer2"]
+unique_name_in_owner = true
+script = ExtResource("7_hqcu1")
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/TempResetButton" to="." method="ResetCharacters"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_charactermenu_pressed"]
