@@ -7,7 +7,15 @@ public abstract partial class Projectile : Area2D
 	protected int Piercing = 1;
 	protected int Speed = 1000;
 	
-	public void OnBodyEntered(Node2D body) 
+	public override void _PhysicsProcess(double delta)
+	{
+		var direction = Vector2.Right.Rotated(Rotation);
+		
+		Position += direction * Speed * (float)delta;
+
+	}
+	
+	public virtual void OnBodyEntered(Node2D body) 
 	{
 		Piercing--;
 		if (Piercing < 1)

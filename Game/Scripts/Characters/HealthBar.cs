@@ -17,9 +17,13 @@ public partial class HealthBar : ProgressBar
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		var health = GetParent() as Health;
-		float current = health.CurHealth;
-		Value = current;
+		UpdateHealthBar();
+	}
+
+	public void UpdateHealthBar()
+	{
+		MaxValue = healthNode.max_health;
+		Value = healthNode.CurHealth;
 		healthLabel.Text = $"{Value}/{MaxValue}";
 	}
 }

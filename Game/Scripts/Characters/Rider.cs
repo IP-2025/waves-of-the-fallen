@@ -18,7 +18,7 @@ public partial class Rider : EnemyBase
 
 	private float attackTimer = 0f;
 
-	public override void _PhysicsProcess(double delta)
+	protected override void HandleMovement(Vector2 direction)
 	{
 		FindNearestPlayer();
 		if (player == null)

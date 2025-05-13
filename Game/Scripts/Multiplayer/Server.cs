@@ -7,29 +7,35 @@ public partial class Server : Node
 {
 	public static Server Instance;
 
-	private bool enableDebug = true;
-	public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
-	private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
-	{
-		{ "res://Scenes/Characters/default_player.tscn", EntityType.DefaultPlayer },
-		{ "res://Scenes/Characters/archer.tscn", EntityType.Archer },
-		{ "res://Scenes/Characters/default_enemy.tscn", EntityType.DefaultEnemy },
-		{ "res://Scenes/Characters/mounted_enemy.tscn", EntityType.MountedEnemy },
-		{ "res://Scenes/Characters/ranged_enemy.tscn", EntityType.RangedEnemy },
-		{ "res://Scenes/Characters/rider_enemy.tscn", EntityType.RiderEnemy },
-		{ "res://Scenes/Weapons/bow.tscn", EntityType.Bow },
-		{ "res://Scenes/Weapons/bow_arrow.tscn", EntityType.BowArrow },
-		{ "res://Scenes/Weapons/crossbow.tscn", EntityType.Crossbow },
-		{ "res://Scenes/Weapons/crossbow_arrow.tscn", EntityType.CrossbowArrow },
-		{ "res://Scenes/Weapons/kunai.tscn", EntityType.Kunai},
-		{ "res://Scenes/Weapons/kunai_projectile.tscn", EntityType.KunaiProjectile},
+    private bool enableDebug = false;
+    public Dictionary<long, int> PlayerSelections = new Dictionary<long, int>();
+    public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
+    private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
+    {
+        { "res://Scenes/Characters/default_player.tscn", EntityType.DefaultPlayer },
+        { "res://Scenes/Characters/archer.tscn", EntityType.Archer },
+        { "res://Scenes/Characters/knight.tscn", EntityType.Knight },
+        { "res://Scenes/Characters/assassin.tscn", EntityType.Assassin }, // Hinzugefügt
+        { "res://Scenes/Characters/mage.tscn", EntityType.Mage },         // Hinzugefügt
+        { "res://Scenes/Characters/default_enemy.tscn", EntityType.DefaultEnemy },
+        { "res://Scenes/Characters/mounted_enemy.tscn", EntityType.MountedEnemy },
+        { "res://Scenes/Characters/ranged_enemy.tscn", EntityType.RangedEnemy },
+        { "res://Scenes/Characters/rider_enemy.tscn", EntityType.RiderEnemy },
+        { "res://Scenes/Weapons/bow.tscn", EntityType.Bow },
+        { "res://Scenes/Weapons/bow_arrow.tscn", EntityType.BowArrow },
+        { "res://Scenes/Weapons/crossbow.tscn", EntityType.Crossbow },
+        { "res://Scenes/Weapons/crossbow_arrow.tscn", EntityType.CrossbowArrow },
+        { "res://Scenes/Weapons/kunai.tscn", EntityType.Kunai },
+        { "res://Scenes/Weapons/kunai_projectile.tscn", EntityType.KunaiProjectile },
+        { "res://Scenes/Weapons/firestaff.tscn", EntityType.FireStaff},
+        { "res://Scenes/Weapons/fireball.tscn", EntityType.FireBall},
 		{ "res://Scenes/Weapons/dagger.tscn", EntityType.Dagger},
-		{ "res://Scenes/Weapons/Sword.tscn", EntityType.Sword},
-	};
-	public override void _Ready()
-	{
-		Instance = this;
-	}
+		{ "res://Scenes/Weapons/Sword.tscn", EntityType.Sword}
+    };
+    public override void _Ready()
+    {
+        Instance = this;
+    }
 
 	public void ProcessCommand(Command cmd)
 	{
@@ -48,19 +54,20 @@ public partial class Server : Node
 				dir = dir.Normalized();
 			}
 
-			// try to get the joystick node from the active player
-			var joystick = entity.GetNodeOrNull<Joystick>("Joystick");
-			if (joystick != null)
-			{
-				joystick.PosVector = dir;
-				DebugIt($"Set Joystick.PosVector = {dir} on Entity {cmd.EntityId}");
-			}
-		}
-		else if (cmd.Type == CommandType.Shoot)
-		{
-			// Tmaybe we need, maybe we don't
-		}
-	}
+            // try to get the joystick node from the active player
+            var joystick = entity.GetNodeOrNull<Joystick>("Joystick");
+            if (joystick != null)
+            {
+                joystick.PosVector = dir;
+                
+                DebugIt($"Set Joystick.PosVector = {dir} on EntityID {cmd.EntityId}");
+            }
+        }
+        else if (cmd.Type == CommandType.Shoot)
+        {
+            // Tmaybe we need, maybe we don't
+        }
+    }
 
 	public byte[] GetSnapshot(ulong tick)
 	{
@@ -110,29 +117,29 @@ public partial class Server : Node
 			var healthNode = node.GetNodeOrNull<Health>("Health");
 			float health = healthNode != null ? healthNode.health : 0f;
 
-			// get players weapons
-			long? owner = null;
-			int? slotIx = null;
-			if (node.HasMeta("OwnerId"))
-			{
-				owner = (long)node.GetMeta("OwnerId");
-				slotIx = (int)node.GetMeta("SlotIndex");
-			}
-
-			snap.Entities.Add(new EntitySnapshot(
-				id,
-				node.Position,
-				node.Rotation,
-				node.Scale,
-				health,
-				entityType,
-				waveCount,
-				secondsLeft,
-				graceTime,
-				owner, // nullable
-				slotIx // nullable
-			));
-		}
+            // get players weapons
+            long? owner = null;
+            int? slotIx = null;
+            if (node.HasMeta("OwnerId"))
+            {
+                owner = (long)node.GetMeta("OwnerId");
+                slotIx = (int)node.GetMeta("SlotIndex");
+            }
+            DebugIt($"Snapshot: Entity Name: {node.Name}, Position: {node.Position}, ID: {id}");
+            snap.Entities.Add(new EntitySnapshot(
+                id,
+                node.Position,
+                node.Rotation,
+                node.Scale,
+                health,
+                entityType,
+                waveCount,
+                secondsLeft,
+                graceTime,
+                owner, // nullable
+                slotIx // nullable
+            ));
+        }
 
 		// remove invalid entities, for example killed enemies
 		foreach (var id in toRemove)
