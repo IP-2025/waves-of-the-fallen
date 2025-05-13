@@ -1,9 +1,8 @@
 using Godot;
-using WavesOfTheFallen;
 
 public partial class RegisterScreen : Control
 {
-	private static readonly string REGISTER_URL = $"{Config.BaseUrl}/api/v1/auth/register";
+	private static readonly string REGISTER_URL = $"{Game.Scripts.Config.Server.BaseUrl}/api/v1/auth/register";
 
 	private LineEdit _emailField;
 	private LineEdit _usernameField;

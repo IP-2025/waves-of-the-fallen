@@ -1,9 +1,6 @@
 using Godot;
-using System;
 using System.Text;
-using System.Collections.Generic;
 using Game.Scripts.Config;
-using Godot;
 namespace Game.Scripts.Menu;
 
 public partial class Charactermenu : Control
@@ -182,7 +179,7 @@ public partial class Charactermenu : Control
 
 				};
 				var err = _httpRequest.Request(
-					$"{Server.BaseUrl}/api/v1/protected/character/unlock",
+					$"{Config.Server.BaseUrl}/api/v1/protected/character/unlock",
 					headers,
 					HttpClient.Method.Post,
 					body
