@@ -18,7 +18,6 @@ offset_bottom = -214.0
 grow_vertical = 0
 scale = Vector2(2.5, 2.5)
 script = ExtResource("1_o5hfc")
-Deadzone = null
 
 [node name="JoyControl" type="TextureRect" parent="."]
 layout_mode = 1
@@ -35,7 +34,6 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_dc5lc")
 script = ExtResource("3_c08kj")
-MaxLength = null
 
 [node name="JoyBaseControl" type="TextureRect" parent="."]
 layout_mode = 1

@@ -199,7 +199,7 @@ public partial class Charactermenu : Control
 		characterManager.SaveCharacterData(3, "Knight", 100, 100, 100, 100, 1, 0);
 		characterManager.SaveCharacterData(4, "Mage", 100, 100, 100, 100, 1, 0);
 
-		Shader blackAndWhiteShader = GD.Load<Shader>("res://Scenes/Menu/characterMenuIconShader.gdshader");
+		Shader blackAndWhiteShader = GD.Load<Shader>("res://Menu/Character/characterMenuIconShader.gdshader");
 		var material = new ShaderMaterial { Shader = blackAndWhiteShader };
 
 		// Lock characters by applying the shader material

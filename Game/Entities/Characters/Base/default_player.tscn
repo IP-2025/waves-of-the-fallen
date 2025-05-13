@@ -10,9 +10,6 @@
 collision_mask = 256
 collision_priority = 2.0
 script = ExtResource("1_y2kgl")
-Speed = null
-MaxHealth = null
-CurrentHealth = null
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 
@@ -29,21 +26,18 @@ position = Vector2(25, 15)
 position = Vector2(-25, 15)
 
 [node name="Archer" parent="." instance=ExtResource("3_kjvlq")]
-Speed = null
-MaxHealth = null
-CurrentHealth = null
 
 [node name="Assassin" parent="." instance=ExtResource("5_jig1i")]
-Speed = null
-MaxHealth = null
-CurrentHealth = null
+Speed = 0.0
+MaxHealth = 0
+CurrentHealth = 0
 
 [node name="Knight" parent="." instance=ExtResource("6_ajyao")]
-Speed = null
-MaxHealth = null
-CurrentHealth = null
+Speed = 0.0
+MaxHealth = 0
+CurrentHealth = 0
 
 [node name="Mage" parent="." instance=ExtResource("7_bdmc5")]
-Speed = null
-MaxHealth = null
-CurrentHealth = null
+Speed = 0.0
+MaxHealth = 0
+CurrentHealth = 0
