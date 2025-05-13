@@ -1,8 +1,8 @@
 [gd_scene load_steps=13 format=3 uid="uid://55ua147f3qds"]
 
-[ext_resource type="Script" uid="uid://ca4o6jn11ysi0" path="res://Entities/Enemies/Rider/MountedEnemy.cs" id="1_script"]
-[ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Entities/Shared/Health.cs" id="3_health"]
-[ext_resource type="Texture2D" uid="uid://b7hv8o45r2s1g" path="res://Assets/Characters/place_holder/PlaceholderBody.png" id="5_6dmdw"]
+[ext_resource type="Script" uid="uid://d0arj1wp2txv2" path="res://Entities/Enemies/Rider/MountedEnemy.cs" id="1_script"]
+[ext_resource type="Script" uid="uid://b5844vj7n6dqt" path="res://Entities/Shared/Health.cs" id="3_health"]
+[ext_resource type="Texture2D" uid="uid://bw3elg76bj11" path="res://Entities/Enemies/Rider/Resources/PlaceholderBody.png" id="5_6dmdw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
 radius = 18.0

@@ -18,12 +18,12 @@ public partial class Client : Node
     // mapping per entity type
     private Dictionary<EntityType, PackedScene> _prefabs = new()
     {
-        { EntityType.DefaultPlayer, GD.Load<PackedScene>("res://Entities/Characters/default_player.tscn") },
-        { EntityType.Archer, GD.Load<PackedScene>("res://Entities/Characters/archer.tscn") },
-        { EntityType.DefaultEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/default_enemy.tscn") },
-        { EntityType.RangedEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/ranged_enemy.tscn") },
-        { EntityType.MountedEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/mounted_enemy.tscn") },
-        { EntityType.RiderEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/rider_enemy.tscn") },
+        { EntityType.DefaultPlayer, GD.Load<PackedScene>("res://Entities/Characters/Base/default_player.tscn") },
+        { EntityType.Archer, GD.Load<PackedScene>("res://Entities/Characters/Archer/archer.tscn") },
+        { EntityType.DefaultEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/Goblin/default_enemy.tscn") },
+        { EntityType.RangedEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/Skeleton/ranged_enemy.tscn") },
+        { EntityType.MountedEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/Rider/mounted_enemy.tscn") },
+        { EntityType.RiderEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/Rider/rider_enemy.tscn") },
         { EntityType.Bow,  GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn") },
         { EntityType.BowArrow,  GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow_arrow.tscn") },
         { EntityType.Crossbow,  GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn") },

@@ -31,7 +31,7 @@ public partial class GameRoot : Node
 			}
 
 			// Start enemy spawner
-			SpawnEnemySpawner("res://Utilities/Gameflow/Spwan/SpawnEnemies.tscn");
+			SpawnEnemySpawner("res://Utilities/Gameflow/Spawn/SpawnEnemies.tscn");
 		}
 
 
@@ -50,7 +50,7 @@ public partial class GameRoot : Node
 
 	public void SpawnPlayer(long peerId)
 	{
-		var player = GD.Load<PackedScene>("res://Entities/Enemies/Goblindefault_player.tscn").Instantiate<DefaultPlayer>();
+		var player = GD.Load<PackedScene>("res://Entities/Characters/Base/default_player.tscn").Instantiate<DefaultPlayer>();
 		player.OwnerPeerId = peerId;
 		player.Name = $"Player_{peerId}";
 		

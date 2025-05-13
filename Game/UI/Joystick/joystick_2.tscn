@@ -1,13 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://drpw3l1n3pqvj"]
 
-[ext_resource type="Script" uid="uid://bw7lkthhk2gy0" path="res://Game/UI/Joystick/JoystickControl.cs" id="1_o5hfc"]
-[ext_resource type="Texture2D" uid="uid://dord4aygupafg" path="res://Game/UI/Joystick/Resources/JoyBase.png" id="2_mcbmx"]
-[ext_resource type="Script" uid="uid://cq7jipj3s8l0b" path="res://Game/UI/Joystick/JoyControl.cs" id="3_c08kj"]
-[ext_resource type="Texture2D" uid="uid://cpq2xb2ttaycw" path="res://Game/UI/Joystick/Resources/JoyHandle.png" id="3_dc5lc"]
+[ext_resource type="Script" uid="uid://dib6aj38086x8" path="res://UI/Joystick/JoystickControl.cs" id="1_o5hfc"]
+[ext_resource type="Texture2D" uid="uid://xnl6e45teso4" path="res://UI/Joystick/Ressources/JoyBase.png" id="2_mcbmx"]
+[ext_resource type="Script" uid="uid://b43r3s6wsvjsg" path="res://UI/Joystick/JoyHandle.cs" id="3_c08kj"]
+[ext_resource type="Texture2D" uid="uid://d3rvrhrun4mef" path="res://UI/Joystick/Ressources/JoyHandle.png" id="3_dc5lc"]
 
 [node name="JoystickControl" type="Control"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 3
+anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 60.0

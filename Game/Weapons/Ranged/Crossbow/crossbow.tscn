@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://dbqlns7qsgchl"]
+
+[ext_resource type="Texture2D" uid="uid://cjka8vftfswwu" path="res://Assets/Weapons/Crossbow/ArmbrustLeer.png" id="1_hgydq"]
+[ext_resource type="Script" uid="uid://b2nx8unint7p5" path="res://Scripts/Weapons/Crossbow.cs" id="1_rf8ij"]
+[ext_resource type="Texture2D" uid="uid://ce404jv12t28v" path="res:///Weapons/Crossbow/ArmbrustSpannen1.png" id="3_ppm1h"]
+[ext_resource type="Texture2D" uid="uid://dfcyk6tekitg8" path="res:///Weapons/Crossbow/ArmbrustSpannen2.png" id="4_vxbuk"]
+[ext_resource type="Texture2D" uid="uid://dg7hwr863flqn" path="res:///Weapons/Crossbow/ArmbrustSpannen3.png" id="5_1nakq"]
+[ext_resource type="Texture2D" uid="uid://bn6j6qnxx3r2l" path="res:///Weapons/Crossbow/ArmbrustSpannen4.png" id="6_pnntu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b7gdf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_hgydq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ppm1h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vxbuk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1nakq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_pnntu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_hgydq")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 30.0
+}]
+
+[node name="Crossbow" type="Area2D"]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("1_rf8ij")
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+rotation = 0.00792616
+scale = Vector2(0.33, 0.33)
+
+[node name="CrossbowSprite" type="AnimatedSprite2D" parent="WeaponPivot"]
+position = Vector2(-15.127, 0)
+scale = Vector2(0.33, 0.33)
+sprite_frames = SubResource("SpriteFrames_b7gdf")
+animation = &"shoot"
+frame = 5
+frame_progress = 1.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="ShootingPoint" type="Marker2D" parent="."]
+position = Vector2(-0.0958824, -0.000759996)
+rotation = 0.00792616
+scale = Vector2(0.1089, 0.1089)
+
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutCrossbow"]

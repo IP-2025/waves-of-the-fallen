@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://cffgskcms870o"]
 
-[ext_resource type="Script" uid="uid://bdkp0e6ivq2b5" path="res://Entities/Characters/Base/DefaultPlayer.cs" id="1_y2kgl"]
-[ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Entities/Characters/Shared/Health.cs" id="2_kjvlq"]
-[ext_resource type="Script" uid="uid://c7yits36f8kyt" path="res://UI/Health/HealthBar.cs" id="3_jig1i"]
+[ext_resource type="Script" uid="uid://dghpbctyqe00t" path="res://Entities/Characters/Base/DefaultPlayer.cs" id="1_y2kgl"]
+[ext_resource type="Script" uid="uid://b5844vj7n6dqt" path="res://Entities/Shared/Health.cs" id="2_kjvlq"]
+[ext_resource type="Script" uid="uid://ce48116xthr6x" path="res://UI/Healthbar/HealthBar.cs" id="3_jig1i"]
 [ext_resource type="PackedScene" uid="uid://56x8ud47qho" path="res://Entities/Characters/Archer/archer.tscn" id="3_kjvlq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2kgl"]

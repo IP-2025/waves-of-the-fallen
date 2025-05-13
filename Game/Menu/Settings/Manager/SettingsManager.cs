@@ -23,7 +23,7 @@ public partial class SettingsManager : Node
 
 	public Dictionary<string, Variant> LoadSettingSection(string section)
 	{
-		Dictionary<string, Variant> settings = new();
+		Dictionary<string, Variant> settings = [];
 		string[] keys = config.GetSectionKeys(section);
 		foreach (var key in keys)
 		{

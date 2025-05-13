@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://byi3q6n3806ha"]
 
-[ext_resource type="Script" uid="uid://c4po6rkdg3gkd" path="res://Maps/GrassMap/Main.cs" id="1_idj7w"]
+[ext_resource type="Script" uid="uid://djw322aegndsb" path="res://Maps/GrassMap/Main.cs" id="1_idj7w"]
 [ext_resource type="PackedScene" uid="uid://du20jt0cajs5p" path="res://Maps/GrassMap/default_map.tscn" id="2_kln2b"]
 
 [node name="Node2D" type="Node2D"]

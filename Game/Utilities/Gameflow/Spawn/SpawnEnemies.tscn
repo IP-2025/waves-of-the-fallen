@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://hid3usep4857"]
 
-[ext_resource type="Script" uid="uid://8vv6fj1qqshe" path="res://Utilities/Gameflow/Spawn/SpawnEnemies.cs" id="1_2wpb7"]
+[ext_resource type="Script" uid="uid://bkcqqp2b11qmt" path="res://Utilities/Gameflow/Spawn/SpawnEnemies.cs" id="1_2wpb7"]
 
 [sub_resource type="Curve2D" id="Curve2D_sxano"]
 _data = {

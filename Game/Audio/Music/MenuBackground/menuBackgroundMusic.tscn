@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://d3odtgwxkrfnf"]
 
-[ext_resource type="AudioStream" uid="uid://ckx76lyu67bi5" path="res:///Audio/Music/MenuBackground/Resources/Financial-Obligations-PM-Music.wav" id="1_fww3n"]
+[ext_resource type="AudioStream" uid="uid://dwpnnepk8ndir" path="res://Audio/Music/MenuBackground/Resources/Financial-Obligations-PM-Music.wav" id="1_fww3n"]
 [ext_resource type="Script" uid="uid://ctu6r5u3ijsg6" path="res://Audio/Music/MenuBackground/MenuBackgroundMusic.cs" id="2_q3d37"]
 
 [node name="BackgroundAudio" type="AudioStreamPlayer"]

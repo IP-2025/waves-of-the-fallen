@@ -11,7 +11,7 @@ public partial class Server : Node
     public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
     private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
     {
-        { "res://Entities/Characters/Basedefault_player.tscn", EntityType.DefaultPlayer },
+        { "res://Entities/Characters/Base/default_player.tscn", EntityType.DefaultPlayer },
         { "res://Entities/Characters/Archer/archer.tscn", EntityType.Archer },
         { "res://Entities/Enemies/Goblin/default_enemy.tscn", EntityType.DefaultEnemy },
         { "res://Entities/Enemies/Rider/mounted_enemy.tscn", EntityType.MountedEnemy },
@@ -23,6 +23,12 @@ public partial class Server : Node
         { "res://Weapons/Ranged/Crossbow/crossbow_arrow.tscn", EntityType.CrossbowArrow },
         { "res://Weapons/Ranged/Kunai/kunai.tscn", EntityType.Kunai },
         { "res://Weapons/Ranged/Kunai/kunai_projectile.tscn", EntityType.KunaiProjectile },
+        // Corrected paths for crossbow-related resources
+        { "res://Assets/Weapons/Crossbow/ArmbrustLeer.png", EntityType.Crossbow },
+        { "res://Assets/Weapons/Crossbow/ArmbrustSpannen1.png", EntityType.Crossbow },
+        { "res://Assets/Weapons/Crossbow/ArmbrustSpannen2.png", EntityType.Crossbow },
+        { "res://Assets/Weapons/Crossbow/ArmbrustSpannen3.png", EntityType.Crossbow },
+        { "res://Assets/Weapons/Crossbow/ArmbrustSpannen4.png", EntityType.Crossbow },
     };
     public override void _Ready()
     {

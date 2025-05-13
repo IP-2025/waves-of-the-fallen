@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c0g5sdnvkhnoc"]
 
-[ext_resource type="Script" uid="uid://dp7ujpdjcjgbf" path="res://Menu/Register/RegisterScreen.cs" id="1_vqvvg"]
+[ext_resource type="Script" uid="uid://cvhyxdx23rpep" path="res://Menu/Register/RegisterScreen.cs" id="1_vqvvg"]
 
 [node name="RegisterScreen" type="Control"]
 layout_mode = 3
@@ -30,6 +30,7 @@ theme_override_font_sizes/font_size = 50
 text = "Register"
 
 [node name="NameField" type="LineEdit" parent="Panel"]
+layout_mode = 0
 offset_left = 310.0
 offset_top = 145.0
 offset_right = 846.0
@@ -37,6 +38,7 @@ offset_bottom = 228.0
 placeholder_text = "Username"
 
 [node name="EmailField" type="LineEdit" parent="Panel"]
+layout_mode = 0
 offset_left = 312.0
 offset_top = 246.0
 offset_right = 848.0
@@ -44,6 +46,7 @@ offset_bottom = 329.0
 placeholder_text = "Email"
 
 [node name="PasswordField" type="LineEdit" parent="Panel"]
+layout_mode = 0
 offset_left = 309.0
 offset_top = 354.0
 offset_right = 845.0
@@ -52,6 +55,7 @@ placeholder_text = "Password"
 secret = true
 
 [node name="RegisterButton" type="Button" parent="Panel"]
+layout_mode = 0
 offset_left = 518.0
 offset_top = 497.0
 offset_right = 626.0
@@ -61,6 +65,7 @@ text = "Register"
 [node name="RegisterRequest" type="HTTPRequest" parent="Panel"]
 
 [node name="BackButton" type="Button" parent="Panel"]
+layout_mode = 0
 offset_left = 24.0
 offset_top = 21.0
 offset_right = 156.0
