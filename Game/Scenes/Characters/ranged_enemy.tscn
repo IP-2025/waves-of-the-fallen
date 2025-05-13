@@ -1,9 +1,9 @@
 [gd_scene load_steps=33 format=3 uid="uid://cpgem5lghshsj"]
 
 [ext_resource type="Script" uid="uid://5j7tqrkdib4s" path="res://Scripts/Characters/RangedEnemy.cs" id="1_1deiu"]
-[ext_resource type="PackedScene" uid="uid://cthg4llu6u25n" path="res://Scenes/Characters/arrow.tscn" id="2_e5mcm"]
+[ext_resource type="PackedScene" uid="uid://brpwgptxilodd" path="res://Scenes/Characters/arrow.tscn" id="2_e5mcm"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_u2wu2"]
-[ext_resource type="Texture2D" uid="uid://bhrncdbnlwv8t" path="res://Assets/Characters/spritesheets/skeleton_Spreadsheet.png" id="3_u2wu2"]
+[ext_resource type="Texture2D" uid="uid://dxsvsma3bc0dc" path="res://Assets/Characters/spritesheets/skeleton_Spreadsheet.png" id="3_u2wu2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u2wu2"]
 radius = 18.0
@@ -213,7 +213,7 @@ animations = [{
 
 [node name="RangedEnemy" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 16
-collision_mask = 17
+collision_mask = 145
 script = ExtResource("1_1deiu")
 EnemyProjectileScene = ExtResource("2_e5mcm")
 animationPath = NodePath("RangedEnemyAnimation")

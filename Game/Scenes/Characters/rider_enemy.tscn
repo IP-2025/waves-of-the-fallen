@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://m5nyfymvipg6" path="res://Scripts/Characters/Rider.cs" id="1_k7dvb"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_ilr60"]
-[ext_resource type="Texture2D" uid="uid://bpwqau0js8exb" path="res://Assets/Characters/Enemies/RiderWalkSheet.png" id="4_3ubfh"]
+[ext_resource type="Texture2D" uid="uid://conxqya52f0s5" path="res://Assets/Characters/Enemies/RiderWalkSheet.png" id="4_3ubfh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2xkst"]
 radius = 15.0
@@ -440,7 +440,7 @@ animations = [{
 
 [node name="Rider" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 16
-collision_mask = 17
+collision_mask = 145
 script = ExtResource("1_k7dvb")
 speed = 100.0
 damage = 5.0
