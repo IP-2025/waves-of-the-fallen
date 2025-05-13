@@ -84,8 +84,6 @@ public abstract partial class EnemyBase : CharacterBody2D
 		Velocity = direction.Normalized() * speed;
 	}
 
-	public abstract void Attack(); 
-
 	public virtual void OnAttackRangeBodyEnter(Node2D body)
 	{
 		if (body.IsInGroup("player"))

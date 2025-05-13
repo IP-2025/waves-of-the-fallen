@@ -13,69 +13,6 @@ radius = 200.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
 radius = 600.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lnbe5"]
-atlas = ExtResource("5_6dmdw")
-region = Rect2(0, 0, 119, 216)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6dmdw"]
-atlas = ExtResource("5_6dmdw")
-region = Rect2(0, 0, 119, 216)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_85pfk"]
-atlas = ExtResource("5_6dmdw")
-region = Rect2(0, 0, 119, 216)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5jabg"]
-atlas = ExtResource("5_6dmdw")
-region = Rect2(0, 0, 119, 216)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_46ajv"]
-atlas = ExtResource("5_6dmdw")
-region = Rect2(0, 0, 119, 216)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_wlcpe"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lnbe5")
-}],
-"loop": true,
-"name": &"attack",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6dmdw")
-}],
-"loop": false,
-"name": &"death",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_85pfk")
-}],
-"loop": false,
-"name": &"hit",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5jabg")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_46ajv")
-}],
-"loop": true,
-"name": &"walk",
-"speed": 5.0
-}]
-
 [node name="MountedEnemy" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 16
 script = ExtResource("1_script")
