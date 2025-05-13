@@ -8,6 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
+    - host: vm28.fkc.hft-stuttgart.de # set to localhost for dev!
     - http:
         paths:
           - path: /
