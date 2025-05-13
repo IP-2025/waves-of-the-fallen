@@ -9,8 +9,8 @@ namespace Game.Scripts.Menu;
 
 class UnlockedCharacter
 {
-	public int CharacterId { get; set; }
-	public int Level { get; set; }
+	public int CharacterId { get; init; }
+	public int Level { get; init; }
 }
 
 public partial class Charactermenu : Control
@@ -115,7 +115,11 @@ public partial class Charactermenu : Control
 				}
 
 				var localProgress = LoadLocalProgress();
-				CompareProgress(localProgress, onlineProgress);
+				if (!CompareProgress(localProgress, onlineProgress))
+				{
+					// DO something 
+					GD.Print("Mismatch between local and online progress detected.");
+				}
 			}
 			catch (Exception ex)
 			{
@@ -389,37 +393,27 @@ public partial class Charactermenu : Control
 		return unlockedCharacters;
 	}
 
-	private void CompareProgress(List<UnlockedCharacter> localProgress, List<UnlockedCharacter> onlineProgress)
+	private bool CompareProgress(List<UnlockedCharacter> localProgress, List<UnlockedCharacter> onlineProgress)
 	{
-		// Listen nach CharacterId sortieren
 		localProgress.Sort((a, b) => a.CharacterId.CompareTo(b.CharacterId));
 		onlineProgress.Sort((a, b) => a.CharacterId.CompareTo(b.CharacterId));
 
-		// Vergleich der Listen
-		for (var i = 0; i < Math.Max(localProgress.Count, onlineProgress.Count); i++)
+		if (localProgress.Count != onlineProgress.Count)
 		{
-			if (i >= localProgress.Count)
-			{
-				GD.Print(
-					$"Charakter nur online vorhanden: CharacterId={onlineProgress[i].CharacterId}, Level={onlineProgress[i].Level}");
-				continue;
-			}
+			return false;
+		}
 
-			if (i >= onlineProgress.Count)
-			{
-				GD.Print(
-					$"Charakter nur lokal vorhanden: CharacterId={localProgress[i].CharacterId}, Level={localProgress[i].Level}");
-				continue;
-			}
-
+		for (var i = 0; i < localProgress.Count; i++)
+		{
 			var local = localProgress[i];
 			var online = onlineProgress[i];
 
 			if (local.CharacterId != online.CharacterId || local.Level != online.Level)
 			{
-				GD.Print($"Unterschied gefunden: Lokal (CharacterId={local.CharacterId}, Level={local.Level}) " +
-						 $"vs. Online (CharacterId={online.CharacterId}, Level={online.Level})");
+				return false;
 			}
 		}
+
+		return true;
 	}
 }
