@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using System.Text;
 using Game.Scripts.Config;
@@ -31,8 +32,20 @@ public partial class Charactermenu : Control
 	private HttpRequest _levelUpRequest;
 	private HttpRequest _progressCheckRequest;
 
+	private Button _localButton;
+	private Button _onlineButton;
+	private ColorRect _colorRect;
+	
+	private List<UnlockedCharacter> _localProgress;
+	private List<UnlockedCharacter> _onlineProgress;
+
 	public override void _Ready()
 	{
+		_localProgress = new List<UnlockedCharacter>();
+		_onlineProgress = new List<UnlockedCharacter>();
+		_localProgress.Clear();
+		_onlineProgress.Clear();
+		
 		_characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 
 		_labelHealth = GetNode<Label>("%Label_health");
@@ -47,10 +60,18 @@ public partial class Charactermenu : Control
 		_unlockRequest = GetNode<HttpRequest>("%HTTPRequest");
 		_levelUpRequest = GetNode<HttpRequest>("%LevelUpRequest");
 		_progressCheckRequest = GetNode<HttpRequest>("%ProgressCheckRequest");
+		
+		_localButton = GetNode<Button>("%LocalButton");
+		_onlineButton = GetNode<Button>("%OnlineButton");
+		_colorRect = GetNode<ColorRect>("%GreyedOut");
+		
 
 		_unlockRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
 		_levelUpRequest.Connect("request_completed", new Callable(this, nameof(OnLevelUpRequestCompleted)));
 		_progressCheckRequest.Connect("request_completed", new Callable(this, nameof(OnProgressCheckRequestCompleted)));
+		
+		_localButton.Connect("pressed", new Callable(this, nameof(OnLocalButtonPressed)));
+		_onlineButton.Connect("pressed", new Callable(this, nameof(OnOnlineButtonPressed)));
 
 		var selectedId = _characterManager.LoadLastSelectedCharacterID();
 		_currentlySelectedCharacter = GetNode<Button>($"%Button_Character{selectedId}");
@@ -65,7 +86,6 @@ public partial class Charactermenu : Control
 			"Content-Type: application/json",
 			"Authorization: Bearer " + SecureStorage.LoadToken()
 		};
-		GD.Print(SecureStorage.LoadToken());
 		var err = _progressCheckRequest.Request(
 			$"{Config.Server.BaseUrl}/api/v1/protected/getAllUnlockedCharacters",
 			headers,
@@ -75,11 +95,46 @@ public partial class Charactermenu : Control
 		if (err != Error.Ok)
 			GD.PrintErr($"AuthRequest error: {err}");
 	}
+	
+	private void OnLocalButtonPressed()
+	{
+	}
 
+	private void OnOnlineButtonPressed()
+	{
+		GD.Print("Synchronizing local state with server…");
+
+		const int maxCharacterId = 4;
+		for (int id = 1; id <= maxCharacterId; id++)
+		{
+			var onlineEntry = _onlineProgress
+				.FirstOrDefault(c => c.CharacterId == id);
+
+			if (onlineEntry != null)
+			{
+				_characterManager.UpdateCharacter(
+					id.ToString(),
+					onlineEntry.Level,
+					1
+				);
+			}
+			else
+			{
+				_characterManager.UpdateCharacter(
+					id.ToString(),
+					1,
+					0
+				);
+			}
+		}
+
+		_colorRect.Visible = false;
+		GD.Print("Local progress is now in sync with online.");
+	}
+	
 	private void OnProgressCheckRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
 	{
 		var receivedString = Encoding.UTF8.GetString(body);
-		GD.Print("Antwort empfangen: " + receivedString);
 
 		if (responseCode == 200)
 		{
@@ -98,8 +153,6 @@ public partial class Charactermenu : Control
 				var unlockedVariant = root["unlocked_characters"];
 				var unlockedArray = (Godot.Collections.Array)unlockedVariant;
 
-				var onlineProgress = new List<UnlockedCharacter>();
-
 				foreach (var element in unlockedArray)
 				{
 					var character = (Dictionary)element;
@@ -111,14 +164,15 @@ public partial class Charactermenu : Control
 						CharacterId = characterId,
 						Level = level
 					};
-					onlineProgress.Add(unlockedCharacter);
+					_onlineProgress.Add(unlockedCharacter);
 				}
 
-				var localProgress = LoadLocalProgress();
-				if (!CompareProgress(localProgress, onlineProgress))
+				_localProgress = LoadLocalProgress();
+				if (!EqualProgress(_localProgress, _onlineProgress))
 				{
 					// DO something 
 					GD.Print("Mismatch between local and online progress detected.");
+					_colorRect.Visible = true;
 				}
 			}
 			catch (Exception ex)
@@ -393,10 +447,14 @@ public partial class Charactermenu : Control
 		return unlockedCharacters;
 	}
 
-	private bool CompareProgress(List<UnlockedCharacter> localProgress, List<UnlockedCharacter> onlineProgress)
+	private bool EqualProgress(List<UnlockedCharacter> localProgress, List<UnlockedCharacter> onlineProgress)
 	{
 		localProgress.Sort((a, b) => a.CharacterId.CompareTo(b.CharacterId));
 		onlineProgress.Sort((a, b) => a.CharacterId.CompareTo(b.CharacterId));
+		
+		// print both lists for debugging
+		GD.Print("Local Progress: " + string.Join(", ", localProgress));
+		GD.Print("Online Progress: " + string.Join(", ", onlineProgress));
 
 		if (localProgress.Count != onlineProgress.Count)
 		{
