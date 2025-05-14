@@ -10,6 +10,7 @@ public partial class GameRoot : Node
 	private int playerIndex = 0; // player index for spawning players
 	bool isServer = false;
 	private bool enableDebug = false;
+	private WaveTimer globalWaveTimer;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -21,6 +22,14 @@ public partial class GameRoot : Node
 		// Load map and store reference
 		SpawnMap("res://Maps/GrassMap/Main.tscn");
 
+		// Instantiate one global WaveTimer for server-wide access
+		if (isServer)
+		{
+			var waveTimerScene = GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn");
+			globalWaveTimer = waveTimerScene.Instantiate<WaveTimer>();
+			globalWaveTimer.Name = "GlobalWaveTimer";
+			AddChild(globalWaveTimer);
+		}
 		if (isServer)
 		{
 			// Server spawns all players
@@ -29,12 +38,12 @@ public partial class GameRoot : Node
 				DebugIt($"Server spawning player {peerId}");
 				SpawnPlayer(peerId);
 			}
-
+			
 			// Start enemy spawner
 			SpawnEnemySpawner("res://Utilities/Gameflow/Spawn/SpawnEnemies.tscn");
 		}
-
-
+		
+		
 	}
 
 	public override void _Process(double delta)
@@ -51,6 +60,10 @@ public partial class GameRoot : Node
 	public void SpawnPlayer(long peerId)
 	{
 		var player = GD.Load<PackedScene>("res://Entities/Characters/Mage/mage.tscn").Instantiate<DefaultPlayer>();
+		player.OwnerPeerId = peerId;
+		player.Name = $"Player_{peerId}";
+
+		
 
 		int characterId = Server.Instance.PlayerSelections[peerId];
 		switch (characterId)
@@ -118,6 +131,7 @@ public partial class GameRoot : Node
 
 	public void OnPlayerDied()
 	{
+		DebugIt("Player died! Switching camera to alive player.");
 		DebugIt("Player died! Showing Game Over screen.");
 
 		if (_mainMap == null)
@@ -136,7 +150,43 @@ public partial class GameRoot : Node
 		{
 			GD.PrintErr("GameOver screen not found in main map!");
 		}
+
+		long peerId = Multiplayer.GetUniqueId();
+
+		// Remove player entity to prevent a leftover copy
+		if (Server.Instance.Entities.TryGetValue(peerId, out var playerNode))
+		{
+			if (IsInstanceValid(playerNode))
+			{
+				playerNode.QueueFree();
+				DebugIt($"Removed dead player node: Player_{peerId}");
+			}
+			Server.Instance.Entities.Remove(peerId);
+		}
+
+		// Find another player who is still alive
+		var alivePlayers = GetTree()
+			.GetNodesInGroup("player")
+			.OfType<Node2D>()
+			.Where(p => p.Name != $"Player_{peerId}")
+			.ToList();
+
+		if (alivePlayers.Count > 0)
+		{
+			var target = alivePlayers[0];
+			var cam = target.GetNodeOrNull<Camera2D>("Camera2D");
+			if (cam != null)
+			{
+				cam.MakeCurrent();
+				DebugIt($"Camera switched to alive player: {target.Name}");
+			}
+		}
+		else
+		{
+			DebugIt("No alive players left.");
+		}
 	}
+
 
 	private void DebugIt(string message)
 	{

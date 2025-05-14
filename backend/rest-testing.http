@@ -8,7 +8,7 @@ Content-Type: application/json
 {
   "email": "test@mail.com",
   "username": "newUser",
-  "password": "newPassword"
+  "password": "123"
 }
 ###
 
@@ -16,8 +16,8 @@ POST http://localhost:3000/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "username": "testUser",
-  "password": "testPassword"
+  "email": "test@mail.com",
+  "password": "123"
 }
 
 ###
@@ -32,3 +32,20 @@ Content-Type: application/json
 {
   "user_id": "D465D2FD-092C-40A6-945D-E29E99FA524A"
 }
+
+###
+
+POST http://localhost/api/v1/game/start
+POST http://localhost:3000/api/v1/protected/character/unlock
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMyYTkxMWVkLTgzYjktNDIxMS1hNzlkLTg3ODViYzViMmY0NiIsImlhdCI6MTc0NjU2OTk5MiwiZXhwIjoxNzQ3MTc0NzkyfQ.zWnY1K-EhKTat8IMLIwZ4ROnbT3Ht2vIoOskndr6GH0
+
+{
+  "character_id": 1
+}
+
+###
+
+POST http://localhost:3000/api/v1/protected/getAllUnlockedCharacters
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3ZGFmYTI5LWIyOWUtNGNlMS04ZjM4LThiZmRmNmFjMjQ0OSIsImlhdCI6MTc0NzE0OTQyMSwiZXhwIjoxNzQ3NzU0MjIxfQ.Jp56V3oHCWYkdS-RE0i5W927ybz8QADLPJdQv3pKNw0

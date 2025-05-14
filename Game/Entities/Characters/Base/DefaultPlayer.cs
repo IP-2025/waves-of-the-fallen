@@ -198,6 +198,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	}
 	public virtual void Die()
 	{
+		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"), GlobalPosition);
 		GD.Print("Default death behavior – no animation");
 		QueueFree();
 	}

@@ -22,7 +22,7 @@ CharacterManager="*res://Entities/Characters/Util/Manager/CharacterManager.cs"
 NetworkManager="*res://Utilities/Multiplayer/NetworkManager.cs"
 SecureStorage="*res://Utilities/SecureStorage/SecureStorage.cs"
 Server="*res://Utilities/Multiplayer/Server.cs"
-
+SoundManager="*res://Scenes/Sounds/sound_manager.tscn"
 [display]
 
 window/stretch/mode="viewport"

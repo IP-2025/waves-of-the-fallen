@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dl4t3wdofnojk"]
+[gd_scene load_steps=8 format=3 uid="uid://ca1dt8xd5q228"]
 
 [ext_resource type="Script" uid="uid://y8e2kdbo5ca3" path="res://Weapons/Ranged/MagicStaffs/Firestaff/FireStaff.cs" id="1_2yg4u"]
 [ext_resource type="Texture2D" uid="uid://bth6olhb7lcj3" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/FireStaff2.png" id="1_3eoh8"]
@@ -54,4 +54,5 @@ autostart = true
 [node name="ShootingPoint" type="Marker2D" parent="."]
 position = Vector2(34, 2)
 
+[connection signal="frame_changed" from="WeaponPivot/FireStaffSprite" to="." method="_on_fire_staff_sprite_frame_changed"]
 [connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutIFirestaff"]

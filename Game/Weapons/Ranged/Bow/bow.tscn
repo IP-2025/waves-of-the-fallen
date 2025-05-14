@@ -53,4 +53,5 @@ position = Vector2(-0.290779, -0.00230481)
 rotation = 0.00792616
 scale = Vector2(0.0825, 0.0825)
 
+[connection signal="frame_changed" from="WeaponPivot/BowSprite" to="." method="_on_bow_sprite_frame_changed"]
 [connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutBow"]

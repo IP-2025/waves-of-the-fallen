@@ -28,9 +28,6 @@ position = Vector2(-25, 15)
 [node name="Archer" parent="." instance=ExtResource("3_kjvlq")]
 
 [node name="Assassin" parent="." instance=ExtResource("5_jig1i")]
-Speed = 0.0
-MaxHealth = 0
-CurrentHealth = 0
 
 [node name="Knight" parent="." instance=ExtResource("6_ajyao")]
 Speed = 0.0
@@ -38,6 +35,6 @@ MaxHealth = 0
 CurrentHealth = 0
 
 [node name="Mage" parent="." instance=ExtResource("7_bdmc5")]
-Speed = 0.0
-MaxHealth = 0
-CurrentHealth = 0
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+current = true

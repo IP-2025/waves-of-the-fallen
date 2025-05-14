@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bg8lc8o2mf0sw"]
+[gd_scene load_steps=13 format=3 uid="uid://lv3058lpkiow"]
 
 [ext_resource type="Texture2D" uid="uid://b7rl0g3sa6bga" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Fireball1.png" id="1_bympj"]
 [ext_resource type="Script" uid="uid://b7i5ogwmrajbx" path="res://Weapons/Ranged/MagicStaffs/Firestaff/FireBall.cs" id="1_ldwc5"]
@@ -60,24 +60,23 @@ animations = [{
 }]
 
 [node name="Fireball" type="Area2D"]
-position = Vector2(-9, 0)
 collision_layer = 4
 collision_mask = 16
 script = ExtResource("1_ldwc5")
 
 [node name="FireballAnimation" type="AnimatedSprite2D" parent="."]
-position = Vector2(2, 0)
+position = Vector2(-6.46978, 0.414137)
 rotation = -0.47822
 scale = Vector2(0.06, 0.06)
 sprite_frames = SubResource("SpriteFrames_d58m4")
 animation = &"projectile"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(9, 0)
+position = Vector2(-0.469786, 0.414137)
 shape = SubResource("CircleShape2D_hhg2a")
 
 [node name="Explosion" type="AnimatedSprite2D" parent="."]
-position = Vector2(9, -1)
+position = Vector2(-0.469786, -0.585863)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_8f8e6")
 animation = &"explosion"

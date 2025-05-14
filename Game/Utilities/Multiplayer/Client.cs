@@ -87,10 +87,24 @@ public partial class Client : Node
 
 		// cleanup removed entities
 		CleanupRemovedEntities(networkIds);
+
+		if (_camera != null && !networkIds.Contains(Multiplayer.GetUniqueId()))
+		{
+			_camera = null;
+			_hasJoystick = false;
+		}
 	}
+
 
 	private void InstantiateOrUpdateEntities(IEnumerable<EntitySnapshot> entities)
 	{
+		// Kamera- und WaveTimer-Referenzen überprüfen und ggf. zurücksetzen
+		if (_camera != null && !GodotObject.IsInstanceValid(_camera))
+		{
+			_camera = null;
+			_waveTimerReady = false;
+			timer = null;
+		}
 		// first all not a weapon things (no OwnerID & SlotIndex)
 		foreach (var entity in entities.Where(e => !e.OwnerId.HasValue || !e.SlotIndex.HasValue))
 		{
@@ -125,12 +139,12 @@ public partial class Client : Node
 				_instances[entity.NetworkId] = inst;
 				DebugIt($"Instantiated {entity.Type} with ID {entity.NetworkId}");
 
-				if (!_hasJoystick)
+				if (!_hasJoystick && entity.NetworkId == Multiplayer.GetUniqueId())
 				{
 					AttachJoystick(inst, entity);
 				}
 
-				if (_camera == null)
+				if (_camera == null && entity.NetworkId == Multiplayer.GetUniqueId())
 				{
 					ChangeCamera(inst, entity);
 				}
@@ -139,6 +153,7 @@ public partial class Client : Node
 			UpdateTransform(inst, entity);
 		}
 
+		// Weapon Handling
 		foreach (var entity in entities.Where(e => e.OwnerId.HasValue && e.SlotIndex.HasValue))
 		{
 			if (_instances.ContainsKey(entity.NetworkId))
@@ -266,12 +281,34 @@ public partial class Client : Node
 		{
 			return;
 		}
+	private void AttachJoystick(Node2D inst, EntitySnapshot entity)
+	{
+		// only for local / this clients player
+		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
+							|| entity.Type == EntityType.Archer
+							|| entity.Type == EntityType.Knight
+							|| entity.Type == EntityType.Mage
+							|| entity.Type == EntityType.Assassin;
+		if (!isPlayerType || entity.NetworkId != Multiplayer.GetUniqueId())
+		{
+			return;
+		}
 
 		var joystick = GD.Load<PackedScene>("res://UI/Joystick/joystick.tscn").Instantiate<Node2D>();
 		inst.AddChild(joystick);
 		DebugIt($"Joystick added to player with ID {entity.NetworkId}");
 	}
 
+	private void ChangeCamera(Node2D inst, EntitySnapshot entity)
+	{
+		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
+							|| entity.Type == EntityType.Archer
+							|| entity.Type == EntityType.Knight
+							|| entity.Type == EntityType.Mage
+							|| entity.Type == EntityType.Assassin;
+		// only for local / this clients player
+		if (!isPlayerType || entity.NetworkId != Multiplayer.GetUniqueId())
+			return;
 	private void ChangeCamera(Node2D inst, EntitySnapshot entity)
 	{
 		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 

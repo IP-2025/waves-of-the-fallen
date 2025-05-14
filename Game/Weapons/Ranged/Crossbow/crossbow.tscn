@@ -59,4 +59,5 @@ position = Vector2(-0.0958824, -0.000759996)
 rotation = 0.00792616
 scale = Vector2(0.1089, 0.1089)
 
+[connection signal="frame_changed" from="WeaponPivot/CrossbowSprite" to="." method="_on_crossbow_sprite_frame_changed"]
 [connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutCrossbow"]
