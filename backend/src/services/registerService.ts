@@ -1,8 +1,11 @@
 import bcrypt from 'bcrypt';
+import {ConflictError, InternalServerError} from '../errors';
 import { v4 as uuidv4 } from 'uuid';
-import { termLogger as logger } from 'logger';
-import { createNewPlayer, deletePlayer } from 'repositories';
-import { saveCredential } from 'repositories';
+import logger from '../logger/logger';
+import {createNewPlayer, deletePlayer} from '../repositories/playerRepository';
+import { saveCredential } from '../repositories/credentialsRepository';
+import { Player } from '../libs/entities/Player';
+import { unlockCharacter } from '../repositories/unlockedCharacterRepository';
 
 export async function registerUser(username: string, password: string, mail: string): Promise<string> {
   const playerId = uuidv4();
@@ -20,11 +23,14 @@ export async function registerUser(username: string, password: string, mail: str
       hashedPassword: hashedPassword,
     });
 
+    await unlockCharacter(playerId, 1);
+
     return createdPlayer.player_id;
   } catch (error) {
     logger.error('Error registering user: ', error);
     await deletePlayer(playerId);
 
-    throw error;
+    throw error
   }
 }
+

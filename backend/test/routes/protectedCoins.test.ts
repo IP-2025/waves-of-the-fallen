@@ -33,8 +33,8 @@ beforeEach(async () => {
   validToken = loginResponse.body.token;
 
   await AppDataSource.getRepository(UnlockedCharacter).insert({
-    player_id: registeredPlayerId,
-    character_id: '1',
+    player: { player_id: registeredPlayerId }, // Use the relation, not raw player_id
+    character_id: 1,
     level: 1,
   });
 

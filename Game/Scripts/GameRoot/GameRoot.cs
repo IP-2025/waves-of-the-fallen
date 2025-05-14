@@ -10,6 +10,7 @@ public partial class GameRoot : Node
 	private int playerIndex = 0; // player index for spawning players
 	bool isServer = false;
 	private bool enableDebug = false;
+	private WaveTimer globalWaveTimer;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -21,6 +22,14 @@ public partial class GameRoot : Node
 		// Load map and store reference
 		SpawnMap("res://Scenes/Main.tscn");
 
+		// Instantiate one global WaveTimer for server-wide access
+		if (isServer)
+		{
+			var waveTimerScene = GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn");
+			globalWaveTimer = waveTimerScene.Instantiate<WaveTimer>();
+			globalWaveTimer.Name = "GlobalWaveTimer";
+			AddChild(globalWaveTimer);
+		}
 		if (isServer)
 		{
 			// Server spawns all players
@@ -29,12 +38,12 @@ public partial class GameRoot : Node
 				DebugIt($"Server spawning player {peerId}");
 				SpawnPlayer(peerId);
 			}
-
+			
 			// Start enemy spawner
 			SpawnEnemySpawner("res://Scenes/Enemies/SpawnEnemies.tscn");
 		}
-
-
+		
+		
 	}
 
 	public override void _Process(double delta)
@@ -50,40 +59,69 @@ public partial class GameRoot : Node
 
 	public void SpawnPlayer(long peerId)
 	{
-		var player = GD.Load<PackedScene>("res://Scenes/Characters/default_player.tscn").Instantiate<DefaultPlayer>();
+		var player = GD.Load<PackedScene>("res://Scenes/Characters/mage.tscn").Instantiate<DefaultPlayer>();
 		player.OwnerPeerId = peerId;
 		player.Name = $"Player_{peerId}";
+
 		
 
-		// Get spawn point from PlayerSpawnPoints group
-		player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
-			.OfType<Node2D>()
-			.ToList()
-			.FindAll(spawnPoint => int.Parse(spawnPoint.Name) == playerIndex)
-			.FirstOrDefault()?.GlobalPosition ?? Vector2.Zero;
-
-		// Add joystick to player
-		var joystick = GD.Load<PackedScene>("res://Scenes/Joystick/joystick.tscn").Instantiate<Node2D>();
-		player.AddChild(joystick);
-		var WaveTimer = GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
-		player.GetNode<Camera2D>("Camera2D").AddChild(WaveTimer);
-		AddChild(player);
-
-		Server.Instance.Entities[peerId] = player;
-
-		// Connect health signal
-		var healthNode = player.GetNodeOrNull<Health>("Health");
-		if (healthNode != null)
+		int characterId = Server.Instance.PlayerSelections[peerId];
+		switch (characterId)
 		{
-			healthNode.Connect(Health.SignalName.HealthDepleted, new Callable(this, nameof(OnPlayerDied)));
-		}
-		else
-		{
-			GD.PrintErr("Health node not found on player!");
+			case 1:
+				player = GD.Load<PackedScene>("res://Scenes/Characters/archer.tscn").Instantiate<DefaultPlayer>();
+				break;
+
+			case 2:
+				player = GD.Load<PackedScene>("res://Scenes/Characters/assassin.tscn").Instantiate<DefaultPlayer>();
+				break;
+
+			case 3:
+				player = GD.Load<PackedScene>("res://Scenes/Characters/knight.tscn").Instantiate<DefaultPlayer>();
+				break;
+
+			case 4:
+				player = GD.Load<PackedScene>("res://Scenes/Characters/mage.tscn").Instantiate<DefaultPlayer>();
+				break;
+
+			default:
+				break;
 		}
 
-		playerIndex++;
-	}
+			player.OwnerPeerId = peerId;
+			player.Name = $"Player_{peerId}";
+
+
+			// Get spawn point from PlayerSpawnPoints group
+			player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
+				.OfType<Node2D>()
+				.ToList()
+				.FindAll(spawnPoint => int.Parse(spawnPoint.Name) == playerIndex)
+				.FirstOrDefault()?.GlobalPosition ?? Vector2.Zero;
+
+			// Add joystick to player
+			var joystick = GD.Load<PackedScene>("res://Scenes/Joystick/joystick.tscn").Instantiate<Node2D>();
+			player.AddChild(joystick);
+			player.Joystick = joystick;
+			var WaveTimer = GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
+			player.GetNode<Camera2D>("Camera2D").AddChild(WaveTimer);
+			AddChild(player);
+
+			Server.Instance.Entities[peerId] = player;
+
+			// Connect health signal
+			var healthNode = player.GetNodeOrNull<Health>("Health");
+			if (healthNode != null)
+			{
+				healthNode.Connect(Health.SignalName.HealthDepleted, new Callable(this, nameof(OnPlayerDied)));
+			}
+			else
+			{
+				GD.PrintErr("Health node not found on player!");
+			}
+
+			playerIndex++;
+		}
 
 	public void SpawnEnemySpawner(string enemySpawnerPath)
 	{
@@ -93,6 +131,7 @@ public partial class GameRoot : Node
 
 	public void OnPlayerDied()
 	{
+		DebugIt("Player died! Switching camera to alive player.");
 		DebugIt("Player died! Showing Game Over screen.");
 
 		if (_mainMap == null)
@@ -111,7 +150,43 @@ public partial class GameRoot : Node
 		{
 			GD.PrintErr("GameOver screen not found in main map!");
 		}
+
+		long peerId = Multiplayer.GetUniqueId();
+
+		// Remove player entity to prevent a leftover copy
+		if (Server.Instance.Entities.TryGetValue(peerId, out var playerNode))
+		{
+			if (IsInstanceValid(playerNode))
+			{
+				playerNode.QueueFree();
+				DebugIt($"Removed dead player node: Player_{peerId}");
+			}
+			Server.Instance.Entities.Remove(peerId);
+		}
+
+		// Find another player who is still alive
+		var alivePlayers = GetTree()
+			.GetNodesInGroup("player")
+			.OfType<Node2D>()
+			.Where(p => p.Name != $"Player_{peerId}")
+			.ToList();
+
+		if (alivePlayers.Count > 0)
+		{
+			var target = alivePlayers[0];
+			var cam = target.GetNodeOrNull<Camera2D>("Camera2D");
+			if (cam != null)
+			{
+				cam.MakeCurrent();
+				DebugIt($"Camera switched to alive player: {target.Name}");
+			}
+		}
+		else
+		{
+			DebugIt("No alive players left.");
+		}
 	}
+
 
 	private void DebugIt(string message)
 	{

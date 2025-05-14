@@ -2,6 +2,9 @@ public enum EntityType
 {
     DefaultPlayer,
     Archer,
+    Assassin,
+    Knight,
+    Mage,
     DefaultEnemy,
     RangedEnemy,
     MountedEnemy,
@@ -9,5 +12,9 @@ public enum EntityType
     Bow,
     BowArrow,
     Crossbow,
-    CrossbowArrow
+    CrossbowArrow,
+    Kunai,
+    KunaiProjectile,
+    FireStaff,
+    FireBall
 }

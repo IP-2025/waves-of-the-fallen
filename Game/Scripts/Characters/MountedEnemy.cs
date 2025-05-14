@@ -6,17 +6,9 @@ public partial class MountedEnemy : EnemyBase
 	/// Configuration for the MountedEnemy:
 	/// - stopDistance: Distance at which MountedEnemy stops moving.
 	/// - attackRange: Close range distance for MountedEnemy's attack.
-	/// - damage: Damage dealt by the MountedEnemy.
-	/// - attackCooldown: Cooldown time between attacks (in seconds).
-	/// - speed: Movement speed of the MountedEnemy.
 	/// </summary>
 	[Export] public float stopDistance = 15f;
 	[Export] public float attackRange = 10f;
-	[Export] public float damage = 2f;
-	[Export] public float attackCooldown = 1.5f;
-	[Export] public float speed = 100f;
-
-	private float attackTimer = 0f;
 
 	public override void _Ready()
 	{
@@ -28,29 +20,11 @@ public partial class MountedEnemy : EnemyBase
 		{
 			health.HealthDepleted += OnHealthDepleted;
 		}
-
-		// Check if sprite texture is assigned
-		var sprite = GetNode<Sprite2D>("Sprite2D");
-		if (sprite.Texture == null)
-		{
-			GD.PrintErr("Texture is not assigned to Sprite2D in MountedEnemy!");
-		}
 	}
 
-	public override void _PhysicsProcess(double delta)
+	protected override void HandleMovement(Vector2 direction)
 	{
-		FindNearestPlayer();
-		if (player == null)
-		{
-			Velocity = Vector2.Zero;
-			MoveAndSlide();
-			return;
-		}
-
 		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
-
-		LookAt(player.GlobalPosition);
-
 		if (dist > stopDistance)
 		{
 			Vector2 toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
@@ -59,20 +33,7 @@ public partial class MountedEnemy : EnemyBase
 		else
 		{
 			Velocity = Vector2.Zero;
-
-			if (dist <= attackRange && attackTimer <= 0f)
-			{
-				Attack();
-				attackTimer = attackCooldown;
-			}
 		}
-
-		if (attackTimer > 0f)
-		{
-			attackTimer -= (float)delta;
-		}
-
-		MoveAndSlide();
 	}
 
 	/// <summary>
