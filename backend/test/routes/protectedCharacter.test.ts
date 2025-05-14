@@ -45,17 +45,22 @@ beforeEach(async () => {
 describe('POST /getAllUnlockedCharacters', () => {
     it('should return all Unlocked Characters', async () => {
         const AllCharacters = await request(app)
-            .post('/api/v1/protected/getAllUnlockedCharacters')
-            .set('Authorization', `Bearer ${validToken}`)
+          .post('/api/v1/protected/getAllUnlockedCharacters')
+          .set('Authorization', `Bearer ${validToken}`);
         expect(AllCharacters.status).toBe(200);
-        expect(AllCharacters.body).toEqual(
-            expect.arrayContaining([
-                expect.objectContaining({
-                    character_id: 1,
-                    level: 1,
-                }),
-            ])
-        );
 
+        const relevantFields = AllCharacters.body.unlocked_characters.map((char: any) => ({
+            character_id: char.character_id,
+            level: char.level,
+        }));
+
+        expect(relevantFields).toEqual(
+          expect.arrayContaining([
+              expect.objectContaining({
+                  character_id: 1,
+                  level: 1,
+              }),
+          ])
+        );
     });
 });
