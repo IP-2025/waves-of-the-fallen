@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using System.Text;
-using Game.Scripts.Config;
+using Game.Utilities.Backend;
 using Godot.Collections;
 
 namespace Game.Scripts.Menu;
@@ -90,7 +90,7 @@ public partial class Charactermenu : Control
 			"Authorization: Bearer " + SecureStorage.LoadToken()
 		};
 		var err = _progressCheckRequest.Request(
-			$"{Config.Server.BaseUrl}/api/v1/protected/getAllUnlockedCharacters",
+			$"{Server.BaseUrl}/api/v1/protected/getAllUnlockedCharacters",
 			headers,
 			HttpClient.Method.Post
 		);
@@ -140,7 +140,7 @@ public partial class Charactermenu : Control
 			"Authorization: Bearer " + SecureStorage.LoadToken()
 		};
 		var err = _unlockRequest.Request(
-			$"{Config.Server.BaseUrl}/api/v1/protected/progressSync",
+			$"{Server.BaseUrl}/api/v1/protected/progressSync",
 			headers,
 			HttpClient.Method.Post,
 			body
@@ -375,7 +375,7 @@ public partial class Charactermenu : Control
 					"Authorization: Bearer " + SecureStorage.LoadToken()
 				};
 				var err = _unlockRequest.Request(
-					$"{Config.Server.BaseUrl}/api/v1/protected/character/levelUp",
+					$"{Server.BaseUrl}/api/v1/protected/character/levelUp",
 					headers,
 					HttpClient.Method.Post,
 					body
@@ -409,7 +409,7 @@ public partial class Charactermenu : Control
 					"Authorization: Bearer " + SecureStorage.LoadToken()
 				};
 				var err = _unlockRequest.Request(
-					$"{Config.Server.BaseUrl}/api/v1/protected/character/unlock",
+					$"{Server.BaseUrl}/api/v1/protected/character/unlock",
 					headers,
 					HttpClient.Method.Post,
 					body

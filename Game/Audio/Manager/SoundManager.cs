@@ -19,7 +19,7 @@ public partial class SoundManager : Node2D
 		AddChild(player);
 
 		player.Position = position;															
-		player.Stream = GD.Load<AudioStream>("res://Assets/Sounds/" + name + ".wav");		
+		player.Stream = GD.Load<AudioStream>("res://Audio/Sounds/Resources/" + name + ".wav");		
 		player.VolumeDb = volumeDb;															
 
 		player.Play();																		
@@ -40,7 +40,7 @@ public partial class SoundManager : Node2D
 		AudioStreamPlayer player = new AudioStreamPlayer();
 		AddChild(player);
 
-		player.Stream = GD.Load<AudioStream>("res://Assets/Sounds/buttonPress.wav");
+		player.Stream = GD.Load<AudioStream>("res://Audio/Sounds/Resources/buttonPress.wav");
 		player.VolumeDb = volumeDb;
 
 		player.Play();
@@ -53,7 +53,7 @@ public partial class SoundManager : Node2D
 		AudioStreamPlayer player = new AudioStreamPlayer();
 		AddChild(player);
 
-		player.Stream = GD.Load<AudioStream>("res://Assets/Sounds/gameEnd.wav");
+		player.Stream = GD.Load<AudioStream>("res://Audio/Sounds/Resources/gameEnd.wav");
 		player.VolumeDb = volumeDb;
 
 		player.Play();

@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using Godot;
+using Game.Utilities.Multiplayer;
 
 public partial class DefaultPlayer : CharacterBody2D
 {

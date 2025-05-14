@@ -8,6 +8,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using Game.Utilities.Multiplayer;
 
 public partial class LocalMenu : Control
 {

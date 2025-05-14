@@ -1,4 +1,6 @@
-using Godot;
+namespace Game.Utilities.Multiplayer
+{
+	using Godot;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -455,4 +457,6 @@ public partial class NetworkManager : Node
 	{
 		throw new NotImplementedException();
 	}
+}
+
 }

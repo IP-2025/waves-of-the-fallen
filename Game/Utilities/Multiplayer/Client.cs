@@ -1,3 +1,5 @@
+namespace Game.Utilities.Multiplayer
+{
 using Godot;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -180,7 +182,7 @@ public partial class Client : Node
 
 			var inst = scene.Instantiate<Node2D>();
 
-			// sisable health for enemies because server handles it
+			// disable health for enemies because server handles it
 			if (entity.Type == EntityType.DefaultEnemy
 				|| entity.Type == EntityType.RangedEnemy
 				|| entity.Type == EntityType.MountedEnemy
@@ -258,9 +260,12 @@ public partial class Client : Node
 		return null; // no OwnerID & SlotIndex? f this
 	}
 
+	
+
+	
 	private void UpdateTransform(Node2D inst, EntitySnapshot entity)
 	{
-		if (IsInstanceValid(inst))
+		if (GodotObject.IsInstanceValid(inst))
 		{
 			inst.GlobalPosition = entity.Position;
 			inst.Rotation = entity.Rotation;
@@ -281,34 +286,12 @@ public partial class Client : Node
 		{
 			return;
 		}
-	private void AttachJoystick(Node2D inst, EntitySnapshot entity)
-	{
-		// only for local / this clients player
-		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
-							|| entity.Type == EntityType.Archer
-							|| entity.Type == EntityType.Knight
-							|| entity.Type == EntityType.Mage
-							|| entity.Type == EntityType.Assassin;
-		if (!isPlayerType || entity.NetworkId != Multiplayer.GetUniqueId())
-		{
-			return;
-		}
 
 		var joystick = GD.Load<PackedScene>("res://UI/Joystick/joystick.tscn").Instantiate<Node2D>();
 		inst.AddChild(joystick);
 		DebugIt($"Joystick added to player with ID {entity.NetworkId}");
 	}
 
-	private void ChangeCamera(Node2D inst, EntitySnapshot entity)
-	{
-		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
-							|| entity.Type == EntityType.Archer
-							|| entity.Type == EntityType.Knight
-							|| entity.Type == EntityType.Mage
-							|| entity.Type == EntityType.Assassin;
-		// only for local / this clients player
-		if (!isPlayerType || entity.NetworkId != Multiplayer.GetUniqueId())
-			return;
 	private void ChangeCamera(Node2D inst, EntitySnapshot entity)
 	{
 		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
@@ -345,4 +328,5 @@ public partial class Client : Node
 	{
 		if (enableDebug) Debug.Print("Client: " + message);
 	}
+}
 }

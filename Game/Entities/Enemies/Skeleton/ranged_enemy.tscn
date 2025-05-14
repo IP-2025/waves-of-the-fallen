@@ -220,7 +220,6 @@ animationPath = NodePath("RangedEnemyAnimation")
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_u2wu2")
-max_health = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 1)
@@ -247,4 +246,3 @@ animation = &"attack"
 
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
 [connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]
-

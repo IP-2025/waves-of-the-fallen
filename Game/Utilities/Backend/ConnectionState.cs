@@ -1,4 +1,4 @@
-﻿namespace Game.Scripts.Config;
+﻿namespace Game.Utilities.Backend;
 
 public enum ConnectionState
 {

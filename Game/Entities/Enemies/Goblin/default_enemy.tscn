@@ -168,7 +168,6 @@ animationPath = NodePath("GoblinAnimation")
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_ihcfn")
-max_health = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_r4aor")

@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using Game.Utilities.Multiplayer;
 
 // GameRoot is the main entry point for the game. It is responsible for loading the map, spawning the player, starting the enemy spawner and so on.
 public partial class GameRoot : Node
@@ -25,7 +26,7 @@ public partial class GameRoot : Node
 		// Instantiate one global WaveTimer for server-wide access
 		if (isServer)
 		{
-			var waveTimerScene = GD.Load<PackedScene>("res://Scenes/Waves/WaveTimer.tscn");
+			var waveTimerScene = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn");
 			globalWaveTimer = waveTimerScene.Instantiate<WaveTimer>();
 			globalWaveTimer.Name = "GlobalWaveTimer";
 			AddChild(globalWaveTimer);
