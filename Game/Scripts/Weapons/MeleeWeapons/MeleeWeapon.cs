@@ -61,7 +61,7 @@ public abstract partial class MeleeWeapon : Area2D
 	{
 		var healthNode = target.GetNodeOrNull<Health>("Health");
 		
-		if (healthNode != null)
+		if (healthNode != null && target != null)
 		{
 			healthNode.Damage(MeleeDamage);
 		}
