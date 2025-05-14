@@ -38,5 +38,6 @@ public partial class ButtonsCharacterSelection : Button
 	public void _on_pressed()
 	{
 		_controller._characterSelected(this);
+		SoundManager.Instance.PlayUI();
 	}
 }

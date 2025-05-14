@@ -132,7 +132,7 @@ public partial class Charactermenu : Control
 		{
 			{ "local_progress", localProgressArray }
 		});
-		
+
 
 		var headers = new[]
 		{
@@ -145,10 +145,10 @@ public partial class Charactermenu : Control
 			HttpClient.Method.Post,
 			body
 		);
-		
+
 		if (err != Error.Ok)
 			GD.PrintErr($"AuthRequest error: {err}");
-		
+
 		_colorRect.Visible = false;
 	}
 
@@ -222,7 +222,7 @@ public partial class Charactermenu : Control
 				_localProgress = LoadLocalProgress();
 				if (!EqualProgress(_localProgress, _onlineProgress))
 				{
-					// DO something 
+					// DO something
 					GD.Print("Mismatch between local and online progress detected.");
 					_colorRect.Visible = true;
 				}
@@ -271,6 +271,7 @@ public partial class Charactermenu : Control
 	private void _on_button_back_charactermenu_pressed()
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
+		SoundManager.Instance.PlayUI();
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
@@ -322,7 +323,7 @@ public partial class Charactermenu : Control
 		button.AddThemeStyleboxOverride("focus", newStyle);
 	}
 
-	//wenn bei einem ausgewöhlten charcter der "select"- button gedrückt wird 
+	//wenn bei einem ausgewöhlten charcter der "select"- button gedrückt wird
 	private void _on_button_select_pressed()
 	{
 		if (_currentlySelectedCharacter != null)
@@ -339,6 +340,7 @@ public partial class Charactermenu : Control
 				_oldSelectedCharacter = _currentlySelectedCharacter;
 			}
 		}
+		SoundManager.Instance.PlayUI();
 	}
 
 	// temp function for temp reset button to reset the character data 
@@ -419,6 +421,7 @@ public partial class Charactermenu : Control
 		}
 
 		SetCharacterPageValuesFromFile(characterId);
+	    SoundManager.Instance.PlayUI();
 	}
 
 	private void ResetCharacters()
@@ -479,51 +482,51 @@ public partial class Charactermenu : Control
 		};
 	}
 
-	private List<UnlockedCharacter> LoadLocalProgress()
-	{
-		var unlockedCharacters = new List<UnlockedCharacter>();
+		private List<UnlockedCharacter> LoadLocalProgress()
+    	{
+    		var unlockedCharacters = new List<UnlockedCharacter>();
 
-		for (var i = 1; i <= 4; i++) // Angenommen, es gibt 4 Charaktere
-		{
-			var characterId = i.ToString();
-			if (!_characterManager.LoadIsUnlocked(characterId)) continue;
-			var character = new UnlockedCharacter
-			{
-				CharacterId = i,
-				Level = _characterManager.LoadLevelByID(characterId)
-			};
+    		for (var i = 1; i <= 4; i++) // Angenommen, es gibt 4 Charaktere
+    		{
+    			var characterId = i.ToString();
+    			if (!_characterManager.LoadIsUnlocked(characterId)) continue;
+    			var character = new UnlockedCharacter
+    			{
+    				CharacterId = i,
+    				Level = _characterManager.LoadLevelByID(characterId)
+    			};
 
-			unlockedCharacters.Add(character);
-		}
+    			unlockedCharacters.Add(character);
+    		}
 
-		return unlockedCharacters;
-	}
+    		return unlockedCharacters;
+    	}
 
-	private bool EqualProgress(List<UnlockedCharacter> localProgress, List<UnlockedCharacter> onlineProgress)
-	{
-		localProgress.Sort((a, b) => a.CharacterId.CompareTo(b.CharacterId));
-		onlineProgress.Sort((a, b) => a.CharacterId.CompareTo(b.CharacterId));
+    	private bool EqualProgress(List<UnlockedCharacter> localProgress, List<UnlockedCharacter> onlineProgress)
+    	{
+    		localProgress.Sort((a, b) => a.CharacterId.CompareTo(b.CharacterId));
+    		onlineProgress.Sort((a, b) => a.CharacterId.CompareTo(b.CharacterId));
 
-		// print both lists for debugging
-		GD.Print("Local Progress: " + string.Join(", ", localProgress));
-		GD.Print("Online Progress: " + string.Join(", ", onlineProgress));
+    		// print both lists for debugging
+    		GD.Print("Local Progress: " + string.Join(", ", localProgress));
+    		GD.Print("Online Progress: " + string.Join(", ", onlineProgress));
 
-		if (localProgress.Count != onlineProgress.Count)
-		{
-			return false;
-		}
+    		if (localProgress.Count != onlineProgress.Count)
+    		{
+    			return false;
+    		}
 
-		for (var i = 0; i < localProgress.Count; i++)
-		{
-			var local = localProgress[i];
-			var online = onlineProgress[i];
+    		for (var i = 0; i < localProgress.Count; i++)
+    		{
+    			var local = localProgress[i];
+    			var online = onlineProgress[i];
 
-			if (local.CharacterId != online.CharacterId || local.Level != online.Level)
-			{
-				return false;
-			}
-		}
+    			if (local.CharacterId != online.CharacterId || local.Level != online.Level)
+    			{
+    				return false;
+    			}
+    		}
 
-		return true;
-	}
+    		return true;
+    	}
 }
