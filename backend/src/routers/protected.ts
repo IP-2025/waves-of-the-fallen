@@ -1,8 +1,6 @@
 import express from 'express';
 import { authenticationStep } from 'middleware';
-import { getSettings, setSettings } from 'controllers';
-import { getAllCharacterController, getAllUnlockedCharacterController } from 'controllers';
-import { setGoldController, getGoldController } from 'controllers';
+import { getGoldController, getSettings, setGoldController, setSettings, getAllCharacterController, getAllUnlockedCharacterController, levelUpCharController, progressSyncController, unlockCharController} from 'controllers';
 
 const protectedRouter = express.Router();
 
@@ -12,8 +10,12 @@ protectedRouter.get('/', authenticationStep, (req, res) => {
 protectedRouter.post('/getSettings', authenticationStep, getSettings);
 protectedRouter.post('/setSettings', authenticationStep, setSettings);
 protectedRouter.post('/getAllCharacters', authenticationStep, getAllCharacterController);
-protectedRouter.post('/getAllUnlockedCharacters', authenticationStep, getAllUnlockedCharacterController);
 protectedRouter.post('/setGold', authenticationStep, setGoldController);
 protectedRouter.post('/getGold', authenticationStep, getGoldController);
+protectedRouter.get('/character', authenticationStep, getAllCharacterController);
+protectedRouter.post('/getAllUnlockedCharacters', authenticationStep, getAllUnlockedCharacterController);
+protectedRouter.post('/character/unlock', authenticationStep, unlockCharController);
+protectedRouter.post('/character/levelUp', authenticationStep, levelUpCharController);
+protectedRouter.post('/progressSync', authenticationStep, progressSyncController);
 
 export default protectedRouter;

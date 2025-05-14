@@ -1,13 +1,11 @@
-import { loginController } from '../controllers/loginController';
-import { registrateController } from '../controllers/registerController';
+import { registrateController, startGameController } from 'controllers';
 import { Router } from 'express';
-import {startGameController} from "../controllers/startGameController";
 
-const router = Router();
+const gameRouter = Router();
 
-router.post('/start', startGameController);
+gameRouter.post('/start', startGameController);
 
-router.post('/all', registrateController);
-router.post('/stop', registrateController);
+gameRouter.post('/all', registrateController);
+gameRouter.post('/stop', registrateController);
 
-export default router;
+export default gameRouter;

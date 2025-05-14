@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from 'express';
 import {getSettingsByPlayerId, insertSettings} from 'repositories/settingsRepository';
-import {BadRequestError, InternalServerError, UnauthorizedError} from 'errors';
+import {BadRequestError, UnauthorizedError} from 'errors';
 import {termLogger as logger} from 'logger';
 import {extractAndValidatePlayerId} from 'auth/jwt';
 

@@ -6,8 +6,7 @@ export function generateToken(userId: string): string {
   if (!AppConfig.JWT_SECRET) {
     throw new InternalServerError('JWT_SECRET is not defined');
   }
-  const token = jwt.sign({ id: userId }, AppConfig.JWT_SECRET, { expiresIn: '7d' });
-  return token;
+  return jwt.sign({ id: userId }, AppConfig.JWT_SECRET, { expiresIn: '7d' });
 }
 
 export function verifyToken(token: string): string | null {

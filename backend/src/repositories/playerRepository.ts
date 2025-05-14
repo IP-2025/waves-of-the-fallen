@@ -1,6 +1,6 @@
 import {AppDataSource} from 'database/dataSource';
 import {termLogger as logger} from 'logger';
-import {BadRequestError, ConflictError, InternalServerError, NotFoundError} from 'errors';
+import { ConflictError, InternalServerError, NotFoundError} from 'errors';
 import {Player, Settings} from 'database/entities';
 
 const playersRepo = AppDataSource.getRepository(Player);

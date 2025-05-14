@@ -5,10 +5,10 @@ import {
   levelUpChar,
   progressSyncService,
   saveCharChanges,
-} from '../services/characterService';
+} from 'services/characterService';
 import { extractAndValidatePlayerId } from '../auth/jwt';
 import { BadRequestError } from '../errors';
-import logger from '../logger/logger';
+import { termLogger as logger } from 'logger';
 
 export async function getAllCharacterController(req: Request, res: Response, next: NextFunction) {
   try {

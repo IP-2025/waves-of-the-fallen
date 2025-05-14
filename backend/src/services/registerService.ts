@@ -1,11 +1,9 @@
 import bcrypt from 'bcrypt';
-import {ConflictError, InternalServerError} from '../errors';
 import { v4 as uuidv4 } from 'uuid';
-import logger from '../logger/logger';
-import {createNewPlayer, deletePlayer} from '../repositories/playerRepository';
-import { saveCredential } from '../repositories/credentialsRepository';
-import { Player } from '../libs/entities/Player';
-import { unlockCharacter } from '../repositories/unlockedCharacterRepository';
+import { termLogger as logger } from 'logger';
+import {createNewPlayer, deletePlayer} from 'repositories/playerRepository';
+import { saveCredential } from 'repositories/credentialsRepository';
+import { unlockCharacter } from 'repositories/unlockedCharacterRepository';
 
 export async function registerUser(username: string, password: string, mail: string): Promise<string> {
   const playerId = uuidv4();
