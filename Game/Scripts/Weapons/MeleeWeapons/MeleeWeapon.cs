@@ -59,11 +59,12 @@ public abstract partial class MeleeWeapon : Area2D
 	}
 	protected void MeleeAttack()
 	{
-		var healthNode = target.GetNodeOrNull<Health>("Health");
-		
-		if (healthNode != null)
-		{
+		if(target != null){
+			var healthNode = target.GetNodeOrNull<Health>("Health");
+			if (healthNode != null)
+			{
 			healthNode.Damage(MeleeDamage);
+			}
 		}
 	}
 	protected void ShootMeleeVisual(Action onAttackComplete = null)

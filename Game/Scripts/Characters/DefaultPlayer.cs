@@ -123,8 +123,8 @@ public partial class DefaultPlayer : CharacterBody2D
 	private Area2D CreateWeaponForClass(object playerClass)
 	{
 		if (playerClass is Archer)
-			return BowScene.Instantiate() as Area2D;
-		
+			//return BowScene.Instantiate() as Area2D;
+			return KunaiScene.Instantiate() as Area2D;
 		if (playerClass is Assassin)
 			return KunaiScene.Instantiate() as Area2D;
 		// if (playerClass is Mage) return FireStaffScene.Instantiate() as Area2D;
