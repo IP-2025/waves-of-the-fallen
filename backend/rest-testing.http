@@ -35,6 +35,7 @@ Content-Type: application/json
 
 ###
 
+POST http://localhost/api/v1/game/start
 POST http://localhost:3000/api/v1/protected/character/unlock
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMyYTkxMWVkLTgzYjktNDIxMS1hNzlkLTg3ODViYzViMmY0NiIsImlhdCI6MTc0NjU2OTk5MiwiZXhwIjoxNzQ3MTc0NzkyfQ.zWnY1K-EhKTat8IMLIwZ4ROnbT3Ht2vIoOskndr6GH0

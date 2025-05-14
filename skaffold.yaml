@@ -6,18 +6,32 @@ build:
   local:
     push: false
   artifacts:
-    - image: kaprele/waves-of-the-fallen/backend
+    - image: kaprele/waves-of-the-fallen_backend
       context: backend
       docker:
         dockerfile: Dockerfile
+    - image: kaprele/k8s-hello-pod
+      context: hello-pod
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: './*.js'
+            dest: .
 manifests:
   rawYaml:
-    - k8s/app-ingress.yaml
-    - k8s/db-secret.yaml
-    - k8s/mngmt-depl.yaml
-    - k8s/mngmt-svc.yaml
-    - k8s/pgadmin-depl.yaml
-    - k8s/pgadmin-svc.yaml
-    - k8s/postgres-depl.yaml
-    - k8s/postgres-pvc.yaml
-    - k8s/postgres-svc.yaml
+    - k8s/*
+
+profiles:
+  - name: prod
+    build:
+      local:
+        push: true
+      tagPolicy:
+        envTemplate:
+          template: "{{.VERSION}}"
+      artifacts:
+        - image: docker.io/kaprele/waves-of-the-fallen_backend
+          context: backend
+          docker:
+            dockerfile: Dockerfile

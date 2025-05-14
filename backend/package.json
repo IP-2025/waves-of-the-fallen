@@ -19,6 +19,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@kubernetes/client-node": "^1.2.0",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "express": "^4.18.2",
