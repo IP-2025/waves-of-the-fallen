@@ -50,6 +50,7 @@ public partial class LocalMenu : Control
     // TODO: disconect from server / host
     var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/online_localMenu.tscn");
     GetTree().ChangeSceneToPacked(scene);
+    SoundManager.Instance.PlayUI();
   }
 
 
@@ -76,6 +77,7 @@ public partial class LocalMenu : Control
 
     hostButton.Visible = false;
     hostButton.Disabled = true;
+    SoundManager.Instance.PlayUI();
   }
 
 
@@ -89,6 +91,7 @@ public partial class LocalMenu : Control
     isHost = true;
 
     NetworkManager.Instance.StartHeadlessServer(true);
+    SoundManager.Instance.PlayUI();
   }
 
   private void _on_play_button_pressed()
@@ -98,6 +101,7 @@ public partial class LocalMenu : Control
     int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
     NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
     NetworkManager.Instance.Rpc("NotifyGameStart");
+    SoundManager.Instance.PlayUI();
   }
 
   private void DebugIt(string message)

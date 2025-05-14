@@ -15,7 +15,7 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "format": "npx prettier --write .",
-    "test": "NODE_ENV=test jest --detectOpenHandles --forceExit"
+    "test": " jest "
   },
   "type": "module",
   "dependencies": {

@@ -1,6 +1,7 @@
-import {NextFunction, Request, Response} from 'express';
-import {BadRequestError, InternalServerError} from '../errors';
-import {registerUser} from '../services/registerService';
+import { NextFunction, Request, Response } from 'express';
+import { BadRequestError, InternalServerError } from '../errors';
+import { registerUser } from '../services/registerService';
+import logger from "../logger/logger";
 
 export async function registrateController(
     req: Request,

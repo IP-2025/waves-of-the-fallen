@@ -1,9 +1,8 @@
 using Godot;
-using WavesOfTheFallen;
 
 public partial class RegisterScreen : Control
 {
-	private static readonly string REGISTER_URL = $"{Config.BaseUrl}/api/v1/auth/register";
+	private static readonly string REGISTER_URL = $"{Game.Scripts.Config.Server.BaseUrl}/api/v1/auth/register";
 
 	private LineEdit _emailField;
 	private LineEdit _usernameField;
@@ -32,6 +31,7 @@ public partial class RegisterScreen : Control
 	private void OnRegisterButtonPressed()
 	{
 		GD.Print("Button pressed!");
+		SoundManager.Instance.PlayUI();
 		var username = _usernameField.Text;
 		var email = _emailField.Text.Trim();
 		var password = _passwordField.Text;
@@ -77,6 +77,7 @@ public partial class RegisterScreen : Control
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/login_screen.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
+		SoundManager.Instance.PlayUI();
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
