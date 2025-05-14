@@ -384,6 +384,7 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 
 [node name="GreyedOut" type="ColorRect" parent="."]
+unique_name_in_owner = true
 visible = false
 layout_mode = 0
 offset_left = -1.0
@@ -403,6 +404,7 @@ text = "The local progress does not match the online progres. Please select the 
 you want to keep."
 
 [node name="LocalButton" type="Button" parent="GreyedOut"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 245.0
 offset_top = 278.0
@@ -412,12 +414,16 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_hqcu1")
 text = "LOCAL"
 
 [node name="OnlineButton" type="Button" parent="GreyedOut"]
+unique_name_in_owner = true
 offset_left = 619.0
 offset_top = 279.0
 offset_right = 910.0
 offset_bottom = 368.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_frg03")
 text = "ONLINE"
+
+[node name="SyncLocalOnServerRequest" type="HTTPRequest" parent="GreyedOut"]
+unique_name_in_owner = true
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/TempResetButton" to="." method="ResetCharacters"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_charactermenu_pressed"]
