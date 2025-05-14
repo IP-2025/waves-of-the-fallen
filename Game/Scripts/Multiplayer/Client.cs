@@ -35,7 +35,7 @@ public partial class Client : Node
 		{ EntityType.Mage, GD.Load<PackedScene>("res://Scenes/Characters/mage.tscn") },
 		{ EntityType.FireStaff, GD.Load<PackedScene>("res://Scenes/Weapons/firestaff.tscn")},
 		{ EntityType.FireBall, GD.Load<PackedScene>("res://Scenes/Weapons/fireball.tscn")},
-		{ EntityType.Dagger, GD.Load<PackedScene>("res://Scenes/Weapons/dagger.tscn")},
+				{ EntityType.Dagger, GD.Load<PackedScene>("res://Scenes/Weapons/dagger.tscn")},
 		{ EntityType.Sword, GD.Load<PackedScene>("res://Scenes/Weapons/Sword.tscn")}
 	};
 
@@ -89,10 +89,24 @@ public partial class Client : Node
 
 		// cleanup removed entities
 		CleanupRemovedEntities(networkIds);
+
+		if (_camera != null && !networkIds.Contains(Multiplayer.GetUniqueId()))
+		{
+			_camera = null;
+			_hasJoystick = false;
+		}
 	}
+
 
 	private void InstantiateOrUpdateEntities(IEnumerable<EntitySnapshot> entities)
 	{
+		// Kamera- und WaveTimer-Referenzen überprüfen und ggf. zurücksetzen
+		if (_camera != null && !GodotObject.IsInstanceValid(_camera))
+		{
+			_camera = null;
+			_waveTimerReady = false;
+			timer = null;
+		}
 		// first all not a weapon things (no OwnerID & SlotIndex)
 		foreach (var entity in entities.Where(e => !e.OwnerId.HasValue || !e.SlotIndex.HasValue))
 		{
@@ -127,12 +141,12 @@ public partial class Client : Node
 				_instances[entity.NetworkId] = inst;
 				DebugIt($"Instantiated {entity.Type} with ID {entity.NetworkId}");
 
-				if (!_hasJoystick)
+				if (!_hasJoystick && entity.NetworkId == Multiplayer.GetUniqueId())
 				{
 					AttachJoystick(inst, entity);
 				}
 
-				if (_camera == null)
+				if (_camera == null && entity.NetworkId == Multiplayer.GetUniqueId())
 				{
 					ChangeCamera(inst, entity);
 				}
@@ -141,6 +155,7 @@ public partial class Client : Node
 			UpdateTransform(inst, entity);
 		}
 
+		// Weapon Handling
 		foreach (var entity in entities.Where(e => e.OwnerId.HasValue && e.SlotIndex.HasValue))
 		{
 			if (_instances.ContainsKey(entity.NetworkId))
@@ -167,7 +182,7 @@ public partial class Client : Node
 
 			var inst = scene.Instantiate<Node2D>();
 
-			// sisable health for enemies because server handles it
+			// disable health for enemies because server handles it
 			if (entity.Type == EntityType.DefaultEnemy
 				|| entity.Type == EntityType.RangedEnemy
 				|| entity.Type == EntityType.MountedEnemy
@@ -245,9 +260,12 @@ public partial class Client : Node
 		return null; // no OwnerID & SlotIndex? f this
 	}
 
+	
+
+	
 	private void UpdateTransform(Node2D inst, EntitySnapshot entity)
 	{
-		if (IsInstanceValid(inst))
+		if (GodotObject.IsInstanceValid(inst))
 		{
 			inst.GlobalPosition = entity.Position;
 			inst.Rotation = entity.Rotation;

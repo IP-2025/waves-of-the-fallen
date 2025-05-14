@@ -21,6 +21,7 @@ public partial class Kunai : RangedWeapon
 			return;
 
 		animatedSprite.Play("shoot");
+		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("kunaiThrows"), GlobalPosition, -6.9f);
 		Shoot();
 	}
 }

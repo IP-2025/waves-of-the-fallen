@@ -5,6 +5,7 @@ import logger from '../logger/logger';
 import {createNewPlayer, deletePlayer} from '../repositories/playerRepository';
 import { saveCredential } from '../repositories/credentialsRepository';
 import { Player } from '../libs/entities/Player';
+import { unlockCharacter } from '../repositories/unlockedCharacterRepository';
 
 export async function registerUser(
   username: string,
@@ -25,6 +26,8 @@ export async function registerUser(
       email: mail,
       hashedPassword: hashedPassword,
     });
+
+    await unlockCharacter(playerId, 1);
 
     return createdPlayer.player_id;
   } catch (error) {

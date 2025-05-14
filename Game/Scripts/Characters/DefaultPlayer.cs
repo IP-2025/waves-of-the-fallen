@@ -123,15 +123,15 @@ public partial class DefaultPlayer : CharacterBody2D
 	private Area2D CreateWeaponForClass(object playerClass)
 	{
 		if (playerClass is Archer)
-			//return BowScene.Instantiate() as Area2D;
-			return KunaiScene.Instantiate() as Area2D;
+			return BowScene.Instantiate() as Area2D;
+		
 		if (playerClass is Assassin)
 			return KunaiScene.Instantiate() as Area2D;
-		// if (playerClass is Mage) return FireStaffScene.Instantiate() as Area2D;
+
 		if (playerClass is Mage) 
 			return FireStaffScene.Instantiate() as Area2D;
 		if (playerClass is Knight)
-		//return DaggerScene.Instantiate() as Area2D;
+			//return DaggerScene.Instantiate() as Area2D;
 			return SwordScene.Instantiate() as Area2D;
 		
 		return null;
@@ -203,6 +203,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	}
 	public virtual void Die()
 	{
+		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"), GlobalPosition);
 		GD.Print("Default death behavior – no animation");
 		QueueFree();
 	}

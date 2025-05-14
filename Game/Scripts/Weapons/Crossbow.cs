@@ -6,7 +6,8 @@ public partial class Crossbow : RangedWeapon
 {
 	
 	private PackedScene arrowScene = GD.Load<PackedScene>("res://Scenes/Weapons/crossbow_arrow.tscn");
-	
+	private int crossbowFiresFrame = 3;
+
 	public override void _Ready()
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/CrossbowSprite");
@@ -22,4 +23,9 @@ public partial class Crossbow : RangedWeapon
 		Shoot();
 	}
 	
+	public void _on_crossbow_sprite_frame_changed() {
+		if(crossbowFiresFrame == GetNode<AnimatedSprite2D>("WeaponPivot/CrossbowSprite").Frame) {
+			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("crossbowFires"), GlobalPosition);
+		}
+	}
 }

@@ -39,9 +39,9 @@ public partial class Server : Node
 
 	public void ProcessCommand(Command cmd)
 	{
-		if (!Entities.TryGetValue(cmd.EntityId, out var entity))
+		if (!Entities.TryGetValue(cmd.EntityId, out var entity) || !GodotObject.IsInstanceValid(entity))
 		{
-			DebugIt($"Entity {cmd.EntityId} not found in Entities dictionary");
+			DebugIt($"[SKIP] Entity {cmd.EntityId} not found or already disposed.");
 			return;
 		}
 
@@ -59,21 +59,20 @@ public partial class Server : Node
 			if (joystick != null)
 			{
 				joystick.PosVector = dir;
-				
-				DebugIt($"Set Joystick.PosVector = {dir} on EntityID {cmd.EntityId}");
+				DebugIt($"Set Joystick.PosVector = {dir} on Entity {cmd.EntityId}");
 			}
 		}
 		else if (cmd.Type == CommandType.Shoot)
 		{
-			// Tmaybe we need, maybe we don't
+			// Maybe we need, maybe we don't
 		}
 	}
 
 	public byte[] GetSnapshot(ulong tick)
 	{
-
-
-		// serialize and build snapshot
+		
+		
+		 // serialize and build snapshot
 		var snap = new Snapshot(tick);
 		var toRemove = new List<long>();
 		foreach (var kv in Entities)
@@ -101,16 +100,15 @@ public partial class Server : Node
 			int waveCount = 0;
 			int secondsLeft = 0;
 			bool graceTime = false;
-			var cam = GetViewport().GetCamera2D();
-			if (cam != null)
+			
+			var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
+			var waveTimer = gameRoot?.GetNodeOrNull<WaveTimer>("GlobalWaveTimer");
+
+			if (waveTimer != null)
 			{
-				var waveTimer = cam.GetNodeOrNull<WaveTimer>("WaveTimer");
-				if (waveTimer != null)
-				{
-					waveCount = waveTimer.waveCounter;
-					secondsLeft = waveTimer.secondCounter;
-					graceTime = waveTimer.isPaused;
-				}
+				waveCount = waveTimer.waveCounter;
+				secondsLeft = waveTimer.secondCounter;
+				graceTime = waveTimer.isPaused;
 			}
 
 			// Get health
@@ -125,6 +123,7 @@ public partial class Server : Node
 				owner = (long)node.GetMeta("OwnerId");
 				slotIx = (int)node.GetMeta("SlotIndex");
 			}
+
 			DebugIt($"Snapshot: Entity Name: {node.Name}, Position: {node.Position}, ID: {id}");
 			snap.Entities.Add(new EntitySnapshot(
 				id,
@@ -139,12 +138,6 @@ public partial class Server : Node
 				owner, // nullable
 				slotIx // nullable
 			));
-		}
-
-		// remove invalid entities, for example killed enemies
-		foreach (var id in toRemove)
-		{
-			Entities.Remove(id);
 		}
 
 		return Serializer.Serialize(snap);
