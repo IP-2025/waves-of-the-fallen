@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import {k8sApi, namespace} from 'services';
+import {k8sApi, namespace} from 'services/k8sService';
 
 export async function listGameController(req: Request, res: Response) {
     try {

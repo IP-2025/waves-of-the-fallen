@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {k8sApi, namespace, removeFromIngress} from "services";
+import {k8sApi, namespace, removeFromIngress} from "services/k8sService";
 
 export async function stopGameController(req: Request, res: Response){
 
