@@ -4,7 +4,7 @@ import { getSettings, setSettings } from '../controllers/settingsController';
 import { setGoldController, getGoldController } from '../controllers/playerStatController';
 import {
   getAllCharacterController,
-  getAllUnlockedCharacterController, levelUpCharController,
+  getAllUnlockedCharacterController, levelUpCharController, progressSyncController,
   unlockCharController,
 } from '../controllers/characterController';
 
@@ -22,6 +22,7 @@ protectedRouter.get('/character',authenticationStep, getAllCharacterController);
 protectedRouter.post('/getAllUnlockedCharacters',authenticationStep, getAllUnlockedCharacterController);
 protectedRouter.post('/character/unlock', authenticationStep, unlockCharController)
 protectedRouter.post('/character/levelUp', authenticationStep, levelUpCharController)
+protectedRouter.post('/progressSync', authenticationStep, progressSyncController);
 
 
 export default protectedRouter;

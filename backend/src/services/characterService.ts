@@ -2,10 +2,11 @@ import { Character } from '../libs/entities/Character';
 import {
   getAllCharactersRepo,
   getAllUnlockedCharactersRepo,
-  insertAllCharacters,
+  insertAllCharacters, removeCharacter, updateCharacter,
 } from '../repositories/characterRepository';
 import fs from 'fs';
 import { levelUpCharacter, unlockCharacter } from '../repositories/unlockedCharacterRepository';
+import { LocalProgress } from '../types/dto';
 
 export async function innitAllCharacters(chars?: Character[]): Promise<void> {
   const characters = chars ?? readCharacters();
@@ -65,3 +66,42 @@ export async function saveCharChanges(playerId: string, charId: number) {
 export async function levelUpChar(playerId: string, charId: number) {
   await levelUpCharacter(playerId, charId);
 }
+
+export async function progressSyncService(playerId: string, body: any) {
+  console.log(JSON.stringify(body, null, 2));
+  const localProgress = parseLocalProgress(body);
+
+  const dbProgress = await getAllUnlockedCharactersRepo(playerId);
+
+  // Filtere Charaktere, die in der Datenbank sind, aber nicht in localProgress
+  const missingInLocalProgress = dbProgress.filter(
+    (dbChar: { character_id: number }) =>
+      !localProgress.some(localChar => localChar.character_id === dbChar.character_id)
+  );
+
+  for (const char of missingInLocalProgress) {
+    await removeCharacter(playerId, char.character_id);
+  }
+
+  for (const char of localProgress) {
+    await updateCharacter(playerId, char.character_id, char.level);
+  }
+
+  return ;
+}
+
+const parseLocalProgress = (data: any): LocalProgress => {
+  if (!data || !Array.isArray(data.local_progress)) {
+    throw new Error('Invalid data format');
+  }
+
+  return data.local_progress.map((item: any) => {
+    if (typeof item.character_id !== 'number' || typeof item.level !== 'number') {
+      throw new Error('Invalid item format');
+    }
+    return {
+      character_id: item.character_id,
+      level: item.level,
+    };
+  });
+};

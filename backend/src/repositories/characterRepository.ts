@@ -2,6 +2,7 @@ import { AppDataSource } from '../libs/data-source';
 import { Character } from '../libs/entities/Character';
 import { UnlockedCharacter } from '../libs/entities/UnlockedCharacter';
 import { Player } from '../libs/entities/Player';
+import { NotFoundError } from '../errors';
 
 async function deleteAll() {
   await AppDataSource.getRepository(Character).clear();
@@ -24,3 +25,44 @@ export async function getAllUnlockedCharactersRepo(playerId: string): Promise<Un
   });
 }
 
+export async function removeCharacter(playerId: string, charId: number): Promise<void> {
+  const player = await AppDataSource.getRepository(Player).findOneBy({ player_id: playerId });
+  if (!player) {
+    throw new NotFoundError('Player not found');
+  }
+
+  const unlockedCharacter = await AppDataSource.getRepository(UnlockedCharacter).findOne({
+    where: {
+      character_id: charId,
+      player: {
+        player_id: playerId,
+      },
+    },
+  });
+
+  if (unlockedCharacter) {
+    await AppDataSource.getRepository(UnlockedCharacter).remove(unlockedCharacter);
+  }
+}
+
+export async function updateCharacter(playerId: string, charId: number, level: number): Promise<void> {
+  const player = await AppDataSource.getRepository(Player).findOneBy({ player_id: playerId });
+  if (!player) {
+    throw new NotFoundError('Player not found');
+  }
+  const unlockedCharacter = await AppDataSource.getRepository(UnlockedCharacter).findOne({
+    where: {
+      character_id: charId,
+      player: {
+        player_id: playerId,
+      },
+    },
+  });
+
+  if (unlockedCharacter) {
+    unlockedCharacter.level = level;
+    await AppDataSource.getRepository(UnlockedCharacter).save(unlockedCharacter);
+  } else {
+    throw new NotFoundError('Unlocked character not found');
+  }
+}
