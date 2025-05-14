@@ -1,6 +1,6 @@
-namespace WavesOfTheFallen
+namespace Game.Scripts.Config
 {
-	public static class Config
+	public static class Server
 	{
 	#if DEBUG
 		public const string BaseUrl = "http://localhost:3000";

@@ -1,22 +1,21 @@
-import { Entity, Column, OneToOne, JoinColumn, PrimaryColumn } from 'typeorm';
-import { Credential } from './Credential';
+  import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-@Entity()
-export class Player {
-  @PrimaryColumn({
-    type: 'varchar',
-    nullable: false,
-    unique: true,
-  })
-  player_id!: string;
+  @Entity()
+  export class Player {
+    @PrimaryColumn({
+      type: 'varchar',
+      nullable: false,
+      unique: true,
+    })
+    player_id!: string;
 
-  @Column({
-    type: 'varchar',
-    nullable: true,
-    unique: true,
-  })
-  username!: string;
+    @Column({
+      type: 'varchar',
+      nullable: true,
+      unique: true,
+    })
+    username!: string;
 
-  @Column({ type: 'int', default: 0 })
-  gold: number = 0;
-}
+    @Column({ type: 'int', default: 0 })
+    gold: number = 0;
+  }

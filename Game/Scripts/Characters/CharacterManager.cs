@@ -42,6 +42,13 @@ public partial class CharacterManager : Node
 		
 		config.Save(SettingsPath);
 	}
+
+	public void UpdateCharacter(string charcterId, int level, int unlocked)
+	{
+		config.SetValue(charcterId, "level", level);
+		config.SetValue(charcterId, "unlocked", unlocked);
+		config.Save(SettingsPath);
+	}
 	
 	public void SaveCharacterData(int characterId, string name, int health, int speed, int dexterity, int intelligence, int level, int unlocked)
 	{
