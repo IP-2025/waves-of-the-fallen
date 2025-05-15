@@ -23,6 +23,7 @@ CharacterManager="*res://Scripts/Characters/CharacterManager.cs"
 NetworkManager="*res://Scripts/Multiplayer/NetworkManager.cs"
 SecureStorage="*res://Scripts/Storage/SecureStorage.cs"
 Server="*res://Scripts/Multiplayer/Server.cs"
+SoundManager="*res://Scenes/Sounds/sound_manager.tscn"
 
 [display]
 

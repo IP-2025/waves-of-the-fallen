@@ -13,7 +13,6 @@ const generateTestUser = () => {
 
 let validToken: string;
 let registeredPlayerId: string;
-const invalidToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZmFrZSIsImlhdCI6MH0.invalidsignature';
 
 beforeEach(async () => {
     const testUser = generateTestUser();
@@ -34,29 +33,34 @@ beforeEach(async () => {
     expect(loginResponse.status).toBe(200); // Correct status for login
     validToken = loginResponse.body.token;
 
-    await AppDataSource.getRepository(UnlockedCharacter).insert({player_id: registeredPlayerId, character_id: '1', level: 1});
+    const unlockedCharacter = AppDataSource.getRepository(UnlockedCharacter).create({
+        player: { player_id: registeredPlayerId },
+        character_id: 1,
+        level: 1,
+    });
+    await AppDataSource.getRepository(UnlockedCharacter).save(unlockedCharacter);
 
 });
 
 describe('POST /getAllUnlockedCharacters', () => {
     it('should return all Unlocked Characters', async () => {
-
-
         const AllCharacters = await request(app)
-            .post('/api/v1/protected/getAllUnlockedCharacters')
-            .set('Authorization', `Bearer ${validToken}`)
+          .post('/api/v1/protected/getAllUnlockedCharacters')
+          .set('Authorization', `Bearer ${validToken}`);
         expect(AllCharacters.status).toBe(200);
-        expect(AllCharacters.body).toEqual(
-            expect.arrayContaining([
-                expect.objectContaining({
-                    player_id: registeredPlayerId,
-                    character_id: '1',
-                    level: 1,
-                }),
-            ])
-        );
 
+        const relevantFields = AllCharacters.body.unlocked_characters.map((char: any) => ({
+            character_id: char.character_id,
+            level: char.level,
+        }));
+
+        expect(relevantFields).toEqual(
+          expect.arrayContaining([
+              expect.objectContaining({
+                  character_id: 1,
+                  level: 1,
+              }),
+          ])
+        );
     });
 });
-
-

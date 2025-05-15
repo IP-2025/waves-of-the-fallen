@@ -448,6 +448,7 @@ animationPath = NodePath("AnimatedSprite2D")
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_ilr60")
+max_health = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_2xkst")

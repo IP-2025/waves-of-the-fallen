@@ -1,11 +1,9 @@
 using Godot;
-using System;
-using Godot.Collections;
-using WavesOfTheFallen;
+using Game.Scripts.Config;
 
 public partial class LoginScreen : Control
 {
-	private static readonly string LOGIN_URL = $"{Config.BaseUrl}/api/v1/auth/login";
+	private const string LoginUrl = $"{Game.Scripts.Config.Server.BaseUrl}/api/v1/auth/login";
 
 	private LineEdit _emailField;
 	private LineEdit _passwordField;
@@ -37,14 +35,12 @@ public partial class LoginScreen : Control
 		_errorLabel.Visible = false;
 		
 		var token = SecureStorage.LoadToken();
-		if (!string.IsNullOrEmpty(token))
-		{
-			var url = $"{Config.BaseUrl}/api/v1/protected/";
-			var headers = new[] { $"Authorization: Bearer {token}" };
-			var err = _authRequest.Request(url, headers, Godot.HttpClient.Method.Get);
-			if (err != Error.Ok)
-				GD.PrintErr($"AuthRequest error: {err}");
-		}
+		if (string.IsNullOrEmpty(token)) return;
+		const string url = $"{Game.Scripts.Config.Server.BaseUrl}/api/v1/protected/";
+		var headers = new[] { $"Authorization: Bearer {token}" };
+		var err = _authRequest.Request(url, headers, Godot.HttpClient.Method.Get);
+		if (err != Error.Ok)
+			GD.PrintErr($"AuthRequest error: {err}");
 	}
 	
 	private void OnAuthRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
@@ -64,15 +60,17 @@ public partial class LoginScreen : Control
 
 	private void OnOfflineButtonPressed()
 	{
+		GameState.CurrentState = ConnectionState.Offline;
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/mainMenu.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
+		SoundManager.Instance.PlayUI();
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
 	private void OnLoginButtonPressed()
 	{
-		string email = _emailField.Text.Trim();
-		string password = _passwordField.Text;
+		var email = _emailField.Text.Trim();
+		var password = _passwordField.Text;
 
 		if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
 		{
@@ -80,31 +78,32 @@ public partial class LoginScreen : Control
 			return;
 		}
 
-		string body = Json.Stringify(new Godot.Collections.Dictionary
+		var body = Json.Stringify(new Godot.Collections.Dictionary
 		{
 			{ "email", email },
 			{ "password", password }
 		});
-
+		SoundManager.Instance.PlayUI();
 		// Send POST request
 		var headers = new[] { "Content-Type: application/json" };
 		var err = _httpRequest.Request(
-			LOGIN_URL,
+			LoginUrl,
 			headers,
-			Godot.HttpClient.Method.Post,
+			HttpClient.Method.Post,
 			body
 		);
-
 		if (err != Error.Ok)
 			ShowError($"Request error: {err}");
 		else
 			_loginButton.Disabled = true;
+	
 	}
 
 	private void OnRegisterButtonPressed()
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Scenes/Menu/register_screen.tscn");
 		if (scene == null) GD.PrintErr("Register Scene not found");
+		SoundManager.Instance.PlayUI();
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
@@ -112,29 +111,31 @@ public partial class LoginScreen : Control
 	{
 		_loginButton.Disabled = false;
 
-		if (responseCode == 200)
+		switch (responseCode)
 		{
-			string bodyText = System.Text.Encoding.UTF8.GetString(body);
+			case 200:
+			{
+				var bodyText = System.Text.Encoding.UTF8.GetString(body);
 
-		 	var json = new Json();
-		 	var parseErr = json.Parse(bodyText);
-		 	if (parseErr == Error.Ok)
-		 	{
-				var response = json.GetData().AsGodotDictionary();
-		 		OnLoginSuccess(response);
-		 		return;
-		 	}
+				var json = new Json();
+				var parseErr = json.Parse(bodyText);
+				if (parseErr == Error.Ok)
+				{
+					var response = json.GetData().AsGodotDictionary();
+					OnLoginSuccess(response);
+					return;
+				}
 
-		 	ShowError("Unexpected server response.");
-		 }
-		 else if (responseCode == 401)
-		 {
-		 	ShowError("Invalid credentials.");
-		 }
-		 else
-		 {
-		 	ShowError($"Server error: {responseCode}");
-		 }
+				ShowError("Unexpected server response.");
+				break;
+			}
+			case 401:
+				ShowError("Invalid credentials.");
+				break;
+			default:
+				ShowError($"Server error: {responseCode}");
+				break;
+		}
 	}
 
 	private void OnLoginSuccess(Godot.Collections.Dictionary data)

@@ -36,3 +36,6 @@ collision_mask = 384
 
 [node name="Mage" parent="." instance=ExtResource("7_bdmc5")]
 collision_mask = 384
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+current = true
