@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import { saveCredential, NewCred } from '../../src/repositories/credentialsRepository';
+import { saveCredential, NewCred } from '../../src/repositories';
 import { AppDataSource } from '../../src/database/dataSource';
-import { Player } from '../../src/database/entities/Player';
-import { Credential } from '../../src/database/entities/Credential';
+import { Player } from '../../src/database/entities';
+import { Credential } from '../../src/database/entities';
 
 describe('Check saveCredential', () => {
   it('should save a new credential', async () => {

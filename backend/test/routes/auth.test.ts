@@ -1,7 +1,9 @@
 import request from 'supertest';
 import app from '../../src/app';
 import { AppDataSource } from '../../src/database/dataSource';
-import { Player } from '../../src/database/entities/Player';
+import { Player } from '../../src/database/entities';
+
+jest.mock('services/k8sService')
 
 const userData = {
   username: 'MaxMustermann',
