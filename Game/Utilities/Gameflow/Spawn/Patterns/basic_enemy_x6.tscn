@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://r602pnonpc86"]
+
+[ext_resource type="Script" uid="uid://bdvsfh2fwgtja" path="res://Utilities/Gameflow/Spawn/EnemyPattern.cs" id="1_0wms1"]
+[ext_resource type="PackedScene" uid="uid://di4l7nv7umbjw" path="res://Entities/Enemies/Goblin/default_enemy.tscn" id="2_fbdw2"]
+
+[node name="BasicEnemyX6" type="Node2D"]
+script = ExtResource("1_0wms1")
+spawningCost = 2.0
+minWave = 2
+
+[node name="BasicEnemy" parent="." instance=ExtResource("2_fbdw2")]
+position = Vector2(-103, -73)
+
+[node name="BasicEnemy2" parent="." instance=ExtResource("2_fbdw2")]
+position = Vector2(5, 113)
+
+[node name="BasicEnemy3" parent="." instance=ExtResource("2_fbdw2")]
+position = Vector2(-103, 44)
+
+[node name="BasicEnemy4" parent="." instance=ExtResource("2_fbdw2")]
+position = Vector2(96, 48)
+
+[node name="BasicEnemy5" parent="." instance=ExtResource("2_fbdw2")]
+position = Vector2(99, -74)
+
+[node name="BasicEnemy6" parent="." instance=ExtResource("2_fbdw2")]
+position = Vector2(-2, -128)

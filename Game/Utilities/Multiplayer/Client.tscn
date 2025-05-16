@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6chl7r341t85"]
+
+[ext_resource type="Script" uid="uid://btyas65lxe44y" path="res://Utilities/Multiplayer/Client.cs" id="1_skxj7"]
+
+[node name="Client" type="Node"]
+script = ExtResource("1_skxj7")
