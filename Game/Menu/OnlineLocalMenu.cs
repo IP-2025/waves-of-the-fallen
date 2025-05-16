@@ -25,7 +25,7 @@ public partial class OnlineLocalMenu : Control
   }
   private void _on_button_local_pressed()
   {
-	var scene = ResourceLoader.Load<PackedScene>("res://Menu/Main/localMenu.tscn");
+	var scene = ResourceLoader.Load<PackedScene>("res://Menu/localMenu.tscn");
 	SoundManager.Instance.PlayUI();
 	GetTree().ChangeSceneToPacked(scene);
   }
