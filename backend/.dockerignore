@@ -12,6 +12,7 @@ yarn-error.log
 .env-*
 .env
 .env.template
+samples/.env.template
 
 # Docker files
 Dockerfile
