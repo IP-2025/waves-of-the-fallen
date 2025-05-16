@@ -94,16 +94,15 @@ public partial class Server : Node
             int waveCount = 0;
             int secondsLeft = 0;
             bool graceTime = false;
-            var cam = GetViewport().GetCamera2D();
-            if (cam != null)
+            var waveTimer = GetTree()
+			.Root.GetNodeOrNull<GameRoot>("GameRoot")
+			?.GetNodeOrNull<WaveTimer>("GlobalWaveTimer");
+
+            if (waveTimer != null)
             {
-                var waveTimer = cam.GetNodeOrNull<WaveTimer>("WaveTimer");
-                if (waveTimer != null)
-                {
-                    waveCount = waveTimer.waveCounter;
-                    secondsLeft = waveTimer.secondCounter;
-                    graceTime = waveTimer.isPaused;
-                }
+                waveCount = waveTimer.waveCounter;
+                secondsLeft = waveTimer.secondCounter;
+                graceTime = waveTimer.isPaused;
             }
 
             var healthNode = node.GetNodeOrNull<Health>("Health");

@@ -10,7 +10,7 @@ public partial class FireBall : Projectile
 	public override void _Ready()
 	{
 		Speed = 600;
-		Damage = 60;
+		Damage = 120;
 	}
 	public override void OnBodyEntered(Node2D body)
 	{

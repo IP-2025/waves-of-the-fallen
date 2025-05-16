@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ckw0iqrsdcp5k" path="res://Entities/Enemies/Goblin/BasicEnemy.cs" id="1_fecjr"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_ihcfn"]
-[ext_resource type="Texture2D" uid="uid://l06upbjknstb" path="res://Entities/Enemies/Goblin/Resources/Goblin_spritesheet.png" id="3_ihcfn"]
+[ext_resource type="Texture2D" uid="uid://dqfsl6qopn6pk" path="res://Entities/Enemies/Goblin/Resources/Goblin_spritesheet.png" id="3_ihcfn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r4aor"]
 radius = 26.0192
@@ -168,6 +168,7 @@ animationPath = NodePath("GoblinAnimation")
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_ihcfn")
+max_health = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_r4aor")

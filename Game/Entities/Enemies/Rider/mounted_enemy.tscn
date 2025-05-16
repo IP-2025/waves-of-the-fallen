@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://4v08bsts05xi" path="res://Entities/Enemies/Rider/MountedEnemy.cs" id="1_script"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="3_health"]
-[ext_resource type="Texture2D" uid="uid://6txj8oes0rnn" path="res://Entities/Enemies/Rider/Resources/PlaceholderBody.png" id="5_6dmdw"]
+[ext_resource type="Texture2D" uid="uid://bdkepp66e5owk" path="res://Entities/Enemies/Rider/Resources/PlaceholderBody.png" id="5_6dmdw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
 radius = 18.0
@@ -85,6 +85,7 @@ animationPath = NodePath("AnimatedSprite2D")
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("3_health")
+max_health = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_body")
