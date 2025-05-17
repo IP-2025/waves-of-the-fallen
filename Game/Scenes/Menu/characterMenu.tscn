@@ -415,6 +415,7 @@ text = "LOCAL"
 
 [node name="OnlineButton" type="Button" parent="GreyedOut"]
 unique_name_in_owner = true
+layout_mode = 0
 offset_left = 619.0
 offset_top = 279.0
 offset_right = 910.0

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { BadRequestError } from 'errors';
-import { pwdCheck } from 'services';
+import { BadRequestError } from '../errors';
+import { pwdCheck } from '../services/loginService';
 
 export async function loginController(req: Request, res: Response, next: NextFunction) {
   try {

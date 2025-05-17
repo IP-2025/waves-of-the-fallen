@@ -161,7 +161,7 @@ animations = [{
 
 [node name="BasicEnemy" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 16
-collision_mask = 145
+collision_mask = 17
 motion_mode = 1
 script = ExtResource("1_fecjr")
 animationPath = NodePath("GoblinAnimation")

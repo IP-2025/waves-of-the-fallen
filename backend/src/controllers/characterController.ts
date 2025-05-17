@@ -5,15 +5,16 @@ import {
   levelUpChar,
   progressSyncService,
   saveCharChanges,
-} from 'services/characterService';
+} from '../services/characterService';
 import { extractAndValidatePlayerId } from '../auth/jwt';
 import { BadRequestError } from '../errors';
-import { termLogger as logger } from 'logger';
+import logger from '../logger/logger';
 
-export async function getAllCharacterController(req: Request, res: Response, next: NextFunction) {
+export const getAllCharacterController = async (req: Request, res: Response, next: NextFunction) => {
+  logger.info('GET: /character');
   try {
     const characters = await getAllCharacters();
-    res.status(200).json(characters);
+    res.json(characters).status(200);
   } catch (err) {
     next(err);
   }
@@ -87,4 +88,4 @@ export const progressSyncController = async (req: Request, res: Response, next: 
   } catch (err) {
     next(err);
   }
-}
+};

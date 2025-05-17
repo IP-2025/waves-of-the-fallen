@@ -1,16 +1,16 @@
-import { Character } from 'database/entities/Character';
+import { Character } from '../libs/entities/Character';
 import {
   getAllCharactersRepo,
   getAllUnlockedCharactersRepo,
   insertAllCharacters, removeCharacter, updateCharacter,
-} from 'repositories/characterRepository';
+} from '../repositories/characterRepository';
 import fs from 'fs';
-import { levelUpCharacter, unlockCharacter } from 'repositories/unlockedCharacterRepository';
-import { LocalProgress } from 'types/dto';
+import { levelUpCharacter, unlockCharacter } from '../repositories/unlockedCharacterRepository';
+import { LocalProgress } from '../types/dto';
 
 export async function innitAllCharacters(chars?: Character[]): Promise<void> {
   const characters = chars ?? readCharacters();
-  const allCharacters = (await getAllCharactersRepo()) ?? [];
+  const allCharacters = (await getAllCharactersRepo()) || [];
 
   // 1) If DB has no rows yet, just insert all characters
   if (allCharacters.length === 0) {
@@ -86,6 +86,8 @@ export async function progressSyncService(playerId: string, body: any) {
   for (const char of localProgress) {
     await updateCharacter(playerId, char.character_id, char.level);
   }
+
+  return ;
 }
 
 const parseLocalProgress = (data: any): LocalProgress => {

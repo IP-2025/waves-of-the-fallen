@@ -10,7 +10,7 @@ size = Vector2(31.25, 7)
 z_index = 1
 position = Vector2(1, 0)
 collision_layer = 4
-collision_mask = 400
+collision_mask = 272
 script = ExtResource("1_ukiom")
 
 [node name="Arrow" type="Sprite2D" parent="."]

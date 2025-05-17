@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import {Request, Response} from 'express';
-import {k8sApi, namespace, patchIngress} from "services/k8sService";
+import {k8sApi, namespace, patchIngress} from "../services/k8sService";
 
 export async function startGameController(req: Request, res: Response) {
 

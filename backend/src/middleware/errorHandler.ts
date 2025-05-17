@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import logger from 'logger/termLogger';
-import { CustomError } from 'errors/customErorr';
+import logger from '../logger/logger';
+import { CustomError } from '../errors/customErorr';
 
 export function errorHandler(err: CustomError, req: Request, res: Response, next: NextFunction) {
   logger.error(`Error: ${err.message}`);

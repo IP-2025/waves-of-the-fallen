@@ -8,7 +8,7 @@ export const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
 export const k8sAppsApi = kc.makeApiClient(k8s.AppsV1Api);
 export const k8sNetworkingApi = kc.makeApiClient(k8s.NetworkingV1Api);
 
-export const namespace = 'waves-of-the-fallen';
+export const namespace = 'k8s-demo';
 export const ingressName = 'dynamic-game-ingress';
 
 export async function patchIngress(newPathName: string, serviceName: string) {
@@ -28,12 +28,6 @@ export async function patchIngress(newPathName: string, serviceName: string) {
                 },
             },
         };
-
-        if(!ingress.spec?.rules?.[0]?.http) {
-            ingress.spec!.rules![0].http = {
-                paths: [],
-            }
-        }
 
         const currentPaths = ingress.spec?.rules?.[0]?.http?.paths ?? [];
         const updatedPaths = [...currentPaths, newPath];

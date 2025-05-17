@@ -1,5 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
 
+
+
 @Entity()
 export class Settings {
   @PrimaryColumn({

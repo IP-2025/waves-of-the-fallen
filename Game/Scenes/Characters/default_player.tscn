@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://bdkp0e6ivq2b5" path="res://Scripts/Characters/DefaultPlayer.cs" id="1_y2kgl"]
 [ext_resource type="PackedScene" uid="uid://56x8ud47qho" path="res://Scenes/Characters/archer.tscn" id="3_kjvlq"]
-[ext_resource type="PackedScene" uid="uid://davsuba61dhxg" path="res://Scenes/Characters/assassin.tscn" id="5_jig1i"]
-[ext_resource type="PackedScene" uid="uid://0p12i28j1a33" path="res://Scenes/Characters/knight.tscn" id="6_ajyao"]
-[ext_resource type="PackedScene" uid="uid://ky4c426l3rhs" path="res://Scenes/Characters/mage.tscn" id="7_bdmc5"]
+[ext_resource type="PackedScene" uid="uid://bichqwbvl1iwh" path="res://Scenes/Characters/assassin.tscn" id="5_jig1i"]
+[ext_resource type="PackedScene" uid="uid://brnmi011d55l7" path="res://Scenes/Characters/knight.tscn" id="6_ajyao"]
+[ext_resource type="PackedScene" uid="uid://dsncgbos1x7l" path="res://Scenes/Characters/mage.tscn" id="7_bdmc5"]
 
 [node name="DefaultPlayer" type="CharacterBody2D"]
-collision_mask = 384
+collision_mask = 256
 collision_priority = 2.0
 script = ExtResource("1_y2kgl")
 
@@ -26,16 +26,12 @@ position = Vector2(25, 15)
 position = Vector2(-25, 15)
 
 [node name="Archer" parent="." instance=ExtResource("3_kjvlq")]
-collision_mask = 384
 
 [node name="Assassin" parent="." instance=ExtResource("5_jig1i")]
-collision_mask = 384
 
 [node name="Knight" parent="." instance=ExtResource("6_ajyao")]
-collision_mask = 384
 
 [node name="Mage" parent="." instance=ExtResource("7_bdmc5")]
-collision_mask = 384
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
