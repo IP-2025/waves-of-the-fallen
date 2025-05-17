@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dsncgbos1x7l"]
+[gd_scene load_steps=6 format=3 uid="uid://ky4c426l3rhs"]
 
 [ext_resource type="Script" uid="uid://biegdkfmesh02" path="res://Scripts/Characters/Mage.cs" id="1_shc7e"]
 [ext_resource type="Script" uid="uid://dspnlxhoo12q" path="res://Scripts/Characters/Health.cs" id="2_55mar"]
@@ -9,7 +9,7 @@
 size = Vector2(25, 36.2188)
 
 [node name="Mage" type="CharacterBody2D"]
-collision_mask = 256
+collision_mask = 384
 collision_priority = 2.0
 script = ExtResource("1_shc7e")
 

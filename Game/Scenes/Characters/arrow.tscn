@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cthg4llu6u25n"]
+[gd_scene load_steps=4 format=3 uid="uid://brpwgptxilodd"]
 
 [ext_resource type="Texture2D" uid="uid://cabl7r7vw2agl" path="res://Assets/Weapons/Crossbow/Arrow2.png" id="1_mffm0"]
 [ext_resource type="Script" uid="uid://bl8guri7oexs" path="res://Scripts/Enemies/EnemyProjectile.cs" id="1_v7l71"]
@@ -8,6 +8,7 @@ size = Vector2(20, 4)
 
 [node name="Arrow" type="Area2D"]
 collision_layer = 6
+collision_mask = 129
 script = ExtResource("1_v7l71")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
