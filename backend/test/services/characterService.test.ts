@@ -1,4 +1,4 @@
-import { Character } from "../../src/database/entities/Character";
+import { Character } from "../../src/libs/entities/Character";
 import {innitAllCharacters } from "../../src/services/characterService";
 import { getAllCharacters } from "../../src/services/characterService";
 

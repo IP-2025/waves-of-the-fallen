@@ -1,9 +1,9 @@
 import { PostgreSqlContainer, StartedPostgreSqlContainer } from "@testcontainers/postgresql";
-import { AppDataSource } from './src/database/dataSource';
+import { AppDataSource } from './src/libs/data-source';
 
 let container: StartedPostgreSqlContainer;
 
-jest.setTimeout(60000); // Set timeout to 30 seconds
+jest.setTimeout(30000); // Set timeout to 30 seconds
 
 global.beforeAll(async () => {
   container = await new PostgreSqlContainer().start();

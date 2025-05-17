@@ -1,7 +1,7 @@
-import { UnauthorizedError } from 'errors';
+import { UnauthorizedError } from '../errors';
 import { NextFunction, Request, Response } from 'express';
-import { extractAndValidatePlayerId } from 'auth/jwt';
-import { userExists } from 'repositories/playerRepository';
+import { extractAndValidatePlayerId } from '../auth/jwt';
+import { userExists } from '../repositories/playerRepository';
 
 export async function authenticationStep(req: Request, res: Response, next: NextFunction) {
   try {
@@ -16,6 +16,6 @@ export async function authenticationStep(req: Request, res: Response, next: Next
 
     next();
   } catch (error) {
-    next(error);
+    next(error)
   }
 }

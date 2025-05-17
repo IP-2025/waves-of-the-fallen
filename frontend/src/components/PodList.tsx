@@ -17,7 +17,7 @@ function PodList({ pods }: PodListProps) {
     if (!pods.length) return <p>No pods running yet.</p>;
 
     const stopPod = (pod: Pod) => {
-        const response = axios.post(`api/v1/game/stop`, {
+        const response = axios.post(`api/stop`, {
             code: pod.code
         })
         // @ts-ignore

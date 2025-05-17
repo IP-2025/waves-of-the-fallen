@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../../src/app';
-import {UnlockedCharacter} from '../../src/database/entities';
-import {AppDataSource} from "../../src/database/dataSource";
+import {UnlockedCharacter} from "../../src/libs/entities/UnlockedCharacter";
+import {AppDataSource} from "../../src/libs/data-source";
 
 const generateTestUser = () => {
     return {

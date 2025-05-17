@@ -1,9 +1,0 @@
-export * from './characterController';
-export { healthCheck } from './healthController';
-export { loginController } from './loginController';
-export { getGoldController, setGoldController } from './playerStatController';
-export { registrateController } from './registerController';
-export { getSettings, setSettings } from './settingsController';
-export { startGameController } from './startGameController';
-export { stopGameController } from './stopGameController';
-export { listGameController } from './listGameController';

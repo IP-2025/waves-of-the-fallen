@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../../src/app';
-import { AppDataSource } from '../../src/database/dataSource';
-import { UnlockedCharacter } from '../../src/database/entities/UnlockedCharacter';
+import { AppDataSource } from '../../src/libs/data-source';
+import { UnlockedCharacter } from '../../src/libs/entities/UnlockedCharacter';
 
 const generateTestUser = () => {
   return {
@@ -75,3 +75,4 @@ describe('POST /setGold', () => {
     expect(coinsResponse.body).toEqual(10);
   });
 });
+
