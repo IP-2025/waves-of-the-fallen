@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
-import { createNewPlayer, NewPlayer } from '../../src/repositories/playerRepository';
-import { AppDataSource } from '../../src/libs/data-source';
-import { Player } from '../../src/libs/entities/Player';
+import { createNewPlayer, NewPlayer } from '../../src/repositories';
+import { AppDataSource } from '../../src/database/dataSource';
+import { Player } from '../../src/database/entities';
 
 describe('Check insertNewUser', () => {
   it('should insert a new user', async () => {

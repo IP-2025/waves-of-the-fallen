@@ -15,7 +15,7 @@ function App() {
 
     const startNewPod = async () => {
         try {
-            const response = await axios.post('/api/start');
+            const response = await axios.post('/api/v1/game/start');
             setMessage(response.data.message || 'Pod started!');
         } catch (error) {
             console.error(error);
@@ -25,7 +25,7 @@ function App() {
 
     const fetchPods = async () => {
         try {
-            const response = await axios.get('/api/pods');
+            const response = await axios.get('/api/v1/game/all');
             setPods([])
             setPods(response.data.pods || []);
             console.log(response.data.pods);

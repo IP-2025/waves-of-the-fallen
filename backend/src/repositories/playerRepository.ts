@@ -1,8 +1,7 @@
-import {AppDataSource} from '../libs/data-source';
-import {Player} from '../libs/entities/Player';
-import logger from '../logger/logger';
-import {ConflictError, InternalServerError} from '../errors';
-import {Settings} from '../libs/entities/Settings';
+import {AppDataSource} from 'database/dataSource';
+import {termLogger as logger} from 'logger';
+import { ConflictError, InternalServerError, NotFoundError} from 'errors';
+import {Player, Settings} from 'database/entities';
 
 const playersRepo = AppDataSource.getRepository(Player);
 const settingRepo = AppDataSource.getRepository(Settings);
@@ -13,7 +12,7 @@ export interface NewPlayer {
 }
 
 export async function createNewPlayer(user: NewPlayer) {
-    const existingPlayer = await playersRepo.findOneBy({ username: user.username });
+    const existingPlayer = await playersRepo.findOneBy({username: user.username});
     if (existingPlayer) {
         throw new ConflictError('Player with this username already exists');
     }
@@ -42,29 +41,17 @@ export async function userExists(playerId: string): Promise<boolean> {
 }
 
 export async function getGoldRepository(playerId: string): Promise<number> {
-    try {
-        const player = await playersRepo.findOneBy({player_id: playerId});
-        if (!player) {
-            throw new InternalServerError('Player not found');
-        }
-        return player.gold;
-    } catch (error) {
-        logger.error('Error retrieving gold: ', error);
-        throw new InternalServerError('Error retrieving gold');
+    const player = await playersRepo.findOneBy({player_id: playerId});
+    if (!player) {
+        throw new NotFoundError('Player not found');
     }
+    return player.gold;
 }
 
-
 export async function setGoldRepository(playerId: string, gold: number): Promise<void> {
-    try {
-        const result = await playersRepo.update({player_id: playerId}, {gold});
-        if (result.affected === 0) {
-            throw new InternalServerError('Player not found');
-        }
-        logger.debug(`Gold updated for player_id: ${playerId}, new gold: ${gold}`);
-    } catch (error) {
-        logger.error('Error setting gold: ', error);
-        throw new InternalServerError('Error setting gold');
+    const result = await playersRepo.update({player_id: playerId}, {gold});
+    if (result.affected === 0) {
+        throw new NotFoundError('Player not found');
     }
 }
 

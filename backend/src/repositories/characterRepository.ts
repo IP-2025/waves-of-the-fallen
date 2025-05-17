@@ -1,8 +1,8 @@
-import { AppDataSource } from '../libs/data-source';
-import { Character } from '../libs/entities/Character';
-import { UnlockedCharacter } from '../libs/entities/UnlockedCharacter';
-import { Player } from '../libs/entities/Player';
-import { NotFoundError } from '../errors';
+import { AppDataSource } from 'database/dataSource';
+import { Character } from 'database/entities/Character';
+import { UnlockedCharacter } from 'database/entities/UnlockedCharacter';
+import { Player } from 'database/entities/Player';
+import { NotFoundError } from 'errors';
 
 async function deleteAll() {
   await AppDataSource.getRepository(Character).clear();

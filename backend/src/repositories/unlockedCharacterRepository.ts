@@ -1,8 +1,7 @@
-import {AppDataSource} from "../libs/data-source";
-import {UnlockedCharacter} from "../libs/entities/UnlockedCharacter";
-import {InternalServerError} from "../errors";
-import {Player} from "../libs/entities/Player";
-import {Character} from "../libs/entities/Character";
+import {AppDataSource} from "database/dataSource";
+import {UnlockedCharacter} from "database/entities/UnlockedCharacter";
+import {InternalServerError} from "errors";
+import {Player} from "database/entities/Player";
 
 const unlockCharRepo = AppDataSource.getRepository(UnlockedCharacter);
 const playerRepo = AppDataSource.getRepository(Player);

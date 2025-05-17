@@ -1,15 +1,15 @@
 import 'reflect-metadata';
 import app from './app';
-import { PORT } from './core/config';
-import { AppDataSource } from './libs/data-source';
-import logger from './logger/logger';
-import { innitAllCharacters } from './services/characterService';
+import { termLogger as logger } from 'logger';
+import { innitAllCharacters } from 'services/characterService';
+import { AppDataSource } from 'database/dataSource';
+import { AppConfig } from 'core/config';
 
-const port = PORT || 3000;
+const port = AppConfig.PORT || 3000;
 
 AppDataSource.initialize()
   .then(async () => {
-    await innitAllCharacters()
+    await innitAllCharacters();
     app.listen(port, () => {
       logger.info(`🚀 Server crying on port ${port}`);
     });

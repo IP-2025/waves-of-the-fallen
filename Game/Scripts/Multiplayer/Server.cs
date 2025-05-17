@@ -28,9 +28,7 @@ public partial class Server : Node
 		{ "res://Scenes/Weapons/kunai.tscn", EntityType.Kunai },
 		{ "res://Scenes/Weapons/kunai_projectile.tscn", EntityType.KunaiProjectile },
 		{ "res://Scenes/Weapons/firestaff.tscn", EntityType.FireStaff},
-		{ "res://Scenes/Weapons/fireball.tscn", EntityType.FireBall},
-		{ "res://Scenes/Weapons/dagger.tscn", EntityType.Dagger},
-		{ "res://Scenes/Weapons/Sword.tscn", EntityType.Sword}
+		{ "res://Scenes/Weapons/fireball.tscn", EntityType.FireBall}
 	};
 	public override void _Ready()
 	{
