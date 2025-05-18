@@ -130,6 +130,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
 		if (playerClass is Mage) 
 			return FireStaffScene.Instantiate() as Area2D;
+			
 		if (playerClass is Knight)
 			//return DaggerScene.Instantiate() as Area2D;
 			return SwordScene.Instantiate() as Area2D;

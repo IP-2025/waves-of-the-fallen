@@ -9,7 +9,7 @@
 size = Vector2(25, 36.2188)
 
 [node name="Archer" type="CharacterBody2D"]
-collision_mask = 256
+collision_mask = 384
 collision_priority = 2.0
 script = ExtResource("1_rpbpn")
 

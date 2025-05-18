@@ -78,6 +78,7 @@ animations = [{
 
 [node name="MountedEnemy" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 16
+collision_mask = 129
 script = ExtResource("1_script")
 speed = 130.0
 damage = 5.0

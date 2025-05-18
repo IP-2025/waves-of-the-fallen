@@ -17,6 +17,6 @@ public enum EntityType
 	KunaiProjectile,
 	FireStaff,
 	FireBall,
-	Sword,
-	Dagger
+	Dagger,
+	Sword
 }

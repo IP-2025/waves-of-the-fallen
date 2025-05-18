@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bewmpi3vhr67l"]
+[gd_scene load_steps=8 format=3 uid="uid://ch3tny3ssg083"]
 
 [ext_resource type="Script" uid="uid://bdb05bu362bd0" path="res://Scripts/Weapons/Sword.cs" id="1_6nwni"]
 [ext_resource type="Texture2D" uid="uid://cuy2ysc8janl4" path="res://Assets/Weapons/MasterSword/MasterSword.png" id="1_l8vww"]
-[ext_resource type="Texture2D" uid="uid://cfwsugsioiyac" path="res://Assets/Weapons/MasterSword/SwordTrailTest.png" id="2_6nwni"]
+[ext_resource type="Texture2D" uid="uid://b5dm5mqnh2av2" path="res://Assets/Weapons/MasterSword/SwordTrailTest.png" id="2_6nwni"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a54vs"]
 radius = 40.2897
