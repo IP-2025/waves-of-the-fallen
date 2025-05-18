@@ -65,10 +65,6 @@ describe('POST /getAllUnlockedCharacters', () => {
   });
 });
 
-/*
-protectedRouter.post('/character/levelUp', authenticationStep, levelUpCharController);
- */
-
 describe('POST /levelUp', () => {
   it('should levelUp specific Character for Player', async () => {
 
