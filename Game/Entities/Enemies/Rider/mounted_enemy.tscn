@@ -1,0 +1,114 @@
+[gd_scene load_steps=13 format=3 uid="uid://55ua147f3qds"]
+
+[ext_resource type="Script" uid="uid://4v08bsts05xi" path="res://Entities/Enemies/Rider/MountedEnemy.cs" id="1_script"]
+[ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="3_health"]
+[ext_resource type="Texture2D" uid="uid://6txj8oes0rnn" path="res://Entities/Enemies/Rider/Resources/PlaceholderBody.png" id="5_6dmdw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 18.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_attack"]
+radius = 200.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
+radius = 600.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lnbe5"]
+atlas = ExtResource("5_6dmdw")
+region = Rect2(0, 0, 119, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6dmdw"]
+atlas = ExtResource("5_6dmdw")
+region = Rect2(0, 0, 119, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85pfk"]
+atlas = ExtResource("5_6dmdw")
+region = Rect2(0, 0, 119, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jabg"]
+atlas = ExtResource("5_6dmdw")
+region = Rect2(0, 0, 119, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_46ajv"]
+atlas = ExtResource("5_6dmdw")
+region = Rect2(0, 0, 119, 216)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wlcpe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lnbe5")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6dmdw")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85pfk")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jabg")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_46ajv")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="MountedEnemy" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 16
+collision_mask = 129
+script = ExtResource("1_script")
+speed = 130.0
+damage = 5.0
+animationPath = NodePath("AnimatedSprite2D")
+
+[node name="Health" type="Node2D" parent="."]
+script = ExtResource("3_health")
+max_health = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_body")
+
+[node name="AttackRange" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+visible = false
+shape = SubResource("CircleShape2D_attack")
+
+[node name="detection_area" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
+visible = false
+shape = SubResource("CircleShape2D_detection")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.167542, 0.170316)
+sprite_frames = SubResource("SpriteFrames_wlcpe")
+animation = &"walk"
+
+[connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
+[connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]
