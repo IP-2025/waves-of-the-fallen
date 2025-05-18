@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://brnmi011d55l7"]
+[gd_scene load_steps=6 format=3 uid="uid://0p12i28j1a33"]
 
 [ext_resource type="Script" uid="uid://cydobr6cu0ytl" path="res://Entities/Characters/Knight/Knight.cs" id="1_wbc0s"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_7stuo"]
@@ -9,12 +9,9 @@
 size = Vector2(25, 36.2188)
 
 [node name="Knight" type="CharacterBody2D"]
-collision_mask = 256
+collision_mask = 384
 collision_priority = 2.0
 script = ExtResource("1_wbc0s")
-Speed = null
-MaxHealth = null
-CurrentHealth = null
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 

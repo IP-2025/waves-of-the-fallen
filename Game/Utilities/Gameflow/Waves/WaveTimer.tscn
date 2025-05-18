@@ -11,6 +11,7 @@ font_size = 21
 font_color = Color(0, 0, 0, 1)
 
 [node name="WaveTimer" type="Node2D"]
+z_index = 2
 script = ExtResource("1_65k0p")
 
 [node name="WaveTimer" type="Timer" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bichqwbvl1iwh"]
+[gd_scene load_steps=6 format=3 uid="uid://davsuba61dhxg"]
 
 [ext_resource type="Script" uid="uid://70abqg7ujgbf" path="res://Entities/Characters/Assassin/Assassin.cs" id="1_y3eth"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_slb6w"]
@@ -9,7 +9,7 @@
 size = Vector2(25, 36.2188)
 
 [node name="Assassin" type="CharacterBody2D"]
-collision_mask = 256
+collision_mask = 384
 collision_priority = 2.0
 script = ExtResource("1_y3eth")
 

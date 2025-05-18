@@ -1,4 +1,4 @@
-import { setGoldRepository, getGoldRepository } from '../repositories/playerRepository';
+import { setGoldRepository, getGoldRepository } from 'repositories';
 
 export async function getGoldService(id: string): Promise<number> {
   return getGoldRepository(id);

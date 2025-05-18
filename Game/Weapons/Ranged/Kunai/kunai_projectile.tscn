@@ -8,7 +8,7 @@ size = Vector2(45.4545, 13.6364)
 
 [node name="KunaiProjektile" type="Area2D"]
 collision_layer = 4
-collision_mask = 272
+collision_mask = 400
 script = ExtResource("1_48rnb")
 
 [node name="Kunai" type="Sprite2D" parent="."]

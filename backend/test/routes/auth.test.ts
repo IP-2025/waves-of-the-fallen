@@ -1,7 +1,9 @@
 import request from 'supertest';
 import app from '../../src/app';
-import { AppDataSource } from '../../src/libs/data-source';
-import { Player } from '../../src/libs/entities/Player';
+import { AppDataSource } from '../../src/database/dataSource';
+import { Player } from '../../src/database/entities';
+
+jest.mock('services/k8sService')
 
 const userData = {
   username: 'MaxMustermann',
@@ -65,7 +67,7 @@ describe('Test POST /login', () => {
 
     expect(errorLoginResponse.status).toBe(401);
     expect(errorLoginResponse.body).toMatchObject({
-      message: 'Invalid password.',
+      message: 'email or password is incorrect.',
       status: 'error',
     });
   });

@@ -3,7 +3,6 @@ import {Player} from './Player';
 
 @Entity()
 export class UnlockedCharacter {
-
   @PrimaryGeneratedColumn()
   id!: number;
 
