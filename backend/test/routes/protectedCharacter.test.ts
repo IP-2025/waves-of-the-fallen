@@ -69,6 +69,52 @@ describe('POST /getAllUnlockedCharacters', () => {
 protectedRouter.post('/character/levelUp', authenticationStep, levelUpCharController);
  */
 
+describe('POST /levelUp', () => {
+  it('should levelUp specific Character for Player', async () => {
+
+    const unlockResponse = await request(app)
+      .post('/api/v1/protected/character/unlock')
+      .set('Authorization', `Bearer ${validToken}`)
+      .send({ character_id: 3 });
+    expect(unlockResponse.status).toBe(200);
+
+    let levelUpResponse = await request(app)
+      .post('/api/v1/protected/character/levelUp')
+      .set('Authorization', `Bearer ${validToken}`)
+      .send({ character_id: 3 });
+    expect(levelUpResponse.status).toBe(200);
+
+    levelUpResponse = await request(app)
+      .post('/api/v1/protected/character/levelUp')
+      .set('Authorization', `Bearer ${validToken}`)
+      .send({ character_id: 1 });
+    expect(levelUpResponse.status).toBe(200);
+
+    const AllCharacters = await request(app)
+      .post('/api/v1/protected/getAllUnlockedCharacters')
+      .set('Authorization', `Bearer ${validToken}`);
+    expect(AllCharacters.status).toBe(200);
+
+    const relevantFields = AllCharacters.body.unlocked_characters.map((char: any) => ({
+      character_id: char.character_id,
+      level: char.level,
+    }));
+
+    expect(relevantFields).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          character_id: 1,
+          level: 2,
+        }),
+        expect.objectContaining({
+          character_id: 3,
+          level: 2,
+        }),
+      ]),
+    );
+  });
+});
+
 
 describe('POST /unlock', () => {
   it('should unlock specific Character for Player', async () => {
@@ -102,6 +148,5 @@ describe('POST /unlock', () => {
         }),
       ]),
     );
-
   });
 });
