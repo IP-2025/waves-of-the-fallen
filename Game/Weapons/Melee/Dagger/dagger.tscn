@@ -1,17 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://dvjyool0r7j0"]
+[gd_scene load_steps=4 format=3 uid="uid://dvjyool0r7j0"]
 
-[ext_resource type="Texture2D" uid="uid://cpyxavt2ndhvx" path="res://Assets/Weapons/Dagger/Dagger.png" id="1_hjfan"]
-[ext_resource type="Script" uid="uid://ovccsntxxhkt" path="res://Scripts/Weapons/MeleeWeapons/Dagger.cs" id="1_o7gox"]
-[ext_resource type="Texture2D" uid="uid://ic2gy2p77hqf" path="res://Assets/Weapons/Dagger/Dagger1.png" id="1_tnl4c"]
+[ext_resource type="Script" uid="uid://ovccsntxxhkt" path="res://Weapons/Melee/Dagger/Dagger.cs" id="1_o7gox"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o7gox"]
 animations = [{
 "frames": [{
 "duration": 5.0,
-"texture": ExtResource("1_hjfan")
+"texture": null
 }, {
 "duration": 1.0,
-"texture": ExtResource("1_tnl4c")
+"texture": null
 }],
 "loop": true,
 "name": &"stab",

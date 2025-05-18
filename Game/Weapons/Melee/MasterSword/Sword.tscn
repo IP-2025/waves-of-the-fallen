@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://ch3tny3ssg083"]
 
-[ext_resource type="Script" uid="uid://bdb05bu362bd0" path="res://Scripts/Weapons/Sword.cs" id="1_6nwni"]
-[ext_resource type="Texture2D" uid="uid://cuy2ysc8janl4" path="res://Assets/Weapons/MasterSword/MasterSword.png" id="1_l8vww"]
-[ext_resource type="Texture2D" uid="uid://b5dm5mqnh2av2" path="res://Assets/Weapons/MasterSword/SwordTrailTest.png" id="2_6nwni"]
+[ext_resource type="Script" uid="uid://cxtedfws8416i" path="res://Weapons/Melee/MasterSword/Sword.cs" id="1_sa01y"]
+[ext_resource type="Texture2D" uid="uid://djj32qdgtl08m" path="res://Weapons/Melee/MasterSword/Resources/MasterSword.png" id="2_ciqr1"]
+[ext_resource type="Texture2D" uid="uid://p480n6hoap35" path="res://Weapons/Melee/MasterSword/Resources/SwordTrailTest.png" id="3_sxts0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a54vs"]
 radius = 40.2897
@@ -96,7 +96,7 @@ _data = {
 
 [node name="Sword" type="Area2D"]
 scale = Vector2(0.0658588, 0.067116)
-script = ExtResource("1_6nwni")
+script = ExtResource("1_sa01y")
 
 [node name="Parts" type="Node2D" parent="."]
 
@@ -110,12 +110,12 @@ shape = SubResource("CapsuleShape2D_a54vs")
 
 [node name="MasterSword" type="Sprite2D" parent="."]
 position = Vector2(2.99999, -2)
-texture = ExtResource("1_l8vww")
+texture = ExtResource("2_ciqr1")
 
 [node name="SwordTrailTest" type="Sprite2D" parent="."]
 position = Vector2(-87, -95)
 rotation = 0.777564
-texture = ExtResource("2_6nwni")
+texture = ExtResource("3_sxts0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

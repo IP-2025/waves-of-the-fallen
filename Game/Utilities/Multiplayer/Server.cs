@@ -31,8 +31,8 @@ public partial class Server : Node
 		{ "res://Entities/Characters/Mage/mage.tscn", EntityType.Mage },
 		{ "res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn", EntityType.FireStaff },
 		{ "res://Weapons/Ranged/MagicStaffs/Firestaff/fireball.tscn", EntityType.FireBall },
-		{ EntityType.Dagger, GD.Load<PackedScene>("res//Weapons/Melee/Dagger/dagger.tscn")},
-		{ EntityType.Sword, GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn")}
+		{ "res://Weapons/Melee/Dagger/dagger.tscn", EntityType.Dagger },
+		{ "res://Weapons/Melee/MasterSword/Sword.tscn", EntityType.Sword },
 	};
 
 	public override void _Ready()
