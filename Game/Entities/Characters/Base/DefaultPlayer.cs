@@ -193,7 +193,7 @@ public partial class DefaultPlayer : CharacterBody2D
 		Velocity = direction * Speed;
 		MoveAndSlide();
 
-		animationHandler?.PlayWalkOrIdle(Velocity);
+		animationHandler?.UpdateAnimationState(false, Velocity);
 
 		// // Play Animations
 		// if (animationPlayer != null)
@@ -231,7 +231,7 @@ public partial class DefaultPlayer : CharacterBody2D
 			Debug.Print(message);
 		}
 	}
-	
+
 	public virtual void Die()
 	{
 		Velocity = Vector2.Zero;
