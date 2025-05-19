@@ -18,5 +18,7 @@ public enum EntityType
 	FireStaff,
 	FireBall,
 	Dagger,
-	Sword
+	Sword,
+	Lightningstaff,
+	Lighting,
 }
