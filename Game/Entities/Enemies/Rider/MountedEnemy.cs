@@ -29,6 +29,13 @@ public partial class MountedEnemy : EnemyBase
 		{
 			Vector2 toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
 			Velocity = toPlayer * speed;
+
+			// Flip Sprite for right direction
+			var sprite = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
+			if (sprite != null)
+			{
+				sprite.FlipH = toPlayer.X > 0;
+			}
 		}
 		else
 		{

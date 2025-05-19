@@ -93,14 +93,13 @@ public partial class SpawnEnemies : Node2D
 		pattern.QueueRedraw();
 	}
 
-	private void LoadPatternPool() // loads patterns through the filepath below into the patternPool with their associated spawningCost
+	private void LoadPatternPool() // loads only the mounted enemy pattern for testing
 	{
 		string patternFilepath = "res://Utilities/Gameflow/Spawn/Patterns/";
-		foreach (string patternName in DirAccess.GetFilesAt(patternFilepath))
-		{
-			PackedScene pattern = GD.Load<PackedScene>(patternFilepath + patternName);
-			patternPool.Add(pattern, pattern.Instantiate<EnemyPattern>().spawningCost);
-		}
+		string mountedPattern = "mounted_enemy_x1.tscn"; // Name deines MountedEnemy-Patterns
+		PackedScene pattern = GD.Load<PackedScene>(patternFilepath + mountedPattern);
+		patternPool.Clear(); // Nur MountedEnemy verwenden
+		patternPool.Add(pattern, pattern.Instantiate<EnemyPattern>().spawningCost);
 	}
 
 	private void OnWaveEnd() // refreshes the current wave value, calculates the enemy limit, deletes empty patterns and starts a grace time
