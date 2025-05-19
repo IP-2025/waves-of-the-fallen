@@ -21,6 +21,8 @@ export async function updateUserHighscore(req: any, res: any, next: NextFunction
         if (bigger) {
             await updateHighScoreService(playerId, score);
         }
+
+        res.status(200).json({message: 'Highscore updated successfully'});
     } catch (err) {
         next(err)
     }
@@ -33,9 +35,9 @@ export async function getUserHighscore(req: any, res: any, next: NextFunction) {
         if (!playerId) {
             throw new BadRequestError('Missing required fields');
         }
-        await getUserHighscoreService(playerId);
+        const highScore = await getUserHighscoreService(playerId);
 
-
+        res.status(200).json({highScore});
     } catch (err) {
         next(err)
     }
@@ -45,7 +47,8 @@ export async function getUserHighscore(req: any, res: any, next: NextFunction) {
 
 export async function getTopHighscore(req: any, res: any, next: NextFunction) {
     try {
-        return await getTopHighscoreService();
+       const highScoreList = await getTopHighscoreService();
+       res.status(200).json({highScoreList});
     } catch (err) {
         next(err)
     }
