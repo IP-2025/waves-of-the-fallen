@@ -40,6 +40,8 @@ public partial class Health : Node2D
 		// hit animation
 		if (GetParent() is EnemyBase enemy)
 			enemy.OnHit();
+		else if (GetParent() is DefaultPlayer player)
+			player.OnHit();
 
 		// death animation
 		if (health <= 0) {

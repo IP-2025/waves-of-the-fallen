@@ -15,10 +15,15 @@ public partial class DefaultPlayer : CharacterBody2D
 	public int CurrentHealth { get; set; }
 	public long OwnerPeerId { get; set; }
 
+	[Export] private NodePath animationPath;
+
 	public Node2D Joystick { get; set; }
 	private Camera2D camera;
 	private MultiplayerSynchronizer multiplayerSynchronizer;
 	public bool enableDebug = false;
+
+	private AnimationHandler animationHandler;
+	private AnimatedSprite2D animation;
 	
 	public PackedScene BowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
 	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
@@ -119,6 +124,16 @@ public partial class DefaultPlayer : CharacterBody2D
 
 			weaponsEquipped++;
 		} 
+
+		if (animationPath != null)
+		{
+			animation = GetNode<AnimatedSprite2D>(animationPath);
+			animationHandler = new AnimationHandler(animation);
+		}else
+		{
+			GD.PushError($"{Name} has no animationPath set!");
+		}
+
 	}
 
 	private Area2D CreateWeaponForClass(object playerClass)
@@ -145,8 +160,14 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector2 direction = Vector2.Zero;
+		if (animationHandler != null && animationHandler.IsDying)
+		{
+			Velocity = Vector2.Zero;
+			MoveAndSlide();
+			return;
+		}
 
+		Vector2 direction = Vector2.Zero;
 		// Check if joystick exists and if it's being used
 		if (Joystick != null)
 		{
@@ -163,8 +184,16 @@ public partial class DefaultPlayer : CharacterBody2D
 			direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		}
 
+		// 3. Flip direction of the sprite
+		if (animation != null && direction != Vector2.Zero)
+		{
+			animation.FlipH = direction.X < 0;
+		}
+		
 		Velocity = direction * Speed;
 		MoveAndSlide();
+
+		animationHandler?.PlayWalkOrIdle(Velocity);
 
 		// // Play Animations
 		// if (animationPlayer != null)
@@ -202,10 +231,17 @@ public partial class DefaultPlayer : CharacterBody2D
 			Debug.Print(message);
 		}
 	}
+	
 	public virtual void Die()
 	{
+		Velocity = Vector2.Zero;
 		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"), GlobalPosition);
-		GD.Print("Default death behavior – no animation");
+		animationHandler?.SetDeath();
 		QueueFree();
+	}
+	
+	public void OnHit()
+	{
+		animationHandler?.SetHit();
 	}
 }
