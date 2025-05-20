@@ -7,8 +7,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_2xkst"]
 radius = 15.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_svs67"]
-radius = 42.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tvky7"]
+size = Vector2(60, 60)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ksi4c"]
 radius = 58.9406
@@ -458,7 +458,8 @@ shape = SubResource("CircleShape2D_2xkst")
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
-shape = SubResource("CircleShape2D_svs67")
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_tvky7")
 
 [node name="detection_area" type="Area2D" parent="."]
 collision_layer = 0
