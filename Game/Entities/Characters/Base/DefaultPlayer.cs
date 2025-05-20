@@ -27,6 +27,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	public PackedScene LightningStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn");
 	public PackedScene DaggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
 	public PackedScene SwordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
+	public PackedScene HammerScene = GD.Load<PackedScene>("res://Weapons/Melee/WarHammer/warHammer.tscn");
 	private int weaponsEquipped = 0;
 
 	public override void _Ready()
@@ -135,7 +136,8 @@ public partial class DefaultPlayer : CharacterBody2D
 			return FireStaffScene.Instantiate() as Area2D;
 		if (playerClass is Knight)
 			//return DaggerScene.Instantiate() as Area2D;
-			return SwordScene.Instantiate() as Area2D;
+			//return SwordScene.Instantiate() as Area2D;
+			return HammerScene.Instantiate() as Area2D;
 		
 		return null;
 	}

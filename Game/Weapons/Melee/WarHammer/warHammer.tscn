@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://bi8iv4nmu4lda"]
+
+[ext_resource type="Script" uid="uid://c3yjq1o6tm30a" path="res://Weapons/Melee/WarHammer/WarHammer.cs" id="1_no3o6"]
+[ext_resource type="Texture2D" uid="uid://x4qnil5s6ma6" path="res://Weapons/Melee/WarHammer/Resources/WarHammer.png" id="2_33nvm"]
+[ext_resource type="Texture2D" uid="uid://b4ndhlnf71xn4" path="res://Weapons/Melee/WarHammer/Resources/WarHammer1.png" id="3_nl3b2"]
+[ext_resource type="Texture2D" uid="uid://qocw6bkdm1vb" path="res://Weapons/Melee/WarHammer/Resources/WarHammer2.png" id="4_guhqi"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cst26"]
+animations = [{
+"frames": [{
+"duration": 3.0,
+"texture": ExtResource("2_33nvm")
+}, {
+"duration": 3.0,
+"texture": ExtResource("3_nl3b2")
+}, {
+"duration": 3.0,
+"texture": ExtResource("4_guhqi")
+}],
+"loop": true,
+"name": &"Crush",
+"speed": 5.0
+}]
+
+[node name="WarHammer" type="Area2D"]
+script = ExtResource("1_no3o6")
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+
+[node name="WarHammer" type="AnimatedSprite2D" parent="WeaponPivot"]
+position = Vector2(9.53674e-07, -4)
+scale = Vector2(0.141593, 0.121951)
+sprite_frames = SubResource("SpriteFrames_cst26")
+animation = &"Crush"
+frame_progress = 0.816158
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+autostart = true
+
+[node name="ShootingPoint" type="Marker2D" parent="."]
+position = Vector2(0, -64)
+
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutAttackHammer"]
