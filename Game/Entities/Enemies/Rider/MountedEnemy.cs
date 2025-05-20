@@ -7,12 +7,12 @@ public partial class MountedEnemy : EnemyBase
 	/// - stopDistance: Distance at which MountedEnemy stops moving.
 	/// - attackRange: Close range distance for MountedEnemy's attack.
 	/// </summary>
-	[Export] public float stopDistance = 1f;
+	[Export] public float stopDistance = 40f;
 	[Export] public float attackRange = 60f;
 
 	public MountedEnemy()
 	{
-		speed = 300f;
+		speed = 230f;
 		damage = 5f;
 		attacksPerSecond = 1f;
 	}

@@ -878,7 +878,7 @@ visible = false
 shape = SubResource("CircleShape2D_detection")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.7, 0.709)
+scale = Vector2(0.55, 0.557)
 sprite_frames = SubResource("SpriteFrames_wlcpe")
 animation = &"hit"
 
