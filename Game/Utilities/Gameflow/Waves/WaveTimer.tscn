@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://by74h3mjd51pu"]
+
+[ext_resource type="Script" uid="uid://cfdfevsg6dfej" path="res://Utilities/Gameflow/Waves/WaveTimer.cs" id="1_65k0p"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wv62o"]
+font_size = 21
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_okqds"]
+font_size = 21
+font_color = Color(0, 0, 0, 1)
+
+[node name="WaveTimer" type="Node2D"]
+z_index = 2
+script = ExtResource("1_65k0p")
+
+[node name="WaveTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="TimeLeft" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = -9.675
+anchor_top = -6.85
+anchor_right = -9.675
+anchor_bottom = -6.85
+offset_left = -24.0
+offset_top = -148.0
+offset_right = 24.0
+offset_bottom = -90.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_wv62o")
+horizontal_alignment = 1
+
+[node name="WaveCounter" type="Label" parent="."]
+offset_left = -76.0
+offset_top = -192.0
+offset_right = 76.0
+offset_bottom = -134.0
+label_settings = SubResource("LabelSettings_okqds")
+horizontal_alignment = 1
+vertical_alignment = 1

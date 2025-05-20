@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://bhvcfkmvm76yd"]
+
+[ext_resource type="Script" uid="uid://d2dckgdnxp5ab" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Lightningstaff.cs" id="1_o0la2"]
+[ext_resource type="Texture2D" uid="uid://b652xmbyawxyp" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff1.png" id="2_jn4o6"]
+[ext_resource type="Texture2D" uid="uid://dtjfryvrdtbhh" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff2.png" id="3_f5i8k"]
+[ext_resource type="Texture2D" uid="uid://dhnr8av267enf" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff3.png" id="4_rqcug"]
+[ext_resource type="Texture2D" uid="uid://jcdjb3vp7b00" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff4.png" id="5_edd4f"]
+[ext_resource type="Texture2D" uid="uid://b0g5j1c1hyiox" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff.png" id="6_njq73"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mi2q8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_jn4o6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_f5i8k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rqcug")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_edd4f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_njq73")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 5.0
+}]
+
+[node name="Lightningstaff" type="Area2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_o0la2")
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+
+[node name="LightningStaffSprite" type="AnimatedSprite2D" parent="WeaponPivot"]
+position = Vector2(6.82121e-13, 2.38419e-07)
+rotation = 1.5708
+scale = Vector2(0.12, 0.12)
+sprite_frames = SubResource("SpriteFrames_mi2q8")
+animation = &"shoot"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.7
+autostart = true
+
+[node name="ShootingPoint" type="Marker2D" parent="."]
+position = Vector2(26, 0)
+
+[connection signal="frame_changed" from="WeaponPivot/LightningStaffSprite" to="." method="_on_lightning_staff_sprite_frame_changed"]
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutLightningstaff"]
