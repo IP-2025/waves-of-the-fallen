@@ -77,7 +77,7 @@ describe('POST /setGold', () => {
 });
 
 describe('POST /levelUp', () => {
-  it('should return 400 for invalid character_id', async () => {
+  it('should return 500 for invalid character_id', async () => {
     const invalidCharacterId = -1;
 
     const levelUpResponse = await request(app)
