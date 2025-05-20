@@ -1,0 +1,209 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8dcceo0us5r5"]
+
+[ext_resource type="Script" uid="uid://j5gcbrucnngq" path="res://UI/Shop/BossShop/BossShop.cs" id="1_cox2s"]
+[ext_resource type="Texture2D" uid="uid://sx8bqn8fukcx" path="res://UI/Shop/BossShop/schwert1.webp" id="2_vpdq8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpdq8"]
+bg_color = Color(0.309804, 0.309804, 0.309804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uv5u4"]
+bg_color = Color(0.309804, 0.309804, 0.309804, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_grg02"]
+bg_color = Color(0.309804, 0.309804, 0.309804, 1)
+
+[node name="BossShop" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1150.0
+offset_bottom = 650.0
+script = ExtResource("1_cox2s")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.151276, 0.151276, 0.151276, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 1150.0
+offset_bottom = 60.79
+
+[node name="Label" type="Label" parent="CenterContainer"]
+custom_minimum_size = Vector2(82.145, 59.76)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Waffe wählen"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+offset_top = 63.0
+offset_right = 1150.0
+offset_bottom = 63.0
+size_flags_horizontal = 0
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+
+[node name="weapon1" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_vpdq8")
+
+[node name="texture" type="TextureRect" parent="MarginContainer/HBoxContainer/weapon1"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 26.0
+offset_right = 265.0
+offset_bottom = 246.0
+texture = ExtResource("2_vpdq8")
+expand_mode = 1
+
+[node name="name" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.099
+anchor_top = 0.612
+anchor_right = 0.882
+anchor_bottom = 0.682
+offset_left = -0.0860023
+offset_top = 0.199982
+offset_right = 0.052002
+offset_bottom = 0.199982
+text = "Waffenname"
+
+[node name="advantage" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105
+anchor_top = 0.745
+anchor_right = 0.92
+anchor_bottom = 0.815
+offset_left = 0.0299988
+offset_top = -3.05176e-05
+offset_right = 0.119995
+offset_bottom = -3.05176e-05
+text = "+ Vorteil"
+
+[node name="disadvantage" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105
+anchor_top = 0.835
+anchor_right = 0.92
+anchor_bottom = 0.905
+offset_left = 0.0299988
+offset_right = 0.119995
+text = "- Nachteil"
+
+[node name="weapon2" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_uv5u4")
+
+[node name="texture" type="TextureRect" parent="MarginContainer/HBoxContainer/weapon2"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 26.0
+offset_right = 265.0
+offset_bottom = 246.0
+texture = ExtResource("2_vpdq8")
+expand_mode = 1
+
+[node name="name" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.099
+anchor_top = 0.612
+anchor_right = 0.882
+anchor_bottom = 0.682
+offset_left = -0.0860023
+offset_top = 0.199982
+offset_right = 0.052002
+offset_bottom = 0.199982
+text = "Waffenname"
+
+[node name="advantage" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105
+anchor_top = 0.745
+anchor_right = 0.92
+anchor_bottom = 0.815
+offset_left = 0.0299988
+offset_top = -3.05176e-05
+offset_right = 0.119995
+offset_bottom = -3.05176e-05
+text = "+ Vorteil"
+
+[node name="disadvantage" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105
+anchor_top = 0.835
+anchor_right = 0.92
+anchor_bottom = 0.905
+offset_left = 0.0299988
+offset_right = 0.119995
+text = "- Nachteil"
+
+[node name="weapon3" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_grg02")
+
+[node name="texture" type="TextureRect" parent="MarginContainer/HBoxContainer/weapon3"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 26.0
+offset_right = 265.0
+offset_bottom = 246.0
+texture = ExtResource("2_vpdq8")
+expand_mode = 1
+
+[node name="name" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.099
+anchor_top = 0.612
+anchor_right = 0.882
+anchor_bottom = 0.682
+offset_left = -0.0860023
+offset_top = 0.199982
+offset_right = 0.052002
+offset_bottom = 0.199982
+text = "Waffenname"
+
+[node name="advantage" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105
+anchor_top = 0.745
+anchor_right = 0.92
+anchor_bottom = 0.815
+offset_left = 0.0299988
+offset_top = -3.05176e-05
+offset_right = 0.119995
+offset_bottom = -3.05176e-05
+text = "+ Vorteil"
+
+[node name="disadvantage" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.105
+anchor_top = 0.835
+anchor_right = 0.92
+anchor_bottom = 0.905
+offset_left = 0.0299988
+offset_right = 0.119934
+text = "- Nachteil"
