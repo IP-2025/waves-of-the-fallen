@@ -31,9 +31,10 @@ public partial class MountedEnemy : EnemyBase
 	protected override void HandleMovement(Vector2 direction)
 	{
 		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
+		var toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
+
 		if (dist > stopDistance)
 		{
-			Vector2 toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
 			Velocity = toPlayer * speed;
 
 			// Flip Sprite for right direction
@@ -46,6 +47,12 @@ public partial class MountedEnemy : EnemyBase
 		else
 		{
 			Velocity = Vector2.Zero;
+
+			//push enemy back if player is too close
+			if (dist < stopDistance * 0.7f)
+			{
+				Velocity = -toPlayer * speed * 0.5f; 
+			}
 		}
 	}
 
