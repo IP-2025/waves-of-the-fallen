@@ -12,7 +12,7 @@
 radius = 18.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_attack"]
-radius = 200.0
+radius = 40.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_detection"]
 radius = 600.0
@@ -572,7 +572,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"attack",
-"speed": 40.0
+"speed": 60.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -637,7 +637,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"death",
-"speed": 12.0
+"speed": 40.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -669,7 +669,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"hit",
-"speed": 40.0
+"speed": 60.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -847,15 +847,13 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 60.0
+"speed": 120.0
 }]
 
 [node name="MountedEnemy" type="CharacterBody2D" groups=["enemies"]]
 collision_layer = 16
 collision_mask = 129
 script = ExtResource("1_script")
-speed = 130.0
-damage = 5.0
 animationPath = NodePath("AnimatedSprite2D")
 
 [node name="Health" type="Node2D" parent="."]
@@ -880,9 +878,9 @@ visible = false
 shape = SubResource("CircleShape2D_detection")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.8, 0.81)
+scale = Vector2(0.7, 0.709)
 sprite_frames = SubResource("SpriteFrames_wlcpe")
-animation = &"death"
+animation = &"hit"
 
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
 [connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]

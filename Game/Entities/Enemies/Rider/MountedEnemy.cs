@@ -7,9 +7,15 @@ public partial class MountedEnemy : EnemyBase
 	/// - stopDistance: Distance at which MountedEnemy stops moving.
 	/// - attackRange: Close range distance for MountedEnemy's attack.
 	/// </summary>
-	[Export] public float stopDistance = 15f;
-	[Export] public float attackRange = 10f;
+	[Export] public float stopDistance = 1f;
+	[Export] public float attackRange = 60f;
 
+	public MountedEnemy()
+	{
+		speed = 300f;
+		damage = 5f;
+		attacksPerSecond = 1f;
+	}
 	public override void _Ready()
 	{
 		base._Ready();
@@ -50,8 +56,12 @@ public partial class MountedEnemy : EnemyBase
 	{
 		if (player != null)
 		{
-			player.GetNode<Health>("Health").Damage(damage);
-			GD.Print($"MountedEnemy dealt {damage} damage to the player!");
+			float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
+			if (dist <= attackRange)
+			{
+				player.GetNode<Health>("Health").Damage(damage);
+				GD.Print($"MountedEnemy dealt {damage} damage to the player!");
+			}
 		}
 	}
 
