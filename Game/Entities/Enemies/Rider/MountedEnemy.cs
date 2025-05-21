@@ -7,7 +7,7 @@ public partial class MountedEnemy : EnemyBase
 	/// - stopDistance: Distance at which MountedEnemy stops moving.
 	/// - attackRange: Close range distance for MountedEnemy's attack.
 	/// </summary>
-	[Export] public float stopDistance = 40f;
+	[Export] public float stopDistance = 200f;
 	[Export] public float attackRange = 60f;
 
 	public MountedEnemy()
@@ -28,31 +28,15 @@ public partial class MountedEnemy : EnemyBase
 		}
 	}
 
-	protected override void HandleMovement(Vector2 direction)
+	public override void _Process(double delta)
 	{
-		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
-		var toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
+		base._Process(delta);
 
-		if (dist > stopDistance)
+		var sprite = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
+		if (sprite != null && player != null)
 		{
-			Velocity = toPlayer * speed;
-
-			// Flip Sprite for right direction
-			var sprite = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
-			if (sprite != null)
-			{
-				sprite.FlipH = toPlayer.X > 0;
-			}
-		}
-		else
-		{
-			Velocity = Vector2.Zero;
-
-			//push enemy back if player is too close
-			if (dist < stopDistance * 0.7f)
-			{
-				Velocity = -toPlayer * speed * 0.5f; 
-			}
+			Vector2 toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
+			sprite.FlipH = toPlayer.X > 0;
 		}
 	}
 
