@@ -168,14 +168,12 @@ public partial class DefaultPlayer : CharacterBody2D
 		}
 
 		Vector2 direction = Vector2.Zero;
-		// Check if joystick exists and if it's being used
-		if (Joystick != null)
+
+		// Get joystick directly as child
+		var joystick = GetNodeOrNull<Joystick>("Joystick");
+		if (joystick != null && joystick.PosVector != Vector2.Zero)
 		{
-			Vector2 joystickDirection = (Vector2)Joystick.Get("PosVector");
-			if (joystickDirection != Vector2.Zero)
-			{
-				direction = joystickDirection;
-			}
+			direction = joystick.PosVector;
 		}
 
 		// If no joystick input, fallback to keyboard
