@@ -25,6 +25,7 @@ public partial class Health : Node2D
 
 	public void Damage(float damage)
 	{
+		if (isDead) return;
 		if (!disable)
 			health -= damage; // reduce health by damage amount
 		
@@ -37,6 +38,7 @@ public partial class Health : Node2D
 
 	private void doAnimation()
 	{
+		if (isDead) return;
 		// hit animation
 		if (GetParent() is EnemyBase enemy)
 		{
@@ -50,6 +52,7 @@ public partial class Health : Node2D
 		
 		// death animation
 		if (health <= 0) {
+			isDead = true;
 			// check if parent is DefaultPlayer
 			if (GetParent() is DefaultPlayer player)
 			{
