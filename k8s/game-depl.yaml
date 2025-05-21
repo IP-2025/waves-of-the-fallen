@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: godot-game-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: godot-server
+  template:
+    metadata:
+      labels:
+        app: godot-server
+    spec:
+      containers:
+        - name: godot-server
+          image: myrepo/godot-game:latest
+          args: ["--headless", "--server-mode"]
+          ports:
+            - name: rpc-tcp
+              containerPort: 9999
+              protocol: TCP
+            - name: game-udp
+              containerPort: 3000
+              protocol: UDP
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+          readinessProbe:
+            tcpSocket:
+              port: 9999
+            initialDelaySeconds: 5
+            periodSeconds: 10
