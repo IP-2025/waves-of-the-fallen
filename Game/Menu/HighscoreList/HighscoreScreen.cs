@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Game.Utilities.Backend;
 
@@ -67,7 +68,7 @@ public partial class HighscoreScreen : Control
 				var vbox = GetNode<VBoxContainer>("Panel/List/VBoxContainer");
 				vbox.ClearChildren();
 
-				for (int i = 0; i < highScoreList.Count; i++)
+				for (var i = 0; i < highScoreList.Count; i++)
 				{
 					var scoreDict = (Godot.Collections.Dictionary)highScoreList[i];
 					var player = (Godot.Collections.Dictionary)scoreDict["player"];
@@ -76,6 +77,13 @@ public partial class HighscoreScreen : Control
 					entry.GetNode<Label>("Position").Text = (i + 1).ToString();
 					entry.GetNode<Label>("Name").Text = player["username"].ToString();
 					entry.GetNode<Label>("Score").Text = scoreDict["highScore"].ToString();
+
+					var rawTimestamp = scoreDict["timeStamp"].ToString();
+					var formattedTime = rawTimestamp;
+					if (DateTime.TryParse(rawTimestamp, out var dt))
+						formattedTime = dt.ToLocalTime().ToString("dd.MM.yyyy HH:mm");
+
+					entry.GetNode<Label>("Time").Text = formattedTime;
 					vbox.AddChild(entry);
 				}
 			}

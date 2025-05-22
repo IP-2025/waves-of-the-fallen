@@ -7,23 +7,31 @@ size_flags_horizontal = 3
 [node name="Position" type="Label" parent="."]
 layout_mode = 0
 offset_left = 11.0
-offset_top = 9.0
+offset_top = 10.0
 offset_right = 115.0
-offset_bottom = 43.0
+offset_bottom = 44.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 
 [node name="Name" type="Label" parent="."]
 layout_mode = 0
-offset_left = 218.0
-offset_top = 8.0
-offset_right = 638.0
-offset_bottom = 43.0
+offset_left = 300.0
+offset_top = 10.0
+offset_right = 554.0
+offset_bottom = 45.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="Time" type="Label" parent="."]
+layout_mode = 0
+offset_left = 565.0
+offset_top = 10.0
+offset_right = 818.0
+offset_bottom = 46.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 
 [node name="Score" type="Label" parent="."]
 layout_mode = 0
-offset_left = 662.0
-offset_top = 8.0
-offset_right = 954.0
-offset_bottom = 43.0
+offset_left = 834.0
+offset_top = 10.0
+offset_right = 1126.0
+offset_bottom = 45.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
