@@ -4,13 +4,13 @@ using System.Diagnostics;
 
 public partial class GiantBossEnemy : EnemyBase
 {
-		public GiantBossEnemy()
+	public GiantBossEnemy()
 	{
-		speed = 100f;
-		damage = 20f;
+		speed = 40f;
+		damage = 10f;
 		attacksPerSecond = 3f;
 	}
-	public override void Attack() 
+	public override void Attack()
 	{
 		player.GetNode<Health>("Health").Damage(damage);
 
