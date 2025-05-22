@@ -32,10 +32,12 @@ export async function updateUserHighscore(req: any, res: any, next: NextFunction
 export async function getUserHighscore(req: any, res: any, next: NextFunction) {
     try {
         const playerId = extractAndValidatePlayerId(req.headers['authorization']);
+        console.log(playerId);
         if (!playerId) {
             throw new BadRequestError('Missing required fields');
         }
         const highScore = await getUserHighscoreService(playerId);
+        console.log(highScore);
 
         res.status(200).json({highScore});
     } catch (err) {

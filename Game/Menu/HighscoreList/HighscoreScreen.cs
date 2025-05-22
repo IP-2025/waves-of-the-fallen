@@ -33,6 +33,21 @@ public partial class HighscoreScreen : Control
 
 			if (err != Error.Ok)
 				GD.PrintErr($"AuthRequest error: {err}");
+			
+			
+			var headers2 = new[]
+			{
+				"Content-Type: application/json",
+				"Authorization: Bearer " + SecureStorage.LoadToken()
+			};
+			var err2 = _personalScoreRequest.Request(
+				$"{Server.BaseUrl}/api/v1/protected/highscore/getUserHighscore",
+				headers2,
+				HttpClient.Method.Post
+			);
+			
+			if (err2 != Error.Ok)
+				GD.PrintErr($"AuthRequest error: {err2}");
 		}
 		else
 		{
@@ -45,7 +60,30 @@ public partial class HighscoreScreen : Control
 	{
 		if (responseCode == 200)
 		{
-			GD.Print(result);
+			var bodyText = System.Text.Encoding.UTF8.GetString(body);
+			var json = new Json();
+			var parseErr = json.Parse(bodyText);
+			if (parseErr == Error.Ok)
+			{
+				var data = (Godot.Collections.Dictionary)json.GetData();
+				var highScore = (Godot.Collections.Dictionary)data["highScore"];
+
+				var playerScore = GetNode<ColorRect>("Panel/PlayerScore");
+				playerScore.GetNode<Label>("Position").Text = "-"; 
+				playerScore.GetNode<Label>("Name").Text = "Me"; 
+				playerScore.GetNode<Label>("Score").Text = highScore["highScore"].ToString();
+
+				var rawTimestamp = highScore["timeStamp"].ToString();
+				var formattedTime = rawTimestamp;
+				if (DateTime.TryParse(rawTimestamp, out var dt))
+					formattedTime = dt.ToLocalTime().ToString("dd.MM.yyyy HH:mm");
+
+				playerScore.GetNode<Label>("Time").Text = formattedTime;
+			}
+			else
+			{
+				GD.PrintErr("Error parsing JSON response.");
+			}
 		}
 		else
 		{
