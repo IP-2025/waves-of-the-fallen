@@ -8,9 +8,15 @@ public partial class MountedEnemy : EnemyBase
 	/// - stopDistance: Distance at which MountedEnemy stops moving.
 	/// - attackRange: Close range distance for MountedEnemy's attack.
 	/// </summary>
-	[Export] public float stopDistance = 15f;
-	[Export] public float attackRange = 10f;
+	[Export] public float stopDistance = 200f;
+	[Export] public float attackRange = 60f;
 
+	public MountedEnemy()
+	{
+		speed = 230f;
+		damage = 5f;
+		attacksPerSecond = 1f;
+	}
 	public override void _Ready()
 	{
 		base._Ready();
@@ -23,17 +29,15 @@ public partial class MountedEnemy : EnemyBase
 		}
 	}
 
-	protected override void HandleMovement(Vector2 direction)
+	public override void _Process(double delta)
 	{
-		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
-		if (dist > stopDistance)
+		base._Process(delta);
+
+		var sprite = GetNodeOrNull<AnimatedSprite2D>("AnimatedSprite2D");
+		if (sprite != null && player != null)
 		{
 			Vector2 toPlayer = (player.GlobalPosition - GlobalPosition).Normalized();
-			Velocity = toPlayer * speed;
-		}
-		else
-		{
-			Velocity = Vector2.Zero;
+			sprite.FlipH = toPlayer.X > 0;
 		}
 	}
 
@@ -44,9 +48,13 @@ public partial class MountedEnemy : EnemyBase
 	{
 		if (player != null)
 		{
-			player.GetNode<Health>("Health").Damage(damage);
-			if (enableDebug)
-				Debug.Print($"MountedEnemy dealt {damage} damage to the player!");
+			float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
+			if (dist <= attackRange)
+			{
+				player.GetNode<Health>("Health").Damage(damage);
+				if (enableDebug)
+					Debug.Print($"MountedEnemy dealt {damage} damage to the player!");
+			}
 		}
 	}
 
