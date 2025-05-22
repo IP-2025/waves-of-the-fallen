@@ -33,6 +33,14 @@ layout_mode = 0
 offset_right = 1151.0
 offset_bottom = 649.0
 
+[node name="BackButton" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 13.0
+offset_right = 130.0
+offset_bottom = 54.0
+text = "Back"
+
 [node name="List" type="ScrollContainer" parent="Panel"]
 layout_mode = 0
 offset_left = 96.0
@@ -126,3 +134,27 @@ offset_top = 10.0
 offset_right = 1126.0
 offset_bottom = 45.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+
+[node name="Offline" type="Panel" parent="Panel"]
+visible = false
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 646.0
+
+[node name="Label" type="Label" parent="Panel/Offline"]
+layout_mode = 0
+offset_left = 273.0
+offset_top = 260.0
+offset_right = 887.0
+offset_bottom = 410.0
+theme_override_font_sizes/font_size = 20
+text = "No Highscores visisble becuase you are offline.
+Go online to view the highscores of other players and yourself."
+
+[node name="Button" type="Button" parent="Panel/Offline"]
+layout_mode = 0
+offset_left = 463.0
+offset_top = 359.0
+offset_right = 663.0
+offset_bottom = 435.0
+text = "Main Menu"

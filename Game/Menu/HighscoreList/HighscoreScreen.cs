@@ -8,15 +8,21 @@ public partial class HighscoreScreen : Control
 {
 	private HttpRequest _personalScoreRequest;
 	private HttpRequest _topPlayerRequest;
+	private Button _backButton;
+	private Button _mainMenuButton;
 
 	public override void _Ready()
 	{
 		_personalScoreRequest = GetNode<HttpRequest>("Panel/PersonalScoreRequest");
 		_topPlayerRequest = GetNode<HttpRequest>("Panel/TopPlayersRequest");
+		_backButton = GetNode<Button>("Panel/BackButton");
+		_mainMenuButton = GetNode<Button>("Panel/Offline/Button");
 
 
 		_personalScoreRequest.Connect("request_completed", new Callable(this, nameof(OnPersonalScoreRequestCompleted)));
 		_topPlayerRequest.Connect("request_completed", new Callable(this, nameof(OnTopPlayersRequestCompleted)));
+		_backButton.Connect("pressed", new Callable(this, nameof(OnBackButtonPressed)));
+		_mainMenuButton.Connect("pressed", new Callable(this, nameof(OnMainMenuButtonPressed)));
 
 
 		if (GameState.CurrentState == ConnectionState.Online)
@@ -33,8 +39,8 @@ public partial class HighscoreScreen : Control
 
 			if (err != Error.Ok)
 				GD.PrintErr($"AuthRequest error: {err}");
-			
-			
+
+
 			var headers2 = new[]
 			{
 				"Content-Type: application/json",
@@ -45,14 +51,14 @@ public partial class HighscoreScreen : Control
 				headers2,
 				HttpClient.Method.Post
 			);
-			
+
 			if (err2 != Error.Ok)
 				GD.PrintErr($"AuthRequest error: {err2}");
 		}
 		else
 		{
-			GD.Print("Offline mode: No highscore data available.");
-			// show offline message
+			var offlinePanel = GetNode<Panel>("Panel/Offline");
+			offlinePanel.Visible = true;
 		}
 	}
 
@@ -69,8 +75,8 @@ public partial class HighscoreScreen : Control
 				var highScore = (Godot.Collections.Dictionary)data["highScore"];
 
 				var playerScore = GetNode<ColorRect>("Panel/PlayerScore");
-				playerScore.GetNode<Label>("Position").Text = "-"; 
-				playerScore.GetNode<Label>("Name").Text = "Me"; 
+				playerScore.GetNode<Label>("Position").Text = "-";
+				playerScore.GetNode<Label>("Name").Text = "Me";
 				playerScore.GetNode<Label>("Score").Text = highScore["highScore"].ToString();
 
 				var rawTimestamp = highScore["timeStamp"].ToString();
@@ -134,6 +140,22 @@ public partial class HighscoreScreen : Control
 		{
 			GD.PrintErr($"Error fetching top players: {responseCode}");
 		}
+	}
+
+	private void OnBackButtonPressed()
+	{
+		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Main/mainMenu.tscn");
+		if (scene == null) GD.PrintErr("Main Menu Scene not found");
+		SoundManager.Instance.PlayUI();
+		GetTree().ChangeSceneToPacked(scene);
+	}
+	
+	private void OnMainMenuButtonPressed()
+	{
+		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Main/mainMenu.tscn");
+		if (scene == null) GD.PrintErr("Main Menu Scene not found");
+		SoundManager.Instance.PlayUI();
+		GetTree().ChangeSceneToPacked(scene);
 	}
 }
 

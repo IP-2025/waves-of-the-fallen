@@ -421,7 +421,7 @@ public partial class Charactermenu : Control
 		}
 
 		SetCharacterPageValuesFromFile(characterId);
-	    SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlayUI();
 	}
 
 	private void ResetCharacters()
@@ -483,50 +483,50 @@ public partial class Charactermenu : Control
 	}
 
 		private List<UnlockedCharacter> LoadLocalProgress()
-    	{
-    		var unlockedCharacters = new List<UnlockedCharacter>();
+		{
+			var unlockedCharacters = new List<UnlockedCharacter>();
 
-    		for (var i = 1; i <= 4; i++) // Angenommen, es gibt 4 Charaktere
-    		{
-    			var characterId = i.ToString();
-    			if (!_characterManager.LoadIsUnlocked(characterId)) continue;
-    			var character = new UnlockedCharacter
-    			{
-    				CharacterId = i,
-    				Level = _characterManager.LoadLevelByID(characterId)
-    			};
+			for (var i = 1; i <= 4; i++) // Angenommen, es gibt 4 Charaktere
+			{
+				var characterId = i.ToString();
+				if (!_characterManager.LoadIsUnlocked(characterId)) continue;
+				var character = new UnlockedCharacter
+				{
+					CharacterId = i,
+					Level = _characterManager.LoadLevelByID(characterId)
+				};
 
-    			unlockedCharacters.Add(character);
-    		}
+				unlockedCharacters.Add(character);
+			}
 
-    		return unlockedCharacters;
-    	}
+			return unlockedCharacters;
+		}
 
-    	private bool EqualProgress(List<UnlockedCharacter> localProgress, List<UnlockedCharacter> onlineProgress)
-    	{
-    		localProgress.Sort((a, b) => a.CharacterId.CompareTo(b.CharacterId));
-    		onlineProgress.Sort((a, b) => a.CharacterId.CompareTo(b.CharacterId));
+		private bool EqualProgress(List<UnlockedCharacter> localProgress, List<UnlockedCharacter> onlineProgress)
+		{
+			localProgress.Sort((a, b) => a.CharacterId.CompareTo(b.CharacterId));
+			onlineProgress.Sort((a, b) => a.CharacterId.CompareTo(b.CharacterId));
 
-    		// print both lists for debugging
-    		GD.Print("Local Progress: " + string.Join(", ", localProgress));
-    		GD.Print("Online Progress: " + string.Join(", ", onlineProgress));
+			// print both lists for debugging
+			GD.Print("Local Progress: " + string.Join(", ", localProgress));
+			GD.Print("Online Progress: " + string.Join(", ", onlineProgress));
 
-    		if (localProgress.Count != onlineProgress.Count)
-    		{
-    			return false;
-    		}
+			if (localProgress.Count != onlineProgress.Count)
+			{
+				return false;
+			}
 
-    		for (var i = 0; i < localProgress.Count; i++)
-    		{
-    			var local = localProgress[i];
-    			var online = onlineProgress[i];
+			for (var i = 0; i < localProgress.Count; i++)
+			{
+				var local = localProgress[i];
+				var online = onlineProgress[i];
 
-    			if (local.CharacterId != online.CharacterId || local.Level != online.Level)
-    			{
-    				return false;
-    			}
-    		}
+				if (local.CharacterId != online.CharacterId || local.Level != online.Level)
+				{
+					return false;
+				}
+			}
 
-    		return true;
-    	}
+			return true;
+		}
 }
