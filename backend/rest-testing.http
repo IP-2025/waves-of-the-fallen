@@ -59,3 +59,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1ZTM0ZjgyL
 {
   "score": 100
 }
+
+###
+
+GET http://localhost:3000/api/v1/protected/highscore/top
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1ZTM0ZjgyLTZiMjgtNDY2NC1iZDMyLWZiNzM2MWQ0YmNiNSIsImlhdCI6MTc0Nzk0OTcxNSwiZXhwIjoxNzQ4NTU0NTE1fQ.UURirUAyGBuOE-S4uDXI9CVBNt82nTeuFQxHrXPv0zM
