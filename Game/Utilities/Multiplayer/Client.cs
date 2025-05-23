@@ -192,6 +192,7 @@ public partial class Client : Node
 				|| entity.Type == EntityType.RangedEnemy
 				|| entity.Type == EntityType.MountedEnemy
 				|| entity.Type == EntityType.RiderEnemy
+				|| entity.Type == EntityType.GiantBossEnemy
 				|| entity.Type == EntityType.DefaultPlayer
 				|| entity.Type == EntityType.Archer
 				|| entity.Type == EntityType.Assassin
@@ -206,7 +207,8 @@ public partial class Client : Node
 			if (entity.Type == EntityType.DefaultEnemy
 				|| entity.Type == EntityType.RangedEnemy
 				|| entity.Type == EntityType.MountedEnemy
-				|| entity.Type == EntityType.RiderEnemy)
+				|| entity.Type == EntityType.RiderEnemy
+				|| entity.Type == EntityType.GiantBossEnemy)
 			{
 				inst.AddToGroup("enemies");
 			}

@@ -1,7 +1,8 @@
-[gd_scene load_steps=54 format=3 uid="uid://bjdn4wvjpfnql"]
+[gd_scene load_steps=56 format=3 uid="uid://bubhglrlday18"]
 
 [ext_resource type="Script" uid="uid://brsiga6vkoslu" path="res://Entities/Enemies/GiantBoss/GiantBossEnemy.cs" id="1_6h1re"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_hc420"]
+[ext_resource type="PackedScene" uid="uid://ceve0lpkg70ey" path="res://Entities/Enemies/GiantBoss/stone_Attack.tscn" id="2_oid3o"]
 [ext_resource type="Texture2D" uid="uid://bga0ocm5qi8h4" path="res://Entities/Enemies/GiantBoss/Resources/Giant_Spritesheet.png" id="3_o0ymr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hc420"]
@@ -9,7 +10,7 @@ radius = 124.0
 height = 316.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_khogr"]
-radius = 250.0
+radius = 200.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hc420"]
 radius = 5000.0
@@ -364,14 +365,17 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_oid3o"]
+radius = 700.0
+
 [node name="GiantBossEnemy" type="CharacterBody2D" groups=["enemies"]]
 scale = Vector2(0.6, 0.6)
 script = ExtResource("1_6h1re")
+StoneAttackScene = ExtResource("2_oid3o")
 animationPath = NodePath("GiantAnimantion")
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_hc420")
-max_health = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_hc420")
@@ -381,17 +385,23 @@ shape = SubResource("CapsuleShape2D_hc420")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
 shape = SubResource("CircleShape2D_khogr")
 
-[node name="DetectionArea" type="Area2D" parent="."]
+[node name="detection_area" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
 visible = false
 shape = SubResource("CircleShape2D_hc420")
 
 [node name="GiantAnimantion" type="AnimatedSprite2D" parent="."]
 position = Vector2(17.1429, -44.2857)
 sprite_frames = SubResource("SpriteFrames_hmwaq")
-animation = &"walk"
-frame_progress = 0.956359
+animation = &"attack"
+
+[node name="AttackRange2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange2"]
+shape = SubResource("CircleShape2D_oid3o")
 
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
 [connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]
+[connection signal="body_entered" from="AttackRange2" to="." method="OnAttackRangeBodyEnterSpecialAttack"]
+[connection signal="body_exited" from="AttackRange2" to="." method="OnAttackRangeBodyExitSpecialAttack"]
