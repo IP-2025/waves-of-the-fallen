@@ -9,9 +9,9 @@ public partial class GiantBossEnemy : EnemyBase
 	[Export] public PackedScene StoneAttackScene;
 	public GiantBossEnemy()
 	{
-		speed = 40f;
+		speed = 70f;
 		damage = 15f;
-		attacksPerSecond = 0.6f;
+		attacksPerSecond = 1f;
 	}
 	public override void Attack()
 	{

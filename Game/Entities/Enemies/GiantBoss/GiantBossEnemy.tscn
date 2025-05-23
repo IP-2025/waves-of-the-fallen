@@ -202,52 +202,52 @@ region = Rect2(6750, 0, 450, 450)
 [sub_resource type="SpriteFrames" id="SpriteFrames_hmwaq"]
 animations = [{
 "frames": [{
-"duration": 0.6,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_oid3o")
 }, {
-"duration": 0.6,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_w7pq6")
 }, {
-"duration": 0.6,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_xqd40")
 }, {
-"duration": 0.6,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_lnd7k")
 }, {
-"duration": 0.6,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_k07fm")
 }, {
-"duration": 0.6,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_u5xxm")
 }, {
-"duration": 0.3,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_v0sby")
 }, {
-"duration": 0.3,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_xo7c0")
 }, {
-"duration": 0.3,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_pcesx")
 }, {
-"duration": 0.3,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_kmwkh")
 }, {
-"duration": 0.3,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_88ov0")
 }, {
 "duration": 0.3,
 "texture": SubResource("AtlasTexture_6pm5t")
 }, {
-"duration": 0.6,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_mx0rr")
 }, {
-"duration": 0.6,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_prbh5")
 }, {
-"duration": 0.6,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_u6de4")
 }, {
-"duration": 0.6,
+"duration": 0.5,
 "texture": SubResource("AtlasTexture_61phg")
 }],
 "loop": true,
@@ -397,7 +397,8 @@ shape = SubResource("CircleShape2D_hc420")
 [node name="GiantAnimantion" type="AnimatedSprite2D" parent="."]
 position = Vector2(17.1429, -44.2857)
 sprite_frames = SubResource("SpriteFrames_hmwaq")
-animation = &"hit"
+animation = &"attack"
+frame_progress = 0.63324
 
 [node name="AttackRange2" type="Area2D" parent="."]
 
