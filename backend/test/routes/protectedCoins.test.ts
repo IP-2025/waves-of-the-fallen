@@ -75,3 +75,21 @@ describe('POST /setGold', () => {
     expect(coinsResponse.body).toEqual(10);
   });
 });
+
+describe('POST /levelUp', () => {
+  it('should return 500 for invalid character_id', async () => {
+    const invalidCharacterId = -1;
+
+    const levelUpResponse = await request(app)
+      .post('/api/v1/protected/character/levelUp')
+      .set('Authorization', `Bearer ${validToken}`)
+      .send({ character_id: invalidCharacterId });
+
+    expect(levelUpResponse.status).toBe(500);
+    expect(levelUpResponse.body).toHaveProperty('status', 'error');
+    expect(levelUpResponse.body).toHaveProperty(
+      'message',
+      `Character with ID ${invalidCharacterId} not found for player ${registeredPlayerId}`
+    );
+  });
+});

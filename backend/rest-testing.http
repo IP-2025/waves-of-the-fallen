@@ -49,3 +49,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMyYTkxMWVkL
 POST http://localhost:3000/api/v1/protected/getAllUnlockedCharacters
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3ZGFmYTI5LWIyOWUtNGNlMS04ZjM4LThiZmRmNmFjMjQ0OSIsImlhdCI6MTc0NzE0OTQyMSwiZXhwIjoxNzQ3NzU0MjIxfQ.Jp56V3oHCWYkdS-RE0i5W927ybz8QADLPJdQv3pKNw0
+
+###
+
+POST http://localhost:3000/api/v1/protected/highscore/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1ZTM0ZjgyLTZiMjgtNDY2NC1iZDMyLWZiNzM2MWQ0YmNiNSIsImlhdCI6MTc0Nzk0OTcxNSwiZXhwIjoxNzQ4NTU0NTE1fQ.UURirUAyGBuOE-S4uDXI9CVBNt82nTeuFQxHrXPv0zM
+
+{
+  "score": 100
+}
+
+###
+
+GET http://localhost:3000/api/v1/protected/highscore/top
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1ZTM0ZjgyLTZiMjgtNDY2NC1iZDMyLWZiNzM2MWQ0YmNiNSIsImlhdCI6MTc0Nzk0OTcxNSwiZXhwIjoxNzQ4NTU0NTE1fQ.UURirUAyGBuOE-S4uDXI9CVBNt82nTeuFQxHrXPv0zM
+
+###
+
+POST http://localhost:3000/api/v1/protected/highscore/getUserHighscore
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1ZTM0ZjgyLTZiMjgtNDY2NC1iZDMyLWZiNzM2MWQ0YmNiNSIsImlhdCI6MTc0Nzk1MTg1MSwiZXhwIjoxNzQ4NTU2NjUxfQ.pvpDv67pLXXo8ryJq79mBspl8neQlpxrz5_RWAz-egk

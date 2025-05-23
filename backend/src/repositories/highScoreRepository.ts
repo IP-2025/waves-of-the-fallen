@@ -23,7 +23,7 @@ export async function updateHighScoreRepo(playerId: string, highScore: number): 
     }
 }
 
-export async function getUserHighscoreRepo(playerId: string): Promise<number> {
+export async function getUserHighscoreRepo(playerId: string): Promise<HighScore> {
     const highScore = await highScoreRepo.findOne({
         where: { player: { player_id: playerId } }
     });
@@ -32,7 +32,7 @@ export async function getUserHighscoreRepo(playerId: string): Promise<number> {
         throw new NotFoundError('Player not found');
     }
 
-    return highScore.highScore;
+    return highScore;
 }
 
 export async function getTopHighscoreRepo(): Promise<HighScore[]> {
