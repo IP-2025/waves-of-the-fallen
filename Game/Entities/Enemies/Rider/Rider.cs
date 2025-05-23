@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Godot;
 
 public partial class Rider : EnemyBase
@@ -32,7 +33,8 @@ public partial class Rider : EnemyBase
 		if (player != null)
 		{
 			player.GetNode<Health>("Health").Damage(damage);
-			GD.Print($"Rider dealt {damage} damage to the player!");
+			if (enableDebug)
+				Debug.Print($"Rider dealt {damage} damage to the player!");
 		}
 	}
 

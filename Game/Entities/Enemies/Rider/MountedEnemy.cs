@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Godot;
 
 public partial class MountedEnemy : EnemyBase
@@ -51,7 +52,8 @@ public partial class MountedEnemy : EnemyBase
 			if (dist <= attackRange)
 			{
 				player.GetNode<Health>("Health").Damage(damage);
-				GD.Print($"MountedEnemy dealt {damage} damage to the player!");
+				if (enableDebug)
+					Debug.Print($"MountedEnemy dealt {damage} damage to the player!");
 			}
 		}
 	}
@@ -61,7 +63,8 @@ public partial class MountedEnemy : EnemyBase
 	/// </summary>
 	private void OnHealthDepleted()
 	{
-		ActivateRider();
+		if (GetTree().GetMultiplayer().IsServer())
+			ActivateRider();
 	}
 
 	/// <summary>
@@ -83,18 +86,17 @@ public partial class MountedEnemy : EnemyBase
 			return;
 		}
 
-		riderInstance.Visible = true;
-		// add rider deffered in next frame to prevent errors
-		GetParent().CallDeferred("add_child", riderInstance);
-		// check deffered if rider was added in next frame
-		CallDeferred(nameof(CheckRiderAdded), riderInstance);
-		riderInstance.GlobalPosition = GlobalPosition;
-	}
-		
+		var spawnEnemies = GetTree()
+		.Root.GetNodeOrNull<GameRoot>("GameRoot")
+		?.GetNodeOrNull<SpawnEnemies>("SpawnEnemies");
 
-	private void CheckRiderAdded(CharacterBody2D rider)
-	{
-		if (rider.GetParent() == null)
-			GD.PrintErr("Rider was not added to the scene!");
+		if (spawnEnemies != null)
+		{
+			spawnEnemies.SpawnEnemy(riderInstance, GlobalPosition);
+		}
+		else
+		{
+			Debug.Print("Failed to find SpawnEnemies in GameRoot");
+		}
 	}
 }
