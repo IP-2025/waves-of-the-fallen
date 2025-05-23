@@ -15,15 +15,15 @@ public partial class DefaultPlayer : CharacterBody2D
 	public int CurrentHealth { get; set; }
 	public long OwnerPeerId { get; set; }
 
-	protected NodePath animationPath;
+	[Export] protected NodePath animationPath;
 
 	public Node2D Joystick { get; set; }
 	private Camera2D camera;
 	private MultiplayerSynchronizer multiplayerSynchronizer;
 	public bool enableDebug = false;
 
-	private AnimationHandler animationHandler;
-	private AnimatedSprite2D animation;
+	public AnimationHandler animationHandler;
+	public AnimatedSprite2D animation;
 	
 	public PackedScene BowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
 	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
@@ -193,29 +193,6 @@ public partial class DefaultPlayer : CharacterBody2D
 		MoveAndSlide();
 
 		animationHandler?.UpdateAnimationState(false, Velocity);
-
-		// // Play Animations
-		// if (animationPlayer != null)
-		// {
-		// 	if (direction != Vector2.Zero)
-		// 	{
-		// 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "walk")
-		// 			animationPlayer.Play("walk");
-		// 	}
-		// 	else
-		// 	{
-		// 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "idle")
-		//
-		// 			animationPlayer.Play("idle");
-		//
-		//
-		// 	}
-		// }
-		//
-		// if (archerSprite != null && direction != Vector2.Zero)
-		// {
-		// 	archerSprite.FlipH = direction.X < 0;
-		// }
 	}
 
 	public virtual void UseAbility()

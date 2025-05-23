@@ -14,6 +14,9 @@ public partial class Client : Node
 	private bool _waveTimerReady = false;
 	private WaveTimer timer = null;
 
+	// movement tracking of players
+	private Dictionary<long, Vector2> _lastPositions = new();
+
 	// GameRoot container for entities
 	private Dictionary<long, Node2D> _instances = new();
 
@@ -269,10 +272,27 @@ public partial class Client : Node
 	{
 		if (GodotObject.IsInstanceValid(inst))
 		{
+			Vector2 lastPos = _lastPositions.TryGetValue(entity.NetworkId, out var lp) ? lp : entity.Position;
+        	Vector2 deltaPos = entity.Position - lastPos;
+
 			inst.GlobalPosition = entity.Position;
 			inst.Rotation = entity.Rotation;
 			inst.Scale = entity.Scale;
 			inst.GetNodeOrNull<Health>("Health").health = entity.Health;
+
+			// Animation for other players, not for local player
+			if (inst is DefaultPlayer player && entity.NetworkId != Multiplayer.GetUniqueId())
+			{
+				// Flip
+				if (player.animation != null && deltaPos != Vector2.Zero)
+					player.animation.FlipH = deltaPos.X < 0;
+
+				// WalkAnimation
+				player.animationHandler?.UpdateAnimationState(false, deltaPos);
+			}
+
+			// save last position
+			_lastPositions[entity.NetworkId] = entity.Position;
 		}
 	}
 

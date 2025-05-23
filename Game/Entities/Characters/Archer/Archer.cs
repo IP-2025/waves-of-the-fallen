@@ -6,7 +6,6 @@ public partial class Archer : DefaultPlayer
 	{
 		MaxHealth = 175;
 		Speed = 400.0f;
-		animationPath = "ArcherAnimation"; 
 	}
 
 	public override void _Ready()
