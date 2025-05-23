@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://bubhglrlday18"]
+[gd_scene load_steps=56 format=3 uid="uid://dwdwswyeatga8"]
 
 [ext_resource type="Script" uid="uid://brsiga6vkoslu" path="res://Entities/Enemies/GiantBoss/GiantBossEnemy.cs" id="1_6h1re"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_hc420"]
@@ -79,26 +79,6 @@ region = Rect2(450, 450, 450, 450)
 atlas = ExtResource("3_o0ymr")
 region = Rect2(0, 450, 450, 450)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_48lsk"]
-atlas = ExtResource("3_o0ymr")
-region = Rect2(6750, 900, 450, 450)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3821c"]
-atlas = ExtResource("3_o0ymr")
-region = Rect2(6300, 900, 450, 450)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i32dy"]
-atlas = ExtResource("3_o0ymr")
-region = Rect2(5850, 900, 450, 450)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qefl6"]
-atlas = ExtResource("3_o0ymr")
-region = Rect2(5400, 900, 450, 450)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cqiev"]
-atlas = ExtResource("3_o0ymr")
-region = Rect2(4950, 900, 450, 450)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_mnnqa"]
 atlas = ExtResource("3_o0ymr")
 region = Rect2(6750, 1800, 450, 450)
@@ -138,6 +118,26 @@ region = Rect2(3150, 1800, 450, 450)
 [sub_resource type="AtlasTexture" id="AtlasTexture_5jcw0"]
 atlas = ExtResource("3_o0ymr")
 region = Rect2(2700, 1800, 450, 450)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48lsk"]
+atlas = ExtResource("3_o0ymr")
+region = Rect2(6750, 900, 450, 450)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3821c"]
+atlas = ExtResource("3_o0ymr")
+region = Rect2(6300, 900, 450, 450)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i32dy"]
+atlas = ExtResource("3_o0ymr")
+region = Rect2(5850, 900, 450, 450)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qefl6"]
+atlas = ExtResource("3_o0ymr")
+region = Rect2(5400, 900, 450, 450)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqiev"]
+atlas = ExtResource("3_o0ymr")
+region = Rect2(4950, 900, 450, 450)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0427w"]
 atlas = ExtResource("3_o0ymr")
@@ -255,26 +255,6 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_48lsk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3821c")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_i32dy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qefl6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cqiev")
-}],
-"loop": true,
-"name": &"damage",
-"speed": 5.0
-}, {
-"frames": [{
 "duration": 0.8,
 "texture": SubResource("AtlasTexture_mnnqa")
 }, {
@@ -305,8 +285,28 @@ animations = [{
 "duration": 0.4,
 "texture": SubResource("AtlasTexture_5jcw0")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48lsk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3821c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i32dy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qefl6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqiev")
+}],
+"loop": false,
+"name": &"hit",
 "speed": 5.0
 }, {
 "frames": [{
@@ -370,12 +370,15 @@ radius = 700.0
 
 [node name="GiantBossEnemy" type="CharacterBody2D" groups=["enemies"]]
 scale = Vector2(0.6, 0.6)
+collision_layer = 16
+collision_mask = 145
 script = ExtResource("1_6h1re")
 StoneAttackScene = ExtResource("2_oid3o")
 animationPath = NodePath("GiantAnimantion")
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_hc420")
+max_health = 500.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_hc420")
@@ -394,7 +397,7 @@ shape = SubResource("CircleShape2D_hc420")
 [node name="GiantAnimantion" type="AnimatedSprite2D" parent="."]
 position = Vector2(17.1429, -44.2857)
 sprite_frames = SubResource("SpriteFrames_hmwaq")
-animation = &"attack"
+animation = &"hit"
 
 [node name="AttackRange2" type="Area2D" parent="."]
 

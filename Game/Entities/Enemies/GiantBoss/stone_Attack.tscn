@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ceve0lpkg70ey"]
+[gd_scene load_steps=17 format=3 uid="uid://ceve0lpkg70ey"]
 
 [ext_resource type="Script" uid="uid://tap3qvwt6d8m" path="res://Entities/Enemies/GiantBoss/StoneAttack.cs" id="1_gy8r0"]
 [ext_resource type="Texture2D" uid="uid://bxenlttv3jc3v" path="res://Entities/Enemies/GiantBoss/Resources/stein.png" id="1_yme2j"]
@@ -14,6 +14,14 @@ region = Rect2(500, 500, 500, 500)
 [sub_resource type="AtlasTexture" id="AtlasTexture_qwqt6"]
 atlas = ExtResource("1_yme2j")
 region = Rect2(1000, 500, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ai4nl"]
+atlas = ExtResource("1_yme2j")
+region = Rect2(500, 500, 500, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_obqcd"]
+atlas = ExtResource("1_yme2j")
+region = Rect2(0, 500, 500, 500)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ghdy"]
 atlas = ExtResource("1_yme2j")
@@ -54,6 +62,21 @@ animations = [{
 }, {
 "duration": 3.0,
 "texture": SubResource("AtlasTexture_qwqt6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ai4nl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_obqcd")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_3g1ig")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_qwqt6")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_ai4nl")
 }],
 "loop": false,
 "name": &"attack",
@@ -97,6 +120,8 @@ script = ExtResource("1_gy8r0")
 position = Vector2(-20, -87)
 sprite_frames = SubResource("SpriteFrames_ai4nl")
 animation = &"attack"
+frame = 7
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-10.5, -20.5)

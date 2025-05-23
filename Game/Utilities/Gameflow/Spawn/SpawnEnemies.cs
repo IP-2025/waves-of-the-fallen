@@ -66,7 +66,7 @@ public partial class SpawnEnemies : Node2D
 
 	private void OnTimerTimeout()
 	{
-		//SpawnEnemy(); // spawn enemy on timer timeout
+		SpawnEnemy(); // spawn enemy on timer timeout
 	}
 
 	private void SpawnEnemy()
@@ -124,7 +124,7 @@ public partial class SpawnEnemies : Node2D
 	}
 	private void OnWaveStart() 
 	{
-		if (currentWave == 1)
+		if (currentWave == 2) // the giant will spawn in wave 2 (Note: the normal enemies also spawn)
 		{
 			spawnGiantBoss();
 		}
