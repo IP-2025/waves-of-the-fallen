@@ -26,6 +26,7 @@ public partial class Client : Node
 		{ EntityType.RangedEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/Skeleton/ranged_enemy.tscn") },
 		{ EntityType.MountedEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/Rider/mounted_enemy.tscn") },
 		{ EntityType.RiderEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/Rider/rider_enemy.tscn") },
+		{ EntityType.GiantBossEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/GiantBoss/giantBossEnemy.tscn") },
 		{ EntityType.Bow,  GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn") },
 		{ EntityType.BowArrow,  GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow_arrow.tscn") },
 		{ EntityType.Crossbow,  GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn") },
@@ -191,6 +192,7 @@ public partial class Client : Node
 				|| entity.Type == EntityType.RangedEnemy
 				|| entity.Type == EntityType.MountedEnemy
 				|| entity.Type == EntityType.RiderEnemy
+				|| entity.Type == EntityType.GiantBossEnemy
 				|| entity.Type == EntityType.DefaultPlayer
 				|| entity.Type == EntityType.Archer
 				|| entity.Type == EntityType.Assassin
@@ -205,7 +207,8 @@ public partial class Client : Node
 			if (entity.Type == EntityType.DefaultEnemy
 				|| entity.Type == EntityType.RangedEnemy
 				|| entity.Type == EntityType.MountedEnemy
-				|| entity.Type == EntityType.RiderEnemy)
+				|| entity.Type == EntityType.RiderEnemy
+				|| entity.Type == EntityType.GiantBossEnemy)
 			{
 				inst.AddToGroup("enemies");
 			}
