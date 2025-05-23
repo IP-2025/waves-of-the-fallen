@@ -1,18 +1,17 @@
-namespace Game.Utilities.Multiplayer
-{
+namespace Game.Utilities.Multiplayer;
+
 using Godot;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security;
 
 public partial class Client : Node
 {
-	bool enableDebug = false;
+	private bool _enableDebug = false;
 	private Camera2D _camera;
 	private bool _hasJoystick = false;
 	private bool _waveTimerReady = false;
-	private WaveTimer timer = null;
+	private WaveTimer _timer = null;
 
 	// GameRoot container for entities
 	private Dictionary<long, Node2D> _instances = new();
@@ -109,7 +108,7 @@ public partial class Client : Node
 		{
 			_camera = null;
 			_waveTimerReady = false;
-			timer = null;
+			_timer = null;
 		}
 		// first all not a weapon things (no OwnerID & SlotIndex)
 		foreach (var entity in entities.Where(e => !e.OwnerId.HasValue || !e.SlotIndex.HasValue))
@@ -118,18 +117,18 @@ public partial class Client : Node
 			if (!_waveTimerReady && _camera != null)
 			{
 				var wt = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
-				wt.disable = true;
+				wt.Disable = true;
 				_camera.AddChild(wt);
-				timer = wt;
+				_timer = wt;
 				_waveTimerReady = true;
 			}
 			else if (_waveTimerReady && _camera != null)
 			{
-				var timeLeftLabel = timer.GetNodeOrNull<Label>("TimeLeft");
+				var timeLeftLabel = _timer.GetNodeOrNull<Label>("TimeLeft");
 				if (timeLeftLabel != null)
-					timeLeftLabel.Text = (timer.maxTime - entity.WaveTimeLeft).ToString();
+					timeLeftLabel.Text = (_timer.MaxTime - entity.WaveTimeLeft).ToString();
 
-				var waveCounterLabel = timer.GetNodeOrNull<Label>("WaveCounter");
+				var waveCounterLabel = _timer.GetNodeOrNull<Label>("WaveCounter");
 				if (waveCounterLabel != null)
 					waveCounterLabel.Text = $"Wave: {entity.WaveCount}";
 				if (entity.GraceTime) timeLeftLabel.Text = $"Grace Time";
@@ -188,14 +187,14 @@ public partial class Client : Node
 
 			// disable health for enemies because server handles it
 			if (entity.Type == EntityType.DefaultEnemy
-				|| entity.Type == EntityType.RangedEnemy
-				|| entity.Type == EntityType.MountedEnemy
-				|| entity.Type == EntityType.RiderEnemy
-				|| entity.Type == EntityType.DefaultPlayer
-				|| entity.Type == EntityType.Archer
-				|| entity.Type == EntityType.Assassin
-				|| entity.Type == EntityType.Knight
-				|| entity.Type == EntityType.Mage)
+			    || entity.Type == EntityType.RangedEnemy
+			    || entity.Type == EntityType.MountedEnemy
+			    || entity.Type == EntityType.RiderEnemy
+			    || entity.Type == EntityType.DefaultPlayer
+			    || entity.Type == EntityType.Archer
+			    || entity.Type == EntityType.Assassin
+			    || entity.Type == EntityType.Knight
+			    || entity.Type == EntityType.Mage)
 			{
 				var healthNode = inst.GetNodeOrNull<Health>("Health");
 				healthNode.disable = true;
@@ -203,9 +202,9 @@ public partial class Client : Node
 			}
 
 			if (entity.Type == EntityType.DefaultEnemy
-				|| entity.Type == EntityType.RangedEnemy
-				|| entity.Type == EntityType.MountedEnemy
-				|| entity.Type == EntityType.RiderEnemy)
+			    || entity.Type == EntityType.RangedEnemy
+			    || entity.Type == EntityType.MountedEnemy
+			    || entity.Type == EntityType.RiderEnemy)
 			{
 				inst.AddToGroup("enemies");
 			}
@@ -233,9 +232,9 @@ public partial class Client : Node
 
 			// find owner node
 			var ownerNode = GetTree()
-			  .Root
-			  .GetNode<GameRoot>("GameRoot")
-			  .GetNode<Node2D>($"E_{entity.OwnerId.Value}");
+				.Root
+				.GetNode<GameRoot>("GameRoot")
+				.GetNode<Node2D>($"E_{entity.OwnerId.Value}");
 
 			if (ownerNode == null)
 			{
@@ -281,11 +280,10 @@ public partial class Client : Node
 	private void AttachJoystick(Node2D inst, EntitySnapshot entity)
 	{
 		// only for local / this clients player
-		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
-							|| entity.Type == EntityType.Archer
-							|| entity.Type == EntityType.Knight
-							|| entity.Type == EntityType.Mage
-							|| entity.Type == EntityType.Assassin;
+		bool isPlayerType = entity.Type is EntityType.DefaultPlayer or EntityType.Archer
+		                    || entity.Type == EntityType.Knight
+		                    || entity.Type == EntityType.Mage
+		                    || entity.Type == EntityType.Assassin;
 		if (!isPlayerType || entity.NetworkId != Multiplayer.GetUniqueId())
 		{
 			return;
@@ -299,10 +297,10 @@ public partial class Client : Node
 	private void ChangeCamera(Node2D inst, EntitySnapshot entity)
 	{
 		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
-							|| entity.Type == EntityType.Archer
-							|| entity.Type == EntityType.Knight
-							|| entity.Type == EntityType.Mage
-							|| entity.Type == EntityType.Assassin;
+		                    || entity.Type == EntityType.Archer
+		                    || entity.Type == EntityType.Knight
+		                    || entity.Type == EntityType.Mage
+		                    || entity.Type == EntityType.Assassin;
 		// only for local / this clients player
 		if (!isPlayerType || entity.NetworkId != Multiplayer.GetUniqueId())
 			return;
@@ -330,7 +328,6 @@ public partial class Client : Node
 
 	private void DebugIt(string message)
 	{
-		if (enableDebug) Debug.Print("Client: " + message);
+		if (_enableDebug) Debug.Print("Client: " + message);
 	}
-}
 }

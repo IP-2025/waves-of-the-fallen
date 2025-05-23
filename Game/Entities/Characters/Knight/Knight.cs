@@ -19,7 +19,7 @@ public partial class Knight : DefaultPlayer
 		GD.Print($"Knight initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
 	}
 
-	public override void UseAbility()
+	protected override void UseAbility()
 	{
 		//TODO: Implement Knight's ability
 	}

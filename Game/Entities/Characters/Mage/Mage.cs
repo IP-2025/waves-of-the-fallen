@@ -19,7 +19,7 @@ public partial class Mage : DefaultPlayer
 		GD.Print($"Mage initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
 	}
 
-	public override void UseAbility()
+	protected override void UseAbility()
 	{
 		//TODO: Implement Mage's ability
 	}

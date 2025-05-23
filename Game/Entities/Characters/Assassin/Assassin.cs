@@ -19,7 +19,7 @@ public partial class Assassin : DefaultPlayer
 		GD.Print($"Assassin initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
 	}
 
-	public override void UseAbility()
+	protected override void UseAbility()
 	{
 		//TODO: Implement Assassin's ability
 	}

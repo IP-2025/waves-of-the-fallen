@@ -5,209 +5,228 @@ using Game.Utilities.Multiplayer;
 
 public partial class DefaultPlayer : CharacterBody2D
 {
-	[Export]
-	public float Speed { get; set; }
+    [Export] public float Speed { get; set; }
 
-	[Export]
-	public int MaxHealth { get; set; }
+    [Export] public int MaxHealth { get; set; }
 
-	[Export]
-	public int CurrentHealth { get; set; }
-	public long OwnerPeerId { get; set; }
+    [Export] public int CurrentHealth { get; set; }
+    public long OwnerPeerId { get; set; }
+    private int Coins { get; set; } = 0;
 
-	public Node2D Joystick { get; set; }
-	private Camera2D camera;
-	private MultiplayerSynchronizer multiplayerSynchronizer;
-	public bool enableDebug = false;
-	
-	public PackedScene BowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
-	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
-	public PackedScene KunaiScene = GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn");
-	public PackedScene FireStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn");
-	public PackedScene LightningStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn");
-	public PackedScene DaggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
-	public PackedScene SwordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
-	private int weaponsEquipped = 0;
+    public Node2D Joystick { get; set; }
+    private Camera2D _camera;
+    private MultiplayerSynchronizer _multiplayerSynchronizer;
+    private bool _enableDebug = false;
 
-	public override void _Ready()
-	{
-		AddToGroup("player");
-/* 		base._Ready(); */
+    private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
+    private PackedScene _crossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
+    private PackedScene _kunaiScene = GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn");
 
-		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
-		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
- 
+    private PackedScene _fireStaffScene =
+        GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn");
+
+    private PackedScene _lightningStaffScene =
+        GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn");
+
+    private PackedScene _daggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
+    private PackedScene _swordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
+    private int _weaponsEquipped;
+
+    private WaveTimer _waveTimer;
+
+    public override void _Ready()
+    {
+        AddToGroup("player");
+
+        var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
+        var selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+        
+        // TODO: Get the timer from the scene tree
+        
 /* 		GetNodeOrNull<Node2D>("Archer")?.Hide();
-		GetNodeOrNull<Node2D>("Assassin")?.Hide();
-		GetNodeOrNull<Node2D>("Knight")?.Hide();
-		GetNodeOrNull<Node2D>("Mage")?.Hide();
+        GetNodeOrNull<Node2D>("Assassin")?.Hide();
+        GetNodeOrNull<Node2D>("Knight")?.Hide();
+        GetNodeOrNull<Node2D>("Mage")?.Hide();
+        
 
-		// Zeige nur den ausgewählten Charakter
-		string selectedClassNodeName = selectedCharacterId switch
-		{
-			1 => "Archer",
-			2 => "Assassin",
-			3 => "Knight",
-			4 => "Mage",
-			_ => "Archer" // Standardwert
-		}; */
+        // Zeige nur den ausgewählten Charakter
+        string selectedClassNodeName = selectedCharacterId switch
+        {
+            1 => "Archer",
+            2 => "Assassin",
+            3 => "Knight",
+            4 => "Mage",
+            _ => "Archer" // Standardwert
+        }; */
 
- /* 		var selectedClassNode = GetNodeOrNull<Node2D>(selectedClassNodeName);
-		if (selectedClassNode != null)
-		{
-			selectedClassNode.Show();
-			GD.Print($"Selected class: {selectedClassNodeName}");
-		}
-		else
-		{
-			GD.PrintErr($"Class node '{selectedClassNodeName}' not found!");
-		}*/
+        /* 		var selectedClassNode = GetNodeOrNull<Node2D>(selectedClassNodeName);
+               if (selectedClassNode != null)
+               {
+                   selectedClassNode.Show();
+                   GD.Print($"Selected class: {selectedClassNodeName}");
+               }
+               else
+               {
+                   GD.PrintErr($"Class node '{selectedClassNodeName}' not found!");
+               }*/
 
-		object playerClass = selectedCharacterId switch
-		{
-			1 => new Archer(),
-			2 => new Assassin(),
-			3 => new Knight(),
-			4 => new Mage(),
-			_ => new DefaultPlayer()
-		};
- 
+        object playerClass = selectedCharacterId switch
+        {
+            1 => new Archer(),
+            2 => new Assassin(),
+            3 => new Knight(),
+            4 => new Mage(),
+            _ => new DefaultPlayer()
+        };
+
 /* 		GD.Print($"Selected Character: {playerClass.GetType().Name}"); */
 
-		// Set attributes based on the selected class
+        // Set attributes based on the selected class
 
-		//------------------
+        //------------------
 /* 		if (playerClass is DefaultPlayer defaultPlayer)
-		{
-			Speed = defaultPlayer.Speed;
-			MaxHealth = defaultPlayer.MaxHealth;
-			CurrentHealth = defaultPlayer.MaxHealth;
-		}
+        {
+            Speed = defaultPlayer.Speed;
+            MaxHealth = defaultPlayer.MaxHealth;
+            CurrentHealth = defaultPlayer.MaxHealth;
+        }
  */
 /* 		AddToGroup("player");
-		CurrentHealth = MaxHealth;
+        CurrentHealth = MaxHealth;
 
-		OwnerPeerId = Multiplayer.GetUniqueId();
-		GD.Print($"OwnerPeerId set to: {OwnerPeerId}");
+        OwnerPeerId = Multiplayer.GetUniqueId();
+        GD.Print($"OwnerPeerId set to: {OwnerPeerId}");
 
-		// Synchronize MaxHealth with the Health node
-		var healthNode = GetNodeOrNull<Health>("Health");
-		if (healthNode != null)
-		{
-			healthNode.max_health = MaxHealth;
-			healthNode.ResetHealth(); // Reset health to max_health
-		}
-		else
-		{
-			GD.PrintErr("Health node not found!");
-		} */
+        // Synchronize MaxHealth with the Health node
+        var healthNode = GetNodeOrNull<Health>("Health");
+        if (healthNode != null)
+        {
+            healthNode.max_health = MaxHealth;
+            healthNode.ResetHealth(); // Reset health to max_health
+        }
+        else
+        {
+            GD.PrintErr("Health node not found!");
+        } */
 
-		// Equip weapon for the selected class
- 		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
-		Area2D weapon = CreateWeaponForClass(playerClass);
+        // Equip weapon for the selected class
+        var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(_weaponsEquipped) as Node2D;
+        var weapon = CreateWeaponForClass(playerClass);
 
-		if (weapon != null)
-		{
-			weaponSlot.AddChild(weapon);
-			weapon.Position = Vector2.Zero;
+        if (weapon == null) return;
+        weaponSlot?.AddChild(weapon);
+        weapon.Position = Vector2.Zero;
 
-			// for multiplayer
-			ulong id = weapon.GetInstanceId();
-			weapon.Name = $"Weapon_{id}";
-			weapon.SetMeta("OwnerId", OwnerPeerId);
-			weapon.SetMeta("SlotIndex", weaponsEquipped);
-			Server.Instance.Entities.Add((long)id, weapon);
+        // for multiplayer
+        var id = weapon.GetInstanceId();
+        weapon.Name = $"Weapon_{id}";
+        weapon.SetMeta("OwnerId", OwnerPeerId);
+        weapon.SetMeta("SlotIndex", _weaponsEquipped);
+        Server.Instance.Entities.Add((long)id, weapon);
 
-			weaponsEquipped++;
-		} 
-	}
+        _weaponsEquipped++;
+    }
 
-	private Area2D CreateWeaponForClass(object playerClass)
-	{
-		if (playerClass is Archer)
-			return BowScene.Instantiate() as Area2D;
-		
-		if (playerClass is Assassin)
-			return KunaiScene.Instantiate() as Area2D;
+    private Area2D CreateWeaponForClass(object playerClass)
+    {
+        return playerClass switch
+        {
+            Archer => _bowScene.Instantiate() as Area2D,
+            Assassin => _kunaiScene.Instantiate() as Area2D,
+            //return LightningStaffScene.Instantiate() as Area2D;
+            Mage => _fireStaffScene.Instantiate() as Area2D,
+            //return DaggerScene.Instantiate() as Area2D;
+            Knight => _swordScene.Instantiate() as Area2D,
+            _ => null
+        };
+    }
 
-		if (playerClass is Mage) 
-			//return LightningStaffScene.Instantiate() as Area2D;
-			return FireStaffScene.Instantiate() as Area2D;
-		if (playerClass is Knight)
-			//return DaggerScene.Instantiate() as Area2D;
-			return SwordScene.Instantiate() as Area2D;
-		
-		return null;
-	}
+    public override void _Process(double delta)
+    {
+        if (_waveTimer == null)
+        {
+            var cam = GetNodeOrNull<Camera2D>("Camera2D");
+            if (cam != null)
+            {
+                _waveTimer = cam.GetNodeOrNull<WaveTimer>("WaveTimer");
+                if (_waveTimer != null)
+                {
+                    _waveTimer.WaveEnded += OnWaveTimerTimeout;
+                }
+            }
+        }
+    }
 
-	public override void _Process(double delta)
-	{
+    public override void _PhysicsProcess(double delta)
+    {
+        var direction = Vector2.Zero;
 
-	}
+        // Check if joystick exists and if it's being used
+        if (Joystick != null)
+        {
+            Vector2 joystickDirection = (Vector2)Joystick.Get("PosVector");
+            if (joystickDirection != Vector2.Zero)
+            {
+                direction = joystickDirection;
+            }
+        }
 
-	public override void _PhysicsProcess(double delta)
-	{
-		Vector2 direction = Vector2.Zero;
+        // If no joystick input, fallback to keyboard
+        if (direction == Vector2.Zero)
+        {
+            direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+        }
 
-		// Check if joystick exists and if it's being used
-		if (Joystick != null)
-		{
-			Vector2 joystickDirection = (Vector2)Joystick.Get("PosVector");
-			if (joystickDirection != Vector2.Zero)
-			{
-				direction = joystickDirection;
-			}
-		}
+        Velocity = direction * Speed;
+        MoveAndSlide();
 
-		// If no joystick input, fallback to keyboard
-		if (direction == Vector2.Zero)
-		{
-			direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-		}
+        // // Play Animations
+        // if (animationPlayer != null)
+        // {
+        // 	if (direction != Vector2.Zero)
+        // 	{
+        // 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "walk")
+        // 			animationPlayer.Play("walk");
+        // 	}
+        // 	else
+        // 	{
+        // 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "idle")
+        //
+        // 			animationPlayer.Play("idle");
+        //
+        //
+        // 	}
+        // }
+        //
+        // if (archerSprite != null && direction != Vector2.Zero)
+        // {
+        // 	archerSprite.FlipH = direction.X < 0;
+        // }
+    }
 
-		Velocity = direction * Speed;
-		MoveAndSlide();
+    protected virtual void UseAbility()
+    {
+        GD.Print("Ability placeholder for all classes");
+    }
 
-		// // Play Animations
-		// if (animationPlayer != null)
-		// {
-		// 	if (direction != Vector2.Zero)
-		// 	{
-		// 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "walk")
-		// 			animationPlayer.Play("walk");
-		// 	}
-		// 	else
-		// 	{
-		// 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "idle")
-		//
-		// 			animationPlayer.Play("idle");
-		//
-		//
-		// 	}
-		// }
-		//
-		// if (archerSprite != null && direction != Vector2.Zero)
-		// {
-		// 	archerSprite.FlipH = direction.X < 0;
-		// }
-	}
+    private void DebugIt(string message)
+    {
+        if (_enableDebug)
+        {
+            Debug.Print(message);
+        }
+    }
 
-	public virtual void UseAbility()
-	{
-		GD.Print("Ability placeholder for all classes");
-	}
-
-	private void DebugIt(string message)
-	{
-		if (enableDebug)
-		{
-			Debug.Print(message);
-		}
-	}
-	public virtual void Die()
-	{
-		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"), GlobalPosition);
-		GD.Print("Default death behavior – no animation");
-		QueueFree();
-	}
+    public virtual void Die()
+    {
+        GD.Print("Player has died");
+        SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"), GlobalPosition);
+        QueueFree();
+    }
+    
+    private void OnWaveTimerTimeout()
+    {
+        GD.Print("WaveTimer ist abgelaufen!");
+        // Hier Coins vergeben oder andere Logik ausführen
+    }
 }

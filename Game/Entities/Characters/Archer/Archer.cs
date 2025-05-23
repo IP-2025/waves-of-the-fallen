@@ -19,7 +19,7 @@ public partial class Archer : DefaultPlayer
 		GD.Print($"Archer initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
 	}
 
-	public override void UseAbility()
+	protected override void UseAbility()
 	{
 		//TODO: Implement Archer's ability
 	}
