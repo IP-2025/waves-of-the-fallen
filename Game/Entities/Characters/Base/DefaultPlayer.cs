@@ -15,7 +15,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	public int CurrentHealth { get; set; }
 	public long OwnerPeerId { get; set; }
 
-	[Export] private NodePath animationPath;
+	protected NodePath animationPath;
 
 	public Node2D Joystick { get; set; }
 	private Camera2D camera;
@@ -125,11 +125,12 @@ public partial class DefaultPlayer : CharacterBody2D
 			weaponsEquipped++;
 		} 
 
-		if (animationPath != null)
+		if (animationPath != null && !animationPath.IsEmpty)
 		{
 			animation = GetNode<AnimatedSprite2D>(animationPath);
 			animationHandler = new AnimationHandler(animation);
-		}else
+		}
+		else
 		{
 			GD.PushError($"{Name} has no animationPath set!");
 		}
