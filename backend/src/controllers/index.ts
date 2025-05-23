@@ -7,3 +7,4 @@ export { getSettings, setSettings } from './settingsController';
 export { startGameController } from './startGameController';
 export { stopGameController } from './stopGameController';
 export { listGameController } from './listGameController';
+export * from './highScoreController';

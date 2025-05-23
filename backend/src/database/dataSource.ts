@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { DbConfig } from 'core/config';
-import { Character, Player, Settings, UnlockedCharacter, Credential } from './entities';
+import {Character, Player, Settings, UnlockedCharacter, Credential, HighScore} from './entities';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -11,6 +11,6 @@ export const AppDataSource = new DataSource({
   database: DbConfig.DATABASE,
   synchronize: true,
   logging: false,
-  entities: [Player, Credential, Settings, Character, UnlockedCharacter],
+  entities: [Player, Credential, Settings, Character, UnlockedCharacter, HighScore],
   migrations: [],
 });

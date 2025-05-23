@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://yx4lw1whi03l"]
+[gd_scene load_steps=11 format=3 uid="uid://yx4lw1whi03l"]
 
 [ext_resource type="Script" uid="uid://d3qtxl5t5i32q" path="res://Audio/Manager/SoundManager.cs" id="1_1u08g"]
-[ext_resource type="AudioStream" uid="uid://d4aomkyc5s0n3" path="res://Audio/Sounds/Resources/EnemyHurt.wav" id="2_olkkv"]
-[ext_resource type="AudioStream" uid="uid://cxx4c25rsbyf8" path="res://Audio/Sounds/Resources/enemySpawn.wav" id="3_578fl"]
-[ext_resource type="AudioStream" uid="uid://c0oupe3glfd3q" path="res://Audio/Sounds/Resources/bowString.wav" id="3_cr6xc"]
-[ext_resource type="AudioStream" uid="uid://5wts847ky0t8" path="res://Audio/Sounds/Resources/footstepsGrass.wav" id="4_c5u0d"]
-[ext_resource type="AudioStream" uid="uid://gcqamxp1h7th" path="res://Audio/Sounds/Resources/swingWoosh.wav" id="4_sfxm6"]
-[ext_resource type="AudioStream" uid="uid://dxpqfdd0nyl36" path="res://Audio/Sounds/Resources/crossbowString.wav" id="4_xjrsk"]
-[ext_resource type="AudioStream" uid="uid://sov0lkct1oh" path="res://Audio/Sounds/Resources/playerDies.wav" id="5_2jdub"]
-[ext_resource type="AudioStream" uid="uid://cvsv563f0bee5" path="res://Audio/Sounds/Resources/firestaffLights.wav" id="7_c5u0d"]
+[ext_resource type="AudioStream" uid="uid://butgfssifn3sp" path="res://Audio/Sounds/Resources/EnemyHurt.wav" id="2_olkkv"]
+[ext_resource type="AudioStream" uid="uid://ld20ckk57f4e" path="res://Audio/Sounds/Resources/enemySpawn.wav" id="3_578fl"]
+[ext_resource type="AudioStream" uid="uid://cwm3loq0p5jh1" path="res://Audio/Sounds/Resources/bowString.wav" id="3_cr6xc"]
+[ext_resource type="AudioStream" uid="uid://dwbt7ppp045w6" path="res://Audio/Sounds/Resources/footstepsGrass.wav" id="4_c5u0d"]
+[ext_resource type="AudioStream" uid="uid://bxywsi7tc6qyx" path="res://Audio/Sounds/Resources/swingWoosh.wav" id="4_sfxm6"]
+[ext_resource type="AudioStream" uid="uid://dvg175jjxxeca" path="res://Audio/Sounds/Resources/crossbowString.wav" id="4_xjrsk"]
+[ext_resource type="AudioStream" uid="uid://b6qq2v5c7gtv5" path="res://Audio/Sounds/Resources/playerDies.wav" id="5_2jdub"]
+[ext_resource type="AudioStream" uid="uid://lwr0n7otiuid" path="res://Audio/Sounds/Resources/firestaffLights.wav" id="7_c5u0d"]
+[ext_resource type="AudioStream" uid="uid://hsj31bllhh8x" path="res://Audio/Sounds/Resources/lightningstaffFire.wav" id="10_8867q"]
 
 [node name="SoundManager" type="Node2D"]
 script = ExtResource("1_1u08g")
@@ -52,4 +53,8 @@ bus = &"SoundEffectBus"
 
 [node name="crossbowFires" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_xjrsk")
+bus = &"SoundEffectBus"
+
+[node name="lightningstaffFires" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_8867q")
 bus = &"SoundEffectBus"

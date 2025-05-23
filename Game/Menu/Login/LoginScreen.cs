@@ -1,5 +1,7 @@
-using Godot;
 using Game.Utilities.Backend;
+using Godot;
+
+namespace Game.Menu.Login;
 
 public partial class LoginScreen : Control
 {

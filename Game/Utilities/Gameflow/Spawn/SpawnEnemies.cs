@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Game.Utilities.Multiplayer; 
+using Game.Utilities.Multiplayer;
 
 public partial class SpawnEnemies : Node2D
 {
@@ -53,16 +53,14 @@ public partial class SpawnEnemies : Node2D
 
 	private void OnTimerTimeout()
 	{
-		SpawnEnemy(); // spawn enemy on timer timeout
+		SpawnEnemiesFromPool(); // spawn enemy on timer timeout
 	}
 
-	private void SpawnEnemy()
+	private void SpawnEnemiesFromPool()
 	{
 		if (GetTree().GetNodesInGroup("enemies").Count >= enemyLimit) // Checks if the enemy limit is reached and returns if too many enemies are spawned
 			return;
 
-		PathFollow2D spawnPath = GetNode<PathFollow2D>("Path2D/PathFollow2D"); // gets a random starting position, where the enemies are spawned
-		spawnPath.ProgressRatio = GD.Randf();
 
 		EnemyPattern pattern = GetPatternFromPool();
 
@@ -74,23 +72,35 @@ public partial class SpawnEnemies : Node2D
 			enemy.player = Player;
 			enemy.speed = enemy.speed * pattern.speedMultiplier;
 			enemy.GetNode<Health>("Health").max_health = enemy.GetNode<Health>("Health").max_health * pattern.healthMultiplier;
-			//pattern.GlobalPosition = spawnPath.GlobalPosition;
-			enemy.GlobalPosition += spawnPath.GlobalPosition;
 
-			ulong id = enemy.GetInstanceId();
-			enemy.Name = $"Enemy_{id}";
-			Server.Instance.Entities[(long)id] = enemy;
 
 			var oldParent = enemy.GetParent();
 			oldParent.RemoveChild(enemy);
 			enemy.Owner = null;
 
-
-			AddChild(enemy);
-			enemy.AddToGroup("enemies"); // added to enemies group
-
+			SpawnEnemy(enemy);
 		}
 		pattern.QueueRedraw();
+	}
+
+
+	public void SpawnEnemy(CharacterBody2D enemy, Vector2 spawnPosition) // gives enemy instanceid as name, instantiates on server and adds it to SpawnEnemy
+	{
+		enemy.GlobalPosition += spawnPosition;
+
+		ulong id = enemy.GetInstanceId();
+		enemy.Name = $"Enemy_{id}";
+		Server.Instance.Entities[(long)id] = enemy;
+
+		CallDeferred("add_child", enemy);
+		enemy.AddToGroup("enemies"); // added to enemy group
+	}
+
+	public void SpawnEnemy(CharacterBody2D enemy) // Uses random spawnPath position if called without Vector2
+	{
+		PathFollow2D spawnPath = GetNode<PathFollow2D>("Path2D/PathFollow2D"); // gets a random starting position, where the enemies are spawned
+		spawnPath.ProgressRatio = GD.Randf();
+		SpawnEnemy(enemy, spawnPath.GlobalPosition);
 	}
 
 	private void LoadPatternPool() // loads patterns through the filepath below into the patternPool with their associated spawningCost
@@ -119,7 +129,8 @@ public partial class SpawnEnemies : Node2D
 		//Debug.Print("Grace time has ended");
 	}
 
-	private EnemyPattern GetPatternFromPool() {
+	private EnemyPattern GetPatternFromPool()
+	{
 
 		float spawnValue = GD.Randf() * currentWave; // generate a random spawnValue to determine the difficulty of the selected enemies
 
