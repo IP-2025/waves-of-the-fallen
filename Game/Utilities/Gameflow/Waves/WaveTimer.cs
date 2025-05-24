@@ -28,6 +28,12 @@ public partial class WaveTimer : Node2D
 		_waveTimer = GetNode<Timer>("WaveTimer");
 		_waveTimer.Timeout += OnTimerTimeout;
 	}
+	
+	public void TriggerWaveEnded()
+	{
+		EmitSignal(nameof(WaveEnded));
+	}
+
 
 
 	private void OnTimerTimeout()
@@ -46,13 +52,7 @@ public partial class WaveTimer : Node2D
 
 		_waveCounterLabel.Text = $"Wave: {WaveCounter}";
 		_timeLeftLabel.Text = (MaxTime - SecondCounter).ToString();
-		if (_waveTimer.Paused) 
-		{
-			_timeLeftLabel.Text = "Grace Time";
-			IsPaused = true;
-		} else{
-			IsPaused = false;
-		}
+		IsPaused = _waveTimer.Paused;
 	}
 
 	public async Task PauseTimer(int time) // Flips the paused state of waveTimer
