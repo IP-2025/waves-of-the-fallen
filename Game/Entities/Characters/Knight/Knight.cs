@@ -2,25 +2,26 @@ using Godot;
 
 public partial class Knight : DefaultPlayer
 {
-	public Knight()
-	{
-		MaxHealth = 250; 
-		Speed = 175.0f;  
-	}
-	
-	public override void _Ready()
-	{
-		base._Ready();
+    public Knight()
+    {
+        CharacterManager characterManager = GetNode<CharacterManager>("/root/CharacterManager");
+        MaxHealth = characterManager.LoadHealthByID("3");
+        Speed = characterManager.LoadHealthByID("3");
+    }
 
-		var healthNode = GetNode<Health>("Health");
-		healthNode.max_health = MaxHealth;
-		healthNode.ResetHealth();
+    public override void _Ready()
+    {
+        base._Ready();
 
-		GD.Print($"Knight initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
-	}
+        var healthNode = GetNode<Health>("Health");
+        healthNode.max_health = MaxHealth;
+        healthNode.ResetHealth();
 
-	public override void UseAbility()
-	{
-		//TODO: Implement Knight's ability
-	}
+        GD.Print($"Knight initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
+    }
+
+    public override void UseAbility()
+    {
+        //TODO: Implement Knight's ability
+    }
 }
