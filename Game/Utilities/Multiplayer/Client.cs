@@ -41,6 +41,7 @@ public partial class Client : Node
 		{ EntityType.Lighting, GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightning.tscn")},
 		{ EntityType.Dagger, GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn")},
 		{ EntityType.Sword, GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn")},
+		{ EntityType.HealStaff, GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn")},
 	};
 
 	public override void _Ready()
