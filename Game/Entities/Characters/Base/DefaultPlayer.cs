@@ -25,6 +25,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	public PackedScene KunaiScene = GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn");
 	public PackedScene FireStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn");
 	public PackedScene LightningStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn");
+	public PackedScene HealStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
 	public PackedScene DaggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
 	public PackedScene SwordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
 	private int weaponsEquipped = 0;
@@ -132,7 +133,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
 		if (playerClass is Mage) 
 			//return LightningStaffScene.Instantiate() as Area2D;
-			return FireStaffScene.Instantiate() as Area2D;
+			return HealStaffScene.Instantiate() as Area2D;
 		if (playerClass is Knight)
 			//return DaggerScene.Instantiate() as Area2D;
 			return SwordScene.Instantiate() as Area2D;
