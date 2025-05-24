@@ -1,7 +1,7 @@
 using Godot;
 using Godot.Collections;
 
-public partial class FireBall : Projectile
+public partial class HammerProjectile : Projectile
 {
 	protected float Radius = 100;
 
@@ -9,15 +9,15 @@ public partial class FireBall : Projectile
 
 	public override void _Ready()
 	{
-		Speed = 600;
+		Speed = 800;
 		Damage = 120;
 	}
 	public override void OnBodyEntered(Node2D body)
 	{
 		Speed = 0;
 		SetDeferred("Monitoring", false);
-		GetNode<AnimatedSprite2D>("./FireballAnimation").Hide();
-		GetNode<AnimatedSprite2D>("./Explosion").Play("explosion");
+		GetNode<AnimatedSprite2D>("./HammerProjectile").Hide();
+		GetNode<AnimatedSprite2D>("./Cracks").Play("cracks");
 		if (!hasHit) {
 			hasHit = true;
 			DamageProcess();
@@ -39,7 +39,7 @@ public partial class FireBall : Projectile
 		}
 	}
 
-	private void OnExplosionAnimationFinished() {
+	private void OnCracksAnimationFinished() {
 		QueueFree();
 	}
 

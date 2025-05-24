@@ -81,7 +81,6 @@ public abstract partial class MeleeWeapon : Area2D
 
 			//Call method for attack
 			tween.TweenCallback(Callable.From(() => {
-				//GD.Print("Execute Attack");
 				onAttackComplete?.Invoke();
 				var timer = GetTree().CreateTimer(0.2);
 				timer.Timeout += () => {

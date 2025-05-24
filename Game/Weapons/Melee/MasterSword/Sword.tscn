@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://ch3tny3ssg083"]
 
 [ext_resource type="Script" uid="uid://cxtedfws8416i" path="res://Weapons/Melee/MasterSword/Sword.cs" id="1_sa01y"]
-[ext_resource type="Texture2D" uid="uid://djj32qdgtl08m" path="res://Weapons/Melee/MasterSword/Resources/MasterSword.png" id="2_ciqr1"]
-[ext_resource type="Texture2D" uid="uid://p480n6hoap35" path="res://Weapons/Melee/MasterSword/Resources/SwordTrailTest.png" id="3_sxts0"]
+[ext_resource type="Texture2D" uid="uid://d0xxlamxvcxsu" path="res://Weapons/Melee/MasterSword/Resources/MasterSword.png" id="2_ciqr1"]
+[ext_resource type="Texture2D" uid="uid://cpmicc3oc3kux" path="res://Weapons/Melee/MasterSword/Resources/SwordTrailTest.png" id="3_sxts0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a54vs"]
 radius = 40.2897
