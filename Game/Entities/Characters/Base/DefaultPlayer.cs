@@ -1,5 +1,5 @@
-using System;
 using System.Diagnostics;
+using System.Threading;
 using Godot;
 using Game.Utilities.Multiplayer;
 
@@ -219,14 +219,13 @@ public partial class DefaultPlayer : CharacterBody2D
 
     public virtual void Die()
     {
-        GD.Print("Player has died");
+        GD.Print("Player dies with Coins: " + Coins);
         SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"), GlobalPosition);
         QueueFree();
     }
     
     private void OnWaveTimerTimeout()
     {
-        GD.Print("WaveTimer ist abgelaufen!");
-        // Hier Coins vergeben oder andere Logik ausführen
+        Coins += 10; 
     }
 }
