@@ -10,10 +10,10 @@ public partial class DefaultPlayer : CharacterBody2D
     [Export] public int MaxHealth { get; set; }
 
     [Export] public int CurrentHealth { get; set; }
-    
+
     [Export] public HttpRequest HttpRequest { get; set; }
     public long OwnerPeerId { get; set; }
-    private int Coins { get; set; }
+    private int Coins { get; set; } = 0;
 
     public Node2D Joystick { get; set; }
     private Camera2D _camera;
@@ -137,7 +137,6 @@ public partial class DefaultPlayer : CharacterBody2D
 
     public virtual void Die()
     {
-        GD.Print("Player dies with Coins: " + Coins);
         SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"),
             GlobalPosition);
 
@@ -145,10 +144,9 @@ public partial class DefaultPlayer : CharacterBody2D
         if (GameState.CurrentState == ConnectionState.Online)
         {
             var token = SecureStorage.LoadToken();
-            GD.Print(token);
             if (string.IsNullOrEmpty(token)) return;
             const string url = $"{ServerConfig.BaseUrl}/api/v1/protected/addGold";
-            var headers = new[] { $"Authorization: Bearer {token}" };
+            var headers = new[] { $"Authorization: Bearer {token}", "Content-Type: application/json" };
             var body = Json.Stringify(new Godot.Collections.Dictionary
             {
                 { "gold", Coins }

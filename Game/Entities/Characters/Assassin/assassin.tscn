@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://70abqg7ujgbf" path="res://Entities/Characters/Assassin/Assassin.cs" id="1_y3eth"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_slb6w"]
 [ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="3_pgiys"]
-[ext_resource type="Texture2D" uid="uid://cmulbokpwupui" path="res://Entities/Characters/Assassin/Resources/AssassinCharacterPreview.png" id="4_slb6w"]
+[ext_resource type="Texture2D" uid="uid://kimtqy3xo4jc" path="res://Entities/Characters/Assassin/Resources/AssassinCharacterPreview.png" id="4_slb6w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
@@ -67,3 +67,5 @@ zoom = Vector2(1.75, 1.75)
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_slb6w")
+
+[node name="HttpRequest" type="HTTPRequest" parent="."]
