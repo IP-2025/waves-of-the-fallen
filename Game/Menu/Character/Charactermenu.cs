@@ -90,7 +90,7 @@ public partial class Charactermenu : Control
 			"Authorization: Bearer " + SecureStorage.LoadToken()
 		};
 		var err = _progressCheckRequest.Request(
-			$"{Server.BaseUrl}/api/v1/protected/getAllUnlockedCharacters",
+			$"{ServerConfig.BaseUrl}/api/v1/protected/getAllUnlockedCharacters",
 			headers,
 			HttpClient.Method.Post
 		);
@@ -140,7 +140,7 @@ public partial class Charactermenu : Control
 			"Authorization: Bearer " + SecureStorage.LoadToken()
 		};
 		var err = _unlockRequest.Request(
-			$"{Server.BaseUrl}/api/v1/protected/progressSync",
+			$"{ServerConfig.BaseUrl}/api/v1/protected/progressSync",
 			headers,
 			HttpClient.Method.Post,
 			body
@@ -375,7 +375,7 @@ public partial class Charactermenu : Control
 					"Authorization: Bearer " + SecureStorage.LoadToken()
 				};
 				var err = _unlockRequest.Request(
-					$"{Server.BaseUrl}/api/v1/protected/character/levelUp",
+					$"{ServerConfig.BaseUrl}/api/v1/protected/character/levelUp",
 					headers,
 					HttpClient.Method.Post,
 					body
@@ -409,7 +409,7 @@ public partial class Charactermenu : Control
 					"Authorization: Bearer " + SecureStorage.LoadToken()
 				};
 				var err = _unlockRequest.Request(
-					$"{Server.BaseUrl}/api/v1/protected/character/unlock",
+					$"{ServerConfig.BaseUrl}/api/v1/protected/character/unlock",
 					headers,
 					HttpClient.Method.Post,
 					body

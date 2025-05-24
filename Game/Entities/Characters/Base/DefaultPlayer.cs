@@ -1,7 +1,7 @@
 using System.Diagnostics;
-using System.Threading;
-using Godot;
+using Game.Utilities.Backend;
 using Game.Utilities.Multiplayer;
+using Godot;
 
 public partial class DefaultPlayer : CharacterBody2D
 {
@@ -10,13 +10,15 @@ public partial class DefaultPlayer : CharacterBody2D
     [Export] public int MaxHealth { get; set; }
 
     [Export] public int CurrentHealth { get; set; }
+    
+    [Export] public HttpRequest HttpRequest { get; set; }
     public long OwnerPeerId { get; set; }
-    private int Coins { get; set; } = 0;
+    private int Coins { get; set; }
 
     public Node2D Joystick { get; set; }
     private Camera2D _camera;
     private MultiplayerSynchronizer _multiplayerSynchronizer;
-    private bool _enableDebug = false;
+    private bool _enableDebug;
 
     private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
     private PackedScene _crossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
@@ -40,35 +42,8 @@ public partial class DefaultPlayer : CharacterBody2D
 
         var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
         var selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
-        
-        // TODO: Get the timer from the scene tree
-        
-/* 		GetNodeOrNull<Node2D>("Archer")?.Hide();
-        GetNodeOrNull<Node2D>("Assassin")?.Hide();
-        GetNodeOrNull<Node2D>("Knight")?.Hide();
-        GetNodeOrNull<Node2D>("Mage")?.Hide();
-        
 
-        // Zeige nur den ausgewählten Charakter
-        string selectedClassNodeName = selectedCharacterId switch
-        {
-            1 => "Archer",
-            2 => "Assassin",
-            3 => "Knight",
-            4 => "Mage",
-            _ => "Archer" // Standardwert
-        }; */
-
-        /* 		var selectedClassNode = GetNodeOrNull<Node2D>(selectedClassNodeName);
-               if (selectedClassNode != null)
-               {
-                   selectedClassNode.Show();
-                   GD.Print($"Selected class: {selectedClassNodeName}");
-               }
-               else
-               {
-                   GD.PrintErr($"Class node '{selectedClassNodeName}' not found!");
-               }*/
+        HttpRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
 
         object playerClass = selectedCharacterId switch
         {
@@ -78,36 +53,6 @@ public partial class DefaultPlayer : CharacterBody2D
             4 => new Mage(),
             _ => new DefaultPlayer()
         };
-
-/* 		GD.Print($"Selected Character: {playerClass.GetType().Name}"); */
-
-        // Set attributes based on the selected class
-
-        //------------------
-/* 		if (playerClass is DefaultPlayer defaultPlayer)
-        {
-            Speed = defaultPlayer.Speed;
-            MaxHealth = defaultPlayer.MaxHealth;
-            CurrentHealth = defaultPlayer.MaxHealth;
-        }
- */
-/* 		AddToGroup("player");
-        CurrentHealth = MaxHealth;
-
-        OwnerPeerId = Multiplayer.GetUniqueId();
-        GD.Print($"OwnerPeerId set to: {OwnerPeerId}");
-
-        // Synchronize MaxHealth with the Health node
-        var healthNode = GetNodeOrNull<Health>("Health");
-        if (healthNode != null)
-        {
-            healthNode.max_health = MaxHealth;
-            healthNode.ResetHealth(); // Reset health to max_health
-        }
-        else
-        {
-            GD.PrintErr("Health node not found!");
-        } */
 
         // Equip weapon for the selected class
         var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(_weaponsEquipped) as Node2D;
@@ -143,17 +88,13 @@ public partial class DefaultPlayer : CharacterBody2D
 
     public override void _Process(double delta)
     {
-        if (_waveTimer == null)
+        if (_waveTimer != null) return;
+        var cam = GetNodeOrNull<Camera2D>("Camera2D");
+        if (cam == null) return;
+        _waveTimer = cam.GetNodeOrNull<WaveTimer>("WaveTimer");
+        if (_waveTimer != null)
         {
-            var cam = GetNodeOrNull<Camera2D>("Camera2D");
-            if (cam != null)
-            {
-                _waveTimer = cam.GetNodeOrNull<WaveTimer>("WaveTimer");
-                if (_waveTimer != null)
-                {
-                    _waveTimer.WaveEnded += OnWaveTimerTimeout;
-                }
-            }
+            _waveTimer.WaveEnded += OnWaveTimerTimeout;
         }
     }
 
@@ -179,29 +120,6 @@ public partial class DefaultPlayer : CharacterBody2D
 
         Velocity = direction * Speed;
         MoveAndSlide();
-
-        // // Play Animations
-        // if (animationPlayer != null)
-        // {
-        // 	if (direction != Vector2.Zero)
-        // 	{
-        // 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "walk")
-        // 			animationPlayer.Play("walk");
-        // 	}
-        // 	else
-        // 	{
-        // 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "idle")
-        //
-        // 			animationPlayer.Play("idle");
-        //
-        //
-        // 	}
-        // }
-        //
-        // if (archerSprite != null && direction != Vector2.Zero)
-        // {
-        // 	archerSprite.FlipH = direction.X < 0;
-        // }
     }
 
     protected virtual void UseAbility()
@@ -220,12 +138,48 @@ public partial class DefaultPlayer : CharacterBody2D
     public virtual void Die()
     {
         GD.Print("Player dies with Coins: " + Coins);
-        SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"), GlobalPosition);
-        QueueFree();
+        SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"),
+            GlobalPosition);
+
+
+        if (GameState.CurrentState == ConnectionState.Online)
+        {
+            var token = SecureStorage.LoadToken();
+            GD.Print(token);
+            if (string.IsNullOrEmpty(token)) return;
+            const string url = $"{ServerConfig.BaseUrl}/api/v1/protected/addGold";
+            var headers = new[] { $"Authorization: Bearer {token}" };
+            var body = Json.Stringify(new Godot.Collections.Dictionary
+            {
+                { "gold", Coins }
+            });
+            var err = HttpRequest.Request(
+                url,
+                headers,
+                HttpClient.Method.Post,
+                body
+            );
+            if (err != Error.Ok)
+                GD.PrintErr($"AuthRequest error: {err}");
+        }
     }
-    
+
     private void OnWaveTimerTimeout()
     {
-        Coins += 10; 
+        Coins += 10;
+    }
+
+    private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
+    {
+        if (responseCode == 200)
+        {
+            GD.Print("Request completed successfully.");
+        }
+        else
+        {
+            GD.PrintErr($"Request failed with response code: {responseCode}");
+        }
+
+        QueueFree();
     }
 }

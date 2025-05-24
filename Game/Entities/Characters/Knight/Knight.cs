@@ -10,6 +10,12 @@ public partial class Knight : DefaultPlayer
 	
 	public override void _Ready()
 	{
+		HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
+		if (HttpRequest == null)
+		{
+			GD.PrintErr("HttpRequest node not found!");
+			return;
+		}
 		base._Ready();
 
 		var healthNode = GetNode<Health>("Health");
