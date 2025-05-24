@@ -9,16 +9,15 @@ public partial class HammerProjectile : Projectile
 
 	public override void _Ready()
 	{
-		Speed = 600;
+		Speed = 800;
 		Damage = 120;
 	}
 	public override void OnBodyEntered(Node2D body)
 	{
 		Speed = 0;
 		SetDeferred("Monitoring", false);
-		GetNode<AnimatedSprite2D>("./WarHammerAnimation").Hide();
-		GetNode<AnimatedSprite2D>("./Explosion").Play("explosion");
-
+		GetNode<AnimatedSprite2D>("./HammerProjectile").Hide();
+		GetNode<AnimatedSprite2D>("./Cracks").Play("cracks");
 		if (!hasHit) {
 			hasHit = true;
 			DamageProcess();
@@ -40,7 +39,7 @@ public partial class HammerProjectile : Projectile
 		}
 	}
 
-	private void OnExplosionAnimationFinished() {
+	private void OnCracksAnimationFinished() {
 		QueueFree();
 	}
 
