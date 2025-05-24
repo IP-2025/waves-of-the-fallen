@@ -21,7 +21,7 @@ protectedRouter.get('/', authenticationStep, (req, res) => {
 protectedRouter.post('/getSettings', authenticationStep, getSettings);
 protectedRouter.post('/setSettings', authenticationStep, setSettings);
 protectedRouter.post('/setGold', authenticationStep, setGoldController);
-protectedRouter.post('addGold', authenticationStep, addGoldController);
+protectedRouter.post('/addGold', authenticationStep, addGoldController);
 protectedRouter.post('/getGold', authenticationStep, getGoldController);
 protectedRouter.get('/characters', authenticationStep, getAllCharacterController);
 protectedRouter.post('/getAllUnlockedCharacters', authenticationStep, getAllUnlockedCharacterController);
