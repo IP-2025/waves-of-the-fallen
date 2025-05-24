@@ -29,13 +29,13 @@ export async function setGoldController(req: Request, res: Response, next: NextF
 
 export async function addGoldController(req: Request, res: Response, next: NextFunction) {
     try {
-      logger.info('body', JSON.stringify(req.body));
+      logger.info('addGoldController called');
       const playerId = extractAndValidatePlayerId(req.headers['authorization']);
       const { gold } = req.body;
-        logger.info(`Adding gold for player ${playerId}: ${gold}`);
         if (!playerId) {
         throw new BadRequestError('Player ID and Gold amount are required');
         }
+        logger.info(`Adding gold: ${gold} to player ID: ${playerId}`);
         await addGoldService(playerId, gold);
         res.status(200).send('OK');
     } catch (err) {

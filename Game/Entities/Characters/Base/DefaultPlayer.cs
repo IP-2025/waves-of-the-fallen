@@ -13,7 +13,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
     [Export] public HttpRequest HttpRequest { get; set; }
     public long OwnerPeerId { get; set; }
-    private int Coins { get; set; } = 0;
+    private int Gold { get; set; }
 
     public Node2D Joystick { get; set; }
     private Camera2D _camera;
@@ -35,13 +35,15 @@ public partial class DefaultPlayer : CharacterBody2D
     private int _weaponsEquipped;
 
     private WaveTimer _waveTimer;
+    private CharacterManager _characterManager;
+    private bool _requestSent = false;
 
     public override void _Ready()
     {
         AddToGroup("player");
 
-        var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
-        var selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+        _characterManager = GetNode<CharacterManager>("/root/CharacterManager");
+        var selectedCharacterId = _characterManager.LoadLastSelectedCharacterID();
 
         HttpRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
 
@@ -105,7 +107,7 @@ public partial class DefaultPlayer : CharacterBody2D
         // Check if joystick exists and if it's being used
         if (Joystick != null)
         {
-            Vector2 joystickDirection = (Vector2)Joystick.Get("PosVector");
+            var joystickDirection = (Vector2)Joystick.Get("PosVector");
             if (joystickDirection != Vector2.Zero)
             {
                 direction = joystickDirection;
@@ -141,15 +143,22 @@ public partial class DefaultPlayer : CharacterBody2D
             GlobalPosition);
 
 
-        if (GameState.CurrentState == ConnectionState.Online)
+        _characterManager.AddGold(Gold);
+
+        if (GameState.CurrentState == ConnectionState.Offline)
         {
+            QueueFree();
+        }
+        else if (!_requestSent)
+        {
+            _requestSent = true;
             var token = SecureStorage.LoadToken();
             if (string.IsNullOrEmpty(token)) return;
             const string url = $"{ServerConfig.BaseUrl}/api/v1/protected/addGold";
             var headers = new[] { $"Authorization: Bearer {token}", "Content-Type: application/json" };
             var body = Json.Stringify(new Godot.Collections.Dictionary
             {
-                { "gold", Coins }
+                { "gold", Gold }
             });
             var err = HttpRequest.Request(
                 url,
@@ -159,12 +168,16 @@ public partial class DefaultPlayer : CharacterBody2D
             );
             if (err != Error.Ok)
                 GD.PrintErr($"AuthRequest error: {err}");
+            
         }
     }
 
     private void OnWaveTimerTimeout()
     {
-        Coins += 10;
+        GD.Print("OnWaveTimerTimeout");
+        Gold += 10;
+        
+        GD.Print("Gold: " + Gold);
     }
 
     private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
