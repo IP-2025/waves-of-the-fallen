@@ -8,6 +8,7 @@ script = ExtResource("1_k0xx2")
 spawningCost = 1.5
 healthMultiplier = 3.0
 speedMultiplier = 0.4
+minWave = 2
 
 [node name="BasicEnemy" parent="." instance=ExtResource("2_xe0qc")]
 scale = Vector2(3, 3)

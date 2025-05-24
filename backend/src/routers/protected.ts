@@ -27,7 +27,7 @@ protectedRouter.post('/getAllUnlockedCharacters', authenticationStep, getAllUnlo
 protectedRouter.post('/character/unlock', authenticationStep, unlockCharController);
 protectedRouter.post('/character/levelUp', authenticationStep, levelUpCharController);
 protectedRouter.post('/progressSync', authenticationStep, progressSyncController);
-protectedRouter.post('highscore/update', authenticationStep, updateUserHighscore)
-protectedRouter.post('highscore/getUserHighscore', authenticationStep, getUserHighscore)
-protectedRouter.get('highscore/top', authenticationStep, getTopHighscore)
+protectedRouter.post('/highscore/update', authenticationStep, updateUserHighscore)
+protectedRouter.post('/highscore/getUserHighscore', authenticationStep, getUserHighscore)
+protectedRouter.get('/highscore/top', authenticationStep, getTopHighscore)
 export default protectedRouter;

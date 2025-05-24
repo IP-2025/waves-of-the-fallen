@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cwl1w7n2se2wd" path="res://Entities/Enemies/Rider/Rider.cs" id="1_k7dvb"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_ilr60"]
-[ext_resource type="Texture2D" uid="uid://b64ns4poeyr8y" path="res://Entities/Enemies/Rider/Resources/RiderWalkSheet.png" id="4_3ubfh"]
+[ext_resource type="Texture2D" uid="uid://q30h6vh6ya1l" path="res://Entities/Enemies/Rider/Resources/RiderWalkSheet.png" id="4_3ubfh"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2xkst"]
 radius = 15.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_svs67"]
-radius = 42.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tvky7"]
+size = Vector2(60, 60)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ksi4c"]
 radius = 58.9406
@@ -444,6 +444,7 @@ collision_mask = 145
 script = ExtResource("1_k7dvb")
 speed = 100.0
 damage = 5.0
+attacksPerSecond = 1.0
 animationPath = NodePath("AnimatedSprite2D")
 
 [node name="Health" type="Node2D" parent="."]
@@ -457,7 +458,8 @@ shape = SubResource("CircleShape2D_2xkst")
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
-shape = SubResource("CircleShape2D_svs67")
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_tvky7")
 
 [node name="detection_area" type="Area2D" parent="."]
 collision_layer = 0

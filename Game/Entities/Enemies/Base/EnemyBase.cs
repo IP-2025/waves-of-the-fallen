@@ -81,7 +81,35 @@ public abstract partial class EnemyBase : CharacterBody2D
 
 	protected virtual void HandleMovement(Vector2 direction)
 	{
-		Velocity = direction.Normalized() * speed;
+		float stopDistance = 0f; // Default stop distance, can be overridden by subclasses
+
+		var stopDistProp = GetType().GetProperty("stopDistance");
+		if (stopDistProp != null)
+			stopDistance = (float)stopDistProp.GetValue(this);
+		else
+		{
+			var stopDistField = GetType().GetField("stopDistance");
+			if (stopDistField != null)
+				stopDistance = (float)stopDistField.GetValue(this);
+		}
+
+		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
+
+		if (dist > stopDistance)
+		{
+			Velocity = direction.Normalized() * speed;
+		}
+		else
+		{
+			Velocity = Vector2.Zero;
+
+			// Pushback for enemy if player is too close
+			if (dist < 40f)
+			{
+				Vector2 awayFromPlayer = (GlobalPosition - player.GlobalPosition).Normalized();
+				Velocity = awayFromPlayer * speed * 0.5f;
+			}
+		}
 	}
 
 	public virtual void OnAttackRangeBodyEnter(Node2D body)

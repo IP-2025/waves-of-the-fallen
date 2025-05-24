@@ -31,22 +31,6 @@ public partial class RangedEnemy : EnemyBase
 		}
 	}
 
-	protected override void HandleMovement(Vector2 direction)
-	{
-		float dist = GlobalPosition.DistanceTo(player.GlobalPosition);
-
-		if (dist > stopDistance)
-		{
-			Velocity = (player.GlobalPosition - GlobalPosition).Normalized() * speed;
-		}
-		else
-		{
-			Velocity = Vector2.Zero;
-
-			// Attack is only executed in the base class
-		}
-	}
-
 	public override void Attack()
 	{
 		if (EnemyProjectileScene != null && player != null)

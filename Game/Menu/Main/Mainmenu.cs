@@ -20,4 +20,11 @@ public partial class Mainmenu : Control
   SoundManager.Instance.PlayUI();
 	GetTree().ChangeSceneToPacked(scene);
   }
+
+  private void _on_button_highscore_pressed()
+  {
+	  var scene = ResourceLoader.Load<PackedScene>("res://Menu/HighscoreList/highscore_screen.tscn");
+	  SoundManager.Instance.PlayUI();
+	  GetTree().ChangeSceneToPacked(scene);
+  }
 }
