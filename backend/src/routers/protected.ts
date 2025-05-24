@@ -10,7 +10,7 @@ import {
   levelUpCharController,
   progressSyncController,
   unlockCharController,
-  updateUserHighscore, getUserHighscore, getTopHighscore
+  updateUserHighscore, getUserHighscore, getTopHighscore, addGoldController
 } from 'controllers';
 
 const protectedRouter = express.Router();
@@ -21,6 +21,7 @@ protectedRouter.get('/', authenticationStep, (req, res) => {
 protectedRouter.post('/getSettings', authenticationStep, getSettings);
 protectedRouter.post('/setSettings', authenticationStep, setSettings);
 protectedRouter.post('/setGold', authenticationStep, setGoldController);
+protectedRouter.post('addGold', authenticationStep, addGoldController);
 protectedRouter.post('/getGold', authenticationStep, getGoldController);
 protectedRouter.get('/characters', authenticationStep, getAllCharacterController);
 protectedRouter.post('/getAllUnlockedCharacters', authenticationStep, getAllUnlockedCharacterController);

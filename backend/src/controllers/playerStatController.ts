@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { getGoldService, setGoldService } from 'services';
+import {addGoldService, getGoldService, setGoldService} from 'services';
 import { BadRequestError } from 'errors';
+import {extractAndValidatePlayerId} from "auth/jwt";
 
 export async function getGoldController(req: Request, res: Response, next: NextFunction) {
   try {
@@ -23,4 +24,18 @@ export async function setGoldController(req: Request, res: Response, next: NextF
   } catch (err) {
     next(err);
   }
+}
+
+export async function addGoldController(req: Request, res: Response, next: NextFunction) {
+    try {
+      const playerId = extractAndValidatePlayerId(req.headers['authorization']);
+      const { gold } = req.body.gold;
+        if (!playerId || !gold) {
+        throw new BadRequestError('Player ID and Gold amount are required');
+        }
+        await addGoldService(playerId, gold);
+        res.status(200).send('OK');
+    } catch (err) {
+        next(err);
+    }
 }
