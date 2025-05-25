@@ -275,7 +275,7 @@ public partial class Client : Node
 		if (GodotObject.IsInstanceValid(inst))
 		{
 			Vector2 lastPos = _lastPositions.TryGetValue(entity.NetworkId, out var lp) ? lp : entity.Position;
-        	Vector2 deltaPos = entity.Position - lastPos;
+			Vector2 deltaPos = entity.Position - lastPos;
 
 			inst.GlobalPosition = entity.Position;
 			inst.Rotation = entity.Rotation;

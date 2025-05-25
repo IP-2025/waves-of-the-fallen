@@ -176,4 +176,4 @@ zoom = Vector2(1.75, 1.75)
 position = Vector2(-2, -5)
 scale = Vector2(0.2385, 0.2385)
 sprite_frames = SubResource("SpriteFrames_4cvdf")
-animation = &"hit"
+animation = &"walk"
