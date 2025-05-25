@@ -132,8 +132,8 @@ public partial class DefaultPlayer : CharacterBody2D
 			return KunaiScene.Instantiate() as Area2D;
 
 		if (playerClass is Mage) 
-			//return LightningStaffScene.Instantiate() as Area2D;
-			return HealStaffScene.Instantiate() as Area2D;
+			//return HealStaffScene.Instantiate() as Area2D;
+			return FireStaffScene.Instantiate() as Area2D;
 		if (playerClass is Knight)
 			//return DaggerScene.Instantiate() as Area2D;
 			return SwordScene.Instantiate() as Area2D;
