@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://dwdwswyeatga8"]
+[gd_scene load_steps=56 format=3 uid="uid://dhg310pq5ofun"]
 
 [ext_resource type="Script" uid="uid://brsiga6vkoslu" path="res://Entities/Enemies/GiantBoss/GiantBossEnemy.cs" id="1_6h1re"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_hc420"]
