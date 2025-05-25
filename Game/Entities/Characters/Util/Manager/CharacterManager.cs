@@ -37,24 +37,6 @@ public partial class CharacterManager : Node
         _config.Save(SettingsPath);
     }
 
-    public void AddGold(int amount)
-    {
-        var currentGold = (int)_config.GetValue(Section, GoldKey, 0);
-        GD.Print("Current Gold: " +currentGold);
-        currentGold += amount;
-        GD.Print("New Gold: " +currentGold);
-        _config.SetValue(Section, GoldKey, currentGold);
-        _config.Save(SettingsPath);
-    }
-
-    public void SubGold(int amount)
-    {
-        var currentGold = (int)_config.GetValue(Section, GoldKey, 0);
-        currentGold = Math.Max(0, currentGold - amount);
-        _config.SetValue(Section, GoldKey, currentGold);
-        _config.Save(SettingsPath);
-    }
-
     public void UpgradeCharacter(string characterId)
     {
         _config.SetValue(Section, Key, characterId);
@@ -75,7 +57,8 @@ public partial class CharacterManager : Node
         _config.Save(SettingsPath);
     }
 
-    public void SaveCharacterData(int characterId, string name, int health, int speed, int dexterity, int intelligence, int level, int unlocked)
+    public void SaveCharacterData(int characterId, string name, int health, int speed, int dexterity, int intelligence,
+        int level, int unlocked)
     {
         _config.SetValue($"{characterId}", "name", name);
         _config.SetValue($"{characterId}", "health", health);
@@ -154,5 +137,29 @@ public partial class CharacterManager : Node
     public int LoadGold()
     {
         return (int)_config.GetValue(Section, GoldKey, 0);
+    }
+
+    public void AddGold(int amount)
+    {
+        var currentGold = (int)_config.GetValue(Section, GoldKey, 0);
+        GD.Print("Current Gold: " + currentGold);
+        currentGold += amount;
+        GD.Print("New Gold: " + currentGold);
+        _config.SetValue(Section, GoldKey, currentGold);
+        _config.Save(SettingsPath);
+    }
+
+    public void SubGold(int amount)
+    {
+        var currentGold = (int)_config.GetValue(Section, GoldKey, 0);
+        currentGold = Math.Max(0, currentGold - amount);
+        _config.SetValue(Section, GoldKey, currentGold);
+        _config.Save(SettingsPath);
+    }
+
+    public void SetGold(int amount)
+    {
+        _config.SetValue(Section, GoldKey, amount);
+        _config.Save(SettingsPath);
     }
 }
