@@ -197,4 +197,4 @@ zoom = Vector2(1.75, 1.75)
 position = Vector2(0, 15)
 scale = Vector2(0.499023, 0.499023)
 sprite_frames = SubResource("SpriteFrames_iqetv")
-animation = &"idle"
+animation = &"death"
