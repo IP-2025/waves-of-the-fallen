@@ -137,7 +137,7 @@ public partial class DefaultPlayer : CharacterBody2D
         }
     }
 
-    public virtual void Die()
+    public void Die()
     {
         SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"),
             GlobalPosition);
