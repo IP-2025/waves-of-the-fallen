@@ -195,8 +195,6 @@ zoom = Vector2(1.75, 1.75)
 
 [node name="MageAnimation" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 15)
-scale = Vector2(0.324219, 0.324219)
+scale = Vector2(0.499023, 0.499023)
 sprite_frames = SubResource("SpriteFrames_iqetv")
-animation = &"death"
-frame = 5
-frame_progress = 1.0
+animation = &"idle"
