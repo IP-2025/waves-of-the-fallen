@@ -1,4 +1,4 @@
-[gd_scene load_steps=197 format=3 uid="uid://dnne18q2ir07d"]
+[gd_scene load_steps=193 format=3 uid="uid://dnne18q2ir07d"]
 
 [ext_resource type="Script" uid="uid://cwl1w7n2se2wd" path="res://Entities/Enemies/Rider/Rider.cs" id="1_k7dvb"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_ilr60"]
@@ -256,22 +256,6 @@ region = Rect2(512, 1792, 256, 256)
 [sub_resource type="AtlasTexture" id="AtlasTexture_3tfav"]
 atlas = ExtResource("3_eq5rk")
 region = Rect2(768, 1792, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r1p4p"]
-atlas = ExtResource("3_eq5rk")
-region = Rect2(1024, 1792, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xmg11"]
-atlas = ExtResource("3_eq5rk")
-region = Rect2(1280, 1792, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mdl75"]
-atlas = ExtResource("3_eq5rk")
-region = Rect2(1536, 1792, 256, 256)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2ydff"]
-atlas = ExtResource("3_eq5rk")
-region = Rect2(1792, 1792, 256, 256)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w51k5"]
 atlas = ExtResource("4_mlik0")
@@ -939,18 +923,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3tfav")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r1p4p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xmg11")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mdl75")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2ydff")
 }],
 "loop": true,
 "name": &"attack",
@@ -1139,7 +1111,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"death",
-"speed": 5.0
+"speed": 60.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1204,7 +1176,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"hit",
-"speed": 5.0
+"speed": 60.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1337,7 +1309,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 60.0
+"speed": 40.0
 }]
 
 [node name="Rider" type="CharacterBody2D" groups=["enemies"]]
@@ -1370,9 +1342,9 @@ collision_layer = 0
 shape = SubResource("CircleShape2D_ksi4c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(1.22656, 1.22656)
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_2xkst")
-animation = &"attack"
+animation = &"death"
 
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
 [connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]

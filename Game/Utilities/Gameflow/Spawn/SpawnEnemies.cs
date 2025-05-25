@@ -36,7 +36,7 @@ public partial class SpawnEnemies : Node2D
 		currentWave = waveTimer.waveCounter;
 
 		enemyLimit = Math.Min(enemyLimitIncrease * currentWave, enemyLimitMax); // sets enemy limit, so a custom starting wave can be used at the beginning
-		enemyLimitMax += 5 * (playerCount - 1); // increase max ammount of enemies with playerCount
+		enemyLimitMax += 5 * (playerCount - 1); // increase max amount of enemies with playerCount
 			
 	}
 	private void spawnGiantBoss()
@@ -75,34 +75,34 @@ public partial class SpawnEnemies : Node2D
 			return;
 
 
-        EnemyPattern pattern = GetPatternFromPool();
+		EnemyPattern pattern = GetPatternFromPool();
 
-        spawnPattern(pattern);
+		spawnPattern(pattern);
 
-        pattern.QueueRedraw();
+		pattern.QueueRedraw();
 
-    }
+	}
 
-    private void spawnPattern(EnemyPattern pattern)
-    {
-        pattern.AddToGroup("EnemyPattern"); // adds the pattern to EnemyPattern group, so it can be cleaned up later on
+	private void spawnPattern(EnemyPattern pattern)
+	{
+		pattern.AddToGroup("EnemyPattern"); // adds the pattern to EnemyPattern group, so it can be cleaned up later on
 
-        foreach (EnemyBase enemy in pattern.GetChildren()) // goes through all enemies in the pattern and assigns the player, speed, health and globalposition
-        {
-            //enemy.player = Player;
-            enemy.player = Player;
-            enemy.speed = enemy.speed * pattern.speedMultiplier;
-            enemy.GetNode<Health>("Health").max_health = enemy.GetNode<Health>("Health").max_health * pattern.healthMultiplier;
-            //pattern.GlobalPosition = spawnPath.GlobalPosition;
-           // enemy.GlobalPosition += spawnPath.GlobalPosition;
+		foreach (EnemyBase enemy in pattern.GetChildren()) // goes through all enemies in the pattern and assigns the player, speed, health and globalposition
+		{
+			//enemy.player = Player;
+			enemy.player = Player;
+			enemy.speed = enemy.speed * pattern.speedMultiplier;
+			enemy.GetNode<Health>("Health").max_health = enemy.GetNode<Health>("Health").max_health * pattern.healthMultiplier;
+			//pattern.GlobalPosition = spawnPath.GlobalPosition;
+		   // enemy.GlobalPosition += spawnPath.GlobalPosition;
 
-          //  ulong id = enemy.GetInstanceId();
-         //   enemy.Name = $"Enemy_{id}";
-         //   Server.Instance.Entities[(long)id] = enemy;
+		  //  ulong id = enemy.GetInstanceId();
+		 //   enemy.Name = $"Enemy_{id}";
+		 //   Server.Instance.Entities[(long)id] = enemy;
 
-            var oldParent = enemy.GetParent();
-            oldParent.RemoveChild(enemy);
-            enemy.Owner = null;
+			var oldParent = enemy.GetParent();
+			oldParent.RemoveChild(enemy);
+			enemy.Owner = null;
 
 			SpawnEnemy(enemy);
 		}
@@ -164,22 +164,9 @@ public partial class SpawnEnemies : Node2D
 
 	private EnemyPattern GetPatternFromPool()
 	{
-
-		float spawnValue = GD.Randf() * currentWave; // generate a random spawnValue to determine the difficulty of the selected enemies
-		
-			Dictionary<PackedScene, float> patternPoolCopy = patternPool; // copy of patternPool so the loaded patterns don't get removed
-			patternPoolCopy = patternPoolCopy.
-				Where(i => i.Key.Instantiate<EnemyPattern>().minWave <= currentWave && i.Key.Instantiate<EnemyPattern>().maxWave >= currentWave). // look for patterns in the correct wave number range
-				ToDictionary(i => i.Key, i => i.Value);
-
-			patternPoolCopy = patternPoolCopy.
-				Where(i => i.Value == patternPoolCopy.FirstOrDefault(i => i.Value > spawnValue, patternPoolCopy.Last()).Value). // looks the next hightest spawncost above spawnValue, if none are found the highest in patternPoolCopy is used
-				ToDictionary(i => i.Key, i => i.Value);
-
-			return patternPoolCopy. // instantiates the found pattern as EnemyPattern
-				ElementAt((int)(GD.Randf() * patternPoolCopy.Count())). // gets a random remaining pattern from the remaining ones (e.g. if 2 patterns with spawningCost 1 are remaining a random one will be drawn)
-				Key.Instantiate<EnemyPattern>();
-		
+	// Nur MountedEnemy-Pattern für Tests zurückgeben
+	var patternScene = GD.Load<PackedScene>("res://Utilities/Gameflow/Spawn/Patterns/mounted_enemy_x1.tscn");
+	return patternScene.Instantiate<EnemyPattern>();
 	}
 
 
