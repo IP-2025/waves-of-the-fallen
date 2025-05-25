@@ -142,7 +142,7 @@ public partial class DefaultPlayer : CharacterBody2D
         SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"),
             GlobalPosition);
 
-
+        GD.Print("Player died with this amount of gold: " + Gold);
         _characterManager.AddGold(Gold);
 
         if (GameState.CurrentState == ConnectionState.Offline)
@@ -168,7 +168,6 @@ public partial class DefaultPlayer : CharacterBody2D
             );
             if (err != Error.Ok)
                 GD.PrintErr($"AuthRequest error: {err}");
-            
         }
     }
 
@@ -176,7 +175,7 @@ public partial class DefaultPlayer : CharacterBody2D
     {
         GD.Print("OnWaveTimerTimeout");
         Gold += 10;
-        
+
         GD.Print("Gold: " + Gold);
     }
 
