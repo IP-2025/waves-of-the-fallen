@@ -154,11 +154,10 @@ public partial class Charactermenu : Control
 	//wenn bei einem ausgewöhlten charcter der "select"- button gedrückt wird
 	private void _on_button_select_pressed()
 	{
+		var characterId = _currentlySelectedCharacter.Text;
 		if (_currentlySelectedCharacter != null)
 		{
-			string characterId = _currentlySelectedCharacter.Text.ToString();
 			_characterManager.SaveLastSelectedCharacterID(int.Parse(characterId));
-
 
 			SetButtonStyle(_currentlySelectedCharacter, Color.Color8(0x2C, 0xC7, 0xFF), true);
 

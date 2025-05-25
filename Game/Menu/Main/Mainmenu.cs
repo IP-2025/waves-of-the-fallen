@@ -110,6 +110,7 @@ public partial class Mainmenu : Control
 			GD.PrintErr($"AuthRequest error: {err}");
 
 		_colorRect.Visible = false;
+		_characterManager.SaveLastSelectedCharacterID(1);
 	}
 
 	private void OnOnlineButtonPressed()
@@ -141,6 +142,7 @@ public partial class Mainmenu : Control
 		}
 
 		_colorRect.Visible = false;
+		_characterManager.SaveLastSelectedCharacterID(1);
 		GD.Print("Local progress is now in sync with online.");
 	}
 	
