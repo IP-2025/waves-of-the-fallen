@@ -36,7 +36,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
     private WaveTimer _waveTimer;
     private CharacterManager _characterManager;
-    private bool _requestSent = false;
+    private bool _requestSent;
 
     public override void _Ready()
     {
