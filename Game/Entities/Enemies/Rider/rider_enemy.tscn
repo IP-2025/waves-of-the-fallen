@@ -1316,9 +1316,6 @@ animations = [{
 collision_layer = 16
 collision_mask = 145
 script = ExtResource("1_k7dvb")
-speed = 100.0
-damage = 5.0
-attacksPerSecond = 1.0
 animationPath = NodePath("AnimatedSprite2D")
 
 [node name="Health" type="Node2D" parent="."]
@@ -1344,7 +1341,7 @@ shape = SubResource("CircleShape2D_ksi4c")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_2xkst")
-animation = &"death"
+animation = &"walk"
 
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
 [connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]
