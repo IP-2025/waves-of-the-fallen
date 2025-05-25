@@ -184,17 +184,10 @@ public partial class DefaultPlayer : CharacterBody2D
 		{
 			direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		}
-
-		// 3. Flip direction of the sprite
-		if (animation != null && direction != Vector2.Zero)
-		{
-			animation.FlipH = direction.X < 0;
-		}
 		
 		Velocity = direction * Speed;
 		MoveAndSlide();
 
-		animationHandler?.UpdateAnimationState(false, Velocity);
 	}
 
 	public virtual void UseAbility()

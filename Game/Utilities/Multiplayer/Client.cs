@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security;
+using System;
+    using System.Threading;
 
-public partial class Client : Node
+    public partial class Client : Node
 {
 	bool enableDebug = false;
 	private Camera2D _camera;
@@ -282,15 +284,28 @@ public partial class Client : Node
 			inst.Scale = entity.Scale;
 			inst.GetNodeOrNull<Health>("Health").health = entity.Health;
 
-			// Animation for other players, not for local player
-			if (inst is DefaultPlayer player && entity.NetworkId != Multiplayer.GetUniqueId())
+			// Sync all animations for players
+			if (inst is DefaultPlayer player)
 			{
-				// Flip
-				if (player.animation != null && deltaPos != Vector2.Zero)
-					player.animation.FlipH = deltaPos.X < 0;
+				if (entity.Health <= 0)
+				{
+					player.animationHandler?.SetDeath();
+				}
+				else
+				{
+					// Flip based on movement direction
+					if (player.animation != null && Math.Abs(deltaPos.X) > 1e-2)
+						player.animation.FlipH = deltaPos.X < 0;
 
-				// WalkAnimation
-				player.animationHandler?.UpdateAnimationState(false, deltaPos);
+					// Walk/Idle Animation based on movement
+					if (player.animationHandler != null)
+					{
+						if (deltaPos.Length() > 1e-2)
+							player.animationHandler.UpdateAnimationState(false, deltaPos);
+						else
+							player.animationHandler.UpdateAnimationState(false, Vector2.Zero);
+					}
+				}
 			}
 
 			// save last position
