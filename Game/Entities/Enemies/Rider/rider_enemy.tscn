@@ -14,8 +14,8 @@ radius = 15.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tvky7"]
 size = Vector2(60, 60)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ksi4c"]
-radius = 58.9406
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eq5rk"]
+size = Vector2(35, 60)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tv6u5"]
 atlas = ExtResource("3_eq5rk")
@@ -1336,12 +1336,14 @@ shape = SubResource("RectangleShape2D_tvky7")
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
-shape = SubResource("CircleShape2D_ksi4c")
+position = Vector2(3.5, -15)
+shape = SubResource("RectangleShape2D_eq5rk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(4, 13)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_2xkst")
-animation = &"walk"
+animation = &"attack"
 
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
 [connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]
