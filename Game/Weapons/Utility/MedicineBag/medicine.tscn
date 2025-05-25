@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://b0a6rtvxta2b6"]
+
+[ext_resource type="Script" uid="uid://f2jp58chd2bc" path="res://Weapons/Utility/MedicineBag/Medicine.cs" id="1_4wycq"]
+[ext_resource type="Texture2D" uid="uid://c5j45v8hmv35a" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag.png" id="1_riq38"]
+[ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_41hyg"]
+[ext_resource type="Texture2D" uid="uid://bhjlcegxqfga0" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag1.png" id="4_ns8c0"]
+[ext_resource type="Texture2D" uid="uid://bu06h7kthb8t8" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag2.png" id="5_2xh6q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wycq"]
+size = Vector2(400, 285.714)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6eu1f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_riq38")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ns8c0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_riq38")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_2xh6q")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Medicine" type="Area2D"]
+scale = Vector2(0.05, 0.05)
+collision_layer = 4
+script = ExtResource("1_4wycq")
+
+[node name="Health" type="Node2D" parent="."]
+script = ExtResource("2_41hyg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4wycq")
+
+[node name="DespawnTime" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6eu1f")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered" flags=6]
+[connection signal="timeout" from="DespawnTime" to="." method="OnDespawnTimeTimeout"]
