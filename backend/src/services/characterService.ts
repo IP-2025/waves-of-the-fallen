@@ -7,6 +7,7 @@ import {
 import fs from 'fs';
 import { levelUpCharacter, unlockCharacter } from 'repositories/unlockedCharacterRepository';
 import { LocalProgress } from 'types/dto';
+import {setGoldService} from "./playerService";
 
 export async function innitAllCharacters(chars?: Character[]): Promise<void> {
   const characters = chars ?? readCharacters();
@@ -68,10 +69,11 @@ export async function levelUpChar(playerId: string, charId: number) {
 }
 
 export async function progressSyncService(playerId: string, body: any) {
-  console.log(JSON.stringify(body, null, 2));
   const localProgress = parseLocalProgress(body);
+  const gold = body.gold;
 
   const dbProgress = await getAllUnlockedCharactersRepo(playerId);
+  await setGoldService(playerId, gold);
 
   // Filtere Charaktere, die in der Datenbank sind, aber nicht in localProgress
   const missingInLocalProgress = dbProgress.filter(

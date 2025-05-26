@@ -36,6 +36,7 @@ public partial class Server : Node
 		{ "res://Weapons/Melee/MasterSword/Sword.tscn", EntityType.Sword },
 		{ "res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn", EntityType.Lightningstaff },
 		{ "res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightning.tscn", EntityType.Lighting },
+		{ "res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn", EntityType.HealStaff },
 		{ "res://Weapons/Utility/MedicineBag/medicineBag.tscn", EntityType.MedicineBag },
 		{ "res://Weapons/Utility/MedicineBag/medicine.tscn", EntityType.Medicine }
 	};
@@ -107,9 +108,9 @@ public partial class Server : Node
 
 			if (waveTimer != null)
 			{
-				waveCount = waveTimer.waveCounter;
-				secondsLeft = waveTimer.secondCounter;
-				graceTime = waveTimer.isPaused;
+				waveCount = waveTimer.WaveCounter;
+				secondsLeft = waveTimer.SecondCounter;
+				graceTime = waveTimer.IsPaused;
 			}
 
 			var healthNode = node.GetNodeOrNull<Health>("Health");

@@ -64,7 +64,16 @@ public partial class MountedEnemy : EnemyBase
 	private void OnHealthDepleted()
 	{
 		if (GetTree().GetMultiplayer().IsServer())
-			ActivateRider();
+		{
+			Velocity = Vector2.Zero;
+			animationHandler.SetDeath();
+
+			animationHandler.OnDeathAnimationFinished += () =>
+			{
+				ActivateRider();
+				QueueFree();
+			};
+		}
 	}
 
 	/// <summary>

@@ -3,7 +3,7 @@ using Game.Utilities.Backend;
 
 public partial class RegisterScreen : Control
 {
-	private static readonly string REGISTER_URL = $"{Server.BaseUrl}/api/v1/auth/register";
+	private static readonly string REGISTER_URL = $"{ServerConfig.BaseUrl}/api/v1/auth/register";
 
 	private LineEdit _emailField;
 	private LineEdit _usernameField;
