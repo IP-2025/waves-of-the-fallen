@@ -11,23 +11,24 @@ public partial class DefaultPlayer : CharacterBody2D
 	[Export]
 	public int MaxHealth { get; set; }
 
-    [Export]
-    public int CurrentHealth { get; set; }
+	[Export]
+	public int CurrentHealth { get; set; }
 
-    [Export]
-    public HttpRequest HttpRequest { get; set; }
-    
-    public long OwnerPeerId { get; set; }
-    private int Gold { get; set; }
+	[Export]
+	public HttpRequest HttpRequest { get; set; }
+	
+	public long OwnerPeerId { get; set; }
+	private int Gold { get; set; }
 
-    [Export] protected NodePath animationPath;
-    public Node2D Joystick { get; set; }
-    private Camera2D _camera;
-    private MultiplayerSynchronizer _multiplayerSynchronizer;
-    private bool _enableDebug;
+	[Export] protected NodePath animationPath;
+	public Node2D Joystick { get; set; }
+	private Camera2D _camera;
+	private MultiplayerSynchronizer _multiplayerSynchronizer;
+	private bool _enableDebug;
 
 	public AnimationHandler animationHandler;
 	public AnimatedSprite2D animation;
+
 
     private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
     private PackedScene _crossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
@@ -97,31 +98,31 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	}
 
-    private Area2D CreateWeaponForClass(object playerClass)
-    {
-        return playerClass switch
-        {
-            Archer => _bowScene.Instantiate() as Area2D,
-            Assassin => _kunaiScene.Instantiate() as Area2D,
-            //return LightningStaffScene.Instantiate() as Area2D;
-            Mage => _fireStaffScene.Instantiate() as Area2D,
-            //return DaggerScene.Instantiate() as Area2D;
-            Knight => _swordScene.Instantiate() as Area2D,
-            _ => null
-        };
-    }
+	private Area2D CreateWeaponForClass(object playerClass)
+	{
+		return playerClass switch
+		{
+			Archer => _bowScene.Instantiate() as Area2D,
+			Assassin => _kunaiScene.Instantiate() as Area2D,
+			//return LightningStaffScene.Instantiate() as Area2D;
+			Mage => _fireStaffScene.Instantiate() as Area2D,
+			//return DaggerScene.Instantiate() as Area2D;
+			Knight => _swordScene.Instantiate() as Area2D,
+			_ => null
+		};
+	}
 
-    public override void _Process(double delta)
-    {
-	    if (_waveTimer != null) return;
-	    var cam = GetNodeOrNull<Camera2D>("Camera2D");
-	    if (cam == null) return;
-	    _waveTimer = cam.GetNodeOrNull<WaveTimer>("WaveTimer");
-	    if (_waveTimer != null)
-	    {
-		    _waveTimer.WaveEnded += OnWaveTimerTimeout;
-	    }
-    }
+	public override void _Process(double delta)
+	{
+		if (_waveTimer != null) return;
+		var cam = GetNodeOrNull<Camera2D>("Camera2D");
+		if (cam == null) return;
+		_waveTimer = cam.GetNodeOrNull<WaveTimer>("WaveTimer");
+		if (_waveTimer != null)
+		{
+			_waveTimer.WaveEnded += OnWaveTimerTimeout;
+		}
+	}
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -151,7 +152,6 @@ public partial class DefaultPlayer : CharacterBody2D
 		MoveAndSlide();
 
 	}
-
     protected virtual void UseAbility()
     {
         GD.Print("Ability placeholder for all classes");
@@ -229,4 +229,5 @@ public partial class DefaultPlayer : CharacterBody2D
         {
 	        animationHandler?.SetHit();
         }
+
 }
