@@ -1,6 +1,6 @@
 namespace Game.Utilities.Backend
 {
-	public static class Server
+	public static class ServerConfig
 	{
 	#if DEBUG
 		public const string BaseUrl = "http://localhost:3000";

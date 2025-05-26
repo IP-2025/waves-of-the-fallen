@@ -1,11 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://b3t68y2ghoi8m"]
+[gd_scene load_steps=19 format=3 uid="uid://b3t68y2ghoi8m"]
 
 [ext_resource type="Script" uid="uid://dnwh8qvd8j2y7" path="res://Menu/Character/Charactermenu.cs" id="1_ivr4t"]
 [ext_resource type="Script" uid="uid://c57s2i06pw35o" path="res://Menu/Character/ButtonsCharacterSelection.cs" id="2_ch0j6"]
-[ext_resource type="Texture2D" uid="uid://bycjxbchsafog" path="res://Entities/Characters/Archer/Resources/ArcherCharacterPreview.png" id="2_u3wkp"]
-[ext_resource type="Texture2D" uid="uid://bvtjy868he78n" path="res://Entities/Characters/Knight/Resources/KnightCharacterPreview.png" id="3_ch0j6"]
-[ext_resource type="Texture2D" uid="uid://cmulbokpwupui" path="res://Entities/Characters/Assassin/Resources/AssassinCharacterPreview.png" id="4_hqcu1"]
-[ext_resource type="Texture2D" uid="uid://lepee6xgikgv" path="res://Entities/Characters/Mage/Resources/MageCharacterPreview.png" id="5_frg03"]
+[ext_resource type="Texture2D" uid="uid://b1rj5fayoqjrn" path="res://Entities/Characters/Archer/Resources/ArcherCharacterPreview.png" id="2_u3wkp"]
+[ext_resource type="Texture2D" uid="uid://b7qjdnc361tf2" path="res://Entities/Characters/Knight/Resources/KnightCharacterPreview.png" id="3_ch0j6"]
+[ext_resource type="Texture2D" uid="uid://kimtqy3xo4jc" path="res://Entities/Characters/Assassin/Resources/AssassinCharacterPreview.png" id="4_hqcu1"]
+[ext_resource type="Texture2D" uid="uid://du5f3vhpaqxxl" path="res://Entities/Characters/Mage/Resources/MageCharacterPreview.png" id="5_frg03"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivr4t"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
@@ -87,10 +87,6 @@ corner_radius_bottom_left = 22
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ch0j6"]
 bg_color = Color(0.309804, 0.309804, 0.309804, 1)
 border_color = Color(0.8, 0.8, 0.8, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hqcu1"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_frg03"]
 
 [node name="Charactermenu" type="Control"]
 layout_mode = 3
@@ -374,55 +370,10 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_ivr4t")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ivr4t")
 text = "select"
 
-[node name="HTTPRequest" type="HTTPRequest" parent="MarginContainer2"]
+[node name="UnlockRequest" type="HTTPRequest" parent="MarginContainer2"]
 unique_name_in_owner = true
 
 [node name="LevelUpRequest" type="HTTPRequest" parent="MarginContainer2"]
-unique_name_in_owner = true
-
-[node name="ProgressCheckRequest" type="HTTPRequest" parent="MarginContainer2"]
-unique_name_in_owner = true
-
-[node name="GreyedOut" type="ColorRect" parent="."]
-unique_name_in_owner = true
-visible = false
-layout_mode = 0
-offset_left = -1.0
-offset_top = 1.0
-offset_right = 1151.0
-offset_bottom = 645.0
-color = Color(0, 0, 0, 0.705882)
-
-[node name="Label" type="Label" parent="GreyedOut"]
-layout_mode = 0
-offset_left = 212.0
-offset_top = 125.0
-offset_right = 944.0
-offset_bottom = 238.0
-theme_override_font_sizes/font_size = 20
-text = "The local progress does not match the online progres. Please select the one 
-you want to keep."
-
-[node name="LocalButton" type="Button" parent="GreyedOut"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 245.0
-offset_top = 278.0
-offset_right = 536.0
-offset_bottom = 367.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_hqcu1")
-text = "LOCAL"
-
-[node name="OnlineButton" type="Button" parent="GreyedOut"]
-unique_name_in_owner = true
-offset_left = 619.0
-offset_top = 279.0
-offset_right = 910.0
-offset_bottom = 368.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_frg03")
-text = "ONLINE"
-
-[node name="SyncLocalOnServerRequest" type="HTTPRequest" parent="GreyedOut"]
 unique_name_in_owner = true
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/TempResetButton" to="." method="ResetCharacters"]

@@ -16,7 +16,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 	protected virtual float timeUntilAttack { get; set; }
 	protected bool withinAttackRange = false;
 
-	private AnimationHandler animationHandler;
+	protected AnimationHandler animationHandler;
 	private AnimatedSprite2D animation;
 
 	public abstract void Attack();
