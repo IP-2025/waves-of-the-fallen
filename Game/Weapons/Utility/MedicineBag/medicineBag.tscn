@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cq0f70x6jlvj0"]
+[gd_scene load_steps=6 format=3 uid="uid://cq0f70x6jlvj0"]
 
 [ext_resource type="Script" uid="uid://ce5nchv7j5ked" path="res://Weapons/Utility/MedicineBag/MedicineBag.cs" id="1_0jeav"]
 [ext_resource type="Texture2D" uid="uid://c5j45v8hmv35a" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag.png" id="2_pmfuo"]
@@ -28,12 +28,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Curve2D" id="Curve2D_er205"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, -415.945, 0, -347.803, 0, 347.803, 364.664, 0, 0, 0, 0, 0, 0, 387.455, -0.133073, 370.706, 0.133073, -370.706, -387.455, 0, 0, 0, 0, 0, 0, -415.945)
-}
-point_count = 5
-
 [node name="MedicineBag" type="Area2D"]
 scale = Vector2(0.035, 0.035)
 script = ExtResource("1_0jeav")
@@ -44,17 +38,6 @@ sprite_frames = SubResource("SpriteFrames_uxab1")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 4.5
 autostart = true
-
-[node name="Path2D" type="Path2D" parent="."]
-position = Vector2(-23.1499, -28.9386)
-scale = Vector2(4.99953, 4.99953)
-curve = SubResource("Curve2D_er205")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(-0.00459528, -415.944)
-rotation = -0.820134
-progress = 2420.13
-cubic_interp = false
 
 [connection signal="animation_finished" from="MedicineBagSprite" to="." method="OnAnimationFinished"]
 [connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutMedicineBag"]

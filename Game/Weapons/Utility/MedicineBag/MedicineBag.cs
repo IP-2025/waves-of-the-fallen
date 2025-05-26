@@ -22,11 +22,9 @@ public partial class MedicineBag : Area2D
 
 	protected void Use()
 	{
-		PathFollow2D path = GetNode<PathFollow2D>("Path2D/PathFollow2D");
-		path.ProgressRatio = GD.Randf();
 		Area2D utilInstance = medicine.Instantiate() as Area2D;
 
-		utilInstance.GlobalPosition = path.GlobalPosition;
+		utilInstance.GlobalPosition = GlobalPosition;
 
 		ulong id = utilInstance.GetInstanceId();
 		utilInstance.Name = $"Medicine_{id}";
