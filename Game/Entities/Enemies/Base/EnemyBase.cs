@@ -10,7 +10,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 	[Export] public float damage;
 	[Export] public float attacksPerSecond;
 	[Export] private NodePath animationPath;
-
+	[Export] public int scoreValue = 100; 
 	public DefaultPlayer player { get; set; }
 	protected virtual float attackCooldown { get; set; }
 	protected virtual float timeUntilAttack { get; set; }
@@ -140,6 +140,19 @@ public abstract partial class EnemyBase : CharacterBody2D
 	{
 		Velocity = Vector2.Zero;
 		animationHandler.SetDeath();
+
+		if (player != null)
+		{
+			GD.Print($"OnDeath: player type={player.GetType().Name}");
+			var myId = player.OwnerPeerId; // oder player.NetworkId, je nachdem wie du es speicherst
+			GD.Print($"OnDeath: myId={myId}, Multiplayer.GetUniqueId()={Multiplayer.GetUniqueId()}");
+
+			if (!Game.Utilities.Backend.GameState.PlayerScores.ContainsKey(myId))
+				Game.Utilities.Backend.GameState.PlayerScores[myId] = 0;
+
+			Game.Utilities.Backend.GameState.PlayerScores[myId] += scoreValue;
+		}
+		GD.Print($"OnDeath: player={player}, scoreValue={scoreValue}");
 	}
 
 	protected void FindNearestPlayer()
