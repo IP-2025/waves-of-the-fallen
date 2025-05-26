@@ -1,17 +1,120 @@
-[gd_scene load_steps=6 format=3 uid="uid://0p12i28j1a33"]
+[gd_scene load_steps=18 format=3 uid="uid://0p12i28j1a33"]
 
 [ext_resource type="Script" uid="uid://cydobr6cu0ytl" path="res://Entities/Characters/Knight/Knight.cs" id="1_wbc0s"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_7stuo"]
 [ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="3_e8lxy"]
-[ext_resource type="Texture2D" uid="uid://cowt5rctp40uv" path="res://Entities/Characters/Knight/Resources/KnightCharacterPreview.png" id="4_v1ffd"]
+
+[ext_resource type="Texture2D" uid="uid://dobi6eulan8n0" path="res://Entities/Characters/Knight/Resources/KnightCharacterSprites.png" id="4_35qrc"]
+
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jxov"]
+atlas = ExtResource("4_35qrc")
+region = Rect2(0, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a5oiy"]
+atlas = ExtResource("4_35qrc")
+region = Rect2(128, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3xrqi"]
+atlas = ExtResource("4_35qrc")
+region = Rect2(256, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80twb"]
+atlas = ExtResource("4_35qrc")
+region = Rect2(384, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2fpc"]
+atlas = ExtResource("4_35qrc")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i6pju"]
+atlas = ExtResource("4_35qrc")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q5m4y"]
+atlas = ExtResource("4_35qrc")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cp2ja"]
+atlas = ExtResource("4_35qrc")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e446v"]
+atlas = ExtResource("4_35qrc")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wg7w3"]
+atlas = ExtResource("4_35qrc")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v02kg"]
+atlas = ExtResource("4_35qrc")
+region = Rect2(384, 128, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_02a6h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jxov")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a5oiy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3xrqi")
+}, {
+"duration": 2.5,
+"texture": SubResource("AtlasTexture_80twb")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x2fpc")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i6pju")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q5m4y")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cp2ja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e446v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wg7w3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v02kg")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
 
 [node name="Knight" type="CharacterBody2D"]
 collision_mask = 384
 collision_priority = 2.0
 script = ExtResource("1_wbc0s")
+animationPath = NodePath("KnightAnimation")
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 
@@ -65,6 +168,10 @@ shape = SubResource("RectangleShape2D_vh0fs")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.75, 1.75)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("4_v1ffd")
+[node name="KnightAnimation" type="AnimatedSprite2D" parent="."]
+position = Vector2(9.53674e-07, 16)
+scale = Vector2(0.519531, 0.519531)
+sprite_frames = SubResource("SpriteFrames_02a6h")
+animation = &"death"
+frame = 3
+frame_progress = 1.0

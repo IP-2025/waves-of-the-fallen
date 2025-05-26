@@ -15,10 +15,15 @@ public partial class DefaultPlayer : CharacterBody2D
 	public int CurrentHealth { get; set; }
 	public long OwnerPeerId { get; set; }
 
+	[Export] protected NodePath animationPath;
+
 	public Node2D Joystick { get; set; }
 	private Camera2D camera;
 	private MultiplayerSynchronizer multiplayerSynchronizer;
 	public bool enableDebug = false;
+
+	public AnimationHandler animationHandler;
+	public AnimatedSprite2D animation;
 	
 	public PackedScene BowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
 	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
@@ -121,6 +126,17 @@ public partial class DefaultPlayer : CharacterBody2D
 
 			weaponsEquipped++;
 		} 
+
+		if (animationPath != null && !animationPath.IsEmpty)
+		{
+			animation = GetNode<AnimatedSprite2D>(animationPath);
+			animationHandler = new AnimationHandler(animation);
+		}
+		else
+		{
+			GD.PushError($"{Name} has no animationPath set!");
+		}
+
 	}
 
 	private Area2D CreateWeaponForClass(object playerClass)
@@ -149,16 +165,20 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		if (animationHandler != null && animationHandler.IsDying)
+		{
+			Velocity = Vector2.Zero;
+			MoveAndSlide();
+			return;
+		}
+
 		Vector2 direction = Vector2.Zero;
 
-		// Check if joystick exists and if it's being used
-		if (Joystick != null)
+		// Get joystick directly as child
+		var joystick = GetNodeOrNull<Joystick>("Joystick");
+		if (joystick != null && joystick.PosVector != Vector2.Zero)
 		{
-			Vector2 joystickDirection = (Vector2)Joystick.Get("PosVector");
-			if (joystickDirection != Vector2.Zero)
-			{
-				direction = joystickDirection;
-			}
+			direction = joystick.PosVector;
 		}
 
 		// If no joystick input, fallback to keyboard
@@ -166,32 +186,10 @@ public partial class DefaultPlayer : CharacterBody2D
 		{
 			direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		}
-
+		
 		Velocity = direction * Speed;
 		MoveAndSlide();
 
-		// // Play Animations
-		// if (animationPlayer != null)
-		// {
-		// 	if (direction != Vector2.Zero)
-		// 	{
-		// 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "walk")
-		// 			animationPlayer.Play("walk");
-		// 	}
-		// 	else
-		// 	{
-		// 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "idle")
-		//
-		// 			animationPlayer.Play("idle");
-		//
-		//
-		// 	}
-		// }
-		//
-		// if (archerSprite != null && direction != Vector2.Zero)
-		// {
-		// 	archerSprite.FlipH = direction.X < 0;
-		// }
 	}
 
 	public virtual void UseAbility()
@@ -206,10 +204,17 @@ public partial class DefaultPlayer : CharacterBody2D
 			Debug.Print(message);
 		}
 	}
+
 	public virtual void Die()
 	{
+		Velocity = Vector2.Zero;
 		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"), GlobalPosition);
-		GD.Print("Default death behavior – no animation");
+		animationHandler?.SetDeath();
 		QueueFree();
+	}
+	
+	public void OnHit()
+	{
+		animationHandler?.SetHit();
 	}
 }
