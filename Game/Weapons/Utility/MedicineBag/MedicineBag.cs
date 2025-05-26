@@ -16,7 +16,7 @@ public partial class MedicineBag : Area2D
 	{
 		medicineBagSprite.Play();
 		await ToSignal(GetTree().CreateTimer(1.2), "timeout");
-		if (Multiplayer.IsServer())
+		if (Multiplayer.IsServer() && GetNode<Health>("../../../Health").CurHealth > 0) // gets the healthnode of weaponowner, so medicine doesn't get thrown by server when dead
 			Use();
 	}
 

@@ -99,7 +99,7 @@ public partial class DefaultPlayer : CharacterBody2D
         return playerClass switch
         {
             Archer => _bowScene.Instantiate() as Area2D,
-            //return _medicineBagScene.Instantiate() as Area2D,
+            // return _medicineBagScene.Instantiate() as Area2D,
             Assassin => _kunaiScene.Instantiate() as Area2D,
             //return _healStaffScene.Instantiate() as Area2D;
             Mage => _fireStaffScene.Instantiate() as Area2D,

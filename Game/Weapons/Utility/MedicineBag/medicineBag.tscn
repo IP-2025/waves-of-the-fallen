@@ -34,9 +34,11 @@ script = ExtResource("1_0jeav")
 
 [node name="MedicineBagSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_uxab1")
+frame = 4
+frame_progress = 1.0
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 4.5
+wait_time = 3.5
 autostart = true
 
 [connection signal="animation_finished" from="MedicineBagSprite" to="." method="OnAnimationFinished"]

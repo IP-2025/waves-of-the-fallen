@@ -7,13 +7,11 @@ public partial class Medicine : Area2D
 	AnimatedSprite2D medicineSprite;
 
 	private Vector2 endPos;
-	protected int Damage = -5;
+	protected int healValue = 5;
 
 	public override void _Ready()
 	{
 		medicineSprite = GetNode<AnimatedSprite2D>("MedicineSprite");
-		medicineSprite.Play("thrown");
-
 		PathFollow2D path = GetNode<PathFollow2D>("Path2D/PathFollow2D");
 		path.ProgressRatio = GD.Randf();
 		endPos = path.GlobalPosition;
@@ -28,7 +26,8 @@ public partial class Medicine : Area2D
 
 	private async Task EnablePlayerCollision()
 	{
-		await ToSignal(GetTree().CreateTimer(0.3), "timeout");
+		await ToSignal(GetTree().CreateTimer(0.7), "timeout");
+		medicineSprite.Play("thrown");
 		SetCollisionMaskValue(1, true);
 	}
 
@@ -38,7 +37,7 @@ public partial class Medicine : Area2D
 		var healthNode = body.GetNodeOrNull<Health>("Health");
 		if (healthNode != null)
 		{
-			healthNode.Damage(Damage);
+			healthNode.Heal(healValue);
 		}
 		QueueFree();
 	}
