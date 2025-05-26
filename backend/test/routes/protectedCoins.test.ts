@@ -40,7 +40,7 @@ beforeEach(async () => {
 
 });
 
-describe('POST /setGold', () => {
+describe('POST gold/set', () => {
   it('should return set the amount of Gold', async () => {
     const gold = 10;
     const param = {
@@ -48,7 +48,7 @@ describe('POST /setGold', () => {
       gold: gold,
     };
     const coinsResponse = await request(app)
-      .post('/api/v1/protected/setGold')
+      .post('/api/v1/protected/gold/set')
       .send(param)
       .set('Authorization', `Bearer ${validToken}`);
     expect(coinsResponse.status).toBe(200);
@@ -63,12 +63,12 @@ describe('POST /setGold', () => {
       gold: gold,
     };
     await request(app)
-      .post('/api/v1/protected/setGold')
+      .post('/api/v1/protected/gold/set')
       .send(param)
       .set('Authorization', `Bearer ${validToken}`);
 
     const coinsResponse = await request(app)
-      .post('/api/v1/protected/getGold')
+      .post('/api/v1/protected/gold/get')
       .send(registeredPlayerId)
       .set('Authorization', `Bearer ${validToken}`);
     expect(coinsResponse.status).toBe(200);

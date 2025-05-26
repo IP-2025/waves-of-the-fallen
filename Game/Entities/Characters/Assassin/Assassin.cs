@@ -10,6 +10,12 @@ public partial class Assassin : DefaultPlayer
 
 	public override void _Ready()
 	{
+		HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
+		if (HttpRequest == null)
+		{
+			GD.PrintErr("HttpRequest node not found!");
+			return;
+		}
 		base._Ready();
 
 		var healthNode = GetNode<Health>("Health");
@@ -19,7 +25,7 @@ public partial class Assassin : DefaultPlayer
 		GD.Print($"Assassin initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
 	}
 
-	public override void UseAbility()
+	protected override void UseAbility()
 	{
 		//TODO: Implement Assassin's ability
 	}

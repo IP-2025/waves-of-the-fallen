@@ -177,3 +177,5 @@ position = Vector2(0, 15)
 scale = Vector2(0.492188, 0.492188)
 sprite_frames = SubResource("SpriteFrames_ihn4h")
 animation = &"death"
+
+[node name="HttpRequest" type="HTTPRequest" parent="."]

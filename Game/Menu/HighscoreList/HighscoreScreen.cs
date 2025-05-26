@@ -33,7 +33,7 @@ public partial class HighscoreScreen : Control
 				"Authorization: Bearer " + SecureStorage.LoadToken()
 			};
 			var err = _topPlayerRequest.Request(
-				$"{Server.BaseUrl}/api/v1/protected/highscore/top",
+				$"{ServerConfig.BaseUrl}/api/v1/protected/highscore/top",
 				headers
 			);
 
@@ -47,7 +47,7 @@ public partial class HighscoreScreen : Control
 				"Authorization: Bearer " + SecureStorage.LoadToken()
 			};
 			var err2 = _personalScoreRequest.Request(
-				$"{Server.BaseUrl}/api/v1/protected/highscore/getUserHighscore",
+				$"{ServerConfig.BaseUrl}/api/v1/protected/highscore/getUserHighscore",
 				headers2,
 				HttpClient.Method.Post
 			);
