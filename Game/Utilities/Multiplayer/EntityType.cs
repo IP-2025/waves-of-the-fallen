@@ -23,5 +23,7 @@ public enum EntityType
 	Lightningstaff,
 	Lighting,
 	WarHammer,
-	HammerProjectile
+	HammerProjectile,
+	HealStaff,
+
 }

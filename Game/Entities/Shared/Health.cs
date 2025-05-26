@@ -35,6 +35,20 @@ public partial class Health : Node2D
 
 		// GD.Print($"Took damage: {damage}, current health: {health}");
 	}
+	
+	public void Heal(float heal)
+	{
+		if (!disable)
+			health += heal; 
+		
+		if (health > max_health)
+			health = max_health;
+		
+		doAnimation();
+		// TODO Sounds fehlen noch
+		//SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("enemyHurt"), ((Node2D)GetParent()).Position);
+
+	}
 
 	private void doAnimation()
 	{

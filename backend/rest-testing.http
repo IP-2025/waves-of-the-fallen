@@ -71,3 +71,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1ZTM0ZjgyL
 POST http://localhost:3000/api/v1/protected/highscore/getUserHighscore
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1ZTM0ZjgyLTZiMjgtNDY2NC1iZDMyLWZiNzM2MWQ0YmNiNSIsImlhdCI6MTc0Nzk1MTg1MSwiZXhwIjoxNzQ4NTU2NjUxfQ.pvpDv67pLXXo8ryJq79mBspl8neQlpxrz5_RWAz-egk
+
+###
+
+POST http://localhost:3000/api/v1/protected/addGold
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRlZjhhYTRmLTVkOGEtNDQyZi04Yzg2LWFmNDM3ZjQyZDcwMiIsImlhdCI6MTc0ODExMzM1NiwiZXhwIjoxNzQ4NzE4MTU2fQ.AvyVpznyBEc2LD6qTKxS-YGH6W1Fhnte9oQoFBIle8k
+
+{
+  "gold": 10
+}

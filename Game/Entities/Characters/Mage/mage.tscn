@@ -198,3 +198,5 @@ position = Vector2(0, 15)
 scale = Vector2(0.499023, 0.499023)
 sprite_frames = SubResource("SpriteFrames_iqetv")
 animation = &"death"
+
+[node name="HttpRequest" type="HTTPRequest" parent="."]

@@ -175,3 +175,5 @@ sprite_frames = SubResource("SpriteFrames_02a6h")
 animation = &"death"
 frame = 3
 frame_progress = 1.0
+
+[node name="HttpRequest" type="HTTPRequest" parent="."]

@@ -37,7 +37,9 @@ public partial class Server : Node
 		{ "res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn", EntityType.Lightningstaff },
 		{ "res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightning.tscn", EntityType.Lighting },
 		{ "res://Weapons/Ranged/WarHammer/warHammer.tscn", EntityType.WarHammer },
-		{ "res://Weapons/Ranged/WarHammer/hammerProjectile.tscn", EntityType.HammerProjectile }
+		{ "res://Weapons/Ranged/WarHammer/hammerProjectile.tscn", EntityType.HammerProjectile },
+		{ "res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn", EntityType.HealStaff },
+
 	};
 
 	public override void _Ready()
@@ -107,9 +109,9 @@ public partial class Server : Node
 
 			if (waveTimer != null)
 			{
-				waveCount = waveTimer.waveCounter;
-				secondsLeft = waveTimer.secondCounter;
-				graceTime = waveTimer.isPaused;
+				waveCount = waveTimer.WaveCounter;
+				secondsLeft = waveTimer.SecondCounter;
+				graceTime = waveTimer.IsPaused;
 			}
 
 			var healthNode = node.GetNodeOrNull<Health>("Health");
