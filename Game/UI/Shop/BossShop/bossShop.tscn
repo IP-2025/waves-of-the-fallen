@@ -49,7 +49,9 @@ offset_right = 1150.0
 offset_bottom = 63.0
 size_flags_horizontal = 0
 theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 80
 theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 custom_minimum_size = Vector2(0, 400)
@@ -62,10 +64,10 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_vpdq8")
 
 [node name="texture" type="TextureRect" parent="MarginContainer/HBoxContainer/weapon1"]
 layout_mode = 0
-offset_left = 45.0
-offset_top = 26.0
-offset_right = 265.0
-offset_bottom = 246.0
+offset_left = 80.0
+offset_top = 61.0
+offset_right = 230.0
+offset_bottom = 211.0
 texture = ExtResource("2_vpdq8")
 expand_mode = 1
 
@@ -113,10 +115,10 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_uv5u4")
 
 [node name="texture" type="TextureRect" parent="MarginContainer/HBoxContainer/weapon2"]
 layout_mode = 0
-offset_left = 45.0
-offset_top = 26.0
-offset_right = 265.0
-offset_bottom = 246.0
+offset_left = 80.0
+offset_top = 61.0
+offset_right = 230.0
+offset_bottom = 211.0
 texture = ExtResource("2_vpdq8")
 expand_mode = 1
 
@@ -164,10 +166,10 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_grg02")
 
 [node name="texture" type="TextureRect" parent="MarginContainer/HBoxContainer/weapon3"]
 layout_mode = 0
-offset_left = 45.0
-offset_top = 26.0
-offset_right = 265.0
-offset_bottom = 246.0
+offset_left = 80.0
+offset_top = 61.0
+offset_right = 230.0
+offset_bottom = 211.0
 texture = ExtResource("2_vpdq8")
 expand_mode = 1
 
