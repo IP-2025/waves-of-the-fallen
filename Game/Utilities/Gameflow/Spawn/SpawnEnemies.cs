@@ -75,34 +75,34 @@ public partial class SpawnEnemies : Node2D
 			return;
 
 
-        EnemyPattern pattern = GetPatternFromPool();
+		EnemyPattern pattern = GetPatternFromPool();
 
-        spawnPattern(pattern);
+		spawnPattern(pattern);
 
-        pattern.QueueRedraw();
+		pattern.QueueRedraw();
 
-    }
+	}
 
-    private void spawnPattern(EnemyPattern pattern)
-    {
-        pattern.AddToGroup("EnemyPattern"); // adds the pattern to EnemyPattern group, so it can be cleaned up later on
+	private void spawnPattern(EnemyPattern pattern)
+	{
+		pattern.AddToGroup("EnemyPattern"); // adds the pattern to EnemyPattern group, so it can be cleaned up later on
 
-        foreach (EnemyBase enemy in pattern.GetChildren()) // goes through all enemies in the pattern and assigns the player, speed, health and globalposition
-        {
-            //enemy.player = Player;
-            enemy.player = Player;
-            enemy.speed = enemy.speed * pattern.speedMultiplier;
-            enemy.GetNode<Health>("Health").max_health = enemy.GetNode<Health>("Health").max_health * pattern.healthMultiplier;
-            //pattern.GlobalPosition = spawnPath.GlobalPosition;
-           // enemy.GlobalPosition += spawnPath.GlobalPosition;
+		foreach (EnemyBase enemy in pattern.GetChildren()) // goes through all enemies in the pattern and assigns the player, speed, health and globalposition
+		{
+			//enemy.player = Player;
+			enemy.player = Player;
+			enemy.speed = enemy.speed * pattern.speedMultiplier;
+			enemy.GetNode<Health>("Health").max_health = enemy.GetNode<Health>("Health").max_health * pattern.healthMultiplier;
+			//pattern.GlobalPosition = spawnPath.GlobalPosition;
+		   // enemy.GlobalPosition += spawnPath.GlobalPosition;
 
-          //  ulong id = enemy.GetInstanceId();
-         //   enemy.Name = $"Enemy_{id}";
-         //   Server.Instance.Entities[(long)id] = enemy;
+		  //  ulong id = enemy.GetInstanceId();
+		 //   enemy.Name = $"Enemy_{id}";
+		 //   Server.Instance.Entities[(long)id] = enemy;
 
-            var oldParent = enemy.GetParent();
-            oldParent.RemoveChild(enemy);
-            enemy.Owner = null;
+			var oldParent = enemy.GetParent();
+			oldParent.RemoveChild(enemy);
+			enemy.Owner = null;
 
 			SpawnEnemy(enemy);
 		}
