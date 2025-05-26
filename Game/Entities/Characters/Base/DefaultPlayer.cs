@@ -5,11 +5,17 @@ using Godot;
 
 public partial class DefaultPlayer : CharacterBody2D
 {
+
+
     [Export] public float Speed { get; set; }
+
 
     [Export] public int MaxHealth { get; set; }
 
+
+
     [Export] public int CurrentHealth { get; set; }
+
 
     [Export] public HttpRequest HttpRequest { get; set; }
 
