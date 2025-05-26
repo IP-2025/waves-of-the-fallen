@@ -58,7 +58,7 @@ public partial class Charactermenu : Control
 			"Authorization: Bearer " + SecureStorage.LoadToken()
 		};
 		var err = _progressCheckRequest.Request(
-			$"{ServerConfig.BaseUrl}/api/v1/protected/getAllUnlockedCharacters",
+			$"{ServerConfig.BaseUrl}/api/v1/protected/progress",
 			headers,
 			HttpClient.Method.Post
 		);
