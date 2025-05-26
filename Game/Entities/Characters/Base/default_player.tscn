@@ -26,7 +26,6 @@ position = Vector2(25, 15)
 position = Vector2(-25, 15)
 
 [node name="Archer" parent="." instance=ExtResource("3_kjvlq")]
-animationPath = null
 
 [node name="Assassin" parent="." instance=ExtResource("5_jig1i")]
 
