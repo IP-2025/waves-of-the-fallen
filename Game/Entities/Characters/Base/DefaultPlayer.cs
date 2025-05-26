@@ -24,20 +24,20 @@ public partial class DefaultPlayer : CharacterBody2D
 
     public AnimationHandler animationHandler;
     public AnimatedSprite2D animation;
-
-
+    
     private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
     private PackedScene _crossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
     private PackedScene _kunaiScene = GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn");
 
     private PackedScene _fireStaffScene =
-        GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn");
+	    GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn");
 
     private PackedScene _lightningStaffScene =
-        GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn");
+	    GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn");
 
     private PackedScene _daggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
     private PackedScene _swordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
+    private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
     private int _weaponsEquipped;
 
     private WaveTimer _waveTimer;
@@ -45,12 +45,12 @@ public partial class DefaultPlayer : CharacterBody2D
     private bool _requestSent;
     private bool _alreadyDead;
 
-    public override void _Ready()
-    {
-        _alreadyDead = false;
-        _requestSent = false;
-
-        AddToGroup("player");
+	public override void _Ready()
+	{
+		_alreadyDead = false;
+		_requestSent = false;
+		AddToGroup("player");
+/* 		base._Ready(); */
 
         CharacterManager = GetNode<CharacterManager>("/root/CharacterManager");
         var selectedCharacterId = CharacterManager.LoadLastSelectedCharacterID();
@@ -99,7 +99,7 @@ public partial class DefaultPlayer : CharacterBody2D
         {
             Archer => _bowScene.Instantiate() as Area2D,
             Assassin => _kunaiScene.Instantiate() as Area2D,
-            //return LightningStaffScene.Instantiate() as Area2D;
+            //return _healStaffScene.Instantiate() as Area2D;
             Mage => _fireStaffScene.Instantiate() as Area2D,
             //return DaggerScene.Instantiate() as Area2D;
             Knight => _swordScene.Instantiate() as Area2D,

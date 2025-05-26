@@ -22,4 +22,5 @@ public enum EntityType
 	Sword,
 	Lightningstaff,
 	Lighting,
+	HealStaff,
 }
