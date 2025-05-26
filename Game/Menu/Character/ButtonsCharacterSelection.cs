@@ -1,9 +1,10 @@
 using Godot;
 using System;
+using Game.Menu.Character;
 
 public partial class ButtonsCharacterSelection : Button
 {
-	private Game.Scripts.Menu.Charactermenu _controller;
+	private Charactermenu _controller;
 	private Shader _blackAndWhiteShader;
 	private CharacterManager characterManager;
 
@@ -17,9 +18,9 @@ public partial class ButtonsCharacterSelection : Button
 		Node node = GetParent();
 		while (_controller == null && node != null)
 		{
-			if (node is Game.Scripts.Menu.Charactermenu)
+			if (node is Charactermenu)
 			{
-				_controller = (Game.Scripts.Menu.Charactermenu)node;
+				_controller = (Charactermenu)node;
 				break;
 			}
 			node = node.GetParent();

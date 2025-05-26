@@ -40,7 +40,7 @@ beforeEach(async () => {
 
 });
 
-describe('POST /setGold', () => {
+describe('POST gold/set', () => {
   it('should return set the amount of Gold', async () => {
     const gold = 10;
     const param = {
@@ -48,7 +48,7 @@ describe('POST /setGold', () => {
       gold: gold,
     };
     const coinsResponse = await request(app)
-      .post('/api/v1/protected/setGold')
+      .post('/api/v1/protected/gold/set')
       .send(param)
       .set('Authorization', `Bearer ${validToken}`);
     expect(coinsResponse.status).toBe(200);
@@ -63,15 +63,33 @@ describe('POST /setGold', () => {
       gold: gold,
     };
     await request(app)
-      .post('/api/v1/protected/setGold')
+      .post('/api/v1/protected/gold/set')
       .send(param)
       .set('Authorization', `Bearer ${validToken}`);
 
     const coinsResponse = await request(app)
-      .post('/api/v1/protected/getGold')
+      .post('/api/v1/protected/gold/get')
       .send(registeredPlayerId)
       .set('Authorization', `Bearer ${validToken}`);
     expect(coinsResponse.status).toBe(200);
     expect(coinsResponse.body).toEqual(10);
+  });
+});
+
+describe('POST /levelUp', () => {
+  it('should return 500 for invalid character_id', async () => {
+    const invalidCharacterId = -1;
+
+    const levelUpResponse = await request(app)
+      .post('/api/v1/protected/character/levelUp')
+      .set('Authorization', `Bearer ${validToken}`)
+      .send({ character_id: invalidCharacterId });
+
+    expect(levelUpResponse.status).toBe(500);
+    expect(levelUpResponse.body).toHaveProperty('status', 'error');
+    expect(levelUpResponse.body).toHaveProperty(
+      'message',
+      `Character with ID ${invalidCharacterId} not found for player ${registeredPlayerId}`
+    );
   });
 });

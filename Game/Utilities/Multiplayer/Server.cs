@@ -20,6 +20,7 @@ public partial class Server : Node
 		{ "res://Entities/Enemies/Rider/mounted_enemy.tscn", EntityType.MountedEnemy },
 		{ "res://Entities/Enemies/Skeleton/ranged_enemy.tscn", EntityType.RangedEnemy },
 		{ "res://Entities/Enemies/Rider/rider_enemy.tscn", EntityType.RiderEnemy },
+		{ "res://Entities/Enemies/GiantBoss/giantBossEnemy.tscn", EntityType.GiantBossEnemy },
 		{ "res://Weapons/Ranged/Bow/bow.tscn", EntityType.Bow },
 		{ "res://Weapons/Ranged/Bow/bow_arrow.tscn", EntityType.BowArrow },
 		{ "res://Weapons/Ranged/Crossbow/crossbow.tscn", EntityType.Crossbow },
@@ -35,6 +36,7 @@ public partial class Server : Node
 		{ "res://Weapons/Melee/MasterSword/Sword.tscn", EntityType.Sword },
 		{ "res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn", EntityType.Lightningstaff },
 		{ "res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightning.tscn", EntityType.Lighting },
+		{ "res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn", EntityType.HealStaff },
 	};
 
 	public override void _Ready()
@@ -104,9 +106,9 @@ public partial class Server : Node
 
 			if (waveTimer != null)
 			{
-				waveCount = waveTimer.waveCounter;
-				secondsLeft = waveTimer.secondCounter;
-				graceTime = waveTimer.isPaused;
+				waveCount = waveTimer.WaveCounter;
+				secondsLeft = waveTimer.SecondCounter;
+				graceTime = waveTimer.IsPaused;
 			}
 
 			var healthNode = node.GetNodeOrNull<Health>("Health");
