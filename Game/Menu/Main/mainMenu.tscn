@@ -172,6 +172,7 @@ unique_name_in_owner = true
 [node name="GreyedOut" type="ColorRect" parent="."]
 unique_name_in_owner = true
 visible = false
+layout_mode = 0
 offset_left = -1.0
 offset_top = 1.0
 offset_right = 1151.0

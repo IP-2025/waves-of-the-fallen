@@ -6,7 +6,7 @@ import {
   setGoldController,
   setSettings,
   getAllCharacterController,
-  getAllUnlockedCharacterController,
+  getProgress,
   levelUpCharController,
   progressSyncController,
   unlockCharController,
@@ -20,15 +20,20 @@ protectedRouter.get('/', authenticationStep, (req, res) => {
 });
 protectedRouter.post('/getSettings', authenticationStep, getSettings);
 protectedRouter.post('/setSettings', authenticationStep, setSettings);
+
 protectedRouter.post('/setGold', authenticationStep, setGoldController);
 protectedRouter.post('/addGold', authenticationStep, addGoldController);
 protectedRouter.post('/getGold', authenticationStep, getGoldController);
+
 protectedRouter.get('/characters', authenticationStep, getAllCharacterController);
-protectedRouter.post('/getAllUnlockedCharacters', authenticationStep, getAllUnlockedCharacterController);
 protectedRouter.post('/character/unlock', authenticationStep, unlockCharController);
 protectedRouter.post('/character/levelUp', authenticationStep, levelUpCharController);
-protectedRouter.post('/progressSync', authenticationStep, progressSyncController);
+
+protectedRouter.post('/progress', authenticationStep, getProgress);
+protectedRouter.post('/progress/sync', authenticationStep, progressSyncController);
+
 protectedRouter.post('/highscore/update', authenticationStep, updateUserHighscore)
 protectedRouter.post('/highscore/getUserHighscore', authenticationStep, getUserHighscore)
 protectedRouter.get('/highscore/top', authenticationStep, getTopHighscore)
+
 export default protectedRouter;

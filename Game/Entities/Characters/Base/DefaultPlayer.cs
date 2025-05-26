@@ -37,9 +37,13 @@ public partial class DefaultPlayer : CharacterBody2D
     private WaveTimer _waveTimer;
     private CharacterManager _characterManager;
     private bool _requestSent;
+    private bool _alreadyDead;
 
     public override void _Ready()
     {
+        _alreadyDead = false;
+        _requestSent = false;
+        
         AddToGroup("player");
 
         _characterManager = GetNode<CharacterManager>("/root/CharacterManager");
@@ -139,6 +143,9 @@ public partial class DefaultPlayer : CharacterBody2D
 
     public void Die()
     {
+        if (_alreadyDead) return;
+        
+        _alreadyDead = true;
         SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"),
             GlobalPosition);
 
