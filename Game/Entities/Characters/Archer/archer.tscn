@@ -176,3 +176,5 @@ position = Vector2(-2, -5)
 scale = Vector2(0.2385, 0.2385)
 sprite_frames = SubResource("SpriteFrames_4cvdf")
 animation = &"walk"
+
+[node name="HttpRequest" type="HTTPRequest" parent="."]

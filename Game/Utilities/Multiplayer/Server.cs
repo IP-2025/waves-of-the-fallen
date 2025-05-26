@@ -105,9 +105,9 @@ public partial class Server : Node
 
 			if (waveTimer != null)
 			{
-				waveCount = waveTimer.waveCounter;
-				secondsLeft = waveTimer.secondCounter;
-				graceTime = waveTimer.isPaused;
+				waveCount = waveTimer.WaveCounter;
+				secondsLeft = waveTimer.SecondCounter;
+				graceTime = waveTimer.IsPaused;
 			}
 
 			var healthNode = node.GetNodeOrNull<Health>("Health");

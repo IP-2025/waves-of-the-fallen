@@ -36,7 +36,7 @@ beforeEach(async () => {
 });
 
 
-describe('POST /setSettings', () => {
+describe('POST settings/set', () => {
   it('should insert settings successfully', async () => {
     const settingsData = {
       player_id: registeredPlayerId,
@@ -45,7 +45,7 @@ describe('POST /setSettings', () => {
     };
 
     const response = await request(app)
-      .post('/api/v1/protected/setSettings')
+      .post('/api/v1/protected/settings/set')
       .set('Authorization', `Bearer ${validToken}`)
       .send(settingsData);
 
@@ -61,7 +61,7 @@ describe('POST /setSettings', () => {
     };
 
     const response = await request(app)
-      .post('/api/v1/protected/setSettings')
+      .post('/api/v1/protected/settings/set')
       .set('Authorization', `Bearer ${invalidToken}`)
       .send(settingsData);
 
@@ -73,7 +73,7 @@ describe('POST /setSettings', () => {
   });
 });
 
-describe('POST /getSettings', () => {
+describe('POST /settings/get', () => {
   it('should retrieve user settings successfully', async () => {
     const settingsData = {
       player_id: registeredPlayerId,
@@ -82,14 +82,14 @@ describe('POST /getSettings', () => {
     };
 
     const responseSet = await request(app)
-      .post('/api/v1/protected/setSettings')
+      .post('/api/v1/protected/settings/set')
       .set('Authorization', `Bearer ${validToken}`)
       .send(settingsData);
 
     expect(responseSet.status).toBe(200);
 
     const responseGet = await request(app)
-      .post('/api/v1/protected/getSettings')
+      .post('/api/v1/protected/settings/get')
       .set('Authorization', `Bearer ${validToken}`)
       .send({ player_id: registeredPlayerId });
 
