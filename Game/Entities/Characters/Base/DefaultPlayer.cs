@@ -44,7 +44,7 @@ public partial class DefaultPlayer : CharacterBody2D
     private int _weaponsEquipped;
 
     private WaveTimer _waveTimer;
-    private CharacterManager _characterManager;
+    protected CharacterManager CharacterManager;
     private bool _requestSent;
     private bool _alreadyDead;
 
@@ -55,8 +55,8 @@ public partial class DefaultPlayer : CharacterBody2D
         
         AddToGroup("player");
 
-        _characterManager = GetNode<CharacterManager>("/root/CharacterManager");
-        var selectedCharacterId = _characterManager.LoadLastSelectedCharacterID();
+        CharacterManager = GetNode<CharacterManager>("/root/CharacterManager");
+        var selectedCharacterId = CharacterManager.LoadLastSelectedCharacterID();
 
         HttpRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
 
@@ -175,7 +175,7 @@ public partial class DefaultPlayer : CharacterBody2D
         animationHandler?.SetDeath();
 
         GD.Print("Player died with this amount of gold: " + Gold);
-        _characterManager.AddGold(Gold);
+        CharacterManager.AddGold(Gold);
 
         if (GameState.CurrentState == ConnectionState.Offline)
         {

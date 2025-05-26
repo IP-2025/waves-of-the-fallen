@@ -2,14 +2,9 @@ using Godot;
 
 public partial class Archer : DefaultPlayer
 {
-	public Archer()
-	{
-		MaxHealth = 175;
-		Speed = 400.0f;
-	}
-
 	public override void _Ready()
 	{
+		
 		HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
 		if (HttpRequest == null)
 		{
@@ -17,6 +12,9 @@ public partial class Archer : DefaultPlayer
 			return;
 		}
 		base._Ready();
+
+		MaxHealth = CharacterManager.LoadHealthByID("1");
+		Speed = CharacterManager.LoadSpeedByID("1");
 
 		var healthNode = GetNode<Health>("Health");
 		healthNode.max_health = MaxHealth; 
