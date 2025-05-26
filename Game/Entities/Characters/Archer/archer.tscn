@@ -1,17 +1,125 @@
-[gd_scene load_steps=6 format=3 uid="uid://56x8ud47qho"]
+[gd_scene load_steps=19 format=3 uid="uid://56x8ud47qho"]
 
 [ext_resource type="Script" uid="uid://fhtm3161dyce" path="res://Entities/Characters/Archer/Archer.cs" id="1_rpbpn"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_odyji"]
 [ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="3_ledbc"]
-[ext_resource type="Texture2D" uid="uid://b1rj5fayoqjrn" path="res://Entities/Characters/Archer/Resources/ArcherCharacterPreview.png" id="4_uajqq"]
+[ext_resource type="Texture2D" uid="uid://d25g2pdriu8x1" path="res://Entities/Characters/Archer/Resources/ArcherSpreadsheet.png" id="4_odyji"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_42x4f"]
+atlas = ExtResource("4_odyji")
+region = Rect2(0, 500, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m8531"]
+atlas = ExtResource("4_odyji")
+region = Rect2(250, 500, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oy8wp"]
+atlas = ExtResource("4_odyji")
+region = Rect2(500, 500, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3k8kn"]
+atlas = ExtResource("4_odyji")
+region = Rect2(750, 500, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kxirx"]
+atlas = ExtResource("4_odyji")
+region = Rect2(1000, 500, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inx2g"]
+atlas = ExtResource("4_odyji")
+region = Rect2(0, 750, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwwvq"]
+atlas = ExtResource("4_odyji")
+region = Rect2(0, 250, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5wy3"]
+atlas = ExtResource("4_odyji")
+region = Rect2(250, 250, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i31vq"]
+atlas = ExtResource("4_odyji")
+region = Rect2(0, 0, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5bfuy"]
+atlas = ExtResource("4_odyji")
+region = Rect2(250, 0, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6ylc"]
+atlas = ExtResource("4_odyji")
+region = Rect2(500, 0, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kg7f"]
+atlas = ExtResource("4_odyji")
+region = Rect2(750, 0, 250, 250)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4cvdf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_42x4f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m8531")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oy8wp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3k8kn")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_kxirx")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inx2g")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwwvq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o5wy3")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i31vq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5bfuy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k6ylc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kg7f")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
 
 [node name="Archer" type="CharacterBody2D"]
 collision_mask = 384
 collision_priority = 2.0
 script = ExtResource("1_rpbpn")
+animationPath = NodePath("ArcherAnimation")
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 
@@ -64,8 +172,10 @@ shape = SubResource("RectangleShape2D_vh0fs")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.75, 1.75)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("4_uajqq")
+[node name="ArcherAnimation" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2, -5)
+scale = Vector2(0.2385, 0.2385)
+sprite_frames = SubResource("SpriteFrames_4cvdf")
+animation = &"walk"
 
 [node name="HttpRequest" type="HTTPRequest" parent="."]

@@ -9,6 +9,7 @@ public enum EntityType
 	RangedEnemy,
 	MountedEnemy,
 	RiderEnemy,
+	GiantBossEnemy,
 	Bow,
 	BowArrow,
 	Crossbow,

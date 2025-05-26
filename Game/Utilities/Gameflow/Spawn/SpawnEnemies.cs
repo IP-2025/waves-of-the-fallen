@@ -33,9 +33,22 @@ public partial class SpawnEnemies : Node2D
 		//waveTimer = GetTree().Root.GetNode<WaveTimer>("GameRoot/WaveTimer"); // loads waveTimer for current wave
 		_waveTimer.WaveEnded += OnWaveEnd;
 		_currentWave = _waveTimer.WaveCounter;
+		_waveTimer.WaveStarted  += OnWaveStart;
 
 		_enemyLimit = Math.Min(_enemyLimitIncrease * _currentWave, _enemyLimitMax); // sets enemy limit, so a custom starting wave can be used at the beginning
 		_enemyLimitMax += 5 * (_playerCount - 1); // increase max ammount of enemies with playerCount
+			
+	}
+	private void spawnGiantBoss()
+	{
+		PackedScene packedScene = GD.Load<PackedScene>("res://Utilities/Gameflow/Spawn/BossPatterns/giant_boss.tscn");
+		EnemyPattern pattern = packedScene.Instantiate<EnemyPattern>();
+		PathFollow2D spawnPath = GetNode<PathFollow2D>("Path2D/PathFollow2D"); // gets a random starting position, where the enemies are spawned
+		spawnPath.ProgressRatio = GD.Randf();
+
+		spawnPattern(pattern);
+
+		pattern.QueueRedraw();
 	}
 
 	private T FindNodeByType<T>(Node parent) where T : Node
@@ -62,21 +75,34 @@ public partial class SpawnEnemies : Node2D
 			return;
 
 
-		EnemyPattern pattern = GetPatternFromPool();
+        EnemyPattern pattern = GetPatternFromPool();
 
-		pattern.AddToGroup("EnemyPattern"); // adds the pattern to EnemyPattern group, so it can be cleaned up later on
+        spawnPattern(pattern);
 
-		foreach (EnemyBase enemy in pattern.GetChildren()) // goes through all enemies in the pattern and assigns the player, speed, health and globalposition
-		{
-			//enemy.player = Player;
-			enemy.player = Player;
-			enemy.speed = enemy.speed * pattern.speedMultiplier;
-			enemy.GetNode<Health>("Health").max_health = enemy.GetNode<Health>("Health").max_health * pattern.healthMultiplier;
+        pattern.QueueRedraw();
 
+    }
 
-			var oldParent = enemy.GetParent();
-			oldParent.RemoveChild(enemy);
-			enemy.Owner = null;
+    private void spawnPattern(EnemyPattern pattern)
+    {
+        pattern.AddToGroup("EnemyPattern"); // adds the pattern to EnemyPattern group, so it can be cleaned up later on
+
+        foreach (EnemyBase enemy in pattern.GetChildren()) // goes through all enemies in the pattern and assigns the player, speed, health and globalposition
+        {
+            //enemy.player = Player;
+            enemy.player = Player;
+            enemy.speed = enemy.speed * pattern.speedMultiplier;
+            enemy.GetNode<Health>("Health").max_health = enemy.GetNode<Health>("Health").max_health * pattern.healthMultiplier;
+            //pattern.GlobalPosition = spawnPath.GlobalPosition;
+           // enemy.GlobalPosition += spawnPath.GlobalPosition;
+
+          //  ulong id = enemy.GetInstanceId();
+         //   enemy.Name = $"Enemy_{id}";
+         //   Server.Instance.Entities[(long)id] = enemy;
+
+            var oldParent = enemy.GetParent();
+            oldParent.RemoveChild(enemy);
+            enemy.Owner = null;
 
 			SpawnEnemy(enemy);
 		}
@@ -112,6 +138,13 @@ public partial class SpawnEnemies : Node2D
 			_patternPool.Add(pattern, pattern.Instantiate<EnemyPattern>().spawningCost);
 		}
 	}
+	private void OnWaveStart() 
+	{
+		if (_currentWave == 2) // the giant will spawn in wave 2 (Note: the normal enemies also spawn)
+		{
+			spawnGiantBoss();
+		}
+	}
 
 	private void OnWaveEnd() // refreshes the current wave value, calculates the enemy limit, deletes empty patterns and starts a grace time
 	{
@@ -139,13 +172,14 @@ public partial class SpawnEnemies : Node2D
 			Where(i => i.Key.Instantiate<EnemyPattern>().minWave <= _currentWave && i.Key.Instantiate<EnemyPattern>().maxWave >= _currentWave). // look for patterns in the correct wave number range
 			ToDictionary(i => i.Key, i => i.Value);
 
-		patternPoolCopy = patternPoolCopy.
-			Where(i => i.Value == patternPoolCopy.FirstOrDefault(i => i.Value > spawnValue, patternPoolCopy.Last()).Value). // looks the next hightest spawncost above spawnValue, if none are found the highest in patternPoolCopy is used
-			ToDictionary(i => i.Key, i => i.Value);
+			patternPoolCopy = patternPoolCopy.
+				Where(i => i.Value == patternPoolCopy.FirstOrDefault(i => i.Value > spawnValue, patternPoolCopy.Last()).Value). // looks the next hightest spawncost above spawnValue, if none are found the highest in patternPoolCopy is used
+				ToDictionary(i => i.Key, i => i.Value);
 
-		return patternPoolCopy. // instantiates the found pattern as EnemyPattern
-			ElementAt((int)(GD.Randf() * patternPoolCopy.Count())). // gets a random remaining pattern from the remaining ones (e.g. if 2 patterns with spawningCost 1 are remaining a random one will be drawn)
-			Key.Instantiate<EnemyPattern>();
+			return patternPoolCopy. // instantiates the found pattern as EnemyPattern
+				ElementAt((int)(GD.Randf() * patternPoolCopy.Count())). // gets a random remaining pattern from the remaining ones (e.g. if 2 patterns with spawningCost 1 are remaining a random one will be drawn)
+				Key.Instantiate<EnemyPattern>();
+		
 	}
 
 

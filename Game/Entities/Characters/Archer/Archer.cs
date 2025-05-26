@@ -5,7 +5,7 @@ public partial class Archer : DefaultPlayer
 	public Archer()
 	{
 		MaxHealth = 175;
-		Speed = 400.0f;  
+		Speed = 400.0f;
 	}
 
 	public override void _Ready()

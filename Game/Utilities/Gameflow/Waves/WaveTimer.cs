@@ -12,8 +12,12 @@ public partial class WaveTimer : Node2D
 	private Timer _waveTimer;
 	private Label _timeLeftLabel;
 	private Label _waveCounterLabel;
+	
 	[Signal]
 	public delegate void WaveEndedEventHandler();
+
+	[Signal]
+	public delegate void WaveStartedEventHandler();
 
 	public override void _Ready()
 	{
@@ -39,7 +43,7 @@ public partial class WaveTimer : Node2D
 	private void OnTimerTimeout()
 	{
 		if (Disable) return;
-		
+
 		SecondCounter++; // counts the seconds until the max_time is reached and a new wave begins
 		if (SecondCounter >= MaxTime)
 		{
@@ -53,6 +57,9 @@ public partial class WaveTimer : Node2D
 		_waveCounterLabel.Text = $"Wave: {WaveCounter}";
 		_timeLeftLabel.Text = (MaxTime - SecondCounter).ToString();
 		IsPaused = _waveTimer.Paused;
+		if (SecondCounter<2 && !_waveTimer.Paused) { 
+			EmitSignal(SignalName.WaveStarted);
+		}
 	}
 
 	public async Task PauseTimer(int time) // Flips the paused state of waveTimer

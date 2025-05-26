@@ -5,20 +5,28 @@ using Godot;
 
 public partial class DefaultPlayer : CharacterBody2D
 {
-    [Export] public float Speed { get; set; }
+	[Export]
+	public float Speed { get; set; }
 
-    [Export] public int MaxHealth { get; set; }
+	[Export]
+	public int MaxHealth { get; set; }
 
-    [Export] public int CurrentHealth { get; set; }
+    [Export]
+    public int CurrentHealth { get; set; }
 
-    [Export] public HttpRequest HttpRequest { get; set; }
+    [Export]
+    public HttpRequest HttpRequest { get; set; }
+    
     public long OwnerPeerId { get; set; }
     private int Gold { get; set; }
 
-    public Node2D Joystick { get; set; }
+    [Export] protected NodePath animationPath;public Node2D Joystick { get; set; }
     private Camera2D _camera;
     private MultiplayerSynchronizer _multiplayerSynchronizer;
     private bool _enableDebug;
+
+	public AnimationHandler animationHandler;
+	public AnimatedSprite2D animation;
 
     private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
     private PackedScene _crossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
@@ -76,7 +84,17 @@ public partial class DefaultPlayer : CharacterBody2D
         Server.Instance.Entities.Add((long)id, weapon);
 
         _weaponsEquipped++;
-    }
+    if (animationPath != null && !animationPath.IsEmpty)
+		{
+			animation = GetNode<AnimatedSprite2D>(animationPath);
+			animationHandler = new AnimationHandler(animation);
+		}
+		else
+		{
+			GD.PushError($"{Name} has no animationPath set!");
+		}
+
+	}
 
     private Area2D CreateWeaponForClass(object playerClass)
     {
@@ -94,39 +112,44 @@ public partial class DefaultPlayer : CharacterBody2D
 
     public override void _Process(double delta)
     {
-        if (_waveTimer != null) return;
-        var cam = GetNodeOrNull<Camera2D>("Camera2D");
-        if (cam == null) return;
-        _waveTimer = cam.GetNodeOrNull<WaveTimer>("WaveTimer");
-        if (_waveTimer != null)
-        {
-            _waveTimer.WaveEnded += OnWaveTimerTimeout;
-        }
+	    if (_waveTimer != null) return;
+	    var cam = GetNodeOrNull<Camera2D>("Camera2D");
+	    if (cam == null) return;
+	    _waveTimer = cam.GetNodeOrNull<WaveTimer>("WaveTimer");
+	    if (_waveTimer != null)
+	    {
+		    _waveTimer.WaveEnded += OnWaveTimerTimeout;
+	    }
     }
 
-    public override void _PhysicsProcess(double delta)
-    {
-        var direction = Vector2.Zero;
+	public override void _PhysicsProcess(double delta)
+	{
+		if (animationHandler != null && animationHandler.IsDying)
+		{
+			Velocity = Vector2.Zero;
+			MoveAndSlide();
+			return;
+		}
+		
+		var direction = Vector2.Zero;
 
-        // Check if joystick exists and if it's being used
-        if (Joystick != null)
-        {
-            var joystickDirection = (Vector2)Joystick.Get("PosVector");
-            if (joystickDirection != Vector2.Zero)
-            {
-                direction = joystickDirection;
-            }
-        }
+		// Get joystick directly as child
+		var joystick = GetNodeOrNull<Joystick>("Joystick");
+		if (joystick != null && joystick.PosVector != Vector2.Zero)
+		{
+			direction = joystick.PosVector;
+		}
 
-        // If no joystick input, fallback to keyboard
-        if (direction == Vector2.Zero)
-        {
-            direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-        }
+		// If no joystick input, fallback to keyboard
+		if (direction == Vector2.Zero)
+		{
+			direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+		}
+		
+		Velocity = direction * Speed;
+		MoveAndSlide();
 
-        Velocity = direction * Speed;
-        MoveAndSlide();
-    }
+	}
 
     protected virtual void UseAbility()
     {
@@ -146,8 +169,9 @@ public partial class DefaultPlayer : CharacterBody2D
         if (_alreadyDead) return;
         
         _alreadyDead = true;
-        SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"),
-            GlobalPosition);
+        Velocity = Vector2.Zero;
+        SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"), GlobalPosition);
+        animationHandler?.SetDeath();
 
         GD.Print("Player died with this amount of gold: " + Gold);
         _characterManager.AddGold(Gold);
@@ -188,15 +212,20 @@ public partial class DefaultPlayer : CharacterBody2D
 
     private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
     {
-        if (responseCode == 200)
-        {
-            GD.Print("Request completed successfully.");
-        }
-        else
-        {
-            GD.PrintErr($"Request failed with response code: {responseCode}");
-        }
+	    if (responseCode == 200)
+	    {
+		    GD.Print("Request completed successfully.");
+	    }
+	    else
+	    {
+		    GD.PrintErr($"Request failed with response code: {responseCode}");
+	    }
 
-        QueueFree();
+	    QueueFree();
     }
+
+    public void OnHit()
+        {
+	        animationHandler?.SetHit();
+        }
 }

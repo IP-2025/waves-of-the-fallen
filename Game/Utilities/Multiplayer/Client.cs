@@ -4,6 +4,9 @@ using Godot;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security;
+using System;
+    using System.Threading;
 
 public partial class Client : Node
 {
@@ -13,6 +16,9 @@ public partial class Client : Node
 	private bool _waveTimerReady;
 	private WaveTimer _timer; 
 	private bool _graceTimeTriggered;
+
+	// movement tracking of players
+	private Dictionary<long, Vector2> _lastPositions = new();
 
 	// GameRoot container for entities
 	private readonly Dictionary<long, Node2D> _instances = new();
@@ -26,6 +32,7 @@ public partial class Client : Node
 		{ EntityType.RangedEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/Skeleton/ranged_enemy.tscn") },
 		{ EntityType.MountedEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/Rider/mounted_enemy.tscn") },
 		{ EntityType.RiderEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/Rider/rider_enemy.tscn") },
+		{ EntityType.GiantBossEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/GiantBoss/giantBossEnemy.tscn") },
 		{ EntityType.Bow,  GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn") },
 		{ EntityType.BowArrow,  GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow_arrow.tscn") },
 		{ EntityType.Crossbow,  GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn") },
@@ -198,14 +205,27 @@ public partial class Client : Node
 			var inst = scene.Instantiate<Node2D>();
 
 			// disable health for enemies because server handles it
-			if (entity.Type is EntityType.DefaultEnemy or EntityType.RangedEnemy or EntityType.MountedEnemy or EntityType.RiderEnemy or EntityType.DefaultPlayer or EntityType.Archer or EntityType.Assassin or EntityType.Knight or EntityType.Mage)
+			if (entity.Type == EntityType.DefaultEnemy
+				|| entity.Type == EntityType.RangedEnemy
+				|| entity.Type == EntityType.MountedEnemy
+				|| entity.Type == EntityType.RiderEnemy
+				|| entity.Type == EntityType.GiantBossEnemy
+				|| entity.Type == EntityType.DefaultPlayer
+				|| entity.Type == EntityType.Archer
+				|| entity.Type == EntityType.Assassin
+				|| entity.Type == EntityType.Knight
+				|| entity.Type == EntityType.Mage)
 			{
 				var healthNode = inst.GetNodeOrNull<Health>("Health");
 				healthNode.disable = true;
 				healthNode.health = entity.Health * 100; // high value so that client cant kill and cant be killed. Server handles it
 			}
 
-			if (entity.Type is EntityType.DefaultEnemy or EntityType.RangedEnemy or EntityType.MountedEnemy or EntityType.RiderEnemy)
+			if (entity.Type == EntityType.DefaultEnemy
+				|| entity.Type == EntityType.RangedEnemy
+				|| entity.Type == EntityType.MountedEnemy
+				|| entity.Type == EntityType.RiderEnemy
+				|| entity.Type == EntityType.GiantBossEnemy)
 			{
 				inst.AddToGroup("enemies");
 			}
@@ -271,10 +291,40 @@ public partial class Client : Node
 	{
 		if (GodotObject.IsInstanceValid(inst))
 		{
+			Vector2 lastPos = _lastPositions.TryGetValue(entity.NetworkId, out var lp) ? lp : entity.Position;
+			Vector2 deltaPos = entity.Position - lastPos;
+
 			inst.GlobalPosition = entity.Position;
 			inst.Rotation = entity.Rotation;
 			inst.Scale = entity.Scale;
 			inst.GetNodeOrNull<Health>("Health").health = entity.Health;
+
+			// Sync all animations for players
+			if (inst is DefaultPlayer player)
+			{
+				if (entity.Health <= 0)
+				{
+					player.animationHandler?.SetDeath();
+				}
+				else
+				{
+					// Flip based on movement direction
+					if (player.animation != null && Math.Abs(deltaPos.X) > 1e-2)
+						player.animation.FlipH = deltaPos.X < 0;
+
+					// Walk/Idle Animation based on movement
+					if (player.animationHandler != null)
+					{
+						if (deltaPos.Length() > 1e-2)
+							player.animationHandler.UpdateAnimationState(false, deltaPos);
+						else
+							player.animationHandler.UpdateAnimationState(false, Vector2.Zero);
+					}
+				}
+			}
+
+			// save last position
+			_lastPositions[entity.NetworkId] = entity.Position;
 		}
 	}
 

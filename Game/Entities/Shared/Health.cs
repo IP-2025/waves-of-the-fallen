@@ -25,6 +25,7 @@ public partial class Health : Node2D
 
 	public void Damage(float damage)
 	{
+		if (isDead) return;
 		if (!disable)
 			health -= damage; // reduce health by damage amount
 		
@@ -37,20 +38,35 @@ public partial class Health : Node2D
 
 	private void doAnimation()
 	{
+		if (isDead) return;
 		// hit animation
 		if (GetParent() is EnemyBase enemy)
+		{
 			enemy.OnHit();
-
+		}
+		else if (GetParent() is DefaultPlayer player)
+		{
+			player.OnHit();
+		}
+			
+		
 		// death animation
 		if (health <= 0) {
+			isDead = true;
 			// check if parent is DefaultPlayer
 			if (GetParent() is DefaultPlayer player)
+			{
 				player.Die(); // call Die() method if parent is DefaultPlayer
+			}	
 			else if (GetParent() is EnemyBase deadEnemy)
+			{
 				deadEnemy.OnDeath();
+			}
 			else
+			{
 				GetParent().QueueFree(); // otherwise, free the parent node
-
+			}
+				
 			EmitSignal(SignalName.HealthDepleted); // emit signal when health is depleted
 			}
 	}

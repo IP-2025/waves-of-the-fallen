@@ -1,17 +1,125 @@
-[gd_scene load_steps=6 format=3 uid="uid://davsuba61dhxg"]
+[gd_scene load_steps=19 format=3 uid="uid://davsuba61dhxg"]
 
 [ext_resource type="Script" uid="uid://70abqg7ujgbf" path="res://Entities/Characters/Assassin/Assassin.cs" id="1_y3eth"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_slb6w"]
 [ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="3_pgiys"]
-[ext_resource type="Texture2D" uid="uid://kimtqy3xo4jc" path="res://Entities/Characters/Assassin/Resources/AssassinCharacterPreview.png" id="4_slb6w"]
+[ext_resource type="Texture2D" uid="uid://by8lvg4hufhel" path="res://Entities/Characters/Assassin/Resources/AssassinSpritesheet.png" id="4_6ntyn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tcv2v"]
+atlas = ExtResource("4_6ntyn")
+region = Rect2(0, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0yb4"]
+atlas = ExtResource("4_6ntyn")
+region = Rect2(128, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3up1w"]
+atlas = ExtResource("4_6ntyn")
+region = Rect2(256, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bax6k"]
+atlas = ExtResource("4_6ntyn")
+region = Rect2(384, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rrjef"]
+atlas = ExtResource("4_6ntyn")
+region = Rect2(512, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0o5f"]
+atlas = ExtResource("4_6ntyn")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jdvnr"]
+atlas = ExtResource("4_6ntyn")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6jqa"]
+atlas = ExtResource("4_6ntyn")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hnvkw"]
+atlas = ExtResource("4_6ntyn")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmetf"]
+atlas = ExtResource("4_6ntyn")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31y0m"]
+atlas = ExtResource("4_6ntyn")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_miacr"]
+atlas = ExtResource("4_6ntyn")
+region = Rect2(384, 128, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ihn4h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tcv2v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d0yb4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3up1w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bax6k")
+}, {
+"duration": 2.5,
+"texture": SubResource("AtlasTexture_rrjef")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0o5f")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jdvnr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n6jqa")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hnvkw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmetf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_31y0m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_miacr")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
 
 [node name="Assassin" type="CharacterBody2D"]
 collision_mask = 384
 collision_priority = 2.0
 script = ExtResource("1_y3eth")
+animationPath = NodePath("AssassinAnimation")
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 
@@ -64,8 +172,10 @@ shape = SubResource("RectangleShape2D_vh0fs")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.75, 1.75)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("4_slb6w")
+[node name="AssassinAnimation" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 15)
+scale = Vector2(0.492188, 0.492188)
+sprite_frames = SubResource("SpriteFrames_ihn4h")
+animation = &"death"
 
 [node name="HttpRequest" type="HTTPRequest" parent="."]
