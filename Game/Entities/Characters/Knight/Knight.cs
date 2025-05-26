@@ -2,31 +2,29 @@ using Godot;
 
 public partial class Knight : DefaultPlayer
 {
-	public Knight()
-	{
-		MaxHealth = 250; 
-		Speed = 175.0f;  
-	}
-	
-	public override void _Ready()
-	{
-		HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
-		if (HttpRequest == null)
-		{
-			GD.PrintErr("HttpRequest node not found!");
-			return;
-		}
-		base._Ready();
+    public override void _Ready()
+    {
+        HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
+        if (HttpRequest == null)
+        {
+            GD.PrintErr("HttpRequest node not found!");
+            return;
+        }
 
-		var healthNode = GetNode<Health>("Health");
-		healthNode.max_health = MaxHealth;
-		healthNode.ResetHealth();
+        base._Ready();
 
-		GD.Print($"Knight initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
-	}
+        MaxHealth = CharacterManager.LoadHealthByID("3");
+        Speed = CharacterManager.LoadSpeedByID("3");
 
-	protected override void UseAbility()
-	{
-		//TODO: Implement Knight's ability
-	}
+        var healthNode = GetNode<Health>("Health");
+        healthNode.max_health = MaxHealth;
+        healthNode.ResetHealth();
+
+        GD.Print($"Knight initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
+    }
+
+    protected override void UseAbility()
+    {
+        //TODO: Implement Knight's ability
+    }
 }
