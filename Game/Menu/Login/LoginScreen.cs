@@ -1,9 +1,11 @@
-using Godot;
 using Game.Utilities.Backend;
+using Godot;
+
+namespace Game.Menu.Login;
 
 public partial class LoginScreen : Control
 {
-	private const string LoginUrl = $"{Server.BaseUrl}/api/v1/auth/login";
+	private const string LoginUrl = $"{ServerConfig.BaseUrl}/api/v1/auth/login";
 
 	private LineEdit _emailField;
 	private LineEdit _passwordField;
@@ -36,7 +38,7 @@ public partial class LoginScreen : Control
 		
 		var token = SecureStorage.LoadToken();
 		if (string.IsNullOrEmpty(token)) return;
-		const string url = $"{Server.BaseUrl}/api/v1/protected/";
+		const string url = $"{ServerConfig.BaseUrl}/api/v1/protected/";
 		var headers = new[] { $"Authorization: Bearer {token}" };
 		var err = _authRequest.Request(url, headers, Godot.HttpClient.Method.Get);
 		if (err != Error.Ok)

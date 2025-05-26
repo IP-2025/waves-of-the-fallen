@@ -5,11 +5,17 @@ public partial class Archer : DefaultPlayer
 	public Archer()
 	{
 		MaxHealth = 175;
-		Speed = 400.0f;  
+		Speed = 400.0f;
 	}
 
 	public override void _Ready()
 	{
+		HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
+		if (HttpRequest == null)
+		{
+			GD.PrintErr("HttpRequest node not found!");
+			return;
+		}
 		base._Ready();
 
 		var healthNode = GetNode<Health>("Health");
@@ -19,7 +25,7 @@ public partial class Archer : DefaultPlayer
 		GD.Print($"Archer initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
 	}
 
-	public override void UseAbility()
+	protected override void UseAbility()
 	{
 		//TODO: Implement Archer's ability
 	}
