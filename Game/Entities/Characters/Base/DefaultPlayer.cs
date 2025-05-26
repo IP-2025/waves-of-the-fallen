@@ -20,7 +20,8 @@ public partial class DefaultPlayer : CharacterBody2D
     public long OwnerPeerId { get; set; }
     private int Gold { get; set; }
 
-    [Export] protected NodePath animationPath;public Node2D Joystick { get; set; }
+    [Export] protected NodePath animationPath;
+    public Node2D Joystick { get; set; }
     private Camera2D _camera;
     private MultiplayerSynchronizer _multiplayerSynchronizer;
     private bool _enableDebug;
@@ -185,7 +186,7 @@ public partial class DefaultPlayer : CharacterBody2D
             _requestSent = true;
             var token = SecureStorage.LoadToken();
             if (string.IsNullOrEmpty(token)) return;
-            const string url = $"{ServerConfig.BaseUrl}/api/v1/protected/addGold";
+            const string url = $"{ServerConfig.BaseUrl}/api/v1/protected/gold/add";
             var headers = new[] { $"Authorization: Bearer {token}", "Content-Type: application/json" };
             var body = Json.Stringify(new Godot.Collections.Dictionary
             {
