@@ -61,7 +61,7 @@ public partial class Healstaff : Area2D
 	
 	public void _on_heal_staff_sprite_frame_changed() {
 		if(staffFiresFrame == GetNode<AnimatedSprite2D>("WeaponPivot/HealStaffSprite").Frame) {
-			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("firestaffFires"), GlobalPosition);
+			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("healstaffFires"), GlobalPosition);
 		}
 	}
 }
