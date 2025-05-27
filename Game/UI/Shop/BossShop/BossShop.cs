@@ -1,45 +1,50 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using WeaponDataShop;
+using System.Reflection;
 
-public partial class BossShop : Control
+public partial class BossShop : Control{
+	
+private static readonly List<RangedWeapon> allWeapons = new()
 {
-	private List<WeaponData> weaponData = new()
+	new Bow(),
+	new Crossbow(),
+	new Kunai(),
+	new FireStaff(),
+	new Lightningstaff()
+};
+
+private void PopulateWeapon(string containerPath, RangedWeapon weapon)
+{
+	var box = GetNode<Node>(containerPath);
+
+	box.GetNode<TextureRect>("texture").Texture = GD.Load<Texture2D>(weapon.IconPath);
+
+	var stats = weapon.BaseStats();
+
+	box.GetNode<RichTextLabel>("name").Text     = weapon.GetType().Name;
+	box.GetNode<RichTextLabel>("damage").Text   = $"Damage:   {stats.dmg}";
+	box.GetNode<RichTextLabel>("range").Text    = $"Range:    {(int)stats.range}";
+	box.GetNode<RichTextLabel>("piercing").Text = $"Piercing: {stats.piercing}";
+	box.GetNode<RichTextLabel>("speed").Text    = $"Speed:    {(int)stats.speed}";
+}
+
+public override void _Ready()
+{
+	var rng = new RandomNumberGenerator();
+	rng.Randomize();
+
+	var shuffled = new List<RangedWeapon>(allWeapons);
+	for (int i = shuffled.Count - 1; i > 0; i--)
 	{
-		new WeaponData("Langschwert", "+ Schaden", "- Langsam", "res://UI/Shop/BossShop/schwert1.webp"),
-		new WeaponData("Eisschwert", "+ Verlangsamt Gegner", "- Schaden", "res://UI/Shop/BossShop/schwert1.webp"),
-		new WeaponData("Dolch", "+ Schnell", "- Geringer Schaden", "res://UI/Shop/BossShop/schwert1.webp"),
-		new WeaponData("Hammer", "+ Großer Schaden", "- Sehr langsam", "res://UI/Shop/BossShop/schwert1.webp"),
-		new WeaponData("Bogen", "+ Fernkampf", "- Muss gespannt werden", "res://UI/Shop/BossShop/schwert1.webp")
-	};
-
-	private string[] weaponNodes = { "weapon1", "weapon2", "weapon3" };
-
-	public override void _Ready()
-	{
-		var random = new Random();
-		var shuffled = new List<WeaponData>(weaponData);
-		shuffled.Sort((a, b) => random.Next(-1, 2));
-
-		var container = GetNode("MarginContainer/HBoxContainer");
-
-		for (int i = 0; i < 3; i++)
-		{
-			var data = shuffled[i];
-			var node = container.GetNode<Control>(weaponNodes[i]);
-
-			var textureRect = node.GetNode<TextureRect>("texture");
-			textureRect.Texture = GD.Load<Texture2D>(data.ImagePath);
-
-			var nameLabel = node.GetNode<RichTextLabel>("name");
-			nameLabel.Text = data.Name;
-
-			var advLabel = node.GetNode<RichTextLabel>("advantage");
-			advLabel.Text = data.Advantage;
-
-			var disadvLabel = node.GetNode<RichTextLabel>("disadvantage");
-			disadvLabel.Text = data.Disadvantage;
-		}
+		int j = rng.RandiRange(0, i);
+		(shuffled[i], shuffled[j]) = (shuffled[j], shuffled[i]);
 	}
+
+	for (int slot = 0; slot < 3 && slot < shuffled.Count; slot++)
+	{
+		string path = $"MarginContainer/HBoxContainer/weapon{slot + 1}";
+		PopulateWeapon(path, shuffled[slot]);
+	}
+}
 }

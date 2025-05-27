@@ -1,14 +1,14 @@
 [gd_scene load_steps=13 format=3 uid="uid://lv3058lpkiow"]
 
-[ext_resource type="Texture2D" uid="uid://b1qfmkb3awomf" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Fireball1.png" id="1_bympj"]
+[ext_resource type="Texture2D" uid="uid://dxs43oyo3spuy" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Fireball1.png" id="1_bympj"]
 [ext_resource type="Script" uid="uid://b7i5ogwmrajbx" path="res://Weapons/Ranged/MagicStaffs/Firestaff/FireBall.cs" id="1_ldwc5"]
-[ext_resource type="Texture2D" uid="uid://degkio6dw55qf" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Fireball2.png" id="2_ldwc5"]
-[ext_resource type="Texture2D" uid="uid://c10wptfom26vl" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Fireball3.png" id="3_jic63"]
-[ext_resource type="Texture2D" uid="uid://chfl64e4d3kle" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion1.png" id="5_o6375"]
-[ext_resource type="Texture2D" uid="uid://c03irq6hpuyf0" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion2.png" id="6_4dy7c"]
-[ext_resource type="Texture2D" uid="uid://cdgcxgvi3wckd" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion3.png" id="7_j033g"]
-[ext_resource type="Texture2D" uid="uid://fgr0l8f8phab" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion4.png" id="8_opg4t"]
-[ext_resource type="Texture2D" uid="uid://cjmvqgmo3yvqa" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion5.png" id="9_0pktg"]
+[ext_resource type="Texture2D" uid="uid://dvely2u7by10c" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Fireball2.png" id="2_ldwc5"]
+[ext_resource type="Texture2D" uid="uid://w4jx00eira0d" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Fireball3.png" id="3_jic63"]
+[ext_resource type="Texture2D" uid="uid://dv3db8sg3eo27" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion1.png" id="5_o6375"]
+[ext_resource type="Texture2D" uid="uid://cso23v5n076c" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion2.png" id="6_4dy7c"]
+[ext_resource type="Texture2D" uid="uid://dajvov5idybrj" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion3.png" id="7_j033g"]
+[ext_resource type="Texture2D" uid="uid://btolfb134i28y" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion4.png" id="8_opg4t"]
+[ext_resource type="Texture2D" uid="uid://br3mxkkcied5a" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion5.png" id="9_0pktg"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_d58m4"]
 animations = [{

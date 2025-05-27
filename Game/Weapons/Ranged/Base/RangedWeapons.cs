@@ -1,26 +1,38 @@
 using Godot;
-using System;
-using System.Linq;
 
 public abstract partial class RangedWeapon : Area2D
 {
 	protected AnimatedSprite2D animatedSprite;
-	protected float WeaponRange = 800f;
-	protected PackedScene projectileScene = null;
+	protected PackedScene      projectileScene;
+
+	public abstract string ResourcePath { get; }
+	public abstract string IconPath     { get; }
+	
+	public abstract int   SoundFrame  { get; }
+	public abstract float ShootDelay { get; }
+
+	public abstract float DefaultRange    { get; }
+	public abstract int   DefaultDamage   { get; } 
+	public abstract int   DefaultPiercing { get; }
+	public abstract float DefaultSpeed    { get; }
+
+	[Export]                      
+	public float WeaponRange { get; protected set; }
+
+	public (int dmg, float range, int piercing, float speed) BaseStats() =>
+		(DefaultDamage, DefaultRange, DefaultPiercing, DefaultSpeed);
 
 	public override void _PhysicsProcess(double delta)
 	{
 		var target = FindNearestEnemy();
 		if (target != null && TryGetPosition(target, out var position))
-		{
 			LookAt(position);
-		}
 	}
 	
 	protected Node FindNearestEnemy()
 	{
-		float closestDist = float.MaxValue;
-		Node closestEnemy = null;
+		float closestDist  = float.MaxValue;
+		Node  closestEnemy = null;
 
 		foreach (Node node in GetTree().GetNodesInGroup("enemies"))
 		{
@@ -31,14 +43,12 @@ public abstract partial class RangedWeapon : Area2D
 
 			if (dist < closestDist && dist <= WeaponRange)
 			{
-				closestDist = dist;
+				closestDist  = dist;
 				closestEnemy = enemyNode;
 			}
 		}
-
 		return closestEnemy;
 	}
-
 
 	protected bool TryGetPosition(object body, out Vector2 position)
 	{
@@ -51,7 +61,6 @@ public abstract partial class RangedWeapon : Area2D
 				position = (Vector2)globalPosVariant;
 				return true;
 			}
-
 			Variant posVariant = obj.Get("position");
 			if (posVariant.VariantType == Variant.Type.Vector2)
 			{
@@ -64,14 +73,14 @@ public abstract partial class RangedWeapon : Area2D
 
 	protected void Shoot()
 	{
-		Area2D projectileInstance = projectileScene.Instantiate() as Area2D;
-		Marker2D shootingPoint = GetNode<Marker2D>("ShootingPoint");
+		if (projectileScene == null) return;
+
+		var projectileInstance = projectileScene.Instantiate<Area2D>();
+		var shootingPoint      = GetNode<Marker2D>("ShootingPoint");
+
 		projectileInstance.GlobalPosition = shootingPoint.GlobalPosition;
 		projectileInstance.GlobalRotation = shootingPoint.GlobalRotation;
-		
+
 		GetTree().CurrentScene.AddChild(projectileInstance);
-
 	}
-
-	
 }

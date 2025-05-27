@@ -8,6 +8,10 @@ public partial class Lightning : Projectile
 	private PackedScene lightningScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightning.tscn");
 	protected float Radius = 200;
 	protected int jumps = 1;
+	
+	public const float DefaultSpeed     = 1000f;
+	public const int   DefaultDamage    = 60;
+	public const int   DefaultPiercing  = 0;
 
 	private bool hasHit = false;
 	private Node2D ignoredBody = null;

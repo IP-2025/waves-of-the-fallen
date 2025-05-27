@@ -4,6 +4,9 @@ using Godot.Collections;
 public partial class FireBall : Projectile
 {
 	protected float Radius = 100;
+		public const float DefaultSpeed    = 600f;
+	public const int   DefaultDamage   = 120;
+	public const int   DefaultPiercing = 0; 
 
 	private bool hasHit = false;
 
