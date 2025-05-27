@@ -36,7 +36,11 @@ public partial class Server : Node
 		{ "res://Weapons/Melee/MasterSword/Sword.tscn", EntityType.Sword },
 		{ "res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn", EntityType.Lightningstaff },
 		{ "res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightning.tscn", EntityType.Lighting },
+		{ "res://Weapons/Ranged/WarHammer/warHammer.tscn", EntityType.WarHammer },
+		{ "res://Weapons/Ranged/WarHammer/hammerProjectile.tscn", EntityType.HammerProjectile },
 		{ "res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn", EntityType.HealStaff },
+		{ "res://Weapons/Utility/MedicineBag/medicineBag.tscn", EntityType.MedicineBag },
+		{ "res://Weapons/Utility/MedicineBag/medicine.tscn", EntityType.Medicine }
 	};
 
 	public override void _Ready()

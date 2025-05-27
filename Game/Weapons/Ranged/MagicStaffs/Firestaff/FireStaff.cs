@@ -11,7 +11,7 @@ public partial class FireStaff : RangedWeapon
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/FireStaffSprite");
 		projectileScene = fireBallScene;
 		WeaponRange = 600f;
-
+		
 	}
 	
 	public async void OnTimerTimeoutIFirestaff()

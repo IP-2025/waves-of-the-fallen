@@ -5,11 +5,17 @@ using Godot;
 
 public partial class DefaultPlayer : CharacterBody2D
 {
+
+
     [Export] public float Speed { get; set; }
+
 
     [Export] public int MaxHealth { get; set; }
 
+
+
     [Export] public int CurrentHealth { get; set; }
+
 
     [Export] public HttpRequest HttpRequest { get; set; }
 
@@ -37,6 +43,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
     private PackedScene _daggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
     private PackedScene _swordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
+	public PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
     private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
     private int _weaponsEquipped;
 
@@ -98,6 +105,7 @@ public partial class DefaultPlayer : CharacterBody2D
         return playerClass switch
         {
             Archer => _bowScene.Instantiate() as Area2D,
+            // return _medicineBagScene.Instantiate() as Area2D,
             Assassin => _kunaiScene.Instantiate() as Area2D,
             //return _healStaffScene.Instantiate() as Area2D;
             Mage => _fireStaffScene.Instantiate() as Area2D,
