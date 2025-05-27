@@ -4,7 +4,6 @@ using Godot;
 public partial class Assassin : DefaultPlayer
 {
 
-	private int assassinWalkFrame = 1;
 	public override void _Ready()
 	{
 		HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
@@ -29,9 +28,9 @@ public partial class Assassin : DefaultPlayer
 	public void _on_assassin_animation_frame_changed()
 	{
 		if(GetNode<AnimatedSprite2D>("AssassinAnimation").Animation.Equals("walk"))
-		if (assassinWalkFrame == GetNode<AnimatedSprite2D>("AssassinAnimation").Frame)
+		if (GetNode<AnimatedSprite2D>("AssassinAnimation").Frame%2 == 1)
 		{
-			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerWalk"), GlobalPosition);
+			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerWalk"), GlobalPosition, -10);
 		}
 	}
 
