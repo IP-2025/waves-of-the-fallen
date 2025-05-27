@@ -1,15 +1,15 @@
 [gd_scene load_steps=4 format=3 uid="uid://brpwgptxilodd"]
 
-[ext_resource type="Script" uid="uid://dxaxdcruvv5is" path="res://Entities/Enemies/Skeleton/EnemyProjectile.cs" id="1_v7l71"]
-[ext_resource type="Texture2D" uid="uid://bo5c3plo2lbon" path="res://Entities/Enemies/Skeleton/Resources/Stone.png" id="2_8ogru"]
+[ext_resource type="Script" uid="uid://dxaxdcruvv5is" path="res://Entities/Enemies/Skeleton/EnemyProjectile.cs" id="1_hfree"]
+[ext_resource type="Texture2D" uid="uid://bo5c3plo2lbon" path="res://Entities/Enemies/Skeleton/Resources/Stone.png" id="2_gt5qh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v7l71"]
 size = Vector2(15, 11)
 
-[node name="Arrow" type="Area2D"]
+[node name="Stone" type="Area2D"]
 collision_layer = 6
 collision_mask = 129
-script = ExtResource("1_v7l71")
+script = ExtResource("1_hfree")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -0.5)
@@ -19,4 +19,4 @@ one_way_collision_margin = 4.0
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-9.53674e-07, -9.53674e-07)
 scale = Vector2(0.0286621, 0.0251928)
-texture = ExtResource("2_8ogru")
+texture = ExtResource("2_gt5qh")
