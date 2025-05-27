@@ -38,7 +38,6 @@ public partial class Medicine : Area2D
 		if (healthNode != null)
 		{
 			healthNode.Heal(healValue);
-			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("healItemPickUp"), GlobalPosition, -10);
 		}
 		QueueFree();
 	}

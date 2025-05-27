@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dnv3ypcus8nxr" path="res://Entities/Characters/Mage/Mage.cs" id="1_shc7e"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_55mar"]
 [ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="3_dt24r"]
-[ext_resource type="Texture2D" uid="uid://c1qyf0tet38cn" path="res://Entities/Characters/Mage/Resources/MageCharacterNormal.png" id="4_w7c0s"]
+[ext_resource type="Texture2D" uid="uid://cr74on6tkmghi" path="res://Entities/Characters/Mage/Resources/MageCharacterNormal.png" id="4_w7c0s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
@@ -197,8 +197,6 @@ zoom = Vector2(1.75, 1.75)
 position = Vector2(0, 15)
 scale = Vector2(0.499023, 0.499023)
 sprite_frames = SubResource("SpriteFrames_iqetv")
-animation = &"walk"
+animation = &"death"
 
 [node name="HttpRequest" type="HTTPRequest" parent="."]
-
-[connection signal="frame_changed" from="MageAnimation" to="." method="_on_mage_animation_frame_changed"]

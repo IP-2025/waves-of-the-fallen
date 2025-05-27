@@ -5,7 +5,6 @@ public partial class MedicineBag : Area2D
 	private PackedScene medicine = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicine.tscn");
 
 	private AnimatedSprite2D medicineBagSprite;
-	private int medicineBagFires = 4;
 
 	public override void _Ready()
 	{
@@ -33,10 +32,4 @@ public partial class MedicineBag : Area2D
 
 		GetTree().CurrentScene.AddChild(utilInstance);
 	}
-	
-	public void _on_medicine_bag_sprite_frame_changed() {
-		if(medicineBagFires == GetNode<AnimatedSprite2D>("MedicineBagSprite").Frame) {
-			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("medicineBagThrow"), GlobalPosition, -10);
-		}
-	}
-} 
+}

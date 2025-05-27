@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://cydobr6cu0ytl" path="res://Entities/Characters/Knight/Knight.cs" id="1_wbc0s"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_7stuo"]
 [ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="3_e8lxy"]
+
 [ext_resource type="Texture2D" uid="uid://dobi6eulan8n0" path="res://Entities/Characters/Knight/Resources/KnightCharacterSprites.png" id="4_35qrc"]
+
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
@@ -175,5 +177,3 @@ frame = 3
 frame_progress = 1.0
 
 [node name="HttpRequest" type="HTTPRequest" parent="."]
-
-[connection signal="frame_changed" from="KnightAnimation" to="." method="_on_knight_animation_frame_changed"]

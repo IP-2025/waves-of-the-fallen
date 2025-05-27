@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Game.Utilities.Backend;
 using Game.Utilities.Multiplayer;
 using Godot;
+using System;
 
 public partial class DefaultPlayer : CharacterBody2D
 {
@@ -30,20 +31,20 @@ public partial class DefaultPlayer : CharacterBody2D
 
     public AnimationHandler animationHandler;
     public AnimatedSprite2D animation;
-    
+
     private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
     private PackedScene _crossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
     private PackedScene _kunaiScene = GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn");
 
     private PackedScene _fireStaffScene =
-	    GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn");
+        GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn");
 
     private PackedScene _lightningStaffScene =
-	    GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn");
+        GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn");
 
     private PackedScene _daggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
     private PackedScene _swordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
-	public PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
+    public PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
     private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
     private int _weaponsEquipped;
 
@@ -51,13 +52,14 @@ public partial class DefaultPlayer : CharacterBody2D
     protected CharacterManager CharacterManager;
     private bool _requestSent;
     private bool _alreadyDead;
+    private Vector2 lastPos = Vector2.Zero;
 
-	public override void _Ready()
-	{
-		_alreadyDead = false;
-		_requestSent = false;
-		AddToGroup("player");
-/* 		base._Ready(); */
+    public override void _Ready()
+    {
+        _alreadyDead = false;
+        _requestSent = false;
+        AddToGroup("player");
+        /* 		base._Ready(); */
 
         CharacterManager = GetNode<CharacterManager>("/root/CharacterManager");
         var selectedCharacterId = CharacterManager.LoadLastSelectedCharacterID();
@@ -117,6 +119,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
     public override void _Process(double delta)
     {
+        Vector2 deltaPos = GlobalPosition - lastPos;
         if (_waveTimer != null) return;
         var cam = GetNodeOrNull<Camera2D>("Camera2D");
         if (cam == null) return;
@@ -125,10 +128,24 @@ public partial class DefaultPlayer : CharacterBody2D
         {
             _waveTimer.WaveEnded += OnWaveTimerTimeout;
         }
+        // Flip based on movement direction
+        if (animation != null && Math.Abs(deltaPos.X) > 1e-2)
+            animation.FlipH = deltaPos.X < 0;
+
+        // Walk/Idle Animation based on movement
+        if (animationHandler != null)
+        {
+            if (deltaPos.Length() > 1e-2)
+                animationHandler.UpdateAnimationState(false, deltaPos);
+            else
+                animationHandler.UpdateAnimationState(false, Vector2.Zero);
+        }
     }
 
     public override void _PhysicsProcess(double delta)
     {
+        lastPos = GlobalPosition;
+
         if (animationHandler != null && animationHandler.IsDying)
         {
             Velocity = Vector2.Zero;
