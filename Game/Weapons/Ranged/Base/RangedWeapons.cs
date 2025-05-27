@@ -3,20 +3,20 @@ using Godot;
 public abstract partial class RangedWeapon : Area2D
 {
 	protected AnimatedSprite2D animatedSprite;
-	protected PackedScene      projectileScene;
+	protected PackedScene projectileScene;
 
 	public abstract string ResourcePath { get; }
-	public abstract string IconPath     { get; }
-	
-	public abstract int   SoundFrame  { get; }
+	public abstract string IconPath { get; }
+
+	public abstract int SoundFrame { get; }
 	public abstract float ShootDelay { get; }
 
-	public abstract float DefaultRange    { get; }
-	public abstract int   DefaultDamage   { get; } 
-	public abstract int   DefaultPiercing { get; }
-	public abstract float DefaultSpeed    { get; }
+	public abstract float DefaultRange { get; }
+	public abstract int DefaultDamage { get; }
+	public abstract int DefaultPiercing { get; }
+	public abstract float DefaultSpeed { get; }
 
-	[Export]                      
+	[Export]
 	public float WeaponRange { get; protected set; }
 
 	public (int dmg, float range, int piercing, float speed) BaseStats() =>
@@ -28,11 +28,11 @@ public abstract partial class RangedWeapon : Area2D
 		if (target != null && TryGetPosition(target, out var position))
 			LookAt(position);
 	}
-	
+
 	protected Node FindNearestEnemy()
 	{
-		float closestDist  = float.MaxValue;
-		Node  closestEnemy = null;
+		float closestDist = float.MaxValue;
+		Node closestEnemy = null;
 
 		foreach (Node node in GetTree().GetNodesInGroup("enemies"))
 		{
@@ -43,7 +43,7 @@ public abstract partial class RangedWeapon : Area2D
 
 			if (dist < closestDist && dist <= WeaponRange)
 			{
-				closestDist  = dist;
+				closestDist = dist;
 				closestEnemy = enemyNode;
 			}
 		}
@@ -76,7 +76,7 @@ public abstract partial class RangedWeapon : Area2D
 		if (projectileScene == null) return;
 
 		var projectileInstance = projectileScene.Instantiate<Area2D>();
-		var shootingPoint      = GetNode<Marker2D>("ShootingPoint");
+		var shootingPoint = GetNode<Marker2D>("ShootingPoint");
 
 		projectileInstance.GlobalPosition = shootingPoint.GlobalPosition;
 		projectileInstance.GlobalRotation = shootingPoint.GlobalRotation;

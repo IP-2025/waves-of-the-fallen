@@ -8,10 +8,10 @@ public partial class Lightning : Projectile
 	private PackedScene lightningScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightning.tscn");
 	protected float Radius = 200;
 	protected int jumps = 1;
-	
-	public const float DefaultSpeed     = 1000f;
-	public const int   DefaultDamage    = 60;
-	public const int   DefaultPiercing  = 0;
+
+	public const float DefaultSpeed = 1000f;
+	public const int DefaultDamage = 60;
+	public const int DefaultPiercing = 0;
 
 	private bool hasHit = false;
 	private Node2D ignoredBody = null;
@@ -29,15 +29,17 @@ public partial class Lightning : Projectile
 		SetDeferred("Monitoring", false);
 		GetNode<AnimatedSprite2D>("./LightningAnimation").Hide();
 		GetNode<AnimatedSprite2D>("./Static").Play("static");
-		
 
-		if (!hasHit) {
+
+		if (!hasHit)
+		{
 			hasHit = true;
-			DamageProcess( body);
+			DamageProcess(body);
 		}
 	}
 
-	private void DamageProcess(Node2D body) {
+	private void DamageProcess(Node2D body)
+	{
 		var healthNode = body.GetNodeOrNull<Health>("Health");
 		if (healthNode != null)
 		{
@@ -47,18 +49,18 @@ public partial class Lightning : Projectile
 		if (jumps > 0)
 		{
 			var targets = GetNearestEnemies(3);
-		
+
 			if (targets.Count > 0)
 				targets.RemoveAt(0);
-		
+
 			foreach (EnemyBase target in targets)
 			{
 				var lightning = lightningScene.Instantiate<Lightning>();
 				lightning.GlobalPosition = GlobalPosition;
-			
+
 				lightning.ignoredBody = body;
 				lightning.jumps = jumps - 1;
-			
+
 				Vector2 direction = (target.GlobalPosition - GlobalPosition).Normalized();
 				lightning.Rotation = direction.Angle();
 
@@ -66,7 +68,7 @@ public partial class Lightning : Projectile
 			}
 		}
 	}
-	
+
 	private List<EnemyBase> GetNearestEnemies(int count)
 	{
 		var list = new List<(EnemyBase enemy, float dist)>();
@@ -82,15 +84,16 @@ public partial class Lightning : Projectile
 
 			list.Add((enemy, d));
 		}
-		
+
 		return list
 			.OrderBy(t => t.dist)
 			.Take(count)
 			.Select(t => t.enemy)
 			.ToList();
 	}
-	
-	private void OnStaticAnimationFinished() {
+
+	private void OnStaticAnimationFinished()
+	{
 		QueueFree();
 	}
 }

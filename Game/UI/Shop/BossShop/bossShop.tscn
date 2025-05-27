@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://b8dcceo0us5r5"]
 
 [ext_resource type="Script" uid="uid://j5gcbrucnngq" path="res://UI/Shop/BossShop/BossShop.cs" id="1_cox2s"]
-[ext_resource type="Texture2D" uid="uid://sx8bqn8fukcx" path="res://UI/Shop/BossShop/schwert1.webp" id="2_vpdq8"]
+[ext_resource type="Texture2D" uid="uid://m6h1jqfkevld" path="res://Weapons/Ranged/Bow/Resources/BowEmpty.png" id="2_vpdq8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpdq8"]
 bg_color = Color(0.309804, 0.309804, 0.309804, 1)
@@ -143,7 +143,6 @@ size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_uv5u4")
 
 [node name="texture" type="TextureRect" parent="MarginContainer/HBoxContainer/weapon2"]
-layout_mode = 0
 offset_left = 80.0
 offset_top = 61.0
 offset_right = 230.0
@@ -223,7 +222,6 @@ size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_grg02")
 
 [node name="texture" type="TextureRect" parent="MarginContainer/HBoxContainer/weapon3"]
-layout_mode = 0
 offset_left = 80.0
 offset_top = 61.0
 offset_right = 230.0

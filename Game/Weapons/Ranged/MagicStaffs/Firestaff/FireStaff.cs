@@ -3,33 +3,33 @@ using Godot;
 [GlobalClass]
 public partial class FireStaff : RangedWeapon
 {
-	private const string _resBase        = "res://Weapons/Ranged/MagicStaffs/Firestaff/";
-	private const string _resourcePath   = _resBase + "Resources/";
-	private const string _iconPath       = _resourcePath + "FireStaff.png";
+	private const string _resBase = "res://Weapons/Ranged/MagicStaffs/Firestaff/";
+	private const string _resourcePath = _resBase + "Resources/";
+	private const string _iconPath = _resourcePath + "FireStaff.png";
 	private const string _projectilePath = _resBase + "fireball.tscn";
 
 	private const float _defaultRange = 600f;
-	private const float _shootDelay   = 1.7f;
-	private const int   _soundFrame   = 5;
+	private const float _shootDelay = 1.7f;
+	private const int _soundFrame = 5;
 
-	public override string ResourcePath    => _resourcePath;
-	public override string IconPath        => _iconPath;
-	public override float  DefaultRange    => _defaultRange;
-	public override int    DefaultDamage   => FireBall.DefaultDamage;
-	public override int    DefaultPiercing => FireBall.DefaultPiercing;
-	public override float  DefaultSpeed    => FireBall.DefaultSpeed;
-	public override float  ShootDelay      => _shootDelay;
-	public override int    SoundFrame      => _soundFrame;
+	public override string ResourcePath => _resourcePath;
+	public override string IconPath => _iconPath;
+	public override float DefaultRange => _defaultRange;
+	public override int DefaultDamage => FireBall.DefaultDamage;
+	public override int DefaultPiercing => FireBall.DefaultPiercing;
+	public override float DefaultSpeed => FireBall.DefaultSpeed;
+	public override float ShootDelay => _shootDelay;
+	public override int SoundFrame => _soundFrame;
 
 	private static readonly PackedScene _fireballPacked = GD.Load<PackedScene>(_projectilePath);
 
 	private AnimatedSprite2D animatedSprite;
 
-public override void _Ready()
+	public override void _Ready()
 	{
-		animatedSprite  = GetNode<AnimatedSprite2D>("./WeaponPivot/FireStaffSprite");
+		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/FireStaffSprite");
 		projectileScene = _fireballPacked;
-		WeaponRange     = DefaultRange;
+		WeaponRange = DefaultRange;
 		GetNode<Timer>("Timer").WaitTime = ShootDelay;
 	}
 
