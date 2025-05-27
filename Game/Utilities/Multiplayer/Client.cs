@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security;
 using System;
-    using System.Threading;
+	using System.Threading;
 
 public partial class Client : Node
 {
@@ -337,9 +337,9 @@ public partial class Client : Node
 	{
 		// only for local / this clients player
 		bool isPlayerType = entity.Type is EntityType.DefaultPlayer or EntityType.Archer
-		                    || entity.Type == EntityType.Knight
-		                    || entity.Type == EntityType.Mage
-		                    || entity.Type == EntityType.Assassin;
+							|| entity.Type == EntityType.Knight
+							|| entity.Type == EntityType.Mage
+							|| entity.Type == EntityType.Assassin;
 		if (!isPlayerType || entity.NetworkId != Multiplayer.GetUniqueId())
 		{
 			return;
@@ -353,10 +353,10 @@ public partial class Client : Node
 	private void ChangeCamera(Node2D inst, EntitySnapshot entity)
 	{
 		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
-		                    || entity.Type == EntityType.Archer
-		                    || entity.Type == EntityType.Knight
-		                    || entity.Type == EntityType.Mage
-		                    || entity.Type == EntityType.Assassin;
+							|| entity.Type == EntityType.Archer
+							|| entity.Type == EntityType.Knight
+							|| entity.Type == EntityType.Mage
+							|| entity.Type == EntityType.Assassin;
 		// only for local / this clients player
 		if (!isPlayerType || entity.NetworkId != Multiplayer.GetUniqueId())
 			return;
