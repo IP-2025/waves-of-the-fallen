@@ -179,3 +179,5 @@ sprite_frames = SubResource("SpriteFrames_4cvdf")
 animation = &"walk"
 
 [node name="HttpRequest" type="HTTPRequest" parent="."]
+
+[connection signal="frame_changed" from="ArcherAnimation" to="." method="_on_archer_animation_frame_changed"]

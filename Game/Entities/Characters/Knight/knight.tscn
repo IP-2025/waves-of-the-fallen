@@ -175,3 +175,5 @@ frame = 3
 frame_progress = 1.0
 
 [node name="HttpRequest" type="HTTPRequest" parent="."]
+
+[connection signal="frame_changed" from="KnightAnimation" to="." method="_on_knight_animation_frame_changed"]

@@ -179,3 +179,5 @@ sprite_frames = SubResource("SpriteFrames_ihn4h")
 animation = &"death"
 
 [node name="HttpRequest" type="HTTPRequest" parent="."]
+
+[connection signal="frame_changed" from="AssassinAnimation" to="." method="_on_assassin_animation_frame_changed"]
