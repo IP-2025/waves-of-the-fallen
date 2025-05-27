@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://bhvcfkmvm76yd"]
 
 [ext_resource type="Script" uid="uid://d2dckgdnxp5ab" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Lightningstaff.cs" id="1_o0la2"]
-[ext_resource type="Texture2D" uid="uid://dfbn4d4vsaejm" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff1.png" id="2_jn4o6"]
-[ext_resource type="Texture2D" uid="uid://lp5eeurptqyp" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff2.png" id="3_f5i8k"]
-[ext_resource type="Texture2D" uid="uid://dv0eyebm0i43" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff3.png" id="4_rqcug"]
-[ext_resource type="Texture2D" uid="uid://b8boev1k1wjyr" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff4.png" id="5_edd4f"]
-[ext_resource type="Texture2D" uid="uid://duhil36hu58nq" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff.png" id="6_njq73"]
+[ext_resource type="Texture2D" uid="uid://cg3rge0nwwl7v" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff1.png" id="2_jn4o6"]
+[ext_resource type="Texture2D" uid="uid://bn675xs6t16km" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff2.png" id="3_f5i8k"]
+[ext_resource type="Texture2D" uid="uid://vk6gufsnct6f" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff3.png" id="4_rqcug"]
+[ext_resource type="Texture2D" uid="uid://5g6oaikonbg0" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff4.png" id="5_edd4f"]
+[ext_resource type="Texture2D" uid="uid://d1l7r7upk4wkj" path="res://Weapons/Ranged/MagicStaffs/Lightningstaff/Resources/LightningStaff.png" id="6_njq73"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mi2q8"]
 animations = [{

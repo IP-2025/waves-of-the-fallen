@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://dbqlns7qsgchl"]
 
-[ext_resource type="Texture2D" uid="uid://cnaks30sqkstp" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustLeer.png" id="1_hgydq"]
+[ext_resource type="Texture2D" uid="uid://dvqi28a228f4p" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustLeer.png" id="1_hgydq"]
 [ext_resource type="Script" uid="uid://bxu36ksuq3n6b" path="res://Weapons/Ranged/Crossbow/Crossbow.cs" id="1_rf8ij"]
-[ext_resource type="Texture2D" uid="uid://bfqstfqh06xdd" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen1.png" id="3_ppm1h"]
-[ext_resource type="Texture2D" uid="uid://b8cqk8aiwcqib" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen2.png" id="4_vxbuk"]
-[ext_resource type="Texture2D" uid="uid://ba1h733eirwqf" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen3.png" id="5_1nakq"]
-[ext_resource type="Texture2D" uid="uid://cim7h6ro7155d" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen4.png" id="6_pnntu"]
+[ext_resource type="Texture2D" uid="uid://dm7nwvkqx2u3i" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen1.png" id="3_ppm1h"]
+[ext_resource type="Texture2D" uid="uid://bcdbx32tic8am" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen2.png" id="4_vxbuk"]
+[ext_resource type="Texture2D" uid="uid://c0ge326jxwsw" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen3.png" id="5_1nakq"]
+[ext_resource type="Texture2D" uid="uid://yeuabgef8sx" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen4.png" id="6_pnntu"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_b7gdf"]
 animations = [{

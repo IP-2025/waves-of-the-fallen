@@ -2,12 +2,6 @@ using Godot;
 
 public partial class Mage : DefaultPlayer
 {
-	public Mage()
-	{
-		MaxHealth = 120;
-		Speed = 200.0f;
-	}
-
 	public override void _Ready()
 	{
 		HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
@@ -17,6 +11,9 @@ public partial class Mage : DefaultPlayer
 			return;
 		}
 		base._Ready();
+		
+		MaxHealth = CharacterManager.LoadHealthByID("4");
+		Speed = CharacterManager.LoadSpeedByID("4");
 
 		var healthNode = GetNode<Health>("Health");
 		healthNode.max_health = MaxHealth;

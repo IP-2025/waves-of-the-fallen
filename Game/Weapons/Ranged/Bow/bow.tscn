@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://blhx5vv32isw5"]
 
 [ext_resource type="Script" uid="uid://d0dfbrd68mnht" path="res://Weapons/Ranged/Bow/Bow.cs" id="1_r4t6c"]
-[ext_resource type="Texture2D" uid="uid://m6h1jqfkevld" path="res://Weapons/Ranged/Bow/Resources/BowEmpty.png" id="2_nlqf0"]
-[ext_resource type="Texture2D" uid="uid://cipgtb4dkeetb" path="res://Weapons/Ranged/Bow/Resources/BowDraw1.png" id="3_w8c72"]
-[ext_resource type="Texture2D" uid="uid://b1kqnmq61y4mv" path="res://Weapons/Ranged/Bow/Resources/BowDraw2.png" id="4_yxbc2"]
-[ext_resource type="Texture2D" uid="uid://dk3gclqqvjxq0" path="res://Weapons/Ranged/Bow/Resources/BowDraw3.png" id="5_7a073"]
+[ext_resource type="Texture2D" uid="uid://bqnmfa5aw4hjl" path="res://Weapons/Ranged/Bow/Resources/BowEmpty.png" id="2_nlqf0"]
+[ext_resource type="Texture2D" uid="uid://bhnivuooou7fx" path="res://Weapons/Ranged/Bow/Resources/BowDraw1.png" id="3_w8c72"]
+[ext_resource type="Texture2D" uid="uid://cdogkam60ntq3" path="res://Weapons/Ranged/Bow/Resources/BowDraw2.png" id="4_yxbc2"]
+[ext_resource type="Texture2D" uid="uid://77yyoko3ad5s" path="res://Weapons/Ranged/Bow/Resources/BowDraw3.png" id="5_7a073"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p3ld5"]
 animations = [{
