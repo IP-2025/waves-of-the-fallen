@@ -79,3 +79,7 @@ bus = &"SoundEffectBus"
 [node name="medicineBagThrow" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_sfxm6")
 pitch_scale = 2.5
+
+[node name="daggerStabs" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_sfxm6")
+pitch_scale = 1.4
