@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c0iidoyspb4ve" path="res://Entities/Enemies/Skeleton/RangedEnemy.cs" id="1_1deiu"]
 [ext_resource type="PackedScene" uid="uid://brpwgptxilodd" path="res://Entities/Enemies/Skeleton/arrow.tscn" id="2_e5mcm"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_u2wu2"]
-[ext_resource type="Texture2D" uid="uid://bvqpxjs0p8mp7" path="res://Entities/Enemies/Skeleton/Resources/skeleton_Spreadsheet.png" id="3_u2wu2"]
+[ext_resource type="Texture2D" uid="uid://1gn0y7o0d0hl" path="res://Entities/Enemies/Skeleton/Resources/skeleton_Spreadsheet.png" id="3_u2wu2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u2wu2"]
 radius = 18.0
