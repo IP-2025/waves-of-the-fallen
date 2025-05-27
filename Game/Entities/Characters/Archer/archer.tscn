@@ -119,6 +119,7 @@ animations = [{
 collision_mask = 384
 collision_priority = 2.0
 script = ExtResource("1_rpbpn")
+animationPath = NodePath("ArcherAnimation")
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
 
