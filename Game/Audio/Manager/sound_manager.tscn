@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://yx4lw1whi03l"]
+[gd_scene load_steps=13 format=3 uid="uid://yx4lw1whi03l"]
 
 [ext_resource type="Script" uid="uid://d3qtxl5t5i32q" path="res://Audio/Manager/SoundManager.cs" id="1_1u08g"]
 [ext_resource type="AudioStream" uid="uid://blhbjt2ed2hxb" path="res://Audio/Sounds/Resources/EnemyHurt.wav" id="2_olkkv"]
@@ -10,6 +10,8 @@
 [ext_resource type="AudioStream" uid="uid://dwtftt1l07pme" path="res://Audio/Sounds/Resources/playerDies.wav" id="5_2jdub"]
 [ext_resource type="AudioStream" uid="uid://di4yr3ov3jkn2" path="res://Audio/Sounds/Resources/firestaffLights.wav" id="7_c5u0d"]
 [ext_resource type="AudioStream" uid="uid://c8oqkpevcptog" path="res://Audio/Sounds/Resources/lightningstaffFire.wav" id="10_8867q"]
+[ext_resource type="AudioStream" uid="uid://gfj1nbwn0p35" path="res://Audio/Sounds/Resources/healstaffFires.wav" id="11_1fkh2"]
+[ext_resource type="AudioStream" uid="uid://drax3xt5x8dyi" path="res://Audio/Sounds/Resources/heal.wav" id="12_o4din"]
 
 [node name="SoundManager" type="Node2D"]
 script = ExtResource("1_1u08g")
@@ -57,4 +59,12 @@ bus = &"SoundEffectBus"
 
 [node name="lightningstaffFires" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_8867q")
+bus = &"SoundEffectBus"
+
+[node name="healstaffFires" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_1fkh2")
+bus = &"SoundEffectBus"
+
+[node name="healItemPickUp" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_o4din")
 bus = &"SoundEffectBus"
