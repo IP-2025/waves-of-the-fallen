@@ -68,3 +68,12 @@ bus = &"SoundEffectBus"
 [node name="healItemPickUp" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_o4din")
 bus = &"SoundEffectBus"
+
+[node name="warhammerThrow" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_sfxm6")
+pitch_scale = 0.45
+bus = &"SoundEffectBus"
+
+[node name="medicineBagThrow" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_sfxm6")
+pitch_scale = 2.5
