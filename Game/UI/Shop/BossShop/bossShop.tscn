@@ -111,7 +111,7 @@ offset_right = 2.12
 offset_bottom = 3.0
 text = "+ Vorteil"
 
-[node name="piercing" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon1"]
+[node name="delay" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon1"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.105
@@ -124,7 +124,7 @@ offset_right = 2.12
 offset_bottom = 28.0
 text = "+ Vorteil"
 
-[node name="speed" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon1"]
+[node name="piercing" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon1"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.105
@@ -191,7 +191,7 @@ offset_right = 2.12
 offset_bottom = 3.0
 text = "+ Vorteil"
 
-[node name="piercing" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon2"]
+[node name="delay" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.105
@@ -204,7 +204,7 @@ offset_right = 2.12
 offset_bottom = 28.0
 text = "+ Vorteil"
 
-[node name="speed" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon2"]
+[node name="piercing" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.105
@@ -271,7 +271,7 @@ offset_right = 2.12
 offset_bottom = 3.0
 text = "+ Vorteil"
 
-[node name="piercing" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon3"]
+[node name="delay" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon3"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.105
@@ -284,7 +284,7 @@ offset_right = 2.12
 offset_bottom = 28.0
 text = "+ Vorteil"
 
-[node name="speed" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon3"]
+[node name="piercing" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon3"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.105

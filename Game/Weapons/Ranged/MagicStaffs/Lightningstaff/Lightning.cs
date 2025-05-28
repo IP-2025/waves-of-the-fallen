@@ -5,16 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 public partial class Lightning : Projectile
 {
-	private PackedScene lightningScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightning.tscn");
-	protected float Radius = 200;
-	protected int jumps = 1;
-
 	public const float DefaultSpeed = 1000f;
 	public const int DefaultDamage = 60;
-	public const int DefaultPiercing = 0;
+	public const int DefaultPiercing = 1;
+	
+	private PackedScene _lightningScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightning.tscn");
+	protected float Radius = 200;
+	protected int Jumps = DefaultPiercing;
 
-	private bool hasHit = false;
-	private Node2D ignoredBody = null;
+	private bool _hasHit = false;
+	private Node2D _ignoredBody = null;
 
 	public override void _Ready()
 	{
@@ -23,7 +23,7 @@ public partial class Lightning : Projectile
 	}
 	public override void OnBodyEntered(Node2D body)
 	{
-		if (body == ignoredBody)
+		if (body == _ignoredBody)
 			return;
 		Speed = 0;
 		SetDeferred("Monitoring", false);
@@ -31,9 +31,9 @@ public partial class Lightning : Projectile
 		GetNode<AnimatedSprite2D>("./Static").Play("static");
 
 
-		if (!hasHit)
+		if (!_hasHit)
 		{
-			hasHit = true;
+			_hasHit = true;
 			DamageProcess(body);
 		}
 	}
@@ -46,7 +46,7 @@ public partial class Lightning : Projectile
 			healthNode.Damage(Damage);
 		}
 
-		if (jumps > 0)
+		if (Jumps > 0)
 		{
 			var targets = GetNearestEnemies(3);
 
@@ -55,11 +55,11 @@ public partial class Lightning : Projectile
 
 			foreach (EnemyBase target in targets)
 			{
-				var lightning = lightningScene.Instantiate<Lightning>();
+				var lightning = _lightningScene.Instantiate<Lightning>();
 				lightning.GlobalPosition = GlobalPosition;
 
-				lightning.ignoredBody = body;
-				lightning.jumps = jumps - 1;
+				lightning._ignoredBody = body;
+				lightning.Jumps = Jumps - 1;
 
 				Vector2 direction = (target.GlobalPosition - GlobalPosition).Normalized();
 				lightning.Rotation = direction.Angle();

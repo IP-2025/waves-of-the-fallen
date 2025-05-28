@@ -6,6 +6,9 @@ public partial class Sword : MeleeWeapon
 	private const string _resBase = "res://Weapons/Melee/MasterSword/";
 	private const string _resourcePath = _resBase + "Resources/";
 	
+	public override int DefaultPiercing { get; set; } = 0;
+	public override float DefaultSpeed { get; set; } = 0f;
+	
 	public override string ResourcePath => _resBase + "Resources/";
 	public override string IconPath => _resourcePath + "MasterSword1.png";
 	public override float DefaultRange { get; set; } = 140f;

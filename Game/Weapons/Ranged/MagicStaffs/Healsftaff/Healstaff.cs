@@ -2,19 +2,22 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class Healstaff : Area2D
+public partial class Healstaff : Weapon
 {
 	protected AnimatedSprite2D animatedSprite;
 	protected AnimatedSprite2D healArea;
 	
 	private const string _resBase = "res://Weapons/Ranged/MagicStaffs/Healsftaff/";
 	private const string _resourcePath = _resBase + "Resources/";
+	
+	public override int DefaultPiercing { get; set; } = 0;
+	public override float DefaultSpeed { get; set; } = 0f;
 
 	public string ResourcePath => _resourcePath;
-	public string IconPath => _resourcePath + "HealStaff1.png";
-	public float DefaultRange { get; set; } = 220f;
-	public int DefaultHeal { get; set; } = 50;
-	public float ShootDelay { get; set; } = 0.1f;
+	public override string IconPath => _resourcePath + "HealStaff1.png";
+	public override float DefaultRange { get; set; } = 220f;
+	public override int DefaultDamage { get; set; } = 50;
+	public override float ShootDelay { get; set; } = 0.1f;
 	public int SoundFrame => 3;
 	
 	private float _shootCooldown;
@@ -65,7 +68,7 @@ public partial class Healstaff : Area2D
 			var healthNode = node.GetNodeOrNull<Health>("Health");
 			if (healthNode != null)
 			{
-				healthNode.Heal(DefaultHeal);
+				healthNode.Heal(DefaultDamage);
 			}
 		}
 	}

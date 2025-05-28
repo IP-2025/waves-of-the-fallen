@@ -6,7 +6,9 @@ public partial class Dagger : MeleeWeapon
 	// Called when the node enters the scene tree for the first time.
 	private const string _resBase = "res://Weapons/Melee/Dagger/";
 	private const string _resourcePath = _resBase + "Resources/";
-	
+
+	public override int DefaultPiercing { get; set; } = 0;
+	public override float DefaultSpeed { get; set; } = 0f;
 	public override string ResourcePath => _resBase + "Resources/";
 	public override string IconPath => _resourcePath + "Dagger.png";
 	public override float DefaultRange { get; set; } = 100f;

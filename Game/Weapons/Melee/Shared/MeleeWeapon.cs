@@ -2,17 +2,11 @@ using Godot;
 using System;
 using System.Linq;
 
-public abstract partial class MeleeWeapon : Area2D
+public abstract partial class MeleeWeapon : Weapon
 {
 	protected AnimatedSprite2D animatedSprite;
 	Node target;	
 	public abstract string ResourcePath { get; }
-	public abstract string IconPath { get; }
-	
-	public abstract float ShootDelay { get; set; }
-
-	public abstract float DefaultRange { get; set;}
-	public abstract int DefaultDamage { get; set;}
 	
 	public override void _PhysicsProcess(double delta)
 	{

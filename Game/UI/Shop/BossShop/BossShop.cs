@@ -6,16 +6,20 @@ using System.Reflection;
 public partial class BossShop : Control
 {
 
-	private static readonly List<RangedWeapon> allWeapons = new()
+	private static readonly List<Weapon> allWeapons = new()
 {
 	new Bow(),
 	new Crossbow(),
 	new Kunai(),
 	new FireStaff(),
-	new Lightningstaff()
+	new Lightningstaff(),
+	new Healstaff(),
+	new Dagger(),
+	new Sword(),
+	new WarHammer()
 };
 
-	private void PopulateWeapon(string containerPath, RangedWeapon weapon)
+	private void PopulateWeapon(string containerPath, Weapon weapon)
 	{
 		var box = GetNode<Node>(containerPath);
 
@@ -24,10 +28,11 @@ public partial class BossShop : Control
 		var stats = weapon.BaseStats();
 
 		box.GetNode<RichTextLabel>("name").Text = weapon.GetType().Name;
-		box.GetNode<RichTextLabel>("damage").Text = $"Damage:   {stats.dmg}";
+		box.GetNode<RichTextLabel>("damage").Text = weapon is Healstaff ? $"Heal:   {stats.dmg}" : $"Damage:   {stats.dmg}";
 		box.GetNode<RichTextLabel>("range").Text = $"Range:    {(int)stats.range}";
-		box.GetNode<RichTextLabel>("piercing").Text = $"Piercing: {stats.piercing}";
-		box.GetNode<RichTextLabel>("speed").Text = $"Speed:    {(int)stats.speed}";
+		box.GetNode<RichTextLabel>("delay").Text = $"Attacks/s:    {stats.delay}";
+		box.GetNode<RichTextLabel>("piercing").Text = weapon is RangedWeapon ? $"Piercing: {stats.piercing}" : "";
+		
 	}
 
 	public override void _Ready()
@@ -35,7 +40,7 @@ public partial class BossShop : Control
 		var rng = new RandomNumberGenerator();
 		rng.Randomize();
 
-		var shuffled = new List<RangedWeapon>(allWeapons);
+		var shuffled = new List<Weapon>(allWeapons);
 		for (int i = shuffled.Count - 1; i > 0; i--)
 		{
 			int j = rng.RandiRange(0, i);

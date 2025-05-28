@@ -1,23 +1,14 @@
 using Godot;
 
-public abstract partial class RangedWeapon : Area2D
+public abstract partial class RangedWeapon : Weapon
 {
 	protected AnimatedSprite2D animatedSprite;
 	protected PackedScene projectileScene;
 
 	public abstract string ResourcePath { get; }
-	public abstract string IconPath { get; }
 
 	public abstract int SoundFrame { get; }
-	public abstract float ShootDelay { get; set; }
-
-	public abstract float DefaultRange { get; set;}
-	public abstract int DefaultDamage { get; set;}
-	public abstract int DefaultPiercing { get; set;}
-	public abstract float DefaultSpeed { get; set;}
-
-	public (int dmg, float range, int piercing, float speed) BaseStats() =>
-		(DefaultDamage, DefaultRange, DefaultPiercing, DefaultSpeed);
+	
 
 	public override void _PhysicsProcess(double delta)
 	{
