@@ -20,6 +20,7 @@ public partial class Sword : MeleeWeapon
 		ShootMeleeVisual(() =>
 	{
 		SwordAnimationPlayer.Play("SwordAttack");
+		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("swordSwings"), GlobalPosition, -5);
 	});
 		await ToSignal(GetTree().CreateTimer(Speed), "timeout");
 	}
