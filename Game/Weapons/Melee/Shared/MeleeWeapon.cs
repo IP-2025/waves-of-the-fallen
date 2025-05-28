@@ -79,7 +79,7 @@ public abstract partial class MeleeWeapon : Area2D
 				.SetTrans(Tween.TransitionType.Sine)
 				.SetEase(Tween.EaseType.Out);
 
-			//Call method for attack
+			//Call method for attack and Animation
 			tween.TweenCallback(Callable.From(() => {
 				onAttackComplete?.Invoke();
 				MeleeAttack(actualTarget);

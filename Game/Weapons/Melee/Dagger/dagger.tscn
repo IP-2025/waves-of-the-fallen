@@ -1,15 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvjyool0r7j0"]
+[gd_scene load_steps=6 format=3 uid="uid://dvjyool0r7j0"]
 
 [ext_resource type="Script" uid="uid://ovccsntxxhkt" path="res://Weapons/Melee/Dagger/Dagger.cs" id="1_o7gox"]
+[ext_resource type="Texture2D" uid="uid://dsvtvcglyl441" path="res://Weapons/Melee/Dagger/Resources/Dagger.png" id="2_yi8m2"]
+[ext_resource type="Texture2D" uid="uid://crucqikp0mpak" path="res://Weapons/Melee/Dagger/Resources/Dagger1.png" id="3_whsy0"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o7gox"]
 animations = [{
 "frames": [{
-"duration": 5.0,
-"texture": null
+"duration": 1.0,
+"texture": ExtResource("2_yi8m2")
 }, {
 "duration": 1.0,
-"texture": null
+"texture": ExtResource("3_whsy0")
 }],
 "loop": true,
 "name": &"stab",
@@ -30,7 +32,7 @@ position = Vector2(2, 0)
 scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_o7gox")
 animation = &"stab"
-frame_progress = 0.311804
+frame_progress = 0.593313
 
 [node name="DaggerPoint" type="Marker2D" parent="."]
 scale = Vector2(0.15, 0.15)

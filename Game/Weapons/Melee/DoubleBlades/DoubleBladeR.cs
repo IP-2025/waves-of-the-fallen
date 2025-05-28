@@ -3,12 +3,15 @@ using System;
 public partial class DoubleBladeR : MeleeWeapon
 {
 	private AnimationPlayer DoubleBladeRAnimationPlayer;
-	// Called when the node enters the scene tree for the first time.
+	private Sprite2D SwordTrailTest;
+
 	public override void _Ready()
 	{
-		DoubleBladeRAnimationPlayer = GetNode<AnimationPlayer>("DoubleBladeR/AnimationPlayerR");
+		DoubleBladeRAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayerR");
+		SwordTrailTest = GetNode<Sprite2D>("SwordTrailTest");
 		MeleeDamage = 100;
 		WeaponRange = 100;
+		SwordTrailTest.Visible = false;
 	}
 
 	public void StartAttack()

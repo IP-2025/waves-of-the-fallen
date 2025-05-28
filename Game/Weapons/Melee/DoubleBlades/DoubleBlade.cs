@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class DoubleBlade : Area2D
+public partial class DoubleBlade : MeleeWeapon
 {
 	private DoubleBladeL leftBlade;
 	private DoubleBladeR rightBlade;
@@ -25,6 +25,6 @@ public partial class DoubleBlade : Area2D
 			leftBlade?.StartAttack();
 		}
 		useRightNext = !useRightNext;
-		await ToSignal(GetTree().CreateTimer(0.2), "timeout");
+		await ToSignal(GetTree().CreateTimer(Speed), "timeout");
 	}
 }
