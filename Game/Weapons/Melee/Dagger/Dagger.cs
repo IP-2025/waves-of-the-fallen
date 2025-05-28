@@ -8,12 +8,13 @@ public partial class Dagger : MeleeWeapon
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/Stab");
 		MeleeDamage = 50;
+		Speed = 0.1f;
 	}
 
 	public async void OnTimerTimeoutDagger()
 	{
 		animatedSprite.Play("Stab");
-		await ToSignal(GetTree().CreateTimer(0.13), "timeout");
-		//MeleeAttack(target);
+		await ToSignal(GetTree().CreateTimer(Speed), "timeout");
+		MeleeAttack(FindNearestEnemy());
 	}	
 }

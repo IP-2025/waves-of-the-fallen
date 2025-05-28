@@ -40,6 +40,7 @@ public partial class Server : Node
 		{ "res://Weapons/Ranged/WarHammer/hammerProjectile.tscn", EntityType.HammerProjectile },
 		{ "res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn", EntityType.HealStaff },
 
+		{ "res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn", EntityType.DoubleBlade },
 	};
 
 	public override void _Ready()

@@ -26,4 +26,5 @@ public enum EntityType
 	HammerProjectile,
 	HealStaff,
 
+	DoubleBlade,
 }

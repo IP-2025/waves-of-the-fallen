@@ -15,10 +15,8 @@ public partial class Sword : MeleeWeapon
 	{ 
 		ShootMeleeVisual(() =>
 	{
-		//GD.Print("Start SwordAnimation");
 		SwordAnimationPlayer.Play("SwordAttack");
 	});
 		await ToSignal(GetTree().CreateTimer(0.2), "timeout");
 	}
-	
 }
