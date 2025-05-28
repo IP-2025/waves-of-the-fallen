@@ -9,7 +9,7 @@ public partial class Dagger : MeleeWeapon
 	{
 		DaggerAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		MeleeDamage = 200;
-		WeaponRange = 30;
+		WeaponRange = 50;
 		Speed = 0.1f;
 	}
 

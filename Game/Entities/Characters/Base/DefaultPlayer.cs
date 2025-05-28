@@ -108,7 +108,8 @@ public partial class DefaultPlayer : CharacterBody2D
 			Assassin => _kunaiScene.Instantiate() as Area2D,
 			//return _healStaffScene.Instantiate() as Area2D;
 			Mage => _fireStaffScene.Instantiate() as Area2D,
-			Knight => _swordScene.Instantiate() as Area2D,
+			//Knight => _swordScene.Instantiate() as Area2D,
+			Knight => _daggerScene.Instantiate() as Area2D,
 			_ => null
 		};
 	}
