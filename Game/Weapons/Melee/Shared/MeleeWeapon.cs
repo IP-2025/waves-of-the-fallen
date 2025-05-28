@@ -59,7 +59,6 @@ public abstract partial class MeleeWeapon : Area2D
 	}
 	protected void MeleeAttack(Node actualTarget)
 	{
-		GD.Print("MELEE ATTACK HIT: " + actualTarget?.Name);
 			var healthNode = actualTarget.GetNodeOrNull<Health>("Health");
 			if (healthNode != null)
 			{
@@ -75,7 +74,7 @@ public abstract partial class MeleeWeapon : Area2D
 		{
 			var tween = CreateTween();
 			//move forward
-			tween.TweenProperty(this, "global_position", position, 0.1)
+			tween.TweenProperty(this, "global_position", position, Speed)
 				.SetTrans(Tween.TransitionType.Sine)
 				.SetEase(Tween.EaseType.Out);
 
@@ -83,9 +82,10 @@ public abstract partial class MeleeWeapon : Area2D
 			tween.TweenCallback(Callable.From(() => {
 				onAttackComplete?.Invoke();
 				MeleeAttack(actualTarget);
+				//};
 			}));
 			//go back
-			tween.TweenProperty(this, "position", Vector2.Zero, 0.1)
+			tween.TweenProperty(this, "position", Vector2.Zero, Speed)
 				.SetDelay(0.1)
 				.SetTrans(Tween.TransitionType.Sine)
 				.SetEase(Tween.EaseType.In);

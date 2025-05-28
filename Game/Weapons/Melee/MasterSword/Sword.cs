@@ -12,6 +12,7 @@ public partial class Sword : MeleeWeapon
 		SwordTrailTest = GetNode<Sprite2D>("SwordTrailTest");
 		MeleeDamage = 100;
 		WeaponRange = 100;
+		Speed = 0.1f;
 		SwordTrailTest.Visible = false;
 	}
 

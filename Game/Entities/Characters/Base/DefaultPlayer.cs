@@ -39,12 +39,12 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	private PackedScene _lightningStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn");
 
-    private PackedScene _daggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
-    private PackedScene _swordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
+	private PackedScene _daggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
+	private PackedScene _swordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
 	public PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
-    private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
+	private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
 	private PackedScene _doubleBladeScene = GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn");
-    private int _weaponsEquipped;
+	private int _weaponsEquipped;
 
 	private WaveTimer _waveTimer;
 	protected CharacterManager CharacterManager;
@@ -108,9 +108,7 @@ public partial class DefaultPlayer : CharacterBody2D
 			Assassin => _kunaiScene.Instantiate() as Area2D,
 			//return _healStaffScene.Instantiate() as Area2D;
 			Mage => _fireStaffScene.Instantiate() as Area2D,
-			//Knight => _daggerScene.Instantiate() as Area2D,
-			//Knight => _swordScene.Instantiate() as Area2D,
-			Knight => _doubleBladeScene.Instantiate() as Area2D,
+			Knight => _swordScene.Instantiate() as Area2D,
 			_ => null
 		};
 	}
