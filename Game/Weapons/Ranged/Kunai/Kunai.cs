@@ -27,7 +27,6 @@ public partial class Kunai : RangedWeapon
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/KunaiSprite");
 		projectileScene = _kunaiPacked;
-		WeaponRange = DefaultRange;
 		
 		_shootCooldown  = 1f / ShootDelay;
 		_timeUntilShoot = _shootCooldown;

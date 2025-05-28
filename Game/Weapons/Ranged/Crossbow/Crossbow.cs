@@ -26,7 +26,6 @@ public partial class Crossbow : RangedWeapon
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/CrossbowSprite");
 		projectileScene = _arrowPacked;
-		WeaponRange = DefaultRange;
 		
 		_shootCooldown  = 1f / ShootDelay;
 		_timeUntilShoot = _shootCooldown;

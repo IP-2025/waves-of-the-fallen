@@ -5,9 +5,15 @@ using System.Linq;
 public abstract partial class MeleeWeapon : Area2D
 {
 	protected AnimatedSprite2D animatedSprite;
-	[Export] public float WeaponRange = 50f;
-	[Export] public int MeleeDamage = 50;
 	Node target;	
+	public abstract string ResourcePath { get; }
+	public abstract string IconPath { get; }
+	
+	public abstract float ShootDelay { get; set; }
+
+	public abstract float DefaultRange { get; set;}
+	public abstract int DefaultDamage { get; set;}
+	
 	public override void _PhysicsProcess(double delta)
 	{
 		target = FindNearestEnemy();
@@ -28,7 +34,7 @@ public abstract partial class MeleeWeapon : Area2D
 
 			float dist = GlobalPosition.DistanceTo(enemyNode.GlobalPosition);
 
-			if (dist < closestDist && dist <= WeaponRange)
+			if (dist < closestDist && dist <= DefaultRange)
 			{
 				closestDist = dist;
 				closestEnemy = enemyNode;
@@ -63,14 +69,14 @@ public abstract partial class MeleeWeapon : Area2D
 			var healthNode = target.GetNodeOrNull<Health>("Health");
 			if (healthNode != null)
 			{
-			healthNode.Damage(MeleeDamage);
+				healthNode.Damage(DefaultDamage);
 			}
 		}
 	}
 	protected void ShootMeleeVisual(Action onAttackComplete = null)
 	{
 		if (target == null)
-		return;
+			return;
 		if (TryGetPosition(target, out var position))
 		{
 			var tween = CreateTween();

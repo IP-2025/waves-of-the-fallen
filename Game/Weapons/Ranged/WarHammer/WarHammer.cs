@@ -29,7 +29,6 @@ public partial class WarHammer : RangedWeapon
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/WarHammer");
 		projectileScene = _throwHammerScene;
-		WeaponRange = DefaultRange;
 		
 		_shootCooldown  = 1f / ShootDelay;
 		_timeUntilShoot = _shootCooldown;

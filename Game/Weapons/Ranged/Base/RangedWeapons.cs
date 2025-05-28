@@ -16,9 +16,6 @@ public abstract partial class RangedWeapon : Area2D
 	public abstract int DefaultPiercing { get; set;}
 	public abstract float DefaultSpeed { get; set;}
 
-	[Export]
-	public float WeaponRange { get; protected set; }
-
 	public (int dmg, float range, int piercing, float speed) BaseStats() =>
 		(DefaultDamage, DefaultRange, DefaultPiercing, DefaultSpeed);
 
@@ -41,7 +38,7 @@ public abstract partial class RangedWeapon : Area2D
 
 			float dist = GlobalPosition.DistanceTo(enemyNode.GlobalPosition);
 
-			if (dist < closestDist && dist <= WeaponRange)
+			if (dist < closestDist && dist <= DefaultRange)
 			{
 				closestDist = dist;
 				closestEnemy = enemyNode;

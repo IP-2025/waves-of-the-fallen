@@ -26,7 +26,6 @@ public partial class FireStaff : RangedWeapon
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/FireStaffSprite");
 		projectileScene = _fireballPacked;
-		WeaponRange = DefaultRange;
 		
 		_shootCooldown  = 1f / ShootDelay;
 		_timeUntilShoot = _shootCooldown;

@@ -28,7 +28,6 @@ public partial class Bow : RangedWeapon
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/BowSprite");
 		projectileScene = _arrowPacked;
-		WeaponRange = DefaultRange;
 
 		_shootCooldown   = 1f/ShootDelay;
 		_timeUntilShoot  = _shootCooldown;

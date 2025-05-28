@@ -27,7 +27,6 @@ public partial class Lightningstaff : RangedWeapon
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/LightningStaffSprite");
 		projectileScene = _lightningPacked;
-		WeaponRange = DefaultRange;
 		
 		_shootCooldown  = 1f / ShootDelay;
 		_timeUntilShoot = _shootCooldown;
