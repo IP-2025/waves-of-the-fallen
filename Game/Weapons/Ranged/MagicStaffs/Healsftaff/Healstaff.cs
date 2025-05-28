@@ -8,6 +8,7 @@ public partial class Healstaff : Area2D
 	protected AnimatedSprite2D healArea;
 	protected float WeaponRange = 220f;
 	protected int healValue = 50;
+	private int staffFiresFrame = 4;
 	
 	public override void _Ready()
 	{
@@ -59,7 +60,8 @@ public partial class Healstaff : Area2D
 	}
 	
 	public void _on_heal_staff_sprite_frame_changed() {
-		// TODO sound fehlt noch
-		return;
+		if(staffFiresFrame == GetNode<AnimatedSprite2D>("WeaponPivot/HealStaffSprite").Frame) {
+			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("healstaffFires"), GlobalPosition);
+		}
 	}
 }
