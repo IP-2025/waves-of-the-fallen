@@ -50,4 +50,4 @@ frame_progress = 1.0
 [node name="ShootingPoint" type="Marker2D" parent="."]
 position = Vector2(34, 2)
 
-[connection signal="frame_changed" from="WeaponPivot/FireStaffSprite" to="." method="_on_fire_staff_sprite_frame_changed"]
+[connection signal="frame_changed" from="WeaponPivot/FireStaffSprite" to="." method="_on_firestaff_sprite_frame_changed"]

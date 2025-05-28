@@ -47,4 +47,4 @@ animation = &"shoot"
 [node name="ShootingPoint" type="Marker2D" parent="."]
 position = Vector2(26, 0)
 
-[connection signal="frame_changed" from="WeaponPivot/LightningStaffSprite" to="." method="_on_lightning_staff_sprite_frame_changed"]
+[connection signal="frame_changed" from="WeaponPivot/LightningStaffSprite" to="." method="_on_lightningstaff_sprite_frame_changed"]

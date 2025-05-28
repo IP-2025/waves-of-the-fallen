@@ -58,7 +58,7 @@ public partial class FireStaff : RangedWeapon
 		if (SoundFrame == animatedSprite.Frame)
 		{
 			SoundManager.Instance.PlaySoundAtPosition(
-				SoundManager.Instance.GetNode<AudioStreamPlayer2D>("fireStaffCasts"),
+				SoundManager.Instance.GetNode<AudioStreamPlayer2D>("firestaffFires"),
 				GlobalPosition
 			);
 		}

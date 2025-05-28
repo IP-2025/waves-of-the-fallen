@@ -60,7 +60,7 @@ public partial class Lightningstaff : RangedWeapon
 		if (SoundFrame == animatedSprite.Frame)
 		{
 			SoundManager.Instance.PlaySoundAtPosition(
-				SoundManager.Instance.GetNode<AudioStreamPlayer2D>("lightningCasts"),
+				SoundManager.Instance.GetNode<AudioStreamPlayer2D>("lightningstaffFires"),
 				GlobalPosition
 			);
 		}

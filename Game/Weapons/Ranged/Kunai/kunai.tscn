@@ -8,6 +8,9 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_rtpyf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_rtpyf")
 }],
 "loop": false,
 "name": &"shoot",
@@ -31,3 +34,5 @@ animation = &"shoot"
 position = Vector2(-0.0958824, -0.000759996)
 rotation = 0.00792616
 scale = Vector2(0.1089, 0.1089)
+
+[connection signal="frame_changed" from="WeaponPivot/KunaiSprite" to="." method="_on_kunai_sprite_frame_changed"]
