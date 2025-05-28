@@ -10,17 +10,19 @@ public partial class Bow : RangedWeapon
 
 	public override string ResourcePath => _resBase + "Resources/";
 	public override string IconPath => _resourcePath + "BowEmpty.png";
-	public override float DefaultRange => 500f;
-	public override int DefaultDamage => BowArrow.DefaultDamage;
-	public override int DefaultPiercing => BowArrow.DefaultPiercing;
-	public override float DefaultSpeed => BowArrow.DefaultSpeed;
-	public override float ShootDelay => 6.03f;
+	public override float DefaultRange { get; set; } = 500f;
+	public override int DefaultDamage { get; set; } = BowArrow.DefaultDamage;
+	public override int DefaultPiercing { get; set; } = BowArrow.DefaultPiercing;
+	public override float DefaultSpeed { get; set; } = BowArrow.DefaultSpeed;
+	public override float ShootDelay{ get; set; } = 1.2f;
 	public override int SoundFrame => 2;
-
-
+	
+	private float _shootCooldown;
+	private float _timeUntilShoot;
+	
+	
 	private static readonly PackedScene _arrowPacked = GD.Load<PackedScene>(_projectilePath);
-
-	private AnimatedSprite2D animatedSprite;
+	
 
 	public override void _Ready()
 	{
@@ -28,7 +30,21 @@ public partial class Bow : RangedWeapon
 		projectileScene = _arrowPacked;
 		WeaponRange = DefaultRange;
 
-		GetNode<Timer>("Timer").WaitTime = ShootDelay;
+		_shootCooldown   = 1f/ShootDelay;
+		_timeUntilShoot  = _shootCooldown;
+	}
+	
+	public override void _Process(double delta)
+	{
+		// Laufenden Countdown aktualisieren
+		_timeUntilShoot -= (float)delta;
+
+		if (_timeUntilShoot <= 0f)
+		{
+			// Zeit ist abgelaufen → schießen
+			OnTimerTimeoutBow();
+			_timeUntilShoot = _shootCooldown;
+		}
 	}
 
 	public async void OnTimerTimeoutBow()
@@ -38,6 +54,7 @@ public partial class Bow : RangedWeapon
 			return;
 
 		animatedSprite.Play("shoot");
+		await ToSignal(GetTree().CreateTimer(0.13), "timeout");
 		Shoot();
 	}
 
@@ -47,5 +64,11 @@ public partial class Bow : RangedWeapon
 		{
 			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("bowFires"), GlobalPosition);
 		}
+	}
+	
+	public void SetNewStats(float newDelay)
+	{
+		ShootDelay     = newDelay;
+		_shootCooldown  = newDelay;
 	}
 }

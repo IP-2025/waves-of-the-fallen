@@ -8,29 +8,40 @@ public partial class FireStaff : RangedWeapon
 	private const string _iconPath = _resourcePath + "FireStaff.png";
 	private const string _projectilePath = _resBase + "fireball.tscn";
 
-	private const float _defaultRange = 600f;
-	private const float _shootDelay = 1.7f;
-	private const int _soundFrame = 5;
-
 	public override string ResourcePath => _resourcePath;
 	public override string IconPath => _iconPath;
-	public override float DefaultRange => _defaultRange;
-	public override int DefaultDamage => FireBall.DefaultDamage;
-	public override int DefaultPiercing => FireBall.DefaultPiercing;
-	public override float DefaultSpeed => FireBall.DefaultSpeed;
-	public override float ShootDelay => _shootDelay;
-	public override int SoundFrame => _soundFrame;
+	public override float DefaultRange { get; set; } = 600f;
+	public override int DefaultDamage { get; set; } = FireBall.DefaultDamage;
+	public override int DefaultPiercing { get; set; } = FireBall.DefaultPiercing;
+	public override float DefaultSpeed { get; set; } = FireBall.DefaultSpeed;
+	public override float ShootDelay { get; set; } = 0.5f;
+	public override int SoundFrame => 5;
 
 	private static readonly PackedScene _fireballPacked = GD.Load<PackedScene>(_projectilePath);
 
-	private AnimatedSprite2D animatedSprite;
+	private float _shootCooldown;
+	private float _timeUntilShoot;
 
 	public override void _Ready()
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/FireStaffSprite");
 		projectileScene = _fireballPacked;
 		WeaponRange = DefaultRange;
-		GetNode<Timer>("Timer").WaitTime = ShootDelay;
+		
+		_shootCooldown  = 1f / ShootDelay;
+		_timeUntilShoot = _shootCooldown;
+	}
+	
+	public override void _Process(double delta)
+	{
+		// Countdown verringern
+		_timeUntilShoot -= (float)delta;
+
+		if (_timeUntilShoot <= 0f)
+		{
+			OnTimerTimeoutFireStaff();
+			_timeUntilShoot = _shootCooldown;
+		}
 	}
 
 	public async void OnTimerTimeoutFireStaff()
@@ -39,6 +50,7 @@ public partial class FireStaff : RangedWeapon
 		if (target == null)
 			return;
 		animatedSprite.Play("shoot");
+		await ToSignal(GetTree().CreateTimer(1.7), "timeout");
 		Shoot();
 	}
 
@@ -51,5 +63,11 @@ public partial class FireStaff : RangedWeapon
 				GlobalPosition
 			);
 		}
+	}
+	
+	public void SetNewStats(float newDelay)
+	{
+		ShootDelay     = newDelay;
+		_shootCooldown = 1f / newDelay;
 	}
 }

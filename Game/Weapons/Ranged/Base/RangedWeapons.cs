@@ -9,12 +9,12 @@ public abstract partial class RangedWeapon : Area2D
 	public abstract string IconPath { get; }
 
 	public abstract int SoundFrame { get; }
-	public abstract float ShootDelay { get; }
+	public abstract float ShootDelay { get; set; }
 
-	public abstract float DefaultRange { get; }
-	public abstract int DefaultDamage { get; }
-	public abstract int DefaultPiercing { get; }
-	public abstract float DefaultSpeed { get; }
+	public abstract float DefaultRange { get; set;}
+	public abstract int DefaultDamage { get; set;}
+	public abstract int DefaultPiercing { get; set;}
+	public abstract float DefaultSpeed { get; set;}
 
 	[Export]
 	public float WeaponRange { get; protected set; }

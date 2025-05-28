@@ -10,25 +10,41 @@ public partial class Kunai : RangedWeapon
 
 	public override string ResourcePath => _resourcePath;
 	public override string IconPath => _resourcePath + "Kunai.png";
-	public override float DefaultRange => 300f;
-	public override int DefaultDamage => KunaiProjectile.DefaultDamage;
-	public override int DefaultPiercing => KunaiProjectile.DefaultPiercing;
-	public override float DefaultSpeed => KunaiProjectile.DefaultSpeed;
+	public override float DefaultRange { get; set; } = 300f;
+	public override int DefaultDamage { get; set; } = KunaiProjectile.DefaultDamage;
+	public override int DefaultPiercing { get; set; } = KunaiProjectile.DefaultPiercing;
+	public override float DefaultSpeed { get; set; } = KunaiProjectile.DefaultSpeed;
 
-	public override float ShootDelay => 0.05f;
+	public override float ShootDelay { get; set; } = 4f;
 	public override int SoundFrame => 0;
+	
+	private float _shootCooldown;
+	private float _timeUntilShoot;
 
 	private static readonly PackedScene _kunaiPacked = GD.Load<PackedScene>(_projectilePath);
-	private AnimatedSprite2D animatedSprite;
 
 	public override void _Ready()
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/KunaiSprite");
 		projectileScene = _kunaiPacked;
 		WeaponRange = DefaultRange;
-		GetNode<Timer>("Timer").WaitTime = ShootDelay;
+		
+		_shootCooldown  = 1f / ShootDelay;
+		_timeUntilShoot = _shootCooldown;
 	}
 
+	public override void _Process(double delta)
+	{
+		// Countdown verringern
+		_timeUntilShoot -= (float)delta;
+
+		if (_timeUntilShoot <= 0f)
+		{
+			OnTimerTimeoutKunai();
+			_timeUntilShoot = _shootCooldown;
+		}
+	}
+	
 	public async void OnTimerTimeoutKunai()
 	{
 		var target = FindNearestEnemy();
@@ -50,5 +66,11 @@ public partial class Kunai : RangedWeapon
 					-6.9f
 				);
 		}
+	}
+	
+	public void SetNewStats(float newDelay)
+	{
+		ShootDelay     = newDelay;
+		_shootCooldown = 1f / newDelay;
 	}
 }
