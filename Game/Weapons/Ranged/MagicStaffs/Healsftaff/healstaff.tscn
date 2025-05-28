@@ -67,10 +67,6 @@ scale = Vector2(0.12, 0.12)
 sprite_frames = SubResource("SpriteFrames_nh364")
 animation = &"shoot"
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 10.0
-autostart = true
-
 [node name="Healcircle" type="AnimatedSprite2D" parent="."]
 visible = false
 modulate = Color(1, 1, 1, 0.254902)
@@ -82,4 +78,3 @@ animation = &"heal"
 frame_progress = 0.394703
 
 [connection signal="frame_changed" from="WeaponPivot/HealStaffSprite" to="." method="_on_heal_staff_sprite_frame_changed"]
-[connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutHealstaff"]

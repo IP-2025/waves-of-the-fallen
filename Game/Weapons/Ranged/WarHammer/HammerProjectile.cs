@@ -3,15 +3,19 @@ using Godot.Collections;
 
 public partial class HammerProjectile : Projectile
 {
-	protected float Radius = 100;
+	
+	public const float DefaultSpeed = 800f;
+	public const int DefaultDamage = 120;
+	public const int DefaultPiercing = 1;
+
+	public float Speed { get; protected set; } = DefaultSpeed;
+	public int Piercing { get; protected set; } = DefaultPiercing;
+	public int Damage { get; protected set; } = DefaultDamage;
+	
+	public float Radius = 100;
 
 	private bool hasHit = false;
 
-	public override void _Ready()
-	{
-		Speed = 800;
-		Damage = 120;
-	}
 	public override void OnBodyEntered(Node2D body)
 	{
 		Speed = 0;

@@ -44,12 +44,7 @@ scale = Vector2(0.12, 0.12)
 sprite_frames = SubResource("SpriteFrames_mi2q8")
 animation = &"shoot"
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 2.7
-autostart = true
-
 [node name="ShootingPoint" type="Marker2D" parent="."]
 position = Vector2(26, 0)
 
-[connection signal="frame_changed" from="WeaponPivot/LightningStaffSprite" to="." method="_on_lightning_staff_sprite_frame_changed"]
-[connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutLightningstaff"]
+[connection signal="frame_changed" from="WeaponPivot/LightningStaffSprite" to="." method="_on_lightningstaff_sprite_frame_changed"]

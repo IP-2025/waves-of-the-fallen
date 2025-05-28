@@ -4,6 +4,9 @@ using Godot.Collections;
 public partial class FireBall : Projectile
 {
 	protected float Radius = 100;
+	public const float DefaultSpeed = 600f;
+	public const int DefaultDamage = 120;
+	public const int DefaultPiercing = 0;
 
 	private bool hasHit = false;
 
@@ -18,13 +21,15 @@ public partial class FireBall : Projectile
 		SetDeferred("Monitoring", false);
 		GetNode<AnimatedSprite2D>("./FireballAnimation").Hide();
 		GetNode<AnimatedSprite2D>("./Explosion").Play("explosion");
-		if (!hasHit) {
+		if (!hasHit)
+		{
 			hasHit = true;
 			DamageProcess();
 		}
 	}
 
-	private void DamageProcess() {
+	private void DamageProcess()
+	{
 		Array<Node> enemyListSnapshot = GetTree().GetNodesInGroup("enemies"); // this is to prevent some funky on enemy interactions with enemies spawned during this check
 		foreach (Node node in enemyListSnapshot) // checks if enemies are in attack radius
 		{
@@ -39,7 +44,8 @@ public partial class FireBall : Projectile
 		}
 	}
 
-	private void OnExplosionAnimationFinished() {
+	private void OnExplosionAnimationFinished()
+	{
 		QueueFree();
 	}
 

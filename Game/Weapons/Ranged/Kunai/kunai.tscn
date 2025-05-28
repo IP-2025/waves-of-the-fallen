@@ -1,11 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://no7ywnyyf73b"]
 
 [ext_resource type="Script" uid="uid://rxagoldtsay0" path="res://Weapons/Ranged/Kunai/Kunai.cs" id="1_w0dn1"]
-[ext_resource type="Texture2D" uid="uid://cnh4yiahu7y1" path="res://Weapons/Ranged/Kunai/Resources/Kunai.png" id="2_rtpyf"]
+[ext_resource type="Texture2D" uid="uid://bw4lpmnhe6bju" path="res://Weapons/Ranged/Kunai/Resources/Kunai.png" id="2_rtpyf"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_akes3"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_rtpyf")
+}, {
 "duration": 1.0,
 "texture": ExtResource("2_rtpyf")
 }],
@@ -27,13 +30,9 @@ scale = Vector2(0.15, 0.15)
 sprite_frames = SubResource("SpriteFrames_akes3")
 animation = &"shoot"
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.4
-autostart = true
-
 [node name="ShootingPoint" type="Marker2D" parent="."]
 position = Vector2(-0.0958824, -0.000759996)
 rotation = 0.00792616
 scale = Vector2(0.1089, 0.1089)
 
-[connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutKunai"]
+[connection signal="frame_changed" from="WeaponPivot/KunaiSprite" to="." method="_on_kunai_sprite_frame_changed"]

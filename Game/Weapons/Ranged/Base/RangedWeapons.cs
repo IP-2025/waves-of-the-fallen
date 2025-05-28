@@ -1,22 +1,22 @@
 using Godot;
-using System;
-using System.Linq;
 
-public abstract partial class RangedWeapon : Area2D
+public abstract partial class RangedWeapon : Weapon
 {
 	protected AnimatedSprite2D animatedSprite;
-	protected float WeaponRange = 800f;
-	protected PackedScene projectileScene = null;
+	protected PackedScene projectileScene;
+
+	public abstract string ResourcePath { get; }
+
+	public abstract int SoundFrame { get; }
+	
 
 	public override void _PhysicsProcess(double delta)
 	{
 		var target = FindNearestEnemy();
 		if (target != null && TryGetPosition(target, out var position))
-		{
 			LookAt(position);
-		}
 	}
-	
+
 	protected Node FindNearestEnemy()
 	{
 		float closestDist = float.MaxValue;
@@ -29,16 +29,14 @@ public abstract partial class RangedWeapon : Area2D
 
 			float dist = GlobalPosition.DistanceTo(enemyNode.GlobalPosition);
 
-			if (dist < closestDist && dist <= WeaponRange)
+			if (dist < closestDist && dist <= DefaultRange)
 			{
 				closestDist = dist;
 				closestEnemy = enemyNode;
 			}
 		}
-
 		return closestEnemy;
 	}
-
 
 	protected bool TryGetPosition(object body, out Vector2 position)
 	{
@@ -51,7 +49,6 @@ public abstract partial class RangedWeapon : Area2D
 				position = (Vector2)globalPosVariant;
 				return true;
 			}
-
 			Variant posVariant = obj.Get("position");
 			if (posVariant.VariantType == Variant.Type.Vector2)
 			{
@@ -64,14 +61,14 @@ public abstract partial class RangedWeapon : Area2D
 
 	protected void Shoot()
 	{
-		Area2D projectileInstance = projectileScene.Instantiate() as Area2D;
-		Marker2D shootingPoint = GetNode<Marker2D>("ShootingPoint");
+		if (projectileScene == null) return;
+
+		var projectileInstance = projectileScene.Instantiate<Area2D>();
+		var shootingPoint = GetNode<Marker2D>("ShootingPoint");
+
 		projectileInstance.GlobalPosition = shootingPoint.GlobalPosition;
 		projectileInstance.GlobalRotation = shootingPoint.GlobalRotation;
-		
+
 		GetTree().CurrentScene.AddChild(projectileInstance);
-
 	}
-
-	
 }
