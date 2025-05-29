@@ -14,9 +14,11 @@ bg_color = Color(0.309804, 0.309804, 0.309804, 1)
 
 [node name="BossShop" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 1150.0
-offset_bottom = 650.0
+offset_left = -287.5
+offset_top = -162.5
+offset_right = 862.5
+offset_bottom = 487.5
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_cox2s")
 
 [node name="ColorRect" type="ColorRect" parent="."]

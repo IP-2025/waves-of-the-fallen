@@ -43,7 +43,9 @@ public partial class DefaultPlayer : CharacterBody2D
 
     private PackedScene _daggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
     private PackedScene _swordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
-	public PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
+    private PackedScene _warHammerScene = GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn");
+    
+	private PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
     private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
     private int _weaponsEquipped;
 
@@ -51,6 +53,9 @@ public partial class DefaultPlayer : CharacterBody2D
     protected CharacterManager CharacterManager;
     private bool _requestSent;
     private bool _alreadyDead;
+    
+    private PackedScene _shopScene = GD.Load<PackedScene>("res://UI/Shop/BossShop/bossShop.tscn");
+    private Node _shopInstance;
 
 	public override void _Ready()
 	{
@@ -206,6 +211,72 @@ public partial class DefaultPlayer : CharacterBody2D
                 GD.PrintErr($"AuthRequest error: {err}");
         }
     }
+    
+    private void OnShopOpened()
+    {
+        GD.Print("shop opend");
+        if (_weaponsEquipped > 3)
+        {
+            return;
+        }
+        _shopInstance = _shopScene.Instantiate();
+        AddChild(_shopInstance);
+        _shopInstance.Connect(
+            BossShop.SignalName.WeaponChosen,
+            new Callable(this, nameof(OnWeaponChosen))
+        );
+        
+        SetProcess(false);
+    }
+    
+    private void OnWeaponChosen(Weapon weaponType)
+    {
+        
+        EquipWeapon(weaponType);
+        
+        if (_shopInstance != null && IsInstanceValid(_shopInstance))
+            _shopInstance.QueueFree();
+        _shopInstance = null;
+        SetProcess(true);
+
+        // 2) Server benachrichtigen, damit alle Clients das neue Weapon-Node sehen
+        //RpcId(1, nameof(RpcRequestEquipWeapon), weaponType);
+    }
+    
+    private void EquipWeapon(Weapon weaponType)
+    {
+        var scene = weaponType.GetType().Name switch
+        {
+            "Bow"               => _bowScene,
+            "Crossbow"          => _crossbowScene,
+            "FireStaff"         => _fireStaffScene,
+            "Kunai"             => _kunaiScene,
+            "Lightningstaff"    => _lightningStaffScene,
+            "Healstaff"         => _healStaffScene,
+            "Dagger"            => _daggerScene,
+            "Sword"             => _swordScene,
+            "WarHammer"         => _warHammerScene,
+            _            => null
+        };
+        if (scene == null) return;
+        
+        Debug.Print("Added weapon: " + weaponType.GetType().Name);
+
+        var slot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(_weaponsEquipped) as Node2D;
+        var weapon = scene.Instantiate<Area2D>();
+        slot.AddChild(weapon);
+        weapon.Position = Vector2.Zero;
+        
+        var id = weapon.GetInstanceId();
+        weapon.Name = $"Weapon_{id}";
+        weapon.SetMeta("OwnerId", OwnerPeerId);
+        weapon.SetMeta("SlotIndex", _weaponsEquipped);
+        //Server.Instance.Entities[(long)id] = weapon;
+        
+        _weaponsEquipped++;
+    }
+    
+
 
     private void OnWaveTimerTimeout()
     {
@@ -213,6 +284,7 @@ public partial class DefaultPlayer : CharacterBody2D
         Gold += 10;
 
         GD.Print("Gold: " + Gold);
+        OnShopOpened();
     }
 
     private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)

@@ -5,7 +5,8 @@ using System.Reflection;
 
 public partial class BossShop : Control
 {
-	[Signal] public delegate void WeaponChosenEventHandler(Weapon weapon);
+	[Signal] 
+	public delegate void WeaponChosenEventHandler(Weapon weapon);
 
 	private static readonly List<Weapon> allWeapons = new()
 {
@@ -62,6 +63,6 @@ public partial class BossShop : Control
 	public void OnWeaponButtonUp(Weapon chosen)
 	{
 		GD.Print($"Du hast gewählt: {chosen.GetType().Name}");
-		EmitSignal(nameof(WeaponChosen), chosen);
+		EmitSignal(SignalName.WeaponChosen, chosen);
 	}
 }
