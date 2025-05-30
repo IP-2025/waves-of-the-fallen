@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dnwh8qvd8j2y7" path="res://Menu/Character/Charactermenu.cs" id="1_ivr4t"]
 [ext_resource type="Script" uid="uid://c57s2i06pw35o" path="res://Menu/Character/ButtonsCharacterSelection.cs" id="2_ch0j6"]
-[ext_resource type="Texture2D" uid="uid://b1rj5fayoqjrn" path="res://Entities/Characters/Archer/Resources/ArcherCharacterPreview.png" id="2_u3wkp"]
-[ext_resource type="Texture2D" uid="uid://b7qjdnc361tf2" path="res://Entities/Characters/Knight/Resources/KnightCharacterPreview.png" id="3_ch0j6"]
-[ext_resource type="Texture2D" uid="uid://kimtqy3xo4jc" path="res://Entities/Characters/Assassin/Resources/AssassinCharacterPreview.png" id="4_hqcu1"]
-[ext_resource type="Texture2D" uid="uid://du5f3vhpaqxxl" path="res://Entities/Characters/Mage/Resources/MageCharacterPreview.png" id="5_frg03"]
+[ext_resource type="Texture2D" uid="uid://bfathx7q6sw3x" path="res://Entities/Characters/Archer/Resources/ArcherCharacterPreview.png" id="2_u3wkp"]
+[ext_resource type="Texture2D" uid="uid://fsdqcdkhbjh0" path="res://Entities/Characters/Knight/Resources/KnightCharacterPreview.png" id="3_ch0j6"]
+[ext_resource type="Texture2D" uid="uid://c0xrp0eh8ygiu" path="res://Entities/Characters/Assassin/Resources/AssassinCharacterPreview.png" id="4_hqcu1"]
+[ext_resource type="Texture2D" uid="uid://er11xofdbw3" path="res://Entities/Characters/Mage/Resources/MageCharacterPreview.png" id="5_frg03"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivr4t"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
@@ -310,21 +310,53 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 40
 
-[node name="Label_intelligence" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="HBoxContainerHealth" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label_health" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainerHealth"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label_dexterity" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="Label_HealthUpgrade" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainerHealth"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+
+[node name="HBoxContainerDexterity" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label_dexterity" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainerDexterity"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label_speed" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="Label_DexterityUpgrade" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainerDexterity"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+
+[node name="HBoxContainerIntelligence" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label_intelligence" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainerIntelligence"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label_health" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+[node name="Label_IntelligenceUpgrade" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainerIntelligence"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+
+[node name="HBoxContainerSpeed" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label_speed" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainerSpeed"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label_SpeedUpgrade" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainerSpeed"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
