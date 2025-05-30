@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Game.Utilities.Multiplayer;
+using Game.UI.GameOver;
 
 // GameRoot is the main entry point for the game. It is responsible for loading the map, spawning the player, starting the enemy spawner and so on.
 public partial class GameRoot : Node
@@ -12,6 +13,8 @@ public partial class GameRoot : Node
 	bool isServer = false;
 	private bool enableDebug = false;
 	private WaveTimer globalWaveTimer;
+	private GameOverScreen _gameOverScreen;
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -39,12 +42,12 @@ public partial class GameRoot : Node
 				DebugIt($"Server spawning player {peerId}");
 				SpawnPlayer(peerId);
 			}
-			
+
 			// Start enemy spawner
 			SpawnEnemySpawner("res://Utilities/Gameflow/Spawn/SpawnEnemies.tscn");
 		}
-		
-		
+
+
 	}
 
 	public override void _Process(double delta)
@@ -107,6 +110,8 @@ public partial class GameRoot : Node
 			var WaveTimer = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
 			player.GetNode<Camera2D>("Camera2D").AddChild(WaveTimer);
 			AddChild(player);
+			player.AddToGroup("player");
+
 
 			Server.Instance.Entities[peerId] = player;
 
@@ -132,44 +137,34 @@ public partial class GameRoot : Node
 
 	public void OnPlayerDied()
 	{
-		DebugIt("Player died! Switching camera to alive player.");
-		DebugIt("Player died! Showing Game Over screen.");
+		DebugIt("Player died!");
 
-		if (_mainMap == null)
-		{
-			GD.PrintErr("Main map is null!");
-			return;
-		}
+		// Ermittele PeerId durch Vergleich mit Entity-Tabelle
+		long deadPeerId = -1;
+		Node toRemove = null;
 
-		var gameOverScreen = _mainMap.GetNodeOrNull<CanvasLayer>("GameOver");
-		if (gameOverScreen != null)
+		foreach (var kv in Server.Instance.Entities)
 		{
-			gameOverScreen.Visible = true;
-			//GetTree().Paused = true;
-		}
-		else
-		{
-			GD.PrintErr("GameOver screen not found in main map!");
-		}
-
-		long peerId = Multiplayer.GetUniqueId();
-
-		// Remove player entity to prevent a leftover copy
-		if (Server.Instance.Entities.TryGetValue(peerId, out var playerNode))
-		{
-			if (IsInstanceValid(playerNode))
+			if (kv.Value.GetNodeOrNull<Health>("Health")?.health <= 0)
 			{
-				playerNode.QueueFree();
-				DebugIt($"Removed dead player node: Player_{peerId}");
+				deadPeerId = kv.Key;
+				toRemove = kv.Value;
+				break;
 			}
-			Server.Instance.Entities.Remove(peerId);
 		}
 
-		// Find another player who is still alive
+		if (deadPeerId != -1 && toRemove != null)
+		{
+			toRemove.QueueFree();
+			Server.Instance.Entities.Remove(deadPeerId);
+			DebugIt($"Removed player {deadPeerId}");
+		}
+
+		// Lebende Spieler aus Gruppe "player"
 		var alivePlayers = GetTree()
 			.GetNodesInGroup("player")
 			.OfType<Node2D>()
-			.Where(p => p.Name != $"Player_{peerId}")
+			.Where(p => IsInstanceValid(p))
 			.ToList();
 
 		if (alivePlayers.Count > 0)
@@ -184,13 +179,21 @@ public partial class GameRoot : Node
 		}
 		else
 		{
-			DebugIt("No alive players left.");
+			DebugIt("No alive players left. Showing Game Over screen.");
+
+			if (_gameOverScreen == null)
+			{
+				var scene = GD.Load<PackedScene>("res://UI/GameOver/gameOverScreen.tscn");
+				_gameOverScreen = scene.Instantiate<GameOverScreen>();
+				AddChild(_gameOverScreen);
+			}
+
+			_gameOverScreen.ShowGameOver(0); // Score ggf. später ersetzen
 		}
 	}
 
-
-	private void DebugIt(string message)
-	{
-		if (enableDebug) Debug.Print("GameRoot: " + message);
-	}
+private void DebugIt(string message)
+{
+	if (enableDebug) Debug.Print("GameRoot: " + message);
+}
 }
