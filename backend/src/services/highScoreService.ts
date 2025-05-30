@@ -5,8 +5,8 @@ import {HighScore} from "../database/entities";
 
 export async function isBiggerThanExistingScore(playerId: string, newScore: number): Promise<boolean>  {
     try {
-        const oldScore = await getUserHighscoreRepo(playerId)
-        return newScore > oldScore;
+        const player = await getUserHighscoreRepo(playerId)
+        return newScore > player.highScore;
     }
     catch (error) {
         logger.info("Highscore does not exist for user, creating new highscore");
@@ -19,8 +19,8 @@ export async function updateHighScoreService(playerId: string, highScore: number
     await updateHighScoreRepo(playerId, highScore);
 }
 
-export  async  function  getUserHighscoreService(playerId: string){
-    await getUserHighscoreRepo(playerId);
+export  async  function  getUserHighscoreService(playerId: string): Promise<HighScore>{
+    return await getUserHighscoreRepo(playerId);
 }
 
 export  async  function  getTopHighscoreService(): Promise<HighScore[]> {

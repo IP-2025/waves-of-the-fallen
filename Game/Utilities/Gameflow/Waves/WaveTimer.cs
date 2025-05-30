@@ -4,17 +4,20 @@ using Godot;
 
 public partial class WaveTimer : Node2D
 {
-	public bool disable	= false;
-	public int waveCounter = 1;
-	public int secondCounter = 0;
-	public int maxTime = 30;
-	public bool isPaused;
+	public bool Disable { get; set; } = false;
+	public int WaveCounter { get; private set; } = 1;
+	public int SecondCounter { get; private set; } = 0;
+	public int MaxTime { get; private set; } = 30;
+	public bool IsPaused { get; private set; }
 	private Timer _waveTimer;
 	private Label _timeLeftLabel;
 	private Label _waveCounterLabel;
-
+	
 	[Signal]
 	public delegate void WaveEndedEventHandler();
+
+	[Signal]
+	public delegate void WaveStartedEventHandler();
 
 	public override void _Ready()
 	{
@@ -22,37 +25,40 @@ public partial class WaveTimer : Node2D
 		_waveCounterLabel = GetNode<Label>("WaveCounter");
 
 		// set values
-		_timeLeftLabel.Text = maxTime.ToString();
-		_waveCounterLabel.Text = $"Wave: {waveCounter}";
+		_timeLeftLabel.Text = MaxTime.ToString();
+		_waveCounterLabel.Text = $"Wave: {WaveCounter}";
 
 		// get timer and callback
 		_waveTimer = GetNode<Timer>("WaveTimer");
 		_waveTimer.Timeout += OnTimerTimeout;
 	}
+	
+	public void TriggerWaveEnded()
+	{
+		EmitSignal(nameof(WaveEnded));
+	}
+
 
 
 	private void OnTimerTimeout()
 	{
-		if (disable) return;
-		
-		secondCounter++; // counts the seconds until the max_time is reached and a new wave begins
-		if (secondCounter >= maxTime)
-		{
-			secondCounter = 0;
-			waveCounter++;
+		if (Disable) return;
 
-			_waveCounterLabel.Text = $"Wave: {waveCounter}";
+		SecondCounter++; // counts the seconds until the max_time is reached and a new wave begins
+		if (SecondCounter >= MaxTime)
+		{
+			SecondCounter = 0;
+			WaveCounter++;
+
+			_waveCounterLabel.Text = $"Wave: {WaveCounter}";
 			EmitSignal(SignalName.WaveEnded);
 		}
 
-		_waveCounterLabel.Text = $"Wave: {waveCounter}";
-		_timeLeftLabel.Text = (maxTime - secondCounter).ToString();
-		if (_waveTimer.Paused) 
-		{
-			_timeLeftLabel.Text = "Grace Time";
-			isPaused = true;
-		} else{
-			isPaused = false;
+		_waveCounterLabel.Text = $"Wave: {WaveCounter}";
+		_timeLeftLabel.Text = (MaxTime - SecondCounter).ToString();
+		IsPaused = _waveTimer.Paused;
+		if (SecondCounter<2 && !_waveTimer.Paused) { 
+			EmitSignal(SignalName.WaveStarted);
 		}
 	}
 

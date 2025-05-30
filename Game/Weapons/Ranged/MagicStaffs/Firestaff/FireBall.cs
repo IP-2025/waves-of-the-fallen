@@ -18,7 +18,6 @@ public partial class FireBall : Projectile
 		SetDeferred("Monitoring", false);
 		GetNode<AnimatedSprite2D>("./FireballAnimation").Hide();
 		GetNode<AnimatedSprite2D>("./Explosion").Play("explosion");
-
 		if (!hasHit) {
 			hasHit = true;
 			DamageProcess();

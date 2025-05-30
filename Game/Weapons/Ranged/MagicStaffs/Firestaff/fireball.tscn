@@ -1,14 +1,16 @@
 [gd_scene load_steps=13 format=3 uid="uid://lv3058lpkiow"]
 
-[ext_resource type="Texture2D" uid="uid://b7rl0g3sa6bga" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Fireball1.png" id="1_bympj"]
+
+[ext_resource type="Texture2D" uid="uid://b1qfmkb3awomf" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Fireball1.png" id="1_bympj"]
 [ext_resource type="Script" uid="uid://b7i5ogwmrajbx" path="res://Weapons/Ranged/MagicStaffs/Firestaff/FireBall.cs" id="1_ldwc5"]
-[ext_resource type="Texture2D" uid="uid://deac1lragwvtm" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Fireball2.png" id="2_ldwc5"]
-[ext_resource type="Texture2D" uid="uid://camom1nfpqrus" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Fireball3.png" id="3_jic63"]
-[ext_resource type="Texture2D" uid="uid://bfw5qvwwbc626" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion1.png" id="5_o6375"]
-[ext_resource type="Texture2D" uid="uid://tfqklqm6lxcy" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion2.png" id="6_4dy7c"]
-[ext_resource type="Texture2D" uid="uid://bsnlirjmwl1fe" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion3.png" id="7_j033g"]
-[ext_resource type="Texture2D" uid="uid://dmqosiqo5ufxu" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion4.png" id="8_opg4t"]
-[ext_resource type="Texture2D" uid="uid://cc4otx20fqjdh" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion5.png" id="9_0pktg"]
+[ext_resource type="Texture2D" uid="uid://degkio6dw55qf" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Fireball2.png" id="2_ldwc5"]
+[ext_resource type="Texture2D" uid="uid://c10wptfom26vl" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Fireball3.png" id="3_jic63"]
+[ext_resource type="Texture2D" uid="uid://chfl64e4d3kle" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion1.png" id="5_o6375"]
+[ext_resource type="Texture2D" uid="uid://c03irq6hpuyf0" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion2.png" id="6_4dy7c"]
+[ext_resource type="Texture2D" uid="uid://cdgcxgvi3wckd" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion3.png" id="7_j033g"]
+[ext_resource type="Texture2D" uid="uid://fgr0l8f8phab" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion4.png" id="8_opg4t"]
+[ext_resource type="Texture2D" uid="uid://cjmvqgmo3yvqa" path="res://Weapons/Ranged/MagicStaffs/Firestaff/Resources/Explosion5.png" id="9_0pktg"]
+
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_d58m4"]
 animations = [{
@@ -71,6 +73,9 @@ scale = Vector2(0.06, 0.06)
 sprite_frames = SubResource("SpriteFrames_d58m4")
 animation = &"projectile"
 
+frame_progress = 0.301813
+
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.469786, 0.414137)
 shape = SubResource("CircleShape2D_hhg2a")
@@ -80,6 +85,10 @@ position = Vector2(-0.469786, -0.585863)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_8f8e6")
 animation = &"explosion"
+frame = 6
+
+frame_progress = 1.0
+
 
 [connection signal="body_entered" from="." to="." method="OnBodyEntered"]
 [connection signal="animation_finished" from="Explosion" to="." method="OnExplosionAnimationFinished"]

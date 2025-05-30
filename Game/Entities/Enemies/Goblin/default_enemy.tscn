@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ckw0iqrsdcp5k" path="res://Entities/Enemies/Goblin/BasicEnemy.cs" id="1_fecjr"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_ihcfn"]
-[ext_resource type="Texture2D" uid="uid://l06upbjknstb" path="res://Entities/Enemies/Goblin/Resources/Goblin_spritesheet.png" id="3_ihcfn"]
+[ext_resource type="Texture2D" uid="uid://dakg368521jrd" path="res://Entities/Enemies/Goblin/Resources/Goblin_spritesheet.png" id="3_ihcfn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r4aor"]
 radius = 26.0192
@@ -190,9 +190,7 @@ shape = SubResource("CircleShape2D_6cefa")
 position = Vector2(1.90735e-06, 1.90735e-06)
 scale = Vector2(0.171794, 0.171794)
 sprite_frames = SubResource("SpriteFrames_paric")
-animation = &"death"
-frame = 5
-frame_progress = 1.0
+animation = &"hit"
 
 [connection signal="body_entered" from="AttackRange" to="." method="OnAttackRangeBodyEnter"]
 [connection signal="body_exited" from="AttackRange" to="." method="OnAttackRangeBodyExit"]
