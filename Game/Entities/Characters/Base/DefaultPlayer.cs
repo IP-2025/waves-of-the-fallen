@@ -44,6 +44,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	public PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
 	private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
 	private PackedScene _doubleBladeScene = GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn");
+	private PackedScene _warHammerScene = GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn");
 	private int _weaponsEquipped;
 
 	private WaveTimer _waveTimer;
@@ -106,10 +107,12 @@ public partial class DefaultPlayer : CharacterBody2D
 		{
 			Archer => _bowScene.Instantiate() as Area2D,
 			Assassin => _kunaiScene.Instantiate() as Area2D,
+			//Assassin => _doubleBladeScene.Instantiate() as Area2D,
+			//Assassin => _daggerScene.Instantiate() as Area2D,
 			//return _healStaffScene.Instantiate() as Area2D;
 			Mage => _fireStaffScene.Instantiate() as Area2D,
-			//Knight => _swordScene.Instantiate() as Area2D,
-			Knight => _daggerScene.Instantiate() as Area2D,
+			Knight => _swordScene.Instantiate() as Area2D,
+			//Knight => _warHammerScene.Instantiate() as Area2D,
 			_ => null
 		};
 	}
