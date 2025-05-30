@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://7ydf68jlyhb3" path="res://Weapons/Ranged/Crossbow/CrossbowArrow.cs" id="1_ghlcr"]
 
+
 [ext_resource type="Texture2D" uid="uid://bjc7c4a85kwha" path="res://Weapons/Ranged/Crossbow/Resources/Pfeil.png" id="1_kbfek"]
+
 
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ghlcr"]

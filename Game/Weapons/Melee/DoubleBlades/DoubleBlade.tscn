@@ -1,0 +1,141 @@
+[gd_scene load_steps=10 format=3 uid="uid://dln03hv3wrwh"]
+
+[ext_resource type="Script" uid="uid://kk6inayuwro3" path="res://Weapons/Melee/DoubleBlades/DoubleBlade.cs" id="1_it8ct"]
+[ext_resource type="Script" uid="uid://b5wcchem6rw6m" path="res://Weapons/Melee/DoubleBlades/DoubleBladeL.cs" id="2_nasur"]
+[ext_resource type="Script" uid="uid://jltsnrjo08q6" path="res://Weapons/Melee/DoubleBlades/DoubleBladeR.cs" id="3_gbif4"]
+[ext_resource type="Texture2D" uid="uid://clrya8q37680g" path="res://Weapons/Melee/DoubleBlades/Resources/DoppelKlingeSolo.png" id="3_i1atb"]
+[ext_resource type="Texture2D" uid="uid://cpmicc3oc3kux" path="res://Weapons/Melee/MasterSword/Resources/SwordTrailTest.png" id="4_i1atb"]
+
+[sub_resource type="Animation" id="Animation_0hyae"]
+resource_name = "BladeLAttack"
+length = 0.45
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.233333, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -1.0472, 1.5708, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SwordTrailTest:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_i1atb"]
+resource_name = "BladeRAttack"
+length = 0.45
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.233333, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -1.0472, 1.5708, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SwordTrailTest:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.24),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_e7juq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SwordTrailTest:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e7juq"]
+_data = {
+&"BladeLAttack": SubResource("Animation_0hyae"),
+&"BladeRAttack": SubResource("Animation_i1atb"),
+&"RESET": SubResource("Animation_e7juq")
+}
+
+[node name="DoubleBladeControl" type="Area2D"]
+scale = Vector2(0.0900451, 0.0932074)
+script = ExtResource("1_it8ct")
+
+[node name="DoubleBladeL" type="Area2D" parent="."]
+script = ExtResource("2_nasur")
+
+[node name="DoppelKlingeSolo2" type="Sprite2D" parent="DoubleBladeL"]
+position = Vector2(-64, -64)
+texture = ExtResource("3_i1atb")
+
+[node name="SwordTrailTest" type="Sprite2D" parent="DoubleBladeL"]
+position = Vector2(-225, -20)
+rotation = 0.716759
+texture = ExtResource("4_i1atb")
+
+[node name="AnimationPlayerL" type="AnimationPlayer" parent="DoubleBladeL"]
+libraries = {
+&"": SubResource("AnimationLibrary_e7juq")
+}
+
+[node name="DoubleBladeR" type="Area2D" parent="."]
+script = ExtResource("3_gbif4")
+
+[node name="DoppelKlingeSolo" type="Sprite2D" parent="DoubleBladeR"]
+position = Vector2(40.5231, 31.4097)
+texture = ExtResource("3_i1atb")
+
+[node name="SwordTrailTest" type="Sprite2D" parent="DoubleBladeR"]
+position = Vector2(-104.269, 52.8907)
+rotation = 0.725482
+texture = ExtResource("4_i1atb")
+
+[node name="AnimationPlayerR" type="AnimationPlayer" parent="DoubleBladeR"]
+libraries = {
+&"": SubResource("AnimationLibrary_e7juq")
+}
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="OnTimeTimeout"]

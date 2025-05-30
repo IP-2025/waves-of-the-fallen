@@ -7,10 +7,10 @@ public abstract partial class MeleeWeapon : Area2D
 	protected AnimatedSprite2D animatedSprite;
 	[Export] public float WeaponRange = 50f;
 	[Export] public int MeleeDamage = 50;
-	Node target;	
+	[Export] public float Speed = 0.2f;
 	public override void _PhysicsProcess(double delta)
 	{
-		target = FindNearestEnemy();
+		var target = FindNearestEnemy();
 		if (target != null && TryGetPosition(target, out var position))
 		{
 			LookAt(position);
@@ -57,38 +57,35 @@ public abstract partial class MeleeWeapon : Area2D
 		}
 		return false;
 	}
-	protected void MeleeAttack()
+	protected void MeleeAttack(Node actualTarget)
 	{
-		if(target != null){
-			var healthNode = target.GetNodeOrNull<Health>("Health");
+			var healthNode = actualTarget.GetNodeOrNull<Health>("Health");
 			if (healthNode != null)
 			{
 			healthNode.Damage(MeleeDamage);
 			}
-		}
 	}
 	protected void ShootMeleeVisual(Action onAttackComplete = null)
 	{
-		if (target == null)
+		Node actualTarget = FindNearestEnemy();
+		if (actualTarget == null)
 		return;
-		if (TryGetPosition(target, out var position))
+		if(TryGetPosition(actualTarget, out var position))
 		{
 			var tween = CreateTween();
 			//move forward
-			tween.TweenProperty(this, "global_position", position, 0.1)
+			tween.TweenProperty(this, "global_position", position, Speed)
 				.SetTrans(Tween.TransitionType.Sine)
 				.SetEase(Tween.EaseType.Out);
 
-			//Call method for attack
+			//Call method for attack and Animation
 			tween.TweenCallback(Callable.From(() => {
 				onAttackComplete?.Invoke();
-				var timer = GetTree().CreateTimer(0.2);
-				timer.Timeout += () => {
-				MeleeAttack();
-				};
+				MeleeAttack(actualTarget);
+				//};
 			}));
 			//go back
-			tween.TweenProperty(this, "position", Vector2.Zero, 0.1)
+			tween.TweenProperty(this, "position", Vector2.Zero, Speed)
 				.SetDelay(0.1)
 				.SetTrans(Tween.TransitionType.Sine)
 				.SetEase(Tween.EaseType.In);
