@@ -16,7 +16,8 @@ export async function getGoldController(req: Request, res: Response, next: NextF
 
 export async function setGoldController(req: Request, res: Response, next: NextFunction) {
   try {
-    const { player_id, gold } = req.body;
+    const player_id = extractAndValidatePlayerId(req.headers['authorization']);
+    const { gold } = req.body;
     if (!player_id || !gold) {
       throw new BadRequestError('Email or Password is required');
     }
