@@ -53,9 +53,6 @@ public partial class DefaultPlayer : CharacterBody2D
     protected CharacterManager CharacterManager;
     private bool _requestSent;
     private bool _alreadyDead;
-    
-    private PackedScene _shopScene = GD.Load<PackedScene>("res://UI/Shop/BossShop/bossShop.tscn");
-    private Node _shopInstance;
 
 	public override void _Ready()
 	{
