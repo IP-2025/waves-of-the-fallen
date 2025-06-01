@@ -215,7 +215,6 @@ public partial class DefaultPlayer : CharacterBody2D
         Gold += 10;
 
         GD.Print("Gold: " + Gold);
-        OnShopOpened();
     }
 
     private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)

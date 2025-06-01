@@ -157,7 +157,6 @@ public partial class Client : Node
 			// Shop
 			if (entity.WaveCount > _lastLocalShopRound)
 			{
-				GD.Print("init shop");
 				_lastLocalShopRound = entity.WaveCount;
 				
 				if (_camera != null)

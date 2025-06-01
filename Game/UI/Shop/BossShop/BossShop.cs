@@ -1,7 +1,6 @@
 using Godot;
-using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Diagnostics;
 
 public partial class BossShop : Control
 {
@@ -62,7 +61,7 @@ public partial class BossShop : Control
 
 	public void OnWeaponButtonUp(Weapon chosen)
 	{
-		GD.Print($"Du hast gewählt: {chosen.GetType().Name}");
+		Debug.Print($"Du hast gewählt: {chosen.GetType().Name}");
 		EmitSignal(SignalName.WeaponChosen, chosen);
 	}
 }
