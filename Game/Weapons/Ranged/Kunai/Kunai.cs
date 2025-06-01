@@ -15,7 +15,7 @@ public partial class Kunai : RangedWeapon
 	public override int DefaultPiercing { get; set; } = KunaiProjectile.DefaultPiercing;
 	public override float DefaultSpeed { get; set; } = KunaiProjectile.DefaultSpeed;
 
-	public override float ShootDelay { get; set; } = 4f;
+	public override float ShootDelay { get; set; } = 2.5f;
 	public override int SoundFrame => 1;
 	
 	private float _shootCooldown;

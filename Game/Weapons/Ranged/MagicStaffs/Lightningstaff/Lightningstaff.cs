@@ -10,11 +10,11 @@ public partial class Lightningstaff : RangedWeapon
 	
 	public override string ResourcePath => _resourcePath;
 	public override string IconPath => _iconPath;
-	public override float DefaultRange { get; set; } = 600f;
+	public override float DefaultRange { get; set; } = 400f;
 	public override int DefaultDamage { get; set; } = Lightning.DefaultDamage;
 	public override int DefaultPiercing { get; set; } = Lightning.DefaultPiercing;
 	public override float DefaultSpeed { get; set; } = Lightning.DefaultSpeed;
-	public override float ShootDelay { get; set; } = 0.9f;
+	public override float ShootDelay { get; set; } = 0.8f;
 	public override int SoundFrame => 3;
 	
 	private float _shootCooldown;

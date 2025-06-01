@@ -29,6 +29,20 @@ public partial class Healstaff : Weapon
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/HealStaffSprite");
 		healArea = GetNode<AnimatedSprite2D>("./Healcircle");
 
+		_shootCooldown  = 1f / ShootDelay;
+		_timeUntilShoot = _shootCooldown;
+	}
+	
+	public override void _Process(double delta)
+	{
+		// Countdown verringern
+		_timeUntilShoot -= (float)delta;
+
+		if (_timeUntilShoot <= 0f)
+		{
+			OnTimerTimeoutHealstaff();
+			_timeUntilShoot = _shootCooldown;
+		}
 	}
 	
 	protected List<Node> FindNearPlayers()
@@ -77,5 +91,11 @@ public partial class Healstaff : Weapon
 		if(_staffFiresFrame == GetNode<AnimatedSprite2D>("WeaponPivot/HealStaffSprite").Frame) {
 			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("healstaffFires"), GlobalPosition);
 		}
+	}
+	
+	public void SetNewStats(float newDelay)
+	{
+		ShootDelay     = newDelay;
+		_shootCooldown = 1f / newDelay;
 	}
 }

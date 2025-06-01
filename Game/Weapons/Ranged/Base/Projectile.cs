@@ -3,9 +3,9 @@ using System;
 
 public abstract partial class Projectile : Area2D
 {
-	protected int Damage = 100;
-	protected int Piercing = 1;
-	protected int Speed = 1000;
+	protected float Speed { get; set; } = 1000;
+	protected int Piercing { get; set; } = 1;
+	protected int Damage { get; set; } = 100;
 
 	public override void _PhysicsProcess(double delta)
 	{

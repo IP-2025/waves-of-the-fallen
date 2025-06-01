@@ -10,7 +10,7 @@ public partial class FireStaff : RangedWeapon
 
 	public override string ResourcePath => _resourcePath;
 	public override string IconPath => _iconPath;
-	public override float DefaultRange { get; set; } = 600f;
+	public override float DefaultRange { get; set; } = 500f;
 	public override int DefaultDamage { get; set; } = FireBall.DefaultDamage;
 	public override int DefaultPiercing { get; set; } = FireBall.DefaultPiercing;
 	public override float DefaultSpeed { get; set; } = FireBall.DefaultSpeed;
