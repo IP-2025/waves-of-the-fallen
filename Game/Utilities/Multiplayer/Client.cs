@@ -155,7 +155,7 @@ public partial class Client : Node
 		{
 			
 			// Shop
-			if (entity.WaveCount > _lastLocalShopRound)
+			if (entity.WaveCount > _lastLocalShopRound && entity.WaveCount < 5)
 			{
 				_lastLocalShopRound = entity.WaveCount;
 				
