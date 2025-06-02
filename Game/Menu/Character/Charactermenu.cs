@@ -28,13 +28,11 @@ public partial class Charactermenu : Control
 	private Label _labelDexterityUpgrade;
 	private Label _labelIntelligenceUpgrade;
 
-
 	private HttpRequest _unlockRequest;
 	private HttpRequest _levelUpRequest;
 	private HttpRequest _progressCheckRequest;
 	private HttpRequest _setGoldRequest;
-	private int maxLevel = 25;
-
+	private int _maxLevel = 25;
 
 	public override void _Ready()
 	{
@@ -91,7 +89,7 @@ public partial class Charactermenu : Control
 		var receivedString = Encoding.UTF8.GetString(body);
 		GD.Print("Antwort empfangen: " + receivedString);
 
-		GD.Print(responseCode == 200 ? "Gold successfully set" : "Error setting gold");
+		GD.Print(responseCode == 200 ? "Gold erfolgreich gesetzt" : "Fehler beim Setzen von Gold");
 	}
 
 	private void OnLevelUpRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
@@ -99,7 +97,7 @@ public partial class Charactermenu : Control
 		var receivedString = Encoding.UTF8.GetString(body);
 		GD.Print("Antwort empfangen: " + receivedString);
 
-		GD.Print(responseCode == 200 ? "Character unlocked" : "Error unlocking character");
+		GD.Print(responseCode == 200 ? "Charakter gelevelt" : "Fehler beim Leveln des Charakters");
 	}
 
 	private void OnUnlockRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
@@ -107,7 +105,7 @@ public partial class Charactermenu : Control
 		var receivedString = Encoding.UTF8.GetString(body);
 		GD.Print("Antwort empfangen: " + receivedString);
 
-		GD.Print(responseCode == 200 ? "Character unlocked" : "Error unlocking character");
+		GD.Print(responseCode == 200 ? "Charakter freigeschaltet" : "Fehler beim Freischalten des Charakters");
 	}
 
 	private void SetCharacterPageValuesFromFile(string characterId)
@@ -120,13 +118,14 @@ public partial class Charactermenu : Control
 		_labelIntelligence.Text = $"Intelligence {_characterManager.LoadIntelligenceByID(characterId)}";
 		UpdateUpgradeUnlockButtonState();
 		UpdateGoldLabel();
-		
-		if (_characterManager.LoadLevelByID(characterId) < maxLevel)
+
+		if (_characterManager.LoadLevelByID(characterId) < _maxLevel)
 		{
-			_labelHealthUpgrade.Text = $"   +{_characterManager.GetUpgradeAmount(_characterManager.LoadLevelByID(characterId))}";
-			_labelSpeedUpgrade.Text = $"   +{_characterManager.GetUpgradeAmount(_characterManager.LoadLevelByID(characterId))}";
-			_labelDexterityUpgrade.Text = $"   +{_characterManager.GetUpgradeAmount(_characterManager.LoadLevelByID(characterId))}";
-			_labelIntelligenceUpgrade.Text = $"   +{_characterManager.GetUpgradeAmount(_characterManager.LoadLevelByID(characterId))}";
+			var upgradeAmount = _characterManager.GetUpgradeAmount(_characterManager.LoadLevelByID(characterId));
+			_labelHealthUpgrade.Text = $"   +{upgradeAmount}";
+			_labelSpeedUpgrade.Text = $"   +{upgradeAmount}";
+			_labelDexterityUpgrade.Text = $"   +{upgradeAmount}";
+			_labelIntelligenceUpgrade.Text = $"   +{upgradeAmount}";
 		}
 	}
 
@@ -157,10 +156,11 @@ public partial class Charactermenu : Control
 			_buttonUpgradeUnlock.Text = "Upgrade";
 			_buttonSelect.Show();
 		}
+
 		UpdateUpgradeUnlockButtonState();
 		UpdateGoldLabel();
 
-		if (_characterManager.LoadLevelByID(button.Text) < maxLevel)
+		if (_characterManager.LoadLevelByID(button.Text) < _maxLevel)
 			_buttonUpgradeUnlock.Show();
 	}
 
@@ -227,6 +227,7 @@ public partial class Charactermenu : Control
 				_oldSelectedCharacter = _currentlySelectedCharacter;
 			}
 		}
+
 		SoundManager.Instance.PlayUI();
 		UpdateUpgradeUnlockButtonState();
 		UpdateGoldLabel();
@@ -248,100 +249,165 @@ public partial class Charactermenu : Control
 		var characterId = _currentlySelectedCharacter.Text;
 		if (_characterManager.LoadIsUnlocked(characterId))
 		{
-			if (_characterManager.LoadLevelByID(characterId) < maxLevel)
-			{
-				_characterManager.UpgradeCharacter(characterId);
-
-				if (_characterManager.LoadLevelByID(characterId) == maxLevel)
-				{
-					_buttonUpgradeUnlock.Hide();
-					_labelHealthUpgrade.Text = "";
-					_labelSpeedUpgrade.Text = "";
-					_labelDexterityUpgrade.Text = "";
-					_labelIntelligenceUpgrade.Text = "";
-				}
-
-				if (GameState.CurrentState == ConnectionState.Online)
-					{
-						var body = Json.Stringify(new Godot.Collections.Dictionary
-						{
-							{ "character_id", characterId }
-						});
-
-						var headers = new[]
-						{
-							"Content-Type: application/json",
-							"Authorization: Bearer " + SecureStorage.LoadToken()
-						};
-						var err = _unlockRequest.Request(
-							$"{ServerConfig.BaseUrl}/api/v1/protected/character/levelUp",
-							headers,
-							HttpClient.Method.Post,
-							body
-						);
-
-						if (err != Error.Ok)
-							GD.PrintErr($"AuthRequest error: {err}");
-					}
-			}
-			else
-			{
-				_buttonUpgradeUnlock.Hide();
-				_labelHealthUpgrade.Text = "";
-				_labelSpeedUpgrade.Text = "";
-				_labelDexterityUpgrade.Text = "";
-				_labelIntelligenceUpgrade.Text = "";
-			}
+			HandleUpgrade(characterId);
 		}
-		
-			else
-			{
-				_characterManager.SetUnlocked(characterId);
-				_buttonUpgradeUnlock.Text = "Upgrade";
-				_buttonSelect.Show();
-				var icon = _currentlySelectedCharacter.GetNode<TextureRect>("TextureRect");
-				icon.Material = null;
+		else
+		{
+			HandleUnlock(characterId);
+		}
 
-				GD.Print("unlcoked char local");
-				if (GameState.CurrentState == ConnectionState.Online)
-				{
-					GD.Print("try to unlock char online");
-					var body = Json.Stringify(new Dictionary
-				{
-					{ "character_id", characterId }
-				});
-
-					// Send POST request
-					var headers = new[]
-					{
-					"Content-Type: application/json",
-					"Authorization: Bearer " + SecureStorage.LoadToken()
-				};
-					var err = _unlockRequest.Request(
-						$"{ServerConfig.BaseUrl}/api/v1/protected/character/unlock",
-						headers,
-						HttpClient.Method.Post,
-						body
-					);
-
-					if (err != Error.Ok)
-						GD.PrintErr($"AuthRequest error: {err}");
-				}
-			}
-
-		SetCharacterPageValuesFromFile(characterId);
+		UpdateCharacterUi(characterId);
 		SoundManager.Instance.PlayUI();
+	}
+
+	// --- Refaktorisierte Flows ---
+
+	private void HandleUpgrade(string characterId)
+	{
+		if (!CanUpgrade(characterId))
+		{
+			ClearUpgradeLabelsAndHideButton();
+			return;
+		}
+
+		PerformUpgrade(characterId);
+		UpdateServerAfterUpgrade(characterId);
+
+		if (_characterManager.LoadLevelByID(characterId) == _maxLevel)
+			ClearUpgradeLabelsAndHideButton();
+	}
+
+	private void HandleUnlock(string characterId)
+	{
+		if (!CanUnlock())
+			return;
+
+		PerformUnlock(characterId);
+		UpdateServerAfterUnlock(characterId);
+	}
+
+	// --- Einzelverantwortlichkeiten ---
+
+	private bool CanUpgrade(string characterId)
+	{
+		return _characterManager.LoadLevelByID(characterId) < _maxLevel && _characterManager.LoadGold() >= UpgradeCost;
+	}
+
+	private bool CanUnlock()
+	{
+		return _characterManager.LoadGold() >= UnlockCost;
+	}
+
+	private void PerformUpgrade(string characterId)
+	{
+		_characterManager.SubGold(UpgradeCost);
+		_characterManager.UpgradeCharacter(characterId);
+	}
+
+	private void PerformUnlock(string characterId)
+	{
+		_characterManager.SubGold(UnlockCost);
+		_characterManager.SetUnlocked(characterId);
+		_buttonUpgradeUnlock.Text = "Upgrade";
+		_buttonSelect.Show();
+		var icon = _currentlySelectedCharacter.GetNode<TextureRect>("TextureRect");
+		icon.Material = null;
+		GD.Print("unlcoked char local");
+	}
+
+	private void UpdateServerAfterUpgrade(string characterId)
+	{
+		if (GameState.CurrentState == ConnectionState.Online)
+		{
+			SendUpgradeRequest(characterId);
+			SendGoldUpdateRequest();
+		}
+	}
+
+	private void UpdateServerAfterUnlock(string characterId)
+	{
+		if (GameState.CurrentState == ConnectionState.Online)
+		{
+			SendUnlockRequest(characterId);
+			SendGoldUpdateRequest();
+		}
+	}
+
+	private void UpdateCharacterUi(string characterId)
+	{
+		SetCharacterPageValuesFromFile(characterId);
+	}
+
+	private void ClearUpgradeLabelsAndHideButton()
+	{
+		_buttonUpgradeUnlock.Hide();
+		_labelHealthUpgrade.Text = "";
+		_labelSpeedUpgrade.Text = "";
+		_labelDexterityUpgrade.Text = "";
+		_labelIntelligenceUpgrade.Text = "";
+	}
+
+	// --- Server Requests ---
+
+	private void SendUpgradeRequest(string characterId)
+	{
+		var body = Json.Stringify(new Dictionary { { "character_id", characterId } });
+		var headers = GetAuthHeaders();
+		var err = _unlockRequest.Request(
+			$"{ServerConfig.BaseUrl}/api/v1/protected/character/levelUp",
+			headers,
+			HttpClient.Method.Post,
+			body
+		);
+		if (err != Error.Ok)
+			GD.PrintErr($"AuthRequest error: {err}");
+	}
+
+	private void SendUnlockRequest(string characterId)
+	{
+		GD.Print("try to unlock char online");
+		var body = Json.Stringify(new Dictionary { { "character_id", characterId } });
+		var headers = GetAuthHeaders();
+		var err = _unlockRequest.Request(
+			$"{ServerConfig.BaseUrl}/api/v1/protected/character/unlock",
+			headers,
+			HttpClient.Method.Post,
+			body
+		);
+		if (err != Error.Ok)
+			GD.PrintErr($"AuthRequest error: {err}");
+	}
+
+	private void SendGoldUpdateRequest()
+	{
+		var body = Json.Stringify(new Dictionary { { "gold", _characterManager.LoadGold() } });
+		var headers = GetAuthHeaders();
+		var err = _setGoldRequest.Request(
+			$"{ServerConfig.BaseUrl}/api/v1/protected/gold/set",
+			headers,
+			HttpClient.Method.Post,
+			body
+		);
+		if (err != Error.Ok)
+			GD.PrintErr($"SetGoldRequest error: {err}");
+	}
+
+	private static string[] GetAuthHeaders()
+	{
+		return
+		[
+			"Content-Type: application/json",
+			"Authorization: Bearer " + SecureStorage.LoadToken()
+		];
 	}
 
 	private void ResetCharacters()
 	{
-		
-
- 		_characterManager.SaveCharacterData(1, "Archer",   85, 200, 100, 110, 1, 1);
-        _characterManager.SaveCharacterData(2, "Assassin", 70, 220, 100, 110, 1, 0);
-        _characterManager.SaveCharacterData(3, "Knight",  125,  180, 125,  85, 1, 0);
-        _characterManager.SaveCharacterData(4, "Mage",    100, 200, 110, 110, 1, 0);
-		Shader blackAndWhiteShader = GD.Load<Shader>("res://Menu/Character/characterMenuIconShader.gdshader");
+		_characterManager.SaveCharacterData(1, "Archer", 85, 200, 100, 110, 1, 1);
+		_characterManager.SaveCharacterData(2, "Assassin", 70, 220, 100, 110, 1, 0);
+		_characterManager.SaveCharacterData(3, "Knight", 125, 180, 125, 85, 1, 0);
+		_characterManager.SaveCharacterData(4, "Mage", 100, 200, 110, 110, 1, 0);
+		var blackAndWhiteShader = GD.Load<Shader>("res://Menu/Character/characterMenuIconShader.gdshader");
 		var material = new ShaderMaterial { Shader = blackAndWhiteShader };
 
 		LockCharacter("%Button_Character2", material);
