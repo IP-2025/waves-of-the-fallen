@@ -10,8 +10,8 @@ public partial class Sword : MeleeWeapon
 	{
 		SwordAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		SwordTrailTest = GetNode<Sprite2D>("SwordTrailTest");
-		MeleeDamage = 100;
-		WeaponRange = 100;
+		MeleeDamage = 150;
+		WeaponRange = 200;
 		Speed = 0.1f;
 		SwordTrailTest.Visible = false;
 	}

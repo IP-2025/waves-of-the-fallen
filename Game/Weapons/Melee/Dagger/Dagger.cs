@@ -8,9 +8,9 @@ public partial class Dagger : MeleeWeapon
 	public override void _Ready()
 	{
 		DaggerAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-		MeleeDamage = 200;
-		WeaponRange = 50;
-		Speed = 0.1f;
+		MeleeDamage = 250;
+		WeaponRange = 70;
+		Speed = 0.01f;
 	}
 
 	public async void OnTimerTimeoutDagger()

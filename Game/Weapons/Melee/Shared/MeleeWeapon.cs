@@ -63,7 +63,6 @@ public abstract partial class MeleeWeapon : Area2D
 			if(actualTarget == null){
 				return;
 			}
-			Godot.GD.PushError(actualTarget);
 			var healthNode = actualTarget.GetNodeOrNull<Health>("Health");
 			if (healthNode != null)
 			{

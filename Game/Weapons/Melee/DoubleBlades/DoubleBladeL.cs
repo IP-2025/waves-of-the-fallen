@@ -9,8 +9,8 @@ public partial class DoubleBladeL : MeleeWeapon
 	{
 		DoubleBladeLAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayerL");
 		SwordTrailTest = GetNode<Sprite2D>("SwordTrailTest");
-		MeleeDamage = 50;
-		WeaponRange = 100;
+		MeleeDamage = 100;
+		WeaponRange = 150;
 		SwordTrailTest.Visible = false;
 	}
 

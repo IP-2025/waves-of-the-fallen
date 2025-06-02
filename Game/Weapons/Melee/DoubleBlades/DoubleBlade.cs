@@ -13,7 +13,7 @@ public partial class DoubleBlade : MeleeWeapon
 		GD.Print("Start SwordAnimation");
 		leftBlade = GetNode<DoubleBladeL>("DoubleBladeL");
 		rightBlade = GetNode<DoubleBladeR>("DoubleBladeR");
-		Speed = 0.1f;
+		Speed = 0.01f;
 	}
 
 	private async void OnTimeTimeout()
