@@ -67,3 +67,109 @@ export async function removeFromIngress(pathName: string, serviceName: string){
         console.error('❌ Failed to patch ingress:', err);
     }
 }
+
+// In-memory set of nodePorts that are already taken
+const usedNodePorts = new Set<number>();
+
+/**
+ * Allocate the next free nodePort in the Kubernetes default NodePort range (30000–32767).
+ */
+export function allocateNodePort(): number {
+    const MIN = 30000;
+    const MAX = 32767;
+    for (let port = MIN; port <= MAX; port++) {
+        if (!usedNodePorts.has(port)) {
+            usedNodePorts.add(port);
+            return port;
+        }
+    }
+    throw new Error("No free NodePort available");
+}
+
+/**
+ * Create a Pod manifest for a game server with the given `code`.
+ * @param code
+ * @param podName
+ * @param image
+ * @param containerPort
+ */
+export function getPodManifest(
+    code: string,
+    podName: string = `pod-${code.toLowerCase()}`,
+    image: string = "kaprele/waves-of-the-fallen_game",
+    containerPort: number = 3000
+) {
+    return {
+        apiVersion: "v1",
+        kind: "Pod",
+        metadata: {
+            name: podName,
+            labels: {
+                app: "game-server",
+                code, // label used to select this Pod
+            },
+        },
+        spec: {
+            containers: [
+                {
+                    name: "game-container",
+                    image,
+                    imagePullPolicy: "IfNotPresent", // Use local image if available
+                    ports: [{ containerPort, protocol: 'UDP' }],
+                    env: [{ name: "CODE", value: code }], // Pass the game code as an environment variable
+                },
+            ],
+            restartPolicy: "Never", // Don't restart the Pod automatically
+        },
+    };
+}
+
+/**
+ * Create a NodePort Service manifest for a game server pod identified by `code`.
+ *
+ * @param code      The label value used to select the Pod (e.g. the game “code”)
+ * @param serviceName  The name to give the Service (must be unique per game)
+ * @param targetPort   The port the Pod is listening on (e.g. 3000)
+ */
+export function getServiceManifest(
+    code: string,
+    serviceName: string,
+    targetPort: number = 3000
+) {
+    // Grab a free port on the host
+    const nodePort = allocateNodePort();
+
+    const serviceManifest = {
+      apiVersion: 'v1',
+      kind: 'Service',
+      metadata: {
+        name: serviceName,
+        labels: {
+          app: 'game-server',
+          gameCode: code,
+        },
+      },
+      spec: {
+        type: 'NodePort', // expose on the node
+        selector: {
+          code, // will match pods labeled { code: "<code>" }
+        },
+        ports: [
+          {
+            name: 'gameplay',
+            port: targetPort, // in-cluster port the Pod listens on
+            targetPort: targetPort, // forward to the Pod’s port
+            protocol: 'UDP',
+            nodePort, // the allocated host port
+          },
+        ],
+      },
+    };
+
+    return {serviceManifest, nodePort};
+}
+
+export function freeNodePort(port: number) {
+    usedNodePorts.delete(port);
+}
+
