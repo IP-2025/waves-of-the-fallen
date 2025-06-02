@@ -23,10 +23,11 @@ public partial class CharacterManager : Node
             _config.SetValue(Section, Key, 1);
 
             //Standart Character und Stats setzen
-            SaveCharacterData(1, "Archer", 100, 100, 100, 100, 1, 1);
-            SaveCharacterData(2, "Assassin", 100, 100, 100, 100, 1, 1);
-            SaveCharacterData(3, "Knight", 100, 100, 100, 100, 1, 1);
-            SaveCharacterData(4, "Mage", 100, 100, 100, 100, 1, 0);
+            //health, speed, dexterity, intelligence,
+            SaveCharacterData(1, "Archer",   85, 200, 100, 110, 1, 1);
+            SaveCharacterData(2, "Assassin", 70, 220, 100, 110, 1, 0);
+            SaveCharacterData(3, "Knight",  125,  180, 125,  85, 1, 0);
+            SaveCharacterData(4, "Mage",    100, 200, 110, 110, 1, 0);
 
             _config.Save(SettingsPath);
         }
@@ -39,16 +40,24 @@ public partial class CharacterManager : Node
 
     public void UpgradeCharacter(string characterId)
     {
+       int levelUpAmount= GetUpgradeAmount(LoadLevelByID(characterId));
+
         _config.SetValue(Section, Key, characterId);
 
-        _config.SetValue(characterId, "health", LoadHealthByID(characterId) + 5);
-        _config.SetValue(characterId, "speed", LoadSpeedByID(characterId) + 5);
-        _config.SetValue(characterId, "dexterity", LoadDexterityByID(characterId) + 5);
-        _config.SetValue(characterId, "intelligence", LoadIntelligenceByID(characterId) + 5);
+        _config.SetValue(characterId, "health", LoadHealthByID(characterId) + levelUpAmount);
+        _config.SetValue(characterId, "speed", LoadSpeedByID(characterId) + levelUpAmount);
+        _config.SetValue(characterId, "dexterity", LoadDexterityByID(characterId) + levelUpAmount);
+        _config.SetValue(characterId, "intelligence", LoadIntelligenceByID(characterId) + levelUpAmount);
         _config.SetValue(characterId, "level", LoadLevelByID(characterId) + 1);
 
         _config.Save(SettingsPath);
     }
+
+    public int GetUpgradeAmount(int level)
+    {
+        return (int)Math.Round(20 * Math.Exp(-0.1 * level));
+    }
+
 
     public void UpdateCharacter(string charcterId, int level, int unlocked)
     {
