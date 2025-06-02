@@ -53,6 +53,8 @@ public partial class Charactermenu : Control
 
 		_buttonUpgradeUnlock = GetNode<Button>("%Button_UpgradeUnlock");
 		_buttonSelect = GetNode<Button>("%Button_Select");
+		
+		_buttonUpgradeUnlock.Text = "Upgrade: " + UpgradeCost + " Gold";
 
 		_unlockRequest = GetNode<HttpRequest>("%UnlockRequest");
 		_levelUpRequest = GetNode<HttpRequest>("%LevelUpRequest");
@@ -148,12 +150,12 @@ public partial class Charactermenu : Control
 
 		if (!_characterManager.LoadIsUnlocked(button.Text))
 		{
-			_buttonUpgradeUnlock.Text = "Unlock";
+			_buttonUpgradeUnlock.Text = "Unlock: " + UnlockCost + " Gold";
 			_buttonSelect.Hide();
 		}
 		else
 		{
-			_buttonUpgradeUnlock.Text = "Upgrade";
+			_buttonUpgradeUnlock.Text = "Upgrade: " + UpgradeCost + " Gold";
 			_buttonSelect.Show();
 		}
 
