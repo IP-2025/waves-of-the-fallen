@@ -8,6 +8,7 @@ public abstract partial class MeleeWeapon : Area2D
 	[Export] public float WeaponRange = 50f;
 	[Export] public int MeleeDamage = 50;
 	[Export] public float Speed = 0.2f;
+	bool onCooldown = false;
 	public override void _PhysicsProcess(double delta)
 	{
 		var target = FindNearestEnemy();
@@ -59,6 +60,9 @@ public abstract partial class MeleeWeapon : Area2D
 	}
 	protected void MeleeAttack(Node actualTarget)
 	{
+			if(actualTarget == null){
+				return;
+			}
 			var healthNode = actualTarget.GetNodeOrNull<Health>("Health");
 			if (healthNode != null)
 			{
@@ -67,28 +71,36 @@ public abstract partial class MeleeWeapon : Area2D
 	}
 	protected void ShootMeleeVisual(Action onAttackComplete = null)
 	{
-		Node actualTarget = FindNearestEnemy();
-		if (actualTarget == null)
-		return;
-		if(TryGetPosition(actualTarget, out var position))
-		{
-			var tween = CreateTween();
-			//move forward
-			tween.TweenProperty(this, "global_position", position, Speed)
-				.SetTrans(Tween.TransitionType.Sine)
-				.SetEase(Tween.EaseType.Out);
+		
+		if(!onCooldown){
+			onCooldown = true;
+			Node actualTarget = FindNearestEnemy();
+			if (actualTarget == null){
+			onCooldown = false;
+			return;
+			}
+				if(TryGetPosition(actualTarget, out var position))
+				{
+				
+				var tween = CreateTween();
+				//move forward
+				tween.TweenProperty(this, "global_position", position, Speed)
+					.SetTrans(Tween.TransitionType.Sine)
+					.SetEase(Tween.EaseType.Out);
 
-			//Call method for attack and Animation
-			tween.TweenCallback(Callable.From(() => {
-				onAttackComplete?.Invoke();
-				MeleeAttack(actualTarget);
-				//};
-			}));
-			//go back
-			tween.TweenProperty(this, "position", Vector2.Zero, Speed)
-				.SetDelay(0.1)
-				.SetTrans(Tween.TransitionType.Sine)
-				.SetEase(Tween.EaseType.In);
+				//Call method for attack and Animation
+				tween.TweenCallback(Callable.From(() => {
+					onAttackComplete?.Invoke();
+					MeleeAttack(actualTarget);
+					//};
+				}));
+				//go back
+				tween.TweenProperty(this, "position", Vector2.Zero, Speed)
+					.SetDelay(0.1)
+					.SetTrans(Tween.TransitionType.Sine)
+					.SetEase(Tween.EaseType.In);
+					onCooldown = false;
+			}
 		}
 	}
 }
