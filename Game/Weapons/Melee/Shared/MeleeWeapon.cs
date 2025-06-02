@@ -63,6 +63,7 @@ public abstract partial class MeleeWeapon : Area2D
 			if(actualTarget == null){
 				return;
 			}
+			Godot.GD.PushError(actualTarget);
 			var healthNode = actualTarget.GetNodeOrNull<Health>("Health");
 			if (healthNode != null)
 			{
@@ -81,7 +82,6 @@ public abstract partial class MeleeWeapon : Area2D
 			}
 				if(TryGetPosition(actualTarget, out var position))
 				{
-				
 				var tween = CreateTween();
 				//move forward
 				tween.TweenProperty(this, "global_position", position, Speed)
@@ -90,8 +90,11 @@ public abstract partial class MeleeWeapon : Area2D
 
 				//Call method for attack and Animation
 				tween.TweenCallback(Callable.From(() => {
+					if (!Godot.GodotObject.IsInstanceValid(actualTarget))
+					return; //Prevents rare asyncronous problem 
 					onAttackComplete?.Invoke();
 					MeleeAttack(actualTarget);
+					onCooldown = false;
 					//};
 				}));
 				//go back
@@ -99,7 +102,6 @@ public abstract partial class MeleeWeapon : Area2D
 					.SetDelay(0.1)
 					.SetTrans(Tween.TransitionType.Sine)
 					.SetEase(Tween.EaseType.In);
-					onCooldown = false;
 			}
 		}
 	}
