@@ -3,6 +3,7 @@ namespace Game.Utilities.Multiplayer
 	
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Metadata;
 
 public partial class Server : Node
@@ -81,71 +82,80 @@ public partial class Server : Node
 	{
 		var snap = new Snapshot(tick);
 		var toRemove = new List<long>();
-		foreach (var kv in Entities)
-		{
-			var node = kv.Value;
-
-			if (node == null || !IsInstanceValid(node))
+			foreach (var kv in Entities)
 			{
-				toRemove.Add(kv.Key);
-				continue;
-			}
+				var node = kv.Value;
 
-			string scenePath = node.SceneFilePath;
-			var id = kv.Key;
+				if (node == null || !IsInstanceValid(node))
+				{
+					toRemove.Add(kv.Key);
+					continue;
+				}
 
-			if (!ScenePathToEntityType.TryGetValue(scenePath, out var entityType))
-			{
-				GD.PrintErr($"Unknown ScenePath: {scenePath}");
-				continue;
-			}
+				string scenePath = node.SceneFilePath;
+				var id = kv.Key;
 
-			// Find WaveTimer as a child of the current camera
-			int waveCount = 0;
-			int secondsLeft = 0;
-			bool graceTime = false;
-			var waveTimer = GetTree()
-			.Root.GetNodeOrNull<GameRoot>("GameRoot")
-			?.GetNodeOrNull<WaveTimer>("GlobalWaveTimer");
+				if (!ScenePathToEntityType.TryGetValue(scenePath, out var entityType))
+				{
+					GD.PrintErr($"Unknown ScenePath: {scenePath}");
+					continue;
+				}
 
-			if (waveTimer != null)
-			{
-				waveCount = waveTimer.WaveCounter;
-				secondsLeft = waveTimer.SecondCounter;
-				graceTime = waveTimer.IsPaused;
-			}
+				// Find WaveTimer as a child of the current camera
+				int waveCount = 0;
+				int secondsLeft = 0;
+				bool graceTime = false;
+				var waveTimer = GetTree()
+				.Root.GetNodeOrNull<GameRoot>("GameRoot")
+				?.GetNodeOrNull<WaveTimer>("GlobalWaveTimer");
 
-			var healthNode = node.GetNodeOrNull<Health>("Health");
-			float health = healthNode != null ? healthNode.health : 0f;
+				if (waveTimer != null)
+				{
+					waveCount = waveTimer.WaveCounter;
+					secondsLeft = waveTimer.SecondCounter;
+					graceTime = waveTimer.IsPaused;
+				}
 
-			long? owner = null;
-			int? slotIx = null;
-			if (node.HasMeta("OwnerId"))
-			{
-				owner = (long)node.GetMeta("OwnerId");
-				slotIx = (int)node.GetMeta("SlotIndex");
-			}
+				var healthNode = node.GetNodeOrNull<Health>("Health");
+				float health = healthNode != null ? healthNode.health : 0f;
 
-			DebugIt($"Snapshot: Entity Name: {node.Name}, Position: {node.Position}, ID: {id}");
-			snap.Entities.Add(new EntitySnapshot(
-				id,
-				node.Position,
-				node.Rotation,
-				node.Scale,
-				health,
-				entityType,
-				waveCount,
-				secondsLeft,
-				graceTime,
-				owner,
-				slotIx
-			));
+				long? owner = null;
+				int? slotIx = null;
+				if (node.HasMeta("OwnerId"))
+				{
+					owner = (long)node.GetMeta("OwnerId");
+					slotIx = (int)node.GetMeta("SlotIndex");
+				}
+
+				DebugIt($"Snapshot: Entity Name: {node.Name}, Position: {node.Position}, ID: {id}");
+				snap.Entities.Add(new EntitySnapshot(
+					id,
+					node.Position,
+					node.Rotation,
+					node.Scale,
+					health,
+					entityType,
+					waveCount,
+					secondsLeft,
+					graceTime,
+					owner,
+					slotIx
+				));
 		}
 
 		foreach (var id in toRemove)
 		{
 			Entities.Remove(id);
 		}
+
+		int livingPlayers = Entities.Values
+    .OfType<DefaultPlayer>() // oder dein Basistyp für Spieler
+    .Count(player => {
+        var health = player.GetNodeOrNull<Health>("Health");
+        return health != null && health.health > 0;
+    });
+
+snap.livingPlayersCount = livingPlayers;
 
 		return Serializer.Serialize(snap);
 	}

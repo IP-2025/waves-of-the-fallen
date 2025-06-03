@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security;
 using System;
 	using System.Threading;
+using Game.UI.GameOver;
 
 public partial class Client : Node
 {
@@ -91,7 +92,10 @@ public partial class Client : Node
 	}
 
 	public void ApplySnapshot(Snapshot snap)
-	{
+	{	
+		// check if all players are dead in snapshot
+		ShowGameOverScreen(snap.livingPlayersCount);
+
 		// collect all network ids from the snapshot
 		var networkIds = snap.Entities.Select(e => e.NetworkId).ToHashSet();
 
@@ -104,6 +108,15 @@ public partial class Client : Node
 		if (_camera == null || networkIds.Contains(Multiplayer.GetUniqueId())) return;
 		_camera = null;
 		_hasJoystick = false;
+	}
+	
+	private void ShowGameOverScreen(int livingPlayersCount)
+	{
+    if (livingPlayersCount == 0)
+    {
+        var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
+		gameRoot.ShowGameOverScreen();
+    }	
 	}
 
 
@@ -123,39 +136,39 @@ public partial class Client : Node
 			{
 				// HUD / WaveCounter stuff
 				case false when _camera != null:
-				{
-					var wt = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
-					wt.Disable = true;
-					_camera.AddChild(wt);
-					_timer = wt;
-					_waveTimerReady = true;
-					break;
-				}
+					{
+						var wt = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
+						wt.Disable = true;
+						_camera.AddChild(wt);
+						_timer = wt;
+						_waveTimerReady = true;
+						break;
+					}
 				case true when _camera != null:
-				{
-					var timeLeftLabel = _timer.GetNodeOrNull<Label>("TimeLeft");
-					if (timeLeftLabel != null)
-						timeLeftLabel.Text = (_timer.MaxTime - entity.WaveTimeLeft).ToString();
-
-					var waveCounterLabel = _timer.GetNodeOrNull<Label>("WaveCounter");
-					if (waveCounterLabel != null)
-						waveCounterLabel.Text = $"Wave: {entity.WaveCount}";
-					if (entity.GraceTime)
 					{
-						timeLeftLabel.Text = "Grace Time";
-						if (!_graceTimeTriggered)
+						var timeLeftLabel = _timer.GetNodeOrNull<Label>("TimeLeft");
+						if (timeLeftLabel != null)
+							timeLeftLabel.Text = (_timer.MaxTime - entity.WaveTimeLeft).ToString();
+
+						var waveCounterLabel = _timer.GetNodeOrNull<Label>("WaveCounter");
+						if (waveCounterLabel != null)
+							waveCounterLabel.Text = $"Wave: {entity.WaveCount}";
+						if (entity.GraceTime)
 						{
-							_timer.TriggerWaveEnded();
-							_graceTimeTriggered = true;
+							timeLeftLabel.Text = "Grace Time";
+							if (!_graceTimeTriggered)
+							{
+								_timer.TriggerWaveEnded();
+								_graceTimeTriggered = true;
+							}
 						}
-					}
-					else
-					{
-						_graceTimeTriggered = false; // Reset, wenn GraceTime vorbei ist
-					}
+						else
+						{
+							_graceTimeTriggered = false; // Reset, wenn GraceTime vorbei ist
+						}
 
-					break;
-				}
+						break;
+					}
 			}
 
 			// Player stuff

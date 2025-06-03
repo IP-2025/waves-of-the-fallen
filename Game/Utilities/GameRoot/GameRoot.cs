@@ -13,7 +13,8 @@ public partial class GameRoot : Node
 	private bool _isServer = false;
 	private bool _enableDebug = false;
 	private WaveTimer _globalWaveTimer;
-		private GameOverScreen _gameOverScreen;
+
+	private GameOverScreen _gameOverScreen;
 
 
 	// Called when the node enters the scene tree for the first time.
@@ -114,27 +115,23 @@ public partial class GameRoot : Node
 		AddChild(spawner);
 	}
 
+	public void ShowGameOverScreen()
+	{
+		if (_gameOverScreen != null)
+		{
+			DebugIt("GameOverScreen already exists, removing it.");
+			return;
+		}
+		var scene = GD.Load<PackedScene>("res://UI/GameOver/gameOverScreen.tscn");
+		_gameOverScreen = scene.Instantiate<GameOverScreen>();
+		AddChild(_gameOverScreen);
+		_gameOverScreen.SetScore(0);
+	}
+
 	public void OnPlayerDied()
 	{
 		DebugIt("Player died! Switching camera to alive player.");
 		DebugIt("Player died! Showing Game Over screen.");
-
-		if (_mainMap == null)
-		{
-			GD.PrintErr("Main map is null!");
-			return;
-		}
-
-		var gameOverScreen = _mainMap.GetNodeOrNull<CanvasLayer>("GameOver");
-		if (gameOverScreen != null)
-		{
-			gameOverScreen.Visible = true;
-			//GetTree().Paused = true;
-		}
-		else
-		{
-			GD.PrintErr("GameOver screen not found in main map!");
-		}
 
 		long peerId = Multiplayer.GetUniqueId();
 
@@ -150,11 +147,11 @@ public partial class GameRoot : Node
 			Server.Instance.Entities.Remove(peerId);
 		}
 
-		// Lebende Spieler aus Gruppe "player"
+		// Find another player who is still alive
 		var alivePlayers = GetTree()
 			.GetNodesInGroup("player")
 			.OfType<Node2D>()
-			.Where(p => IsInstanceValid(p))
+			.Where(p => p.Name != $"Player_{peerId}")
 			.ToList();
 
 		if (alivePlayers.Count > 0)
@@ -169,18 +166,11 @@ public partial class GameRoot : Node
 		}
 		else
 		{
-			DebugIt("No alive players left. Showing Game Over screen.");
-
-			if (_gameOverScreen == null)
-			{
-				var scene = GD.Load<PackedScene>("res://UI/GameOver/gameOverScreen.tscn");
-				_gameOverScreen = scene.Instantiate<GameOverScreen>();
-				AddChild(_gameOverScreen);
-			}
-
-			_gameOverScreen.ShowGameOver(0); // Score ggf. später ersetzen
+			DebugIt("No alive players left.");
 		}
 	}
+
+	
 
 	private void DebugIt(string message)
 	{
