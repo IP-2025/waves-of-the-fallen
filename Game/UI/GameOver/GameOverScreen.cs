@@ -1,5 +1,5 @@
 using Godot;
-using System.Threading.Tasks;
+using Game.Utilities.Multiplayer;
 
 namespace Game.UI.GameOver{
 	public partial class GameOverScreen : Control
@@ -7,65 +7,26 @@ namespace Game.UI.GameOver{
 	[Export] public Label ScoreLabel;
 	[Export] public Button MainMenuBtn;
 	[Export] public ColorRect FadeRect;
-	[Export] public HBoxContainer GameOverBox;
-	[Export] public Label GameLabel;
-	[Export] public Label OverLabel;
+	[Export] public Label GameOverLabel;
 	[Export] public AudioStreamPlayer AudioPlayer;
+	[Export] public AnimationPlayer AnimationPlayerBackground;
+	[Export] public AnimationPlayer AnimationPlayerForeground;
 
 	public override void _Ready()
-	{
-		// Initial Setup
-		MainMenuBtn.Visible = false;
-		GameOverBox.Visible = true;
+		{
+			// Initial Setup
+			MainMenuBtn.Visible = false;
 
-		// Labels außerhalb des Sichtbereichs platzieren (Animation-Start)
-		GameLabel.Position = new Vector2(-400, 0);
-		OverLabel.Position = new Vector2(600, 0);
+			AnimationPlayerBackground.Play("FadeIn");
+			AnimationPlayerForeground.Play("GameOver");
+			MainMenuBtn.Visible = true;
 
-		// Animation starten
-		AnimateGameOver();
-		FadeToGrey();
-		PlaySound();
-		ShowButtonDelayed();
-
-		// Button Signal verbinden
-		MainMenuBtn.Pressed += OnMainMenuBtnPressed;
-	}
+			MainMenuBtn.Pressed += OnMainMenuBtnPressed;
+		}
 
 	public void SetScore(int score)
 	{
 		ScoreLabel.Text = $"Score: {score}";
-	}
-
-	private void AnimateGameOver()
-	{
-		// GameLabel von links zur Mitte
-		var tweenGame = GetNode<Tween>("GameOverBox/TweenGame");
-		tweenGame.TweenProperty(GameLabel, "position:x", 0, 1.0f);
-		tweenGame.Play();
-
-		// OverLabel von rechts zur Mitte
-		var tweenOver = GetNode<Tween>("GameOverBox/TweenOver");
-		tweenOver.TweenProperty(OverLabel, "position:x", 0, 1.0f);
-		tweenOver.Play();
-	}
-
-	private void FadeToGrey()
-	{
-		var tween = CreateTween();
-		tween.TweenProperty(FadeRect, "modulate:a", 0.7f, 2.0f);
-		tween.Play();
-	}
-
-	private void PlaySound()
-	{
-		AudioPlayer.Play();
-	}
-
-	private async void ShowButtonDelayed()
-	{
-		await ToSignal(GetTree().CreateTimer(2), "timeout");
-		MainMenuBtn.Visible = true;
 	}
 
 	private void OnMainMenuBtnPressed()

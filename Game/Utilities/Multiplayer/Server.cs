@@ -1,19 +1,19 @@
 namespace Game.Utilities.Multiplayer
 {
-	
-using Godot;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
 
-public partial class Server : Node
-{
-	public static Server Instance;
+	using Godot;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Reflection.Metadata;
 
-	private bool enableDebug = false;
-	public Dictionary<long, int> PlayerSelections = new Dictionary<long, int>();
-	public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
-	private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
+	public partial class Server : Node
+	{
+		public static Server Instance;
+
+		private bool enableDebug = false;
+		public Dictionary<long, int> PlayerSelections = new Dictionary<long, int>();
+		public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
+		private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
 	{
 		{ "res://Entities/Characters/Base/default_player.tscn", EntityType.DefaultPlayer },
 		{ "res://Entities/Characters/Archer/archer.tscn", EntityType.Archer },
@@ -44,44 +44,44 @@ public partial class Server : Node
 		{ "res://Weapons/Utility/MedicineBag/medicine.tscn", EntityType.Medicine }
 	};
 
-	public override void _Ready()
-	{
-		Instance = this;
-	}
-
-	public void ProcessCommand(Command cmd)
-	{
-		if (!Entities.TryGetValue(cmd.EntityId, out var entity))
+		public override void _Ready()
 		{
-			DebugIt($"Entity {cmd.EntityId} not found in Entities dictionary");
-			return;
+			Instance = this;
 		}
 
-		if (cmd.Type == CommandType.Move && cmd.MoveDir.HasValue)
+		public void ProcessCommand(Command cmd)
 		{
-			var dir = cmd.MoveDir.Value;
-			if (dir.Length() > 1f)
+			if (!Entities.TryGetValue(cmd.EntityId, out var entity))
 			{
-				dir = dir.Normalized();
+				DebugIt($"Entity {cmd.EntityId} not found in Entities dictionary");
+				return;
 			}
 
-			var joystick = entity.GetNodeOrNull<Joystick>("Joystick");
-			if (joystick != null)
+			if (cmd.Type == CommandType.Move && cmd.MoveDir.HasValue)
 			{
-				joystick.PosVector = dir;
-				DebugIt($"Set Joystick.PosVector = {dir} on EntityID {cmd.EntityId}");
+				var dir = cmd.MoveDir.Value;
+				if (dir.Length() > 1f)
+				{
+					dir = dir.Normalized();
+				}
+
+				var joystick = entity.GetNodeOrNull<Joystick>("Joystick");
+				if (joystick != null)
+				{
+					joystick.PosVector = dir;
+					DebugIt($"Set Joystick.PosVector = {dir} on EntityID {cmd.EntityId}");
+				}
+			}
+			else if (cmd.Type == CommandType.Shoot)
+			{
+				// Maybe we need, maybe we don't
 			}
 		}
-		else if (cmd.Type == CommandType.Shoot)
-		{
-			// Maybe we need, maybe we don't
-		}
-	}
 
-	public byte[] GetSnapshot(ulong tick)
-	{
-		var snap = new Snapshot(tick);
-		var toRemove = new List<long>();
+		public byte[] GetSnapshot(ulong tick)
+		{
+			var snap = new Snapshot(tick);
+			var toRemove = new List<long>();
 			foreach (var kv in Entities)
 			{
 				var node = kv.Value;
@@ -141,29 +141,30 @@ public partial class Server : Node
 					owner,
 					slotIx
 				));
-		}
+			}
 
-		foreach (var id in toRemove)
+			foreach (var id in toRemove)
+			{
+				Entities.Remove(id);
+			}
+
+			int livingPlayers = Entities.Values
+		.OfType<DefaultPlayer>() // oder dein Basistyp für Spieler
+		.Count(player =>
 		{
-			Entities.Remove(id);
+			var health = player.GetNodeOrNull<Health>("Health");
+			return health != null && health.health > 0;
+		});
+
+			snap.livingPlayersCount = livingPlayers;
+
+			return Serializer.Serialize(snap);
 		}
 
-		int livingPlayers = Entities.Values
-    .OfType<DefaultPlayer>() // oder dein Basistyp für Spieler
-    .Count(player => {
-        var health = player.GetNodeOrNull<Health>("Health");
-        return health != null && health.health > 0;
-    });
-
-snap.livingPlayersCount = livingPlayers;
-
-		return Serializer.Serialize(snap);
+		private void DebugIt(string message)
+		{
+			if (enableDebug)
+				GD.Print($"Server: {message}");
+		}
 	}
-
-	private void DebugIt(string message)
-	{
-		if (enableDebug)
-			GD.Print($"Server: {message}");
-	}
-}	
 }

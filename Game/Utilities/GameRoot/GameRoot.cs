@@ -124,6 +124,7 @@ public partial class GameRoot : Node
 		}
 		var scene = GD.Load<PackedScene>("res://UI/GameOver/gameOverScreen.tscn");
 		_gameOverScreen = scene.Instantiate<GameOverScreen>();
+		_gameOverScreen.VisibilityLayer = 1000;
 		AddChild(_gameOverScreen);
 		_gameOverScreen.SetScore(0);
 	}

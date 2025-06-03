@@ -112,10 +112,10 @@ public partial class Client : Node
 	
 	private void ShowGameOverScreen(int livingPlayersCount)
 	{
-    if (livingPlayersCount == 0)
-    {
-        var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
-		gameRoot.ShowGameOverScreen();
+		if (livingPlayersCount == 0)
+		{
+			var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
+			gameRoot.ShowGameOverScreen();
     }	
 	}
 
