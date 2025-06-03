@@ -80,10 +80,12 @@ bus = &"SoundEffectBus"
 [node name="medicineBagThrow" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_sfxm6")
 pitch_scale = 2.5
+bus = &"SoundEffectBus"
 
 [node name="daggerStabs" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_sfxm6")
 pitch_scale = 1.4
+bus = &"SoundEffectBus"
 
 [node name="buttonPress" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_m7r52")
