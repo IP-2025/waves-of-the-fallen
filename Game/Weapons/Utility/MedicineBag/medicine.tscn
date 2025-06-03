@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://b0a6rtvxta2b6"]
 
 [ext_resource type="Script" uid="uid://f2jp58chd2bc" path="res://Weapons/Utility/MedicineBag/Medicine.cs" id="1_4wycq"]
-[ext_resource type="Texture2D" uid="uid://c5j45v8hmv35a" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag.png" id="1_riq38"]
+[ext_resource type="Texture2D" uid="uid://bpc1dvfcaahpc" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag.png" id="1_riq38"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_41hyg"]
-[ext_resource type="Texture2D" uid="uid://bhjlcegxqfga0" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag1.png" id="4_ns8c0"]
-[ext_resource type="Texture2D" uid="uid://bu06h7kthb8t8" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag2.png" id="5_2xh6q"]
+[ext_resource type="Texture2D" uid="uid://b0k17yp4x5jtk" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag1.png" id="4_ns8c0"]
+[ext_resource type="Texture2D" uid="uid://cwd87aghdu86h" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag2.png" id="5_2xh6q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4wycq"]
 size = Vector2(400, 285.714)
@@ -64,7 +64,9 @@ autostart = true
 
 [node name="MedicineSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6eu1f")
-animation = &"despawning"
+animation = &"thrown"
+frame = 2
+frame_progress = 0.629986
 
 [node name="Path2D" type="Path2D" parent="."]
 position = Vector2(11.1328, 13.9166)

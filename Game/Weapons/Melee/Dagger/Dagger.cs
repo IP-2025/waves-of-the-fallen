@@ -3,17 +3,22 @@ using System;
 
 public partial class Dagger : MeleeWeapon
 {
+	private AnimationPlayer DaggerAnimationPlayer;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/Stab");
-		MeleeDamage = 50;
+		DaggerAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		MeleeDamage = 250;
+		WeaponRange = 70;
+		Speed = 0.01f;
 	}
 
 	public async void OnTimerTimeoutDagger()
+	{ 
+		ShootMeleeVisual(() =>
 	{
-		animatedSprite.Play("Stab");
-		await ToSignal(GetTree().CreateTimer(0.13), "timeout");
-		//MeleeAttack(target);
-	}	
+		DaggerAnimationPlayer.Play("stab");
+	});
+		await ToSignal(GetTree().CreateTimer(Speed), "timeout");
+	}
 }
