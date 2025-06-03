@@ -2,13 +2,11 @@ using Godot;
 using System;
 using System.Linq;
 
-public abstract partial class MeleeWeapon : Area2D
+public abstract partial class MeleeWeapon : Weapon
 {
 	protected AnimatedSprite2D animatedSprite;
-	[Export] public float WeaponRange = 50f;
-	[Export] public int MeleeDamage = 50;
-	[Export] public float Speed = 0.2f;
-	bool onCooldown = false;
+	public abstract string ResourcePath { get; }
+	
 	public override void _PhysicsProcess(double delta)
 	{
 		var target = FindNearestEnemy();
@@ -29,7 +27,7 @@ public abstract partial class MeleeWeapon : Area2D
 
 			float dist = GlobalPosition.DistanceTo(enemyNode.GlobalPosition);
 
-			if (dist < closestDist && dist <= WeaponRange)
+			if (dist < closestDist && dist <= DefaultRange)
 			{
 				closestDist = dist;
 				closestEnemy = enemyNode;
@@ -66,42 +64,36 @@ public abstract partial class MeleeWeapon : Area2D
 			var healthNode = actualTarget.GetNodeOrNull<Health>("Health");
 			if (healthNode != null)
 			{
-			healthNode.Damage(MeleeDamage);
+				healthNode.Damage(DefaultDamage);
 			}
 	}
 	protected void ShootMeleeVisual(Action onAttackComplete = null)
 	{
-		
-		if(!onCooldown){
-			onCooldown = true;
-			Node actualTarget = FindNearestEnemy();
-			if (actualTarget == null){
-			onCooldown = false;
+		Node actualTarget = FindNearestEnemy();
+		if (actualTarget == null){
 			return;
-			}
-				if(TryGetPosition(actualTarget, out var position))
-				{
-				var tween = CreateTween();
-				//move forward
-				tween.TweenProperty(this, "global_position", position, Speed)
-					.SetTrans(Tween.TransitionType.Sine)
-					.SetEase(Tween.EaseType.Out);
+		}
+		if(TryGetPosition(actualTarget, out var position))
+		{
+			var tween = CreateTween();
+			//move forward
+			tween.TweenProperty(this, "global_position", position, 0.1)
+				.SetTrans(Tween.TransitionType.Sine)
+				.SetEase(Tween.EaseType.Out);
 
-				//Call method for attack and Animation
-				tween.TweenCallback(Callable.From(() => {
-					if (!Godot.GodotObject.IsInstanceValid(actualTarget))
+			//Call method for attack and Animation
+			tween.TweenCallback(Callable.From(() => {
+				if (!Godot.GodotObject.IsInstanceValid(actualTarget))
 					return; //Prevents rare asyncronous problem 
-					onAttackComplete?.Invoke();
-					MeleeAttack(actualTarget);
-					onCooldown = false;
-					//};
-				}));
-				//go back
-				tween.TweenProperty(this, "position", Vector2.Zero, Speed)
-					.SetDelay(0.1)
-					.SetTrans(Tween.TransitionType.Sine)
-					.SetEase(Tween.EaseType.In);
-			}
+				onAttackComplete?.Invoke();
+				MeleeAttack(actualTarget);
+				//};
+			}));
+			//go back
+			tween.TweenProperty(this, "position", Vector2.Zero, 0.1)
+				.SetDelay(0.2)
+				.SetTrans(Tween.TransitionType.Sine)
+				.SetEase(Tween.EaseType.In);
 		}
 	}
 }
