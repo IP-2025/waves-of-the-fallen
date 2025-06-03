@@ -4,6 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using Game.Utilities.Multiplayer;
 using Game.UI.GameOver;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 
 // GameRoot is the main entry point for the game. It is responsible for loading the map, spawning the player, starting the enemy spawner and so on.
 public partial class GameRoot : Node
@@ -15,6 +18,8 @@ public partial class GameRoot : Node
 	private WaveTimer _globalWaveTimer;
 
 	private GameOverScreen _gameOverScreen;
+
+	private static readonly System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
 
 
 	// Called when the node enters the scene tree for the first time.
@@ -115,17 +120,47 @@ public partial class GameRoot : Node
 		AddChild(spawner);
 	}
 
+	private async void SendScoreToBackend(long playerId, int score)
+	{
+		var url = Game.Utilities.Backend.ServerConfig.BaseUrl + "/api/v1/protected/highscore/submit";
+
+		var data = new
+		{
+			playerId = playerId,
+			score = score
+		};
+		string json = JsonSerializer.Serialize(data);
+		var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+		try
+		{
+			var response = await httpClient.PostAsync(url, content);
+			if (!response.IsSuccessStatusCode)
+			{
+				GD.PrintErr($"Score submit error: {response.StatusCode}");
+			}
+		}
+		catch (Exception ex)
+		{
+			GD.PrintErr($"Score submit exception: {ex.Message}");
+		}
+	}
+
 	public void ShowGameOverScreen()
 	{
 		if (_gameOverScreen != null)
-		{
 			return;
-		}
+
 		var scene = GD.Load<PackedScene>("res://UI/GameOver/gameOverScreen.tscn");
 		_gameOverScreen = scene.Instantiate<GameOverScreen>();
 		AddChild(_gameOverScreen);
-		_gameOverScreen.SetScore(0); //Show Score 0 for now, you can set it later
-		
+
+		long peerId = Multiplayer.GetUniqueId();
+		int score = 0;
+		if (Game.Utilities.Backend.GameState.PlayerScores.ContainsKey(peerId))
+			score = Game.Utilities.Backend.GameState.PlayerScores[peerId];
+
+		_gameOverScreen.SetScore(score);
 	}
 
 	public void OnPlayerDied()
@@ -134,6 +169,10 @@ public partial class GameRoot : Node
 		DebugIt("Player died! Showing Game Over screen.");
 
 		long peerId = Multiplayer.GetUniqueId();
+		int score = 0;
+		if (Game.Utilities.Backend.GameState.PlayerScores.ContainsKey(peerId))
+			score = Game.Utilities.Backend.GameState.PlayerScores[peerId];
+		_gameOverScreen.SetScore(score);
 
 		// Remove player entity to prevent a leftover copy
 		if (Server.Instance.Entities.TryGetValue(peerId, out var playerNode))
@@ -167,10 +206,12 @@ public partial class GameRoot : Node
 		else
 		{
 			DebugIt("No alive players left.");
+
+			SendScoreToBackend(peerId, score);
+
+			ShowGameOverScreen();
 		}
 	}
-
-	
 
 	private void DebugIt(string message)
 	{
