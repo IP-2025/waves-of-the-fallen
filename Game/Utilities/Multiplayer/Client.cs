@@ -23,7 +23,7 @@ public partial class Client : Node
 	// GameRoot container for entities
 	private readonly Dictionary<long, Node2D> _instances = new();
 
-	// Shop - minimal integration
+	// Shop
 	private int _lastLocalShopRound = 1;
 	private int _newWeaponPos = 0;
 	private PackedScene _shopScene = GD.Load<PackedScene>("res://UI/Shop/BossShop/bossShop.tscn");
@@ -72,37 +72,28 @@ public partial class Client : Node
 	{
 		long eid = Multiplayer.GetUniqueId();
 
-		CheckShopSelection();
-		if (weaponUpdated)
-		{
-			weaponUpdated = false;
-			return new Command(tick, eid, CommandType.BossShop, Vector2.Zero, _selectedWeapon, _newWeaponPos);
-		}
-
 		var joy = GetLocalJoystickDirection();
 		var key = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		// decide between joystick and keyboard input, joystick has priority
 		var dir = joy != Vector2.Zero ? joy : key;
 
 		// nonly send move command if there is input
-		return dir != Vector2.Zero ? new Command(tick, eid, CommandType.Move, dir, "", 0) : null;
+		return dir != Vector2.Zero ? new Command(tick, eid, CommandType.Move, dir, _selectedWeapon, _newWeaponPos) : null;
 	}
 
-	private void CheckShopSelection()
+	public Command GetShopCommand(ulong tick)
 	{
-		if (_shopInstance != null && IsInstanceValid(_shopInstance))
-		{
-			var bossShop = _shopInstance as BossShop;
-			if (bossShop != null && bossShop.HasSelection)
-			{
-				_selectedWeapon = bossShop.SelectedWeapon;
-				_newWeaponPos++;
-				weaponUpdated = true;
-				bossShop.ConsumeSelection();
+		long eid = Multiplayer.GetUniqueId();
 
-				DebugIt($"Shop selection retrieved: {_selectedWeapon} at position {_newWeaponPos}");
-			}
-		}
+		var joy = GetLocalJoystickDirection();
+		var key = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+		// decide between joystick and keyboard input, joystick has priority
+		var dir = joy != Vector2.Zero ? joy : key;
+
+		bool executeCommand = weaponUpdated;
+		weaponUpdated = false;
+		
+		return executeCommand ? new Command(tick, eid, CommandType.BossShop, dir, _selectedWeapon, _newWeaponPos) : null;
 	}
 
 	// helper finds the local player's joystick and returns its direction
@@ -139,6 +130,17 @@ public partial class Client : Node
 		_hasJoystick = false;
 	}
 
+	private void OnWeaponChosen(Weapon weaponType)
+	{
+		if (_shopInstance != null && IsInstanceValid(_shopInstance))
+			_shopInstance.QueueFree();
+		_shopInstance = null;
+
+		_selectedWeapon = weaponType.GetType().Name;
+		_newWeaponPos++;
+		weaponUpdated = true;
+	}
+	
 	private void InstantiateOrUpdateEntities(IEnumerable<EntitySnapshot> entities)
 	{
 		// Kamera- und WaveTimer-Referenzen überprüfen und ggf. zurücksetzen
@@ -160,6 +162,7 @@ public partial class Client : Node
 				if (_camera != null && _shopInstance == null)
 				{
 					_shopInstance = _shopScene.Instantiate();
+					_shopInstance.Connect(nameof(BossShop.WeaponChosen), new Callable(this, nameof(OnWeaponChosen)));
 					_camera.AddChild(_shopInstance);
 
 					DebugIt($"Shop instantiated for wave {entity.WaveCount}");

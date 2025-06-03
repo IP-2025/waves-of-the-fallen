@@ -4,25 +4,24 @@ using System.Diagnostics;
 
 public partial class BossShop : Control
 {
+	[Signal] 
+	public delegate void WeaponChosenEventHandler(Weapon weapon);
+
 	private static readonly List<Weapon> allWeapons = new()
-	{
-		new Bow(),
-		new Crossbow(),
-		new Kunai(),
-		new FireStaff(),
-		new Lightningstaff(),
-		new Healstaff(),
-		new Dagger(),
-		new Sword(),
-		new WarHammer(),
-		new DoubleBlade()
-	};
+{
+	new Bow(),
+	new Crossbow(),
+	new Kunai(),
+	new FireStaff(),
+	new Lightningstaff(),
+	new Healstaff(),
+	new Dagger(),
+	new Sword(),
+	new WarHammer(),
+	new DoubleBlade()
+};
 
-	// Properties that Client can access
-	public string SelectedWeapon { get; private set; } = "";
-	public bool HasSelection { get; private set; } = false;
-
-	private void PopulateWeapon(string containerPath, Weapon weapon)
+	private void PopulateWeapon(string containerPath, Weapon weapon, int index)
 	{
 		var box = GetNode<Node>(containerPath);
 
@@ -37,12 +36,13 @@ public partial class BossShop : Control
 		box.GetNode<RichTextLabel>("piercing").Text = weapon is RangedWeapon ? $"Piercing: {stats.piercing}" : "";
 		
 		var btn = GetNode<Button>(containerPath);
+		var w = weapon; // closure copy
 		btn.Pressed += () => OnWeaponButtonUp(weapon);
+		
 	}
 
 	public override void _Ready()
 	{
-		
 		var rng = new RandomNumberGenerator();
 		rng.Randomize();
 
@@ -56,25 +56,13 @@ public partial class BossShop : Control
 		for (int slot = 0; slot < 3 && slot < shuffled.Count; slot++)
 		{
 			string path = $"MarginContainer/HBoxContainer/weapon{slot + 1}";
-			PopulateWeapon(path, shuffled[slot]);
+			PopulateWeapon(path, shuffled[slot], slot + 1);
 		}
 	}
 
 	public void OnWeaponButtonUp(Weapon chosen)
 	{
 		Debug.Print($"Du hast gewählt: {chosen.GetType().Name}");
-
-		// Store selection for Client to pick up
-		SelectedWeapon = chosen.GetType().Name;
-		HasSelection = true;
-
-		// Close shop
-		QueueFree();
-	}
-	
-	// Method for Client to consume the selection
-	public void ConsumeSelection()
-	{
-		HasSelection = false;
+		EmitSignal(SignalName.WeaponChosen, chosen);
 	}
 }

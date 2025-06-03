@@ -18,6 +18,7 @@ public partial class GameRoot : Node
 	private int _lastLocalShopRound = 1;
 	private Node _shopInstance;
 	private int _newWeaponPos = 0;
+	string _selectedWeapon = "";
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -62,7 +63,7 @@ public partial class GameRoot : Node
 
 	public override void _Process(double delta)
 	{
-		// kind of a silly workaround, however its better than re implementing the shop system. Due date is tomorrow so whatever.. quick an dirty, lets gooo
+		// kind of a silly workaround, however its better than re implementing the shop system...
 		if (!NetworkManager.Instance._soloMode) return;
 
 		int currentWave = _globalWaveTimer.WaveCounter;
@@ -72,45 +73,39 @@ public partial class GameRoot : Node
 			if (_shopInstance == null)
 			{
 				_shopInstance = GD.Load<PackedScene>("res://UI/Shop/BossShop/bossShop.tscn").Instantiate();
-				GetChildren().OfType<DefaultPlayer>().FirstOrDefault().GetNode<Camera2D>("Camera2D").AddChild(_shopInstance);
-				GD.Print("crate shop");
+				_shopInstance.Connect(nameof(BossShop.WeaponChosen), new Callable(this, nameof(OnWeaponChosen)));
+				GetChildren().OfType<DefaultPlayer>().FirstOrDefault().GetNodeOrNull<Camera2D>("Camera2D").AddChild(_shopInstance);
 			}
 		}
+	}
+	private void OnWeaponChosen(Weapon weaponType)
+	{
+		_selectedWeapon = weaponType.GetType().Name;
+		_newWeaponPos++;
 
-		if (_shopInstance != null)
+		var scene = _selectedWeapon switch
 		{
-			GD.Print("read shop");
-			var bossShop = _shopInstance as BossShop;
-			if (bossShop != null && bossShop.HasSelection)
-			{
-				_newWeaponPos++;
-				GD.Print("Weapon Pos" + _newWeaponPos);
-				GD.Print("selected weapon" + bossShop.SelectedWeapon);
-				var scene = bossShop.SelectedWeapon switch
-				{
-					"Bow" => GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn"),
-					"Crossbow" => GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn"),
-					"FireStaff" => GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn"),
-					"Kunai" => GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn"),
-					"Lightningstaff" => GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn"),
-					"Healstaff" => GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn"),
-					"Dagger" => GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn"),
-					"Sword" => GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn"),
-					"WarHammer" => GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn"),
-					"DoubleBlade" => GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn"),
-					_ => null
-				};
-				if (scene == null) return;
-				
-				var slot = GetChildren().OfType<DefaultPlayer>().FirstOrDefault().GetNode<Node2D>("WeaponSpawnPoints").GetChild<Node2D>(_newWeaponPos);
-				var weapon = scene.Instantiate<Area2D>();
-				weapon.Position = Vector2.Zero;;
-				slot.AddChild(weapon);
+			"Bow" => GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn"),
+			"Crossbow" => GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn"),
+			"FireStaff" => GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn"),
+			"Kunai" => GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn"),
+			"Lightningstaff" => GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn"),
+			"Healstaff" => GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn"),
+			"Dagger" => GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn"),
+			"Sword" => GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn"),
+			"WarHammer" => GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn"),
+			"DoubleBlade" => GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn"),
+			_ => null
+		};
+		if (scene == null) return;
 
-				bossShop.ConsumeSelection();
-				_shopInstance = null;
-			}
-		}
+		var slot = GetChildren().OfType<DefaultPlayer>().FirstOrDefault().GetNode<Node2D>("WeaponSpawnPoints").GetChild<Node2D>(_newWeaponPos);
+		var weapon = scene.Instantiate<Area2D>();
+		slot.AddChild(weapon);
+		weapon.Position = Vector2.Up;
+
+		_shopInstance.QueueFree();
+		_shopInstance = null;
 	}
 
 	private void SpawnMap(string mapPath)
