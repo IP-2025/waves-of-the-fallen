@@ -48,7 +48,9 @@ public partial class LocalMenu : Control
 
   private void _on_button_back_local_pressed()
   {
-    // TODO: disconect from server / host
+    // disconnect from server / host
+    NetworkManager.Instance.DisconnectClient();
+    // Load the previous scene
     var scene = ResourceLoader.Load<PackedScene>("res://Menu/online_localMenu.tscn");
     GetTree().ChangeSceneToPacked(scene);
     SoundManager.Instance.PlayUI();
@@ -71,7 +73,7 @@ public partial class LocalMenu : Control
     timer2.OneShot = true;
     timer2.Timeout += () => NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
     timer2.Start();
-    
+
     // disable join and host button
     joinButton.Visible = false;
     joinButton.Disabled = true;

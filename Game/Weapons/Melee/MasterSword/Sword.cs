@@ -17,7 +17,6 @@ public partial class Sword : MeleeWeapon
 	{
 		//GD.Print("Start SwordAnimation");
 		SwordAnimationPlayer.Play("SwordAttack");
-		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("swordSwings"), GlobalPosition, -5);
 	});
 		await ToSignal(GetTree().CreateTimer(0.2), "timeout");
 	}

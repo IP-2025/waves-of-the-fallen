@@ -31,15 +31,7 @@ public partial class Health : Node2D
 		
 		doAnimation(); // client has to do damage animations
 		
-		if (GetParent() is EnemyBase enemy)
-		{
-			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("enemyHurt"), ((Node2D)GetParent()).Position);
-		}
-		else if (GetParent() is DefaultPlayer player)
-		{
-			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerHit"), ((Node2D)GetParent()).Position, -10);
-		}
-		
+		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("enemyHurt"), ((Node2D)GetParent()).Position);
 
 		// GD.Print($"Took damage: {damage}, current health: {health}");
 	}
