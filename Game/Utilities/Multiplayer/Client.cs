@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security;
 using System;
-	using System.Threading;
+using System.Threading;
 
 public partial class Client : Node
 {
@@ -14,7 +14,7 @@ public partial class Client : Node
 	private Camera2D _camera;
 	private bool _hasJoystick;
 	private bool _waveTimerReady;
-	private WaveTimer _timer; 
+	private WaveTimer _timer;
 	private bool _graceTimeTriggered;
 
 	// movement tracking of players
@@ -22,8 +22,8 @@ public partial class Client : Node
 
 	// GameRoot container for entities
 	private readonly Dictionary<long, Node2D> _instances = new();
-	
-	// Shop
+
+	// Shop - minimal integration
 	private int _lastLocalShopRound = 1;
 	private int _newWeaponPos = 0;
 	private PackedScene _shopScene = GD.Load<PackedScene>("res://UI/Shop/BossShop/bossShop.tscn");
@@ -72,28 +72,37 @@ public partial class Client : Node
 	{
 		long eid = Multiplayer.GetUniqueId();
 
+		CheckShopSelection();
+		if (weaponUpdated)
+		{
+			weaponUpdated = false;
+			return new Command(tick, eid, CommandType.BossShop, Vector2.Zero, _selectedWeapon, _newWeaponPos);
+		}
+
 		var joy = GetLocalJoystickDirection();
 		var key = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		// decide between joystick and keyboard input, joystick has priority
 		var dir = joy != Vector2.Zero ? joy : key;
 
 		// nonly send move command if there is input
-		return dir != Vector2.Zero ? new Command(tick, eid, CommandType.Move, dir, _selectedWeapon, _newWeaponPos) : null;
+		return dir != Vector2.Zero ? new Command(tick, eid, CommandType.Move, dir, "", 0) : null;
 	}
-	
-	public Command GetShopCommand(ulong tick)
+
+	private void CheckShopSelection()
 	{
-		long eid = Multiplayer.GetUniqueId();
+		if (_shopInstance != null && IsInstanceValid(_shopInstance))
+		{
+			var bossShop = _shopInstance as BossShop;
+			if (bossShop != null && bossShop.HasSelection)
+			{
+				_selectedWeapon = bossShop.SelectedWeapon;
+				_newWeaponPos++;
+				weaponUpdated = true;
+				bossShop.ConsumeSelection();
 
-		var joy = GetLocalJoystickDirection();
-		var key = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-		// decide between joystick and keyboard input, joystick has priority
-		var dir = joy != Vector2.Zero ? joy : key;
-
-		bool executeCommand = weaponUpdated;
-		weaponUpdated = false;
-		
-		return executeCommand ? new Command(tick, eid, CommandType.BossShop, dir, _selectedWeapon, _newWeaponPos) : null;
+				DebugIt($"Shop selection retrieved: {_selectedWeapon} at position {_newWeaponPos}");
+			}
+		}
 	}
 
 	// helper finds the local player's joystick and returns its direction
@@ -129,18 +138,6 @@ public partial class Client : Node
 		_camera = null;
 		_hasJoystick = false;
 	}
-	
-	private void OnWeaponChosen(Weapon weaponType)
-	{
-		if (_shopInstance != null && IsInstanceValid(_shopInstance))
-			_shopInstance.QueueFree();
-		_shopInstance = null;
-
-		_selectedWeapon = weaponType.GetType().Name;
-		_newWeaponPos++;
-		weaponUpdated = true;
-	}
-
 
 	private void InstantiateOrUpdateEntities(IEnumerable<EntitySnapshot> entities)
 	{
@@ -154,62 +151,58 @@ public partial class Client : Node
 		// first all not a weapon things (no OwnerID & SlotIndex)
 		foreach (var entity in entities.Where(e => !e.OwnerId.HasValue || !e.SlotIndex.HasValue))
 		{
-			
+
 			// Shop
 			if (entity.WaveCount > _lastLocalShopRound && entity.WaveCount < 5)
 			{
 				_lastLocalShopRound = entity.WaveCount;
-				
-				if (_camera != null)
+
+				if (_camera != null && _shopInstance == null)
 				{
 					_shopInstance = _shopScene.Instantiate();
 					_camera.AddChild(_shopInstance);
-					_shopInstance.Connect(
-						BossShop.SignalName.WeaponChosen,
-						new Callable(this, nameof(OnWeaponChosen))
-					);
+
+					DebugIt($"Shop instantiated for wave {entity.WaveCount}");
 				}
-				
-        
 			}
-			
+
 			switch (_waveTimerReady)
 			{
 				// HUD / WaveCounter stuff
 				case false when _camera != null:
-				{
-					var wt = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
-					wt.Disable = true;
-					_camera.AddChild(wt);
-					_timer = wt;
-					_waveTimerReady = true;
-					break;
-				}
+					{
+						var wt = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
+						wt.Disable = true;
+						_camera.AddChild(wt);
+						_timer = wt;
+						_waveTimerReady = true;
+						break;
+					}
 				case true when _camera != null:
-				{
-					var timeLeftLabel = _timer.GetNodeOrNull<Label>("TimeLeft");
-					if (timeLeftLabel != null)
-						timeLeftLabel.Text = (_timer.MaxTime - entity.WaveTimeLeft).ToString();
-
-					var waveCounterLabel = _timer.GetNodeOrNull<Label>("WaveCounter");
-					if (waveCounterLabel != null)
-						waveCounterLabel.Text = $"Wave: {entity.WaveCount}";
-					if (entity.GraceTime)
 					{
-						timeLeftLabel.Text = "Grace Time";
-						if (!_graceTimeTriggered)
+						var timeLeftLabel = _timer.GetNodeOrNull<Label>("TimeLeft");
+						if (timeLeftLabel != null)
+							timeLeftLabel.Text = (_timer.MaxTime - entity.WaveTimeLeft).ToString();
+
+						var waveCounterLabel = _timer.GetNodeOrNull<Label>("WaveCounter");
+						if (waveCounterLabel != null)
+							waveCounterLabel.Text = $"Wave: {entity.WaveCount}";
+						if (entity.GraceTime)
 						{
-							_timer.TriggerWaveEnded();
-							_graceTimeTriggered = true;
+							timeLeftLabel.Text = "Grace Time";
+							if (!_graceTimeTriggered)
+							{
+								_timer.TriggerWaveEnded();
+								_graceTimeTriggered = true;
+							}
 						}
-					}
-					else
-					{
-						_graceTimeTriggered = false; // Reset, wenn GraceTime vorbei ist
-					}
+						else
+						{
+							_graceTimeTriggered = false; // Reset, wenn GraceTime vorbei ist
+						}
 
-					break;
-				}
+						break;
+					}
 			}
 
 			// Player stuff
@@ -343,9 +336,9 @@ public partial class Client : Node
 		return null; // no OwnerID & SlotIndex? f this
 	}
 
-	
 
-	
+
+
 	private void UpdateTransform(Node2D inst, EntitySnapshot entity)
 	{
 		if (IsInstanceValid(inst))
@@ -406,7 +399,7 @@ public partial class Client : Node
 
 	private void ChangeCamera(Node2D inst, EntitySnapshot entity)
 	{
-		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
+		bool isPlayerType = entity.Type == EntityType.DefaultPlayer
 							|| entity.Type == EntityType.Archer
 							|| entity.Type == EntityType.Knight
 							|| entity.Type == EntityType.Mage

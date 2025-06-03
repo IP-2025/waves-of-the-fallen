@@ -1,3 +1,4 @@
+//old one
 namespace Game.Utilities.Multiplayer
 {
 	using Godot;
@@ -363,6 +364,7 @@ namespace Game.Utilities.Multiplayer
 		{
 			// change scene to game
 			var gameScene = GD.Load<PackedScene>("res://Utilities/GameRoot/GameRoot.tscn");
+			gameScene.Instantiate<Node>();
 			GetTree().ChangeSceneToPacked(gameScene);
 
 			var peerId = GetTree().GetMultiplayer().GetUniqueId();
@@ -407,16 +409,7 @@ namespace Game.Utilities.Multiplayer
 		{
 			if (_udpClientPeer == null) return;
 
-			Command cmdShop = client.GetShopCommand(_tick);
-
-			if (cmdShop != null)
-			{
-				_udpClientPeer.PutPacket(Serializer.Serialize(cmdShop));
-				DebugIt($"Send Shop cmd tick={_tick}, dir={cmdShop.Weapon}");
-			}
-
 			Command cmd = client.GetCommand(_tick);
-
 			if (cmd == null) return;
 
 			_udpClientPeer.PutPacket(Serializer.Serialize(cmd));
