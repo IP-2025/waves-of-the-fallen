@@ -23,6 +23,7 @@ public partial class Server : Node
 	private PackedScene _warHammerScene = GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn");
 	private PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
 	private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
+	private PackedScene _doubleBladeScene = GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn");
 	
 	private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
 	{
@@ -101,6 +102,7 @@ public partial class Server : Node
 				"Dagger"            => _daggerScene,
 				"Sword"             => _swordScene,
 				"WarHammer"         => _warHammerScene,
+				"DoubleBlade"         => _doubleBladeScene,
 				_            => null
 			};
 			if (scene == null) return;

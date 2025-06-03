@@ -41,7 +41,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	private PackedScene _daggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
 	private PackedScene _swordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
-	public PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
+	private PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
 	private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
 	private PackedScene _doubleBladeScene = GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn");
 	private PackedScene _warHammerScene = GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn");

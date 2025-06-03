@@ -17,7 +17,8 @@ public partial class BossShop : Control
 	new Healstaff(),
 	new Dagger(),
 	new Sword(),
-	new WarHammer()
+	new WarHammer(),
+	new DoubleBlade()
 };
 
 	private void PopulateWeapon(string containerPath, Weapon weapon, int index)

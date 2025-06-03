@@ -12,10 +12,10 @@ public partial class Dagger : MeleeWeapon
 	public override float DefaultSpeed { get; set; } = 0f;
 	public override string ResourcePath => _resBase + "Resources/";
 	public override string IconPath => _resourcePath + "Dagger.png";
-	public override float DefaultRange { get; set; } = 100f;
-	public override int DefaultDamage { get; set; } = 50;
+	public override float DefaultRange { get; set; } = 120f;
+	public override int DefaultDamage { get; set; } = 80;
 	
-	public override float ShootDelay{ get; set; } = 1f;
+	public override float ShootDelay{ get; set; } = 1.3f;
 	
 	private float _shootCooldown;
 	private float _timeUntilShoot;
@@ -49,7 +49,7 @@ public partial class Dagger : MeleeWeapon
 			DaggerAnimationPlayer.Play("stab");
 		});
 		
-		await ToSignal(GetTree().CreateTimer(0.13), "timeout");
+		await ToSignal(GetTree().CreateTimer(0.2), "timeout");
 		//MeleeAttack(target);
 	}	
 	

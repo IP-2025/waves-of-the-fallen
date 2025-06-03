@@ -69,32 +69,31 @@ public abstract partial class MeleeWeapon : Weapon
 	}
 	protected void ShootMeleeVisual(Action onAttackComplete = null)
 	{
-			Node actualTarget = FindNearestEnemy();
-			if (actualTarget == null){
-				return;
-			}
-				if(TryGetPosition(actualTarget, out var position))
-				{
-				var tween = CreateTween();
-				//move forward
-				tween.TweenProperty(this, "global_position", position, 0.1)
-					.SetTrans(Tween.TransitionType.Sine)
-					.SetEase(Tween.EaseType.Out);
+		Node actualTarget = FindNearestEnemy();
+		if (actualTarget == null){
+			return;
+		}
+		if(TryGetPosition(actualTarget, out var position))
+		{
+			var tween = CreateTween();
+			//move forward
+			tween.TweenProperty(this, "global_position", position, 0.1)
+				.SetTrans(Tween.TransitionType.Sine)
+				.SetEase(Tween.EaseType.Out);
 
-				//Call method for attack and Animation
-				tween.TweenCallback(Callable.From(() => {
-					if (!Godot.GodotObject.IsInstanceValid(actualTarget))
-						return; //Prevents rare asyncronous problem 
-					onAttackComplete?.Invoke();
-					MeleeAttack(actualTarget);
-					//};
-				}));
-				//go back
-				tween.TweenProperty(this, "position", Vector2.Zero, 0.1)
-					.SetDelay(0.1)
-					.SetTrans(Tween.TransitionType.Sine)
-					.SetEase(Tween.EaseType.In);
-			}
+			//Call method for attack and Animation
+			tween.TweenCallback(Callable.From(() => {
+				if (!Godot.GodotObject.IsInstanceValid(actualTarget))
+					return; //Prevents rare asyncronous problem 
+				onAttackComplete?.Invoke();
+				MeleeAttack(actualTarget);
+				//};
+			}));
+			//go back
+			tween.TweenProperty(this, "position", Vector2.Zero, 0.1)
+				.SetDelay(0.2)
+				.SetTrans(Tween.TransitionType.Sine)
+				.SetEase(Tween.EaseType.In);
 		}
 	}
 }
