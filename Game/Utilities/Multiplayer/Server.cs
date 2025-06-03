@@ -1,13 +1,14 @@
 namespace Game.Utilities.Multiplayer
 {
-	
-using Godot;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
 
-public partial class Server : Node
-{
-	public static Server Instance;
+	using Godot;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Reflection.Metadata;
+
+	public partial class Server : Node
+	{
+		public static Server Instance;
 
 	private bool enableDebug = false;
 	public Dictionary<long, int> PlayerSelections = new Dictionary<long, int>();
@@ -57,26 +58,26 @@ public partial class Server : Node
 		{ "res://Weapons/Utility/MedicineBag/medicine.tscn", EntityType.Medicine }
 	};
 
-	public override void _Ready()
-	{
-		Instance = this;
-	}
-
-	public void ProcessCommand(Command cmd)
-	{
-		if (!Entities.TryGetValue(cmd.EntityId, out var entity))
+		public override void _Ready()
 		{
-			DebugIt($"Entity {cmd.EntityId} not found in Entities dictionary");
-			return;
+			Instance = this;
 		}
 
-		if (cmd.Type == CommandType.Move && cmd.MoveDir.HasValue)
+		public void ProcessCommand(Command cmd)
 		{
-			var dir = cmd.MoveDir.Value;
-			if (dir.Length() > 1f)
+			if (!Entities.TryGetValue(cmd.EntityId, out var entity))
 			{
-				dir = dir.Normalized();
+				DebugIt($"Entity {cmd.EntityId} not found in Entities dictionary");
+				return;
 			}
+
+			if (cmd.Type == CommandType.Move && cmd.MoveDir.HasValue)
+			{
+				var dir = cmd.MoveDir.Value;
+				if (dir.Length() > 1f)
+				{
+					dir = dir.Normalized();
+				}
 
 			var joystick = entity.GetNodeOrNull<Joystick>("Joystick");
 			if (joystick != null)
@@ -120,83 +121,93 @@ public partial class Server : Node
 		
 	}
 
-	public byte[] GetSnapshot(ulong tick)
-	{
-		var snap = new Snapshot(tick);
-		var toRemove = new List<long>();
-		foreach (var kv in Entities)
+		public byte[] GetSnapshot(ulong tick)
 		{
-			var node = kv.Value;
-
-			if (node == null || !IsInstanceValid(node))
+			var snap = new Snapshot(tick);
+			var toRemove = new List<long>();
+			foreach (var kv in Entities)
 			{
-				toRemove.Add(kv.Key);
-				continue;
+				var node = kv.Value;
+
+				if (node == null || !IsInstanceValid(node))
+				{
+					toRemove.Add(kv.Key);
+					continue;
+				}
+
+				string scenePath = node.SceneFilePath;
+				var id = kv.Key;
+
+				if (!ScenePathToEntityType.TryGetValue(scenePath, out var entityType))
+				{
+					GD.PrintErr($"Unknown ScenePath: {scenePath}");
+					continue;
+				}
+
+				// Find WaveTimer as a child of the current camera
+				int waveCount = 0;
+				int secondsLeft = 0;
+				bool graceTime = false;
+				var waveTimer = GetTree()
+				.Root.GetNodeOrNull<GameRoot>("GameRoot")
+				?.GetNodeOrNull<WaveTimer>("GlobalWaveTimer");
+
+				if (waveTimer != null)
+				{
+					waveCount = waveTimer.WaveCounter;
+					secondsLeft = waveTimer.SecondCounter;
+					graceTime = waveTimer.IsPaused;
+				}
+
+				var healthNode = node.GetNodeOrNull<Health>("Health");
+				float health = healthNode != null ? healthNode.health : 0f;
+
+				long? owner = null;
+				int? slotIx = null;
+				if (node.HasMeta("OwnerId"))
+				{
+					owner = (long)node.GetMeta("OwnerId");
+					slotIx = (int)node.GetMeta("SlotIndex");
+				}
+
+				DebugIt($"Snapshot: Entity Name: {node.Name}, Position: {node.Position}, ID: {id}");
+				snap.Entities.Add(new EntitySnapshot(
+					id,
+					node.Position,
+					node.Rotation,
+					node.Scale,
+					health,
+					entityType,
+					waveCount,
+					secondsLeft,
+					graceTime,
+					owner,
+					slotIx
+				));
 			}
 
-			string scenePath = node.SceneFilePath;
-			var id = kv.Key;
-
-			if (!ScenePathToEntityType.TryGetValue(scenePath, out var entityType))
+			foreach (var id in toRemove)
 			{
-				GD.PrintErr($"Unknown ScenePath: {scenePath}");
-				continue;
+				Entities.Remove(id);
 			}
 
-			// Find WaveTimer as a child of the current camera
-			int waveCount = 0;
-			int secondsLeft = 0;
-			bool graceTime = false;
-			var waveTimer = GetTree()
-			.Root.GetNodeOrNull<GameRoot>("GameRoot")
-			?.GetNodeOrNull<WaveTimer>("GlobalWaveTimer");
+			int livingPlayers = Entities.Values
+		.OfType<DefaultPlayer>() // oder dein Basistyp für Spieler
+		.Count(player =>
+		{
+			var health = player.GetNodeOrNull<Health>("Health");
+			return health != null && health.health > 0;
+		});
 
-			if (waveTimer != null)
-			{
-				waveCount = waveTimer.WaveCounter;
-				secondsLeft = waveTimer.SecondCounter;
-				graceTime = waveTimer.IsPaused;
-			}
+			snap.livingPlayersCount = livingPlayers;
 
-			var healthNode = node.GetNodeOrNull<Health>("Health");
-			float health = healthNode != null ? healthNode.health : 0f;
-
-			long? owner = null;
-			int? slotIx = null;
-			if (node.HasMeta("OwnerId"))
-			{
-				owner = (long)node.GetMeta("OwnerId");
-				slotIx = (int)node.GetMeta("SlotIndex");
-			}
-
-			DebugIt($"Snapshot: Entity Name: {node.Name}, Position: {node.Position}, ID: {id}");
-			snap.Entities.Add(new EntitySnapshot(
-				id,
-				node.Position,
-				node.Rotation,
-				node.Scale,
-				health,
-				entityType,
-				waveCount,
-				secondsLeft,
-				graceTime,
-				owner,
-				slotIx
-			));
+			return Serializer.Serialize(snap);
 		}
 
-		foreach (var id in toRemove)
+		private void DebugIt(string message)
 		{
-			Entities.Remove(id);
+			if (enableDebug)
+				GD.Print($"Server: {message}");
 		}
-
-		return Serializer.Serialize(snap);
 	}
-
-	private void DebugIt(string message)
-	{
-		if (enableDebug)
-			GD.Print($"Server: {message}");
-	}
-}	
 }
