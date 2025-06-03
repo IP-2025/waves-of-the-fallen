@@ -28,6 +28,7 @@ public partial class DoubleBladeL : MeleeWeapon
 		ShootMeleeVisual(() =>
 	{
 		DoubleBladeLAnimationPlayer.Play("BladeLAttack");
+		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("swordSwings"), GlobalPosition, -5);
 	});
 	}
 	

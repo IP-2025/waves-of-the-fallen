@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Game.Utilities.Multiplayer;
+using Game.UI.GameOver;
 
 // GameRoot is the main entry point for the game. It is responsible for loading the map, spawning the player, starting the enemy spawner and so on.
 public partial class GameRoot : Node
@@ -12,7 +13,10 @@ public partial class GameRoot : Node
 	private bool _isServer = false;
 	private bool _enableDebug = false;
 	private WaveTimer _globalWaveTimer;
-	
+
+	private GameOverScreen _gameOverScreen;
+
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -111,27 +115,23 @@ public partial class GameRoot : Node
 		AddChild(spawner);
 	}
 
+	public void ShowGameOverScreen()
+	{
+		if (_gameOverScreen != null)
+		{
+			return;
+		}
+		var scene = GD.Load<PackedScene>("res://UI/GameOver/gameOverScreen.tscn");
+		_gameOverScreen = scene.Instantiate<GameOverScreen>();
+		AddChild(_gameOverScreen);
+		_gameOverScreen.SetScore(0); //Show Score 0 for now, you can set it later
+		
+	}
+
 	public void OnPlayerDied()
 	{
 		DebugIt("Player died! Switching camera to alive player.");
 		DebugIt("Player died! Showing Game Over screen.");
-
-		if (_mainMap == null)
-		{
-			GD.PrintErr("Main map is null!");
-			return;
-		}
-
-		var gameOverScreen = _mainMap.GetNodeOrNull<CanvasLayer>("GameOver");
-		if (gameOverScreen != null)
-		{
-			gameOverScreen.Visible = true;
-			//GetTree().Paused = true;
-		}
-		else
-		{
-			GD.PrintErr("GameOver screen not found in main map!");
-		}
 
 		long peerId = Multiplayer.GetUniqueId();
 
@@ -170,6 +170,7 @@ public partial class GameRoot : Node
 		}
 	}
 
+	
 
 	private void DebugIt(string message)
 	{
