@@ -3,6 +3,7 @@ using System;
 
 public partial class Dagger : MeleeWeapon
 {
+	private AnimationPlayer DaggerAnimationPlayer;
 	// Called when the node enters the scene tree for the first time.
 	private const string _resBase = "res://Weapons/Melee/Dagger/";
 	private const string _resourcePath = _resBase + "Resources/";
@@ -21,6 +22,7 @@ public partial class Dagger : MeleeWeapon
 	
 	public override void _Ready()
 	{
+		DaggerAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/Stab");
 		
 		_shootCooldown   = 1f/ShootDelay;
@@ -44,7 +46,7 @@ public partial class Dagger : MeleeWeapon
 	{
 		ShootMeleeVisual(() =>
 		{
-			animatedSprite.Play("stab");
+			DaggerAnimationPlayer.Play("stab");
 		});
 		
 		await ToSignal(GetTree().CreateTimer(0.13), "timeout");

@@ -3,6 +3,7 @@ using System;
 public partial class Sword : MeleeWeapon
 {
 	private AnimationPlayer SwordAnimationPlayer;
+	private Sprite2D SwordTrailTest;
 	private const string _resBase = "res://Weapons/Melee/MasterSword/";
 	private const string _resourcePath = _resBase + "Resources/";
 	
@@ -22,11 +23,12 @@ public partial class Sword : MeleeWeapon
 	public override void _Ready()
 	{
 		SwordAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-		
+		SwordTrailTest = GetNode<Sprite2D>("SwordTrailTest");
 		_shootCooldown   = 1f/ShootDelay;
 		_timeUntilShoot  = _shootCooldown;
+		SwordTrailTest.Visible = false;
 	}
-
+	
 	public override void _Process(double delta)
 	{
 		// Laufenden Countdown aktualisieren
@@ -44,7 +46,6 @@ public partial class Sword : MeleeWeapon
 	{ 
 		ShootMeleeVisual(() =>
 	{
-		//GD.Print("Start SwordAnimation");
 		SwordAnimationPlayer.Play("SwordAttack");
 		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("swordSwings"), GlobalPosition, -5);
 	});
