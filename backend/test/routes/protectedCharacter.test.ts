@@ -45,7 +45,7 @@ beforeEach(async () => {
 describe('POST /getAllUnlockedCharacters', () => {
   it('should return all Unlocked Characters', async () => {
     const AllCharacters = await request(app)
-      .post('/api/v1/protected/getAllUnlockedCharacters')
+      .post('/api/v1/protected/progress')
       .set('Authorization', `Bearer ${validToken}`);
     expect(AllCharacters.status).toBe(200);
 
@@ -87,7 +87,7 @@ describe('POST /levelUp', () => {
     expect(levelUpResponse.status).toBe(200);
 
     const AllCharacters = await request(app)
-      .post('/api/v1/protected/getAllUnlockedCharacters')
+      .post('/api/v1/protected/progress')
       .set('Authorization', `Bearer ${validToken}`);
     expect(AllCharacters.status).toBe(200);
 
@@ -124,7 +124,7 @@ describe('POST /unlock', () => {
     expect(unlockResponse.status).toBe(200);
 
     const AllCharacters = await request(app)
-      .post('/api/v1/protected/getAllUnlockedCharacters')
+      .post('/api/v1/protected/progress')
       .set('Authorization', `Bearer ${validToken}`);
     expect(AllCharacters.status).toBe(200);
 

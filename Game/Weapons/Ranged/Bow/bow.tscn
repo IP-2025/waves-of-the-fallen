@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://blhx5vv32isw5"]
 
 [ext_resource type="Script" uid="uid://d0dfbrd68mnht" path="res://Weapons/Ranged/Bow/Bow.cs" id="1_r4t6c"]
-[ext_resource type="Texture2D" uid="uid://yxdtu03jta2l" path="res://Weapons/Ranged/Bow/Resources/BowEmpty.png" id="2_nlqf0"]
-[ext_resource type="Texture2D" uid="uid://dsaapmsxexeuu" path="res://Weapons/Ranged/Bow/Resources/BowDraw1.png" id="3_w8c72"]
-[ext_resource type="Texture2D" uid="uid://culfo2ujsjgv8" path="res://Weapons/Ranged/Bow/Resources/BowDraw2.png" id="4_yxbc2"]
-[ext_resource type="Texture2D" uid="uid://d2n11yf5of2he" path="res://Weapons/Ranged/Bow/Resources/BowDraw3.png" id="5_7a073"]
+[ext_resource type="Texture2D" uid="uid://c68u26c3b6r1w" path="res://Weapons/Ranged/Bow/Resources/BowEmpty.png" id="2_nlqf0"]
+[ext_resource type="Texture2D" uid="uid://d34t2uio51wgv" path="res://Weapons/Ranged/Bow/Resources/BowDraw1.png" id="3_w8c72"]
+[ext_resource type="Texture2D" uid="uid://chwgwk2a8x0oi" path="res://Weapons/Ranged/Bow/Resources/BowDraw2.png" id="4_yxbc2"]
+[ext_resource type="Texture2D" uid="uid://c5igu1v31cfnt" path="res://Weapons/Ranged/Bow/Resources/BowDraw3.png" id="5_7a073"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p3ld5"]
 animations = [{
@@ -44,14 +44,9 @@ animation = &"shoot"
 frame = 4
 frame_progress = 1.0
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.8
-autostart = true
-
 [node name="ShootingPoint" type="Marker2D" parent="."]
 position = Vector2(-0.290779, -0.00230481)
 rotation = 0.00792616
 scale = Vector2(0.0825, 0.0825)
 
 [connection signal="frame_changed" from="WeaponPivot/BowSprite" to="." method="_on_bow_sprite_frame_changed"]
-[connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutBow"]

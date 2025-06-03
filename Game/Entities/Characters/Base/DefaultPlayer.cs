@@ -1,72 +1,69 @@
-using System;
 using System.Diagnostics;
-using Godot;
+using Game.Utilities.Backend;
 using Game.Utilities.Multiplayer;
+using Godot;
 
 public partial class DefaultPlayer : CharacterBody2D
 {
-	[Export]
-	public float Speed { get; set; }
 
-	[Export]
-	public int MaxHealth { get; set; }
 
-	[Export]
-	public int CurrentHealth { get; set; }
+	[Export] public float Speed { get; set; }
+
+
+	[Export] public int MaxHealth { get; set; }
+
+
+
+	[Export] public int CurrentHealth { get; set; }
+
+
+	[Export] public HttpRequest HttpRequest { get; set; }
+
 	public long OwnerPeerId { get; set; }
+	private int Gold { get; set; }
 
 	[Export] protected NodePath animationPath;
-
 	public Node2D Joystick { get; set; }
-	private Camera2D camera;
-	private MultiplayerSynchronizer multiplayerSynchronizer;
-	public bool enableDebug = false;
+	private Camera2D _camera;
+	private MultiplayerSynchronizer _multiplayerSynchronizer;
+	private bool _enableDebug;
 
 	public AnimationHandler animationHandler;
 	public AnimatedSprite2D animation;
 	
-	public PackedScene BowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
-	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
-	public PackedScene KunaiScene = GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn");
-	public PackedScene FireStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn");
-	public PackedScene LightningStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn");
-	public PackedScene DaggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
-	public PackedScene SwordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
-	private int weaponsEquipped = 0;
+	private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
+	private PackedScene _crossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
+	private PackedScene _kunaiScene = GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn");
+
+	private PackedScene _fireStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn");
+
+	private PackedScene _lightningStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn");
+
+	private PackedScene _daggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
+	private PackedScene _swordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
+	private PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
+	private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
+	private PackedScene _doubleBladeScene = GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn");
+	private PackedScene _warHammerScene = GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn");
+	private int _weaponsEquipped;
+
+	private WaveTimer _waveTimer;
+	protected CharacterManager CharacterManager;
+	private bool _requestSent;
+	private bool _alreadyDead;
+	
 
 	public override void _Ready()
 	{
+		_alreadyDead = false;
+		_requestSent = false;
 		AddToGroup("player");
 /* 		base._Ready(); */
 
-		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
-		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
- 
-/* 		GetNodeOrNull<Node2D>("Archer")?.Hide();
-		GetNodeOrNull<Node2D>("Assassin")?.Hide();
-		GetNodeOrNull<Node2D>("Knight")?.Hide();
-		GetNodeOrNull<Node2D>("Mage")?.Hide();
+		CharacterManager = GetNode<CharacterManager>("/root/CharacterManager");
+		var selectedCharacterId = CharacterManager.LoadLastSelectedCharacterID();
 
-		// Zeige nur den ausgewählten Charakter
-		string selectedClassNodeName = selectedCharacterId switch
-		{
-			1 => "Archer",
-			2 => "Assassin",
-			3 => "Knight",
-			4 => "Mage",
-			_ => "Archer" // Standardwert
-		}; */
-
- /* 		var selectedClassNode = GetNodeOrNull<Node2D>(selectedClassNodeName);
-		if (selectedClassNode != null)
-		{
-			selectedClassNode.Show();
-			GD.Print($"Selected class: {selectedClassNodeName}");
-		}
-		else
-		{
-			GD.PrintErr($"Class node '{selectedClassNodeName}' not found!");
-		}*/
+		HttpRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
 
 		object playerClass = selectedCharacterId switch
 		{
@@ -76,56 +73,23 @@ public partial class DefaultPlayer : CharacterBody2D
 			4 => new Mage(),
 			_ => new DefaultPlayer()
 		};
- 
-/* 		GD.Print($"Selected Character: {playerClass.GetType().Name}"); */
-
-		// Set attributes based on the selected class
-
-		//------------------
-/* 		if (playerClass is DefaultPlayer defaultPlayer)
-		{
-			Speed = defaultPlayer.Speed;
-			MaxHealth = defaultPlayer.MaxHealth;
-			CurrentHealth = defaultPlayer.MaxHealth;
-		}
- */
-/* 		AddToGroup("player");
-		CurrentHealth = MaxHealth;
-
-		OwnerPeerId = Multiplayer.GetUniqueId();
-		GD.Print($"OwnerPeerId set to: {OwnerPeerId}");
-
-		// Synchronize MaxHealth with the Health node
-		var healthNode = GetNodeOrNull<Health>("Health");
-		if (healthNode != null)
-		{
-			healthNode.max_health = MaxHealth;
-			healthNode.ResetHealth(); // Reset health to max_health
-		}
-		else
-		{
-			GD.PrintErr("Health node not found!");
-		} */
 
 		// Equip weapon for the selected class
- 		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
-		Area2D weapon = CreateWeaponForClass(playerClass);
+		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(_weaponsEquipped) as Node2D;
+		var weapon = CreateWeaponForClass(playerClass);
 
-		if (weapon != null)
-		{
-			weaponSlot.AddChild(weapon);
-			weapon.Position = Vector2.Zero;
+		if (weapon == null) return;
+		weaponSlot?.AddChild(weapon);
+		weapon.Position = Vector2.Zero;
 
-			// for multiplayer
-			ulong id = weapon.GetInstanceId();
-			weapon.Name = $"Weapon_{id}";
-			weapon.SetMeta("OwnerId", OwnerPeerId);
-			weapon.SetMeta("SlotIndex", weaponsEquipped);
-			Server.Instance.Entities.Add((long)id, weapon);
+		// for multiplayer
+		var id = weapon.GetInstanceId();
+		weapon.Name = $"Weapon_{id}";
+		weapon.SetMeta("OwnerId", OwnerPeerId);
+		weapon.SetMeta("SlotIndex", _weaponsEquipped);
+		Server.Instance.Entities.Add((long)id, weapon);
 
-			weaponsEquipped++;
-		} 
-
+		_weaponsEquipped++;
 		if (animationPath != null && !animationPath.IsEmpty)
 		{
 			animation = GetNode<AnimatedSprite2D>(animationPath);
@@ -135,30 +99,34 @@ public partial class DefaultPlayer : CharacterBody2D
 		{
 			GD.PushError($"{Name} has no animationPath set!");
 		}
-
 	}
 
 	private Area2D CreateWeaponForClass(object playerClass)
 	{
-		if (playerClass is Archer)
-			return BowScene.Instantiate() as Area2D;
-		
-		if (playerClass is Assassin)
-			return KunaiScene.Instantiate() as Area2D;
-
-		if (playerClass is Mage) 
-			//return LightningStaffScene.Instantiate() as Area2D;
-			return FireStaffScene.Instantiate() as Area2D;
-		if (playerClass is Knight)
-			//return DaggerScene.Instantiate() as Area2D;
-			return SwordScene.Instantiate() as Area2D;
-		
-		return null;
+		return playerClass switch
+		{
+			Archer => _bowScene.Instantiate() as Area2D,
+			//Assassin => _kunaiScene.Instantiate() as Area2D,
+			//Assassin => _doubleBladeScene.Instantiate() as Area2D,
+			Assassin => _daggerScene.Instantiate() as Area2D,
+			//return _healStaffScene.Instantiate() as Area2D;
+			Mage => _fireStaffScene.Instantiate() as Area2D,
+			Knight => _swordScene.Instantiate() as Area2D,
+			//Knight => _warHammerScene.Instantiate() as Area2D,
+			_ => null
+		};
 	}
 
 	public override void _Process(double delta)
 	{
-
+		if (_waveTimer != null) return;
+		var cam = GetNodeOrNull<Camera2D>("Camera2D");
+		if (cam == null) return;
+		_waveTimer = cam.GetNodeOrNull<WaveTimer>("WaveTimer");
+		if (_waveTimer != null)
+		{
+			_waveTimer.WaveEnded += OnWaveTimerTimeout;
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -170,7 +138,7 @@ public partial class DefaultPlayer : CharacterBody2D
 			return;
 		}
 
-		Vector2 direction = Vector2.Zero;
+		var direction = Vector2.Zero;
 
 		// Get joystick directly as child
 		var joystick = GetNodeOrNull<Joystick>("Joystick");
@@ -184,33 +152,85 @@ public partial class DefaultPlayer : CharacterBody2D
 		{
 			direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		}
-		
+
 		Velocity = direction * Speed;
 		MoveAndSlide();
-
 	}
 
-	public virtual void UseAbility()
+	protected virtual void UseAbility()
 	{
 		GD.Print("Ability placeholder for all classes");
 	}
 
 	private void DebugIt(string message)
 	{
-		if (enableDebug)
+		if (_enableDebug)
 		{
 			Debug.Print(message);
 		}
 	}
 
-	public virtual void Die()
+	public void Die()
 	{
+		if (_alreadyDead) return;
+
+		_alreadyDead = true;
 		Velocity = Vector2.Zero;
-		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"), GlobalPosition);
+		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"),
+			GlobalPosition);
 		animationHandler?.SetDeath();
+
+		GD.Print("Player died with this amount of gold: " + Gold);
+		CharacterManager.AddGold(Gold);
+
+		if (GameState.CurrentState == ConnectionState.Offline)
+		{
+			QueueFree();
+		}
+		else if (!_requestSent)
+		{
+			_requestSent = true;
+			var token = SecureStorage.LoadToken();
+			if (string.IsNullOrEmpty(token)) return;
+			const string url = $"{ServerConfig.BaseUrl}/api/v1/protected/gold/add";
+			var headers = new[] { $"Authorization: Bearer {token}", "Content-Type: application/json" };
+			var body = Json.Stringify(new Godot.Collections.Dictionary
+			{
+				{ "gold", Gold }
+			});
+			var err = HttpRequest.Request(
+				url,
+				headers,
+				HttpClient.Method.Post,
+				body
+			);
+			if (err != Error.Ok)
+				GD.PrintErr($"AuthRequest error: {err}");
+		}
+	}
+
+	private void OnWaveTimerTimeout()
+	{
+		GD.Print("OnWaveTimerTimeout");
+		Gold += 10;
+
+		GD.Print("Gold: " + Gold);
+	}
+
+	private void OnRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
+	{
+		if (responseCode == 200)
+		{
+			GD.Print("Request completed successfully.");
+		}
+		else
+		{
+			GD.PrintErr($"Request failed with response code: {responseCode}");
+		}
+
 		QueueFree();
 	}
-	
+
 	public void OnHit()
 	{
 		animationHandler?.SetHit();

@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1bx00asf6eeb"]
+
+[ext_resource type="Script" uid="uid://ce5nchv7j5ked" path="res://Weapons/Utility/MedicineBag/MedicineBag.cs" id="1_0jeav"]
+[ext_resource type="Texture2D" uid="uid://bpc1dvfcaahpc" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag.png" id="2_pmfuo"]
+[ext_resource type="Texture2D" uid="uid://b0k17yp4x5jtk" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag1.png" id="3_e3fqg"]
+[ext_resource type="Texture2D" uid="uid://cwd87aghdu86h" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag2.png" id="4_ftxdo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uxab1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_pmfuo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_e3fqg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_pmfuo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ftxdo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_pmfuo")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="MedicineBag" type="Area2D"]
+scale = Vector2(0.035, 0.035)
+script = ExtResource("1_0jeav")
+
+[node name="MedicineBagSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_uxab1")
+frame = 4
+frame_progress = 1.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.5
+autostart = true
+
+[connection signal="animation_finished" from="MedicineBagSprite" to="." method="OnAnimationFinished"]
+[connection signal="frame_changed" from="MedicineBagSprite" to="." method="_on_medicine_bag_sprite_frame_changed"]
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutMedicineBag"]

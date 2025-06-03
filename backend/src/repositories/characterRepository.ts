@@ -63,6 +63,11 @@ export async function updateCharacter(playerId: string, charId: number, level: n
     unlockedCharacter.level = level;
     await AppDataSource.getRepository(UnlockedCharacter).save(unlockedCharacter);
   } else {
-    throw new NotFoundError('Unlocked character not found');
+    // if the character is not found -> user unlocked a new character so we create a new one
+    const newUnlockedCharacter = new UnlockedCharacter();
+    newUnlockedCharacter.character_id = charId;
+    newUnlockedCharacter.level = level;
+    newUnlockedCharacter.player = player;
+    await AppDataSource.getRepository(UnlockedCharacter).save(newUnlockedCharacter);
   }
 }

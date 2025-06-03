@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://yx4lw1whi03l"]
+[gd_scene load_steps=14 format=3 uid="uid://yx4lw1whi03l"]
 
 [ext_resource type="Script" uid="uid://d3qtxl5t5i32q" path="res://Audio/Manager/SoundManager.cs" id="1_1u08g"]
 [ext_resource type="AudioStream" uid="uid://butgfssifn3sp" path="res://Audio/Sounds/Resources/EnemyHurt.wav" id="2_olkkv"]
@@ -8,8 +8,11 @@
 [ext_resource type="AudioStream" uid="uid://bxywsi7tc6qyx" path="res://Audio/Sounds/Resources/swingWoosh.wav" id="4_sfxm6"]
 [ext_resource type="AudioStream" uid="uid://dvg175jjxxeca" path="res://Audio/Sounds/Resources/crossbowString.wav" id="4_xjrsk"]
 [ext_resource type="AudioStream" uid="uid://b6qq2v5c7gtv5" path="res://Audio/Sounds/Resources/playerDies.wav" id="5_2jdub"]
+[ext_resource type="AudioStream" uid="uid://b716jt6hlwu2t" path="res://Audio/Sounds/Resources/playerHit.wav" id="5_v0oym"]
 [ext_resource type="AudioStream" uid="uid://lwr0n7otiuid" path="res://Audio/Sounds/Resources/firestaffLights.wav" id="7_c5u0d"]
 [ext_resource type="AudioStream" uid="uid://hsj31bllhh8x" path="res://Audio/Sounds/Resources/lightningstaffFire.wav" id="10_8867q"]
+[ext_resource type="AudioStream" uid="uid://dpqhuwuce1m3d" path="res://Audio/Sounds/Resources/healstaffFires.wav" id="11_1fkh2"]
+[ext_resource type="AudioStream" uid="uid://bk3vkx51ylerd" path="res://Audio/Sounds/Resources/heal.wav" id="12_o4din"]
 
 [node name="SoundManager" type="Node2D"]
 script = ExtResource("1_1u08g")
@@ -27,6 +30,7 @@ stream = ExtResource("4_c5u0d")
 bus = &"SoundEffectBus"
 
 [node name="playerHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_v0oym")
 bus = &"SoundEffectBus"
 
 [node name="playerDies" type="AudioStreamPlayer2D" parent="."]
@@ -58,3 +62,24 @@ bus = &"SoundEffectBus"
 [node name="lightningstaffFires" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_8867q")
 bus = &"SoundEffectBus"
+
+[node name="healstaffFires" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_1fkh2")
+bus = &"SoundEffectBus"
+
+[node name="healItemPickUp" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_o4din")
+bus = &"SoundEffectBus"
+
+[node name="warhammerThrow" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_sfxm6")
+pitch_scale = 0.45
+bus = &"SoundEffectBus"
+
+[node name="medicineBagThrow" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_sfxm6")
+pitch_scale = 2.5
+
+[node name="daggerStabs" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_sfxm6")
+pitch_scale = 1.4
