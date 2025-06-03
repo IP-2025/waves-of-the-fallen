@@ -348,7 +348,7 @@ public partial class Client : Node
 	
 	private void UpdateTransform(Node2D inst, EntitySnapshot entity)
 	{
-		if (GodotObject.IsInstanceValid(inst))
+		if (IsInstanceValid(inst))
 		{
 			Vector2 lastPos = _lastPositions.TryGetValue(entity.NetworkId, out var lp) ? lp : entity.Position;
 			Vector2 deltaPos = entity.Position - lastPos;

@@ -33,9 +33,9 @@ public partial class GameRoot : Node
 		// Instantiate one global WaveTimer for server-wide access
 		var waveTimerScene = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn");
 		_globalWaveTimer = waveTimerScene.Instantiate<WaveTimer>();
-		_globalWaveTimer.Name = "GlobalWaveTimer";
 		if (_isServer)
 		{
+			_globalWaveTimer.Name = "GlobalWaveTimer";
 			AddChild(_globalWaveTimer);
 			// Server spawns all players
 			foreach (var peerId in GetTree().GetMultiplayer().GetPeers())
