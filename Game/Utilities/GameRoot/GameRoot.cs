@@ -119,14 +119,13 @@ public partial class GameRoot : Node
 	{
 		if (_gameOverScreen != null)
 		{
-			DebugIt("GameOverScreen already exists, removing it.");
 			return;
 		}
 		var scene = GD.Load<PackedScene>("res://UI/GameOver/gameOverScreen.tscn");
 		_gameOverScreen = scene.Instantiate<GameOverScreen>();
-		_gameOverScreen.VisibilityLayer = 1000;
 		AddChild(_gameOverScreen);
-		_gameOverScreen.SetScore(0);
+		_gameOverScreen.SetScore(0); //Show Score 0 for now, you can set it later
+		
 	}
 
 	public void OnPlayerDied()

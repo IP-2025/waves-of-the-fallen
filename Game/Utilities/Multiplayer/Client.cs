@@ -116,6 +116,7 @@ public partial class Client : Node
 		{
 			var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
 			gameRoot.ShowGameOverScreen();
+			
     }	
 	}
 

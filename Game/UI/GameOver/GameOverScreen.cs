@@ -2,13 +2,12 @@ using Godot;
 using Game.Utilities.Multiplayer;
 
 namespace Game.UI.GameOver{
-	public partial class GameOverScreen : Control
+	public partial class GameOverScreen : CanvasLayer
 {
 	[Export] public Label ScoreLabel;
 	[Export] public Button MainMenuBtn;
 	[Export] public ColorRect FadeRect;
 	[Export] public Label GameOverLabel;
-	[Export] public AudioStreamPlayer AudioPlayer;
 	[Export] public AnimationPlayer AnimationPlayerBackground;
 	[Export] public AnimationPlayer AnimationPlayerForeground;
 
@@ -20,6 +19,7 @@ namespace Game.UI.GameOver{
 			AnimationPlayerBackground.Play("FadeIn");
 			AnimationPlayerForeground.Play("GameOver");
 			MainMenuBtn.Visible = true;
+			SoundManager.Instance.PlayGameOver();
 
 			MainMenuBtn.Pressed += OnMainMenuBtnPressed;
 		}
@@ -30,8 +30,9 @@ namespace Game.UI.GameOver{
 	}
 
 	private void OnMainMenuBtnPressed()
-	{
-		GetTree().ChangeSceneToFile("res://Menu/Main/MainMenu.tscn");
-	}
+{
+	GetTree().Quit(); // Exit the game instead of trying to shutdown headless server (iOS cant use GetTree().Quit())
+	//GetTree().ChangeSceneToFile("res://Menu/Main/MainMenu.tscn");
+}
 }
 }
