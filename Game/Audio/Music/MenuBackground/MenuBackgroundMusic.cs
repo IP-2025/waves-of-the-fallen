@@ -1,3 +1,5 @@
+using System.Data;
+using System.Linq.Expressions;
 using Godot;
 
 public partial class MenuBackgroundMusic : AudioStreamPlayer
@@ -12,7 +14,12 @@ public partial class MenuBackgroundMusic : AudioStreamPlayer
 		float musicVolume = (float)settingsManager.LoadSettingSection("Audio")["Volume"];
 		AudioServer.SetBusVolumeDb(menuBackgroundMusicBusIndex, Mathf.LinearToDb(musicVolume));
 		AudioServer.SetBusMute(menuBackgroundMusicBusIndex, !musicEnabled);
-		Play();
 		Autoplay = true;
+		Play();
+	}
+
+	public void _on_finished()
+	{
+		Play();
 	}
 }
