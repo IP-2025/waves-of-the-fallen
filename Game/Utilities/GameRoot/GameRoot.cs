@@ -14,6 +14,7 @@ public partial class GameRoot : Node
 	private bool _enableDebug = false;
 	private WaveTimer _globalWaveTimer;
 	private int _soloSelectedCharacterId = 1;
+	private DefaultPlayer _soloPlayer;
 
 	// Shop dirty workaround
 	private int _lastLocalShopRound = 1;
@@ -58,6 +59,7 @@ public partial class GameRoot : Node
 		if (NetworkManager.Instance._soloMode)
 		{
 			SpawnPlayer(1);
+			_soloPlayer = GetNodeOrNull<DefaultPlayer>("Player_1");
 			GetChildren().OfType<DefaultPlayer>().FirstOrDefault().GetNodeOrNull<Camera2D>("Camera2D").AddChild(_globalWaveTimer);
 		}
 
@@ -70,6 +72,8 @@ public partial class GameRoot : Node
 		// kind of a silly workaround, however its better than re implementing the shop system...
 		if (!NetworkManager.Instance._soloMode) return;
 
+		if (_soloPlayer == null || !_soloPlayer.alive) ShowGameOverScreen();
+
 		int currentWave = _globalWaveTimer.WaveCounter;
 		if (currentWave > _lastLocalShopRound && currentWave < 5)
 		{
@@ -78,7 +82,7 @@ public partial class GameRoot : Node
 			{
 				_shopInstance = GD.Load<PackedScene>("res://UI/Shop/BossShop/bossShop.tscn").Instantiate();
 				_shopInstance.Connect(nameof(BossShop.WeaponChosen), new Callable(this, nameof(OnWeaponChosen)));
-				GetChildren().OfType<DefaultPlayer>().FirstOrDefault().GetNodeOrNull<Camera2D>("Camera2D").AddChild(_shopInstance);
+				_soloPlayer.GetNodeOrNull<Camera2D>("Camera2D").AddChild(_shopInstance);
 			}
 		}
 	}

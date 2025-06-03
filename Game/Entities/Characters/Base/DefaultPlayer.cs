@@ -31,6 +31,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public AnimationHandler animationHandler;
 	public AnimatedSprite2D animation;
+	public bool alive = false;
 	private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
 	private PackedScene _crossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
 	private PackedScene _kunaiScene = GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn");
@@ -54,6 +55,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public override void _Ready()
 	{
+		alive = true;
 		_alreadyDead = false;
 		_requestSent = false;
 		AddToGroup("player");
@@ -176,6 +178,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	{
 		if (_alreadyDead) return;
 
+		alive = false;
 		_alreadyDead = true;
 		Velocity = Vector2.Zero;
 		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"),
