@@ -407,7 +407,16 @@ namespace Game.Utilities.Multiplayer
 		{
 			if (_udpClientPeer == null) return;
 
+			Command cmdShop = client.GetShopCommand(_tick);
+
+			if (cmdShop != null)
+			{
+				_udpClientPeer.PutPacket(Serializer.Serialize(cmdShop));
+				DebugIt($"Send Shop cmd tick={_tick}, dir={cmdShop.Weapon}");
+			}
+
 			Command cmd = client.GetCommand(_tick);
+
 			if (cmd == null) return;
 
 			_udpClientPeer.PutPacket(Serializer.Serialize(cmd));

@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://ch3tny3ssg083"]
 
 [ext_resource type="Script" uid="uid://cxtedfws8416i" path="res://Weapons/Melee/MasterSword/Sword.cs" id="1_sa01y"]
-[ext_resource type="Texture2D" uid="uid://d0xxlamxvcxsu" path="res://Weapons/Melee/MasterSword/Resources/MasterSword.png" id="2_ciqr1"]
-[ext_resource type="Texture2D" uid="uid://cpmicc3oc3kux" path="res://Weapons/Melee/MasterSword/Resources/SwordTrailTest.png" id="3_sxts0"]
+[ext_resource type="Texture2D" uid="uid://bxs2bughtv4hs" path="res://Weapons/Melee/MasterSword/Resources/MasterSword.png" id="2_ciqr1"]
+[ext_resource type="Texture2D" uid="uid://dy1lkehiw5gtn" path="res://Weapons/Melee/MasterSword/Resources/SwordTrailTest.png" id="3_sxts0"]
 
 [sub_resource type="Animation" id="Animation_6nwni"]
 length = 0.001
@@ -83,9 +83,3 @@ texture = ExtResource("3_sxts0")
 libraries = {
 &"": SubResource("AnimationLibrary_6nwni")
 }
-
-[node name="Timer" type="Timer" parent="."]
-process_callback = 0
-autostart = true
-
-[connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutAttack"]

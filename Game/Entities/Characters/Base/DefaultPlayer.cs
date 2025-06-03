@@ -31,7 +31,6 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public AnimationHandler animationHandler;
 	public AnimatedSprite2D animation;
-
 	private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
 	private PackedScene _crossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
 	private PackedScene _kunaiScene = GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn");
@@ -42,18 +41,16 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	private PackedScene _daggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
 	private PackedScene _swordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
-	public PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
+	private PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
 	private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
 	private PackedScene _doubleBladeScene = GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn");
 	private PackedScene _warHammerScene = GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn");
 	private int _weaponsEquipped;
-
 	private WaveTimer _waveTimer;
 	protected CharacterManager CharacterManager;
 	private bool _requestSent;
 	private bool _alreadyDead;
 	private Vector2 _lastPos = Vector2.Zero;
-
 
 	public override void _Ready()
 	{

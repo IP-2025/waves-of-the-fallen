@@ -12,6 +12,19 @@ public partial class Server : Node
 	private bool enableDebug = false;
 	public Dictionary<long, int> PlayerSelections = new Dictionary<long, int>();
 	public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
+	
+	private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
+	private PackedScene _crossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
+	private PackedScene _kunaiScene = GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn");
+	private PackedScene _fireStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn");
+	private PackedScene _lightningStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn");
+	private PackedScene _daggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
+	private PackedScene _swordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
+	private PackedScene _warHammerScene = GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn");
+	private PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
+	private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
+	private PackedScene _doubleBladeScene = GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn");
+	
 	private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
 	{
 		{ "res://Entities/Characters/Base/default_player.tscn", EntityType.DefaultPlayer },
@@ -76,6 +89,35 @@ public partial class Server : Node
 		{
 			// Maybe we need, maybe we don't
 		}
+		else if (cmd.Type == CommandType.BossShop)
+		{
+			var scene = cmd.Weapon switch
+			{
+				"Bow"               => _bowScene,
+				"Crossbow"          => _crossbowScene,
+				"FireStaff"         => _fireStaffScene,
+				"Kunai"             => _kunaiScene,
+				"Lightningstaff"    => _lightningStaffScene,
+				"Healstaff"         => _healStaffScene,
+				"Dagger"            => _daggerScene,
+				"Sword"             => _swordScene,
+				"WarHammer"         => _warHammerScene,
+				"DoubleBlade"         => _doubleBladeScene,
+				_            => null
+			};
+			if (scene == null) return;
+			var slot = entity.GetNode("WeaponSpawnPoints").GetChild(cmd.WeaponPos) as Node2D;
+			var weapon = scene.Instantiate<Area2D>();
+			slot?.AddChild(weapon);
+			weapon.Position = Vector2.Up;
+			
+			var id = weapon.GetInstanceId();
+			weapon.Name = $"Weapon_{id}";
+			weapon.SetMeta("OwnerId", cmd.EntityId);
+			weapon.SetMeta("SlotIndex", cmd.WeaponPos);
+			Instance.Entities.Add((long)id, weapon);
+		}
+		
 	}
 
 	public byte[] GetSnapshot(ulong tick)
