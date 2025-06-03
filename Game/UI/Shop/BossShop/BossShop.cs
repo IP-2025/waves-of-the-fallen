@@ -22,7 +22,7 @@ public partial class BossShop : Control
 	public string SelectedWeapon { get; private set; } = "";
 	public bool HasSelection { get; private set; } = false;
 
-	private void PopulateWeapon(string containerPath, Weapon weapon, int index)
+	private void PopulateWeapon(string containerPath, Weapon weapon)
 	{
 		var box = GetNode<Node>(containerPath);
 
@@ -42,6 +42,7 @@ public partial class BossShop : Control
 
 	public override void _Ready()
 	{
+		
 		var rng = new RandomNumberGenerator();
 		rng.Randomize();
 
@@ -55,18 +56,18 @@ public partial class BossShop : Control
 		for (int slot = 0; slot < 3 && slot < shuffled.Count; slot++)
 		{
 			string path = $"MarginContainer/HBoxContainer/weapon{slot + 1}";
-			PopulateWeapon(path, shuffled[slot], slot + 1);
+			PopulateWeapon(path, shuffled[slot]);
 		}
 	}
 
 	public void OnWeaponButtonUp(Weapon chosen)
 	{
 		Debug.Print($"Du hast gewählt: {chosen.GetType().Name}");
-		
+
 		// Store selection for Client to pick up
 		SelectedWeapon = chosen.GetType().Name;
 		HasSelection = true;
-		
+
 		// Close shop
 		QueueFree();
 	}

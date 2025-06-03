@@ -14,6 +14,11 @@ public partial class GameRoot : Node
 	private WaveTimer _globalWaveTimer;
 	private int _soloSelectedCharacterId = 1;
 
+	// Shop dirty workaround
+	private int _lastLocalShopRound = 1;
+	private Node _shopInstance;
+	private int _newWeaponPos = 0;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -57,8 +62,55 @@ public partial class GameRoot : Node
 
 	public override void _Process(double delta)
 	{
-		// Game logic per frame (optional)
-		// PrintTree(GetTree().Root);
+		// kind of a silly workaround, however its better than re implementing the shop system. Due date is tomorrow so whatever.. quick an dirty, lets gooo
+		if (!NetworkManager.Instance._soloMode) return;
+
+		int currentWave = _globalWaveTimer.WaveCounter;
+		if (currentWave > _lastLocalShopRound && currentWave < 5)
+		{
+			_lastLocalShopRound = currentWave;
+			if (_shopInstance == null)
+			{
+				_shopInstance = GD.Load<PackedScene>("res://UI/Shop/BossShop/bossShop.tscn").Instantiate();
+				GetChildren().OfType<DefaultPlayer>().FirstOrDefault().GetNode<Camera2D>("Camera2D").AddChild(_shopInstance);
+				GD.Print("crate shop");
+			}
+		}
+
+		if (_shopInstance != null)
+		{
+			GD.Print("read shop");
+			var bossShop = _shopInstance as BossShop;
+			if (bossShop != null && bossShop.HasSelection)
+			{
+				_newWeaponPos++;
+				GD.Print("Weapon Pos" + _newWeaponPos);
+				GD.Print("selected weapon" + bossShop.SelectedWeapon);
+				var scene = bossShop.SelectedWeapon switch
+				{
+					"Bow" => GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn"),
+					"Crossbow" => GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn"),
+					"FireStaff" => GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn"),
+					"Kunai" => GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn"),
+					"Lightningstaff" => GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn"),
+					"Healstaff" => GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn"),
+					"Dagger" => GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn"),
+					"Sword" => GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn"),
+					"WarHammer" => GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn"),
+					"DoubleBlade" => GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn"),
+					_ => null
+				};
+				if (scene == null) return;
+				
+				var slot = GetChildren().OfType<DefaultPlayer>().FirstOrDefault().GetNode<Node2D>("WeaponSpawnPoints").GetChild<Node2D>(_newWeaponPos);
+				var weapon = scene.Instantiate<Area2D>();
+				weapon.Position = Vector2.Zero;;
+				slot.AddChild(weapon);
+
+				bossShop.ConsumeSelection();
+				_shopInstance = null;
+			}
+		}
 	}
 
 	private void SpawnMap(string mapPath)

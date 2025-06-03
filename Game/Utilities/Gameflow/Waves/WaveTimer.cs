@@ -7,7 +7,7 @@ public partial class WaveTimer : Node2D
 	public bool Disable { get; set; } = false;
 	public int WaveCounter { get; private set; } = 1;
 	public int SecondCounter { get; private set; } = 0;
-	public int MaxTime { get; private set; } = 30;
+	public int MaxTime { get; private set; } = 3;
 	public bool IsPaused { get; private set; }
 	private Timer _waveTimer;
 	private Label _timeLeftLabel;
