@@ -404,12 +404,21 @@ namespace Game.Utilities.Multiplayer
 			}
 		}
 
-		private void SendClientCommand()
-		{
-			if (_udpClientPeer == null) return;
+	private void SendClientCommand()
+	{
+		if (_udpClientPeer == null) return;
+		
+		Command cmdShop = client.GetShopCommand(_tick);
 
-			Command cmd = client.GetCommand(_tick);
-			if (cmd == null) return;
+		if (cmdShop != null)
+		{
+			_udpClientPeer.PutPacket(Serializer.Serialize(cmdShop));
+			DebugIt($"Send Shop cmd tick={_tick}, dir={cmdShop.Weapon}");
+		}
+		
+		Command cmd = client.GetCommand(_tick);
+		
+		if (cmd == null) return;
 
 			_udpClientPeer.PutPacket(Serializer.Serialize(cmd));
 			DebugIt($"Send MOVE cmd tick={_tick}, dir={cmd.MoveDir}");

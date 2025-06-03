@@ -34,11 +34,5 @@ sprite_frames = SubResource("SpriteFrames_cst26")
 animation = &"Crush"
 frame_progress = 0.816158
 
-[node name="Timer" type="Timer" parent="."]
-process_callback = 0
-autostart = true
-
 [node name="ShootingPoint" type="Marker2D" parent="."]
 position = Vector2(12, -10)
-
-[connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutAttackHammer"]
