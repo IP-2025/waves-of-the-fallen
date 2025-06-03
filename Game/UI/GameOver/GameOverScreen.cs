@@ -19,7 +19,7 @@ namespace Game.UI.GameOver{
 			AnimationPlayerBackground.Play("FadeIn");
 			AnimationPlayerForeground.Play("GameOver");
 			MainMenuBtn.Visible = true;
-			SoundManager.Instance.PlayGameOver();
+			SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("gameOver"));
 
 			MainMenuBtn.Pressed += OnMainMenuBtnPressed;
 		}
