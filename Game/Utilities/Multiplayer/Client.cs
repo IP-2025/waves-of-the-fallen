@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security;
 using System;
-using System.Threading;
+	using System.Threading;
 
 public partial class Client : Node
 {
@@ -14,10 +14,11 @@ public partial class Client : Node
 	private Camera2D _camera;
 	private bool _hasJoystick;
 	private bool _waveTimerReady;
-	private WaveTimer _timer;
+	private WaveTimer _timer; 
 	private bool _graceTimeTriggered;
 
-	// movement tracking of players is now done directly in the default player class
+	// movement tracking of players
+	private Dictionary<long, Vector2> _lastPositions = new();
 
 	// GameRoot container for entities
 	private readonly Dictionary<long, Node2D> _instances = new();
@@ -50,6 +51,7 @@ public partial class Client : Node
 		{ EntityType.WarHammer, GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn")},
 		{ EntityType.HammerProjectile, GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/hammerProjectile.tscn")},
 		{ EntityType.HealStaff, GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn")},
+		{ EntityType.DoubleBlade, GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn")},
 		{ EntityType.MedicineBag, GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn")},
 		{ EntityType.Medicine, GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicine.tscn")}
 	};
@@ -122,39 +124,39 @@ public partial class Client : Node
 			{
 				// HUD / WaveCounter stuff
 				case false when _camera != null:
-					{
-						var wt = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
-						wt.Disable = true;
-						_camera.AddChild(wt);
-						_timer = wt;
-						_waveTimerReady = true;
-						break;
-					}
+				{
+					var wt = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
+					wt.Disable = true;
+					_camera.AddChild(wt);
+					_timer = wt;
+					_waveTimerReady = true;
+					break;
+				}
 				case true when _camera != null:
+				{
+					var timeLeftLabel = _timer.GetNodeOrNull<Label>("TimeLeft");
+					if (timeLeftLabel != null)
+						timeLeftLabel.Text = (_timer.MaxTime - entity.WaveTimeLeft).ToString();
+
+					var waveCounterLabel = _timer.GetNodeOrNull<Label>("WaveCounter");
+					if (waveCounterLabel != null)
+						waveCounterLabel.Text = $"Wave: {entity.WaveCount}";
+					if (entity.GraceTime)
 					{
-						var timeLeftLabel = _timer.GetNodeOrNull<Label>("TimeLeft");
-						if (timeLeftLabel != null)
-							timeLeftLabel.Text = (_timer.MaxTime - entity.WaveTimeLeft).ToString();
-
-						var waveCounterLabel = _timer.GetNodeOrNull<Label>("WaveCounter");
-						if (waveCounterLabel != null)
-							waveCounterLabel.Text = $"Wave: {entity.WaveCount}";
-						if (entity.GraceTime)
+						timeLeftLabel.Text = "Grace Time";
+						if (!_graceTimeTriggered)
 						{
-							timeLeftLabel.Text = "Grace Time";
-							if (!_graceTimeTriggered)
-							{
-								_timer.TriggerWaveEnded();
-								_graceTimeTriggered = true;
-							}
+							_timer.TriggerWaveEnded();
+							_graceTimeTriggered = true;
 						}
-						else
-						{
-							_graceTimeTriggered = false; // Reset, wenn GraceTime vorbei ist
-						}
-
-						break;
 					}
+					else
+					{
+						_graceTimeTriggered = false; // Reset, wenn GraceTime vorbei ist
+					}
+
+					break;
+				}
 			}
 
 			// Player stuff
@@ -288,22 +290,47 @@ public partial class Client : Node
 		return null; // no OwnerID & SlotIndex? f this
 	}
 
+	
 
-
-
+	
 	private void UpdateTransform(Node2D inst, EntitySnapshot entity)
 	{
-		if (IsInstanceValid(inst))
+		if (GodotObject.IsInstanceValid(inst))
 		{
+			Vector2 lastPos = _lastPositions.TryGetValue(entity.NetworkId, out var lp) ? lp : entity.Position;
+			Vector2 deltaPos = entity.Position - lastPos;
+
 			inst.GlobalPosition = entity.Position;
 			inst.Rotation = entity.Rotation;
 			inst.Scale = entity.Scale;
 			inst.GetNodeOrNull<Health>("Health").health = entity.Health;
 
-			if (inst is DefaultPlayer player && entity.Health <= 0)
+			// Sync all animations for players
+			if (inst is DefaultPlayer player)
 			{
-				player.animationHandler?.SetDeath();
+				if (entity.Health <= 0)
+				{
+					player.animationHandler?.SetDeath();
+				}
+				else
+				{
+					// Flip based on movement direction
+					if (player.animation != null && Math.Abs(deltaPos.X) > 1e-2)
+						player.animation.FlipH = deltaPos.X < 0;
+
+					// Walk/Idle Animation based on movement
+					if (player.animationHandler != null)
+					{
+						if (deltaPos.Length() > 1e-2)
+							player.animationHandler.UpdateAnimationState(false, deltaPos);
+						else
+							player.animationHandler.UpdateAnimationState(false, Vector2.Zero);
+					}
+				}
 			}
+
+			// save last position
+			_lastPositions[entity.NetworkId] = entity.Position;
 		}
 	}
 
@@ -326,7 +353,7 @@ public partial class Client : Node
 
 	private void ChangeCamera(Node2D inst, EntitySnapshot entity)
 	{
-		bool isPlayerType = entity.Type == EntityType.DefaultPlayer
+		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
 							|| entity.Type == EntityType.Archer
 							|| entity.Type == EntityType.Knight
 							|| entity.Type == EntityType.Mage

@@ -38,6 +38,7 @@ namespace Game.Utilities.Multiplayer
 		public static NetworkManager Instance { get; private set; }
 		private Client client;
 		private Server server;
+		public bool _soloMode = false;
 		// Server ready signal
 		[Signal]
 		public delegate void HeadlessServerInitializedEventHandler();
@@ -362,7 +363,6 @@ namespace Game.Utilities.Multiplayer
 		{
 			// change scene to game
 			var gameScene = GD.Load<PackedScene>("res://Utilities/GameRoot/GameRoot.tscn");
-			gameScene.Instantiate<Node>();
 			GetTree().ChangeSceneToPacked(gameScene);
 
 			var peerId = GetTree().GetMultiplayer().GetUniqueId();

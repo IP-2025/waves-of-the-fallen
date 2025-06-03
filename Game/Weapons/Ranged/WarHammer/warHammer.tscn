@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bi8iv4nmu4lda"]
+[gd_scene load_steps=6 format=3 uid="uid://bpen6hn6ahxuh"]
 
 [ext_resource type="Script" uid="uid://c3yjq1o6tm30a" path="res://Weapons/Ranged/WarHammer/WarHammer.cs" id="1_no3o6"]
 [ext_resource type="Texture2D" uid="uid://x4qnil5s6ma6" path="res://Weapons/Ranged/WarHammer/Resources/WarHammer.png" id="2_33nvm"]
