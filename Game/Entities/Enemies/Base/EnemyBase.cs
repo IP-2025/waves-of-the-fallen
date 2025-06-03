@@ -144,7 +144,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 		if (player != null)
 		{
 			GD.Print($"OnDeath: player type={player.GetType().Name}");
-			var myId = player.OwnerPeerId; // oder player.NetworkId, je nachdem wie du es speicherst
+			var myId = player.OwnerPeerId; // oder player.NetworkId, noch besser: Spielername in Zukunft
 			GD.Print($"OnDeath: myId={myId}, Multiplayer.GetUniqueId()={Multiplayer.GetUniqueId()}");
 
 			if (!Game.Utilities.Backend.GameState.PlayerScores.ContainsKey(myId))
