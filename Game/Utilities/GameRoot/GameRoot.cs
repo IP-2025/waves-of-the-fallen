@@ -37,7 +37,7 @@ public partial class GameRoot : Node
 
         if (_soloMode)
         {
-            SpawnPlayer(2);
+            SpawnPlayer(1);
             GetChildren().OfType<DefaultPlayer>().FirstOrDefault().GetNodeOrNull<Camera2D>("Camera2D").AddChild(_globalWaveTimer);
         }
         else // its the server
