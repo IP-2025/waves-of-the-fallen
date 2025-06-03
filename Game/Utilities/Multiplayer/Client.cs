@@ -7,6 +7,8 @@ using System.Linq;
 using System.Security;
 using System;
 using System.Threading;
+using System.Threading;
+using Game.UI.GameOver;
 
 public partial class Client : Node
 {
@@ -115,7 +117,10 @@ public partial class Client : Node
 	}
 
 	public void ApplySnapshot(Snapshot snap)
-	{
+	{	
+		// check if all players are dead in snapshot
+		ShowGameOverScreen(snap.livingPlayersCount);
+
 		// collect all network ids from the snapshot
 		var networkIds = snap.Entities.Select(e => e.NetworkId).ToHashSet();
 
@@ -128,6 +133,15 @@ public partial class Client : Node
 		if (_camera == null || networkIds.Contains(Multiplayer.GetUniqueId())) return;
 		_camera = null;
 		_hasJoystick = false;
+	}
+	
+	private void ShowGameOverScreen(int livingPlayersCount)
+	{
+		if (livingPlayersCount == 0)
+		{
+			var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
+			gameRoot.ShowGameOverScreen();
+		}
 	}
 
 	private void OnWeaponChosen(Weapon weaponType)

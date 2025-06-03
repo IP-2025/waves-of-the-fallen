@@ -40,6 +40,7 @@ namespace Game.Utilities.Multiplayer
 		private Client client;
 		private Server server;
 		public bool _soloMode = false;
+		Process process = new Process();
 		// Server ready signal
 		[Signal]
 		public delegate void HeadlessServerInitializedEventHandler();
@@ -180,7 +181,6 @@ namespace Game.Utilities.Multiplayer
 				};
 			}
 
-			var process = new Process();
 			process.StartInfo = startInfo;
 
 			process.OutputDataReceived += (sender, args) =>
@@ -405,21 +405,21 @@ namespace Game.Utilities.Multiplayer
 			}
 		}
 
-		private void SendClientCommand()
+	private void SendClientCommand()
+	{
+		if (_udpClientPeer == null) return;
+		
+		Command cmdShop = client.GetShopCommand(_tick);
+
+		if (cmdShop != null)
 		{
-			if (_udpClientPeer == null) return;
-
-			Command cmdShop = client.GetShopCommand(_tick);
-
-			if (cmdShop != null)
-			{
-				_udpClientPeer.PutPacket(Serializer.Serialize(cmdShop));
-				DebugIt($"Send Shop cmd tick={_tick}, dir={cmdShop.Weapon}");
-			}
-
-			Command cmd = client.GetCommand(_tick);
-
-			if (cmd == null) return;
+			_udpClientPeer.PutPacket(Serializer.Serialize(cmdShop));
+			DebugIt($"Send Shop cmd tick={_tick}, dir={cmdShop.Weapon}");
+		}
+		
+		Command cmd = client.GetCommand(_tick);
+		
+		if (cmd == null) return;
 
 			_udpClientPeer.PutPacket(Serializer.Serialize(cmd));
 			DebugIt($"Send MOVE cmd tick={_tick}, dir={cmd.MoveDir}");

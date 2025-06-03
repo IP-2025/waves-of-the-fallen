@@ -47,6 +47,7 @@ public partial class Dagger : MeleeWeapon
 		ShootMeleeVisual(() =>
 		{
 			DaggerAnimationPlayer.Play("stab");
+			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("daggerStabs"), GlobalPosition, -5);
 		});
 		
 		await ToSignal(GetTree().CreateTimer(0.2), "timeout");

@@ -1,0 +1,194 @@
+[gd_scene load_steps=10 format=3 uid="uid://ckkabryqawp1l"]
+
+[ext_resource type="Script" uid="uid://5qdnog2ipfp3" path="res://UI/GameOver/GameOverScreen.cs" id="1_8am08"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pposm"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="Animation" id="Animation_j032u"]
+resource_name = "ButtonFadeIn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MainMenuButton:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_8am08"]
+resource_name = "FadeIn"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.381703, 0.381703, 0.381703, 0), Color(0.381048, 0.381048, 0.381048, 0.0392157), Color(0.380392, 0.380392, 0.380392, 0.0784314), Color(0.380392, 0.380392, 0.380392, 0.117647), Color(0.380392, 0.380392, 0.380392, 0.156863), Color(0.380392, 0.380392, 0.380392, 0.196078), Color(0.380392, 0.380392, 0.380392, 0.313726)]
+}
+
+[sub_resource type="Animation" id="Animation_0tvqg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadeRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.381703, 0.381703, 0.381703, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MainMenuButton:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GameOverLabel:theme_override_font_sizes/font_size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [40]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j032u"]
+_data = {
+&"ButtonFadeIn": SubResource("Animation_j032u"),
+&"FadeIn": SubResource("Animation_8am08"),
+&"RESET": SubResource("Animation_0tvqg")
+}
+
+[sub_resource type="Animation" id="Animation_itcb5"]
+resource_name = "GameOver"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GameOverLabel:theme_override_font_sizes/font_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1, 80]
+}
+
+[sub_resource type="Animation" id="Animation_w6qo0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GameOverLabel:theme_override_font_sizes/font_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_isfdy"]
+_data = {
+&"GameOver": SubResource("Animation_itcb5"),
+&"RESET": SubResource("Animation_w6qo0")
+}
+
+[node name="GameOverScreen" type="CanvasLayer" node_paths=PackedStringArray("ScoreLabel", "MainMenuBtn", "FadeRect", "GameOverLabel", "AnimationPlayerBackground", "AnimationPlayerForeground")]
+layer = 10
+script = ExtResource("1_8am08")
+ScoreLabel = NodePath("ScoreLabel")
+MainMenuBtn = NodePath("MainMenuButton")
+FadeRect = NodePath("FadeRect")
+GameOverLabel = NodePath("GameOverLabel")
+AnimationPlayerBackground = NodePath("AnimationPlayerBackground")
+AnimationPlayerForeground = NodePath("AnimationPlayerForeground")
+
+[node name="FadeRect" type="ColorRect" parent="."]
+offset_right = 1148.0
+offset_bottom = 646.0
+color = Color(0.381703, 0.381703, 0.381703, 0)
+metadata/_edit_lock_ = true
+
+[node name="GameOverLabel" type="Label" parent="."]
+offset_left = 358.0
+offset_top = 117.0
+offset_right = 792.0
+offset_bottom = 227.0
+theme_override_font_sizes/font_size = 1
+text = "Game Over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 507.0
+offset_top = 343.0
+offset_right = 634.0
+offset_bottom = 398.0
+theme_override_font_sizes/font_size = 40
+text = "SCORE"
+
+[node name="MainMenuButton" type="Button" parent="."]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -121.0
+offset_top = -150.0
+offset_right = 121.0
+offset_bottom = -35.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/normal = SubResource("StyleBoxFlat_pposm")
+text = "Quit"
+
+[node name="AnimationPlayerBackground" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_j032u")
+}
+
+[node name="AnimationPlayerForeground" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_isfdy")
+}
