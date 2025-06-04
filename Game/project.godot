@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Game"
+config/name="Waves of the fallen"
 run/main_scene="uid://d2coob6g63jxs"
 config/features=PackedStringArray("4.4", "C#", "Mobile")
 
