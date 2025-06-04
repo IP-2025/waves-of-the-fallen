@@ -5,41 +5,73 @@ using Game.Utilities.Multiplayer;
 
 public partial class OnlineLocalMenu : Control
 {
-	private void HeadlessServerInitializedEventHandler()
-	{
-		throw new NotImplementedException();
-	}
+  bool _headlessIsReady = false;
 
-	private void _on_button_back_onlineLocal_pressed()
-	{
-		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Main/mainMenu.tscn");
-		SoundManager.Instance.PlayUI();
-		GetTree().ChangeSceneToPacked(scene);
-	}
-	private void _on_button_local_pressed()
-	{
-		var scene = ResourceLoader.Load<PackedScene>("res://Menu/localMenu.tscn");
-		SoundManager.Instance.PlayUI();
-		GetTree().ChangeSceneToPacked(scene);
-	}
-	private void _on_button_online_pressed()
-	{
+  public override void _Ready()
+  {
+	NetworkManager.Instance.HeadlessServerInitialized += OnHeadlessServerInitialized;
+  }
 
-	}
+  private void HeadlessServerInitializedEventHandler()
+  {
+	throw new NotImplementedException();
+  }
 
-	private void _on_button_solo_pressed()
+  private void _on_button_back_onlineLocal_pressed()
+  {
+	var scene = ResourceLoader.Load<PackedScene>("res://Menu/Main/mainMenu.tscn");
+	SoundManager.Instance.PlayUI();
+	GetTree().ChangeSceneToPacked(scene);
+  }
+  private void _on_button_local_pressed()
+  {
+	var scene = ResourceLoader.Load<PackedScene>("res://Menu/localMenu.tscn");
+	SoundManager.Instance.PlayUI();
+	GetTree().ChangeSceneToPacked(scene);
+  }
+  private void _on_button_online_pressed()
+  {
+
+  }
+
+  private void _on_button_solo_pressed()
+  {
+	Button soloButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2/Button_Solo");
+	soloButton.Disabled = true;
+	SoundManager.Instance.PlayUI();
+	NetworkManager.Instance.StartHeadlessServer(true);
+  }
+
+  private void OnHeadlessServerInitialized()
+  {
+	var timer = new Timer();
+	AddChild(timer);
+	timer.WaitTime = 0.5f;
+	timer.OneShot = true;
+
+	timer.Timeout += () =>
 	{
-		Button soloButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2/Button_Solo");
-		soloButton.Disabled = true;
-		SoundManager.Instance.PlayUI();
+	  NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
 
-		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
-		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+	  var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
+	  int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
 
-		GameRoot gameScene = ResourceLoader.Load<PackedScene>("res://Utilities/GameRoot/GameRoot.tscn").Instantiate<GameRoot>();
-		gameScene._soloSelectedCharacterId = selectedCharacterId;
-		gameScene._soloMode = true;
-		GetTree().Root.AddChild(gameScene);
-		GetTree().CurrentScene = gameScene;
-	}
+	  Timer gameStartTimer = new Timer();
+	  AddChild(gameStartTimer);
+	  gameStartTimer.WaitTime = 0.5f;
+	  gameStartTimer.OneShot = true;
+	  gameStartTimer.Timeout += () => {
+		NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
+		NetworkManager.Instance.Rpc("NotifyGameStart");
+	  };
+	  gameStartTimer.Start();
+	};
+
+	timer.Start();
+  }
+
+  public override void _ExitTree()
+  {
+	NetworkManager.Instance.HeadlessServerInitialized -= OnHeadlessServerInitialized;
+  }
 }

@@ -38,6 +38,8 @@ namespace Game.Utilities.Multiplayer
 		public static NetworkManager Instance { get; private set; }
 		private Client client;
 		private Server server;
+
+		Process process = new Process();
 		// Server ready signal
 		[Signal]
 		public delegate void HeadlessServerInitializedEventHandler();
@@ -184,6 +186,7 @@ namespace Game.Utilities.Multiplayer
 
 		public void StartHeadlessServer(bool headless)
 		{
+			process = new Process();
 			ProcessStartInfo startInfo;
 
 			if (headless)
@@ -211,7 +214,6 @@ namespace Game.Utilities.Multiplayer
 				};
 			}
 
-			var process = new Process();
 			process.StartInfo = startInfo;
 
 			process.OutputDataReceived += (sender, args) =>
@@ -258,7 +260,7 @@ namespace Game.Utilities.Multiplayer
 			AddChild(shutdownTimer);
 			shutdownTimer.Start();
 
-			DebugIt("Shutdown timer gestartet...");
+			DebugIt("Shutdown timer started...");
 		}
 
 		private void OnPeerDisconnected(long id)
@@ -441,7 +443,16 @@ namespace Game.Utilities.Multiplayer
 		{
 			if (_udpClientPeer == null) return;
 
+			Command cmdShop = client.GetShopCommand(_tick);
+
+			if (cmdShop != null)
+			{
+				_udpClientPeer.PutPacket(Serializer.Serialize(cmdShop));
+				DebugIt($"Send Shop cmd tick={_tick}, dir={cmdShop.Weapon}");
+			}
+
 			Command cmd = client.GetCommand(_tick);
+
 			if (cmd == null) return;
 
 			_udpClientPeer.PutPacket(Serializer.Serialize(cmd));

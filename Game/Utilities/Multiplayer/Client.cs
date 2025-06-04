@@ -6,7 +6,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security;
 using System;
-using System.Threading;
+	using System.Threading;
+using Game.UI.GameOver;
 
 public partial class Client : Node
 {
@@ -14,13 +15,22 @@ public partial class Client : Node
 	private Camera2D _camera;
 	private bool _hasJoystick;
 	private bool _waveTimerReady;
-	private WaveTimer _timer;
+	private WaveTimer _timer; 
 	private bool _graceTimeTriggered;
 
-	// movement tracking of players is now done directly in the default player class
+	// movement tracking of players
+	private Dictionary<long, Vector2> _lastPositions = new();
 
 	// GameRoot container for entities
 	private readonly Dictionary<long, Node2D> _instances = new();
+	
+	// Shop
+	private int _lastLocalShopRound = 1;
+	private int _newWeaponPos = 0;
+	private PackedScene _shopScene = GD.Load<PackedScene>("res://UI/Shop/BossShop/bossShop.tscn");
+	private Node _shopInstance;
+	private bool weaponUpdated = false;
+	private string _selectedWeapon = "";
 
 	// mapping per entity type
 	private readonly Dictionary<EntityType, PackedScene> _prefabs = new()
@@ -50,6 +60,7 @@ public partial class Client : Node
 		{ EntityType.WarHammer, GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn")},
 		{ EntityType.HammerProjectile, GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/hammerProjectile.tscn")},
 		{ EntityType.HealStaff, GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn")},
+		{ EntityType.DoubleBlade, GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn")},
 		{ EntityType.MedicineBag, GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn")},
 		{ EntityType.Medicine, GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicine.tscn")}
 	};
@@ -68,7 +79,22 @@ public partial class Client : Node
 		var dir = joy != Vector2.Zero ? joy : key;
 
 		// nonly send move command if there is input
-		return dir != Vector2.Zero ? new Command(tick, eid, CommandType.Move, dir) : null;
+		return dir != Vector2.Zero ? new Command(tick, eid, CommandType.Move, dir, _selectedWeapon, _newWeaponPos) : null;
+	}
+	
+	public Command GetShopCommand(ulong tick)
+	{
+		long eid = Multiplayer.GetUniqueId();
+
+		var joy = GetLocalJoystickDirection();
+		var key = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+		// decide between joystick and keyboard input, joystick has priority
+		var dir = joy != Vector2.Zero ? joy : key;
+
+		bool executeCommand = weaponUpdated;
+		weaponUpdated = false;
+		
+		return executeCommand ? new Command(tick, eid, CommandType.BossShop, dir, _selectedWeapon, _newWeaponPos) : null;
 	}
 
 	// helper finds the local player's joystick and returns its direction
@@ -90,7 +116,10 @@ public partial class Client : Node
 	}
 
 	public void ApplySnapshot(Snapshot snap)
-	{
+	{	
+		// check if all players are dead in snapshot
+		ShowGameOverScreen(snap.livingPlayersCount);
+
 		// collect all network ids from the snapshot
 		var networkIds = snap.Entities.Select(e => e.NetworkId).ToHashSet();
 
@@ -103,6 +132,26 @@ public partial class Client : Node
 		if (_camera == null || networkIds.Contains(Multiplayer.GetUniqueId())) return;
 		_camera = null;
 		_hasJoystick = false;
+	}
+	
+	private void ShowGameOverScreen(int livingPlayersCount)
+	{
+		if (livingPlayersCount == 0)
+		{
+			var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
+			gameRoot.ShowGameOverScreen();
+		}
+	}
+
+	private void OnWeaponChosen(Weapon weaponType)
+	{
+		if (_shopInstance != null && IsInstanceValid(_shopInstance))
+			_shopInstance.QueueFree();
+		_shopInstance = null;
+
+		_selectedWeapon = weaponType.GetType().Name;
+		_newWeaponPos++;
+		weaponUpdated = true;
 	}
 
 
@@ -118,6 +167,25 @@ public partial class Client : Node
 		// first all not a weapon things (no OwnerID & SlotIndex)
 		foreach (var entity in entities.Where(e => !e.OwnerId.HasValue || !e.SlotIndex.HasValue))
 		{
+			
+			// Shop
+			if (entity.WaveCount > _lastLocalShopRound && entity.WaveCount < 5)
+			{
+				_lastLocalShopRound = entity.WaveCount;
+				
+				if (_camera != null)
+				{
+					_shopInstance = _shopScene.Instantiate();
+					_camera.AddChild(_shopInstance);
+					_shopInstance.Connect(
+						BossShop.SignalName.WeaponChosen,
+						new Callable(this, nameof(OnWeaponChosen))
+					);
+				}
+				
+        
+			}
+			
 			switch (_waveTimerReady)
 			{
 				// HUD / WaveCounter stuff
@@ -288,22 +356,47 @@ public partial class Client : Node
 		return null; // no OwnerID & SlotIndex? f this
 	}
 
+	
 
-
-
+	
 	private void UpdateTransform(Node2D inst, EntitySnapshot entity)
 	{
-		if (IsInstanceValid(inst))
+		if (GodotObject.IsInstanceValid(inst))
 		{
+			Vector2 lastPos = _lastPositions.TryGetValue(entity.NetworkId, out var lp) ? lp : entity.Position;
+			Vector2 deltaPos = entity.Position - lastPos;
+
 			inst.GlobalPosition = entity.Position;
 			inst.Rotation = entity.Rotation;
 			inst.Scale = entity.Scale;
 			inst.GetNodeOrNull<Health>("Health").health = entity.Health;
 
-			if (inst is DefaultPlayer player && entity.Health <= 0)
+			// Sync all animations for players
+			if (inst is DefaultPlayer player)
 			{
-				player.animationHandler?.SetDeath();
+				if (entity.Health <= 0)
+				{
+					player.animationHandler?.SetDeath();
+				}
+				else
+				{
+					// Flip based on movement direction
+					if (player.animation != null && Math.Abs(deltaPos.X) > 1e-2)
+						player.animation.FlipH = deltaPos.X < 0;
+
+					// Walk/Idle Animation based on movement
+					if (player.animationHandler != null)
+					{
+						if (deltaPos.Length() > 1e-2)
+							player.animationHandler.UpdateAnimationState(false, deltaPos);
+						else
+							player.animationHandler.UpdateAnimationState(false, Vector2.Zero);
+					}
+				}
 			}
+
+			// save last position
+			_lastPositions[entity.NetworkId] = entity.Position;
 		}
 	}
 
@@ -326,7 +419,7 @@ public partial class Client : Node
 
 	private void ChangeCamera(Node2D inst, EntitySnapshot entity)
 	{
-		bool isPlayerType = entity.Type == EntityType.DefaultPlayer
+		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
 							|| entity.Type == EntityType.Archer
 							|| entity.Type == EntityType.Knight
 							|| entity.Type == EntityType.Mage

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ckw0iqrsdcp5k" path="res://Entities/Enemies/Goblin/BasicEnemy.cs" id="1_fecjr"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_ihcfn"]
-[ext_resource type="Texture2D" uid="uid://byx08s5kfvrqb" path="res://Entities/Enemies/Goblin/Resources/Goblin_spritesheet.png" id="3_ihcfn"]
+[ext_resource type="Texture2D" uid="uid://bqu7fjlpwamks" path="res://Entities/Enemies/Goblin/Resources/Goblin_spritesheet.png" id="3_ihcfn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_r4aor"]
 radius = 26.0192

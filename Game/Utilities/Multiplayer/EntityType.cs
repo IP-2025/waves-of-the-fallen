@@ -25,6 +25,7 @@ public enum EntityType
 	WarHammer,
 	HammerProjectile,
 	HealStaff,
+	DoubleBlade,
 	MedicineBag,
 	Medicine
 }

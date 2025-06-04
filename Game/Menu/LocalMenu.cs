@@ -25,6 +25,7 @@ public partial class LocalMenu : Control
 
   public override void _Ready()
   {
+    GD.Print("LocalMenu: Ready aufgerufen – isHost=" + isHost);
     joinButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/join");
     hostButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/host");
     playButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/play");
@@ -48,13 +49,18 @@ public partial class LocalMenu : Control
 
   private void _on_button_back_local_pressed()
   {
-    // disconnect from server / host
+    // 1. Disconnect vom Server/Host
     NetworkManager.Instance.DisconnectClient();
-    // Load the previous scene
-    var scene = ResourceLoader.Load<PackedScene>("res://Menu/online_localMenu.tscn");
-    GetTree().ChangeSceneToPacked(scene);
+    // 2. UI-Sound
     SoundManager.Instance.PlayUI();
+    // 3. Neue Szene laden – Godot killt automatisch alle alten Nodes + Scripte
+    var scene = ResourceLoader.Load<PackedScene>("res://Menu/online_localMenu.tscn");
+    var err = GetTree().ChangeSceneToPacked(scene);
+    if (err != Error.Ok)
+      GD.PrintErr($"Konnte Szene nicht wechseln: {err}");
   }
+
+
 
 
   private void _on_join_button_pressed()
@@ -93,7 +99,9 @@ public partial class LocalMenu : Control
 
     isHost = true;
 
+    GD.Print("Start Headless");
     NetworkManager.Instance.StartHeadlessServer(true);
+    GD.Print("Headless started");
     SoundManager.Instance.PlayUI();
   }
 
