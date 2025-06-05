@@ -6,7 +6,7 @@
 .navbar {
     border-bottom: 3px solid #1976d2;
     box-shadow: 0 2px 12px rgba(25, 118, 210, 0.07);
-    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    font-family: "Segoe UI", "Roboto", Arial, sans-serif;
     font-size: 1.08rem;
     letter-spacing: 0.01em;
 }
@@ -24,7 +24,9 @@
     font-weight: 500;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
-    transition: color 0.18s, background 0.18s;
+    transition:
+        color 0.18s,
+        background 0.18s;
     border-radius: 0.3rem;
     padding: 0.5rem 1rem;
 }
@@ -34,7 +36,7 @@
 .navbar .navbar-nav .nav-link:hover {
     color: #fff !important;
     background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
-    text-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
+    text-shadow: 0 2px 8px rgba(25, 118, 210, 0.1);
 }
 
 .navbar-toggler {
@@ -54,7 +56,7 @@
     .navbar .navbar-collapse {
         background: #1976d2;
         border-radius: 0 0 0.5rem 0.5rem;
-        box-shadow: 0 2px 12px rgba(25, 118, 210, 0.10);
+        box-shadow: 0 2px 12px rgba(25, 118, 210, 0.1);
     }
 }
 
