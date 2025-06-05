@@ -146,7 +146,7 @@ public partial class Mainmenu : Control
                 );
             }
         }
-        
+
         _characterManager.SetGold(_onlineGoldAmount);
         _characterManager.SaveLastSelectedCharacterID(1);
 
@@ -181,7 +181,7 @@ public partial class Mainmenu : Control
                 var root = (Dictionary)json.Data;
 
                 var goldVariant = root["gold"];
-                _onlineGoldAmount = (int) goldVariant;
+                _onlineGoldAmount = (int)goldVariant;
 
                 // Check if gold matches local gold
                 if (!GoldIsEqual(_onlineGoldAmount))
@@ -301,6 +301,13 @@ public partial class Mainmenu : Control
     private void _on_button_highscore_pressed()
     {
         var scene = ResourceLoader.Load<PackedScene>("res://Menu/HighscoreList/highscore_screen.tscn");
+        SoundManager.Instance.PlayUI();
+        GetTree().ChangeSceneToPacked(scene);
+    }
+    private void _on_button_credits_pressed()
+    {
+        var scene = ResourceLoader.Load<PackedScene>("res://Menu/Credits/creditsPage.tscn");
+        GD.Print("to Credit Page");
         SoundManager.Instance.PlayUI();
         GetTree().ChangeSceneToPacked(scene);
     }

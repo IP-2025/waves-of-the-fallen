@@ -1,6 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://dj7j4ns1clpnx"]
+[gd_scene load_steps=13 format=3 uid="uid://dvv7xj4dmh4sa"]
 
-[ext_resource type="Script" uid="uid://bou8cv1blf3w8" path="res://Menu/Settings/SettingsMenu.cs" id="1_ifxnj"]
+[ext_resource type="Script" uid="uid://p1wohhl845y8" path="res://Menu/Credits/CreditsPage.cs" id="1_v02xy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eyi13"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
@@ -86,7 +86,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ifxnj")
+script = ExtResource("1_v02xy")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -120,7 +120,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 60
-text = "Settings"
+text = "Credits"
 
 [node name="Button_Back" type="Button" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(140, 0)
@@ -148,57 +148,50 @@ theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer2/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="LabelMusicVolume" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 40
-text = "Music"
-
-[node name="CheckBoxMusicEnabled" type="CheckBox" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
-unique_name_in_owner = true
-layout_mode = 2
-button_pressed = true
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="LabelMusicVolume" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 40
-text = "Music Volume"
-
-[node name="SliderMusicVolume" type="HSlider" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-max_value = 1.0
-step = 0.005
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 40
-text = "Language"
-
-[node name="ButtonLanguage" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
-unique_name_in_owner = true
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer"]
 layout_mode = 2
 
-[connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_settings_pressed"]
-[connection signal="toggled" from="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer4/CheckBoxMusicEnabled" to="." method="_on_check_box_music_enabled_toggled"]
-[connection signal="value_changed" from="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3/SliderMusicVolume" to="." method="_on_h_slider_music_value_changed"]
-[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2/ButtonLanguage" to="." method="_on_button_language_pressed"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "Backgroundmusic:"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="Label2" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "\"Financial Obligations\"  -  https://www.youtube.com/watch?v=IAZacOlW7PA
+Conducted and composed by Philip Milman  -  https://pmmusic.pro/
+Copyright © 2025  -  Philip Milman  -  All Rights Reserved.
+Licensed under Attribution 3.0 Unported (CC BY 3.0)  -  https://creativecommons.org/licenses/by/3.0/"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = ":"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="Label2" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer2/MarginContainer"]
+layout_mode = 2
+
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_BackToMainMenu_pressed"]
