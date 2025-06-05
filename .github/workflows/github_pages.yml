@@ -2,9 +2,10 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      # - master
-      - 339-github-pages
+    # branches:
+    #   - master
+    paths:
+      - 'pages/**'
 
 permissions:
   contents: read
