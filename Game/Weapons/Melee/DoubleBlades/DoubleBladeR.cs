@@ -4,7 +4,6 @@ public partial class DoubleBladeR : MeleeWeapon
 {
 	private AnimationPlayer DoubleBladeRAnimationPlayer;
 	private Sprite2D SwordTrailTest;
-	
 	private const string _resBase = "res://Weapons/Melee/DoubleBlades/";
 	public override int DefaultPiercing { get; set; } = 0;
 	public override float DefaultSpeed { get; set; } = 0f;

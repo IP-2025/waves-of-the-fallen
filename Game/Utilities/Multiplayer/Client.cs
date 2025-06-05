@@ -6,7 +6,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security;
 using System;
-	using System.Threading;
+using System.Threading;
+using System.Threading;
 using Game.UI.GameOver;
 
 public partial class Client : Node
@@ -15,7 +16,7 @@ public partial class Client : Node
 	private Camera2D _camera;
 	private bool _hasJoystick;
 	private bool _waveTimerReady;
-	private WaveTimer _timer; 
+	private WaveTimer _timer;
 	private bool _graceTimeTriggered;
 
 	// movement tracking of players
@@ -23,7 +24,7 @@ public partial class Client : Node
 
 	// GameRoot container for entities
 	private readonly Dictionary<long, Node2D> _instances = new();
-	
+
 	// Shop
 	private int _lastLocalShopRound = 1;
 	private int _newWeaponPos = 0;
@@ -81,7 +82,7 @@ public partial class Client : Node
 		// nonly send move command if there is input
 		return dir != Vector2.Zero ? new Command(tick, eid, CommandType.Move, dir, _selectedWeapon, _newWeaponPos) : null;
 	}
-	
+
 	public Command GetShopCommand(ulong tick)
 	{
 		long eid = Multiplayer.GetUniqueId();
@@ -153,8 +154,7 @@ public partial class Client : Node
 		_newWeaponPos++;
 		weaponUpdated = true;
 	}
-
-
+	
 	private void InstantiateOrUpdateEntities(IEnumerable<EntitySnapshot> entities)
 	{
 		// Kamera- und WaveTimer-Referenzen überprüfen und ggf. zurücksetzen
@@ -167,25 +167,22 @@ public partial class Client : Node
 		// first all not a weapon things (no OwnerID & SlotIndex)
 		foreach (var entity in entities.Where(e => !e.OwnerId.HasValue || !e.SlotIndex.HasValue))
 		{
-			
+
 			// Shop
 			if (entity.WaveCount > _lastLocalShopRound && entity.WaveCount < 5)
 			{
 				_lastLocalShopRound = entity.WaveCount;
-				
-				if (_camera != null)
+
+				if (_camera != null && _shopInstance == null)
 				{
 					_shopInstance = _shopScene.Instantiate();
+					_shopInstance.Connect(nameof(BossShop.WeaponChosen), new Callable(this, nameof(OnWeaponChosen)));
 					_camera.AddChild(_shopInstance);
-					_shopInstance.Connect(
-						BossShop.SignalName.WeaponChosen,
-						new Callable(this, nameof(OnWeaponChosen))
-					);
+
+					DebugIt($"Shop instantiated for wave {entity.WaveCount}");
 				}
-				
-        
 			}
-			
+
 			switch (_waveTimerReady)
 			{
 				// HUD / WaveCounter stuff
@@ -356,12 +353,12 @@ public partial class Client : Node
 		return null; // no OwnerID & SlotIndex? f this
 	}
 
-	
 
-	
+
+
 	private void UpdateTransform(Node2D inst, EntitySnapshot entity)
 	{
-		if (GodotObject.IsInstanceValid(inst))
+		if (IsInstanceValid(inst))
 		{
 			Vector2 lastPos = _lastPositions.TryGetValue(entity.NetworkId, out var lp) ? lp : entity.Position;
 			Vector2 deltaPos = entity.Position - lastPos;
@@ -419,7 +416,7 @@ public partial class Client : Node
 
 	private void ChangeCamera(Node2D inst, EntitySnapshot entity)
 	{
-		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
+		bool isPlayerType = entity.Type == EntityType.DefaultPlayer
 							|| entity.Type == EntityType.Archer
 							|| entity.Type == EntityType.Knight
 							|| entity.Type == EntityType.Mage

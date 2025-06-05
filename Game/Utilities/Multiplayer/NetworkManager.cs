@@ -1,3 +1,4 @@
+//old one
 namespace Game.Utilities.Multiplayer
 {
 	using Godot;
@@ -38,7 +39,7 @@ namespace Game.Utilities.Multiplayer
 		public static NetworkManager Instance { get; private set; }
 		private Client client;
 		private Server server;
-
+		public bool _soloMode = false;
 		Process process = new Process();
 		// Server ready signal
 		[Signal]
