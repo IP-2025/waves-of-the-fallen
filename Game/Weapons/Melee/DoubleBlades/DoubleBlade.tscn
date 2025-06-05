@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://kk6inayuwro3" path="res://Weapons/Melee/DoubleBlades/DoubleBlade.cs" id="1_it8ct"]
 [ext_resource type="Script" uid="uid://b5wcchem6rw6m" path="res://Weapons/Melee/DoubleBlades/DoubleBladeL.cs" id="2_nasur"]
 [ext_resource type="Script" uid="uid://jltsnrjo08q6" path="res://Weapons/Melee/DoubleBlades/DoubleBladeR.cs" id="3_gbif4"]
-[ext_resource type="Texture2D" uid="uid://clrya8q37680g" path="res://Weapons/Melee/DoubleBlades/Resources/DoppelKlingeSolo.png" id="3_i1atb"]
-[ext_resource type="Texture2D" uid="uid://cpmicc3oc3kux" path="res://Weapons/Melee/MasterSword/Resources/SwordTrailTest.png" id="4_i1atb"]
+[ext_resource type="Texture2D" uid="uid://dq68q6r2lfqso" path="res://Weapons/Melee/DoubleBlades/Resources/DoppelKlingeSolo.png" id="3_i1atb"]
+[ext_resource type="Texture2D" uid="uid://k77ptn7iwsdm" path="res://Weapons/Melee/MasterSword/Resources/SwordTrailTest.png" id="4_i1atb"]
 
 [sub_resource type="Animation" id="Animation_0hyae"]
 resource_name = "BladeLAttack"

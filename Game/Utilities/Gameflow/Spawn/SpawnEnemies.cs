@@ -24,6 +24,7 @@ public partial class SpawnEnemies : Node2D
 		_timer = GetNode<Timer>("SpawnTimer");
 		_timer.Timeout += OnTimerTimeout; // timer event connected
 		_playerCount = GetTree().GetMultiplayer().GetPeers().Count();
+		_playerCount = _playerCount <= 0 ? 1 : _playerCount; // have at least one player, (important for solo mode without multiplayer peers)
 		_timer.WaitTime = _timer.WaitTime / _playerCount; // scale with players
 		LoadPatternPool(); // loads the pattern pool see method LoadPatternPool() and debug prints every found pattern and the associated spawning cost
 		foreach (var pattern in _patternPool)
