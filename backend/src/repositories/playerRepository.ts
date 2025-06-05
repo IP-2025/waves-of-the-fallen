@@ -1,7 +1,7 @@
 import {AppDataSource} from 'database/dataSource';
 import {termLogger as logger} from 'logger';
 import { ConflictError, InternalServerError, NotFoundError} from 'errors';
-import {Player, Settings} from 'database/entities';
+import {HighScore, Player, Settings, UnlockedCharacter} from 'database/entities';
 
 const playersRepo = AppDataSource.getRepository(Player);
 const settingRepo = AppDataSource.getRepository(Settings);
@@ -58,10 +58,13 @@ export async function setGoldRepository(playerId: string, gold: number): Promise
 export async function deletePlayer(playerId: string): Promise<void> {
     try {
         await AppDataSource.transaction(async (transactionalEntityManager) => {
-            await transactionalEntityManager.delete(Settings, {player_id: playerId});
-            await transactionalEntityManager.delete(Player, {player_id: playerId});
+            await transactionalEntityManager.delete(HighScore, { player: { player_id: playerId } });
+            await transactionalEntityManager.delete(UnlockedCharacter, { player: { player_id: playerId } });
+            await transactionalEntityManager.delete(Credential, { player: { player_id: playerId } });
+            await transactionalEntityManager.delete(Settings, { player_id: playerId });
+            await transactionalEntityManager.delete(Player, { player_id: playerId });
         });
-        logger.info(`Player with ID ${playerId} deleted successfully.`);
+        logger.info(`Player with ID ${playerId} und alle zugehörigen Daten gelöscht.`);
     } catch (error) {
         logger.error('Error deleting player: ', error);
         throw new InternalServerError('Error deleting player');
