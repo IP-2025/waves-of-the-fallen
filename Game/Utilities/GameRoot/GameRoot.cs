@@ -52,7 +52,7 @@ public partial class GameRoot : Node
 		httpRequest.RequestCompleted += OnScoreRequestCompleted;
 
 		// TEST: Score-Submit 
-		SendScoreToBackend(1234); // Testwert
+		SendScoreToBackend(1234); // testvalue
 	}
 
 	public override void _Process(double delta)
@@ -142,7 +142,7 @@ public partial class GameRoot : Node
 		{
 			{ "score", score }
 		};
-		string json = System.Text.Json.JsonSerializer.Serialize(data);
+		string json = $"{{\"score\":{score}}}";
 
 		var err = httpRequest.Request(
 			url,
@@ -154,6 +154,7 @@ public partial class GameRoot : Node
 			GD.PrintErr($"Score submit error: {err}");
 		else
 			GD.Print("Score submit request sent!");
+		GD.Print("SendScoreToBackend called!");
 	}
 
 	private void OnScoreRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
