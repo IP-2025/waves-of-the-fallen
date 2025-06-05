@@ -1,63 +1,93 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datenschutz |</title> Waves of the Fallen</title>
+    <title>Privacy Policy | Waves of the Fallen</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/navbar.css" rel="stylesheet">
     <link href="css/datenschutz.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary main-navbar">
         <div class="container">
             <a class="navbar-brand" href="index.html">Waves of the Fallen</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Startseite</a></li>
-                    <li class="nav-item"><a class="nav-link" href="datenschutz.html">Datenschutz</a></li>
-                    <li class="nav-item"><a class="nav-link" href="agbs.html">AGBs</a></li>
-                    <li class="nav-item"><a class="nav-link" href="support.html">Support</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="support.html">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="agbs.html">Terms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="datenschutz.html">Privacy</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
     <main class="container datenschutz-content">
-        <h1 class="mb-4">Datenschutzerklärung</h1>
+        <h1 class="mb-4">Privacy Policy</h1>
         <p>
-            Der Schutz Ihrer persönlichen Daten ist uns ein besonderes Anliegen. Wir verarbeiten Ihre Daten daher ausschließlich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, TMG).
+            Protecting your personal data is very important to us. We process your data exclusively in accordance with legal regulations (GDPR, TMG).
         </p>
-        <h2>Kontakt mit uns</h2>
+        <h2>Contacting Us</h2>
         <p>
-            Wenn Sie per Formular auf der</h2> Website oder per E-Mail Kontakt mit uns aufnehmen, werden Ihre angegebenen Daten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen sechs Monate bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
+            If you contact us via the form on the website or by email, your provided data will be stored for six months for the purpose of processing the request and in case of follow-up questions. We do not share this data without your consent.
         </p>
-        <h2>Cookies</h2>
-        <p>
-            Unsere Website verwendet so genannte Cookies. Dabei handelt es sich um kleine Textdateien, die mit Hilfe des Browsers auf Ihrem Endgerät abgelegt werden. Sie</h2> richten keinen Schaden an.
-        </p>
-        <h2>Ihre Rechte</h2>
+        <h2>Your Rights</h2>
         <ul>
-            <li>Auskunft, Berichtigung</h2>, Löschung</li>
-            <li>Einschränkung der Verarbeitung</li>
-           </li> <li>Datenübertragbarkeit</li>
-            <li>Widerruf und Widerspruch</li>
+            <li>Right to information, correction, and deletion</li>
+            <li>Restriction of processing</li>
+            <li>Data portability</li>
+            <li>Withdrawal and objection</li>
         </ul>
         <p>
-            Wenn Sie glauben, dass die</li> Verarbeitung Ihrer Daten gegen das Datenschutzrecht verstößt oder Ihre datenschutzrechtlichen Ansprüche sonst in einer Weise verletzt worden sind, können Sie sich bei der Aufsichtsbehörde beschweren.
+            If you believe that the processing of your data violates data protection law or your data protection rights have otherwise been violated, you can lodge a complaint with the supervisory authority.
         </p>
-        <h2>Kontakt</h2>
+        <h2>Game Data & Authentication</h2>
         <p>
-            Bei Fragen zum Datenschutz erreichen Sie uns unter:<br>
-            <a href="mailto:support@wavesofthefallen.de"></h2>support@wavesofthefallen.de</a>
+            As "Waves of the Fallen" is a multiplayer vampire survivor-like game, we may collect and process gameplay data such as usernames, scores, and multiplayer session information. This data is used solely to provide and improve the gaming experience and is not shared with third parties.
+        </p>
+        <h2>Authentication & JWT</h2>
+        <p>
+            For authentication, "Waves of the Fallen" uses JSON Web Tokens (JWTs) that are generated and stored securely on your device or mobile phone. The JWT is saved in a file on your device and is used to verify your identity when accessing the game and its services. This token is never shared with third parties and is only used for authentication purposes within the game.
+        </p>
+        <h2>Contact</h2>
+        <p>
+            For questions about privacy, you can reach us at:<br>
+            <a href="mailto:support@wavesofthefallen.de">support@wavesofthefallen.de</a>
         </p>
     </main>
-    <footer class="footer bg-dark text-white mt-5 py-3">
-        <div class="container text-center">
-            &copy; 2024 Waves of the Fallen. Alle Rechte vorbehalten.
+    <footer class="footer bg-primary text-white text-center py-3 mt-auto">
+        <div class="container">
+            &copy; 2024 Waves of the Fallen – Multiplayer Vampire Survivor Game. All rights reserved.
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+      html, body {
+        height: 100%;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      main.container {
+        flex: 1 0 auto;
+      }
+      .footer {
+        flex-shrink: 0;
+      }
+    </style>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

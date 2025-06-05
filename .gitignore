@@ -14,6 +14,7 @@ export_presets.cfg
 *.env
 *.translation
 k8s/db-secret.yaml
+.DS_Store
 
 # === .NET build output ===
 bin/
