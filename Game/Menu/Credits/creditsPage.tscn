@@ -183,7 +183,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 18
-text = ":"
+text = "Game engine:"
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -193,5 +193,8 @@ theme_override_constants/margin_bottom = 10
 
 [node name="Label2" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer2/MarginContainer"]
 layout_mode = 2
+size_flags_vertical = 1
+text = "Godot Engine  -  https://godotengine.org
+Licensed under MIT-license  -  https://godotengine.org/license/"
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_BackToMainMenu_pressed"]
