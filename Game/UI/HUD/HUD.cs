@@ -8,7 +8,7 @@ public partial class HUD : CanvasLayer
 	{
 		var sb = new StringBuilder();
 
-		foreach (var kv in GameState.PlayerScores)
+		foreach (var kv in ScoreManager.PlayerScores)
 		{
 			string playerNodeName = $"E_{kv.Key}";
 			var playerNode = GetTree().Root.GetNodeOrNull<Node2D>("GameRoot")?.GetNodeOrNull<Node2D>(playerNodeName);

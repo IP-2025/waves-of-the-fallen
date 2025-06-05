@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using Game.Utilities.Multiplayer;
 using Game.UI.GameOver;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using Game.Utilities.Backend;
 
 // GameRoot is the main entry point for the game. It is responsible for loading the map, spawning the player, starting the enemy spawner and so on.
 public partial class GameRoot : Node
@@ -18,9 +18,6 @@ public partial class GameRoot : Node
 	private WaveTimer _globalWaveTimer;
 
 	private GameOverScreen _gameOverScreen;
-
-	private static readonly System.Net.Http.HttpClient httpClient = new System.Net.Http.HttpClient();
-
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -120,30 +117,40 @@ public partial class GameRoot : Node
 		AddChild(spawner);
 	}
 
-	private async void SendScoreToBackend(long playerId, int score)
+	private void SendScoreToBackend(int score)
 	{
-		var url = Game.Utilities.Backend.ServerConfig.BaseUrl + "/api/v1/protected/highscore/submit";
+		var httpRequest = GetNode<HttpRequest>("SendScoreRequest");
 
-		var data = new
+		var url = Game.Utilities.Backend.ServerConfig.BaseUrl + "/api/v1/highscore/update";
+		var token = SecureStorage.LoadToken();
+
+		var headers = new string[]
 		{
-			playerId = playerId,
-			score = score
+			"Content-Type: application/json",
+			$"Authorization: Bearer {token}"
 		};
-		string json = JsonSerializer.Serialize(data);
-		var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-		try
+		var data = new Godot.Collections.Dictionary
 		{
-			var response = await httpClient.PostAsync(url, content);
-			if (!response.IsSuccessStatusCode)
-			{
-				GD.PrintErr($"Score submit error: {response.StatusCode}");
-			}
-		}
-		catch (Exception ex)
-		{
-			GD.PrintErr($"Score submit exception: {ex.Message}");
-		}
+			{ "score", score }
+		};
+		string json = System.Text.Json.JsonSerializer.Serialize(data);
+
+		var err = httpRequest.Request(
+			url,
+			headers,
+			HttpClient.Method.Post,
+			json
+		);
+		if (err != Error.Ok)
+			GD.PrintErr($"Score submit error: {err}");
+
+		httpRequest.Connect("request_completed", new Callable(this, nameof(OnScoreRequestCompleted)));
+	}
+
+	private void OnScoreRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
+	{
+		GD.Print($"Score submit response: {responseCode}");
 	}
 
 	public void ShowGameOverScreen()
@@ -157,8 +164,8 @@ public partial class GameRoot : Node
 
 		long peerId = Multiplayer.GetUniqueId();
 		int score = 0;
-		if (Game.Utilities.Backend.GameState.PlayerScores.ContainsKey(peerId))
-			score = Game.Utilities.Backend.GameState.PlayerScores[peerId];
+		if (Game.Utilities.Backend.ScoreManager.PlayerScores.ContainsKey(peerId))
+			score = Game.Utilities.Backend.ScoreManager.PlayerScores[peerId];
 
 		_gameOverScreen.SetScore(score);
 	}
@@ -170,8 +177,8 @@ public partial class GameRoot : Node
 
 		long peerId = Multiplayer.GetUniqueId();
 		int score = 0;
-		if (Game.Utilities.Backend.GameState.PlayerScores.ContainsKey(peerId))
-			score = Game.Utilities.Backend.GameState.PlayerScores[peerId];
+		if (Game.Utilities.Backend.ScoreManager.PlayerScores.ContainsKey(peerId))
+			score = Game.Utilities.Backend.ScoreManager.PlayerScores[peerId];
 		_gameOverScreen.SetScore(score);
 
 		// Remove player entity to prevent a leftover copy
@@ -207,7 +214,7 @@ public partial class GameRoot : Node
 		{
 			DebugIt("No alive players left.");
 
-			SendScoreToBackend(peerId, score);
+			SendScoreToBackend(score);
 
 			ShowGameOverScreen();
 		}
