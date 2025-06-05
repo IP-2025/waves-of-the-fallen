@@ -19,6 +19,8 @@ public partial class GameRoot : Node
 
 	private GameOverScreen _gameOverScreen;
 
+	private bool _shouldQuitAfterSubmit = false;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -45,6 +47,12 @@ public partial class GameRoot : Node
 
 		// Start enemy spawner
 		SpawnEnemySpawner("res://Utilities/Gameflow/Spawn/SpawnEnemies.tscn");
+
+		var httpRequest = GetNode<HttpRequest>("SendScoreRequest");
+		httpRequest.RequestCompleted += OnScoreRequestCompleted;
+
+		// TEST: Score-Submit 
+		SendScoreToBackend(1234); // Testwert
 	}
 
 	public override void _Process(double delta)
@@ -144,13 +152,17 @@ public partial class GameRoot : Node
 		);
 		if (err != Error.Ok)
 			GD.PrintErr($"Score submit error: {err}");
-
-		httpRequest.Connect("request_completed", new Callable(this, nameof(OnScoreRequestCompleted)));
+		else
+			GD.Print("Score submit request sent!");
 	}
 
 	private void OnScoreRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
 	{
 		GD.Print($"Score submit response: {responseCode}");
+		if (_shouldQuitAfterSubmit)
+		{
+			GetTree().Quit();
+		}
 	}
 
 	public void ShowGameOverScreen()
@@ -161,6 +173,8 @@ public partial class GameRoot : Node
 		var scene = GD.Load<PackedScene>("res://UI/GameOver/gameOverScreen.tscn");
 		_gameOverScreen = scene.Instantiate<GameOverScreen>();
 		AddChild(_gameOverScreen);
+
+		_gameOverScreen.QuitPressed += OnGameOverQuitPressed;
 
 		long peerId = Multiplayer.GetUniqueId();
 		int score = 0;
@@ -179,7 +193,12 @@ public partial class GameRoot : Node
 		int score = 0;
 		if (Game.Utilities.Backend.ScoreManager.PlayerScores.ContainsKey(peerId))
 			score = Game.Utilities.Backend.ScoreManager.PlayerScores[peerId];
-		_gameOverScreen.SetScore(score);
+
+		if (_gameOverScreen == null)
+			ShowGameOverScreen();
+
+		if (_gameOverScreen != null)
+			_gameOverScreen.SetScore(score);
 
 		// Remove player entity to prevent a leftover copy
 		if (Server.Instance.Entities.TryGetValue(peerId, out var playerNode))
@@ -213,9 +232,6 @@ public partial class GameRoot : Node
 		else
 		{
 			DebugIt("No alive players left.");
-
-			SendScoreToBackend(score);
-
 			ShowGameOverScreen();
 		}
 	}
@@ -223,5 +239,16 @@ public partial class GameRoot : Node
 	private void DebugIt(string message)
 	{
 		if (_enableDebug) Debug.Print("GameRoot: " + message);
+	}
+
+	private void OnGameOverQuitPressed()
+	{
+		long peerId = Multiplayer.GetUniqueId();
+		int score = 0;
+		if (Game.Utilities.Backend.ScoreManager.PlayerScores.ContainsKey(peerId))
+			score = Game.Utilities.Backend.ScoreManager.PlayerScores[peerId];
+
+		_shouldQuitAfterSubmit = true;
+		SendScoreToBackend(score);
 	}
 }
