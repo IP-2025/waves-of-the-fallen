@@ -24,6 +24,8 @@ public partial class GameRoot : Node
 
 	// GameOver
 	private GameOverScreen _gameOverScreen;
+	public bool _soloMode = false;
+	public int _soloSelectedCharacterId = 1;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -191,7 +193,7 @@ public partial class GameRoot : Node
 		_gameOverScreen = scene.Instantiate<GameOverScreen>();
 		AddChild(_gameOverScreen);
 		_gameOverScreen.SetScore(0); //Show Score 0 for now, you can set it later
-		
+
 	}
 
 	public void OnPlayerDied()
@@ -236,7 +238,7 @@ public partial class GameRoot : Node
 		}
 	}
 
-	
+
 
 	private void DebugIt(string message)
 	{

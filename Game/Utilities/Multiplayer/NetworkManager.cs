@@ -85,6 +85,39 @@ namespace Game.Utilities.Multiplayer
 			HandleTickLoop(delta);
 		}
 
+		public void DisconnectClient()
+		{
+			// disconnect ENetMultiplayerPeer
+			if (_rpcClientPeer != null)
+			{
+				_rpcClientPeer.Close();
+				_rpcClientPeer.Dispose();
+				_rpcClientPeer = null;
+				DebugIt("ENetMultiplayerPeer disconnected.");
+			}
+
+			// disconnect UDP client
+			if (_udpClientPeer != null)
+			{
+				_udpClientPeer.Close();
+				_udpClientPeer = null;
+				DebugIt("UDP Client disconnected.");
+			}
+
+			// set multiplayerPeer to null
+			if (GetTree().GetMultiplayer().MultiplayerPeer != null)
+			{
+				GetTree().GetMultiplayer().MultiplayerPeer = null;
+				DebugIt("MultiplayerPeer set to null.");
+			}
+
+			// Additional cleanup
+			_readyForUdp = false;
+			_gameRunning = false;
+
+			DebugIt("Client fully disconnected.");
+		}
+
 		public void InitServer()
 		{
 			// add node as child to NetworkManager
@@ -154,6 +187,7 @@ namespace Game.Utilities.Multiplayer
 
 		public void StartHeadlessServer(bool headless)
 		{
+			process = new Process();
 			ProcessStartInfo startInfo;
 
 			if (headless)
@@ -213,7 +247,7 @@ namespace Game.Utilities.Multiplayer
 			{
 				if (GetTree().GetMultiplayer().GetPeers().Count() == 0)
 				{
-					DebugIt("No peers connected after 30 seconds. Shutting down server.");
+					DebugIt("No peers connected. Shutting down server.");
 					GetTree().Quit();
 				}
 				else
@@ -227,17 +261,18 @@ namespace Game.Utilities.Multiplayer
 			AddChild(shutdownTimer);
 			shutdownTimer.Start();
 
-			DebugIt("Shutdown timer gestartet (30s)...");
+			DebugIt("Shutdown timer started...");
 		}
 
 		private void OnPeerDisconnected(long id)
 		{
 			DebugIt($"Peer disconnected: {id}");
 
-			// Wenn niemand mehr da ist, runterfahren einleiten
-			if (GetTree().GetMultiplayer().GetPeers().Count() == 0)
+			if (_isServer && GetTree().GetMultiplayer().GetPeers().Count() == 0)
 			{
-				StartAutoShutdownTimer();
+				// kill him!! if he is a lonely server, lost in the sad world of the web with no one to play with ;(
+				DebugIt("No peers connected. Shutting down server.");
+				GetTree().Quit();
 			}
 		}
 
@@ -405,21 +440,21 @@ namespace Game.Utilities.Multiplayer
 			}
 		}
 
-	private void SendClientCommand()
-	{
-		if (_udpClientPeer == null) return;
-		
-		Command cmdShop = client.GetShopCommand(_tick);
-
-		if (cmdShop != null)
+		private void SendClientCommand()
 		{
-			_udpClientPeer.PutPacket(Serializer.Serialize(cmdShop));
-			DebugIt($"Send Shop cmd tick={_tick}, dir={cmdShop.Weapon}");
-		}
-		
-		Command cmd = client.GetCommand(_tick);
-		
-		if (cmd == null) return;
+			if (_udpClientPeer == null) return;
+
+			Command cmdShop = client.GetShopCommand(_tick);
+
+			if (cmdShop != null)
+			{
+				_udpClientPeer.PutPacket(Serializer.Serialize(cmdShop));
+				DebugIt($"Send Shop cmd tick={_tick}, dir={cmdShop.Weapon}");
+			}
+
+			Command cmd = client.GetCommand(_tick);
+
+			if (cmd == null) return;
 
 			_udpClientPeer.PutPacket(Serializer.Serialize(cmd));
 			DebugIt($"Send MOVE cmd tick={_tick}, dir={cmd.MoveDir}");
