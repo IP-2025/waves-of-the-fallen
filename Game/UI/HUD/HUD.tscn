@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c4j4rhf5hm3la" path="res://UI/HUD/HUD.cs" id="1_0ktxb"]
 
-[node name="Score" type="CanvasLayer"]
+[node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_0ktxb")
 
 [node name="ScoreLabel" type="Label" parent="."]

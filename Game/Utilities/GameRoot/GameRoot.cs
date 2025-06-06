@@ -71,13 +71,24 @@ public partial class GameRoot : Node
 
 		if (NetworkManager.Instance._soloMode)
 		{
-			SpawnPlayer(1);
-			_soloPlayer = GetNodeOrNull<DefaultPlayer>("Player_1");
-			GetChildren().OfType<DefaultPlayer>().FirstOrDefault().GetNodeOrNull<Camera2D>("Camera2D").AddChild(_globalWaveTimer);
+			long peerId = Multiplayer.GetUniqueId();
+			if (!ScoreManager.PlayerScores.ContainsKey(peerId))
+				ScoreManager.PlayerScores[peerId] = 0;
+
+			SpawnPlayer(peerId);
+			_soloPlayer = GetNodeOrNull<DefaultPlayer>($"Player_{peerId}");
+			GetChildren().OfType<DefaultPlayer>().FirstOrDefault()?.GetNodeOrNull<Camera2D>("Camera2D")?.AddChild(_globalWaveTimer);
 		}
 
 		// Start enemy spawner
 		SpawnEnemySpawner("res://Utilities/Gameflow/Spawn/SpawnEnemies.tscn");
+
+		if (GetNodeOrNull<CanvasLayer>("HUD") == null)
+		{
+			var hudScene = GD.Load<PackedScene>("res://UI/HUD/HUD.tscn");
+			var hud = hudScene.Instantiate<CanvasLayer>();
+			AddChild(hud);
+		}
 	}
 	
 	public override void _Process(double delta)
