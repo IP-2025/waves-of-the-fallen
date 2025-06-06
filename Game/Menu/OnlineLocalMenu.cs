@@ -8,13 +8,13 @@ public partial class OnlineLocalMenu : Control
 	private void _on_button_back_onlineLocal_pressed()
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Main/mainMenu.tscn");
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		GetTree().ChangeSceneToPacked(scene);
 	}
 	private void _on_button_local_pressed()
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Menu/localMenu.tscn");
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		GetTree().ChangeSceneToPacked(scene);
 	}
 	private void _on_button_online_pressed()
@@ -28,7 +28,7 @@ public partial class OnlineLocalMenu : Control
 
 		Button soloButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2/Button_Solo");
 		soloButton.Disabled = true;
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		var gameScene = ResourceLoader.Load<PackedScene>("res://Utilities/GameRoot/GameRoot.tscn");
 		GetTree().ChangeSceneToPacked(gameScene);
 	}
