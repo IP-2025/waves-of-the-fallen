@@ -9,6 +9,7 @@ public partial class BasicEnemy : EnemyBase
 		speed = 150f;
 		damage = 5f;
 		attacksPerSecond = 1f;
+		scoreValue = 50; // z.B. 50 Punkte für einen Goblin
 	}
 	public override void Attack() 
 	{

@@ -19,6 +19,7 @@ public partial class RangedEnemy : EnemyBase
 		speed = 250;
 		damage = 2.5f;
 		attacksPerSecond = 0.8f;
+		scoreValue = 30;
 	}
 
 	public override void _Ready()
