@@ -33,6 +33,6 @@ public partial class Mage : DefaultPlayer
 
 	protected override void UseAbility()
 	{
-		//TODO: Implement Mage's ability
+		//TODO: Implement Mage's ability increase to int
 	}
 }

@@ -34,6 +34,6 @@ public partial class Knight : DefaultPlayer
 
 	protected override void UseAbility()
 	{
-		//TODO: Implement Knight's ability
+		//TODO: Implement Knight's ability SHIELD blocking a few attacks
 	}
 }

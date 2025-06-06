@@ -33,6 +33,6 @@ public partial class Archer : DefaultPlayer
 	}
 	protected override void UseAbility()
 	{
-		//TODO: Implement Archer's ability
+		//TODO: Implement Archer's ability increase to dex
 	}
 }

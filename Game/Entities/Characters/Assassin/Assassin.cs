@@ -4,6 +4,9 @@ using Godot;
 public partial class Assassin : DefaultPlayer
 {
 
+	private float speedTemp;
+	private static Timer timer;
+
 	public override void _Ready()
 	{
 		HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
@@ -36,6 +39,9 @@ public partial class Assassin : DefaultPlayer
 
 	protected override void UseAbility()
 	{
-		//TODO: Implement Assassin's ability
+		speedTemp = Speed;
+		Speed = Speed * 2;
+		timer.Start(0.25);
+		Speed = speedTemp;
 	}
 }
