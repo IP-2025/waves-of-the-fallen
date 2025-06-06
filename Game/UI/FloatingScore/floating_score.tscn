@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://l4ay6418rbac"]
+
+[ext_resource type="Script" uid="uid://bkccrx7i6vkmg" path="res://UI/FloatingScore/FloatingScore.cs" id="1_vafbw"]
+
+[node name="FloatingScoreLabel" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("1_vafbw")
