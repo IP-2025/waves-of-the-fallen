@@ -7,6 +7,7 @@ using Game.UI.GameOver;
 using System.Text;
 using System.Text.Json;
 using Game.Utilities.Backend;
+using Godot.Collections;
 
 // GameRoot is the main entry point for the game. It is responsible for loading the map, spawning the player, starting the enemy spawner and so on.
 public partial class GameRoot : Node
@@ -18,13 +19,21 @@ public partial class GameRoot : Node
 	private WaveTimer _globalWaveTimer;
 
 	private GameOverScreen _gameOverScreen;
-
-	private bool _shouldQuitAfterSubmit = false;
+	
+	private HttpRequest _sendScoreRequest;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		Engine.MaxFps = 60; // important! performance...
+		
+		_sendScoreRequest = GetNodeOrNull<HttpRequest>("%SendScoreRequest");
+		if (_sendScoreRequest == null)
+		{
+			GD.PrintErr("SendScoreRequest node not found! Please ensure it is present in the scene.");
+			return;
+		}
+		_sendScoreRequest.Connect(HttpRequest.SignalName.RequestCompleted, new Callable(this, nameof(OnScoreRequestCompleted)));
 
 		_isServer = GetTree().GetMultiplayer().IsServer();
 
@@ -47,14 +56,8 @@ public partial class GameRoot : Node
 
 		// Start enemy spawner
 		SpawnEnemySpawner("res://Utilities/Gameflow/Spawn/SpawnEnemies.tscn");
-
-		var httpRequest = GetNode<HttpRequest>("SendScoreRequest");
-		httpRequest.RequestCompleted += OnScoreRequestCompleted;
-
-		// TEST: Score-Submit 
-		SendScoreToBackend(1234); // testvalue
 	}
-
+	
 	public override void _Process(double delta)
 	{
 		// Game logic per frame (optional)
@@ -127,43 +130,29 @@ public partial class GameRoot : Node
 
 	private void SendScoreToBackend(int score)
 	{
-		var httpRequest = GetNode<HttpRequest>("SendScoreRequest");
+		const string url = ServerConfig.BaseUrl + "/api/v1/protected/highscore/update";
 
-		var url = Game.Utilities.Backend.ServerConfig.BaseUrl + "/api/v1/highscore/update";
-		var token = SecureStorage.LoadToken();
+        var headers = new[]
+        {
+            "Content-Type: application/json",
+            "Authorization: Bearer " + SecureStorage.LoadToken()
+        };
 
-		var headers = new string[]
-		{
-			"Content-Type: application/json",
-			$"Authorization: Bearer {token}"
-		};
+        var body = Json.Stringify(new Dictionary { { "score", score } });
 
-		var data = new Godot.Collections.Dictionary
-		{
-			{ "score", score }
-		};
-		string json = $"{{\"score\":{score}}}";
-
-		var err = httpRequest.Request(
+		var err = _sendScoreRequest.Request(
 			url,
 			headers,
 			HttpClient.Method.Post,
-			json
+			body
 		);
 		if (err != Error.Ok)
 			GD.PrintErr($"Score submit error: {err}");
-		else
-			GD.Print("Score submit request sent!");
-		GD.Print("SendScoreToBackend called!");
 	}
 
 	private void OnScoreRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
 	{
 		GD.Print($"Score submit response: {responseCode}");
-		if (_shouldQuitAfterSubmit)
-		{
-			GetTree().Quit();
-		}
 	}
 
 	public void ShowGameOverScreen()
@@ -175,14 +164,16 @@ public partial class GameRoot : Node
 		_gameOverScreen = scene.Instantiate<GameOverScreen>();
 		AddChild(_gameOverScreen);
 
-		_gameOverScreen.QuitPressed += OnGameOverQuitPressed;
-
 		long peerId = Multiplayer.GetUniqueId();
-		int score = 0;
-		if (Game.Utilities.Backend.ScoreManager.PlayerScores.ContainsKey(peerId))
-			score = Game.Utilities.Backend.ScoreManager.PlayerScores[peerId];
+		var score = 0;
+		if (ScoreManager.PlayerScores.TryGetValue(peerId, out var playerScore))
+			score = playerScore;
 
 		_gameOverScreen.SetScore(score);
+		
+		if (GameState.CurrentState == ConnectionState.Online)
+			SendScoreToBackend(score);
+		
 	}
 
 	public void OnPlayerDied()
@@ -191,9 +182,9 @@ public partial class GameRoot : Node
 		DebugIt("Player died! Showing Game Over screen.");
 
 		long peerId = Multiplayer.GetUniqueId();
-		int score = 0;
-		if (Game.Utilities.Backend.ScoreManager.PlayerScores.ContainsKey(peerId))
-			score = Game.Utilities.Backend.ScoreManager.PlayerScores[peerId];
+		var score = 0;
+		if (ScoreManager.PlayerScores.TryGetValue(peerId, out var playerScore))
+			score = playerScore;
 
 		if (_gameOverScreen == null)
 			ShowGameOverScreen();
@@ -240,16 +231,5 @@ public partial class GameRoot : Node
 	private void DebugIt(string message)
 	{
 		if (_enableDebug) Debug.Print("GameRoot: " + message);
-	}
-
-	private void OnGameOverQuitPressed()
-	{
-		long peerId = Multiplayer.GetUniqueId();
-		int score = 0;
-		if (Game.Utilities.Backend.ScoreManager.PlayerScores.ContainsKey(peerId))
-			score = Game.Utilities.Backend.ScoreManager.PlayerScores[peerId];
-
-		_shouldQuitAfterSubmit = true;
-		SendScoreToBackend(score);
 	}
 }
