@@ -13,7 +13,7 @@ public partial class GameRoot : Node
 	private bool _isServer = false;
 	private bool _enableDebug = false;
 	private WaveTimer _globalWaveTimer;
-	private int _soloSelectedCharacterId = 1;
+	// private int _soloSelectedCharacterId = 1; 
 	private DefaultPlayer _soloPlayer;
 
 	// Shop dirty workaround
