@@ -134,7 +134,7 @@ public partial class Charactermenu : Control
 	private void _on_button_back_charactermenu_pressed()
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Main/mainMenu.tscn");
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
@@ -230,7 +230,7 @@ public partial class Charactermenu : Control
 			}
 		}
 
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		UpdateUpgradeUnlockButtonState();
 		UpdateGoldLabel();
 	}
@@ -259,7 +259,7 @@ public partial class Charactermenu : Control
 		}
 
 		UpdateCharacterUi(characterId);
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 	}
 
 	// --- Refaktorisierte Flows ---
