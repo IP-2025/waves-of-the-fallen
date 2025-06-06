@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Game.Utilities.Backend;
+﻿namespace Game.Utilities.Backend;
 
 public static class GameState
 {
