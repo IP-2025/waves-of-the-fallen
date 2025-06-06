@@ -129,13 +129,13 @@ public partial class GameRoot : Node
 	{
 		const string url = ServerConfig.BaseUrl + "/api/v1/protected/highscore/update";
 
-        var headers = new[]
-        {
-            "Content-Type: application/json",
-            "Authorization: Bearer " + SecureStorage.LoadToken()
-        };
+		var headers = new[]
+		{
+			"Content-Type: application/json",
+			"Authorization: Bearer " + SecureStorage.LoadToken()
+		};
 
-        var body = Json.Stringify(new Dictionary { { "score", score } });
+		var body = Json.Stringify(new Dictionary { { "score", score } });
 
 		var err = _sendScoreRequest.Request(
 			url,
