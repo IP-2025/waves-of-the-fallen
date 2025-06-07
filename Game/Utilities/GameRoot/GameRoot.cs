@@ -109,7 +109,21 @@ public partial class GameRoot : Node
 				_soloPlayer.GetNodeOrNull<Camera2D>("Camera2D").AddChild(_shopInstance);
 			}
 		}
-		Game.Utilities.Backend.ScoreManager.UpdateCombo((float)delta);
+		long peerId = Multiplayer.GetUniqueId();
+		ScoreManager.UpdateCombo(peerId, (float)delta);
+
+		if (NetworkManager.Instance._soloMode)
+		{
+			long peerId2 = Multiplayer.GetUniqueId();
+			ScoreManager.UpdateCombo(peerId2, (float)delta);
+		}
+		else
+		{
+			foreach (var playerId in ScoreManager.PlayerScores.Keys)
+			{
+				ScoreManager.UpdateCombo(playerId, (float)delta);
+			}
+		}
 	}
 	private void OnWeaponChosen(Weapon weaponType)
 	{

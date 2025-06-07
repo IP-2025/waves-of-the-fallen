@@ -141,17 +141,17 @@ public abstract partial class EnemyBase : CharacterBody2D
 		Velocity = Vector2.Zero;
 		animationHandler.SetDeath();
 
+		long myId = -1;
 		if (player != null)
 		{
-			var myId = player.OwnerPeerId;
+			myId = player.OwnerPeerId;
 			Game.Utilities.Backend.ScoreManager.OnEnemyKilled(myId, scoreValue);
 		}
 
-		
 		var floatingScoreScene = GD.Load<PackedScene>("res://UI/FloatingScore/floating_score.tscn");
 		var floatingScore = floatingScoreScene.Instantiate<FloatingScore>();
 
-		int combo = Game.Utilities.Backend.ScoreManager.ComboMultiplier;
+		int combo = Game.Utilities.Backend.ScoreManager.GetCombo(myId);
 
 		if (combo > 1)
 			floatingScore.Text = $"+{scoreValue} x{combo}";
