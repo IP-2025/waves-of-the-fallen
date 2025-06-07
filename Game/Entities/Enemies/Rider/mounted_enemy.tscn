@@ -1,12 +1,12 @@
 [gd_scene load_steps=127 format=3 uid="uid://55ua147f3qds"]
 
 [ext_resource type="Script" uid="uid://4v08bsts05xi" path="res://Entities/Enemies/Rider/MountedEnemy.cs" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://b4fcprmyxcw5u" path="res://Entities/Enemies/Rider/Resources/MountedEnemyAttack.png" id="3_4ieiv"]
+[ext_resource type="Texture2D" uid="uid://ls6a3axyjk5" path="res://Entities/Enemies/Rider/Resources/MountedEnemyAttack.png" id="3_4ieiv"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="3_health"]
-[ext_resource type="Texture2D" uid="uid://clb868mev3hfe" path="res://Entities/Enemies/Rider/Resources/MountedEnemyDeath.png" id="4_2ai7e"]
-[ext_resource type="Texture2D" uid="uid://bmbpu2qyr8xo5" path="res://Entities/Enemies/Rider/Resources/MountedEnemyHit.png" id="5_4ieiv"]
-[ext_resource type="Texture2D" uid="uid://dwofyrpkq01ra" path="res://Entities/Enemies/Rider/Resources/MountedEnemySprite.png" id="6_6sy85"]
-[ext_resource type="Texture2D" uid="uid://b80bol6orqxr1" path="res://Entities/Enemies/Rider/Resources/MountedEnemyWalk.png" id="7_x1df5"]
+[ext_resource type="Texture2D" uid="uid://ckc2ayi2hi0qj" path="res://Entities/Enemies/Rider/Resources/MountedEnemyDeath.png" id="4_2ai7e"]
+[ext_resource type="Texture2D" uid="uid://coddjakcw1e1x" path="res://Entities/Enemies/Rider/Resources/MountedEnemyHit.png" id="5_4ieiv"]
+[ext_resource type="Texture2D" uid="uid://btg15ybop0uvn" path="res://Entities/Enemies/Rider/Resources/MountedEnemySprite.png" id="6_6sy85"]
+[ext_resource type="Texture2D" uid="uid://ddtgn4c5ao68c" path="res://Entities/Enemies/Rider/Resources/MountedEnemyWalk.png" id="7_x1df5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
 radius = 18.0

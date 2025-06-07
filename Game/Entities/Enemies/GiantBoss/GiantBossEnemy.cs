@@ -12,6 +12,7 @@ public partial class GiantBossEnemy : EnemyBase
 		speed = 70f;
 		damage = 15f;
 		attacksPerSecond = 1f;
+		scoreValue = 1000;
 	}
 	public override void Attack()
 	{

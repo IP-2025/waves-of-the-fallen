@@ -241,6 +241,15 @@ public partial class Client : Node
 				{
 					ChangeCamera(inst, entity);
 				}
+
+				// HUD for local player
+				if (entity.NetworkId == Multiplayer.GetUniqueId() && GetTree().Root.GetNodeOrNull("HUD") == null)
+				{
+					var hudScene = GD.Load<PackedScene>("res://UI/HUD/HUD.tscn");
+					var hud = hudScene.Instantiate();
+					hud.Name = "HUD";
+					GetTree().Root.AddChild(hud);
+				}
 			}
 
 			UpdateTransform(inst, entity);
@@ -272,6 +281,12 @@ public partial class Client : Node
 			}
 
 			var inst = scene.Instantiate<Node2D>();
+
+			// Set OwnerPeerId for player instances
+			if (inst is DefaultPlayer dp)
+			{
+				dp.OwnerPeerId = entity.NetworkId;
+			}
 
 			// disable health for enemies because server handles it
 			if (entity.Type == EntityType.DefaultEnemy

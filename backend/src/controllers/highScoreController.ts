@@ -6,12 +6,11 @@ import {updateHighScoreService} from "services";
 
 export async function updateUserHighscore(req: any, res: any, next: NextFunction) {
     try {
-
         const {score} = req.body;
         const playerId = extractAndValidatePlayerId(req.headers['authorization']);
 
-        if (!playerId || !score) {
-            throw new BadRequestError('Missing required fields');
+        if (!playerId) {
+            throw new BadRequestError('Here Missing required fields');
         }
         if (score < 0) {
             throw new BadRequestError('Score cannot be negative');

@@ -16,6 +16,7 @@ public partial class Rider : EnemyBase
 		speed = 120f;
 		damage = 7f;
 		attacksPerSecond = 1f;
+		scoreValue = 150; // z.B. 150 Punkte für einen Rider
 	}
 
 	/// <summary>

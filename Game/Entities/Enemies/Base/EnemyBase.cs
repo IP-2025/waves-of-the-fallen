@@ -10,7 +10,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 	[Export] public float damage;
 	[Export] public float attacksPerSecond;
 	[Export] private NodePath animationPath;
-
+	[Export] public int scoreValue = 100; 
 	public DefaultPlayer player { get; set; }
 	protected virtual float attackCooldown { get; set; }
 	protected virtual float timeUntilAttack { get; set; }
@@ -140,6 +140,30 @@ public abstract partial class EnemyBase : CharacterBody2D
 	{
 		Velocity = Vector2.Zero;
 		animationHandler.SetDeath();
+
+		long myId = -1;
+		if (player != null)
+		{
+			myId = player.OwnerPeerId;
+			Game.Utilities.Backend.ScoreManager.OnEnemyKilled(myId, scoreValue);
+		}
+
+		var floatingScoreScene = GD.Load<PackedScene>("res://UI/FloatingScore/floating_score.tscn");
+		var floatingScore = floatingScoreScene.Instantiate<FloatingScore>();
+
+		int combo = Game.Utilities.Backend.ScoreManager.GetCombo(myId);
+
+		if (combo > 1)
+			floatingScore.Text = $"+{scoreValue} x{combo}";
+		else
+			floatingScore.Text = $"+{scoreValue}";
+
+		floatingScore.SetPlayerColorById(myId);
+
+		GetTree().Root.AddChild(floatingScore);
+		floatingScore.GlobalPosition = GlobalPosition;
+
+		GD.Print($"OnDeath: player={player}, scoreValue={scoreValue}");
 	}
 
 	protected void FindNearestPlayer()
