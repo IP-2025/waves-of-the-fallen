@@ -1,7 +1,7 @@
 import {AppDataSource} from 'database/dataSource';
 import {termLogger as logger} from 'logger';
 import { ConflictError, InternalServerError, NotFoundError} from 'errors';
-import {HighScore, Player, Settings, UnlockedCharacter} from 'database/entities';
+import {Credential, HighScore, Player, Settings, UnlockedCharacter} from 'database/entities';
 
 const playersRepo = AppDataSource.getRepository(Player);
 const settingRepo = AppDataSource.getRepository(Settings);
