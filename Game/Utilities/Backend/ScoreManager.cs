@@ -48,5 +48,12 @@ namespace Game.Utilities.Backend
         {
             return ComboMultipliers.ContainsKey(playerId) ? ComboMultipliers[playerId] : 1;
         }
+
+        public static void AddBonus(long playerId, int bonus)
+        {
+            if (!PlayerScores.ContainsKey(playerId))
+                PlayerScores[playerId] = 0;
+            PlayerScores[playerId] += bonus;
+        }
     }
 }
