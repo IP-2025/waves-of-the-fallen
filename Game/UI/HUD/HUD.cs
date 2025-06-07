@@ -52,8 +52,7 @@ public partial class HUD : CanvasLayer
 
 			if (combo > 1 && timer > 0f)
 			{
-				
-				string color = "#FFD700"; // Gold
+				string color = ScoreManager.GetPlayerColor(peerId).ToHtml();
 				comboLabel.BbcodeEnabled = true;
 				comboLabel.Text = $"[center][b][color={color}]COMBO x{combo}![/color][/b]\n[wave amp=20 freq=2]{timer:0.0}s[/wave][/center]";
 				comboLabel.Visible = true;
