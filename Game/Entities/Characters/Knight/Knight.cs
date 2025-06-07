@@ -34,6 +34,9 @@ public partial class Knight : DefaultPlayer
 
 	public override void UseAbility()
 	{
-		AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/shield.tscn").Instantiate<Sprite2D>());
+		//Ability 1: SelfHeal
+
+		//Ability 2: Shield
+		//AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/shield.tscn").Instantiate<CharacterBody2D>());
 	}
 }
