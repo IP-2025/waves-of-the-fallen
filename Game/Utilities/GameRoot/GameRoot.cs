@@ -15,19 +15,19 @@ public partial class GameRoot : Node
 	private bool _enableDebug = false;
 	private WaveTimer _globalWaveTimer;
 	private DefaultPlayer _soloPlayer;
-	public int _soloSelectedCharacterId = 1;
+	private int _soloSelectedCharacterId = 1;
 
 	// Shop dirty workaround
 	private int _lastLocalShopRound = 1;
 	private Node _shopInstance;
 	private int _newWeaponPos = 0;
-	string _selectedWeapon = "";
+	private string _selectedWeapon = "";
 
 	// GameOver
 	private GameOverScreen _gameOverScreen;
 	
 	private HttpRequest _sendScoreRequest;
-	public bool _soloMode = false;
+	private bool _soloMode = false;
 	
 
 	// Called when the node enters the scene tree for the first time.
@@ -72,8 +72,7 @@ public partial class GameRoot : Node
 		if (NetworkManager.Instance._soloMode)
 		{
 			long peerId = Multiplayer.GetUniqueId();
-			if (!ScoreManager.PlayerScores.ContainsKey(peerId))
-				ScoreManager.PlayerScores[peerId] = 0;
+			ScoreManager.PlayerScores.TryAdd(peerId, 0);
 
 			SpawnPlayer(peerId);
 			_soloPlayer = GetNodeOrNull<DefaultPlayer>($"Player_{peerId}");
@@ -96,10 +95,10 @@ public partial class GameRoot : Node
 		
 		if (NetworkManager.Instance._soloMode)
 		{
-			if (_soloPlayer == null || !_soloPlayer.alive)
+			if (_soloPlayer is not { alive: true })
 				ShowGameOverScreen();
 
-			int currentWave = _globalWaveTimer.WaveCounter;
+			var currentWave = _globalWaveTimer.WaveCounter;
 			if (currentWave > _lastLocalShopRound && currentWave < 5)
 			{
 				_lastLocalShopRound = currentWave;
@@ -138,9 +137,9 @@ public partial class GameRoot : Node
 		};
 		if (scene == null) return;
 
-		var slot = GetChildren().OfType<DefaultPlayer>().FirstOrDefault().GetNode<Node2D>("WeaponSpawnPoints").GetChild<Node2D>(_newWeaponPos);
+		var slot = GetChildren().OfType<DefaultPlayer>().FirstOrDefault()?.GetNode<Node2D>("WeaponSpawnPoints").GetChild<Node2D>(_newWeaponPos);
 		var weapon = scene.Instantiate<Area2D>();
-		slot.AddChild(weapon);
+		slot?.AddChild(weapon);
 		weapon.Position = Vector2.Up;
 
 		_shopInstance.QueueFree();
@@ -160,7 +159,7 @@ public partial class GameRoot : Node
 		player.Name = $"Player_{peerId}";
 
 
-		int characterId = _soloSelectedCharacterId;
+		var characterId = _soloSelectedCharacterId;
 		if (!NetworkManager.Instance._soloMode) characterId = Server.Instance.PlayerSelections[peerId];
 		player = characterId switch
 		{
@@ -273,8 +272,7 @@ public partial class GameRoot : Node
 		if (_gameOverScreen == null)
 			ShowGameOverScreen();
 
-		if (_gameOverScreen != null)
-			_gameOverScreen.SetScore(score);
+		_gameOverScreen?.SetScore(score);
 
 		// Remove player entity to prevent a leftover copy
 		if (Server.Instance.Entities.TryGetValue(peerId, out var playerNode))
@@ -299,11 +297,9 @@ public partial class GameRoot : Node
 		{
 			var target = alivePlayers[0];
 			var cam = target.GetNodeOrNull<Camera2D>("Camera2D");
-			if (cam != null)
-			{
-				cam.MakeCurrent();
-				DebugIt($"Camera switched to alive player: {target.Name}");
-			}
+			if (cam == null) return;
+			cam.MakeCurrent();
+			DebugIt($"Camera switched to alive player: {target.Name}");
 		}
 		else
 		{
