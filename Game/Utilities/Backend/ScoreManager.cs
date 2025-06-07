@@ -15,7 +15,7 @@ namespace Game.Utilities.Backend
 
         public static readonly List<Color> PlayerColorList = new()
         {
-            new Color(1, 0f, 0f),   // red
+            new Color(1, 0f, 0f),       // red
             new Color(0.1f, 0.4f, 1),   // bright blue
             new Color(1, 0.7f, 0.1f),   // bright orange-yellow
             new Color(0.7f, 0.2f, 1),   // bright purple

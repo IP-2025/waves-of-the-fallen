@@ -43,5 +43,25 @@ public partial class HUD : CanvasLayer
 			label.BbcodeEnabled = true;
 			label.Text = sb.ToString();
 		}
+		
+		var comboLabel = GetNodeOrNull<RichTextLabel>("ComboTimerLabel");
+		if (comboLabel != null)
+		{
+			int combo = ScoreManager.GetCombo(peerId);
+			float timer = ScoreManager.ComboTimers.ContainsKey(peerId) ? ScoreManager.ComboTimers[peerId] : 0f;
+
+			if (combo > 1 && timer > 0f)
+			{
+				
+				string color = "#FFD700"; // Gold
+				comboLabel.BbcodeEnabled = true;
+				comboLabel.Text = $"[center][b][color={color}]COMBO x{combo}![/color][/b]\n[wave amp=20 freq=2]{timer:0.0}s[/wave][/center]";
+				comboLabel.Visible = true;
+			}
+			else
+			{
+				comboLabel.Visible = false;
+			}
+		}
 	}
 }
