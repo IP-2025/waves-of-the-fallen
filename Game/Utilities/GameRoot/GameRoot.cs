@@ -93,36 +93,28 @@ public partial class GameRoot : Node
 	
 	public override void _Process(double delta)
 	{
-		// kind of a silly workaround, however its better than re implementing the shop system...
-		if (!NetworkManager.Instance._soloMode) return;
-
-		if (_soloPlayer == null || !_soloPlayer.alive) ShowGameOverScreen();
-
-		int currentWave = _globalWaveTimer.WaveCounter;
-		if (currentWave > _lastLocalShopRound && currentWave < 5)
-		{
-			_lastLocalShopRound = currentWave;
-			if (_shopInstance == null)
-			{
-				_shopInstance = GD.Load<PackedScene>("res://UI/Shop/BossShop/bossShop.tscn").Instantiate();
-				_shopInstance.Connect(nameof(BossShop.WeaponChosen), new Callable(this, nameof(OnWeaponChosen)));
-				_soloPlayer.GetNodeOrNull<Camera2D>("Camera2D").AddChild(_shopInstance);
-			}
-		}
-		long peerId = Multiplayer.GetUniqueId();
-		ScoreManager.UpdateCombo(peerId, (float)delta);
-
+		
 		if (NetworkManager.Instance._soloMode)
 		{
-			long peerId2 = Multiplayer.GetUniqueId();
-			ScoreManager.UpdateCombo(peerId2, (float)delta);
-		}
-		else
-		{
-			foreach (var playerId in ScoreManager.PlayerScores.Keys)
+			if (_soloPlayer == null || !_soloPlayer.alive)
+				ShowGameOverScreen();
+
+			int currentWave = _globalWaveTimer.WaveCounter;
+			if (currentWave > _lastLocalShopRound && currentWave < 5)
 			{
-				ScoreManager.UpdateCombo(playerId, (float)delta);
+				_lastLocalShopRound = currentWave;
+				if (_shopInstance == null)
+				{
+					_shopInstance = GD.Load<PackedScene>("res://UI/Shop/BossShop/bossShop.tscn").Instantiate();
+					_shopInstance.Connect(nameof(BossShop.WeaponChosen), new Callable(this, nameof(OnWeaponChosen)));
+					_soloPlayer.GetNodeOrNull<Camera2D>("Camera2D").AddChild(_shopInstance);
+				}
 			}
+		}
+
+		foreach (var playerId in ScoreManager.PlayerScores.Keys)
+		{
+			ScoreManager.UpdateCombo(playerId, (float)delta);
 		}
 	}
 	private void OnWeaponChosen(Weapon weaponType)
