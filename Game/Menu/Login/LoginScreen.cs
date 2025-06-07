@@ -65,7 +65,7 @@ public partial class LoginScreen : Control
 		GameState.CurrentState = ConnectionState.Offline;
 		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Main/mainMenu.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
@@ -85,7 +85,7 @@ public partial class LoginScreen : Control
 			{ "email", email },
 			{ "password", password }
 		});
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		// Send POST request
 		var headers = new[] { "Content-Type: application/json" };
 		var err = _httpRequest.Request(
@@ -105,7 +105,7 @@ public partial class LoginScreen : Control
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Register/register_screen.tscn");
 		if (scene == null) GD.PrintErr("Register Scene not found");
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		GetTree().ChangeSceneToPacked(scene);
 	}
 

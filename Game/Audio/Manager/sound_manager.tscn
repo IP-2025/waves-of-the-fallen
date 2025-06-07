@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://yx4lw1whi03l"]
+[gd_scene load_steps=16 format=3 uid="uid://yx4lw1whi03l"]
 
 [ext_resource type="Script" uid="uid://d3qtxl5t5i32q" path="res://Audio/Manager/SoundManager.cs" id="1_1u08g"]
 [ext_resource type="AudioStream" uid="uid://blhbjt2ed2hxb" path="res://Audio/Sounds/Resources/EnemyHurt.wav" id="2_olkkv"]
@@ -13,6 +13,8 @@
 [ext_resource type="AudioStream" uid="uid://c8oqkpevcptog" path="res://Audio/Sounds/Resources/lightningstaffFire.wav" id="10_8867q"]
 [ext_resource type="AudioStream" uid="uid://gfj1nbwn0p35" path="res://Audio/Sounds/Resources/healstaffFires.wav" id="11_1fkh2"]
 [ext_resource type="AudioStream" uid="uid://drax3xt5x8dyi" path="res://Audio/Sounds/Resources/heal.wav" id="12_o4din"]
+[ext_resource type="AudioStream" uid="uid://dgtfn6wgg1f8k" path="res://Audio/Sounds/Resources/buttonPress.wav" id="14_m7r52"]
+[ext_resource type="AudioStream" uid="uid://dqaosqcmcvcv1" path="res://Audio/Sounds/Resources/gameEnd.wav" id="15_uqh4n"]
 
 [node name="SoundManager" type="Node2D"]
 script = ExtResource("1_1u08g")
@@ -85,6 +87,13 @@ bus = &"SoundEffectBus"
 stream = ExtResource("4_sfxm6")
 pitch_scale = 1.4
 bus = &"SoundEffectBus"
+
+[node name="buttonPress" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_m7r52")
+bus = &"SoundEffectBus"
+
+[node name="gameOver" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_uqh4n")
 
 [node name="dash" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_sfxm6")
