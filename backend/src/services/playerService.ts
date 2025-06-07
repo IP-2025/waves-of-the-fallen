@@ -1,4 +1,4 @@
-import { setGoldRepository, getGoldRepository } from 'repositories';
+import {setGoldRepository, getGoldRepository, deletePlayer} from 'repositories';
 
 export async function getGoldService(id: string): Promise<number> {
   return getGoldRepository(id);
@@ -12,4 +12,8 @@ export async function addGoldService(id: string, gold: number): Promise<void> {
     const currentGold = await getGoldRepository(id);
     const newGold = currentGold + gold;
     await setGoldRepository(id, newGold);
+}
+
+export async function deletePlayerService(id: string): Promise<void> {
+    await deletePlayer(id)
 }

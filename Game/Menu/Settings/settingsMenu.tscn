@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dj7j4ns1clpnx"]
+[gd_scene load_steps=16 format=3 uid="uid://dj7j4ns1clpnx"]
 
 [ext_resource type="Script" uid="uid://bou8cv1blf3w8" path="res://Menu/Settings/SettingsMenu.cs" id="1_ifxnj"]
 
@@ -78,6 +78,12 @@ corner_radius_top_left = 22
 corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
+
+[sub_resource type="Theme" id="Theme_wwagv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wwagv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_deft6"]
 
 [node name="settings" type="Control"]
 layout_mode = 3
@@ -233,6 +239,60 @@ text = "Language"
 [node name="ButtonLanguage" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="HBoxContainer7" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ButtonDeleteAccount" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer7"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_wwagv")
+theme_override_font_sizes/font_size = 40
+text = "Delete Account"
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = -1.0
+offset_top = 1.0
+offset_right = 1151.0
+offset_bottom = 645.0
+color = Color(0, 0, 0, 0.705882)
+
+[node name="Label" type="Label" parent="ColorRect2"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 212.0
+offset_top = 125.0
+offset_right = 944.0
+offset_bottom = 238.0
+theme_override_font_sizes/font_size = 20
+text = "Are you sure you want to delete your account?"
+
+[node name="CancleButton" type="Button" parent="ColorRect2"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 245.0
+offset_top = 278.0
+offset_right = 536.0
+offset_bottom = 367.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_wwagv")
+text = "CANCLE"
+
+[node name="YesButton" type="Button" parent="ColorRect2"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 619.0
+offset_top = 279.0
+offset_right = 910.0
+offset_bottom = 368.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_deft6")
+text = "YES"
+
+[node name="DeleteAccountRequest" type="HTTPRequest" parent="ColorRect2"]
+unique_name_in_owner = true
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_settings_pressed"]
 [connection signal="toggled" from="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer4/CheckBoxMusicEnabled" to="." method="_on_check_box_music_enabled_toggled"]
