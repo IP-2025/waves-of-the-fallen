@@ -43,7 +43,7 @@ public partial class Dagger : MeleeWeapon
 	}
 
 	public async void OnTimerTimeoutDagger()
-	{
+	{ 
 		ShootMeleeVisual(() =>
 		{
 			DaggerAnimationPlayer.Play("stab");

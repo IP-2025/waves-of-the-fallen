@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using Game.Utilities.Backend;
 using Game.Utilities.Multiplayer;
@@ -30,7 +31,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public AnimationHandler animationHandler;
 	public AnimatedSprite2D animation;
-	
+	public bool alive = false;
 	private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
 	private PackedScene _crossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
 	private PackedScene _kunaiScene = GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn");
@@ -46,19 +47,19 @@ public partial class DefaultPlayer : CharacterBody2D
 	private PackedScene _doubleBladeScene = GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn");
 	private PackedScene _warHammerScene = GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn");
 	private int _weaponsEquipped;
-
 	private WaveTimer _waveTimer;
 	protected CharacterManager CharacterManager;
 	private bool _requestSent;
 	private bool _alreadyDead;
-	
+	private Vector2 _lastPos = Vector2.Zero;
 
 	public override void _Ready()
 	{
+		alive = true;
 		_alreadyDead = false;
 		_requestSent = false;
 		AddToGroup("player");
-/* 		base._Ready(); */
+		/* 		base._Ready(); */
 
 		CharacterManager = GetNode<CharacterManager>("/root/CharacterManager");
 		var selectedCharacterId = CharacterManager.LoadLastSelectedCharacterID();
@@ -155,6 +156,9 @@ public partial class DefaultPlayer : CharacterBody2D
 
 		Velocity = direction * Speed;
 		MoveAndSlide();
+
+		// Check if in solo (offline) mode or multiplayer
+		if (NetworkManager.Instance._soloMode) UpdateTransform(Velocity);
 	}
 
 	protected virtual void UseAbility()
@@ -174,6 +178,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	{
 		if (_alreadyDead) return;
 
+		alive = false;
 		_alreadyDead = true;
 		Velocity = Vector2.Zero;
 		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"),
@@ -229,6 +234,15 @@ public partial class DefaultPlayer : CharacterBody2D
 		}
 
 		QueueFree();
+	}
+
+	private void UpdateTransform(Vector2 velocity)
+	{
+		if (animation == null) return;
+		// Flip based on movement direction
+		animation.FlipH = velocity.X > 0 ? false : true;
+		// Walk/Idle Animation based on movement
+		animationHandler.UpdateAnimationState(false, velocity);
 	}
 
 	public void OnHit()

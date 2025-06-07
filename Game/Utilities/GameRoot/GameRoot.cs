@@ -13,32 +13,56 @@ public partial class GameRoot : Node
 	private bool _isServer = false;
 	private bool _enableDebug = false;
 	private WaveTimer _globalWaveTimer;
+	private int _soloSelectedCharacterId = 1;
+	private DefaultPlayer _soloPlayer;
 
+	// Shop dirty workaround
+	private int _lastLocalShopRound = 1;
+	private Node _shopInstance;
+	private int _newWeaponPos = 0;
+	string _selectedWeapon = "";
+
+	// GameOver
 	private GameOverScreen _gameOverScreen;
-
+	public bool _soloMode = false;
+	public int _soloSelectedCharacterId = 1;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		Engine.MaxFps = 60; // important! performance...
 
-		_isServer = GetTree().GetMultiplayer().IsServer();
+		// get selected character
+		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
+		_soloSelectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+
+		if (!NetworkManager.Instance._soloMode) _isServer = GetTree().GetMultiplayer().IsServer();
 
 		// Load map and store reference
 		SpawnMap("res://Maps/GrassMap/Main.tscn");
 
+		if (!_isServer && !NetworkManager.Instance._soloMode) return; // clients return
+
 		// Instantiate one global WaveTimer for server-wide access
-		if (!_isServer) return;
 		var waveTimerScene = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn");
 		_globalWaveTimer = waveTimerScene.Instantiate<WaveTimer>();
-		_globalWaveTimer.Name = "GlobalWaveTimer";
-		AddChild(_globalWaveTimer);
-
-		// Server spawns all players
-		foreach (var peerId in GetTree().GetMultiplayer().GetPeers())
+		if (_isServer)
 		{
-			DebugIt($"Server spawning player {peerId}");
-			SpawnPlayer(peerId);
+			_globalWaveTimer.Name = "GlobalWaveTimer";
+			AddChild(_globalWaveTimer);
+			// Server spawns all players
+			foreach (var peerId in GetTree().GetMultiplayer().GetPeers())
+			{
+				DebugIt($"Server spawning player {peerId}");
+				SpawnPlayer(peerId);
+			}
+		}
+
+		if (NetworkManager.Instance._soloMode)
+		{
+			SpawnPlayer(1);
+			_soloPlayer = GetNodeOrNull<DefaultPlayer>("Player_1");
+			GetChildren().OfType<DefaultPlayer>().FirstOrDefault().GetNodeOrNull<Camera2D>("Camera2D").AddChild(_globalWaveTimer);
 		}
 
 		// Start enemy spawner
@@ -47,8 +71,51 @@ public partial class GameRoot : Node
 
 	public override void _Process(double delta)
 	{
-		// Game logic per frame (optional)
-		// PrintTree(GetTree().Root);
+		// kind of a silly workaround, however its better than re implementing the shop system...
+		if (!NetworkManager.Instance._soloMode) return;
+
+		if (_soloPlayer == null || !_soloPlayer.alive) ShowGameOverScreen();
+
+		int currentWave = _globalWaveTimer.WaveCounter;
+		if (currentWave > _lastLocalShopRound && currentWave < 5)
+		{
+			_lastLocalShopRound = currentWave;
+			if (_shopInstance == null)
+			{
+				_shopInstance = GD.Load<PackedScene>("res://UI/Shop/BossShop/bossShop.tscn").Instantiate();
+				_shopInstance.Connect(nameof(BossShop.WeaponChosen), new Callable(this, nameof(OnWeaponChosen)));
+				_soloPlayer.GetNodeOrNull<Camera2D>("Camera2D").AddChild(_shopInstance);
+			}
+		}
+	}
+	private void OnWeaponChosen(Weapon weaponType)
+	{
+		_selectedWeapon = weaponType.GetType().Name;
+		_newWeaponPos++;
+
+		var scene = _selectedWeapon switch
+		{
+			"Bow" => GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn"),
+			"Crossbow" => GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn"),
+			"FireStaff" => GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn"),
+			"Kunai" => GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn"),
+			"Lightningstaff" => GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn"),
+			"Healstaff" => GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn"),
+			"Dagger" => GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn"),
+			"Sword" => GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn"),
+			"WarHammer" => GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn"),
+			"DoubleBlade" => GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn"),
+			_ => null
+		};
+		if (scene == null) return;
+
+		var slot = GetChildren().OfType<DefaultPlayer>().FirstOrDefault().GetNode<Node2D>("WeaponSpawnPoints").GetChild<Node2D>(_newWeaponPos);
+		var weapon = scene.Instantiate<Area2D>();
+		slot.AddChild(weapon);
+		weapon.Position = Vector2.Up;
+
+		_shopInstance.QueueFree();
+		_shopInstance = null;
 	}
 
 	private void SpawnMap(string mapPath)
@@ -64,7 +131,8 @@ public partial class GameRoot : Node
 		player.Name = $"Player_{peerId}";
 
 
-		var characterId = Server.Instance.PlayerSelections[peerId];
+		int characterId = _soloSelectedCharacterId;
+		if (!NetworkManager.Instance._soloMode) characterId = Server.Instance.PlayerSelections[peerId];
 		player = characterId switch
 		{
 			1 => GD.Load<PackedScene>("res://Entities/Characters/Archer/archer.tscn").Instantiate<DefaultPlayer>(),
@@ -93,7 +161,7 @@ public partial class GameRoot : Node
 		// player.GetNode<Camera2D>("Camera2D").AddChild(_globalWaveTimer);
 		AddChild(player);
 
-		Server.Instance.Entities[peerId] = player;
+		if (!NetworkManager.Instance._soloMode) Server.Instance.Entities[peerId] = player;
 
 		// Connect health signal
 		var healthNode = player.GetNodeOrNull<Health>("Health");
@@ -125,7 +193,7 @@ public partial class GameRoot : Node
 		_gameOverScreen = scene.Instantiate<GameOverScreen>();
 		AddChild(_gameOverScreen);
 		_gameOverScreen.SetScore(0); //Show Score 0 for now, you can set it later
-		
+
 	}
 
 	public void OnPlayerDied()
@@ -170,7 +238,7 @@ public partial class GameRoot : Node
 		}
 	}
 
-	
+
 
 	private void DebugIt(string message)
 	{

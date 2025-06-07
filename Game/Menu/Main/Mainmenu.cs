@@ -287,21 +287,21 @@ public partial class Mainmenu : Control
     private void _on_button_settings_pressed()
     {
         var scene = ResourceLoader.Load<PackedScene>("res://Menu/Settings/settingsMenu.tscn");
-        SoundManager.Instance.PlayUI();
+        SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
         GetTree().ChangeSceneToPacked(scene);
     }
 
     private void _on_button_play_pressed()
     {
         var scene = ResourceLoader.Load<PackedScene>("res://Menu/online_localMenu.tscn");
-        SoundManager.Instance.PlayUI();
+        SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
         GetTree().ChangeSceneToPacked(scene);
     }
 
     private void _on_button_highscore_pressed()
     {
         var scene = ResourceLoader.Load<PackedScene>("res://Menu/HighscoreList/highscore_screen.tscn");
-        SoundManager.Instance.PlayUI();
+        SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
         GetTree().ChangeSceneToPacked(scene);
     }
 }

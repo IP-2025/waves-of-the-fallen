@@ -57,5 +57,4 @@ public partial class Sword : MeleeWeapon
 		ShootDelay     = newDelay;
 		_shootCooldown  = newDelay;
 	}
-	
 }
