@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dao4qnnfxvvry"]
+
+[ext_resource type="Texture2D" uid="uid://irgt1q6sf5db" path="res://UI/Ability/Ablities/Ressources/Shield.png" id="1_blg1s"]
+[ext_resource type="Script" uid="uid://obmm46p25muv" path="res://UI/Ability/Ablities/Shield.cs" id="2_poi6l"]
+
+[node name="Shield" type="Sprite2D"]
+position = Vector2(-7, 19.5156)
+scale = Vector2(0.186398, 0.194986)
+texture = ExtResource("1_blg1s")
+script = ExtResource("2_poi6l")

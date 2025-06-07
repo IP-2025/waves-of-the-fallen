@@ -157,6 +157,11 @@ public partial class GameRoot : Node
 		var joystick = GD.Load<PackedScene>("res://UI/Joystick/joystick.tscn").Instantiate<Node2D>();
 		player.AddChild(joystick);
 		player.Joystick = joystick;
+		// Add abilityButton to player
+		var abilityButton = GD.Load<PackedScene>("res://UI/Ability/abilityButton.tscn").Instantiate<Node2D>();
+		player.AddChild(abilityButton);
+		player.Ability = abilityButton;
+
 		// var waveTimer = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
 		// player.GetNode<Camera2D>("Camera2D").AddChild(_globalWaveTimer);
 		AddChild(player);

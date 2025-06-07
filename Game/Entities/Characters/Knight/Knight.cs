@@ -32,8 +32,8 @@ public partial class Knight : DefaultPlayer
 		}
 	}
 
-	protected override void UseAbility()
+	public override void UseAbility()
 	{
-		//TODO: Implement Knight's ability SHIELD blocking a few attacks
+		AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/shield.tscn").Instantiate<Sprite2D>());
 	}
 }

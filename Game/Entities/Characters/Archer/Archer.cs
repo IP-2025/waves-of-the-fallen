@@ -31,7 +31,7 @@ public partial class Archer : DefaultPlayer
 			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerWalk"), GlobalPosition, -10);
 		}
 	}
-	protected override void UseAbility()
+	public override void UseAbility()
 	{
 		//TODO: Implement Archer's ability increase to dex
 	}

@@ -37,7 +37,7 @@ public partial class Assassin : DefaultPlayer
 		}
 	}
 
-	protected override void UseAbility()
+	public override void UseAbility()
 	{
 		speedTemp = Speed;
 		Speed = Speed * 2;

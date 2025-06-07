@@ -25,6 +25,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	[Export] protected NodePath animationPath;
 	public Node2D Joystick { get; set; }
+	public Node2D Ability { get; set; }
 	private Camera2D _camera;
 	private MultiplayerSynchronizer _multiplayerSynchronizer;
 	private bool _enableDebug;
@@ -161,7 +162,7 @@ public partial class DefaultPlayer : CharacterBody2D
 		if (NetworkManager.Instance._soloMode) UpdateTransform(Velocity);
 	}
 
-	protected virtual void UseAbility()
+	public virtual void UseAbility()
 	{
 		GD.Print("Ability placeholder for all classes");
 	}
