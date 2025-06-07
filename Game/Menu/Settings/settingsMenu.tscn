@@ -240,11 +240,11 @@ text = "Language"
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer7" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="ButtonDeleteAccount" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer5"]
+[node name="ButtonDeleteAccount" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer7"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = SubResource("Theme_wwagv")

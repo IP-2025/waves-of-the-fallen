@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Diagnostics;
 using System.Linq;
 using Game.Utilities.Multiplayer;
@@ -20,12 +19,11 @@ public partial class GameRoot : Node
 	private int _lastLocalShopRound = 1;
 	private Node _shopInstance;
 	private int _newWeaponPos = 0;
-	string _selectedWeapon = "";
+	private string _selectedWeapon = "";
 
 	// GameOver
 	private GameOverScreen _gameOverScreen;
-	public bool _soloMode = false;
-	public int _soloSelectedCharacterId = 1;
+	private bool _soloMode = false;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

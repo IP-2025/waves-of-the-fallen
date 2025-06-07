@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using Game.Utilities.Backend;
 using Godot;
 
@@ -11,12 +10,11 @@ public partial class SettingsMenu : Control
 	private SettingsManager _settingsManager;
 	private Button _buttonLanguage;
 	private int _menuBackgroundMusicBusIndex;
-	private int soundEffectBusIndex;
+	private int _soundEffectBusIndex;
 
 	private readonly List<string> _languages = ["English", "German"];
 
-	private Dictionary<string, Variant> audioSettings;
-	private Dictionary<string, Variant> soundSettings;
+	private Dictionary<string, Variant> _soundSettings;
 	private Dictionary<string, Variant> _audioSettings;
 
 	private Button _deleteAccountButton;
@@ -29,15 +27,13 @@ public partial class SettingsMenu : Control
 	public override void _Ready()
 	{
 		_settingsManager = GetNode<SettingsManager>("/root/SettingsManager");
-		CheckBox _musicEnabledCheckbox = GetNode<CheckBox>("%CheckBoxMusicEnabled");
-		CheckBox soundEnabledCheckbox = GetNode<CheckBox>("%CheckBoxSoundEnabled");
-		HSlider _sliderMusic = GetNode<HSlider>("%SliderMusicVolume");
-		HSlider sliderSound = GetNode<HSlider>("%SliderSoundVolume");
+		var soundEnabledCheckbox = GetNode<CheckBox>("%CheckBoxSoundEnabled");
+		var sliderSound = GetNode<HSlider>("%SliderSoundVolume");
 		_buttonLanguage = GetNode<Button>("%ButtonLanguage");
-		audioSettings = _settingsManager.LoadSettingSection("Audio");
-		soundSettings = _settingsManager.LoadSettingSection("Sound");
+		_audioSettings = _settingsManager.LoadSettingSection("Audio");
+		_soundSettings = _settingsManager.LoadSettingSection("Sound");
 		_menuBackgroundMusicBusIndex = AudioServer.GetBusIndex("MenuBackgroundMusicBus");
-		soundEffectBusIndex = AudioServer.GetBusIndex("SoundEffectBus");
+		_soundEffectBusIndex = AudioServer.GetBusIndex("SoundEffectBus");
 		_characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 		_settingsManager = GetNode<SettingsManager>("/root/SettingsManager");
 		var musicEnabledCheckbox = GetNode<CheckBox>("%CheckBoxMusicEnabled");
@@ -49,12 +45,12 @@ public partial class SettingsMenu : Control
 			AudioServer.GetBusVolumeDb(_menuBackgroundMusicBusIndex)
 		);
 		sliderSound.Value = Mathf.DbToLinear(
-			AudioServer.GetBusVolumeDb(soundEffectBusIndex)
+			AudioServer.GetBusVolumeDb(_soundEffectBusIndex)
 		);
-		musicEnabledCheckbox.ButtonPressed = (bool)audioSettings["Enabled"];
-		AudioServer.SetBusMute(_menuBackgroundMusicBusIndex, !(bool)audioSettings["Enabled"]);
-		soundEnabledCheckbox.ButtonPressed = (bool)soundSettings["Enabled"];
-		AudioServer.SetBusMute(soundEffectBusIndex, !(bool)soundSettings["Enabled"]);
+		musicEnabledCheckbox.ButtonPressed = (bool)_audioSettings["Enabled"];
+		AudioServer.SetBusMute(_menuBackgroundMusicBusIndex, !(bool)_audioSettings["Enabled"]);
+		soundEnabledCheckbox.ButtonPressed = (bool)_soundSettings["Enabled"];
+		AudioServer.SetBusMute(_soundEffectBusIndex, !(bool)_soundSettings["Enabled"]);
 		_buttonLanguage.Text = (string)_settingsManager.LoadSettingSection("General")["Language"];
 		
 		_deleteAccountButton = GetNode<Button>("%ButtonDeleteAccount");
@@ -75,7 +71,7 @@ public partial class SettingsMenu : Control
 	{
 		_deletePopup.Visible = true;
 		_deleteLabel.Text = GameState.CurrentState == ConnectionState.Offline ? "You are currently offline. Please connect to the internet to delete your account.\n If you want to delete your local save data press 'Yes'." : "Are you sure you want to delete your account? This action cannot be undone.";
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));	
 	}
 	
 	private void OnYesButtonPressed()
@@ -107,7 +103,7 @@ public partial class SettingsMenu : Control
 		if (GameState.CurrentState == ConnectionState.Offline)
 		{
 			var scene = ResourceLoader.Load<PackedScene>("res://Menu/Login/login_screen.tscn");
-			SoundManager.Instance.PlayUI();
+			SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));	
 			GetTree().ChangeSceneToPacked(scene);
 		}
 	}
@@ -115,7 +111,7 @@ public partial class SettingsMenu : Control
 	private void OnCancelButtonPressed()
 	{
 		_deletePopup.Visible = false;
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));	
 	}
 
 	private void OnDeleteAccountRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
@@ -125,7 +121,7 @@ public partial class SettingsMenu : Control
 		{
 			GD.Print("Account deleted successfully.");
 			var scene = ResourceLoader.Load<PackedScene>("res://Menu/Login/login_screen.tscn");
-			SoundManager.Instance.PlayUI();
+			SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));	
 			GetTree().ChangeSceneToPacked(scene);
 		}
 		else
@@ -155,14 +151,14 @@ public partial class SettingsMenu : Control
 
 	private void _on_h_slider_sound_volume_value_changed(float volumeSlider)
 	{
-		AudioServer.SetBusVolumeDb(soundEffectBusIndex, Mathf.LinearToDb(volumeSlider));
-		settingsManager.SaveSetting("Sound", "Volume", volumeSlider);
+		AudioServer.SetBusVolumeDb(_soundEffectBusIndex, Mathf.LinearToDb(volumeSlider));
+		_settingsManager.SaveSetting("Sound", "Volume", volumeSlider);
 	}
 
-	private void _on_check_box_sound_enabled_toggled(bool toggled_on)
+	private void _on_check_box_sound_enabled_toggled(bool toggledOn)
 	{
-		AudioServer.SetBusMute(soundEffectBusIndex, !toggled_on);
-		settingsManager.SaveSetting("Sound", "Enabled", toggled_on);
+		AudioServer.SetBusMute(_soundEffectBusIndex, !toggledOn);
+		_settingsManager.SaveSetting("Sound", "Enabled", toggledOn);
 	}
 
 	private void _on_button_language_pressed()
