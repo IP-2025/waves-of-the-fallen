@@ -35,7 +35,9 @@ public partial class Knight : DefaultPlayer
 	public override void UseAbility()
 	{
 		//Ability 1: SelfHeal
-
+		var healthNode = GetNode<Health>("Health");
+		healthNode.Heal(MaxHealth / 4);
+		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("healItemPickUp"), GlobalPosition, -10);
 		//Ability 2: Shield
 		//AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/shield.tscn").Instantiate<CharacterBody2D>());
 	}

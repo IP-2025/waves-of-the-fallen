@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpewu2tbj1ube"]
+
+[ext_resource type="Script" uid="uid://pdx021ex3uik" path="res://UI/Ability/Ablities/SpeedUp.cs" id="1_tqraw"]
+
+[node name="SpeedUp" type="Node2D"]
+script = ExtResource("1_tqraw")
+
+[node name="SpeedTimer" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true
+
+[connection signal="timeout" from="SpeedTimer" to="." method="_on_speed_timer_timeout"]

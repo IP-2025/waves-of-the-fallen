@@ -4,9 +4,6 @@ using Godot;
 public partial class Assassin : DefaultPlayer
 {
 
-	private float speedTemp;
-	private static Timer timer;
-
 	public override void _Ready()
 	{
 		HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
@@ -39,9 +36,9 @@ public partial class Assassin : DefaultPlayer
 
 	public override void UseAbility()
 	{
-		speedTemp = Speed;
-		Speed = Speed * 2;
-		timer.Start(0.25);
-		Speed = speedTemp;
+		//Ability 1: SpeedUp
+		AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/speed_up.tscn").Instantiate<Node2D>());
+		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("dash"), GlobalPosition, -10);
+		//Ability 2: WeaponEnhance
 	}
 }
