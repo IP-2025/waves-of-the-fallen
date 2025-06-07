@@ -30,6 +30,8 @@ public partial class HUD : CanvasLayer
 			}
 		}
 
+		sb.AppendLine($"Combo: x{ScoreManager.ComboMultiplier}");
+
 		var label = GetNodeOrNull<Label>("ScoreLabel");
 		if (label == null)
 			GD.PrintErr("ScoreLabel not found!");

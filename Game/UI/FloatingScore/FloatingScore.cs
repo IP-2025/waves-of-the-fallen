@@ -27,4 +27,14 @@ public partial class FloatingScore : Label
         if (_elapsed >= _lifetime)
             QueueFree();
     }
+
+    public void SetComboColor(int combo)
+    {
+        if (combo >= 5)
+            Modulate = new Color(1, 0.5f, 0, 1); // Orange high combos
+        else if (combo > 1)
+            Modulate = new Color(0.8f, 1, 0, 1); // Yellow-Green for small combos
+        else
+            Modulate = new Color(1, 1, 0, 1); // Standard Yellow
+    }
 }

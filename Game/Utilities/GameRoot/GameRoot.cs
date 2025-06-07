@@ -109,6 +109,7 @@ public partial class GameRoot : Node
 				_soloPlayer.GetNodeOrNull<Camera2D>("Camera2D").AddChild(_shopInstance);
 			}
 		}
+		Game.Utilities.Backend.ScoreManager.UpdateCombo((float)delta);
 	}
 	private void OnWeaponChosen(Weapon weaponType)
 	{

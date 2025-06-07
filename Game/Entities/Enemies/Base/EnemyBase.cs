@@ -143,20 +143,23 @@ public abstract partial class EnemyBase : CharacterBody2D
 
 		if (player != null)
 		{
-			GD.Print($"OnDeath: player type={player.GetType().Name}");
-			var myId = player.OwnerPeerId; // should be replaced with userName
-			GD.Print($"OnDeath: myId={myId}, Multiplayer.GetUniqueId()={Multiplayer.GetUniqueId()}");
-
-			if (!Game.Utilities.Backend.ScoreManager.PlayerScores.ContainsKey(myId))
-				Game.Utilities.Backend.ScoreManager.PlayerScores[myId] = 0;
-
-			Game.Utilities.Backend.ScoreManager.PlayerScores[myId] += scoreValue;
+			var myId = player.OwnerPeerId;
+			Game.Utilities.Backend.ScoreManager.OnEnemyKilled(myId, scoreValue);
 		}
 
 		
 		var floatingScoreScene = GD.Load<PackedScene>("res://UI/FloatingScore/floating_score.tscn");
 		var floatingScore = floatingScoreScene.Instantiate<FloatingScore>();
-		floatingScore.Text = $"+{scoreValue}";
+
+		int combo = Game.Utilities.Backend.ScoreManager.ComboMultiplier;
+
+		if (combo > 1)
+			floatingScore.Text = $"+{scoreValue} x{combo}";
+		else
+			floatingScore.Text = $"+{scoreValue}";
+
+		floatingScore.SetComboColor(combo);
+
 		GetTree().Root.AddChild(floatingScore);
 		floatingScore.GlobalPosition = GlobalPosition;
 
