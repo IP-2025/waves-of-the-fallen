@@ -5,4 +5,5 @@
 [node name="FloatingScoreLabel" type="Label"]
 offset_right = 40.0
 offset_bottom = 23.0
+theme_override_constants/outline_size = 2
 script = ExtResource("1_vafbw")

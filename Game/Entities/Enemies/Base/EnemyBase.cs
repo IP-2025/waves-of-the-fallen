@@ -158,7 +158,7 @@ public abstract partial class EnemyBase : CharacterBody2D
 		else
 			floatingScore.Text = $"+{scoreValue}";
 
-		floatingScore.SetComboColor(combo);
+		floatingScore.SetPlayerColorById(myId);
 
 		GetTree().Root.AddChild(floatingScore);
 		floatingScore.GlobalPosition = GlobalPosition;

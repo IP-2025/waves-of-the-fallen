@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Godot;
 
 namespace Game.Utilities.Backend
 {
@@ -11,6 +12,14 @@ namespace Game.Utilities.Backend
         public static Dictionary<long, int> ComboMultipliers { get; } = new();
         public static Dictionary<long, float> ComboTimers { get; } = new();
         public static float ComboTimeout { get; set; } = 2.0f; // Sekunden für Combo-Fenster
+
+        public static readonly List<Color> PlayerColorList = new()
+        {
+            new Color(1, 0f, 0f),   // red
+            new Color(0.1f, 0.4f, 1),   // bright blue
+            new Color(1, 0.7f, 0.1f),   // bright orange-yellow
+            new Color(0.7f, 0.2f, 1),   // bright purple
+        };
 
         public static void OnEnemyKilled(long playerId, int baseScore)
         {
@@ -54,6 +63,13 @@ namespace Game.Utilities.Backend
             if (!PlayerScores.ContainsKey(playerId))
                 PlayerScores[playerId] = 0;
             PlayerScores[playerId] += bonus;
+        }
+
+        public static Color GetPlayerColor(long playerId)
+        {
+            if (playerId >= 1 && playerId <= PlayerColorList.Count)
+                return PlayerColorList[(int)playerId - 1];
+            return PlayerColorList[(int)(playerId % PlayerColorList.Count)];
         }
     }
 }

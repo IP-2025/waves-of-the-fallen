@@ -5,7 +5,7 @@
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_0ktxb")
 
-[node name="ScoreLabel" type="Label" parent="."]
+[node name="ScoreLabel" type="RichTextLabel" parent="."]
 anchors_preset = -1
 anchor_left = 0.214
 anchor_top = 0.211
