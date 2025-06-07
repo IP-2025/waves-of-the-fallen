@@ -19,9 +19,9 @@ offset_bottom = 29.568
 text = "Score:"
 
 [node name="ComboTimerLabel" type="RichTextLabel" parent="."]
-offset_left = 212.0
-offset_top = 140.0
-offset_right = 940.0
-offset_bottom = 547.0
+offset_left = 507.0
+offset_top = 129.0
+offset_right = 637.0
+offset_bottom = 194.0
 theme_override_constants/outline_size = 2
 theme_override_fonts/normal_font = ExtResource("2_53dev")
