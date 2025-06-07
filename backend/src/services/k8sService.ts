@@ -12,79 +12,82 @@ export const namespace = 'waves-of-the-fallen';
 export const ingressName = 'dynamic-game-ingress';
 
 export async function patchIngress(newPathName: string, serviceName: string) {
+  try {
+    // 1. Get current Ingress
+    const ingress = await k8sNetworkingApi.readNamespacedIngress({ name: ingressName, namespace: namespace });
 
-    try {
-        // 1. Get current Ingress
-        const ingress = await k8sNetworkingApi.readNamespacedIngress({name: ingressName, namespace: namespace});
+    // 2. Add new path to the existing list
+    const newPath = {
+      path: newPathName,
+      pathType: 'Prefix',
+      backend: {
+        service: {
+          name: serviceName,
+          port: { number: 80 },
+        },
+      },
+    };
 
-        // 2. Add new path to the existing list
-        const newPath = {
-            path: newPathName,
-            pathType: 'Prefix',
-            backend: {
-                service: {
-                    name: serviceName,
-                    port: {number: 80},
-                },
-            },
-        };
-
-        if(!ingress.spec?.rules?.[0]?.http) {
-            ingress.spec!.rules![0].http = {
-                paths: [],
-            }
-        }
-
-        const currentPaths = ingress.spec?.rules?.[0]?.http?.paths ?? [];
-        const updatedPaths = [...currentPaths, newPath];
-
-        ingress.spec!.rules![0].http!.paths = updatedPaths;
-
-        // 3. Patch the Ingress
-        await k8sNetworkingApi.replaceNamespacedIngress({name: ingressName, namespace: namespace, body: ingress});
-        console.log(`✅ Patched Ingress to route ${newPathName} → ${serviceName}`);
-    } catch (err) {
-        console.error('❌ Failed to patch ingress:', err);
+    if (!ingress.spec?.rules?.[0]?.http) {
+      ingress.spec!.rules![0].http = {
+        paths: [],
+      };
     }
 
+    const currentPaths = ingress.spec?.rules?.[0]?.http?.paths ?? [];
+    const updatedPaths = [...currentPaths, newPath];
+
+    ingress.spec!.rules![0].http!.paths = updatedPaths;
+
+    // 3. Patch the Ingress
+    await k8sNetworkingApi.replaceNamespacedIngress({ name: ingressName, namespace: namespace, body: ingress });
+    console.log(`✅ Patched Ingress to route ${newPathName} → ${serviceName}`);
+  } catch (err) {
+    console.error('❌ Failed to patch ingress:', err);
+  }
 }
 
-export async function removeFromIngress(pathName: string, serviceName: string){
+export async function removeFromIngress(pathName: string, serviceName: string) {
+  try {
+    // 1. Get current Ingress
+    const ingress = await k8sNetworkingApi.readNamespacedIngress({ name: ingressName, namespace: namespace });
 
-    try {
-        // 1. Get current Ingress
-        const ingress = await k8sNetworkingApi.readNamespacedIngress({name: ingressName, namespace: namespace});
+    const currentPaths = ingress.spec?.rules?.[0]?.http?.paths ?? [];
+    const updatedPaths = currentPaths.filter((path) => path.path !== pathName);
 
-        const currentPaths = ingress.spec?.rules?.[0]?.http?.paths ?? [];
-        const updatedPaths = currentPaths.filter(path => path.path !== pathName)
+    ingress.spec!.rules![0].http!.paths = updatedPaths;
 
-        ingress.spec!.rules![0].http!.paths = updatedPaths;
-
-        // 3. Patch the Ingress
-        await k8sNetworkingApi.replaceNamespacedIngress({name: ingressName, namespace: namespace, body: ingress});
-        console.log(`✅ Deleted Route ${pathName} and Service ${serviceName} from ingress`);
-    } catch (err) {
-        console.error('❌ Failed to patch ingress:', err);
-    }
+    // 3. Patch the Ingress
+    await k8sNetworkingApi.replaceNamespacedIngress({ name: ingressName, namespace: namespace, body: ingress });
+    console.log(`✅ Deleted Route ${pathName} and Service ${serviceName} from ingress`);
+  } catch (err) {
+    console.error('❌ Failed to patch ingress:', err);
+  }
 }
 
 // In-memory set of nodePorts that are already taken
 const usedNodePorts = new Set<number>();
+const games: {
+  [lobbyCode: string]: {
+    udpPort: number;
+    rpcPort: number;
+  };
+} ={};
 
 /**
  * Allocate the next free nodePort in the Kubernetes default NodePort range (30000–32767).
  */
 export function allocateNodePorts(): number[] {
-    const MIN = 30000;
-    const MAX = 32767;
-    for (let port = MIN; port <= MAX; port +=2) {
-        if (!usedNodePorts.has(port)) {
-            usedNodePorts.add(port);
-            usedNodePorts.add(port +1)
-            return [port, port+1];
-        }
+  const MIN = 30000;
+  const MAX = 32767;
+  for (let port = MIN; port <= MAX; port += 2) {
+    if (!usedNodePorts.has(port)) {
+      usedNodePorts.add(port);
+      usedNodePorts.add(port + 1);
+      return [port, port + 1];
     }
-    throw new Error("No free NodePort available");
+  }
+  throw new Error('No free NodePort available');
 }
 
 /**
@@ -93,34 +96,33 @@ export function allocateNodePorts(): number[] {
  * @param podName
  * @param image
  */
-export function getPodManifest(
-    code: string,
-    podName: string = `pod-${code.toLowerCase()}`,
-    image: string = "kaprele/waves-of-the-fallen_game",
-) {
-    return {
-        apiVersion: "v1",
-        kind: "Pod",
-        metadata: {
-            name: podName,
-            labels: {
-                app: "game-server",
-                code, // label used to select this Pod
-            },
+export function getPodManifest(code: string, podName: string = `pod-${code.toLowerCase()}`, image: string = 'kaprele/waves-of-the-fallen_game') {
+  return {
+    apiVersion: 'v1',
+    kind: 'Pod',
+    metadata: {
+      name: podName,
+      labels: {
+        app: 'game-server',
+        code, // label used to select this Pod
+      },
+    },
+    spec: {
+      containers: [
+        {
+          name: 'game-container',
+          image,
+          imagePullPolicy: 'IfNotPresent', // Use local image if available
+          ports: [
+            { containerPort: 3000, protocol: 'UDP' },
+            { containerPort: 9999, protocol: 'UDP' },
+          ],
+          env: [{ name: 'CODE', value: code }], // Pass the game code as an environment variable
         },
-        spec: {
-            containers: [
-                {
-                    name: "game-container",
-                    image,
-                    imagePullPolicy: "IfNotPresent", // Use local image if available
-                    ports: [{containerPort: 3000, protocol: 'UDP' }, {containerPort: 9999, protocol: 'UDP'}],
-                    env: [{ name: "CODE", value: code }], // Pass the game code as an environment variable
-                },
-            ],
-            restartPolicy: "Never", // Don't restart the Pod automatically
-        },
-    };
+      ],
+      restartPolicy: 'Never', // Don't restart the Pod automatically
+    },
+  };
 }
 
 /**
@@ -132,7 +134,7 @@ export function getPodManifest(
  */
 export function getServiceManifest(code: string, serviceName: string, udpTargetPort: number = 3000, rpcTargetPort: number = 9999) {
   // Grab a free port on the host
-  const [ udpPort, rpcPort ] = allocateNodePorts();
+  const [udpPort, rpcPort] = allocateNodePorts();
 
   const serviceManifest = {
     apiVersion: 'v1',
@@ -155,14 +157,14 @@ export function getServiceManifest(code: string, serviceName: string, udpTargetP
           port: udpPort, // in-cluster port the Pod listens on
           targetPort: udpTargetPort, // forward to the Pod’s port
           protocol: 'UDP',
-          nodePort: udpPort
+          nodePort: udpPort,
         },
         {
           name: 'rpc',
           port: rpcTargetPort, // in-cluster port the Pod listens on
           targetPort: rpcTargetPort, // forward to the Pod’s port
           protocol: 'UDP',
-          nodePort: rpcPort
+          nodePort: rpcPort,
         },
       ],
     },
@@ -172,6 +174,17 @@ export function getServiceManifest(code: string, serviceName: string, udpTargetP
 }
 
 export function freeNodePort(port: number) {
-    usedNodePorts.delete(port);
+  usedNodePorts.delete(port);
 }
 
+export function saveLobby(lobbyCode: string, udpPort: number, rpcPort: number) {
+  games[lobbyCode] = { udpPort: udpPort, rpcPort: rpcPort };
+}
+
+export function getLobbyPorts(lobbyCode: string){
+  return games[lobbyCode];
+}
+
+export function removeLobby(lobbyCode: string){
+  delete games[lobbyCode];
+}

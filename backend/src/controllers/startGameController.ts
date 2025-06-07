@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { Request, Response } from 'express';
-import { getPodManifest, getServiceManifest, k8sApi, namespace } from 'services/k8sService';
+import { getPodManifest, getServiceManifest, k8sApi, namespace, saveLobby } from 'services/k8sService';
 
 export async function startGameController(req: Request, res: Response) {
   try {
@@ -22,6 +22,8 @@ export async function startGameController(req: Request, res: Response) {
     const { serviceManifest, udpPort, rpcPort } = getServiceManifest(code, `svc-${code}`);
     await k8sApi.createNamespacedService({ namespace: namespace, body: serviceManifest });
     console.log(`✅ Service ${serviceName} created. Pod reachable on ${udpPort} (UDP) and ${rpcPort} (RPC)`);
+
+    saveLobby(code, udpPort, rpcPort);
 
     // await patchIngress(`/game/${code}`, serviceName)
     res.status(201).json({
