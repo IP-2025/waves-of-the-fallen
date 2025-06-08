@@ -241,15 +241,6 @@ public partial class Client : Node
 				{
 					ChangeCamera(inst, entity);
 				}
-
-				// HUD for local player
-				if (entity.NetworkId == Multiplayer.GetUniqueId() && GetTree().Root.GetNodeOrNull("HUD") == null)
-				{
-					var hudScene = GD.Load<PackedScene>("res://UI/HUD/HUD.tscn");
-					var hud = hudScene.Instantiate();
-					hud.Name = "HUD";
-					GetTree().Root.AddChild(hud);
-				}
 			}
 
 			UpdateTransform(inst, entity);

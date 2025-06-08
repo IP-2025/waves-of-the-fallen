@@ -44,7 +44,7 @@ public partial class LocalMenu : Control
 
     var peers = Multiplayer.GetPeers().ToList();
 
-    currentPlayers.Text = $"Players: {peers.Count}\n" + string.Join("\n", peers.Select(id => $"ID {id}"));
+    currentPlayers.Text = $"Players playing with you: {peers.Count}\n" + string.Join("\n", peers.Select(id => $"ID {id}"));
   }
 
   private void _on_button_back_local_pressed()
@@ -94,6 +94,7 @@ public partial class LocalMenu : Control
     hostButton.Visible = false;
     joinButton.Visible = false;
     joinButton.Disabled = true;
+    isHost = true;
 
     NetworkManager.Instance.InitServer();
     NetworkManager.Instance._isLocalHost = true;

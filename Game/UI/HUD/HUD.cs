@@ -14,8 +14,8 @@ public partial class HUD : CanvasLayer
 		if (NetworkManager.Instance != null && NetworkManager.Instance._soloMode)
 		{
 			// Solo-Mode: score of the local player
-			int score = ScoreManager.PlayerScores.ContainsKey(peerId) ? ScoreManager.PlayerScores[peerId] : 0;
-			var playerNode = GetTree().Root.GetNodeOrNull<Node>("GameRoot")?.GetNodeOrNull<Node>($"Player_{peerId}");
+			int score = ScoreManager.PlayerScores.ContainsKey(peerId) ? ScoreManager.PlayerScores[peerId] : 0;			
+			var playerNode = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot")?.GetNodeOrNull<DefaultPlayer>($"Player_{peerId}");
 			string className = playerNode != null ? playerNode.GetType().Name : $"Player {peerId}";
 			var color = ScoreManager.GetPlayerColor(peerId);
 			string colorHex = color.ToHtml();
@@ -28,7 +28,8 @@ public partial class HUD : CanvasLayer
 			{
 				var color = ScoreManager.GetPlayerColor(kv.Key);
 				string colorHex = color.ToHtml();
-				var playerNode = GetTree().Root.GetNodeOrNull<Node>("GameRoot")?.GetNodeOrNull<Node>($"Player_{kv.Key}");
+				string playerName = NetworkManager.Instance._isLocalHost ? $"Player_{kv.Key}" : $"E_{kv.Key}";
+				var playerNode = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot")?.GetNodeOrNull<DefaultPlayer>(playerName);
 				string className = $"[color={colorHex}]{(playerNode != null ? playerNode.GetType().Name : $"Player {kv.Key}")}[/color]";
 				int combo = ScoreManager.GetCombo(kv.Key);
 				sb.AppendLine($"{className}: {kv.Value} (Combo: x{combo})");
