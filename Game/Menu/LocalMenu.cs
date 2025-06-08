@@ -148,7 +148,7 @@ public partial class LocalMenu : Control
 
   public override void _Notification(int what)
 	{
-		if (what == NotificationWMCloseRequest)
+		if (what == NotificationWMGoBackRequest)
 		{
       _on_button_back_local_pressed();
 		}   

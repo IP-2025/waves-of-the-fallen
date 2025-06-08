@@ -175,7 +175,7 @@ public partial class SettingsMenu : Control
 	
 	public override void _Notification(int what)
 	{
-		if (what == NotificationWMCloseRequest)
+		if (what == NotificationWMGoBackRequest)
 		{
 			_on_button_back_settings_pressed();
 		}   

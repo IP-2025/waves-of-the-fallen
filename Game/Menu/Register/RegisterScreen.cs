@@ -139,7 +139,7 @@ public partial class RegisterScreen : Control
 	
 	public override void _Notification(int what)
 	{
-		if (what == NotificationWMCloseRequest)
+		if (what == NotificationWMGoBackRequest)
 		{
 			OnBackButtonPressed();
 		}   
