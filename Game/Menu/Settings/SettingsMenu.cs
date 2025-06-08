@@ -59,21 +59,21 @@ public partial class SettingsMenu : Control
 		_yesButton = GetNode<Button>("%YesButton");
 		_cancelButton = GetNode<Button>("%CancleButton");
 		_deleteAccountRequest = GetNode<HttpRequest>("%DeleteAccountRequest");
-		
+
 		_deleteAccountButton.Connect("pressed", new Callable(this, nameof(OnDeleteAccountButtonPressed)));
 		_deletePopup.Visible = false;
 		_yesButton.Connect("pressed", new Callable(this, nameof(OnYesButtonPressed)));
 		_cancelButton.Connect("pressed", new Callable(this, nameof(OnCancelButtonPressed)));
 		_deleteAccountRequest.Connect("request_completed", new Callable(this, nameof(OnDeleteAccountRequestCompleted)));
 	}
-	
-		private void OnDeleteAccountButtonPressed()
+
+	private void OnDeleteAccountButtonPressed()
 	{
 		_deletePopup.Visible = true;
 		_deleteLabel.Text = GameState.CurrentState == ConnectionState.Offline ? "You are currently offline. Please connect to the internet to delete your account.\n If you want to delete your local save data press 'Yes'." : "Are you sure you want to delete your account? This action cannot be undone.";
-		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));	
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 	}
-	
+
 	private void OnYesButtonPressed()
 	{
 		if (GameState.CurrentState == ConnectionState.Online)
@@ -99,19 +99,19 @@ public partial class SettingsMenu : Control
 		{
 			GD.Print("Datei nicht gefunden.");
 		}
-		
+
 		if (GameState.CurrentState == ConnectionState.Offline)
 		{
 			var scene = ResourceLoader.Load<PackedScene>("res://Menu/Login/login_screen.tscn");
-			SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));	
+			SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 			GetTree().ChangeSceneToPacked(scene);
 		}
 	}
-	
+
 	private void OnCancelButtonPressed()
 	{
 		_deletePopup.Visible = false;
-		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));	
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 	}
 
 	private void OnDeleteAccountRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
@@ -121,7 +121,7 @@ public partial class SettingsMenu : Control
 		{
 			GD.Print("Account deleted successfully.");
 			var scene = ResourceLoader.Load<PackedScene>("res://Menu/Login/login_screen.tscn");
-			SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));	
+			SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 			GetTree().ChangeSceneToPacked(scene);
 		}
 		else
@@ -170,5 +170,14 @@ public partial class SettingsMenu : Control
 		var nextLanguage = _languages[nextLanguageIndex];
 		_settingsManager.SaveSetting("General", "Language", nextLanguage);
 		_buttonLanguage.Text = nextLanguage;
-		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));	}
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
+	}
+	
+	public override void _Notification(int what)
+	{
+		if (what == NotificationWMGoBackRequest)
+		{
+			_on_button_back_settings_pressed();
+		}   
+	}
 }
