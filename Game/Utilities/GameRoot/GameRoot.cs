@@ -29,7 +29,7 @@ public partial class GameRoot : Node
 	
 	private HttpRequest _sendScoreRequest;
 	private bool _soloMode = false;
-	private PauseMenu _pauseMenu; // Feld oben in der Klasse
+	private PauseMenu _pauseMenu;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -96,7 +96,7 @@ public partial class GameRoot : Node
 			hud = GetNode<CanvasLayer>("HUD");
 		}
 
-		// PauseMenu an das HUD anhängen!
+		// PauseMenu attached to HUD!
 		if (_pauseMenu == null && hud != null)
 		{
 			var pauseMenuScene = GD.Load<PackedScene>("res://Menu/PauseMenu/pauseMenu.tscn");
@@ -336,7 +336,13 @@ public partial class GameRoot : Node
 		if (@event.IsActionPressed("ui_cancel"))
 		{
 			if (_pauseMenu != null)
+			{
 				_pauseMenu.Visible = !_pauseMenu.Visible;
+
+				// Solo-Mode: game pause
+				if (NetworkManager.Instance._soloMode)
+					GetTree().Paused = _pauseMenu.Visible;
+			}
 		}
 	}
 }
