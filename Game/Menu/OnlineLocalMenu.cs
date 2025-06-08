@@ -32,4 +32,13 @@ public partial class OnlineLocalMenu : Control
 		var gameScene = ResourceLoader.Load<PackedScene>("res://Utilities/GameRoot/GameRoot.tscn");
 		GetTree().ChangeSceneToPacked(gameScene);
 	}
+
+	public override void _Notification(int what)
+	{
+		if (what == NotificationWMGoBackRequest)
+		{
+			_on_button_back_onlineLocal_pressed();
+		}
+        
+	}
 }

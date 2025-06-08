@@ -53,7 +53,7 @@ public partial class Charactermenu : Control
 
 		_buttonUpgradeUnlock = GetNode<Button>("%Button_UpgradeUnlock");
 		_buttonSelect = GetNode<Button>("%Button_Select");
-		
+
 		_buttonUpgradeUnlock.Text = "Upgrade: " + UpgradeCost + " Gold";
 
 		_unlockRequest = GetNode<HttpRequest>("%UnlockRequest");
@@ -448,5 +448,13 @@ public partial class Charactermenu : Control
 			"4" => "Mage",
 			_ => "DefaultPlayer"
 		};
+	}
+	
+	public override void _Notification(int what)
+	{
+		if (what == NotificationWMGoBackRequest)
+		{
+			_on_button_back_charactermenu_pressed();
+		}   
 	}
 }

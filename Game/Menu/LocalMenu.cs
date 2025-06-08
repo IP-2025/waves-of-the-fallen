@@ -128,4 +128,12 @@ public partial class LocalMenu : Control
   {
     if (enableDebug) Debug.Print("Local Menue: " + message);
   }
+  
+  public override void _Notification(int what)
+  {
+    if (what == NotificationWMGoBackRequest)
+    {
+      _on_button_back_local_pressed();
+    }
+  }
 }
