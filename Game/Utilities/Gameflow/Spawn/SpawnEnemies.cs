@@ -132,10 +132,25 @@ public partial class SpawnEnemies : Node2D
 
 	private void LoadPatternPool() // loads patterns through the filepath below into the patternPool with their associated spawningCost
 	{
-		const string patternFilepath = "res://Utilities/Gameflow/Spawn/Patterns/";
+		/*const string patternFilepath = "res://Utilities/Gameflow/Spawn/Patterns/";
 		foreach (var patternName in DirAccess.GetFilesAt(patternFilepath))
 		{
 			PackedScene pattern = GD.Load<PackedScene>(patternFilepath + patternName);
+			_patternPool.Add(pattern, pattern.Instantiate<EnemyPattern>().spawningCost);
+		}*/
+		var patternPaths = new[]
+		{
+			"res://Utilities/Gameflow/Spawn/Patterns/basic_enemy_x1.tscn",
+			"res://Utilities/Gameflow/Spawn/Patterns/basic_enemy_x1_big.tscn",
+			"res://Utilities/Gameflow/Spawn/Patterns/basic_enemy_x6.tscn",
+			"res://Utilities/Gameflow/Spawn/Patterns/mounted_enemy_x1.tscn",
+			"res://Utilities/Gameflow/Spawn/Patterns/ranged_enemy_x1.tscn",
+			"res://Utilities/Gameflow/Spawn/Patterns/ranged_enemy_big_triangle.tscn"
+		};
+
+		foreach (var path in patternPaths)
+		{
+			var pattern = GD.Load<PackedScene>(path);
 			_patternPool.Add(pattern, pattern.Instantiate<EnemyPattern>().spawningCost);
 		}
 	}
