@@ -26,16 +26,17 @@ public partial class GameRoot : Node
 	// GameOver
 	private GameOverScreen _gameOverScreen;
 
-	
+
 	private HttpRequest _sendScoreRequest;
 	private bool _soloMode = false;
-	
+
 
 	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	public override void _Ready() // builds the game
 	{
 		Engine.MaxFps = 60; // important! performance...
-		
+
+		// Score -------------------------------------------------------------------------------------------
 		_sendScoreRequest = GetNodeOrNull<HttpRequest>("%SendScoreRequest");
 		if (_sendScoreRequest == null)
 		{
@@ -44,17 +45,21 @@ public partial class GameRoot : Node
 		}
 		_sendScoreRequest.Connect(HttpRequest.SignalName.RequestCompleted, new Callable(this, nameof(OnScoreRequestCompleted)));
 
+		// Character ---------------------------------------------------------------------------------------
 		// get selected character
 		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 		_soloSelectedCharacterId = characterManager.LoadLastSelectedCharacterID();
 
 		if (!NetworkManager.Instance._soloMode) _isServer = GetTree().GetMultiplayer().IsServer();
 
+		// Map ---------------------------------------------------------------------------------------------
 		// Load map and store reference
-		SpawnMap("res://Maps/GrassMap/Main.tscn");
-
+		_mainMap = GD.Load<PackedScene>("res://Maps/GrassMap/Main.tscn").Instantiate<Node2D>();
+		AddChild(_mainMap);
+		// -------------------------------------------------------------------------------------------------
 		if (!_isServer && !NetworkManager.Instance._soloMode) return; // clients return
 
+		// WaveTimer ---------------------------------------------------------------------------------------
 		// Instantiate one global WaveTimer for server-wide access
 		var waveTimerScene = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn");
 		_globalWaveTimer = waveTimerScene.Instantiate<WaveTimer>();
@@ -62,7 +67,10 @@ public partial class GameRoot : Node
 		{
 			_globalWaveTimer.Name = "GlobalWaveTimer";
 			AddChild(_globalWaveTimer);
-			// Server spawns all players
+			// Players -------------------------------------------------------------------------------------
+			// spawn player for self
+			if (NetworkManager.Instance._isHost) SpawnPlayer(1);
+			// Server spawns all players for peers
 			foreach (var peerId in GetTree().GetMultiplayer().GetPeers())
 			{
 				DebugIt($"Server spawning player {peerId}");
@@ -70,6 +78,7 @@ public partial class GameRoot : Node
 			}
 		}
 
+		// SoloMode ----------------------------------------------------------------------------------------
 		if (NetworkManager.Instance._soloMode)
 		{
 			long peerId = Multiplayer.GetUniqueId();
@@ -80,9 +89,12 @@ public partial class GameRoot : Node
 			GetChildren().OfType<DefaultPlayer>().FirstOrDefault()?.GetNodeOrNull<Camera2D>("Camera2D")?.AddChild(_globalWaveTimer);
 		}
 
+		// Enemies ----------------------------------------------------------------------------------------
 		// Start enemy spawner
-		SpawnEnemySpawner("res://Utilities/Gameflow/Spawn/SpawnEnemies.tscn");
+		var spawner = GD.Load<PackedScene>("res://Utilities/Gameflow/Spawn/SpawnEnemies.tscn").Instantiate<SpawnEnemies>();
+		AddChild(spawner);
 
+		// HUD --------------------------------------------------------------------------------------------
 		if (GetNodeOrNull<CanvasLayer>("HUD") == null)
 		{
 			var hudScene = GD.Load<PackedScene>("res://UI/HUD/HUD.tscn");
@@ -90,10 +102,10 @@ public partial class GameRoot : Node
 			AddChild(hud);
 		}
 	}
-	
+
 	public override void _Process(double delta)
 	{
-		
+		// Shop
 		if (NetworkManager.Instance._soloMode)
 		{
 			if (_soloPlayer is not { alive: true })
@@ -112,6 +124,7 @@ public partial class GameRoot : Node
 			}
 		}
 
+		// ScoreSystem
 		foreach (var playerId in ScoreManager.PlayerScores.Keys)
 		{
 			ScoreManager.UpdateCombo(playerId, (float)delta);
@@ -147,12 +160,6 @@ public partial class GameRoot : Node
 		_shopInstance = null;
 	}
 
-	private void SpawnMap(string mapPath)
-	{
-		_mainMap = GD.Load<PackedScene>(mapPath).Instantiate<Node2D>();
-		AddChild(_mainMap);
-	}
-
 	private void SpawnPlayer(long peerId)
 	{
 		var player = GD.Load<PackedScene>("res://Entities/Characters/Mage/mage.tscn").Instantiate<DefaultPlayer>();
@@ -186,8 +193,6 @@ public partial class GameRoot : Node
 		var joystick = GD.Load<PackedScene>("res://UI/Joystick/joystick.tscn").Instantiate<Node2D>();
 		player.AddChild(joystick);
 		player.Joystick = joystick;
-		// var waveTimer = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
-		// player.GetNode<Camera2D>("Camera2D").AddChild(_globalWaveTimer);
 		AddChild(player);
 
 		if (!NetworkManager.Instance._soloMode) Server.Instance.Entities[peerId] = player;
@@ -204,12 +209,6 @@ public partial class GameRoot : Node
 		}
 
 		_playerIndex++;
-	}
-
-	private void SpawnEnemySpawner(string enemySpawnerPath)
-	{
-		var spawner = GD.Load<PackedScene>(enemySpawnerPath).Instantiate<SpawnEnemies>();
-		AddChild(spawner);
 	}
 
 	private void SendScoreToBackend(int score)
@@ -254,10 +253,10 @@ public partial class GameRoot : Node
 			score = playerScore;
 
 		_gameOverScreen.SetScore(score);
-		
+
 		if (GameState.CurrentState == ConnectionState.Online)
 			SendScoreToBackend(score);
-		
+
 	}
 
 	public void OnPlayerDied()
