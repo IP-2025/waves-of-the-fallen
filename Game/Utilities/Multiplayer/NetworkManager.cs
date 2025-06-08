@@ -38,7 +38,7 @@ namespace Game.Utilities.Multiplayer
 		public static NetworkManager Instance { get; private set; }
 		private Client client;
 		private Server server;
-		public bool _isHost = false;
+		public bool _isLocalHost = false;
 		public bool _soloMode = false;
 		Process process = new Process();
 		// Server ready signal
@@ -121,7 +121,7 @@ namespace Game.Utilities.Multiplayer
 			// RPC Server with ENet
 			_rpcServerPeer = new ENetMultiplayerPeer();
 			// test if address and port is valid / open
-			var err = _rpcServerPeer.CreateServer(RPC_PORT, maxClients: 4); // max 4 clients
+			var err = _rpcServerPeer.CreateServer(RPC_PORT, maxClients: _isLocalHost ? 3 : 4); // max 4 players
 			DebugIt($"ENet CreateClient: {err}");
 
 			if (err != Error.Ok)

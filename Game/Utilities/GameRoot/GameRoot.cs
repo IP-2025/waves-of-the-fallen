@@ -66,10 +66,10 @@ public partial class GameRoot : Node
 		if (_isServer)
 		{
 			_globalWaveTimer.Name = "GlobalWaveTimer";
-			AddChild(_globalWaveTimer);
 			// Players -------------------------------------------------------------------------------------
 			// spawn player for self
-			if (NetworkManager.Instance._isHost) SpawnPlayer(1);
+			if (NetworkManager.Instance._isLocalHost) SpawnPlayer(1);
+			GetNodeOrNull<DefaultPlayer>("Player_1")?.GetNodeOrNull<Camera2D>("Camera2D").AddChild(_globalWaveTimer);
 			// Server spawns all players for peers
 			foreach (var peerId in GetTree().GetMultiplayer().GetPeers())
 			{

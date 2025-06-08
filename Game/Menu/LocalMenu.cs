@@ -96,7 +96,7 @@ public partial class LocalMenu : Control
     joinButton.Disabled = true;
 
     NetworkManager.Instance.InitServer();
-    NetworkManager.Instance._isHost = true;
+    NetworkManager.Instance._isLocalHost = true;
     // small delay...
     var timer = new Timer();
     AddChild(timer);
