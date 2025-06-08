@@ -25,6 +25,7 @@ public partial class GameRoot : Node
 
 	// GameOver
 	private GameOverScreen _gameOverScreen;
+
 	
 	private HttpRequest _sendScoreRequest;
 	private bool _soloMode = false;

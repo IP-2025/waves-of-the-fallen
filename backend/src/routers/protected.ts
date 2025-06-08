@@ -4,6 +4,7 @@ import progressRouter from './progress';
 import highscoreRouter from './highscore';
 import settingsRouter from './settings';
 import goldRouter from './gold';
+import userRouter from './user';
 import { authenticationStep } from 'middleware';
 
 const protectedRouter = express.Router();
@@ -17,5 +18,6 @@ protectedRouter.use('/progress', progressRouter);
 protectedRouter.use('/highscore', highscoreRouter);
 protectedRouter.use('/settings', settingsRouter);
 protectedRouter.use('/gold', goldRouter);
+protectedRouter.use('/user', userRouter);
 
 export default protectedRouter;
