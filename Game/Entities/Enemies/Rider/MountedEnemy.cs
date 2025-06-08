@@ -16,6 +16,7 @@ public partial class MountedEnemy : EnemyBase
 		speed = 230f;
 		damage = 5f;
 		attacksPerSecond = 1f;
+		scoreValue = 75;
 	}
 	public override void _Ready()
 	{

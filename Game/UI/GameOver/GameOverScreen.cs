@@ -11,6 +11,9 @@ namespace Game.UI.GameOver{
 	[Export] public AnimationPlayer AnimationPlayerBackground;
 	[Export] public AnimationPlayer AnimationPlayerForeground;
 
+	[Signal]
+	public delegate void QuitPressedEventHandler();
+
 	public override void _Ready()
 		{
 			// Initial Setup
@@ -31,6 +34,7 @@ namespace Game.UI.GameOver{
 
 	private void OnMainMenuBtnPressed()
 {
+	EmitSignal(nameof(QuitPressed));
 	GetTree().Quit(); // Exit the game instead of trying to shutdown headless server (iOS cant use GetTree().Quit())
 	//GetTree().ChangeSceneToFile("res://Menu/Main/MainMenu.tscn");
 }
