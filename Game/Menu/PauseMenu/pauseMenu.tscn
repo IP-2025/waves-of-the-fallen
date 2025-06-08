@@ -44,4 +44,4 @@ text = "Main Menu"
 
 [node name="Quit" type="Button" parent="Background/VBoxContainer"]
 layout_mode = 2
-text = "Quit"
+text = "Quit Wave of the Fallen"
