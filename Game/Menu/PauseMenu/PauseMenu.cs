@@ -38,4 +38,16 @@ public partial class PauseMenu : Control
     {
         GetTree().Quit();
     }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (Visible && @event.IsActionPressed("ui_cancel"))
+        {
+            Visible = false;
+            if (NetworkManager.Instance._soloMode)
+                GetTree().Paused = false;
+            // waste input event to prevent it from propagating further
+            @event.Dispose();
+        }
+    }
 }
