@@ -49,6 +49,12 @@ public partial class PauseMenu : Control
 			// TODO: Backend or local penalty for leaving multiplayer
 			GD.Print("Penalty: Player loses gold for leaving multiplayer!");
 		}
+
+		// remove pause menu and hud
+		var hud = GetTree().Root.GetNodeOrNull<CanvasLayer>("HUD");
+		if (hud != null)
+			hud.QueueFree();
+
 		GetTree().Paused = false;
 		GetTree().ChangeSceneToFile("res://Menu/Main/mainMenu.tscn");
 	}
