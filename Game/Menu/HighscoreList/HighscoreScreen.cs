@@ -13,10 +13,10 @@ public partial class HighscoreScreen : Control
 
 	public override void _Ready()
 	{
-		_personalScoreRequest = GetNode<HttpRequest>("Panel/PersonalScoreRequest");
-		_topPlayerRequest = GetNode<HttpRequest>("Panel/TopPlayersRequest");
-		_backButton = GetNode<Button>("Panel/BackButton");
-		_mainMenuButton = GetNode<Button>("Panel/Offline/Button");
+		_personalScoreRequest = GetNode<HttpRequest>("%PersonalScoreRequest");
+		_topPlayerRequest = GetNode<HttpRequest>("%TopPlayersRequest");
+		_backButton = GetNode<Button>("%BackButton");
+		_mainMenuButton = GetNode<Button>("%Button");
 
 
 		_personalScoreRequest.Connect("request_completed", new Callable(this, nameof(OnPersonalScoreRequestCompleted)));
@@ -57,7 +57,7 @@ public partial class HighscoreScreen : Control
 		}
 		else
 		{
-			var offlinePanel = GetNode<Panel>("Panel/Offline");
+			var offlinePanel = GetNode<Panel>("%Offline");
 			offlinePanel.Visible = true;
 		}
 	}
@@ -74,7 +74,7 @@ public partial class HighscoreScreen : Control
 				var data = (Godot.Collections.Dictionary)json.GetData();
 				var highScore = (Godot.Collections.Dictionary)data["highScore"];
 
-				var playerScore = GetNode<ColorRect>("Panel/PlayerScore");
+				var playerScore = GetNode<ColorRect>("%PlayerScore");
 				playerScore.GetNode<Label>("Position").Text = "-";
 				playerScore.GetNode<Label>("Name").Text = "Me";
 				playerScore.GetNode<Label>("Score").Text = highScore["highScore"].ToString();
@@ -109,7 +109,7 @@ public partial class HighscoreScreen : Control
 				var data = (Godot.Collections.Dictionary)json.GetData();
 				var highScoreList = (Godot.Collections.Array)data["highScoreList"];
 				var entryScene = GD.Load<PackedScene>("res://Menu/HighscoreList/entry.tscn");
-				var vbox = GetNode<VBoxContainer>("Panel/List/VBoxContainer");
+				var vbox = GetNode<VBoxContainer>("%VBoxContainer");
 				vbox.ClearChildren();
 
 				for (var i = 0; i < highScoreList.Count; i++)
