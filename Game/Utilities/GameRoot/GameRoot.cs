@@ -65,11 +65,15 @@ public partial class GameRoot : Node
 		_globalWaveTimer = waveTimerScene.Instantiate<WaveTimer>();
 		if (_isServer)
 		{
-			_globalWaveTimer.Name = "GlobalWaveTimer";
+			_globalWaveTimer.Name = "GlobalWaveTimer"; // is for sync with clients
+			_globalWaveTimer.Visible = false; // or would spawn somewhere on the map
+			AddChild(_globalWaveTimer);
 			// Players -------------------------------------------------------------------------------------
 			// spawn player for self
 			if (NetworkManager.Instance._isLocalHost) SpawnPlayer(1);
-			GetNodeOrNull<DefaultPlayer>("Player_1")?.GetNodeOrNull<Camera2D>("Camera2D").AddChild(_globalWaveTimer);
+			GetNodeOrNull<DefaultPlayer>("Player_1")
+				.GetNodeOrNull<Camera2D>("Camera2D")
+				.AddChild( waveTimerScene.Instantiate<WaveTimer>()); // player needs wave timer, is normaly added in Client.cs
 			// Server spawns all players for peers
 			foreach (var peerId in GetTree().GetMultiplayer().GetPeers())
 			{
@@ -86,7 +90,9 @@ public partial class GameRoot : Node
 
 			SpawnPlayer(peerId);
 			_soloPlayer = GetNodeOrNull<DefaultPlayer>($"Player_{peerId}");
-			GetChildren().OfType<DefaultPlayer>().FirstOrDefault()?.GetNodeOrNull<Camera2D>("Camera2D")?.AddChild(_globalWaveTimer);
+			GetNodeOrNull<DefaultPlayer>("Player_1")
+				.GetNodeOrNull<Camera2D>("Camera2D")
+				.AddChild(_globalWaveTimer);
 		}
 
 		// Enemies ----------------------------------------------------------------------------------------
@@ -105,21 +111,25 @@ public partial class GameRoot : Node
 
 	public override void _Process(double delta)
 	{
-		// Shop
-		if (NetworkManager.Instance._soloMode)
+		if (NetworkManager.Instance._isLocalHost)
 		{
-			if (_soloPlayer is not { alive: true })
+			if (NetworkManager.Instance._soloMode && _soloPlayer is not { alive: true })
 				ShowGameOverScreen();
 
+			// Shop
 			var currentWave = _globalWaveTimer.WaveCounter;
 			if (currentWave > _lastLocalShopRound && currentWave < 5)
 			{
+				DebugIt("Check if shop should be started");
 				_lastLocalShopRound = currentWave;
 				if (_shopInstance == null)
 				{
+					DebugIt("Start new shop");
 					_shopInstance = GD.Load<PackedScene>("res://UI/Shop/BossShop/bossShop.tscn").Instantiate();
 					_shopInstance.Connect(nameof(BossShop.WeaponChosen), new Callable(this, nameof(OnWeaponChosen)));
-					_soloPlayer.GetNodeOrNull<Camera2D>("Camera2D").AddChild(_shopInstance);
+					GetNodeOrNull<DefaultPlayer>("Player_1")
+						.GetNodeOrNull<Camera2D>("Camera2D")
+						.AddChild(_shopInstance);
 				}
 			}
 		}
@@ -271,8 +281,8 @@ public partial class GameRoot : Node
 		if (ScoreManager.PlayerScores.TryGetValue(peerId, out var playerScore))
 			score = playerScore;
 
-/* 		if (_gameOverScreen == null)
-			ShowGameOverScreen(); */
+		/* 		if (_gameOverScreen == null)
+					ShowGameOverScreen(); */
 
 		//_gameOverScreen?.SetScore(score);
 
@@ -281,10 +291,10 @@ public partial class GameRoot : Node
 		{
 			if (IsInstanceValid(playerNode))
 			{
-				playerNode.QueueFree();
+				playerNode.CallDeferred("queue_free");
 				DebugIt($"Removed dead player node: Player_{peerId}");
 			}
-			DebugIt("Remove Player: " + peerId);
+			DebugIt("Remove Player from server entities: " + peerId);
 			Server.Instance.Entities.Remove(peerId);
 		}
 

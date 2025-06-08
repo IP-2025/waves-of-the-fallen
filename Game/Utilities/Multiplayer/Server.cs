@@ -149,9 +149,8 @@ namespace Game.Utilities.Multiplayer
 				int secondsLeft = 0;
 				bool graceTime = false;
 				var waveTimer = GetTree()
-				.Root.GetNodeOrNull<GameRoot>("GameRoot")
-					.GetNodeOrNull<DefaultPlayer>("Player_1")
-					.GetNodeOrNull<Camera2D>("Camera2D")
+					.Root
+					.GetNodeOrNull<GameRoot>("GameRoot")
 					.GetNodeOrNull<WaveTimer>("GlobalWaveTimer");
 
 				if (waveTimer != null)
