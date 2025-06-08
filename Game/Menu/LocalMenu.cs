@@ -31,7 +31,7 @@ public partial class LocalMenu : Control
     playButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/play");
     ipIO = GetNode<LineEdit>("IP_IO");
     currentPlayers = GetNode<RichTextLabel>("CurrentPlayers");
-    NetworkManager.Instance.HeadlessServerInitialized += OnHeadlessServerInitialized;
+    //NetworkManager.Instance.HeadlessServerInitialized += OnHeadlessServerInitialized;
 
     // disable play button by default
     playButton.Visible = false;
@@ -95,11 +95,17 @@ public partial class LocalMenu : Control
     joinButton.Visible = false;
     joinButton.Disabled = true;
 
-    isHost = true;
+    //isHost = true;
 
-    GD.Print("Start Headless");
-    NetworkManager.Instance.StartHeadlessServer(true);
-    GD.Print("Headless started");
+    /*     GD.Print("Start Headless");
+        NetworkManager.Instance.StartHeadlessServer(true);
+        GD.Print("Headless started"); */
+    NetworkManager.Instance.InitServer();
+    hostButton.Visible = false;
+    playButton.Visible = true;
+    playButton.Disabled = false;
+    ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show Server IP
+
     SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
   }
 
@@ -118,37 +124,37 @@ public partial class LocalMenu : Control
     if (enableDebug) Debug.Print("Local Menue: " + message);
   }
 
-  private void OnHeadlessServerInitialized()
-  {
-    var timer = new Timer();
-    AddChild(timer);
-    timer.WaitTime = 0.5f;
-    timer.OneShot = true;
-    timer.Timeout += () =>
+  /*   private void OnHeadlessServerInitialized()
     {
-      NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
-      ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show Server IP
-
-      var timer2 = new Timer();
-      AddChild(timer2);
-      timer2.WaitTime = 0.5f;
-      timer2.OneShot = true;
-      timer2.Timeout += () =>
+      var timer = new Timer();
+      AddChild(timer);
+      timer.WaitTime = 0.5f;
+      timer.OneShot = true;
+      timer.Timeout += () =>
       {
-        hostButton.Visible = false;
-        playButton.Visible = true;
-        playButton.Disabled = false;
+        NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
+        ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show Server IP
+
+        var timer2 = new Timer();
+        AddChild(timer2);
+        timer2.WaitTime = 0.5f;
+        timer2.OneShot = true;
+        timer2.Timeout += () =>
+        {
+          hostButton.Visible = false;
+          playButton.Visible = true;
+          playButton.Disabled = false;
+        };
+
+        timer2.Start();
       };
 
-      timer2.Start();
-    };
+      timer.Start();
+    }
+   */
 
-    timer.Start();
-  }
-
-
-  public override void _ExitTree()
-  {
-    NetworkManager.Instance.HeadlessServerInitialized -= OnHeadlessServerInitialized;
-  }
+  /*   public override void _ExitTree()
+    {
+      NetworkManager.Instance.HeadlessServerInitialized -= OnHeadlessServerInitialized;
+    } */
 }
