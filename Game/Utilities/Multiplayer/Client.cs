@@ -249,6 +249,16 @@ public partial class Client : Node
 					var hud = hudScene.Instantiate();
 					hud.Name = "HUD";
 					GetTree().Root.AddChild(hud);
+
+					var hudNode = GetTree().Root.GetNodeOrNull<CanvasLayer>("HUD");
+					if (hudNode != null && hudNode.GetNodeOrNull<PauseMenu>("PauseMenu") == null)
+					{
+						var pauseMenuScene = GD.Load<PackedScene>("res://Menu/PauseMenu/pauseMenu.tscn");
+						var pauseMenu = pauseMenuScene.Instantiate<PauseMenu>();
+						pauseMenu.Name = "PauseMenu";
+						hudNode.AddChild(pauseMenu);
+						pauseMenu.Visible = false;
+					}
 				}
 			}
 

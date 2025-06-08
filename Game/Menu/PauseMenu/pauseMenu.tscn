@@ -36,9 +36,12 @@ text = "Resume"
 
 [node name="Settings" type="Button" parent="Background/VBoxContainer"]
 layout_mode = 2
+text = "Settings"
 
 [node name="Main Menu" type="Button" parent="Background/VBoxContainer"]
 layout_mode = 2
+text = "Main Menu"
 
 [node name="Quit" type="Button" parent="Background/VBoxContainer"]
 layout_mode = 2
+text = "Quit"

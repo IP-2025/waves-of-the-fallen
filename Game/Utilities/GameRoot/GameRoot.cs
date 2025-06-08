@@ -335,13 +335,21 @@ public partial class GameRoot : Node
 	{
 		if (@event.IsActionPressed("ui_cancel"))
 		{
-			if (_pauseMenu != null)
+			// Solo-Mode
+			if (NetworkManager.Instance._soloMode)
 			{
-				_pauseMenu.Visible = !_pauseMenu.Visible;
-
-				// Solo-Mode: game pause
-				if (NetworkManager.Instance._soloMode)
+				if (_pauseMenu != null)
+				{
+					_pauseMenu.Visible = !_pauseMenu.Visible;
 					GetTree().Paused = _pauseMenu.Visible;
+				}
+			}
+			else // Multiplayer: 
+			{
+				var hud = GetTree().Root.GetNodeOrNull<CanvasLayer>("HUD");
+				var pauseMenu = hud?.GetNodeOrNull<PauseMenu>("PauseMenu");
+				if (pauseMenu != null)
+					pauseMenu.Visible = !pauseMenu.Visible;
 			}
 		}
 	}
