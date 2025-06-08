@@ -31,6 +31,24 @@ public partial class PauseMenu : Control
 
 	private void OnMainMenuPressed()
 	{
+		var dialogScene = GD.Load<PackedScene>("res://Menu/PauseMenu/leaveWarningDialog.tscn");
+		var dialog = dialogScene.Instantiate<ConfirmationDialog>();
+		dialog.ProcessMode = ProcessModeEnum.Always; 
+		dialog.DialogText = "Are you sure you want to leave the game?\nIn multiplayer you will lose gold as a penalty!";
+		dialog.GetOkButton().Text = "Yes";
+		dialog.GetCancelButton().Text = "No";
+		dialog.Confirmed += OnLeaveConfirmed;
+		GetTree().Root.AddChild(dialog);
+		dialog.PopupCentered();
+	}
+
+	private void OnLeaveConfirmed()
+	{
+		if (!NetworkManager.Instance._soloMode)
+		{
+			// TODO: Backend or local penalty for leaving multiplayer
+			GD.Print("Penalty: Player loses gold for leaving multiplayer!");
+		}
 		GetTree().Paused = false;
 		GetTree().ChangeSceneToFile("res://Menu/Main/mainMenu.tscn");
 	}
