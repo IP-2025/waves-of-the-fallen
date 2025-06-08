@@ -170,6 +170,10 @@ public partial class GameRoot : Node
 
 	private void SpawnPlayer(long peerId)
 	{
+		// only solo mode cleanup
+		if (NetworkManager.Instance._soloMode)
+			CleanupOldPlayers();
+
 		var player = GD.Load<PackedScene>("res://Entities/Characters/Mage/mage.tscn").Instantiate<DefaultPlayer>();
 		player.OwnerPeerId = peerId;
 		player.Name = $"Player_{peerId}";
@@ -351,6 +355,14 @@ public partial class GameRoot : Node
 				if (pauseMenu != null)
 					pauseMenu.Visible = !pauseMenu.Visible;
 			}
+		}
+	}
+
+	private void CleanupOldPlayers()
+	{
+		foreach (var node in GetChildren().OfType<DefaultPlayer>().ToList())
+		{
+			node.QueueFree();
 		}
 	}
 }
