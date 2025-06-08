@@ -174,7 +174,6 @@ namespace Game.Utilities.Multiplayer
 			var hello = Encoding.UTF8.GetBytes("HELLO");
 			_udpClientPeer.PutPacket(hello);
 
-			_isServer = false;
 			_readyForUdp = true;
 			DebugIt("Client connecting to: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + address);
 		}

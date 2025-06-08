@@ -12,7 +12,7 @@ public partial class GameRoot : Node
 	private Node2D _mainMap;
 	private int _playerIndex = 0; // player index for spawning players
 	private bool _isServer = false;
-	private bool _enableDebug = false;
+	private bool _enableDebug = true;
 	private WaveTimer _globalWaveTimer;
 	private DefaultPlayer _soloPlayer;
 	private int _soloSelectedCharacterId = 1;
@@ -191,6 +191,10 @@ public partial class GameRoot : Node
 
 		// Add joystick to player
 		var joystick = GD.Load<PackedScene>("res://UI/Joystick/joystick.tscn").Instantiate<Node2D>();
+		if (peerId != 1)
+		{
+			joystick.Visible = false;
+		}
 		player.AddChild(joystick);
 		player.Joystick = joystick;
 		AddChild(player);
@@ -235,7 +239,7 @@ public partial class GameRoot : Node
 
 	private void OnScoreRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
 	{
-		GD.Print($"Score submit response: {responseCode}");
+		DebugIt($"Score submit response: {responseCode}");
 	}
 
 	public void ShowGameOverScreen()
@@ -259,20 +263,18 @@ public partial class GameRoot : Node
 
 	}
 
-	public void OnPlayerDied()
+	public void OnPlayerDied(long peerId)
 	{
-		DebugIt("Player died! Switching camera to alive player.");
-		DebugIt("Player died! Showing Game Over screen.");
+		DebugIt($"Player {peerId} died! Switching camera to alive player or showing Game Over screen.");
 
-		long peerId = Multiplayer.GetUniqueId();
 		var score = 0;
 		if (ScoreManager.PlayerScores.TryGetValue(peerId, out var playerScore))
 			score = playerScore;
 
-		if (_gameOverScreen == null)
-			ShowGameOverScreen();
+/* 		if (_gameOverScreen == null)
+			ShowGameOverScreen(); */
 
-		_gameOverScreen?.SetScore(score);
+		//_gameOverScreen?.SetScore(score);
 
 		// Remove player entity to prevent a leftover copy
 		if (Server.Instance.Entities.TryGetValue(peerId, out var playerNode))
@@ -282,7 +284,7 @@ public partial class GameRoot : Node
 				playerNode.QueueFree();
 				DebugIt($"Removed dead player node: Player_{peerId}");
 			}
-
+			DebugIt("Remove Player: " + peerId);
 			Server.Instance.Entities.Remove(peerId);
 		}
 
@@ -292,6 +294,7 @@ public partial class GameRoot : Node
 			.OfType<Node2D>()
 			.Where(p => p.Name != $"Player_{peerId}")
 			.ToList();
+		DebugIt("Alive player count: " + (int)alivePlayers.Count);
 
 		if (alivePlayers.Count > 0)
 		{
@@ -305,6 +308,7 @@ public partial class GameRoot : Node
 		{
 			DebugIt("No alive players left.");
 			ShowGameOverScreen();
+			_gameOverScreen?.SetScore(score);
 		}
 	}
 

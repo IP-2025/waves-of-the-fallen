@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Game.Utilities.Multiplayer;
+using System.Text;
 
 public partial class LocalMenu : Control
 {
@@ -103,7 +104,7 @@ public partial class LocalMenu : Control
     timer.OneShot = true;
     timer.Timeout += () => { };
     timer.Start();
-
+    
     ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show Server IP
 
     //ipIO.Text = "Running";

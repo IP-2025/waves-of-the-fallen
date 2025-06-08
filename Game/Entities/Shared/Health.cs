@@ -79,7 +79,8 @@ public partial class Health : Node2D
 			if (GetParent() is DefaultPlayer player)
 			{
 				player.Die(); // call Die() method if parent is DefaultPlayer
-			}	
+				EmitSignal(SignalName.HealthDepleted, player.OwnerPeerId);
+			}
 			else if (GetParent() is EnemyBase deadEnemy)
 			{
 				deadEnemy.OnDeath();
