@@ -146,6 +146,14 @@ public partial class LocalMenu : Control
     timer.Start();
   }
 
+  public override void _Notification(int what)
+	{
+		if (what == NotificationWMCloseRequest)
+		{
+      _on_button_back_local_pressed();
+		}   
+	}
+
 
   public override void _ExitTree()
   {
