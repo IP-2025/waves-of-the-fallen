@@ -29,7 +29,7 @@ public partial class GameRoot : Node
 	
 	private HttpRequest _sendScoreRequest;
 	private bool _soloMode = false;
-	
+	private PauseMenu _pauseMenu; // Feld oben in der Klasse
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -83,11 +83,26 @@ public partial class GameRoot : Node
 		// Start enemy spawner
 		SpawnEnemySpawner("res://Utilities/Gameflow/Spawn/SpawnEnemies.tscn");
 
+		// HUD laden (wie bisher)
+		CanvasLayer hud = null;
 		if (GetNodeOrNull<CanvasLayer>("HUD") == null)
 		{
 			var hudScene = GD.Load<PackedScene>("res://UI/HUD/HUD.tscn");
-			var hud = hudScene.Instantiate<CanvasLayer>();
+			hud = hudScene.Instantiate<CanvasLayer>();
 			AddChild(hud);
+		}
+		else
+		{
+			hud = GetNode<CanvasLayer>("HUD");
+		}
+
+		// PauseMenu an das HUD anhängen!
+		if (_pauseMenu == null && hud != null)
+		{
+			var pauseMenuScene = GD.Load<PackedScene>("res://Menu/PauseMenu/pauseMenu.tscn");
+			_pauseMenu = pauseMenuScene.Instantiate<PauseMenu>();
+			hud.AddChild(_pauseMenu);
+			_pauseMenu.Visible = false;
 		}
 	}
 	
@@ -314,5 +329,14 @@ public partial class GameRoot : Node
 	private void DebugIt(string message)
 	{
 		if (_enableDebug) Debug.Print("GameRoot: " + message);
+	}
+
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("ui_cancel"))
+		{
+			if (_pauseMenu != null)
+				_pauseMenu.Visible = !_pauseMenu.Visible;
+		}
 	}
 }

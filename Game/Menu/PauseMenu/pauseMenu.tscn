@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://crwcks87pa34x"]
+
+[ext_resource type="Script" uid="uid://dyuhwd40863aq" path="res://Menu/PauseMenu/PauseMenu.cs" id="1_82pb6"]
+
+[node name="PauseMenu" type="Control"]
+custom_minimum_size = Vector2(1200, 600)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_82pb6")
+
+[node name="Background" type="Panel" parent="."]
+custom_minimum_size = Vector2(600, 400)
+layout_direction = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Resume" type="Button" parent="Background/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+text = "Resume"
+
+[node name="Settings" type="Button" parent="Background/VBoxContainer"]
+layout_mode = 2
+
+[node name="Main Menu" type="Button" parent="Background/VBoxContainer"]
+layout_mode = 2
+
+[node name="Quit" type="Button" parent="Background/VBoxContainer"]
+layout_mode = 2
