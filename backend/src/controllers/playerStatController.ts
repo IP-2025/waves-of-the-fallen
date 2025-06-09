@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import {addGoldService, getGoldService, setGoldService} from 'services';
+import {addGoldService, deletePlayerService, getGoldService, setGoldService} from 'services';
 import { BadRequestError } from 'errors';
 import {extractAndValidatePlayerId} from "auth/jwt";
-import { termLogger as logger } from 'logger';
 
 export async function getGoldController(req: Request, res: Response, next: NextFunction) {
   try {
@@ -30,14 +29,25 @@ export async function setGoldController(req: Request, res: Response, next: NextF
 
 export async function addGoldController(req: Request, res: Response, next: NextFunction) {
     try {
-      logger.info('addGoldController called');
       const playerId = extractAndValidatePlayerId(req.headers['authorization']);
       const { gold } = req.body;
         if (!playerId) {
         throw new BadRequestError('Player ID and Gold amount are required');
         }
-        logger.info(`Adding gold: ${gold} to player ID: ${playerId}`);
         await addGoldService(playerId, gold);
+        res.status(200).send('OK');
+    } catch (err) {
+        next(err);
+    }
+}
+
+export async function deletePlayerController(req: Request, res: Response, next: NextFunction) {
+    try {
+        const playerId = extractAndValidatePlayerId(req.headers['authorization']);
+        if (!playerId) {
+        throw new BadRequestError('Player ID is required');
+        }
+        await deletePlayerService(playerId);
         res.status(200).send('OK');
     } catch (err) {
         next(err);

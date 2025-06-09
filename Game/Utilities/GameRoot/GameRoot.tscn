@@ -4,3 +4,6 @@
 
 [node name="GameRoot" type="Node"]
 script = ExtResource("1_qg15c")
+
+[node name="SendScoreRequest" type="HTTPRequest" parent="."]
+unique_name_in_owner = true

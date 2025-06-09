@@ -24,6 +24,7 @@ public partial class SpawnEnemies : Node2D
 		_timer = GetNode<Timer>("SpawnTimer");
 		_timer.Timeout += OnTimerTimeout; // timer event connected
 		_playerCount = GetTree().GetMultiplayer().GetPeers().Count();
+		_playerCount = _playerCount <= 0 ? 1 : _playerCount; // have at least one player, (important for solo mode without multiplayer peers)
 		_timer.WaitTime = _timer.WaitTime / _playerCount; // scale with players
 		LoadPatternPool(); // loads the pattern pool see method LoadPatternPool() and debug prints every found pattern and the associated spawning cost
 		foreach (var pattern in _patternPool)
@@ -131,11 +132,31 @@ public partial class SpawnEnemies : Node2D
 
 	private void LoadPatternPool() // loads patterns through the filepath below into the patternPool with their associated spawningCost
 	{
-		const string patternFilepath = "res://Utilities/Gameflow/Spawn/Patterns/";
+		//commented out version only works for desktop and not for mobile devices
+		/*const string patternFilepath = "res://Utilities/Gameflow/Spawn/Patterns/";
 		foreach (var patternName in DirAccess.GetFilesAt(patternFilepath))
 		{
 			PackedScene pattern = GD.Load<PackedScene>(patternFilepath + patternName);
 			_patternPool.Add(pattern, pattern.Instantiate<EnemyPattern>().spawningCost);
+		}*/
+
+		var enemy_patterns = FileAccess.Open("res://Utilities/Gameflow/Spawn/Patterns/enemy_patterns.json", FileAccess.ModeFlags.Read);
+		if (enemy_patterns == null)
+		{
+			Debug.Print("Could not open enemy_patterns.json");
+			return;
+		}
+		var content = enemy_patterns.GetAsText();
+		var patternPaths = Json.ParseString(content).AsGodotArray<string>();
+
+		foreach (var path in patternPaths)
+		{
+			var pattern = GD.Load<PackedScene>(path);
+			if (pattern != null)
+			{
+				var instance = pattern.Instantiate<EnemyPattern>();
+				_patternPool[pattern] = instance.spawningCost;
+			}
 		}
 	}
 	private void OnWaveStart() 

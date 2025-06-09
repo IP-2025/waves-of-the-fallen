@@ -20,14 +20,12 @@ public partial class DoubleBlade : MeleeWeapon
 	
 	private float _shootCooldown;
 	private float _timeUntilShoot;
-	
 
 	public override void _Ready()
 	{
 		GD.Print("Start SwordAnimation");
 		leftBlade = GetNode<DoubleBladeL>("DoubleBladeL");
 		rightBlade = GetNode<DoubleBladeR>("DoubleBladeR");
-		
 		_shootCooldown   = 1f/ShootDelay;
 		_timeUntilShoot  = _shootCooldown;
 	}

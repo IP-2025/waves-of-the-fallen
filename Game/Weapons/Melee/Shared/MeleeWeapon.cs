@@ -6,7 +6,6 @@ public abstract partial class MeleeWeapon : Weapon
 {
 	protected AnimatedSprite2D animatedSprite;
 	public abstract string ResourcePath { get; }
-	
 	public override void _PhysicsProcess(double delta)
 	{
 		var target = FindNearestEnemy();
@@ -69,6 +68,7 @@ public abstract partial class MeleeWeapon : Weapon
 	}
 	protected void ShootMeleeVisual(Action onAttackComplete = null)
 	{
+
 		Node actualTarget = FindNearestEnemy();
 		if (actualTarget == null){
 			return;
