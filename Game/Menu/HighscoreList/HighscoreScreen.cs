@@ -18,13 +18,12 @@ public partial class HighscoreScreen : Control
 		_backButton = GetNode<Button>("%BackButton");
 		_mainMenuButton = GetNode<Button>("%Button");
 
-
 		_personalScoreRequest.Connect("request_completed", new Callable(this, nameof(OnPersonalScoreRequestCompleted)));
 		_topPlayerRequest.Connect("request_completed", new Callable(this, nameof(OnTopPlayersRequestCompleted)));
 		_backButton.Connect("pressed", new Callable(this, nameof(OnBackButtonPressed)));
 		_mainMenuButton.Connect("pressed", new Callable(this, nameof(OnMainMenuButtonPressed)));
 
-
+	
 		if (GameState.CurrentState == ConnectionState.Online)
 		{
 			var headers = new[]
@@ -57,8 +56,8 @@ public partial class HighscoreScreen : Control
 		}
 		else
 		{
-			var offlinePanel = GetNode<Panel>("%Offline");
-			offlinePanel.Visible = true;
+			var offlineMarginContainer = GetNode<MarginContainer>("%MarginContainerOffline");
+			offlineMarginContainer.Visible = true;
 		}
 	}
 
@@ -75,16 +74,16 @@ public partial class HighscoreScreen : Control
 				var highScore = (Godot.Collections.Dictionary)data["highScore"];
 
 				var playerScore = GetNode<ColorRect>("%PlayerScore");
-				playerScore.GetNode<Label>("Position").Text = "-";
-				playerScore.GetNode<Label>("Name").Text = "Me";
-				playerScore.GetNode<Label>("Score").Text = highScore["highScore"].ToString();
+				GetNode<Label>("%Position").Text = "-";
+				GetNode<Label>("%Name").Text = "Me";
+				GetNode<Label>("%Score").Text = highScore["highScore"].ToString();
 
 				var rawTimestamp = highScore["timeStamp"].ToString();
 				var formattedTime = rawTimestamp;
 				if (DateTime.TryParse(rawTimestamp, out var dt))
 					formattedTime = dt.ToLocalTime().ToString("dd.MM.yyyy HH:mm");
 
-				playerScore.GetNode<Label>("Time").Text = formattedTime;
+				GetNode<Label>("%Time").Text = formattedTime;
 			}
 			else
 			{
@@ -118,16 +117,17 @@ public partial class HighscoreScreen : Control
 					var player = (Godot.Collections.Dictionary)scoreDict["player"];
 
 					var entry = entryScene.Instantiate<Control>();
-					entry.GetNode<Label>("Position").Text = (i + 1).ToString();
-					entry.GetNode<Label>("Name").Text = player["username"].ToString();
-					entry.GetNode<Label>("Score").Text = scoreDict["highScore"].ToString();
+					entry.GetNode<Label>("HBoxContainer/Position").Text = (i + 1).ToString();
+					entry.GetNode<Label>("HBoxContainer/Name").Text = player["username"].ToString();
+					entry.GetNode<Label>("HBoxContainer/Score").Text = scoreDict["highScore"].ToString();
+
 
 					var rawTimestamp = scoreDict["timeStamp"].ToString();
 					var formattedTime = rawTimestamp;
 					if (DateTime.TryParse(rawTimestamp, out var dt))
 						formattedTime = dt.ToLocalTime().ToString("dd.MM.yyyy HH:mm");
 
-					entry.GetNode<Label>("Time").Text = formattedTime;
+					entry.GetNode<Label>("HBoxContainer/Time").Text = formattedTime;
 					vbox.AddChild(entry);
 				}
 			}
