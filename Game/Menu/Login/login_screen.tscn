@@ -1,6 +1,83 @@
-[gd_scene load_steps=2 format=3 uid="uid://d2coob6g63jxs"]
+[gd_scene load_steps=13 format=3 uid="uid://d2coob6g63jxs"]
 
 [ext_resource type="Script" uid="uid://cys3fynk5hqns" path="res://Menu/Login/LoginScreen.cs" id="1_36i0f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwt6s"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ri42l"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ttk5k"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fiyoi"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y1mls"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qtdfk"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ug441"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kn4ob"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5glfu"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nqid3"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qjo62"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [node name="LoginScreen" type="Control"]
 layout_mode = 3
@@ -11,74 +88,139 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_36i0f")
 
+[node name="LoginRequest" type="HTTPRequest" parent="."]
+unique_name_in_owner = true
+
+[node name="AuthRequest" type="HTTPRequest" parent="."]
+unique_name_in_owner = true
+
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
 offset_top = -1.0
 offset_right = 1152.0
 offset_bottom = 650.0
 
-[node name="LoginText" type="Label" parent="Panel"]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -65.5
-offset_right = 65.5
-offset_bottom = 69.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 50
+grow_vertical = 2
+color = Color(0.152941, 0.152941, 0.152941, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RegisterButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxFlat_jwt6s")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_ri42l")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ttk5k")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_fiyoi")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_y1mls")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_qtdfk")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ug441")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_kn4ob")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5glfu")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_nqid3")
+theme_override_styles/normal = SubResource("StyleBoxFlat_qjo62")
+text = "Create Account"
+
+[node name="LoginText" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_font_sizes/font_size = 40
 text = "Login"
 
-[node name="EmailField" type="LineEdit" parent="Panel"]
-layout_mode = 0
-offset_left = 311.0
-offset_top = 167.0
-offset_right = 847.0
-offset_bottom = 250.0
+[node name="OfflineButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxFlat_jwt6s")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_ri42l")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ttk5k")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_fiyoi")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_y1mls")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_qtdfk")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ug441")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_kn4ob")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5glfu")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_nqid3")
+theme_override_styles/normal = SubResource("StyleBoxFlat_qjo62")
+text = "Play Offline"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="EmailField" type="LineEdit" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
 placeholder_text = "Email"
 
-[node name="PasswordField" type="LineEdit" parent="Panel"]
-layout_mode = 0
-offset_left = 309.0
-offset_top = 354.0
-offset_right = 845.0
-offset_bottom = 437.0
+[node name="PasswordField" type="LineEdit" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
 placeholder_text = "Password"
 secret = true
 
-[node name="LoginButton" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 518.0
-offset_top = 497.0
-offset_right = 626.0
-offset_bottom = 551.0
-text = "Log In"
-
-[node name="AuthRequest" type="HTTPRequest" parent="Panel"]
-
-[node name="LoginRequest" type="HTTPRequest" parent="Panel"]
-
-[node name="OfflineButton" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 1002.0
-offset_top = 18.0
-offset_right = 1134.0
-offset_bottom = 57.0
-text = "Play Offline"
-
-[node name="ErrorLabel" type="Label" parent="Panel"]
+[node name="ErrorLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 visible = false
-layout_mode = 0
-offset_left = 315.0
-offset_top = 444.0
-offset_right = 841.0
-offset_bottom = 467.0
+layout_mode = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
 
-[node name="RegisterButton" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 21.0
-offset_right = 156.0
-offset_bottom = 58.0
-text = "Create Account"
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 200
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 200
+theme_override_constants/margin_bottom = 30
+
+[node name="LoginButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxFlat_jwt6s")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_jwt6s")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jwt6s")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_jwt6s")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jwt6s")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_jwt6s")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jwt6s")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_jwt6s")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jwt6s")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_jwt6s")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwt6s")
+text = "Log In"
