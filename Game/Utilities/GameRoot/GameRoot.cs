@@ -397,4 +397,36 @@ public partial class GameRoot : Node
 			node.QueueFree();
 		}
 	}
+
+	public void CleanupAllLocal()
+	{
+	
+		foreach (var node in GetChildren().OfType<DefaultPlayer>().ToList())
+			node.QueueFree();
+
+		foreach (var node in GetChildren().OfType<Node2D>().Where(n => n.Name.ToString().Contains("Joystick")).ToList())
+			node.QueueFree();
+
+		var hud = GetNodeOrNull<CanvasLayer>("HUD");
+		if (hud != null)
+			hud.QueueFree();
+
+		if (_gameOverScreen != null)
+		{
+			_gameOverScreen.QueueFree();
+			_gameOverScreen = null;
+		}
+
+		if (_pauseMenu != null)
+		{
+			_pauseMenu.QueueFree();
+			_pauseMenu = null;
+		}
+
+		if (_shopInstance != null)
+		{
+			_shopInstance.QueueFree();
+			_shopInstance = null;
+		}
+	}
 }

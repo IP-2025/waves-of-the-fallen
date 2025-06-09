@@ -51,22 +51,11 @@ public partial class PauseMenu : Control
 
 			// TODO: Backend or local penalty for leaving multiplayer
 			GD.Print("Penalty: Player loses gold for leaving multiplayer!");
-
-			// remove HUD
-			var hud = GetTree().Root.GetNodeOrNull<CanvasLayer>("HUD");
-			if (hud != null)
-				hud.QueueFree();
-
-			// disconnect from multiplayer
-			Multiplayer.MultiplayerPeer?.DisconnectPeer(Multiplayer.GetUniqueId());
 		}
-		else
-		{
-			// Solo-Mode: remove HUD
-			var hud = GetTree().Root.GetNodeOrNull<CanvasLayer>("HUD");
-			if (hud != null)
-				hud.QueueFree();
-		}
+		// cleanup local game state
+		var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
+		gameRoot?.CleanupAllLocal();
+		NetworkManager.Instance.CleanupNetworkState();
 
 		GetTree().Paused = false;
 		GetTree().ChangeSceneToFile("res://Menu/Main/mainMenu.tscn");

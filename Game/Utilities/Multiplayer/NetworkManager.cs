@@ -441,6 +441,61 @@ namespace Game.Utilities.Multiplayer
 		{
 			if (enableDebug) Debug.Print("Network Manager: " + message);
 		}
+
+		public void CleanupNetworkState()
+		{
+			_isServer = false;
+			_gameRunning = false;
+			_readyForUdp = false;
+			_udpPeers.Clear();
+
+			foreach (var child in GetChildren().ToList())
+			{
+				if (child is Server || child is Client)
+					RemoveChild(child);
+				if (child is Node node)
+					node.QueueFree();
+			}
+			server = null;
+			client = null;
+
+			var multiplayer = GetTree().GetMultiplayer();
+			if (multiplayer.MultiplayerPeer != null)
+			{
+				multiplayer.MultiplayerPeer.Close();
+				multiplayer.MultiplayerPeer = null;
+				DebugIt("MultiplayerPeer set to null (Cleanup).");
+			}
+
+			if (_udpClientPeer != null)
+			{
+				_udpClientPeer.Close();
+				_udpClientPeer = null;
+				DebugIt("UDP Client disconnected (Cleanup).");
+			}
+
+			if (_udpServer != null)
+			{
+				_udpServer = null;
+				DebugIt("UDP Server disconnected (Cleanup).");
+			}
+
+			if (_rpcClientPeer != null)
+			{
+				_rpcClientPeer.Close();
+				_rpcClientPeer.Dispose();
+				_rpcClientPeer = null;
+				DebugIt("ENetMultiplayerPeer (Client) disconnected (Cleanup).");
+			}
+			if (_rpcServerPeer != null)
+			{
+				_rpcServerPeer.Close();
+				_rpcServerPeer.Dispose();
+				_rpcServerPeer = null;
+				DebugIt("ENetMultiplayerPeer (Server) disconnected (Cleanup).");
+			}
+			GC.Collect();
+		}
 	}
 
 }
