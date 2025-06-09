@@ -1,0 +1,8 @@
+[
+    "res://Utilities/Gameflow/Spawn/Patterns/basic_enemy_x1.tscn",
+	"res://Utilities/Gameflow/Spawn/Patterns/basic_enemy_x1_big.tscn",
+	"res://Utilities/Gameflow/Spawn/Patterns/basic_enemy_x6.tscn",
+	"res://Utilities/Gameflow/Spawn/Patterns/mounted_enemy_x1.tscn",
+	"res://Utilities/Gameflow/Spawn/Patterns/ranged_enemy_x1.tscn",
+	"res://Utilities/Gameflow/Spawn/Patterns/ranged_enemy_big_triangle.tscn"
+]

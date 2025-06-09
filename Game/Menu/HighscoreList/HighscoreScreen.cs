@@ -149,13 +149,21 @@ public partial class HighscoreScreen : Control
 		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		GetTree().ChangeSceneToPacked(scene);
 	}
-	
+
 	private void OnMainMenuButtonPressed()
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Main/mainMenu.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
 		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		GetTree().ChangeSceneToPacked(scene);
+	}
+	
+	public override void _Notification(int what)
+	{
+		if (what == NotificationWMGoBackRequest)
+		{
+			OnBackButtonPressed();
+		}   
 	}
 }
 
