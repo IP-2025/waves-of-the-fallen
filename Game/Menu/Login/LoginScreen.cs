@@ -18,14 +18,14 @@ public partial class LoginScreen : Control
 	
 	public override void _Ready()
 	{
-		_emailField = GetNode<LineEdit>("Panel/EmailField");
-		_passwordField = GetNode<LineEdit>("Panel/PasswordField");
-		_loginButton = GetNode<Button>("Panel/LoginButton");
-		_offlineButton = GetNode<Button>("Panel/OfflineButton");
-		_httpRequest = GetNode<HttpRequest>("Panel/LoginRequest");
-		_authRequest = GetNode<HttpRequest>("Panel/AuthRequest");
-		_errorLabel = GetNode<Label>("Panel/ErrorLabel");
-		_registerButton = GetNode<Button>("Panel/RegisterButton");
+		_emailField = GetNode<LineEdit>("%EmailField");
+		_passwordField = GetNode<LineEdit>("%PasswordField");
+		_loginButton = GetNode<Button>("%LoginButton");
+		_offlineButton = GetNode<Button>("%OfflineButton");
+		_httpRequest = GetNode<HttpRequest>("%LoginRequest");
+		_authRequest = GetNode<HttpRequest>("%AuthRequest");
+		_errorLabel = GetNode<Label>("%ErrorLabel");
+		_registerButton = GetNode<Button>("%RegisterButton");
 
 		_loginButton.Connect("pressed", new Callable(this, nameof(OnLoginButtonPressed)));
 		_offlineButton.Connect("pressed", new Callable(this, nameof(OnOfflineButtonPressed)));

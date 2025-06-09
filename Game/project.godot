@@ -39,6 +39,12 @@ project/assembly_name="Game"
 PlayerSpawnPoints=""
 enemies=""
 
+[importer_defaults]
+
+animation_library={
+&"animation/fps": 3.0
+}
+
 [input]
 
 ui_cancel={

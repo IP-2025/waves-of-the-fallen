@@ -149,8 +149,9 @@ namespace Game.Utilities.Multiplayer
 				int secondsLeft = 0;
 				bool graceTime = false;
 				var waveTimer = GetTree()
-				.Root.GetNodeOrNull<GameRoot>("GameRoot")
-				?.GetNodeOrNull<WaveTimer>("GlobalWaveTimer");
+					.Root
+					.GetNodeOrNull<GameRoot>("GameRoot")
+					.GetNodeOrNull<WaveTimer>("GlobalWaveTimer");
 
 				if (waveTimer != null)
 				{
@@ -213,15 +214,15 @@ namespace Game.Utilities.Multiplayer
 [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
 public void PlayerLeft(long playerId)
 {
-    // remove entity from Entities dictionary if player left
-    if (Entities.TryGetValue(playerId, out var node))
-    {
-        node.QueueFree();
-        Entities.Remove(playerId);
-        GD.Print($"Player {playerId} has left the game and was removed.");
-    }
-    
-    PlayerSelections.Remove(playerId);
+	// remove entity from Entities dictionary if player left
+	if (Entities.TryGetValue(playerId, out var node))
+	{
+		node.QueueFree();
+		Entities.Remove(playerId);
+		GD.Print($"Player {playerId} has left the game and was removed.");
+	}
+	
+	PlayerSelections.Remove(playerId);
 }
 	}
 }

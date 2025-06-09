@@ -117,7 +117,7 @@ public partial class Client : Node
 	}
 
 	public void ApplySnapshot(Snapshot snap)
-	{	
+	{
 		// check if all players are dead in snapshot
 		ShowGameOverScreen(snap.livingPlayersCount);
 

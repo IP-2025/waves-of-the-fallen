@@ -304,4 +304,11 @@ public partial class Mainmenu : Control
 		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		GetTree().ChangeSceneToPacked(scene);
 	}
+	private void _on_button_credits_pressed()
+	{
+		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Credits/creditsPage.tscn");
+		GD.Print("to Credit Page");
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
+		GetTree().ChangeSceneToPacked(scene);
+	}
 }
