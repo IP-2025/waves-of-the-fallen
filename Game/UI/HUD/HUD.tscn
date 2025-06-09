@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c6iedr3itagaf"]
 
 [ext_resource type="Script" uid="uid://c4j4rhf5hm3la" path="res://UI/HUD/HUD.cs" id="1_0ktxb"]
-[ext_resource type="FontFile" uid="uid://cbtai6ax18jyn" path="res://Assets/Fonts/Orbitron/Orbitron-VariableFont_wght.ttf" id="2_53dev"]
+[ext_resource type="FontFile" uid="uid://dnl13rnihdp1h" path="res://Assets/Fonts/Orbitron/Orbitron-VariableFont_wght.ttf" id="2_53dev"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_0ktxb")

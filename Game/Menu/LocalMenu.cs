@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Game.Utilities.Multiplayer;
+using System.Text;
 
 public partial class LocalMenu : Control
 {
@@ -31,7 +32,6 @@ public partial class LocalMenu : Control
     playButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/play");
     ipIO = GetNode<LineEdit>("IP_IO");
     currentPlayers = GetNode<RichTextLabel>("CurrentPlayers");
-    NetworkManager.Instance.HeadlessServerInitialized += OnHeadlessServerInitialized;
 
     // disable play button by default
     playButton.Visible = false;
@@ -44,7 +44,7 @@ public partial class LocalMenu : Control
 
     var peers = Multiplayer.GetPeers().ToList();
 
-    currentPlayers.Text = $"Players: {peers.Count}\n" + string.Join("\n", peers.Select(id => $"ID {id}"));
+    currentPlayers.Text = $"Players playing with you: {peers.Count}\n" + string.Join("\n", peers.Select(id => $"ID {id}"));
   }
 
   private void _on_button_back_local_pressed()
@@ -91,21 +91,32 @@ public partial class LocalMenu : Control
   private void _on_host_button_pressed()
   {
     hostButton.Disabled = true;
-
+    hostButton.Visible = false;
     joinButton.Visible = false;
     joinButton.Disabled = true;
-
     isHost = true;
 
-    GD.Print("Start Headless");
-    NetworkManager.Instance.StartHeadlessServer(true);
-    GD.Print("Headless started");
+    NetworkManager.Instance.InitServer();
+    NetworkManager.Instance._isLocalHost = true;
+    // small delay...
+    var timer = new Timer();
+    AddChild(timer);
+    timer.WaitTime = 0.5f;
+    timer.OneShot = true;
+    timer.Timeout += () => { };
+    timer.Start();
+    
+    ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show Server IP
+
+    //ipIO.Text = "Running";
+    playButton.Visible = true;
+    playButton.Disabled = false;
+
     SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
   }
 
   private void _on_play_button_pressed()
   {
-
     var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
     int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
     NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
@@ -117,46 +128,12 @@ public partial class LocalMenu : Control
   {
     if (enableDebug) Debug.Print("Local Menue: " + message);
   }
-
-  private void OnHeadlessServerInitialized()
-  {
-    var timer = new Timer();
-    AddChild(timer);
-    timer.WaitTime = 0.5f;
-    timer.OneShot = true;
-    timer.Timeout += () =>
-    {
-      NetworkManager.Instance.InitClient(NetworkManager.Instance.GetServerIPAddress());
-      ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show Server IP
-
-      var timer2 = new Timer();
-      AddChild(timer2);
-      timer2.WaitTime = 0.5f;
-      timer2.OneShot = true;
-      timer2.Timeout += () =>
-      {
-        hostButton.Visible = false;
-        playButton.Visible = true;
-        playButton.Disabled = false;
-      };
-
-      timer2.Start();
-    };
-
-    timer.Start();
-  }
-
+  
   public override void _Notification(int what)
-	{
-		if (what == NotificationWMGoBackRequest)
-		{
-      _on_button_back_local_pressed();
-		}   
-	}
-
-
-  public override void _ExitTree()
   {
-    NetworkManager.Instance.HeadlessServerInitialized -= OnHeadlessServerInitialized;
+    if (what == NotificationWMGoBackRequest)
+    {
+      _on_button_back_local_pressed();
+    }
   }
 }
