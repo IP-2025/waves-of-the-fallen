@@ -194,8 +194,9 @@ theme_override_constants/margin_bottom = 30
 
 [node name="RegisterButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer2"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("StyleBoxFlat_f8pln")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_w1ipm")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_x0x4u")
