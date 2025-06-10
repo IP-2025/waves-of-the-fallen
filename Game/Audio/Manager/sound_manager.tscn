@@ -94,3 +94,4 @@ bus = &"SoundEffectBus"
 
 [node name="gameOver" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_uqh4n")
+bus = &"SoundEffectBus"
