@@ -339,6 +339,7 @@ namespace Game.Utilities.Multiplayer
 		[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
 		public void NotifyGameStart()
 		{
+			_soloMode = false;
 			// change scene to game
 			var gameScene = GD.Load<PackedScene>("res://Utilities/GameRoot/GameRoot.tscn");
 			gameScene.Instantiate<Node>();

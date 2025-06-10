@@ -391,7 +391,8 @@ public partial class GameRoot : Node
 
 	public void CleanupAllLocal()
 	{
-	
+		ScoreManager.PlayerScores.Clear();
+		
 		foreach (var node in GetChildren().OfType<DefaultPlayer>().ToList())
 			node.QueueFree();
 
