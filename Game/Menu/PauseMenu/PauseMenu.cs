@@ -1,5 +1,6 @@
 using Godot;
 using Game.Utilities.Multiplayer;
+using Game.Utilities.Backend;
 
 public partial class PauseMenu : Control
 {
@@ -46,9 +47,10 @@ public partial class PauseMenu : Control
 
 	private void OnLeaveConfirmed()
 	{
+		ScoreManager.Reset();
+		
 		if (!NetworkManager.Instance._soloMode)
 		{
-			// send leave message to server
 			RpcId(1, "PlayerLeft", Multiplayer.GetUniqueId());
 			GD.Print("Penalty: Player loses gold for leaving multiplayer!");
 		}
@@ -57,6 +59,10 @@ public partial class PauseMenu : Control
 		var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
 		gameRoot?.CleanupAllLocal();
 		NetworkManager.Instance.CleanupNetworkState();
+
+		var hud = GetTree().Root.GetNodeOrNull<CanvasLayer>("HUD");
+		if (hud != null)
+			hud.QueueFree();
 
 		GetTree().Paused = false;
 		CallDeferred(nameof(ChangeToMainMenu));

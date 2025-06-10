@@ -35,6 +35,7 @@ public partial class GameRoot : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() // builds the game
 	{
+		ScoreManager.Reset();
 		GetTree().Paused = false;
 		Engine.MaxFps = 60; // important! performance...
 

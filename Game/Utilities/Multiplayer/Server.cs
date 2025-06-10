@@ -217,11 +217,11 @@ public void PlayerLeft(long playerId)
 	// remove entity from Entities dictionary if player left
 	if (Entities.TryGetValue(playerId, out var node))
 	{
-		node.QueueFree();
+		if (IsInstanceValid(node))
+			node.QueueFree();
 		Entities.Remove(playerId);
 		GD.Print($"Player {playerId} has left the game and was removed.");
 	}
-	
 	PlayerSelections.Remove(playerId);
 }
 	}

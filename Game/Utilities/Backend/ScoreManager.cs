@@ -71,5 +71,12 @@ namespace Game.Utilities.Backend
                 return PlayerColorList[(int)playerId - 1];
             return PlayerColorList[(int)(playerId % PlayerColorList.Count)];
         }
+
+        public static void Reset()
+        {
+            PlayerScores.Clear();
+            ComboMultipliers.Clear();
+            ComboTimers.Clear();
+        }
     }
 }
