@@ -94,7 +94,9 @@ bus = &"SoundEffectBus"
 
 [node name="gameOver" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_uqh4n")
+bus = &"SoundEffectBus"
 
 [node name="dash" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_sfxm6")
 pitch_scale = 0.69
+bus = &"SoundEffectBus"

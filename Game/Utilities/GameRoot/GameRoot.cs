@@ -219,6 +219,10 @@ public partial class GameRoot : Node
 		player.Joystick = joystick;
 		// Add abilityButton to player
 		var abilityButton = GD.Load<PackedScene>("res://UI/Ability/abilityButton.tscn").Instantiate<Node2D>();
+		if (peerId != 1)
+		{
+			abilityButton.Visible = false;
+		}
 		player.AddChild(abilityButton);
 		player.Ability = abilityButton;
 
