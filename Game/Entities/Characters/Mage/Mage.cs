@@ -14,6 +14,9 @@ public partial class Mage : DefaultPlayer
 		
 		MaxHealth = CharacterManager.LoadHealthByID("4");
 		Speed = CharacterManager.LoadSpeedByID("4");
+		Strength = CharacterManager.LoadStrengthByID("4");
+		Dexterity = CharacterManager.LoadDexterityByID("4");
+		Intelligence = CharacterManager.LoadIntelligenceByID("4");
 
 		var healthNode = GetNode<Health>("Health");
 		healthNode.max_health = MaxHealth;
@@ -33,6 +36,7 @@ public partial class Mage : DefaultPlayer
 
 	public override void UseAbility()
 	{
-		//TODO: Implement Mage's ability increase to int
+		//Ability 1: BoostIntelligence
+		AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_intelligence.tscn").Instantiate<Node2D>());
 	}
 }

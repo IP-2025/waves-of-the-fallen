@@ -13,7 +13,9 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	[Export] public int MaxHealth { get; set; }
 
-
+	[Export] public int Strength { get; set; }
+	[Export] public int Dexterity { get; set; }
+	[Export] public int Intelligence { get; set; }
 
 	[Export] public int CurrentHealth { get; set; }
 

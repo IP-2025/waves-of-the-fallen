@@ -1,0 +1,31 @@
+using Godot;
+using System;
+using System.Diagnostics;
+
+public partial class BoostStrength : Node2D
+{
+	private Node2D _parent;
+	private int tempStrength;
+	private int boostAmount = 2;
+
+	public override void _Ready()
+	{
+		_parent = GetParent<Node2D>();
+		if (_parent is DefaultPlayer player)
+		{
+			tempStrength = player.Strength;
+			player.Strength *= boostAmount;
+			Debug.Print(player.Strength.ToString());
+		}
+	}
+
+	private void _on_boost_strength_timer_timeout()
+	{
+		if (_parent is DefaultPlayer player)
+		{
+			player.Strength = tempStrength;
+			Debug.Print(player.Strength.ToString());
+		}
+		QueueFree();
+	}
+}

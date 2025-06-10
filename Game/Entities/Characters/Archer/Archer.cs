@@ -15,6 +15,9 @@ public partial class Archer : DefaultPlayer
 
         MaxHealth = CharacterManager.LoadHealthByID("1");
         Speed = CharacterManager.LoadSpeedByID("1");
+        Strength = CharacterManager.LoadStrengthByID("1");
+		Dexterity = CharacterManager.LoadDexterityByID("1");
+		Intelligence = CharacterManager.LoadIntelligenceByID("1");
 
         var healthNode = GetNode<Health>("Health");
         healthNode.max_health = MaxHealth;
@@ -33,6 +36,7 @@ public partial class Archer : DefaultPlayer
 	}
 	public override void UseAbility()
 	{
-		//TODO: Implement Archer's ability increase to dex
+		//Ability 1: BoostDexterity
+		AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_dexterity.tscn").Instantiate<Node2D>());
 	}
 }

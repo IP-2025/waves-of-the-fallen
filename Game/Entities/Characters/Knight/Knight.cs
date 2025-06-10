@@ -15,6 +15,9 @@ public partial class Knight : DefaultPlayer
 
 		MaxHealth = CharacterManager.LoadHealthByID("3");
 		Speed = CharacterManager.LoadSpeedByID("3");
+		Strength = CharacterManager.LoadStrengthByID("3");
+		Dexterity = CharacterManager.LoadDexterityByID("3");
+		Intelligence = CharacterManager.LoadIntelligenceByID("3");
 
 		var healthNode = GetNode<Health>("Health");
 		healthNode.max_health = MaxHealth;
@@ -34,11 +37,14 @@ public partial class Knight : DefaultPlayer
 
 	public override void UseAbility()
 	{
-		//Ability 1: SelfHeal
+		//Ability 1: BoostStrength
+		AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_strength.tscn").Instantiate<Node2D>());
+		//Ability 2: Shield and Heal (Shield needs fixes)
+		/*
 		var healthNode = GetNode<Health>("Health");
-		healthNode.Heal(MaxHealth / 4);
+		healthNode.Heal(MaxHealth / 5);
 		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("healItemPickUp"), GlobalPosition, -10);
-		//Ability 2: Shield
-		//AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/shield.tscn").Instantiate<CharacterBody2D>());
+		AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/shield.tscn").Instantiate<CharacterBody2D>());
+		*/
 	}
 }

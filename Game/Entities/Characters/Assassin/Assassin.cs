@@ -17,6 +17,9 @@ public partial class Assassin : DefaultPlayer
 
 		MaxHealth = CharacterManager.LoadHealthByID("2");
 		Speed = CharacterManager.LoadSpeedByID("2");
+		Strength = CharacterManager.LoadStrengthByID("2");
+		Dexterity = CharacterManager.LoadDexterityByID("2");
+		Intelligence = CharacterManager.LoadIntelligenceByID("2");
 
 		var healthNode = GetNode<Health>("Health");
 		healthNode.max_health = MaxHealth;
@@ -38,6 +41,7 @@ public partial class Assassin : DefaultPlayer
 	{
 		//Ability 1: SpeedUp
 		AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/speed_up.tscn").Instantiate<Node2D>());
+		GetNode("res://UI/Ability/abilityButton.tscn");
 		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("dash"), GlobalPosition, -10);
 		//Ability 2: WeaponEnhance
 	}
