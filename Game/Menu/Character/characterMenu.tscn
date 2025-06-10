@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dnwh8qvd8j2y7" path="res://Menu/Character/Charactermenu.cs" id="1_ivr4t"]
 [ext_resource type="Script" uid="uid://c57s2i06pw35o" path="res://Menu/Character/ButtonsCharacterSelection.cs" id="2_ch0j6"]
-[ext_resource type="Texture2D" uid="uid://bfathx7q6sw3x" path="res://Entities/Characters/Archer/Resources/ArcherCharacterPreview.png" id="2_u3wkp"]
-[ext_resource type="Texture2D" uid="uid://fsdqcdkhbjh0" path="res://Entities/Characters/Knight/Resources/KnightCharacterPreview.png" id="3_ch0j6"]
-[ext_resource type="Texture2D" uid="uid://c0xrp0eh8ygiu" path="res://Entities/Characters/Assassin/Resources/AssassinCharacterPreview.png" id="4_hqcu1"]
-[ext_resource type="Texture2D" uid="uid://er11xofdbw3" path="res://Entities/Characters/Mage/Resources/MageCharacterPreview.png" id="5_frg03"]
+[ext_resource type="Texture2D" uid="uid://dgyb5qobaith1" path="res://Entities/Characters/Archer/Resources/ArcherCharacterPreview.png" id="2_u3wkp"]
+[ext_resource type="Texture2D" uid="uid://b70ol6l22i6dv" path="res://Entities/Characters/Knight/Resources/KnightCharacterPreview.png" id="3_ch0j6"]
+[ext_resource type="Texture2D" uid="uid://cqwxf7kxto47o" path="res://Entities/Characters/Assassin/Resources/AssassinCharacterPreview.png" id="4_hqcu1"]
+[ext_resource type="Texture2D" uid="uid://bbb3diisjwbor" path="res://Entities/Characters/Mage/Resources/MageCharacterPreview.png" id="5_frg03"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ivr4t"]
 bg_color = Color(0.172549, 0.780392, 1, 1)
@@ -318,6 +318,18 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Label_HealthUpgrade" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainerHealth"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+
+[node name="HBoxContainerStrength" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label_strength" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainerStrength"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label_StrengthUpgrade" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainerStrength"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 1, 0, 1)
