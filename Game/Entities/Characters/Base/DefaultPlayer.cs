@@ -150,7 +150,7 @@ public partial class DefaultPlayer : CharacterBody2D
 		}
 
 		// If no joystick input, fallback to keyboard
-		if (direction == Vector2.Zero)
+		if (direction == Vector2.Zero && OwnerPeerId == Multiplayer.GetUniqueId()) //w a s d only for own player
 		{
 			direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		}
@@ -158,8 +158,8 @@ public partial class DefaultPlayer : CharacterBody2D
 		Velocity = direction * Speed;
 		MoveAndSlide();
 
-		// Check if in solo (offline) mode or multiplayer
-		if (NetworkManager.Instance._soloMode) UpdateTransform(Velocity);
+		// Check if in solo (offline) mode or multiplayer (clients cant move, server handles it)
+		if (NetworkManager.Instance._soloMode || NetworkManager.Instance._isServer) UpdateTransform(Velocity);
 	}
 
 	public virtual void UseAbility()

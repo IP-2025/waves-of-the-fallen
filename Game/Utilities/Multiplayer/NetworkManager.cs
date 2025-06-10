@@ -27,7 +27,6 @@ namespace Game.Utilities.Multiplayer
 
 		// state & queues
 		public bool _isServer = false;
-		public bool _isHost = false;
 		private bool _gameRunning = false;
 		private bool _readyForUdp = false;
 		private Queue<Command> _incomingCommands = new();
@@ -39,6 +38,7 @@ namespace Game.Utilities.Multiplayer
 		public static NetworkManager Instance { get; private set; }
 		private Client client;
 		private Server server;
+		public bool _isLocalHost = false;
 		public bool _soloMode = false;
 		Process process = new Process();
 		// Server ready signal
@@ -66,13 +66,7 @@ namespace Game.Utilities.Multiplayer
 			if (!_readyForUdp) return;
 
 			// UDP Networking
-			if (_isHost)
-			{
-				_rpcServerPeer.Poll();
-				HandleServerUdp();
-				HandleClientUdp();
-			}
-			else if (_isServer)
+			if (_isServer)
 			{
 				HandleServerUdp();
 			}
@@ -127,7 +121,7 @@ namespace Game.Utilities.Multiplayer
 			// RPC Server with ENet
 			_rpcServerPeer = new ENetMultiplayerPeer();
 			// test if address and port is valid / open
-			var err = _rpcServerPeer.CreateServer(RPC_PORT, maxClients: 4); // max 4 clients
+			var err = _rpcServerPeer.CreateServer(RPC_PORT, maxClients: _isLocalHost ? 3 : 4); // max 4 players
 			DebugIt($"ENet CreateClient: {err}");
 
 			if (err != Error.Ok)
@@ -180,60 +174,8 @@ namespace Game.Utilities.Multiplayer
 			var hello = Encoding.UTF8.GetBytes("HELLO");
 			_udpClientPeer.PutPacket(hello);
 
-			_isServer = false;
 			_readyForUdp = true;
 			DebugIt("Client connecting to: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + address);
-		}
-
-		public void StartHeadlessServer(bool headless)
-		{
-			process = new Process();
-			ProcessStartInfo startInfo;
-
-			if (headless)
-			{
-				startInfo = new ProcessStartInfo
-				{
-					FileName = OS.GetExecutablePath(),
-					Arguments = "--headless --server-mode",
-					UseShellExecute = false,
-					RedirectStandardOutput = true,
-					RedirectStandardError = true,
-					CreateNoWindow = true
-				};
-			}
-			else
-			{
-				startInfo = new ProcessStartInfo
-				{
-					FileName = OS.GetExecutablePath(),
-					Arguments = "--server-mode",
-					UseShellExecute = false,
-					RedirectStandardOutput = true,
-					RedirectStandardError = true,
-					CreateNoWindow = false
-				};
-			}
-
-			process.StartInfo = startInfo;
-
-			process.OutputDataReceived += (sender, args) =>
-			{
-				if (!string.IsNullOrEmpty(args.Data))
-					DebugIt("HEADLESS STDOUT: " + args.Data);
-			};
-			process.ErrorDataReceived += (sender, args) =>
-			{
-				if (!string.IsNullOrEmpty(args.Data))
-					GD.PrintErr("HEADLESS STDERR: " + args.Data);
-			};
-
-			process.Start();
-			process.BeginOutputReadLine();
-			process.BeginErrorReadLine();
-
-			EmitSignal(nameof(HeadlessServerInitialized));
-
 		}
 
 		private void StartAutoShutdownTimer()
@@ -403,12 +345,12 @@ namespace Game.Utilities.Multiplayer
 			GetTree().ChangeSceneToPacked(gameScene);
 
 			var peerId = GetTree().GetMultiplayer().GetUniqueId();
-			DebugIt($"NotifyGameStart called by server? {_isServer} host? {_isHost} (PeerID: {peerId})");
+			DebugIt($"NotifyGameStart called by (PeerID: {peerId})");
 
 			_gameRunning = true;
 		}
 
-		[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = false)]
+		[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
 		public void SelectCharacter(int selectedCharacterId)
 		{
 			long peerId = Multiplayer.GetRemoteSenderId();
@@ -416,14 +358,15 @@ namespace Game.Utilities.Multiplayer
 			DebugIt("Player selectged: " + selectedCharacterId + " By PlayerID: " + peerId);
 		}
 
-		public void NotifyGameStartUDP()
-		{
-			var startPacket = Encoding.UTF8.GetBytes("START");
-			foreach (var peer in _udpPeers)
-				peer.PutPacket(startPacket);
+		// maybe reactivate for online multiplayer
+		/* 		public void NotifyGameStartUDP()
+				{
+					var startPacket = Encoding.UTF8.GetBytes("START");
+					foreach (var peer in _udpPeers)
+						peer.PutPacket(startPacket);
 
-			CallDeferred(nameof(NotifyGameStart));
-		}
+					CallDeferred(nameof(NotifyGameStart));
+				} */
 		private void ProcessServerTick()
 		{
 			// apply all commands
@@ -497,11 +440,6 @@ namespace Game.Utilities.Multiplayer
 		private void DebugIt(string message)
 		{
 			if (enableDebug) Debug.Print("Network Manager: " + message);
-		}
-
-		internal void Connect(string v1, OnlineLocalMenu onlineLocalMenu, string v2)
-		{
-			throw new NotImplementedException();
 		}
 	}
 

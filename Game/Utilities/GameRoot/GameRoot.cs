@@ -12,7 +12,7 @@ public partial class GameRoot : Node
 	private Node2D _mainMap;
 	private int _playerIndex = 0; // player index for spawning players
 	private bool _isServer = false;
-	private bool _enableDebug = false;
+	private bool _enableDebug = true;
 	private WaveTimer _globalWaveTimer;
 	private DefaultPlayer _soloPlayer;
 	private int _soloSelectedCharacterId = 1;
@@ -26,16 +26,17 @@ public partial class GameRoot : Node
 	// GameOver
 	private GameOverScreen _gameOverScreen;
 
-	
+
 	private HttpRequest _sendScoreRequest;
 	private bool _soloMode = false;
-	
+
 
 	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	public override void _Ready() // builds the game
 	{
 		Engine.MaxFps = 60; // important! performance...
-		
+
+		// Score -------------------------------------------------------------------------------------------
 		_sendScoreRequest = GetNodeOrNull<HttpRequest>("%SendScoreRequest");
 		if (_sendScoreRequest == null)
 		{
@@ -44,25 +45,44 @@ public partial class GameRoot : Node
 		}
 		_sendScoreRequest.Connect(HttpRequest.SignalName.RequestCompleted, new Callable(this, nameof(OnScoreRequestCompleted)));
 
+		// Character ---------------------------------------------------------------------------------------
 		// get selected character
 		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 		_soloSelectedCharacterId = characterManager.LoadLastSelectedCharacterID();
 
 		if (!NetworkManager.Instance._soloMode) _isServer = GetTree().GetMultiplayer().IsServer();
 
+		// Map ---------------------------------------------------------------------------------------------
 		// Load map and store reference
-		SpawnMap("res://Maps/GrassMap/Main.tscn");
+		_mainMap = GD.Load<PackedScene>("res://Maps/GrassMap/Main.tscn").Instantiate<Node2D>();
+		AddChild(_mainMap);
 
+		// HUD --------------------------------------------------------------------------------------------
+		if (GetNodeOrNull<CanvasLayer>("HUD") == null)
+		{
+			var hudScene = GD.Load<PackedScene>("res://UI/HUD/HUD.tscn");
+			var hud = hudScene.Instantiate<CanvasLayer>();
+			AddChild(hud);
+		}
+		// -------------------------------------------------------------------------------------------------
 		if (!_isServer && !NetworkManager.Instance._soloMode) return; // clients return
 
+		// WaveTimer ---------------------------------------------------------------------------------------
 		// Instantiate one global WaveTimer for server-wide access
 		var waveTimerScene = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn");
 		_globalWaveTimer = waveTimerScene.Instantiate<WaveTimer>();
 		if (_isServer)
 		{
-			_globalWaveTimer.Name = "GlobalWaveTimer";
+			_globalWaveTimer.Name = "GlobalWaveTimer"; // is for sync with clients
+			_globalWaveTimer.Visible = false; // or would spawn somewhere on the map
 			AddChild(_globalWaveTimer);
-			// Server spawns all players
+			// Players -------------------------------------------------------------------------------------
+			// spawn player for self
+			if (NetworkManager.Instance._isLocalHost) SpawnPlayer(1);
+			GetNodeOrNull<DefaultPlayer>("Player_1")
+				.GetNodeOrNull<Camera2D>("Camera2D")
+				.AddChild(waveTimerScene.Instantiate<WaveTimer>()); // player needs wave timer, is normaly added in Client.cs
+																	// Server spawns all players for peers
 			foreach (var peerId in GetTree().GetMultiplayer().GetPeers())
 			{
 				DebugIt($"Server spawning player {peerId}");
@@ -70,48 +90,51 @@ public partial class GameRoot : Node
 			}
 		}
 
+		// SoloMode ----------------------------------------------------------------------------------------
 		if (NetworkManager.Instance._soloMode)
 		{
-			long peerId = Multiplayer.GetUniqueId();
-			ScoreManager.PlayerScores.TryAdd(peerId, 0);
+			ScoreManager.PlayerScores.TryAdd(1, 0);
 
-			SpawnPlayer(peerId);
-			_soloPlayer = GetNodeOrNull<DefaultPlayer>($"Player_{peerId}");
-			GetChildren().OfType<DefaultPlayer>().FirstOrDefault()?.GetNodeOrNull<Camera2D>("Camera2D")?.AddChild(_globalWaveTimer);
+			SpawnPlayer(1);
+			_soloPlayer = GetNodeOrNull<DefaultPlayer>($"Player_1");
+			GetNodeOrNull<DefaultPlayer>("Player_1")
+				.GetNodeOrNull<Camera2D>("Camera2D")
+				.AddChild(_globalWaveTimer);
 		}
 
+		// Enemies ----------------------------------------------------------------------------------------
 		// Start enemy spawner
-		SpawnEnemySpawner("res://Utilities/Gameflow/Spawn/SpawnEnemies.tscn");
-
-		if (GetNodeOrNull<CanvasLayer>("HUD") == null)
-		{
-			var hudScene = GD.Load<PackedScene>("res://UI/HUD/HUD.tscn");
-			var hud = hudScene.Instantiate<CanvasLayer>();
-			AddChild(hud);
-		}
+		var spawner = GD.Load<PackedScene>("res://Utilities/Gameflow/Spawn/SpawnEnemies.tscn").Instantiate<SpawnEnemies>();
+		AddChild(spawner);
 	}
-	
+
 	public override void _Process(double delta)
 	{
-		
-		if (NetworkManager.Instance._soloMode)
-		{
-			if (_soloPlayer is not { alive: true })
-				ShowGameOverScreen();
 
+		if (NetworkManager.Instance._soloMode && _soloPlayer is not { alive: true })
+			ShowGameOverScreen();
+
+		if (NetworkManager.Instance._isLocalHost || NetworkManager.Instance._soloMode)
+		{
+			// Shop
 			var currentWave = _globalWaveTimer.WaveCounter;
 			if (currentWave > _lastLocalShopRound && currentWave < 5)
 			{
+				DebugIt("Check if shop should be started");
 				_lastLocalShopRound = currentWave;
 				if (_shopInstance == null)
 				{
+					DebugIt("Start new shop");
 					_shopInstance = GD.Load<PackedScene>("res://UI/Shop/BossShop/bossShop.tscn").Instantiate();
 					_shopInstance.Connect(nameof(BossShop.WeaponChosen), new Callable(this, nameof(OnWeaponChosen)));
-					_soloPlayer.GetNodeOrNull<Camera2D>("Camera2D").AddChild(_shopInstance);
+					GetNodeOrNull<DefaultPlayer>("Player_1")
+						.GetNodeOrNull<Camera2D>("Camera2D")
+						.AddChild(_shopInstance);
 				}
 			}
 		}
 
+		// ScoreSystem
 		foreach (var playerId in ScoreManager.PlayerScores.Keys)
 		{
 			ScoreManager.UpdateCombo(playerId, (float)delta);
@@ -140,17 +163,21 @@ public partial class GameRoot : Node
 
 		var slot = GetChildren().OfType<DefaultPlayer>().FirstOrDefault()?.GetNode<Node2D>("WeaponSpawnPoints").GetChild<Node2D>(_newWeaponPos);
 		var weapon = scene.Instantiate<Area2D>();
+
+		if (NetworkManager.Instance._isLocalHost) // give to server -> send to clients
+		{
+			var id = weapon.GetInstanceId();
+			weapon.Name = $"Weapon_{id}";
+			weapon.SetMeta("OwnerId", 1);
+			weapon.SetMeta("SlotIndex", _newWeaponPos);
+			Server.Instance.Entities.Add((long)id, weapon);
+		}
+
 		slot?.AddChild(weapon);
 		weapon.Position = Vector2.Up;
 
 		_shopInstance.QueueFree();
 		_shopInstance = null;
-	}
-
-	private void SpawnMap(string mapPath)
-	{
-		_mainMap = GD.Load<PackedScene>(mapPath).Instantiate<Node2D>();
-		AddChild(_mainMap);
 	}
 
 	private void SpawnPlayer(long peerId)
@@ -184,6 +211,10 @@ public partial class GameRoot : Node
 
 		// Add joystick to player
 		var joystick = GD.Load<PackedScene>("res://UI/Joystick/joystick.tscn").Instantiate<Node2D>();
+		if (peerId != 1)
+		{
+			joystick.Visible = false;
+		}
 		player.AddChild(joystick);
 		player.Joystick = joystick;
 		// Add abilityButton to player
@@ -211,12 +242,6 @@ public partial class GameRoot : Node
 		_playerIndex++;
 	}
 
-	private void SpawnEnemySpawner(string enemySpawnerPath)
-	{
-		var spawner = GD.Load<PackedScene>(enemySpawnerPath).Instantiate<SpawnEnemies>();
-		AddChild(spawner);
-	}
-
 	private void SendScoreToBackend(int score)
 	{
 		const string url = ServerConfig.BaseUrl + "/api/v1/protected/highscore/update";
@@ -241,7 +266,7 @@ public partial class GameRoot : Node
 
 	private void OnScoreRequestCompleted(long result, long responseCode, string[] headers, byte[] body)
 	{
-		GD.Print($"Score submit response: {responseCode}");
+		DebugIt($"Score submit response: {responseCode}");
 	}
 
 	public void ShowGameOverScreen()
@@ -259,36 +284,35 @@ public partial class GameRoot : Node
 			score = playerScore;
 
 		_gameOverScreen.SetScore(score);
-		
+
 		if (GameState.CurrentState == ConnectionState.Online)
 			SendScoreToBackend(score);
-		
+
 	}
 
-	public void OnPlayerDied()
+	public void OnPlayerDied(long peerId)
 	{
-		DebugIt("Player died! Switching camera to alive player.");
-		DebugIt("Player died! Showing Game Over screen.");
+		DebugIt($"Player {peerId} died! Switching camera to alive player or showing Game Over screen.");
 
-		long peerId = Multiplayer.GetUniqueId();
 		var score = 0;
 		if (ScoreManager.PlayerScores.TryGetValue(peerId, out var playerScore))
 			score = playerScore;
 
-		if (_gameOverScreen == null)
-			ShowGameOverScreen();
+		// maybe we need for online multi
+		/* 		if (_gameOverScreen == null)
+					ShowGameOverScreen(); */
 
-		_gameOverScreen?.SetScore(score);
+		//_gameOverScreen?.SetScore(score);
 
 		// Remove player entity to prevent a leftover copy
 		if (Server.Instance.Entities.TryGetValue(peerId, out var playerNode))
 		{
 			if (IsInstanceValid(playerNode))
 			{
-				playerNode.QueueFree();
+				playerNode.CallDeferred("queue_free");
 				DebugIt($"Removed dead player node: Player_{peerId}");
 			}
-
+			DebugIt("Remove Player from server entities: " + peerId);
 			Server.Instance.Entities.Remove(peerId);
 		}
 
@@ -298,6 +322,7 @@ public partial class GameRoot : Node
 			.OfType<Node2D>()
 			.Where(p => p.Name != $"Player_{peerId}")
 			.ToList();
+		DebugIt("Alive player count: " + (int)alivePlayers.Count);
 
 		if (alivePlayers.Count > 0)
 		{
@@ -311,6 +336,7 @@ public partial class GameRoot : Node
 		{
 			DebugIt("No alive players left.");
 			ShowGameOverScreen();
+			_gameOverScreen?.SetScore(score);
 		}
 	}
 
