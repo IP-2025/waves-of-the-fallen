@@ -242,22 +242,15 @@ public partial class Client : Node
 					ChangeCamera(inst, entity);
 				}
 
-				// HUD for local player
-				if (entity.NetworkId == Multiplayer.GetUniqueId() && GetTree().Root.GetNodeOrNull("HUD") == null)
+				// check HUD for local player
+				if (entity.NetworkId == Multiplayer.GetUniqueId())
 				{
-					var hudScene = GD.Load<PackedScene>("res://UI/HUD/HUD.tscn");
-					var hud = hudScene.Instantiate();
-					hud.Name = "HUD";
-					GetTree().Root.AddChild(hud);
-
-					var hudNode = GetTree().Root.GetNodeOrNull<CanvasLayer>("HUD");
-					if (hudNode != null && hudNode.GetNodeOrNull<PauseMenu>("PauseMenu") == null)
+					if (GetTree().Root.GetNodeOrNull("HUD") == null)
 					{
-						var pauseMenuScene = GD.Load<PackedScene>("res://Menu/PauseMenu/pauseMenu.tscn");
-						var pauseMenu = pauseMenuScene.Instantiate<PauseMenu>();
-						pauseMenu.Name = "PauseMenu";
-						hudNode.AddChild(pauseMenu);
-						pauseMenu.Visible = false;
+						var hudScene = GD.Load<PackedScene>("res://UI/HUD/HUD.tscn");
+						var hud = hudScene.Instantiate();
+						hud.Name = "HUD";
+						GetTree().Root.AddChild(hud);
 					}
 				}
 			}
@@ -277,6 +270,17 @@ public partial class Client : Node
 
 			_instances[entity.NetworkId] = inst;
 			DebugIt($"Instantiated weapon {entity.Type} with ID {entity.NetworkId} under owner {entity.OwnerId.Value}");
+		}
+
+		// guarantee that the PauseMenu for the local player ALWAYS exists
+		var hudNode = GetTree().Root.GetNodeOrNull<CanvasLayer>("HUD");
+		if (hudNode != null && hudNode.GetNodeOrNull<PauseMenu>("PauseMenu") == null)
+		{
+			var pauseMenuScene = GD.Load<PackedScene>("res://Menu/PauseMenu/pauseMenu.tscn");
+			var pauseMenu = pauseMenuScene.Instantiate<PauseMenu>();
+			pauseMenu.Name = "PauseMenu";
+			hudNode.AddChild(pauseMenu);
+			pauseMenu.Visible = false;
 		}
 	}
 
