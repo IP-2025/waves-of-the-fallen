@@ -210,6 +210,16 @@ namespace Game.Utilities.Multiplayer
 		{
 			DebugIt($"Peer disconnected: {id}");
 
+			// Wenn der Host (PeerID 1) disconnected und wir sind ein Client:
+			if (!_isServer && id == 1)
+			{
+				GD.Print("Host disconnected. Returning to main menu.");
+				// TODO: Zeige eine Nachricht an den Spieler
+				GetTree().ChangeSceneToFile("res://Menu/Main/mainMenu.tscn");
+				return;
+			}
+
+			// Wenn wir der Server sind und keine Peers mehr verbunden sind:
 			if (_isServer && GetTree().GetMultiplayer().GetPeers().Count() == 0)
 			{
 				// kill him!! if he is a lonely server, lost in the sad world of the web with no one to play with ;(
