@@ -50,22 +50,35 @@ public partial class PauseMenu : Control
 		{
 			// send leave message to server
 			RpcId(1, "PlayerLeft", Multiplayer.GetUniqueId());
-
-			// TODO: Backend or local penalty for leaving multiplayer
 			GD.Print("Penalty: Player loses gold for leaving multiplayer!");
 		}
+
 		// cleanup local game state
 		var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
 		gameRoot?.CleanupAllLocal();
 		NetworkManager.Instance.CleanupNetworkState();
 
 		GetTree().Paused = false;
+		CallDeferred(nameof(ChangeToMainMenu));
+	}
+
+	private void ChangeToMainMenu()
+	{
 		GetTree().ChangeSceneToFile("res://Menu/Main/mainMenu.tscn");
 	}
 
 	private void OnQuitPressed()
 	{
 		GetTree().Quit();
+	}
+
+	public void OpenPauseMenu()
+	{
+		Visible = true;
+		if (NetworkManager.Instance._soloMode)
+			GetTree().Paused = true;
+		else
+			GetTree().Paused = false;
 	}
 
 	public override void _Input(InputEvent @event)
@@ -75,15 +88,9 @@ public partial class PauseMenu : Control
 			Visible = false;
 			if (NetworkManager.Instance._soloMode)
 				GetTree().Paused = false;
-			// waste input event to prevent it from propagating further
+			else
+				GetTree().Paused = false;
 			@event.Dispose();
 		}
-	}
-
-	public void OpenPauseMenu()
-	{
-		Visible = true;
-		if (NetworkManager.Instance._soloMode)
-			GetTree().Paused = true;
 	}
 }
