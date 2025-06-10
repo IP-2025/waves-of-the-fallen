@@ -228,6 +228,15 @@ namespace Game.Utilities.Multiplayer
 				return;
 			}
 
+			// if we are the server and a client disconnects, remove the player entity
+			if (_isServer && id != 1)
+			{
+				GD.Print($"Client {id} disconnected. Removing player entity, but game continues.");
+				// NO CLEANUP HERE! NO CHANGE SCENE! or it will crash the host game
+				return;
+			}
+
+			// If all players disconnect from the server, we shut it down
 			if (_isServer && GetTree().GetMultiplayer().GetPeers().Count() == 0)
 			{
 				// kill him!! if he is a lonely server, lost in the sad world of the web with no one to play with ;(
