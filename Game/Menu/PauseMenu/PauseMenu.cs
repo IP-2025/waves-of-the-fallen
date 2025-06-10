@@ -6,6 +6,8 @@ public partial class PauseMenu : Control
 {
 	public override void _Ready()
 	{
+		ScoreManager.Reset();
+		GameState.CurrentState = ConnectionState.Online; 
 		ProcessMode = ProcessModeEnum.Always; // important to continue while paused
 		GetNode<Button>("Background/VBoxContainer/Resume").Pressed += OnResumePressed;
 		GetNode<Button>("Background/VBoxContainer/Settings").Pressed += OnSettingsPressed;
@@ -48,6 +50,7 @@ public partial class PauseMenu : Control
 	private void OnLeaveConfirmed()
 	{
 		ScoreManager.Reset();
+		GameState.CurrentState = ConnectionState.Offline;
 		
 		if (!NetworkManager.Instance._soloMode)
 		{

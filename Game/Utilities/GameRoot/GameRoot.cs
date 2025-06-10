@@ -135,9 +135,15 @@ public partial class GameRoot : Node
 
 	public override void _Process(double delta)
 	{
-
 		if (NetworkManager.Instance._soloMode && _soloPlayer is not { alive: true })
 			ShowGameOverScreen();
+
+		if (!NetworkManager.Instance._soloMode && !NetworkManager.Instance._isLocalHost)
+		{
+			var localPlayer = GetNodeOrNull<DefaultPlayer>($"Player_{Multiplayer.GetUniqueId()}");
+			if (localPlayer != null && !localPlayer.alive)
+				ShowGameOverScreen();
+		}
 
 		if (NetworkManager.Instance._isLocalHost || NetworkManager.Instance._soloMode)
 		{
