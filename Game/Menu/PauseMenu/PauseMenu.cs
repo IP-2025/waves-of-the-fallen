@@ -93,4 +93,14 @@ public partial class PauseMenu : Control
 			@event.Dispose();
 		}
 	}
+
+	// not a clean solution: for player joining host to get pause menu	
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (!Visible && @event.IsActionPressed("ui_cancel"))
+		{
+			OpenPauseMenu();
+			@event.Dispose();
+		}
+	}
 }
