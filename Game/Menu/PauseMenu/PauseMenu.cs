@@ -31,6 +31,8 @@ public partial class PauseMenu : Control
 
 	private void OnMainMenuPressed()
 	{
+		GetTree().Paused = false;
+
 		var dialogScene = GD.Load<PackedScene>("res://Menu/PauseMenu/leaveWarningDialog.tscn");
 		var dialog = dialogScene.Instantiate<ConfirmationDialog>();
 		dialog.ProcessMode = ProcessModeEnum.Always; 
@@ -76,5 +78,12 @@ public partial class PauseMenu : Control
 			// waste input event to prevent it from propagating further
 			@event.Dispose();
 		}
+	}
+
+	public void OpenPauseMenu()
+	{
+		Visible = true;
+		if (NetworkManager.Instance._soloMode)
+			GetTree().Paused = true;
 	}
 }

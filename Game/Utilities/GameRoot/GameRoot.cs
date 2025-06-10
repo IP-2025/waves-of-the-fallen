@@ -35,6 +35,7 @@ public partial class GameRoot : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() // builds the game
 	{
+		GetTree().Paused = false;
 		Engine.MaxFps = 60; // important! performance...
 
 		// Score -------------------------------------------------------------------------------------------
@@ -371,21 +372,11 @@ public partial class GameRoot : Node
 	{
 		if (@event.IsActionPressed("ui_cancel"))
 		{
-			// Solo-Mode
-			if (NetworkManager.Instance._soloMode)
+			var hud = GetNodeOrNull<CanvasLayer>("HUD");
+			var pauseMenu = hud?.GetNodeOrNull<PauseMenu>("PauseMenu");
+			if (pauseMenu != null && !pauseMenu.Visible)
 			{
-				if (_pauseMenu != null)
-				{
-					_pauseMenu.Visible = !_pauseMenu.Visible;
-					GetTree().Paused = _pauseMenu.Visible;
-				}
-			}
-			else // Multiplayer: 
-			{
-				var hud = GetTree().Root.GetNodeOrNull<CanvasLayer>("HUD");
-				var pauseMenu = hud?.GetNodeOrNull<PauseMenu>("PauseMenu");
-				if (pauseMenu != null)
-					pauseMenu.Visible = !pauseMenu.Visible;
+				pauseMenu.OpenPauseMenu();
 			}
 		}
 	}
