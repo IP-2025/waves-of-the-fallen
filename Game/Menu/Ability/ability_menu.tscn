@@ -1,0 +1,298 @@
+[gd_scene load_steps=18 format=3 uid="uid://cdaeo7lm0i4pw"]
+
+[ext_resource type="Script" uid="uid://dgy1vrpnwybbf" path="res://Menu/Ability/AbilityMenu.cs" id="1_ofmms"]
+[ext_resource type="Texture2D" uid="uid://dgyb5qobaith1" path="res://Entities/Characters/Archer/Resources/ArcherCharacterPreview.png" id="3_qhjhs"]
+[ext_resource type="Texture2D" uid="uid://b70ol6l22i6dv" path="res://Entities/Characters/Knight/Resources/KnightCharacterPreview.png" id="4_mub0m"]
+[ext_resource type="Texture2D" uid="uid://cqwxf7kxto47o" path="res://Entities/Characters/Assassin/Resources/AssassinCharacterPreview.png" id="5_6r7lm"]
+[ext_resource type="Texture2D" uid="uid://bbb3diisjwbor" path="res://Entities/Characters/Mage/Resources/MageCharacterPreview.png" id="6_foiw0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3vyr6"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lh6j4"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qemub"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ehln5"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s8trc"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5rg4c"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3s600"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qrxkw"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i3npy"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jv11c"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_im5h2"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wkm7u"]
+bg_color = Color(0.309804, 0.309804, 0.309804, 1)
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[node name="AbilityMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ofmms")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.151276, 0.151276, 0.151276, 1)
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 40
+text = "Abilities"
+
+[node name="Button_Back" type="Button" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxFlat_3vyr6")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_lh6j4")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_qemub")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_ehln5")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_s8trc")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_5rg4c")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3s600")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_qrxkw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_i3npy")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_jv11c")
+theme_override_styles/normal = SubResource("StyleBoxFlat_im5h2")
+text = "Back"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button_Character1" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/focus = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/normal = SubResource("StyleBoxFlat_wkm7u")
+text = "1"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_qhjhs")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button_Character3" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/focus = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/normal = SubResource("StyleBoxFlat_wkm7u")
+text = "3"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_mub0m")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button_Character2" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/focus = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/normal = SubResource("StyleBoxFlat_wkm7u")
+text = "2"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_6r7lm")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button_Character4" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/focus = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/hover = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_wkm7u")
+theme_override_styles/normal = SubResource("StyleBoxFlat_wkm7u")
+text = "4"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_foiw0")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_abilitymenu_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character1" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character1" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character3" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer/Button_Character3" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character2" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character2" method="_on_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character4" to="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HBoxContainer/VBoxContainer2/Button_Character4" method="_on_pressed"]

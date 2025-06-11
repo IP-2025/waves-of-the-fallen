@@ -268,6 +268,13 @@ public partial class Charactermenu : Control
 		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 	}
 
+	private void _on_button_abilities_pressed()
+	{
+		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Ability/ability_menu.tscn");
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
+		GetTree().ChangeSceneToPacked(scene);
+	}
+
 	// --- Refaktorisierte Flows ---
 
 	private void HandleUpgrade(string characterId)
