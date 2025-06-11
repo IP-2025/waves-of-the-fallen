@@ -1,15 +1,35 @@
-[gd_scene load_steps=5 format=3 uid="uid://crwcks87pa34x"]
+[gd_scene load_steps=6 format=3 uid="uid://crwcks87pa34x"]
 
 [ext_resource type="Script" uid="uid://dyuhwd40863aq" path="res://Menu/PauseMenu/PauseMenu.cs" id="1_82pb6"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jh53t"]
-bg_color = Color(0.398186, 0.533289, 0.871832, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fantasy_bg"]
+bg_color = Color(0.85, 0.78, 0.62, 0.92)
+border_color = Color(0.55, 0.44, 0.18, 1)
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8in3a"]
-bg_color = Color(0.33063, 0.0243437, 0, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fantasy_btn_hover"]
+bg_color = Color(0.45, 0.33, 0.18, 1)
+border_color = Color(1, 0.85, 0.4, 1)
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_82pb6"]
-bg_color = Color(0.505131, 0.0834759, 1.44392e-07, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fantasy_btn"]
+bg_color = Color(0.32, 0.23, 0.13, 1)
+border_color = Color(0.7, 0.6, 0.3, 1)
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fantasy_btn_quit"]
+bg_color = Color(0.5, 0.1, 0.1, 1)
+border_color = Color(0.7, 0.6, 0.3, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [node name="PauseMenu" type="Control"]
 layout_mode = 3
@@ -22,13 +42,18 @@ script = ExtResource("1_82pb6")
 
 [node name="Background" type="Panel" parent="."]
 layout_mode = 1
-offset_left = -173.0
-offset_top = -117.0
-offset_right = 39.0
-offset_bottom = 54.0
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -140.0
+offset_right = 170.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fantasy_bg")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Background"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,24 +62,29 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Resume" type="Button" parent="Background/VBoxContainer"]
-custom_minimum_size = Vector2(180, 40)
+custom_minimum_size = Vector2(220, 48)
 layout_mode = 2
-theme_override_styles/hover = SubResource("StyleBoxFlat_jh53t")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fantasy_btn_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fantasy_btn")
 text = "Resume"
 
 [node name="Settings" type="Button" parent="Background/VBoxContainer"]
-custom_minimum_size = Vector2(180, 40)
+custom_minimum_size = Vector2(220, 48)
 layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_fantasy_btn_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fantasy_btn")
 text = "Settings"
 
 [node name="Main Menu" type="Button" parent="Background/VBoxContainer"]
-custom_minimum_size = Vector2(180, 40)
+custom_minimum_size = Vector2(220, 48)
 layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_fantasy_btn_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fantasy_btn")
 text = "Main Menu"
 
 [node name="Quit" type="Button" parent="Background/VBoxContainer"]
-custom_minimum_size = Vector2(200, 40)
+custom_minimum_size = Vector2(220, 48)
 layout_mode = 2
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_8in3a")
-theme_override_styles/normal = SubResource("StyleBoxFlat_82pb6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fantasy_btn_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fantasy_btn_quit")
 text = "Quit Wave of the Fallen"
