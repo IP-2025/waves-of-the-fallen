@@ -25,3 +25,15 @@ offset_right = 637.0
 offset_bottom = 194.0
 theme_override_constants/outline_size = 2
 theme_override_fonts/normal_font = ExtResource("2_53dev")
+
+[node name="PauseButton" type="Button" parent="."]
+z_index = 100
+custom_minimum_size = Vector2(60, 60)
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 1043.0
+offset_top = 31.0
+offset_right = -40.0
+offset_bottom = 91.0
+grow_horizontal = 2
+text = "II"

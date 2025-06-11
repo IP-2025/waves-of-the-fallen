@@ -64,4 +64,18 @@ public partial class HUD : CanvasLayer
 			}
 		}
 	}
+
+	public override void _Ready()
+	{
+		var pauseButton = GetNodeOrNull<Button>("PauseButton");
+		if (pauseButton != null)
+			pauseButton.Pressed += OnPauseButtonPressed;
+	}
+
+	private void OnPauseButtonPressed()
+	{
+		var pauseMenu = GetNodeOrNull<PauseMenu>("PauseMenu");
+		if (pauseMenu != null)
+			pauseMenu.OpenPauseMenu();
+	}
 }
