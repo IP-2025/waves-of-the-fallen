@@ -63,8 +63,8 @@ public partial class LocalMenu : Control
 
   private void _on_join_button_pressed()
   {
-    string ipv4Pattern = @"^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$";
-    if (!Regex.IsMatch(ipIO.Text, ipv4Pattern)) return;
+    string codePattern = @"^\d{1,3}$";
+    if (!Regex.IsMatch(ipIO.Text, codePattern)) return;
 
     NetworkManager.Instance.InitClient(ipIO.Text);
 
@@ -105,8 +105,9 @@ public partial class LocalMenu : Control
     timer.OneShot = true;
     timer.Timeout += () => { };
     timer.Start();
-    
-    ipIO.Text = NetworkManager.Instance.GetServerIPAddress(); // show Server IP
+
+    ipIO.Text = NetworkManager.Instance.GenerateConnectionCode();
+    //NetworkManager.Instance.GetServerIPAddress(); // show Server IP
 
     //ipIO.Text = "Running";
     playButton.Visible = true;

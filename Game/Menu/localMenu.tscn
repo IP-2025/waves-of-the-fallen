@@ -291,7 +291,7 @@ offset_left = 142.0
 offset_top = 546.0
 offset_right = 732.152
 offset_bottom = 545.896
-placeholder_text = "Enter IP to join"
+placeholder_text = "Enter code to join a local lobby"
 
 [node name="CurrentPlayers" type="RichTextLabel" parent="."]
 layout_mode = 0
