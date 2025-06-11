@@ -149,8 +149,9 @@ namespace Game.Utilities.Multiplayer
 			DebugIt("Server startet on port: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + GetServerIPAddress());
 		}
 
-		public void InitClient(string address)
+		public void InitClient(string code)
 		{
+			string address = ResolveConnectionCode(code);
 			// add client node as child to NetworkManager
 			client = new Client();
 			AddChild(client);
@@ -435,6 +436,22 @@ namespace Game.Utilities.Multiplayer
 				// Fallback to localhost if something goes wrong
 				return "127.0.0.1";
 			}
+		}
+
+		public string GenerateConnectionCode()
+		{
+			string ip = GetServerIPAddress();
+			var parts = ip.Split('.');
+			if (parts.Length != 4)
+				return "ERR";
+			return $"{parts[3]}";
+		}
+
+		private string ResolveConnectionCode(string code)
+		{
+			string localIp = GetServerIPAddress();
+			var prefix = string.Join(".", localIp.Split('.').Take(3));
+			return $"{prefix}.{code}";
 		}
 
 		private void DebugIt(string message)
