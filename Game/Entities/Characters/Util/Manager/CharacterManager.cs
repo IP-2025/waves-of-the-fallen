@@ -23,11 +23,11 @@ public partial class CharacterManager : Node
             _config.SetValue(Section, Key, 1);
 
             //Standart Character und Stats setzen
-            //health, speed, dexterity, intelligence,
-            SaveCharacterData(1, "Archer",   85, 200, 100, 100, 110, 1, 1, 1);
-            SaveCharacterData(2, "Assassin", 70, 220, 100, 100, 110, 1, 1, 0);
-            SaveCharacterData(3, "Knight",  125,  180, 100, 125,  85, 1, 1, 0);
-            SaveCharacterData(4, "Mage",    100, 200, 100, 110, 110, 1, 1, 0);
+            //health, speed, strength, dexterity, intelligence, abilities
+            SaveCharacterData(1, "Archer",   85, 200, 100, 100, 110, 1, "Boost Dexterity", "Arrow Rain", 1, 1);
+            SaveCharacterData(2, "Assassin", 70, 220, 100, 100, 110, 1, "Dash", "Deadly Strike", 1, 0);
+            SaveCharacterData(3, "Knight",  125,  180, 100, 125,  85, 1, "Boost Strength", "Fortress", 1, 0);
+            SaveCharacterData(4, "Mage",    100, 200, 100, 110, 110, 1, "Boost Intelligence", "Beam of Destruction", 1, 0);
 
             _config.Save(SettingsPath);
         }
@@ -68,7 +68,7 @@ public partial class CharacterManager : Node
     }
 
     public void SaveCharacterData(int characterId, string name, int health, int speed, int strength, int dexterity, int intelligence,
-        int level, int ability, int unlocked)
+        int level, string abilityOne, string abilityTwo, int abilityChosen, int unlocked)
     {
         _config.SetValue($"{characterId}", "name", name);
         _config.SetValue($"{characterId}", "health", health);
@@ -77,7 +77,9 @@ public partial class CharacterManager : Node
         _config.SetValue($"{characterId}", "dexterity", dexterity);
         _config.SetValue($"{characterId}", "intelligence", intelligence);
         _config.SetValue($"{characterId}", "level", level);
-        _config.SetValue($"{characterId}", "ability", ability);
+        _config.SetValue($"{characterId}", "abilityOne", abilityOne);
+        _config.SetValue($"{characterId}", "abilityTwo", abilityTwo);
+        _config.SetValue($"{characterId}", "abilityChosen", abilityChosen);
         _config.SetValue($"{characterId}", "unlocked", unlocked);
         _config.Save(SettingsPath);
     }
@@ -85,6 +87,12 @@ public partial class CharacterManager : Node
     public void SaveLastSelectedCharacterID(int characterId)
     {
         _config.SetValue(Section, Key, characterId);
+        _config.Save(SettingsPath);
+    }
+
+    public void SetAbilityByID(string id, int ability)
+    {
+        _config.SetValue(id, "abilityChosen", ability);
         _config.Save(SettingsPath);
     }
 
@@ -123,9 +131,19 @@ public partial class CharacterManager : Node
         return (int)_config.GetValue(id, "level");
     }
 
-    public int LoadAbilityByID(string id)
+    public string LoadAbilityOneByID(string id)
     {
-        return (int)_config.GetValue(id, "ability");
+        return (string)_config.GetValue(id, "abilityOne");
+    }
+
+    public string LoadAbilityTwoByID(string id)
+    {
+        return (string)_config.GetValue(id, "abilityTwo");
+    }
+
+    public int LoadAbilityChosenByID(string id)
+    {
+        return (int)_config.GetValue(id, "abilityChosen");
     }
 
     public bool LoadIsUnlocked(string id)

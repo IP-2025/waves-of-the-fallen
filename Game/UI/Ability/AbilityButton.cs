@@ -1,5 +1,7 @@
 using Godot;
+using Godot.NativeInterop;
 using System;
+using System.Diagnostics;
 
 public partial class AbilityButton : Node2D
 {
@@ -11,17 +13,25 @@ public partial class AbilityButton : Node2D
 	private Timer _abilityTimer;
 	private Sprite2D _abilityPic;
 	private Label _timeLeftLabel;
-
+	private CharacterManager _characterManager;
+	private AbilityBase abilityBase;
+	private PackedScene packedScene;
 	public override void _Ready()
 	{
 		_timeLeftLabel = GetNode<Label>("TimeLeft");
 		_abilityPic = GetNode<Sprite2D>("%AbilityPic");
 		_parent = GetParent<Node2D>();
-		
-		if (_parent is DefaultPlayer player)
+		_characterManager = GetNode<CharacterManager>("/root/CharacterManager");
+		var selectedId = _characterManager.LoadLastSelectedCharacterID();
+
+		/*if (_parent is DefaultPlayer player)
 		{
-			//MaxTime = player.Ability.g;
-		} 
+			packedScene = ((DefaultPlayer) _parent)._abilityScene;
+			Debug.Print(packedScene.Instantiate().ToString());
+			abilityBase = (AbilityBase)packedScene.Instantiate().GetScript();
+			MaxTime = abilityBase.getCooldown();
+			Debug.Print(MaxTime.ToString());
+		}*/
 
 
 

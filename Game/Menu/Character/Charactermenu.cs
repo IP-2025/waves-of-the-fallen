@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text;
 using Game.Utilities.Backend;
 using Godot;
@@ -16,12 +17,16 @@ public partial class Charactermenu : Control
 	private Button _oldSelectedCharacter;
 	private Button _buttonUpgradeUnlock;
 	private Button _buttonSelect;
+	private Button _buttonAbilityOne;
+	private Button _buttonAbilityTwo;
 
 	private Label _labelHealth;
 	private Label _labelSpeed;
 	private Label _labelStrength;
 	private Label _labelDexterity;
 	private Label _labelIntelligence;
+	private Label _labelAbilityOne;
+	private Label _labelAbilityTwo;
 	private Label _goldLabel;
 
 	private Label _labelHealthUpgrade;
@@ -59,6 +64,11 @@ public partial class Charactermenu : Control
 		_buttonSelect = GetNode<Button>("%Button_Select");
 
 		_buttonUpgradeUnlock.Text = "Upgrade: " + UpgradeCost + " Gold";
+
+		_labelAbilityOne = GetNode<Label>("%Label_Ability1");
+		_labelAbilityTwo = GetNode<Label>("%Label_Ability2");
+		_buttonAbilityOne = GetNode<Button>("%Button_Ability1");
+		_buttonAbilityOne = GetNode<Button>("%Button_Ability2");
 
 		_unlockRequest = GetNode<HttpRequest>("%UnlockRequest");
 		_levelUpRequest = GetNode<HttpRequest>("%LevelUpRequest");
@@ -123,6 +133,9 @@ public partial class Charactermenu : Control
 		_labelStrength.Text = $"Strength {_characterManager.LoadStrengthByID(characterId)}";
 		_labelDexterity.Text = $"Dexterity {_characterManager.LoadDexterityByID(characterId)}";
 		_labelIntelligence.Text = $"Intelligence {_characterManager.LoadIntelligenceByID(characterId)}";
+		_labelAbilityOne.Text = $"{_characterManager.LoadAbilityOneByID(characterId)}";
+		_labelAbilityTwo.Text = $"{_characterManager.LoadAbilityTwoByID(characterId)}";
+
 		UpdateUpgradeUnlockButtonState();
 		UpdateGoldLabel();
 
@@ -265,6 +278,20 @@ public partial class Charactermenu : Control
 		}
 
 		UpdateCharacterUi(characterId);
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
+	}
+
+	private void _on_button_ability_1_pressed()
+	{
+		var characterId = _currentlySelectedCharacter.Text;
+		_characterManager.SetAbilityByID(characterId, 1);
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
+	}
+
+	private void _on_button_ability_2_pressed()
+	{
+		var characterId = _currentlySelectedCharacter.Text;
+		_characterManager.SetAbilityByID(characterId, 2);
 		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 	}
 
@@ -419,10 +446,10 @@ public partial class Charactermenu : Control
 
 	private void ResetCharacters()
 	{
-		_characterManager.SaveCharacterData(1, "Archer", 85, 200, 100, 100, 110, 1, 1, 1);
-		_characterManager.SaveCharacterData(2, "Assassin", 70, 220, 100, 100, 110, 1, 1, 0);
-		_characterManager.SaveCharacterData(3, "Knight", 125, 180, 100, 125, 85, 1, 1, 0);
-		_characterManager.SaveCharacterData(4, "Mage", 100, 200, 100, 110, 110, 1, 1, 0);
+		_characterManager.SaveCharacterData(1, "Archer", 85, 200, 100, 100, 110, 1, "Boost Dexterity", "Arrow Rain", 1, 1);
+		_characterManager.SaveCharacterData(2, "Assassin", 70, 220, 100, 100, 110, 1, "Dash", "Deadly Strike", 1, 0);
+		_characterManager.SaveCharacterData(3, "Knight", 125, 180, 100, 125,  85, 1, "Boost Strength", "Fortress", 1, 0);
+		_characterManager.SaveCharacterData(4, "Mage", 100, 200, 100, 110, 110, 1, "Boost Intelligence", "Beam of Destruction", 1, 0);
 		var blackAndWhiteShader = GD.Load<Shader>("res://Menu/Character/characterMenuIconShader.gdshader");
 		var material = new ShaderMaterial { Shader = blackAndWhiteShader };
 

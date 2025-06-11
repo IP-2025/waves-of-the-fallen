@@ -54,7 +54,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	private PackedScene _boostDexScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_dexterity.tscn");
 	private PackedScene _boostIntScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_intelligence.tscn");
 	private PackedScene _dashScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/speed_up.tscn");
-	private PackedScene _abilityScene;
+	public PackedScene _abilityScene;
 	public int _abilityIndex = 4; //Hier ändern noch, speichern in savedata oben export variable
 	private WaveTimer _waveTimer;
 	protected CharacterManager CharacterManager;
@@ -84,7 +84,7 @@ public partial class DefaultPlayer : CharacterBody2D
 			_ => new DefaultPlayer()
 		};
 
-		_abilityScene = GetAbilityForPlayer();
+		_abilityScene = GetAbilityForPlayer(selectedCharacterId);
 
 		// Equip weapon for the selected class
 		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(_weaponsEquipped) as Node2D;
@@ -129,14 +129,20 @@ public partial class DefaultPlayer : CharacterBody2D
 		};
 	}
 
-	private PackedScene GetAbilityForPlayer()
+	private PackedScene GetAbilityForPlayer(int id)
 	{
+		_abilityIndex = id * 10 + CharacterManager.LoadAbilityChosenByID(id.ToString());
+
 		return _abilityIndex switch
 		{
-			1 => _boostStrScene,
-			2 => _boostDexScene,
-			3 => _boostIntScene,
-			4 => _dashScene,
+			11 => _boostDexScene,
+			//12 => _
+			21 => _dashScene,
+			//22 => _
+			31 => _boostStrScene,
+			//32 => _
+			41 => _boostIntScene,
+			//42 => _
 			_ => null
 		};
 	}
@@ -187,6 +193,11 @@ public partial class DefaultPlayer : CharacterBody2D
 	public virtual void UseAbility()
 	{
 		AddChild(_abilityScene.Instantiate());
+	}
+
+	public PackedScene GetAbilityScene()
+	{
+		return _abilityScene;
 	}
 
 	private void DebugIt(string message)

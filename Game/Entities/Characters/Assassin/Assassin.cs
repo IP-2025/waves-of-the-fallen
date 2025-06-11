@@ -35,11 +35,4 @@ public partial class Assassin : DefaultPlayer
 				SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerWalk"), GlobalPosition, -10);
 			}
 	}
-
-	/*public override void UseAbility()
-	{
-		//Ability 1: SpeedUp
-		AddChild(_abilityScene.Instantiate());
-		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("dash"), GlobalPosition, -10);
-	}*/
 }

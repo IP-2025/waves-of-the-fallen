@@ -34,9 +34,4 @@ public partial class Archer : DefaultPlayer
 			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerWalk"), GlobalPosition, -10);
 		}
 	}
-    /*public override void UseAbility()
-    {
-		//Ability 1: BoostDexterity
-        AddChild(Ability);
-	}*/
 }

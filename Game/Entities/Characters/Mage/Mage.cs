@@ -33,11 +33,4 @@ public partial class Mage : DefaultPlayer
 			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerWalk"), GlobalPosition, -10);
 		}
 	}
-
-	/*public override void UseAbility()
-	{
-		//Ability 1: BoostIntelligence
-		AddChild(Ability);
-		//Ability 2: Kamehameha or smth
-	}*/
 }
