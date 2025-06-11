@@ -1,13 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://crwcks87pa34x"]
+[gd_scene load_steps=7 format=3 uid="uid://crwcks87pa34x"]
 
 [ext_resource type="Script" uid="uid://dyuhwd40863aq" path="res://Menu/PauseMenu/PauseMenu.cs" id="1_82pb6"]
+[ext_resource type="Texture2D" uid="uid://g8icn3aa8exw" path="res://Assets/Menu/Scroll/scroll.png" id="2_8in3a"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fantasy_bg"]
-bg_color = Color(0.85, 0.78, 0.62, 0.92)
-border_color = Color(0.55, 0.44, 0.18, 1)
-corner_radius_top_right = 24
-corner_radius_bottom_right = 24
-corner_radius_bottom_left = 24
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_scroll"]
+content_margin_left = 64.0
+content_margin_top = 64.0
+content_margin_right = 64.0
+content_margin_bottom = 64.0
+texture = ExtResource("2_8in3a")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fantasy_btn_hover"]
 bg_color = Color(0.45, 0.33, 0.18, 1)
@@ -45,21 +46,26 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -230.0
-offset_top = -140.0
-offset_right = 170.0
-offset_bottom = 75.0
+offset_left = -289.0
+offset_top = -205.0
+offset_right = 111.0
+offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_fantasy_bg")
+theme_override_styles/panel = SubResource("StyleBoxTexture_scroll")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Background"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -120.0
+offset_right = 110.0
+offset_bottom = 120.0
+grow_horizontal = 0
+grow_vertical = 0
 
 [node name="Resume" type="Button" parent="Background/VBoxContainer"]
 custom_minimum_size = Vector2(220, 48)
