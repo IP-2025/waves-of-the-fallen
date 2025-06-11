@@ -50,6 +50,12 @@ public partial class DefaultPlayer : CharacterBody2D
 	private PackedScene _doubleBladeScene = GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn");
 	private PackedScene _warHammerScene = GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn");
 	private int _weaponsEquipped;
+	private PackedScene _boostStrScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_strength.tscn");
+	private PackedScene _boostDexScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_dexterity.tscn");
+	private PackedScene _boostIntScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_intelligence.tscn");
+	private PackedScene _dashScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/speed_up.tscn");
+	private PackedScene _abilityScene;
+	public int _abilityIndex = 4; //Hier ändern noch, speichern in savedata oben export variable
 	private WaveTimer _waveTimer;
 	protected CharacterManager CharacterManager;
 	private bool _requestSent;
@@ -77,6 +83,8 @@ public partial class DefaultPlayer : CharacterBody2D
 			4 => new Mage(),
 			_ => new DefaultPlayer()
 		};
+
+		_abilityScene = GetAbilityForPlayer();
 
 		// Equip weapon for the selected class
 		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(_weaponsEquipped) as Node2D;
@@ -117,6 +125,18 @@ public partial class DefaultPlayer : CharacterBody2D
 			Mage => _fireStaffScene.Instantiate() as Area2D,
 			Knight => _swordScene.Instantiate() as Area2D,
 			//Knight => _warHammerScene.Instantiate() as Area2D,
+			_ => null
+		};
+	}
+
+	private PackedScene GetAbilityForPlayer()
+	{
+		return _abilityIndex switch
+		{
+			1 => _boostStrScene,
+			2 => _boostDexScene,
+			3 => _boostIntScene,
+			4 => _dashScene,
 			_ => null
 		};
 	}
@@ -166,7 +186,7 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public virtual void UseAbility()
 	{
-		GD.Print("Ability placeholder for all classes");
+		AddChild(_abilityScene.Instantiate());
 	}
 
 	private void DebugIt(string message)

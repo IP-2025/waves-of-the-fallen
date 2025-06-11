@@ -2,11 +2,12 @@ using Godot;
 using System;
 using System.Diagnostics;
 
-public partial class BoostStrength : Node2D
+public partial class BoostStrength : AbilityBase
 {
 	private Node2D _parent;
 	private int tempStrength;
 	private int boostAmount = 2;
+	private int cooldown = 15;
 
 	public override void _Ready()
 	{
@@ -27,5 +28,10 @@ public partial class BoostStrength : Node2D
 			Debug.Print(player.Strength.ToString());
 		}
 		QueueFree();
+	}
+
+	public override int getCooldown()
+	{
+		return cooldown;
 	}
 }

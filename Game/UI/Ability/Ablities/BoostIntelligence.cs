@@ -1,11 +1,12 @@
 using Godot;
 using System;
 
-public partial class BoostIntelligence : Node2D
+public partial class BoostIntelligence : AbilityBase
 {
 	private Node2D _parent;
 	private int tempInt;
 	private int boostAmount = 2;
+	private int cooldown = 15;
 
 	public override void _Ready()
 	{
@@ -24,5 +25,10 @@ public partial class BoostIntelligence : Node2D
 			player.Intelligence = tempInt;
 		}
 		QueueFree();
+	}
+
+	public override int getCooldown()
+	{
+		return cooldown;
 	}
 }

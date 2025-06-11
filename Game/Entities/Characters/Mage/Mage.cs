@@ -34,9 +34,10 @@ public partial class Mage : DefaultPlayer
 		}
 	}
 
-	public override void UseAbility()
+	/*public override void UseAbility()
 	{
 		//Ability 1: BoostIntelligence
-		AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_intelligence.tscn").Instantiate<Node2D>());
-	}
+		AddChild(Ability);
+		//Ability 2: Kamehameha or smth
+	}*/
 }

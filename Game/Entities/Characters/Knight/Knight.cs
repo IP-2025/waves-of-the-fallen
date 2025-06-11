@@ -35,16 +35,17 @@ public partial class Knight : DefaultPlayer
 		}
 	}
 
-	public override void UseAbility()
+	/*public override void UseAbility()
 	{
-		//Ability 1: BoostStrength
-		AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_strength.tscn").Instantiate<Node2D>());
-		//Ability 2: Shield and Heal (Shield needs fixes)
-		/*
-		var healthNode = GetNode<Health>("Health");
-		healthNode.Heal(MaxHealth / 5);
-		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("healItemPickUp"), GlobalPosition, -10);
-		AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/shield.tscn").Instantiate<CharacterBody2D>());
-		*/
-	}
+			//Ability 1: BoostStrength
+			AddChild(Ability);
+
+			//Ability 2: Shield and Heal (Shield needs fixes)
+			/*
+			var healthNode = GetNode<Health>("Health");
+			healthNode.Heal(MaxHealth / 5);
+			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("healItemPickUp"), GlobalPosition, -10);
+			AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/shield.tscn").Instantiate<CharacterBody2D>());
+			
+	}*/
 }

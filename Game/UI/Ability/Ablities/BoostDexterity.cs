@@ -1,11 +1,12 @@
 using Godot;
 using System;
 
-public partial class BoostDexterity : Node2D
+public partial class BoostDexterity : AbilityBase
 {
 	private Node2D _parent;
 	private int tempDex;
 	private int boostAmount = 2;
+	private int cooldown = 15;
 
 	public override void _Ready()
 	{
@@ -24,5 +25,10 @@ public partial class BoostDexterity : Node2D
 			player.Dexterity = tempDex;
 		}
 		QueueFree();
+	}
+
+	public override int getCooldown()
+	{
+		return cooldown;
 	}
 }

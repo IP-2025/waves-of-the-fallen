@@ -3,7 +3,6 @@ using Godot;
 
 public partial class Assassin : DefaultPlayer
 {
-
 	public override void _Ready()
 	{
 		HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
@@ -30,19 +29,17 @@ public partial class Assassin : DefaultPlayer
 
 	public void _on_assassin_animation_frame_changed()
 	{
-		if(GetNode<AnimatedSprite2D>("AssassinAnimation").Animation.Equals("walk"))
-		if (GetNode<AnimatedSprite2D>("AssassinAnimation").Frame%2 == 1)
-		{
-			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerWalk"), GlobalPosition, -10);
-		}
+		if (GetNode<AnimatedSprite2D>("AssassinAnimation").Animation.Equals("walk"))
+			if (GetNode<AnimatedSprite2D>("AssassinAnimation").Frame % 2 == 1)
+			{
+				SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerWalk"), GlobalPosition, -10);
+			}
 	}
 
-	public override void UseAbility()
+	/*public override void UseAbility()
 	{
 		//Ability 1: SpeedUp
-		AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/speed_up.tscn").Instantiate<Node2D>());
-		GetNode("res://UI/Ability/abilityButton.tscn");
+		AddChild(_abilityScene.Instantiate());
 		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("dash"), GlobalPosition, -10);
-		//Ability 2: WeaponEnhance
-	}
+	}*/
 }

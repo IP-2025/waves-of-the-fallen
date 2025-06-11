@@ -16,8 +16,8 @@ public partial class Archer : DefaultPlayer
         MaxHealth = CharacterManager.LoadHealthByID("1");
         Speed = CharacterManager.LoadSpeedByID("1");
         Strength = CharacterManager.LoadStrengthByID("1");
-		Dexterity = CharacterManager.LoadDexterityByID("1");
-		Intelligence = CharacterManager.LoadIntelligenceByID("1");
+        Dexterity = CharacterManager.LoadDexterityByID("1");
+        Intelligence = CharacterManager.LoadIntelligenceByID("1");
 
         var healthNode = GetNode<Health>("Health");
         healthNode.max_health = MaxHealth;
@@ -34,9 +34,9 @@ public partial class Archer : DefaultPlayer
 			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerWalk"), GlobalPosition, -10);
 		}
 	}
-	public override void UseAbility()
-	{
+    /*public override void UseAbility()
+    {
 		//Ability 1: BoostDexterity
-		AddChild(GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_dexterity.tscn").Instantiate<Node2D>());
-	}
+        AddChild(Ability);
+	}*/
 }

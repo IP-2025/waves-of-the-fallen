@@ -24,10 +24,10 @@ public partial class CharacterManager : Node
 
             //Standart Character und Stats setzen
             //health, speed, dexterity, intelligence,
-            SaveCharacterData(1, "Archer",   85, 200, 100, 100, 110, 1, 1);
-            SaveCharacterData(2, "Assassin", 70, 220, 100, 100, 110, 1, 0);
-            SaveCharacterData(3, "Knight",  125,  180, 100, 125,  85, 1, 0);
-            SaveCharacterData(4, "Mage",    100, 200, 100, 110, 110, 1, 0);
+            SaveCharacterData(1, "Archer",   85, 200, 100, 100, 110, 1, 1, 1);
+            SaveCharacterData(2, "Assassin", 70, 220, 100, 100, 110, 1, 1, 0);
+            SaveCharacterData(3, "Knight",  125,  180, 100, 125,  85, 1, 1, 0);
+            SaveCharacterData(4, "Mage",    100, 200, 100, 110, 110, 1, 1, 0);
 
             _config.Save(SettingsPath);
         }
@@ -68,7 +68,7 @@ public partial class CharacterManager : Node
     }
 
     public void SaveCharacterData(int characterId, string name, int health, int speed, int strength, int dexterity, int intelligence,
-        int level, int unlocked)
+        int level, int ability, int unlocked)
     {
         _config.SetValue($"{characterId}", "name", name);
         _config.SetValue($"{characterId}", "health", health);
@@ -77,6 +77,7 @@ public partial class CharacterManager : Node
         _config.SetValue($"{characterId}", "dexterity", dexterity);
         _config.SetValue($"{characterId}", "intelligence", intelligence);
         _config.SetValue($"{characterId}", "level", level);
+        _config.SetValue($"{characterId}", "ability", ability);
         _config.SetValue($"{characterId}", "unlocked", unlocked);
         _config.Save(SettingsPath);
     }
@@ -120,6 +121,11 @@ public partial class CharacterManager : Node
     public int LoadLevelByID(string id)
     {
         return (int)_config.GetValue(id, "level");
+    }
+
+    public int LoadAbilityByID(string id)
+    {
+        return (int)_config.GetValue(id, "ability");
     }
 
     public bool LoadIsUnlocked(string id)

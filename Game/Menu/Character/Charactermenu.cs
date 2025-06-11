@@ -412,10 +412,10 @@ public partial class Charactermenu : Control
 
 	private void ResetCharacters()
 	{
-		_characterManager.SaveCharacterData(1, "Archer", 85, 200, 100, 100, 110, 1, 1);
-		_characterManager.SaveCharacterData(2, "Assassin", 70, 220, 100, 100, 110, 1, 0);
-		_characterManager.SaveCharacterData(3, "Knight", 125, 180, 100, 125, 85, 1, 0);
-		_characterManager.SaveCharacterData(4, "Mage", 100, 200, 100, 110, 110, 1, 0);
+		_characterManager.SaveCharacterData(1, "Archer", 85, 200, 100, 100, 110, 1, 1, 1);
+		_characterManager.SaveCharacterData(2, "Assassin", 70, 220, 100, 100, 110, 1, 1, 0);
+		_characterManager.SaveCharacterData(3, "Knight", 125, 180, 100, 125, 85, 1, 1, 0);
+		_characterManager.SaveCharacterData(4, "Mage", 100, 200, 100, 110, 110, 1, 1, 0);
 		var blackAndWhiteShader = GD.Load<Shader>("res://Menu/Character/characterMenuIconShader.gdshader");
 		var material = new ShaderMaterial { Shader = blackAndWhiteShader };
 

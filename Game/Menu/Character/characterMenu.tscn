@@ -423,6 +423,15 @@ theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_ivr4t")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ivr4t")
 text = "select"
 
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Button2" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
 [node name="UnlockRequest" type="HTTPRequest" parent="MarginContainer2"]
 unique_name_in_owner = true
 
