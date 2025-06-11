@@ -50,10 +50,10 @@ public partial class DefaultPlayer : CharacterBody2D
 	private PackedScene _doubleBladeScene = GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn");
 	private PackedScene _warHammerScene = GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn");
 	private int _weaponsEquipped;
-	private PackedScene _boostStrScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_strength.tscn");
-	private PackedScene _boostDexScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_dexterity.tscn");
-	private PackedScene _boostIntScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_intelligence.tscn");
-	private PackedScene _dashScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/speed_up.tscn");
+	public PackedScene _boostStrScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_strength.tscn");
+	public PackedScene _boostDexScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_dexterity.tscn");
+	public PackedScene _boostIntScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_intelligence.tscn");
+	public PackedScene _dashScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/speed_up.tscn");
 	public PackedScene _abilityScene;
 	public int _abilityIndex = 4; //Hier ändern noch, speichern in savedata oben export variable
 	private WaveTimer _waveTimer;

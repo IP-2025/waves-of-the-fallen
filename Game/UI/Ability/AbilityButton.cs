@@ -11,6 +11,7 @@ public partial class AbilityButton : Node2D
 	public bool IsPaused { get; private set; }
 	private Node2D _parent;
 	private Timer _abilityTimer;
+	private int _abilityIndex;
 	private Sprite2D _abilityPic;
 	private Label _timeLeftLabel;
 	private CharacterManager _characterManager;
@@ -24,14 +25,28 @@ public partial class AbilityButton : Node2D
 		_characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 		var selectedId = _characterManager.LoadLastSelectedCharacterID();
 
-		/*if (_parent is DefaultPlayer player)
+		if (_parent is DefaultPlayer player)
 		{
-			packedScene = ((DefaultPlayer) _parent)._abilityScene;
-			Debug.Print(packedScene.Instantiate().ToString());
-			abilityBase = (AbilityBase)packedScene.Instantiate().GetScript();
-			MaxTime = abilityBase.getCooldown();
-			Debug.Print(MaxTime.ToString());
-		}*/
+			_abilityIndex = selectedId * 10 + _characterManager.LoadAbilityChosenByID(selectedId.ToString());
+
+			BoostDexterity boostDexterity = new BoostDexterity();
+			BoostIntelligence boostIntelligence = new BoostIntelligence();
+			BoostStrength boostStrength = new BoostStrength();
+			SpeedUp dash = new SpeedUp();
+
+			MaxTime = _abilityIndex switch
+			{
+				11 => boostDexterity.getCooldown(),
+				//12 => _
+				21 => dash.getCooldown(),
+				//22 => _
+				31 => boostStrength.getCooldown(),
+				//32 => _
+				41 => boostIntelligence.getCooldown(),
+				//42 => _
+				_ => 0
+			};
+		}
 
 
 
