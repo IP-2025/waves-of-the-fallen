@@ -23,6 +23,8 @@ namespace Game.Utilities.Backend
 
 		public static void OnEnemyKilled(long playerId, int baseScore)
 		{
+			if (playerId == 0) playerId = 1;
+
 			if (!PlayerScores.ContainsKey(playerId))
 				PlayerScores[playerId] = 0;
 			if (!ComboMultipliers.ContainsKey(playerId))

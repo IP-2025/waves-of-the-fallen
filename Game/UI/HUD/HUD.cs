@@ -9,7 +9,7 @@ public partial class HUD : CanvasLayer
 	public override void _Process(double delta)
 	{
 		var sb = new StringBuilder();
-		long peerId = Multiplayer.GetUniqueId(); 
+		long peerId = NetworkManager.Instance._soloMode ? 1 : Multiplayer.GetUniqueId(); 
 
 		if (NetworkManager.Instance != null && NetworkManager.Instance._soloMode)
 		{
