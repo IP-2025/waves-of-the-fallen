@@ -1,12 +1,14 @@
 using Godot;
 
-public partial class InGameSettingsMenu : CanvasLayer
+public partial class InGameSettingsMenu : Control
 {
 	private int _musicBus;
 	private int _soundBus;
 
 	public override void _Ready()
 	{
+		ProcessMode = ProcessModeEnum.Always;
+
 		_musicBus = AudioServer.GetBusIndex("MenuBackgroundMusicBus");
 		_soundBus = AudioServer.GetBusIndex("SoundEffectBus");
 
@@ -25,6 +27,18 @@ public partial class InGameSettingsMenu : CanvasLayer
 		soundCheck.Toggled += toggled => AudioServer.SetBusMute(_soundBus, !toggled);
 		soundSlider.ValueChanged += value => AudioServer.SetBusVolumeDb(_soundBus, Mathf.LinearToDb((float)value));
 
-		GetNode<Button>("%ButtonBack").Pressed += () => QueueFree();
+		GetNode<Button>("%ButtonBack").Pressed += OnBackPressed;
 	}
+
+	private void OnBackPressed()
+	{
+	var pauseMenu = GetTree().Root.FindChild("PauseMenu", true, false) as PauseMenu;
+	if (pauseMenu != null)
+	{
+		pauseMenu.Visible = true;
+		var resumeBtn = pauseMenu.GetNodeOrNull<Button>("Background/VBoxContainer/Resume");
+		resumeBtn?.GrabFocus();
+	}
+	QueueFree();
+}
 }

@@ -28,6 +28,7 @@ public partial class PauseMenu : Control
 	{
 		var settingsScene = GD.Load<PackedScene>("res://Menu/Settings/inGameSettingsMenu.tscn");
 		var settingsMenu = settingsScene.Instantiate();
+		settingsMenu.Name = "InGameSettingsMenu";
 		GetTree().Root.AddChild(settingsMenu);
 		Visible = false;
 	}
