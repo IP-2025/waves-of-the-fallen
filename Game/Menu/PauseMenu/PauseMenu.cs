@@ -35,8 +35,7 @@ public partial class PauseMenu : Control
 
 	private void OnMainMenuPressed()
 	{
-		GetTree().Paused = false;
-
+		
 		var dialogScene = GD.Load<PackedScene>("res://Menu/PauseMenu/leaveWarningDialog.tscn");
 		var dialog = dialogScene.Instantiate<ConfirmationDialog>();
 		dialog.ProcessMode = ProcessModeEnum.Always; 
@@ -50,6 +49,9 @@ public partial class PauseMenu : Control
 
 	private void OnLeaveConfirmed()
 	{
+		
+		GetTree().Paused = false;
+
 		ScoreManager.Reset();
 		GameState.CurrentState = ConnectionState.Offline;
 		
@@ -68,7 +70,6 @@ public partial class PauseMenu : Control
 		if (hud != null)
 			hud.QueueFree();
 
-		GetTree().Paused = false;
 		CallDeferred(nameof(ChangeToMainMenu));
 	}
 
