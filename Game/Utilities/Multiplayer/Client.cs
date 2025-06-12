@@ -282,7 +282,9 @@ public partial class Client : Node
 				if (healthNode != null)
 				{
 					healthNode.MaxHealth = entity.Health; // <- MaxHealth aus dem Snapshot setzen!
+					healthNode.max_health = entity.Health;
 					healthNode.health = entity.Health;
+					healthNode.ResetHealth();
 				}
 			}
 

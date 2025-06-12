@@ -19,10 +19,6 @@ public partial class Assassin : DefaultPlayer
 		{
 			MaxHealth = CharacterManager.LoadHealthByID("1");
 			Speed = CharacterManager.LoadSpeedByID("1");
-			
-			var healthNode = GetNode<Health>("Health");
-			healthNode.max_health = MaxHealth;
-			healthNode.ResetHealth();
 		}
 
 		GD.Print($"Assassin initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");

@@ -17,10 +17,6 @@ public partial class Archer : DefaultPlayer
 		{
 			MaxHealth = CharacterManager.LoadHealthByID("1");
 			Speed = CharacterManager.LoadSpeedByID("1");
-			
-			var healthNode = GetNode<Health>("Health");
-			healthNode.max_health = MaxHealth;
-			healthNode.ResetHealth();
 		}
 
         GD.Print($"Archer initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
