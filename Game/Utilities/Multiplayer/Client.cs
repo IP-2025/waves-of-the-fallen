@@ -277,6 +277,13 @@ public partial class Client : Node
 			if (inst is DefaultPlayer dp)
 			{
 				dp.OwnerPeerId = entity.NetworkId;
+				
+				var healthNode = inst.GetNodeOrNull<Health>("Health");
+				if (healthNode != null)
+				{
+					healthNode.MaxHealth = entity.Health; // <- MaxHealth aus dem Snapshot setzen!
+					healthNode.health = entity.Health;
+				}
 			}
 
 			// disable health for enemies because server handles it

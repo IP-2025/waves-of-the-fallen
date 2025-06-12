@@ -50,7 +50,7 @@ public partial class GameRoot : Node
 		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 		_soloSelectedCharacterId = characterManager.LoadLastSelectedCharacterID();
 
-		if (!NetworkManager.Instance._soloMode) _isServer = GetTree().GetMultiplayer().IsServer();
+		if (!NetworkManager.Instance.SoloMode) _isServer = GetTree().GetMultiplayer().IsServer();
 
 		// Map ---------------------------------------------------------------------------------------------
 		// Load map and store reference
@@ -65,7 +65,7 @@ public partial class GameRoot : Node
 			AddChild(hud);
 		}
 		// -------------------------------------------------------------------------------------------------
-		if (!_isServer && !NetworkManager.Instance._soloMode) return; // clients return
+		if (!_isServer && !NetworkManager.Instance.SoloMode) return; // clients return
 
 		// WaveTimer ---------------------------------------------------------------------------------------
 		// Instantiate one global WaveTimer for server-wide access
@@ -91,7 +91,7 @@ public partial class GameRoot : Node
 		}
 
 		// SoloMode ----------------------------------------------------------------------------------------
-		if (NetworkManager.Instance._soloMode)
+		if (NetworkManager.Instance.SoloMode)
 		{
 			ScoreManager.PlayerScores.TryAdd(1, 0);
 
@@ -111,10 +111,10 @@ public partial class GameRoot : Node
 	public override void _Process(double delta)
 	{
 
-		if (NetworkManager.Instance._soloMode && _soloPlayer is not { alive: true })
+		if (NetworkManager.Instance.SoloMode && _soloPlayer is not { alive: true })
 			ShowGameOverScreen();
 
-		if (NetworkManager.Instance._isLocalHost || NetworkManager.Instance._soloMode)
+		if (NetworkManager.Instance._isLocalHost || NetworkManager.Instance.SoloMode)
 		{
 			// Shop
 			var currentWave = _globalWaveTimer.WaveCounter;
@@ -180,60 +180,74 @@ public partial class GameRoot : Node
 		_shopInstance = null;
 	}
 
-	private void SpawnPlayer(long peerId)
-	{
-		var player = GD.Load<PackedScene>("res://Entities/Characters/Mage/mage.tscn").Instantiate<DefaultPlayer>();
-		player.OwnerPeerId = peerId;
-		player.Name = $"Player_{peerId}";
+    private void SpawnPlayer(long peerId)
+    {
+        var player = GD.Load<PackedScene>("res://Entities/Characters/Mage/mage.tscn").Instantiate<DefaultPlayer>();
+        player.OwnerPeerId = peerId;
+        player.Name = $"Player_{peerId}";
 
 
-		var characterId = _soloSelectedCharacterId;
-		if (!NetworkManager.Instance._soloMode) characterId = Server.Instance.PlayerSelections[peerId];
-		player = characterId switch
-		{
-			1 => GD.Load<PackedScene>("res://Entities/Characters/Archer/archer.tscn").Instantiate<DefaultPlayer>(),
-			2 => GD.Load<PackedScene>("res://Entities/Characters/Assassin/assassin.tscn").Instantiate<DefaultPlayer>(),
-			3 => GD.Load<PackedScene>("res://Entities/Characters/Knight/knight.tscn").Instantiate<DefaultPlayer>(),
-			4 => GD.Load<PackedScene>("res://Entities/Characters/Mage/mage.tscn").Instantiate<DefaultPlayer>(),
-			_ => player
-		};
+        PlayerCharacterData character = null;
+        var characterId = 1;
+        switch (NetworkManager.Instance.SoloMode)
+        {
+            case false when Server.Instance.PlayerSelections.TryGetValue(peerId, out character):
+                characterId = character.CharacterId;
+                break;
+            case true:
+                characterId = _soloSelectedCharacterId;
+                character = new PlayerCharacterData { CharacterId = characterId, Health = 0 };
+                break;
+        }
 
-		player.OwnerPeerId = peerId;
-		player.Name = $"Player_{peerId}";
+        player = characterId switch
+        {
+            1 => GD.Load<PackedScene>("res://Entities/Characters/Archer/archer.tscn").Instantiate<DefaultPlayer>(),
+            2 => GD.Load<PackedScene>("res://Entities/Characters/Assassin/assassin.tscn").Instantiate<DefaultPlayer>(),
+            3 => GD.Load<PackedScene>("res://Entities/Characters/Knight/knight.tscn").Instantiate<DefaultPlayer>(),
+            4 => GD.Load<PackedScene>("res://Entities/Characters/Mage/mage.tscn").Instantiate<DefaultPlayer>(),
+            _ => player
+        };
+        player.OwnerPeerId = peerId;
+        player.Name = $"Player_{peerId}";
+        player.MaxHealth = character?.Health ?? 0;
+        player.CurrentHealth = character?.Health ?? 0;
+        player.Speed = character?.Speed ?? 0;        
+        
+        player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
+            .OfType<Node2D>()
+            .ToList()
+            .FindAll(spawnPoint => int.Parse(spawnPoint.Name) == _playerIndex)
+            .FirstOrDefault()?.GlobalPosition ?? Vector2.Zero;
 
+        // Add joystick to player
+        var joystick = GD.Load<PackedScene>("res://UI/Joystick/joystick.tscn").Instantiate<Node2D>();
+        if (peerId != 1)
+        {
+            joystick.Visible = false;
+        }
 
-		// Get spawn point from PlayerSpawnPoints group
-		player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
-			.OfType<Node2D>()
-			.ToList()
-			.FindAll(spawnPoint => int.Parse(spawnPoint.Name) == _playerIndex)
-			.FirstOrDefault()?.GlobalPosition ?? Vector2.Zero;
+        player.AddChild(joystick);
+        player.Joystick = joystick;
+        AddChild(player);
 
-		// Add joystick to player
-		var joystick = GD.Load<PackedScene>("res://UI/Joystick/joystick.tscn").Instantiate<Node2D>();
-		if (peerId != 1)
-		{
-			joystick.Visible = false;
-		}
-		player.AddChild(joystick);
-		player.Joystick = joystick;
-		AddChild(player);
+        if (!NetworkManager.Instance.SoloMode) Server.Instance.Entities[peerId] = player;
 
-		if (!NetworkManager.Instance._soloMode) Server.Instance.Entities[peerId] = player;
+        // Connect health signal
+        var healthNode = player.GetNodeOrNull<Health>("Health");
+        if (healthNode != null)
+        {
+            healthNode.Connect(Health.SignalName.HealthDepleted, new Callable(this, nameof(OnPlayerDied)));
+            healthNode.max_health = player.MaxHealth;
+            healthNode.ResetHealth();
+        }
+        else
+        {
+            GD.PrintErr("Health node not found on player!");
+        }
 
-		// Connect health signal
-		var healthNode = player.GetNodeOrNull<Health>("Health");
-		if (healthNode != null)
-		{
-			healthNode.Connect(Health.SignalName.HealthDepleted, new Callable(this, nameof(OnPlayerDied)));
-		}
-		else
-		{
-			GD.PrintErr("Health node not found on player!");
-		}
-
-		_playerIndex++;
-	}
+        _playerIndex++;
+    }
 
 	private void SendScoreToBackend(int score)
 	{
