@@ -34,13 +34,15 @@ public partial class AbilityButton : Node2D
 			SpeedUp dash = new SpeedUp();
 			Shield shield = new Shield();
 			FireBlast fireBlast = new FireBlast();
+			ArrowRain arrowRain = new ArrowRain();
+			DeadlyStrike deadlyStrike = new DeadlyStrike();
 
 			MaxTime = _abilityIndex switch
 			{
 				11 => boostDexterity.getCooldown(),
-				//12 => _
+				12 => arrowRain.getCooldown(),
 				21 => dash.getCooldown(),
-				//22 => _
+				22 => deadlyStrike.getCooldown(),
 				31 => boostStrength.getCooldown(),
 				32 => shield.getCooldown(),
 				41 => boostIntelligence.getCooldown(),

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://n7w20rvewljn"]
+
+[ext_resource type="Script" uid="uid://f058ffo2hr27" path="res://UI/Ability/Ablities/ArrowRain.cs" id="1_jsc2i"]
+
+[node name="ArrowRain" type="Node2D"]
+script = ExtResource("1_jsc2i")
+
+[node name="ShootingPoint" type="Marker2D" parent="."]
+position = Vector2(0, -2)
+
+[node name="arrowRainTimer" type="Timer" parent="."]
