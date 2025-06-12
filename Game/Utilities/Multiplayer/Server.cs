@@ -11,7 +11,7 @@ namespace Game.Utilities.Multiplayer
 		public static Server Instance;
 
 	private bool enableDebug = false;
-	public Dictionary<long, int> PlayerSelections = new Dictionary<long, int>();
+	public Dictionary<long, PlayerCharacterData> PlayerSelections = new Dictionary<long, PlayerCharacterData>();
 	public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
 	
 	private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");

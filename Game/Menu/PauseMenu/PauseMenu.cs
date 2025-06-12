@@ -20,7 +20,7 @@ public partial class PauseMenu : Control
 	{
 		Visible = false;
 	
-		if (NetworkManager.Instance._soloMode)
+		if (NetworkManager.Instance.SoloMode)
 			GetTree().Paused = false;
 	}
 
@@ -55,7 +55,7 @@ public partial class PauseMenu : Control
 		ScoreManager.Reset();
 		GameState.CurrentState = ConnectionState.Offline;
 		
-		if (!NetworkManager.Instance._soloMode)
+		if (!NetworkManager.Instance.SoloMode)
 		{
 			RpcId(1, "PlayerLeft", Multiplayer.GetUniqueId());
 			GD.Print("Penalty: Player loses gold for leaving multiplayer!");
@@ -86,7 +86,7 @@ public partial class PauseMenu : Control
 	public void OpenPauseMenu()
 	{
 		Visible = true;
-		if (NetworkManager.Instance._soloMode)
+		if (NetworkManager.Instance.SoloMode)
 			GetTree().Paused = true;
 		else
 			GetTree().Paused = false;
@@ -97,7 +97,7 @@ public partial class PauseMenu : Control
 		if (Visible && @event.IsActionPressed("ui_cancel"))
 		{
 			Visible = false;
-			if (NetworkManager.Instance._soloMode)
+			if (NetworkManager.Instance.SoloMode)
 				GetTree().Paused = false;
 			else
 				GetTree().Paused = false;

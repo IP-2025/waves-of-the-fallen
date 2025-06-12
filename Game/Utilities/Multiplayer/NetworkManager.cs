@@ -39,7 +39,7 @@ namespace Game.Utilities.Multiplayer
 		private Client client;
 		private Server server;
 		public bool _isLocalHost = false;
-		public bool _soloMode = false;
+		public bool SoloMode = false;
 		Process process = new Process();
 		// Server ready signal
 		[Signal]
@@ -367,7 +367,7 @@ namespace Game.Utilities.Multiplayer
 		[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
 		public void NotifyGameStart()
 		{
-			_soloMode = false;
+			SoloMode = false;
 			// change scene to game
 			var gameScene = GD.Load<PackedScene>("res://Utilities/GameRoot/GameRoot.tscn");
 			gameScene.Instantiate<Node>();
@@ -383,7 +383,7 @@ namespace Game.Utilities.Multiplayer
 		public void SelectCharacter(int selectedCharacterId)
 		{
 			long peerId = Multiplayer.GetRemoteSenderId();
-			Server.Instance.PlayerSelections[peerId] = selectedCharacterId;
+			Server.Instance.PlayerSelections[peerId] = new PlayerCharacterData { CharacterId = selectedCharacterId };
 			DebugIt("Player selectged: " + selectedCharacterId + " By PlayerID: " + peerId);
 		}
 

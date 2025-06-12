@@ -158,7 +158,7 @@ public partial class DefaultPlayer : CharacterBody2D
 		MoveAndSlide();
 
 		// Check if in solo (offline) mode or multiplayer (clients cant move, server handles it)
-		if (NetworkManager.Instance._soloMode || NetworkManager.Instance._isServer) UpdateTransform(Velocity);
+		if (NetworkManager.Instance.SoloMode || NetworkManager.Instance._isServer) UpdateTransform(Velocity);
 	}
 
 	protected virtual void UseAbility()
