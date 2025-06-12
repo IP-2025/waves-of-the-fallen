@@ -14,7 +14,7 @@ config/name="Waves of the fallen"
 run/main_scene="uid://d2coob6g63jxs"
 config/quit_on_go_back=false
 config/features=PackedStringArray("4.4", "C#", "Mobile")
-config/icon="uid://di7schluh4i7p"
+config/icon="uid://qdore6g0t5gj"
 
 [autoload]
 
