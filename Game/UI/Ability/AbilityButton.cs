@@ -33,6 +33,7 @@ public partial class AbilityButton : Node2D
 			BoostIntelligence boostIntelligence = new BoostIntelligence();
 			BoostStrength boostStrength = new BoostStrength();
 			SpeedUp dash = new SpeedUp();
+			Shield shield = new Shield();
 
 			MaxTime = _abilityIndex switch
 			{
@@ -41,7 +42,7 @@ public partial class AbilityButton : Node2D
 				21 => dash.getCooldown(),
 				//22 => _
 				31 => boostStrength.getCooldown(),
-				//32 => _
+				32 => shield.getCooldown(),
 				41 => boostIntelligence.getCooldown(),
 				//42 => _
 				_ => 0

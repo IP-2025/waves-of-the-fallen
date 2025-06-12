@@ -62,6 +62,15 @@ public partial class EnemyProjectile : Area2D
 			}
 			QueueFree();
 		}
+		else if (body is Shield shield)
+		{
+			var health = shield.GetNodeOrNull<Health>("Health");
+			if (health != null)
+			{
+				health.Damage(Damage);
+			}
+			QueueFree();
+		}
 		else if (body is StaticBody2D || body is TileMap)
 		{
 			QueueFree();

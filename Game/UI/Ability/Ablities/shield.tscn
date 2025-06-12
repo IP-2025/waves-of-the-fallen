@@ -1,18 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://cfbhjwjmjwhx4"]
+[gd_scene load_steps=5 format=3 uid="uid://cfbhjwjmjwhx4"]
 
+[ext_resource type="Script" uid="uid://obmm46p25muv" path="res://UI/Ability/Ablities/Shield.cs" id="1_4i5gg"]
 [ext_resource type="Texture2D" uid="uid://irgt1q6sf5db" path="res://UI/Ability/Ablities/Ressources/Shield.png" id="1_blg1s"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="3_4i5gg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_poi6l"]
+radius = 50.0
+height = 154.0
 
 [node name="Shield" type="CharacterBody2D"]
+script = ExtResource("1_4i5gg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 24)
 shape = SubResource("CapsuleShape2D_poi6l")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-18, 23)
+scale = Vector2(0.478589, 0.34016)
 texture = ExtResource("1_blg1s")
 
 [node name="Health" type="Node2D" parent="."]
 position = Vector2(-3, 1)
 script = ExtResource("3_4i5gg")
+max_health = 10.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_shield_timer_timeout"]
