@@ -92,7 +92,7 @@ public partial class SettingsMenu : Control
 			_characterManager.SaveCharacterData(1, "Archer", 85, 200, 100, 100, 110, 1, "Boost Dexterity", "Arrow Rain", 1, 1);
 			_characterManager.SaveCharacterData(2, "Assassin", 70, 220, 100, 100, 110, 1, "Dash", "Deadly Strike", 1, 0);
 			_characterManager.SaveCharacterData(3, "Knight", 125, 180, 100, 125,  85, 1, "Boost Strength", "Fortress", 1, 0);
-			_characterManager.SaveCharacterData(4, "Mage", 100, 200, 100, 110, 110, 1, "Boost Intelligence", "Beam of Destruction", 1, 0);
+			_characterManager.SaveCharacterData(4, "Mage", 100, 200, 100, 110, 110, 1, "Boost Intelligence", "FIRE BLAST!", 1, 0);
 			_characterManager.SetGold(0);
 		}
 		else

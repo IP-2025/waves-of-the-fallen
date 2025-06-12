@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b57h1rv5loobg"]
+
+[ext_resource type="Script" uid="uid://dpoxckmdyglss" path="res://UI/Ability/Ablities/FireBlast.cs" id="1_sairn"]
+
+[node name="fireBlast" type="Node2D"]
+script = ExtResource("1_sairn")
+
+[node name="ShootingPoint" type="Marker2D" parent="."]
+position = Vector2(0, -2)

@@ -27,7 +27,7 @@ public partial class CharacterManager : Node
             SaveCharacterData(1, "Archer",   85, 200, 100, 100, 110, 1, "Boost Dexterity", "Arrow Rain", 1, 1);
             SaveCharacterData(2, "Assassin", 70, 220, 100, 100, 110, 1, "Dash", "Deadly Strike", 1, 0);
             SaveCharacterData(3, "Knight",  125,  180, 100, 125,  85, 1, "Boost Strength", "The Shield", 1, 0);
-            SaveCharacterData(4, "Mage",    100, 200, 100, 110, 110, 1, "Boost Intelligence", "Stop Time", 1, 0);
+            SaveCharacterData(4, "Mage",    100, 200, 100, 110, 110, 1, "Boost Intelligence", "FIRE BLAST!", 1, 0);
 
             _config.Save(SettingsPath);
         }

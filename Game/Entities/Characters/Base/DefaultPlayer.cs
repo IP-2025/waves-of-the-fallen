@@ -55,6 +55,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	public PackedScene _boostIntScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_intelligence.tscn");
 	public PackedScene _dashScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/speed_up.tscn");
 	public PackedScene _shieldScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/shield.tscn");
+	public PackedScene _fireBlastScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/fire_blast.tscn");
 	public PackedScene _abilityScene;
 	public int _abilityIndex = 4; //Hier ändern noch, speichern in savedata oben export variable
 	private WaveTimer _waveTimer;
@@ -143,7 +144,7 @@ public partial class DefaultPlayer : CharacterBody2D
 			31 => _boostStrScene,
 			32 => _shieldScene,
 			41 => _boostIntScene,
-			//42 => _
+			42 => _fireBlastScene,
 			_ => null
 		};
 	}
