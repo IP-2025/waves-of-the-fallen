@@ -15,13 +15,13 @@ public partial class RegisterScreen : Control
 
 	public override void _Ready()
 	{
-		_emailField = GetNode<LineEdit>("Panel/EmailField");
-		_usernameField = GetNode<LineEdit>("Panel/NameField");
-		_passwordField = GetNode<LineEdit>("Panel/PasswordField");
-		_registerButton = GetNode<Button>("Panel/RegisterButton");
-		_backButton = GetNode<Button>("Panel/BackButton");
-		_registerRequest = GetNode<HttpRequest>("Panel/RegisterRequest");
-		_errorLabel = GetNode<Label>("Panel/ErrorLabel");
+		_emailField = GetNode<LineEdit>("%EmailField");
+		_usernameField = GetNode<LineEdit>("%NameField");
+		_passwordField = GetNode<LineEdit>("%PasswordField");
+		_registerButton = GetNode<Button>("%RegisterButton");
+		_backButton = GetNode<Button>("%BackButton");
+		_registerRequest = GetNode<HttpRequest>("%RegisterRequest");
+		_errorLabel = GetNode<Label>("%ErrorLabel");
 
 		_registerButton.Connect("pressed", new Callable(this, nameof(OnRegisterButtonPressed)));
 		_backButton.Connect("pressed", new Callable(this, nameof(OnBackButtonPressed)));

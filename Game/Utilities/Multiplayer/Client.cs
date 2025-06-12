@@ -117,7 +117,7 @@ public partial class Client : Node
 	}
 
 	public void ApplySnapshot(Snapshot snap)
-	{	
+	{
 		// check if all players are dead in snapshot
 		ShowGameOverScreen(snap.livingPlayersCount);
 
@@ -240,15 +240,6 @@ public partial class Client : Node
 				if (_camera == null && entity.NetworkId == Multiplayer.GetUniqueId())
 				{
 					ChangeCamera(inst, entity);
-				}
-
-				// HUD for local player
-				if (entity.NetworkId == Multiplayer.GetUniqueId() && GetTree().Root.GetNodeOrNull("HUD") == null)
-				{
-					var hudScene = GD.Load<PackedScene>("res://UI/HUD/HUD.tscn");
-					var hud = hudScene.Instantiate();
-					hud.Name = "HUD";
-					GetTree().Root.AddChild(hud);
 				}
 			}
 
