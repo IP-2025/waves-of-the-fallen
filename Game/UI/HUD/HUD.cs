@@ -11,7 +11,7 @@ public partial class HUD : CanvasLayer
 		var sb = new StringBuilder();
 		long peerId = Multiplayer.GetUniqueId(); 
 
-		if (NetworkManager.Instance != null && NetworkManager.Instance._soloMode)
+		if (NetworkManager.Instance != null && NetworkManager.Instance.SoloMode)
 		{
 			// Solo-Mode: score of the local player
 			int score = ScoreManager.PlayerScores.ContainsKey(peerId) ? ScoreManager.PlayerScores[peerId] : 0;			

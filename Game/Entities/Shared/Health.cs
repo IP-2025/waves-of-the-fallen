@@ -15,7 +15,12 @@ public partial class Health : Node2D
 	public delegate void HealthDepletedEventHandler(); // signal emitted when health is depleted
 
 	// property to access max health
-	public float MaxHealth => max_health;
+	public float MaxHealth
+	{
+		get => max_health;
+		set => max_health = value;
+	}
+
 	private bool isDead = false;
 
 	public override void _Ready()

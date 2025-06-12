@@ -12,12 +12,11 @@ public partial class Mage : DefaultPlayer
 		}
 		base._Ready();
 		
-		MaxHealth = CharacterManager.LoadHealthByID("4");
-		Speed = CharacterManager.LoadSpeedByID("4");
-
-		var healthNode = GetNode<Health>("Health");
-		healthNode.max_health = MaxHealth;
-		healthNode.ResetHealth();
+		if ( MaxHealth <= 0 && Speed <= 0)
+		{
+			MaxHealth = CharacterManager.LoadHealthByID("1");
+			Speed = CharacterManager.LoadSpeedByID("1");
+		}
 
 		GD.Print($"Mage initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
 	}
