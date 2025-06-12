@@ -49,7 +49,7 @@ public partial class EnemyProjectile : Area2D
 
 	/// <summary>
 	/// Handles collision with other objects.
-	/// Applies damage to the player if hit and removes the projectile.
+	/// Applies damage to the player or shield if hit and removes the projectile.
 	/// </summary>
 	private void _on_EnemyProjectile_body_entered(Node body)
 	{

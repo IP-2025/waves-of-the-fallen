@@ -16,7 +16,6 @@ public partial class AbilityButton : Node2D
 	private Label _timeLeftLabel;
 	private CharacterManager _characterManager;
 	private AbilityBase abilityBase;
-	private PackedScene packedScene;
 	public override void _Ready()
 	{
 		_timeLeftLabel = GetNode<Label>("TimeLeft");
@@ -49,8 +48,6 @@ public partial class AbilityButton : Node2D
 			};
 		}
 
-
-
 		_timeLeftLabel.Text = MaxTime.ToString();
 		_abilityTimer = GetNode<Timer>("AbilityTimer");
 		_abilityTimer.Timeout += OnTimerTimeout;
@@ -67,7 +64,7 @@ public partial class AbilityButton : Node2D
 			_abilityTimer.Stop();
 			_timeLeftLabel.Hide();
 			Disable = false;
-			//Pic for ability ready show
+			//Pic for ability ready show insert here
 		}
 		_timeLeftLabel.Text = (MaxTime - SecondCounter).ToString();
 		IsPaused = _abilityTimer.Paused;
