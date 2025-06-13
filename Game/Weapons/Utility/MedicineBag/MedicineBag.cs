@@ -23,7 +23,7 @@ public partial class MedicineBag : Weapon
 	{
 		medicineBagSprite = GetNode<AnimatedSprite2D>("MedicineBagSprite");
 
-		_shootCooldown = 1f / ShootDelay;
+		_shootCooldown = ShootDelay;
 		_timeUntilShoot = _shootCooldown;
 	}
 
