@@ -3,12 +3,12 @@ using System;
 
 public partial class FireBlast : AbilityBase
 {
-	private const string _resBase = "res://Weapons/Ranged/MagicStaffs/Firestaff/";
-	private const string _projectilePath = _resBase + "fireball.tscn";
+	private const string _resBase = "res://UI/Ability/Ablities/";
+	private const string _projectilePath = _resBase + "big_fireball.tscn";
 	public float DefaultRange { get; set; } = 1000f;
 	public int DefaultDamage { get; set; } = 500;
 	public int DefaultPiercing { get; set; } = FireBall.DefaultPiercing;
-	public float DefaultSpeed { get; set; } = 300;
+	public float DefaultSpeed { get; set; } = 100;
 	private int cooldown = 30;
 	private static readonly PackedScene _fireballPacked = GD.Load<PackedScene>(_projectilePath);
 
@@ -73,6 +73,7 @@ public partial class FireBlast : AbilityBase
 		projectileInstance.GlobalRotation = shootingPoint.GlobalRotation;
 
 		GetTree().CurrentScene.AddChild(projectileInstance);
+		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("firestaffFires"), GlobalPosition);
 	}
 
 	public override int getCooldown()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://yx4lw1whi03l"]
+[gd_scene load_steps=17 format=3 uid="uid://yx4lw1whi03l"]
 
 [ext_resource type="Script" uid="uid://d3qtxl5t5i32q" path="res://Audio/Manager/SoundManager.cs" id="1_1u08g"]
 [ext_resource type="AudioStream" uid="uid://blhbjt2ed2hxb" path="res://Audio/Sounds/Resources/EnemyHurt.wav" id="2_olkkv"]
@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://drax3xt5x8dyi" path="res://Audio/Sounds/Resources/heal.wav" id="12_o4din"]
 [ext_resource type="AudioStream" uid="uid://dgtfn6wgg1f8k" path="res://Audio/Sounds/Resources/buttonPress.wav" id="14_m7r52"]
 [ext_resource type="AudioStream" uid="uid://dqaosqcmcvcv1" path="res://Audio/Sounds/Resources/gameEnd.wav" id="15_uqh4n"]
+[ext_resource type="AudioStream" uid="uid://b5urfsr1bbxwo" path="res://Audio/Sounds/Resources/arrowAbility.wav" id="16_jg6q5"]
 
 [node name="SoundManager" type="Node2D"]
 script = ExtResource("1_1u08g")
@@ -99,4 +100,9 @@ bus = &"SoundEffectBus"
 [node name="dash" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_sfxm6")
 pitch_scale = 0.69
+bus = &"SoundEffectBus"
+
+[node name="arrowAbility" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_jg6q5")
+pitch_scale = 1.46
 bus = &"SoundEffectBus"
