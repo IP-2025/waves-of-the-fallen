@@ -42,23 +42,23 @@ namespace Game.UI.GameOver
 
 		private void OnMainMenuBtnPressed()
 		{
+			GetTree().Paused = false;
+
 			ScoreManager.Reset();
-			GameState.CurrentState = ConnectionState.Offline;
 
 			if (!NetworkManager.Instance.SoloMode)
 			{
-				RpcId(1, "PlayerLeft", Multiplayer.GetUniqueId());
-				GD.Print("Penalty: Player loses gold for leaving multiplayer!");
+				NetworkManager.Instance.CleanupNetworkState();
+
+				GetTree().GetMultiplayer().MultiplayerPeer = null;
 			}
 
-			var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
-			gameRoot?.CleanupAllLocal();
-			NetworkManager.Instance.CleanupNetworkState();
 
-			var hud = GetTree().Root.GetNodeOrNull<CanvasLayer>("HUD");
-			if (hud != null)
-				hud.QueueFree();
+			CallDeferred(nameof(GoToMainMenu));
+		}
 
+		private void GoToMainMenu()
+		{
 			GetTree().ChangeSceneToFile("res://Menu/Main/mainMenu.tscn");
 		}
 
