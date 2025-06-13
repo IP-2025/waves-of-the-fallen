@@ -48,6 +48,7 @@ namespace Game.Utilities.Multiplayer
 
 		public override void _Ready()
 		{
+			Engine.MaxFps = 60; // this is here because NetworkManager is an autoload (and it wont work in SettingsMenu for whatever reason). This means the whole game will be on 60 fps. Workaround but works
 			Instance = this;
 			// check if we are in headless server mode
 			var args = OS.GetCmdlineArgs();
@@ -63,6 +64,7 @@ namespace Game.Utilities.Multiplayer
 
 		public override void _PhysicsProcess(double delta)
 		{
+			
 			if (!_readyForUdp) return;
 
 			// UDP Networking

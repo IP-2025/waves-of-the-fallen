@@ -30,6 +30,8 @@ SoundManager="*res://Audio/Manager/sound_manager.tscn"
 
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+window/force_fps = 60
+window/vsync/use_vsync = true
 
 [dotnet]
 

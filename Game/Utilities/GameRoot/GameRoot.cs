@@ -37,7 +37,6 @@ public partial class GameRoot : Node
 	{
 		ScoreManager.Reset();
 		GetTree().Paused = false;
-		Engine.MaxFps = 60; // important! performance...
 
 		// Score -------------------------------------------------------------------------------------------
 		_sendScoreRequest = GetNodeOrNull<HttpRequest>("%SendScoreRequest");
