@@ -5,7 +5,7 @@ namespace Game.Menu.Login;
 
 public partial class LoginScreen : Control
 {
-	private const string LoginUrl = $"{Server.BaseUrl}/api/v1/auth/login";
+	private const string LoginUrl = $"{ServerConfig.BaseUrl}/api/v1/auth/login";
 
 	private LineEdit _emailField;
 	private LineEdit _passwordField;
@@ -18,14 +18,14 @@ public partial class LoginScreen : Control
 	
 	public override void _Ready()
 	{
-		_emailField = GetNode<LineEdit>("Panel/EmailField");
-		_passwordField = GetNode<LineEdit>("Panel/PasswordField");
-		_loginButton = GetNode<Button>("Panel/LoginButton");
-		_offlineButton = GetNode<Button>("Panel/OfflineButton");
-		_httpRequest = GetNode<HttpRequest>("Panel/LoginRequest");
-		_authRequest = GetNode<HttpRequest>("Panel/AuthRequest");
-		_errorLabel = GetNode<Label>("Panel/ErrorLabel");
-		_registerButton = GetNode<Button>("Panel/RegisterButton");
+		_emailField = GetNode<LineEdit>("%EmailField");
+		_passwordField = GetNode<LineEdit>("%PasswordField");
+		_loginButton = GetNode<Button>("%LoginButton");
+		_offlineButton = GetNode<Button>("%OfflineButton");
+		_httpRequest = GetNode<HttpRequest>("%LoginRequest");
+		_authRequest = GetNode<HttpRequest>("%AuthRequest");
+		_errorLabel = GetNode<Label>("%ErrorLabel");
+		_registerButton = GetNode<Button>("%RegisterButton");
 
 		_loginButton.Connect("pressed", new Callable(this, nameof(OnLoginButtonPressed)));
 		_offlineButton.Connect("pressed", new Callable(this, nameof(OnOfflineButtonPressed)));
@@ -38,7 +38,7 @@ public partial class LoginScreen : Control
 		
 		var token = SecureStorage.LoadToken();
 		if (string.IsNullOrEmpty(token)) return;
-		const string url = $"{Server.BaseUrl}/api/v1/protected/";
+		const string url = $"{ServerConfig.BaseUrl}/api/v1/protected/";
 		var headers = new[] { $"Authorization: Bearer {token}" };
 		var err = _authRequest.Request(url, headers, Godot.HttpClient.Method.Get);
 		if (err != Error.Ok)
@@ -65,7 +65,7 @@ public partial class LoginScreen : Control
 		GameState.CurrentState = ConnectionState.Offline;
 		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Main/mainMenu.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
@@ -85,7 +85,7 @@ public partial class LoginScreen : Control
 			{ "email", email },
 			{ "password", password }
 		});
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		// Send POST request
 		var headers = new[] { "Content-Type: application/json" };
 		var err = _httpRequest.Request(
@@ -105,7 +105,7 @@ public partial class LoginScreen : Control
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Register/register_screen.tscn");
 		if (scene == null) GD.PrintErr("Register Scene not found");
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		GetTree().ChangeSceneToPacked(scene);
 	}
 

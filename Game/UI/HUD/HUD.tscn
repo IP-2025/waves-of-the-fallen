@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6iedr3itagaf"]
+
+[ext_resource type="Script" uid="uid://c4j4rhf5hm3la" path="res://UI/HUD/HUD.cs" id="1_0ktxb"]
+[ext_resource type="FontFile" uid="uid://cbtai6ax18jyn" path="res://Assets/Fonts/Orbitron/Orbitron-VariableFont_wght.ttf" id="2_53dev"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_0ktxb")
+
+[node name="ScoreLabel" type="RichTextLabel" parent="."]
+anchors_preset = -1
+anchor_left = 0.214
+anchor_top = 0.211
+anchor_right = 0.441
+anchor_bottom = 0.459
+offset_left = -235.528
+offset_top = -130.728
+offset_right = 25.968
+offset_bottom = 29.568
+text = "Score:"
+
+[node name="ComboTimerLabel" type="RichTextLabel" parent="."]
+offset_left = 507.0
+offset_top = 129.0
+offset_right = 637.0
+offset_bottom = 194.0
+theme_override_constants/outline_size = 2
+theme_override_fonts/normal_font = ExtResource("2_53dev")
+
+[node name="PauseButton" type="Button" parent="."]
+z_index = 100
+custom_minimum_size = Vector2(60, 60)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_top = 40.0
+offset_right = -20.0
+offset_bottom = 100.0
+text = "X"

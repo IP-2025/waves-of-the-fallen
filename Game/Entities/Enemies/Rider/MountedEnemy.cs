@@ -16,6 +16,7 @@ public partial class MountedEnemy : EnemyBase
 		speed = 230f;
 		damage = 5f;
 		attacksPerSecond = 1f;
+		scoreValue = 75;
 	}
 	public override void _Ready()
 	{
@@ -64,7 +65,16 @@ public partial class MountedEnemy : EnemyBase
 	private void OnHealthDepleted()
 	{
 		if (GetTree().GetMultiplayer().IsServer())
-			ActivateRider();
+		{
+			Velocity = Vector2.Zero;
+			animationHandler.SetDeath();
+
+			animationHandler.OnDeathAnimationFinished += () =>
+			{
+				ActivateRider();
+				QueueFree();
+			};
+		}
 	}
 
 	/// <summary>

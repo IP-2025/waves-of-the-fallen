@@ -17,7 +17,12 @@ public partial class Health : Node2D
 	[Signal]
 	public delegate void HealthDepletedEventHandler(); // signal emitted when health is depleted
 
-	public float MaxHealth => max_health; // property to access max health
+	// property to access max health
+	public float MaxHealth
+	{
+		get => max_health;
+		set => max_health = value;
+	}
 
 	private bool isDead = false;
 
@@ -30,7 +35,19 @@ public partial class Health : Node2D
 	{
 		if (isDead) return;
 		if (!disable)
-			health -= damage;
+			health -= damage; // reduce health by damage amount
+
+		doAnimation(); // client has to do damage animations
+
+		if (GetParent() is EnemyBase enemy)
+		{
+			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("enemyHurt"), ((Node2D)GetParent()).Position);
+		}
+		else if (GetParent() is DefaultPlayer player)
+		{
+			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerHit"), ((Node2D)GetParent()).Position, -10);
+		}
+
 
 		doAnimation();
 
@@ -40,10 +57,23 @@ public partial class Health : Node2D
 		);
 	}
 
+	public void Heal(float heal)
+	{
+		if (!disable)
+			health += heal;
+
+		if (health > max_health)
+			health = max_health;
+
+		doAnimation();
+		// TODO Sounds fehlen noch
+		//SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("enemyHurt"), ((Node2D)GetParent()).Position);
+
+	}
+
 	private void doAnimation()
 	{
 		if (isDead) return;
-
 		// hit animation
 		if (GetParent() is EnemyBase enemy)
 		{
@@ -54,16 +84,16 @@ public partial class Health : Node2D
 			player.OnHit();
 		}
 
+
 		// death animation
 		if (health <= 0)
 		{
 			isDead = true;
-
-			EmitSignal(SignalName.HealthDepleted);
-
+			// check if parent is DefaultPlayer
 			if (GetParent() is DefaultPlayer player)
 			{
-				player.CallDeferred("Die");
+				player.Die(); // call Die() method if parent is DefaultPlayer
+				EmitSignal(SignalName.HealthDepleted, player.OwnerPeerId);
 			}
 			else if (GetParent() is EnemyBase deadEnemy)
 			{
@@ -71,28 +101,40 @@ public partial class Health : Node2D
 			}
 			else
 			{
-				Node parent = GetParent();
-				while (parent != null && parent is not DefaultPlayer)
-				{
-					parent = parent.GetParent();
-				}
+				GetParent().QueueFree(); // otherwise, free the parent node
+			}
 
-				if (parent is DefaultPlayer defaultPlayer)
-				{
-					GD.Print("DefaultPlayer found higher in tree, calling Die()");
-					defaultPlayer.Die();
-				}
-				else
-				{
-					GD.Print("Unknown parent type, calling QueueFree()");
-					GetParent().QueueFree();
-				}
+			//EmitSignal(SignalName.HealthDepleted); // emit signal when health is depleted
+		}
+		else if (GetParent() is EnemyBase deadEnemy)
+		{
+			deadEnemy.OnDeath();
+		}
+		else
+		{
+			Node parent = GetParent();
+			while (parent != null && parent is not DefaultPlayer)
+			{
+				parent = parent.GetParent();
+			}
+
+			if (parent is DefaultPlayer defaultPlayer)
+			{
+				GD.Print("DefaultPlayer found higher in tree, calling Die()");
+				defaultPlayer.Die();
+			}
+			else
+			{
+				GD.Print("Unknown parent type, calling QueueFree()");
+				GetParent().QueueFree();
 			}
 		}
 	}
+
 
 	public void ResetHealth()
 	{
 		health = max_health;
 	}
+
 }

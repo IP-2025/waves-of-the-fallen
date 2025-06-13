@@ -1,33 +1,23 @@
 import express from 'express';
+import characterRouter from './character';
+import progressRouter from './progress';
+import highscoreRouter from './highscore';
+import settingsRouter from './settings';
+import goldRouter from './gold';
+import userRouter from './user';
 import { authenticationStep } from 'middleware';
-import {
-  getGoldController,
-  getSettings,
-  setGoldController,
-  setSettings,
-  getAllCharacterController,
-  getAllUnlockedCharacterController,
-  levelUpCharController,
-  progressSyncController,
-  unlockCharController,
-  updateUserHighscore, getUserHighscore, getTopHighscore
-} from 'controllers';
 
 const protectedRouter = express.Router();
 
 protectedRouter.get('/', authenticationStep, (req, res) => {
   res.json({ authenticated: true });
 });
-protectedRouter.post('/getSettings', authenticationStep, getSettings);
-protectedRouter.post('/setSettings', authenticationStep, setSettings);
-protectedRouter.post('/setGold', authenticationStep, setGoldController);
-protectedRouter.post('/getGold', authenticationStep, getGoldController);
-protectedRouter.get('/characters', authenticationStep, getAllCharacterController);
-protectedRouter.post('/getAllUnlockedCharacters', authenticationStep, getAllUnlockedCharacterController);
-protectedRouter.post('/character/unlock', authenticationStep, unlockCharController);
-protectedRouter.post('/character/levelUp', authenticationStep, levelUpCharController);
-protectedRouter.post('/progressSync', authenticationStep, progressSyncController);
-protectedRouter.post('/highscore/update', authenticationStep, updateUserHighscore)
-protectedRouter.post('/highscore/getUserHighscore', authenticationStep, getUserHighscore)
-protectedRouter.get('/highscore/top', authenticationStep, getTopHighscore)
+
+protectedRouter.use('/character', characterRouter);
+protectedRouter.use('/progress', progressRouter);
+protectedRouter.use('/highscore', highscoreRouter);
+protectedRouter.use('/settings', settingsRouter);
+protectedRouter.use('/gold', goldRouter);
+protectedRouter.use('/user', userRouter);
+
 export default protectedRouter;

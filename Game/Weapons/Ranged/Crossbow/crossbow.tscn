@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://dbqlns7qsgchl"]
 
-[ext_resource type="Texture2D" uid="uid://sba7cioky4v8" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustLeer.png" id="1_hgydq"]
+[ext_resource type="Texture2D" uid="uid://b8dg1q1ljcwpg" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustLeer.png" id="1_hgydq"]
 [ext_resource type="Script" uid="uid://bxu36ksuq3n6b" path="res://Weapons/Ranged/Crossbow/Crossbow.cs" id="1_rf8ij"]
-[ext_resource type="Texture2D" uid="uid://bg01j6cdx0g5k" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen1.png" id="3_ppm1h"]
-[ext_resource type="Texture2D" uid="uid://0bwx67qa6u2n" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen2.png" id="4_vxbuk"]
-[ext_resource type="Texture2D" uid="uid://b3fd811d25xru" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen3.png" id="5_1nakq"]
-[ext_resource type="Texture2D" uid="uid://1c6st8207f15" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen4.png" id="6_pnntu"]
+[ext_resource type="Texture2D" uid="uid://cmdta3tijfj42" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen1.png" id="3_ppm1h"]
+[ext_resource type="Texture2D" uid="uid://c838m7ec3afti" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen2.png" id="4_vxbuk"]
+[ext_resource type="Texture2D" uid="uid://b3bcusdrottp4" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen3.png" id="5_1nakq"]
+[ext_resource type="Texture2D" uid="uid://bepxsw2hl5bos" path="res://Weapons/Ranged/Crossbow/Resources/ArmbrustSpannen4.png" id="6_pnntu"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_b7gdf"]
 animations = [{
@@ -50,14 +50,9 @@ animation = &"shoot"
 frame = 5
 frame_progress = 1.0
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
-autostart = true
-
 [node name="ShootingPoint" type="Marker2D" parent="."]
 position = Vector2(-0.0958824, -0.000759996)
 rotation = 0.00792616
 scale = Vector2(0.1089, 0.1089)
 
 [connection signal="frame_changed" from="WeaponPivot/CrossbowSprite" to="." method="_on_crossbow_sprite_frame_changed"]
-[connection signal="timeout" from="Timer" to="." method="OnTimerTimeoutCrossbow"]

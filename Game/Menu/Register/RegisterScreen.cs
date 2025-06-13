@@ -3,7 +3,7 @@ using Game.Utilities.Backend;
 
 public partial class RegisterScreen : Control
 {
-	private static readonly string REGISTER_URL = $"{Server.BaseUrl}/api/v1/auth/register";
+	private static readonly string REGISTER_URL = $"{ServerConfig.BaseUrl}/api/v1/auth/register";
 
 	private LineEdit _emailField;
 	private LineEdit _usernameField;
@@ -15,13 +15,13 @@ public partial class RegisterScreen : Control
 
 	public override void _Ready()
 	{
-		_emailField = GetNode<LineEdit>("Panel/EmailField");
-		_usernameField = GetNode<LineEdit>("Panel/NameField");
-		_passwordField = GetNode<LineEdit>("Panel/PasswordField");
-		_registerButton = GetNode<Button>("Panel/RegisterButton");
-		_backButton = GetNode<Button>("Panel/BackButton");
-		_registerRequest = GetNode<HttpRequest>("Panel/RegisterRequest");
-		_errorLabel = GetNode<Label>("Panel/ErrorLabel");
+		_emailField = GetNode<LineEdit>("%EmailField");
+		_usernameField = GetNode<LineEdit>("%NameField");
+		_passwordField = GetNode<LineEdit>("%PasswordField");
+		_registerButton = GetNode<Button>("%RegisterButton");
+		_backButton = GetNode<Button>("%BackButton");
+		_registerRequest = GetNode<HttpRequest>("%RegisterRequest");
+		_errorLabel = GetNode<Label>("%ErrorLabel");
 
 		_registerButton.Connect("pressed", new Callable(this, nameof(OnRegisterButtonPressed)));
 		_backButton.Connect("pressed", new Callable(this, nameof(OnBackButtonPressed)));
@@ -32,7 +32,7 @@ public partial class RegisterScreen : Control
 	private void OnRegisterButtonPressed()
 	{
 		GD.Print("Button pressed!");
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		var username = _usernameField.Text;
 		var email = _emailField.Text.Trim();
 		var password = _passwordField.Text;
@@ -42,12 +42,12 @@ public partial class RegisterScreen : Control
 			ShowError("Please fill in all fields.");
 			return;
 		}
-		
+
 		if (!IsValidEmail(email))
 		{
 			ShowError("Please enter a valid email address.");
 			return;
-		}	
+		}
 
 		var body = Json.Stringify(
 			new Godot.Collections.Dictionary
@@ -57,7 +57,7 @@ public partial class RegisterScreen : Control
 				{ "password", password }
 			}
 		);
-		
+
 		var headers = new[] { "Content-Type: application/json" };
 		var err = _registerRequest.Request(
 			REGISTER_URL,
@@ -65,7 +65,7 @@ public partial class RegisterScreen : Control
 			HttpClient.Method.Post,
 			body
 		);
-		
+
 		GD.Print("Request sent!");
 
 		if (err != Error.Ok)
@@ -78,7 +78,7 @@ public partial class RegisterScreen : Control
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Login/login_screen.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		GetTree().ChangeSceneToPacked(scene);
 	}
 
@@ -114,7 +114,7 @@ public partial class RegisterScreen : Control
 	private void OnRegisterSuccess(Godot.Collections.Dictionary data)
 	{
 		GD.Print("Login successful!");
-		
+
 		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Login/login_screen.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
 		GetTree().ChangeSceneToPacked(scene);
@@ -123,11 +123,11 @@ public partial class RegisterScreen : Control
 	private void ShowError(string message)
 	{
 		GD.PrintErr("Error: " + message);
-		
+
 		_errorLabel.Text = message;
 		_errorLabel.Visible = true;
 	}
-	
+
 	private bool IsValidEmail(string email)
 	{
 		var emailRegex = new System.Text.RegularExpressions.Regex(
@@ -135,5 +135,13 @@ public partial class RegisterScreen : Control
 			System.Text.RegularExpressions.RegexOptions.Compiled
 		);
 		return emailRegex.IsMatch(email);
+	}
+	
+	public override void _Notification(int what)
+	{
+		if (what == NotificationWMGoBackRequest)
+		{
+			OnBackButtonPressed();
+		}   
 	}
 }

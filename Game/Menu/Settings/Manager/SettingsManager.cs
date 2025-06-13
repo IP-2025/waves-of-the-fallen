@@ -13,6 +13,8 @@ public partial class SettingsManager : Node
 			config.SetValue("General", "Language", "English");
 			config.SetValue("Audio", "Enabled", true);
 			config.SetValue("Audio", "Volume", 0.1f);
+			config.SetValue("Sound", "Enabled", true);
+			config.SetValue("Sound", "Volume", 0.1f);
 			config.Save(SettingsPath);
 		}
 		else

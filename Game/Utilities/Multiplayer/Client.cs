@@ -1,26 +1,41 @@
-namespace Game.Utilities.Multiplayer
-{
+namespace Game.Utilities.Multiplayer;
+
 using Godot;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security;
 using System;
-	using System.Threading;
+using System.Threading;
+using System.Threading.Tasks;
+using Game.UI.GameOver;
+using Game.Utilities.Backend;
 
 	public partial class Client : Node
 {
-	bool enableDebug = false;
+	private bool _enableDebug = false;
 	private Camera2D _camera;
-	private bool _hasJoystick = false;
-	private bool _waveTimerReady = false;
-	private WaveTimer timer = null;
+	private bool _hasJoystick;
+	private bool _waveTimerReady;
+	private WaveTimer _timer;
+	private bool _graceTimeTriggered;
+
+	// movement tracking of players
+	private Dictionary<long, Vector2> _lastPositions = new();
 
 	// GameRoot container for entities
-	private Dictionary<long, Node2D> _instances = new();
+	private readonly Dictionary<long, Node2D> _instances = new();
+
+	// Shop
+	private int _lastLocalShopRound = 1;
+	private int _newWeaponPos = 0;
+	private PackedScene _shopScene = GD.Load<PackedScene>("res://UI/Shop/BossShop/bossShop.tscn");
+	private Node _shopInstance;
+	private bool weaponUpdated = false;
+	private string _selectedWeapon = "";
 
 	// mapping per entity type
-	private Dictionary<EntityType, PackedScene> _prefabs = new()
+	private readonly Dictionary<EntityType, PackedScene> _prefabs = new()
 	{
 		{ EntityType.DefaultPlayer, GD.Load<PackedScene>("res://Entities/Characters/Base/default_player.tscn") },
 		{ EntityType.Archer, GD.Load<PackedScene>("res://Entities/Characters/Archer/archer.tscn") },
@@ -28,6 +43,7 @@ using System;
 		{ EntityType.RangedEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/Skeleton/ranged_enemy.tscn") },
 		{ EntityType.MountedEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/Rider/mounted_enemy.tscn") },
 		{ EntityType.RiderEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/Rider/rider_enemy.tscn") },
+		{ EntityType.GiantBossEnemy,  GD.Load<PackedScene>("res://Entities/Enemies/GiantBoss/giantBossEnemy.tscn") },
 		{ EntityType.Bow,  GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn") },
 		{ EntityType.BowArrow,  GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow_arrow.tscn") },
 		{ EntityType.Crossbow,  GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn") },
@@ -43,6 +59,12 @@ using System;
 		{ EntityType.Lighting, GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightning.tscn")},
 		{ EntityType.Dagger, GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn")},
 		{ EntityType.Sword, GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn")},
+		{ EntityType.WarHammer, GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn")},
+		{ EntityType.HammerProjectile, GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/hammerProjectile.tscn")},
+		{ EntityType.HealStaff, GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn")},
+		{ EntityType.DoubleBlade, GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn")},
+		{ EntityType.MedicineBag, GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn")},
+		{ EntityType.Medicine, GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicine.tscn")}
 	};
 
 	public override void _Ready()
@@ -53,25 +75,35 @@ using System;
 	{
 		long eid = Multiplayer.GetUniqueId();
 
-		Vector2 joy = GetLocalJoystickDirection();
+		var joy = GetLocalJoystickDirection();
 		var key = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		// decide between joystick and keyboard input, joystick has priority
 		var dir = joy != Vector2.Zero ? joy : key;
 
 		// nonly send move command if there is input
-		if (dir != Vector2.Zero)
-		{
-			return new Command(tick, eid, CommandType.Move, dir);
-		}
+		return dir != Vector2.Zero ? new Command(tick, eid, CommandType.Move, dir, _selectedWeapon, _newWeaponPos) : null;
+	}
 
-		return null;
+	public Command GetShopCommand(ulong tick)
+	{
+		long eid = Multiplayer.GetUniqueId();
+
+		var joy = GetLocalJoystickDirection();
+		var key = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+		// decide between joystick and keyboard input, joystick has priority
+		var dir = joy != Vector2.Zero ? joy : key;
+
+		bool executeCommand = weaponUpdated;
+		weaponUpdated = false;
+
+		return executeCommand ? new Command(tick, eid, CommandType.BossShop, dir, _selectedWeapon, _newWeaponPos) : null;
 	}
 
 	// helper finds the local player's joystick and returns its direction
 	private Vector2 GetLocalJoystickDirection()
 	{
 		// scene root - GameRoot
-		string playerNodeName = $"E_{Multiplayer.GetUniqueId()}";
+		var playerNodeName = $"E_{Multiplayer.GetUniqueId()}";
 		var playerNode = GetTree()
 			.Root.GetNodeOrNull<GameRoot>("GameRoot")
 			?.GetNodeOrNull<CharacterBody2D>(playerNodeName);
@@ -87,8 +119,14 @@ using System;
 
 	public void ApplySnapshot(Snapshot snap)
 	{
+		// check if all players are dead in snapshot
+		ShowGameOverScreen(snap.livingPlayersCount);
+
 		// collect all network ids from the snapshot
 		var networkIds = snap.Entities.Select(e => e.NetworkId).ToHashSet();
+
+		// Update PlayerScores from the snapshot
+		UpdatePlayerScores(snap.Entities);
 
 		// instanciate or update entities
 		InstantiateOrUpdateEntities(snap.Entities);
@@ -96,13 +134,50 @@ using System;
 		// cleanup removed entities
 		CleanupRemovedEntities(networkIds);
 
-		if (_camera != null && !networkIds.Contains(Multiplayer.GetUniqueId()))
+		if (_camera == null || networkIds.Contains(Multiplayer.GetUniqueId())) return;
+		_camera = null;
+		_hasJoystick = false;
+	}
+
+	private void UpdatePlayerScores(IEnumerable<EntitySnapshot> entities)
+	{
+		foreach (var entity in entities)
 		{
-			_camera = null;
-			_hasJoystick = false;
+			if (entity.PlayerScores != null)
+			{
+				foreach (var score in entity.PlayerScores)
+				{
+					// update the ScoreManager with the scores from the snapshot
+					if (!ScoreManager.PlayerScores.ContainsKey(score.Key))
+					{
+						ScoreManager.PlayerScores[score.Key] = 0;
+					}
+					ScoreManager.PlayerScores[score.Key] = score.Value;
+				}
+			}
 		}
 	}
 
+	private void ShowGameOverScreen(int livingPlayersCount)
+	{
+		if (livingPlayersCount == 0)
+		{
+			DebugIt("Show Game Over screen, no one is alive");
+			var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
+			gameRoot.ShowGameOverScreen();
+		}
+	}
+
+	private void OnWeaponChosen(Weapon weaponType)
+	{
+		if (_shopInstance != null && IsInstanceValid(_shopInstance))
+			_shopInstance.QueueFree();
+		_shopInstance = null;
+
+		_selectedWeapon = weaponType.GetType().Name;
+		_newWeaponPos++;
+		weaponUpdated = true;
+	}
 
 	private void InstantiateOrUpdateEntities(IEnumerable<EntitySnapshot> entities)
 	{
@@ -111,30 +186,64 @@ using System;
 		{
 			_camera = null;
 			_waveTimerReady = false;
-			timer = null;
+			_timer = null;
 		}
 		// first all not a weapon things (no OwnerID & SlotIndex)
 		foreach (var entity in entities.Where(e => !e.OwnerId.HasValue || !e.SlotIndex.HasValue))
 		{
-			// HUD / WaveCounter stuff
-			if (!_waveTimerReady && _camera != null)
-			{
-				var wt = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
-				wt.disable = true;
-				_camera.AddChild(wt);
-				timer = wt;
-				_waveTimerReady = true;
-			}
-			else if (_waveTimerReady && _camera != null)
-			{
-				var timeLeftLabel = timer.GetNodeOrNull<Label>("TimeLeft");
-				if (timeLeftLabel != null)
-					timeLeftLabel.Text = (timer.maxTime - entity.WaveTimeLeft).ToString();
 
-				var waveCounterLabel = timer.GetNodeOrNull<Label>("WaveCounter");
-				if (waveCounterLabel != null)
-					waveCounterLabel.Text = $"Wave: {entity.WaveCount}";
-				if (entity.GraceTime) timeLeftLabel.Text = $"Grace Time";
+			// Shop
+			if (entity.WaveCount > _lastLocalShopRound && entity.WaveCount < 5)
+			{
+				_lastLocalShopRound = entity.WaveCount;
+
+				if (_camera != null && _shopInstance == null)
+				{
+					_shopInstance = _shopScene.Instantiate();
+					_shopInstance.Connect(nameof(BossShop.WeaponChosen), new Callable(this, nameof(OnWeaponChosen)));
+					_camera.AddChild(_shopInstance);
+
+					DebugIt($"Shop instantiated for wave {entity.WaveCount}");
+				}
+			}
+
+			switch (_waveTimerReady)
+			{
+				// HUD / WaveCounter stuff
+				case false when _camera != null:
+					{
+						var wt = GD.Load<PackedScene>("res://Utilities/Gameflow/Waves/WaveTimer.tscn").Instantiate<WaveTimer>();
+						wt.Disable = true;
+						_camera.AddChild(wt);
+						_timer = wt;
+						_waveTimerReady = true;
+						break;
+					}
+				case true when _camera != null:
+					{
+						var timeLeftLabel = _timer.GetNodeOrNull<Label>("TimeLeft");
+						if (timeLeftLabel != null)
+							timeLeftLabel.Text = (_timer.MaxTime - entity.WaveTimeLeft).ToString();
+
+						var waveCounterLabel = _timer.GetNodeOrNull<Label>("WaveCounter");
+						if (waveCounterLabel != null)
+							waveCounterLabel.Text = $"Wave: {entity.WaveCount}";
+						if (entity.GraceTime)
+						{
+							timeLeftLabel.Text = "Grace Time";
+							if (!_graceTimeTriggered)
+							{
+								_timer.TriggerWaveEnded();
+								_graceTimeTriggered = true;
+							}
+						}
+						else
+						{
+							_graceTimeTriggered = false; // Reset, wenn GraceTime vorbei ist
+						}
+
+						break;
+					}
 			}
 
 			// Player stuff
@@ -156,6 +265,18 @@ using System;
 				{
 					ChangeCamera(inst, entity);
 				}
+
+				// check HUD for local player
+				if (entity.NetworkId == Multiplayer.GetUniqueId())
+				{
+					if (GetTree().Root.GetNodeOrNull("HUD") == null)
+					{
+						var hudScene = GD.Load<PackedScene>("res://UI/HUD/HUD.tscn");
+						var hud = hudScene.Instantiate();
+						hud.Name = "HUD";
+						GetTree().Root.AddChild(hud);
+					}
+				}
 			}
 
 			UpdateTransform(inst, entity);
@@ -174,6 +295,17 @@ using System;
 			_instances[entity.NetworkId] = inst;
 			DebugIt($"Instantiated weapon {entity.Type} with ID {entity.NetworkId} under owner {entity.OwnerId.Value}");
 		}
+
+		// guarantee that the PauseMenu for the local player ALWAYS exists
+		var hudNode = GetTree().Root.GetNodeOrNull<CanvasLayer>("HUD");
+		if (hudNode != null && hudNode.GetNodeOrNull<PauseMenu>("PauseMenu") == null)
+		{
+			var pauseMenuScene = GD.Load<PackedScene>("res://Menu/PauseMenu/pauseMenu.tscn");
+			var pauseMenu = pauseMenuScene.Instantiate<PauseMenu>();
+			pauseMenu.Name = "PauseMenu";
+			hudNode.AddChild(pauseMenu);
+			pauseMenu.Visible = false;
+		}
 	}
 
 	private Node2D CreateInstance(EntitySnapshot entity)
@@ -188,11 +320,27 @@ using System;
 
 			var inst = scene.Instantiate<Node2D>();
 
+			// Set OwnerPeerId for player instances
+			if (inst is DefaultPlayer dp)
+			{
+				dp.OwnerPeerId = entity.NetworkId;
+
+				var healthNode = inst.GetNodeOrNull<Health>("Health");
+				if (healthNode != null)
+				{
+					healthNode.MaxHealth = entity.Health; // <- MaxHealth aus dem Snapshot setzen!
+					healthNode.max_health = entity.Health;
+					healthNode.health = entity.Health;
+					healthNode.ResetHealth();
+				}
+			}
+
 			// disable health for enemies because server handles it
 			if (entity.Type == EntityType.DefaultEnemy
 				|| entity.Type == EntityType.RangedEnemy
 				|| entity.Type == EntityType.MountedEnemy
 				|| entity.Type == EntityType.RiderEnemy
+				|| entity.Type == EntityType.GiantBossEnemy
 				|| entity.Type == EntityType.DefaultPlayer
 				|| entity.Type == EntityType.Archer
 				|| entity.Type == EntityType.Assassin
@@ -207,7 +355,8 @@ using System;
 			if (entity.Type == EntityType.DefaultEnemy
 				|| entity.Type == EntityType.RangedEnemy
 				|| entity.Type == EntityType.MountedEnemy
-				|| entity.Type == EntityType.RiderEnemy)
+				|| entity.Type == EntityType.RiderEnemy
+				|| entity.Type == EntityType.GiantBossEnemy)
 			{
 				inst.AddToGroup("enemies");
 			}
@@ -235,9 +384,9 @@ using System;
 
 			// find owner node
 			var ownerNode = GetTree()
-			  .Root
-			  .GetNode<GameRoot>("GameRoot")
-			  .GetNode<Node2D>($"E_{entity.OwnerId.Value}");
+				.Root
+				.GetNode<GameRoot>("GameRoot")
+				.GetNode<Node2D>($"E_{entity.OwnerId.Value}");
 
 			if (ownerNode == null)
 			{
@@ -266,25 +415,54 @@ using System;
 		return null; // no OwnerID & SlotIndex? f this
 	}
 
-	
 
-	
+
+
 	private void UpdateTransform(Node2D inst, EntitySnapshot entity)
 	{
-		if (GodotObject.IsInstanceValid(inst))
+		if (IsInstanceValid(inst))
 		{
+			Vector2 lastPos = _lastPositions.TryGetValue(entity.NetworkId, out var lp) ? lp : entity.Position;
+			Vector2 deltaPos = entity.Position - lastPos;
+
 			inst.GlobalPosition = entity.Position;
 			inst.Rotation = entity.Rotation;
 			inst.Scale = entity.Scale;
 			inst.GetNodeOrNull<Health>("Health").health = entity.Health;
+
+			// Sync all animations for players
+			if (inst is DefaultPlayer player)
+			{
+				if (entity.Health <= 0)
+				{
+					player.animationHandler?.SetDeath();
+				}
+				else
+				{
+					// Flip based on movement direction
+					if (player.animation != null && Math.Abs(deltaPos.X) > 1e-2)
+						player.animation.FlipH = deltaPos.X < 0;
+
+					// Walk/Idle Animation based on movement
+					if (player.animationHandler != null)
+					{
+						if (deltaPos.Length() > 1e-2)
+							player.animationHandler.UpdateAnimationState(false, deltaPos);
+						else
+							player.animationHandler.UpdateAnimationState(false, Vector2.Zero);
+					}
+				}
+			}
+
+			// save last position
+			_lastPositions[entity.NetworkId] = entity.Position;
 		}
 	}
 
 	private void AttachJoystick(Node2D inst, EntitySnapshot entity)
 	{
 		// only for local / this clients player
-		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
-							|| entity.Type == EntityType.Archer
+		bool isPlayerType = entity.Type is EntityType.DefaultPlayer or EntityType.Archer
 							|| entity.Type == EntityType.Knight
 							|| entity.Type == EntityType.Mage
 							|| entity.Type == EntityType.Assassin;
@@ -300,7 +478,7 @@ using System;
 
 	private void ChangeCamera(Node2D inst, EntitySnapshot entity)
 	{
-		bool isPlayerType = entity.Type == EntityType.DefaultPlayer 
+		bool isPlayerType = entity.Type == EntityType.DefaultPlayer
 							|| entity.Type == EntityType.Archer
 							|| entity.Type == EntityType.Knight
 							|| entity.Type == EntityType.Mage
@@ -332,7 +510,6 @@ using System;
 
 	private void DebugIt(string message)
 	{
-		if (enableDebug) Debug.Print("Client: " + message);
+		if (_enableDebug) Debug.Print("Client: " + message);
 	}
-}
 }

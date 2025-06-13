@@ -1,0 +1,83 @@
+[gd_scene load_steps=9 format=3 uid="uid://b0a6rtvxta2b6"]
+
+[ext_resource type="Script" uid="uid://f2jp58chd2bc" path="res://Weapons/Utility/MedicineBag/Medicine.cs" id="1_4wycq"]
+[ext_resource type="Texture2D" uid="uid://bpc1dvfcaahpc" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag.png" id="1_riq38"]
+[ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_41hyg"]
+[ext_resource type="Texture2D" uid="uid://b0k17yp4x5jtk" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag1.png" id="4_ns8c0"]
+[ext_resource type="Texture2D" uid="uid://cwd87aghdu86h" path="res://Weapons/Utility/MedicineBag/Resources/MedicineBag2.png" id="5_2xh6q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wycq"]
+size = Vector2(400, 285.714)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6eu1f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_riq38")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"despawning",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_riq38")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ns8c0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_riq38")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_2xh6q")
+}],
+"loop": true,
+"name": &"thrown",
+"speed": 5.0
+}]
+
+[sub_resource type="Curve2D" id="Curve2D_ns8c0"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, -415.945, 0, -347.803, 0, 347.803, 364.664, 0, 0, 0, 0, 0, 0, 387.455, -0.133073, 370.706, 0.133073, -370.706, -387.455, 0, 0, 0, 0, 0, 0, -415.945)
+}
+point_count = 5
+
+[node name="Medicine" type="Area2D"]
+scale = Vector2(0.0501474, 0.05)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_4wycq")
+
+[node name="Health" type="Node2D" parent="."]
+script = ExtResource("2_41hyg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4wycq")
+
+[node name="DespawnTime" type="Timer" parent="."]
+wait_time = 7.0
+autostart = true
+
+[node name="MedicineSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6eu1f")
+animation = &"thrown"
+frame = 2
+frame_progress = 0.629986
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(11.1328, 13.9166)
+scale = Vector2(8.00799, 8.00799)
+curve = SubResource("Curve2D_ns8c0")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(-0.00459528, -415.944)
+rotation = -0.820134
+progress = 2420.13
+cubic_interp = false
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered" flags=6]
+[connection signal="timeout" from="DespawnTime" to="." method="OnDespawnTimeTimeout"]

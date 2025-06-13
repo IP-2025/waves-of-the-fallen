@@ -55,10 +55,11 @@ public partial class JoyHandle : Sprite2D
 
 		Vector2 posVector = Vector2.Zero;
 
-		if (Mathf.Abs(diff.X) >= _deadzone)
+		// Enable the if-statements for 8-directional movement
+		//if (Mathf.Abs(diff.X) >= _deadzone)
 			posVector.X = diff.X / MaxLength;
 		
-		if (Mathf.Abs(diff.Y) >= _deadzone)
+		//if (Mathf.Abs(diff.Y) >= _deadzone)
 			posVector.Y = diff.Y / MaxLength;
 
 		SetJoystickPosVector(posVector);

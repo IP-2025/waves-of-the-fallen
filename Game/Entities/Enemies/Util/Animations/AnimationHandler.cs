@@ -39,7 +39,7 @@ public partial class AnimationHandler
 	
 	public void SetHit()
 	{
-		if (CurrentState == EnemyAnimationState.Die)
+		if (CurrentState == EnemyAnimationState.Hit)
 		{
 			return;
 		}
@@ -78,6 +78,7 @@ public partial class AnimationHandler
 		if (animation.Animation == "hit")
 		{
 			CurrentState = EnemyAnimationState.IdleOrWalk;
+			HandleAnimations(Vector2.Zero);
 		}
 		else if (animation.Animation == "death")
 		{

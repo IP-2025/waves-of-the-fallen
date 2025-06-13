@@ -9,6 +9,7 @@ public enum EntityType
 	RangedEnemy,
 	MountedEnemy,
 	RiderEnemy,
+	GiantBossEnemy,
 	Bow,
 	BowArrow,
 	Crossbow,
@@ -21,4 +22,10 @@ public enum EntityType
 	Sword,
 	Lightningstaff,
 	Lighting,
+	WarHammer,
+	HammerProjectile,
+	HealStaff,
+	DoubleBlade,
+	MedicineBag,
+	Medicine
 }

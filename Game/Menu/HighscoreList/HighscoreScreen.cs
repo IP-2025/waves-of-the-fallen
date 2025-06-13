@@ -13,18 +13,17 @@ public partial class HighscoreScreen : Control
 
 	public override void _Ready()
 	{
-		_personalScoreRequest = GetNode<HttpRequest>("Panel/PersonalScoreRequest");
-		_topPlayerRequest = GetNode<HttpRequest>("Panel/TopPlayersRequest");
-		_backButton = GetNode<Button>("Panel/BackButton");
-		_mainMenuButton = GetNode<Button>("Panel/Offline/Button");
-
+		_personalScoreRequest = GetNode<HttpRequest>("%PersonalScoreRequest");
+		_topPlayerRequest = GetNode<HttpRequest>("%TopPlayersRequest");
+		_backButton = GetNode<Button>("%BackButton");
+		_mainMenuButton = GetNode<Button>("%Button");
 
 		_personalScoreRequest.Connect("request_completed", new Callable(this, nameof(OnPersonalScoreRequestCompleted)));
 		_topPlayerRequest.Connect("request_completed", new Callable(this, nameof(OnTopPlayersRequestCompleted)));
 		_backButton.Connect("pressed", new Callable(this, nameof(OnBackButtonPressed)));
 		_mainMenuButton.Connect("pressed", new Callable(this, nameof(OnMainMenuButtonPressed)));
 
-
+	
 		if (GameState.CurrentState == ConnectionState.Online)
 		{
 			var headers = new[]
@@ -33,7 +32,7 @@ public partial class HighscoreScreen : Control
 				"Authorization: Bearer " + SecureStorage.LoadToken()
 			};
 			var err = _topPlayerRequest.Request(
-				$"{Server.BaseUrl}/api/v1/protected/highscore/top",
+				$"{ServerConfig.BaseUrl}/api/v1/protected/highscore/top",
 				headers
 			);
 
@@ -47,7 +46,7 @@ public partial class HighscoreScreen : Control
 				"Authorization: Bearer " + SecureStorage.LoadToken()
 			};
 			var err2 = _personalScoreRequest.Request(
-				$"{Server.BaseUrl}/api/v1/protected/highscore/getUserHighscore",
+				$"{ServerConfig.BaseUrl}/api/v1/protected/highscore/getUserHighscore",
 				headers2,
 				HttpClient.Method.Post
 			);
@@ -57,8 +56,8 @@ public partial class HighscoreScreen : Control
 		}
 		else
 		{
-			var offlinePanel = GetNode<Panel>("Panel/Offline");
-			offlinePanel.Visible = true;
+			var offlineMarginContainer = GetNode<MarginContainer>("%MarginContainerOffline");
+			offlineMarginContainer.Visible = true;
 		}
 	}
 
@@ -74,17 +73,17 @@ public partial class HighscoreScreen : Control
 				var data = (Godot.Collections.Dictionary)json.GetData();
 				var highScore = (Godot.Collections.Dictionary)data["highScore"];
 
-				var playerScore = GetNode<ColorRect>("Panel/PlayerScore");
-				playerScore.GetNode<Label>("Position").Text = "-";
-				playerScore.GetNode<Label>("Name").Text = "Me";
-				playerScore.GetNode<Label>("Score").Text = highScore["highScore"].ToString();
+				var playerScore = GetNode<ColorRect>("%PlayerScore");
+				GetNode<Label>("%Position").Text = "-";
+				GetNode<Label>("%Name").Text = "Me";
+				GetNode<Label>("%Score").Text = highScore["highScore"].ToString();
 
 				var rawTimestamp = highScore["timeStamp"].ToString();
 				var formattedTime = rawTimestamp;
 				if (DateTime.TryParse(rawTimestamp, out var dt))
 					formattedTime = dt.ToLocalTime().ToString("dd.MM.yyyy HH:mm");
 
-				playerScore.GetNode<Label>("Time").Text = formattedTime;
+				GetNode<Label>("%Time").Text = formattedTime;
 			}
 			else
 			{
@@ -109,7 +108,7 @@ public partial class HighscoreScreen : Control
 				var data = (Godot.Collections.Dictionary)json.GetData();
 				var highScoreList = (Godot.Collections.Array)data["highScoreList"];
 				var entryScene = GD.Load<PackedScene>("res://Menu/HighscoreList/entry.tscn");
-				var vbox = GetNode<VBoxContainer>("Panel/List/VBoxContainer");
+				var vbox = GetNode<VBoxContainer>("%VBoxContainer");
 				vbox.ClearChildren();
 
 				for (var i = 0; i < highScoreList.Count; i++)
@@ -118,16 +117,17 @@ public partial class HighscoreScreen : Control
 					var player = (Godot.Collections.Dictionary)scoreDict["player"];
 
 					var entry = entryScene.Instantiate<Control>();
-					entry.GetNode<Label>("Position").Text = (i + 1).ToString();
-					entry.GetNode<Label>("Name").Text = player["username"].ToString();
-					entry.GetNode<Label>("Score").Text = scoreDict["highScore"].ToString();
+					entry.GetNode<Label>("HBoxContainer/Position").Text = (i + 1).ToString();
+					entry.GetNode<Label>("HBoxContainer/Name").Text = player["username"].ToString();
+					entry.GetNode<Label>("HBoxContainer/Score").Text = scoreDict["highScore"].ToString();
+
 
 					var rawTimestamp = scoreDict["timeStamp"].ToString();
 					var formattedTime = rawTimestamp;
 					if (DateTime.TryParse(rawTimestamp, out var dt))
 						formattedTime = dt.ToLocalTime().ToString("dd.MM.yyyy HH:mm");
 
-					entry.GetNode<Label>("Time").Text = formattedTime;
+					entry.GetNode<Label>("HBoxContainer/Time").Text = formattedTime;
 					vbox.AddChild(entry);
 				}
 			}
@@ -146,16 +146,24 @@ public partial class HighscoreScreen : Control
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Main/mainMenu.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		GetTree().ChangeSceneToPacked(scene);
 	}
-	
+
 	private void OnMainMenuButtonPressed()
 	{
 		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Main/mainMenu.tscn");
 		if (scene == null) GD.PrintErr("Main Menu Scene not found");
-		SoundManager.Instance.PlayUI();
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 		GetTree().ChangeSceneToPacked(scene);
+	}
+	
+	public override void _Notification(int what)
+	{
+		if (what == NotificationWMGoBackRequest)
+		{
+			OnBackButtonPressed();
+		}   
 	}
 }
 
