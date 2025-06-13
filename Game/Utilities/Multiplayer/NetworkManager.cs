@@ -39,7 +39,7 @@ namespace Game.Utilities.Multiplayer
 		private Client client;
 		private Server server;
 		public bool _isLocalHost = false;
-		public bool _soloMode = false;
+		public bool SoloMode = false;
 		Process process = new Process();
 		// Server ready signal
 		[Signal]
@@ -48,6 +48,7 @@ namespace Game.Utilities.Multiplayer
 
 		public override void _Ready()
 		{
+			Engine.MaxFps = 60; // this is here because NetworkManager is an autoload (and it wont work in SettingsMenu for whatever reason). This means the whole game will be on 60 fps. Workaround but works
 			Instance = this;
 			// check if we are in headless server mode
 			var args = OS.GetCmdlineArgs();
@@ -63,6 +64,7 @@ namespace Game.Utilities.Multiplayer
 
 		public override void _PhysicsProcess(double delta)
 		{
+			
 			if (!_readyForUdp) return;
 
 			// UDP Networking
@@ -211,6 +213,33 @@ namespace Game.Utilities.Multiplayer
 		{
 			DebugIt($"Peer disconnected: {id}");
 
+			// host (id == 1) is the server
+			if (!_isServer && id == 1)
+			{
+				GD.Print("Host disconnected. Returning to main menu.");
+
+				// cleanup UI, score, etc.
+				var root = GetTree().Root;
+				var hud = root.GetNodeOrNull<CanvasLayer>("HUD");
+				if (hud != null)
+					hud.QueueFree();
+
+				var gameRoot = root.GetNodeOrNull<GameRoot>("GameRoot");
+				gameRoot?.CleanupAllLocal();
+
+				GetTree().ChangeSceneToFile("res://Menu/Main/mainMenu.tscn");
+				return;
+			}
+
+			// if we are the server and a client disconnects, remove the player entity
+			if (_isServer && id != 1)
+			{
+				GD.Print($"Client {id} disconnected. Removing player entity, but game continues.");
+				// NO CLEANUP HERE! NO CHANGE SCENE! or it will crash the host game
+				return;
+			}
+
+			// If all players disconnect from the server, we shut it down
 			if (_isServer && GetTree().GetMultiplayer().GetPeers().Count() == 0)
 			{
 				// kill him!! if he is a lonely server, lost in the sad world of the web with no one to play with ;(
@@ -340,6 +369,7 @@ namespace Game.Utilities.Multiplayer
 		[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
 		public void NotifyGameStart()
 		{
+			SoloMode = false;
 			// change scene to game
 			var gameScene = GD.Load<PackedScene>("res://Utilities/GameRoot/GameRoot.tscn");
 			gameScene.Instantiate<Node>();
@@ -352,11 +382,17 @@ namespace Game.Utilities.Multiplayer
 		}
 
 		[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-		public void SelectCharacter(int selectedCharacterId)
+		public void SelectCharacter(int selectedCharacterId, int health, int speed)
 		{
 			long peerId = Multiplayer.GetRemoteSenderId();
-			Server.Instance.PlayerSelections[peerId] = selectedCharacterId;
-			DebugIt("Player selectged: " + selectedCharacterId + " By PlayerID: " + peerId);
+			// Speichere alle Werte pro Spieler
+			Server.Instance.PlayerSelections[peerId] = new PlayerCharacterData
+			{
+				CharacterId = selectedCharacterId,
+				Health = health,
+				Speed = speed
+			};
+			DebugIt($"Player {peerId} selected character {selectedCharacterId} (HP: {health}, Speed: {speed}, ...)");
 		}
 
 		// maybe reactivate for online multiplayer
@@ -457,6 +493,61 @@ namespace Game.Utilities.Multiplayer
 		private void DebugIt(string message)
 		{
 			if (enableDebug) Debug.Print("Network Manager: " + message);
+		}
+
+		public void CleanupNetworkState()
+		{
+			_isServer = false;
+			_gameRunning = false;
+			_readyForUdp = false;
+			_udpPeers.Clear();
+
+			foreach (var child in GetChildren().ToList())
+			{
+				if (child is Server || child is Client)
+					RemoveChild(child);
+				if (child is Node node)
+					node.QueueFree();
+			}
+			server = null;
+			client = null;
+
+			var multiplayer = GetTree().GetMultiplayer();
+			if (multiplayer.MultiplayerPeer != null)
+			{
+				multiplayer.MultiplayerPeer.Close();
+				multiplayer.MultiplayerPeer = null;
+				DebugIt("MultiplayerPeer set to null (Cleanup).");
+			}
+
+			if (_udpClientPeer != null)
+			{
+				_udpClientPeer.Close();
+				_udpClientPeer = null;
+				DebugIt("UDP Client disconnected (Cleanup).");
+			}
+
+			if (_udpServer != null)
+			{
+				_udpServer = null;
+				DebugIt("UDP Server disconnected (Cleanup).");
+			}
+
+			if (_rpcClientPeer != null)
+			{
+				_rpcClientPeer.Close();
+				_rpcClientPeer.Dispose();
+				_rpcClientPeer = null;
+				DebugIt("ENetMultiplayerPeer (Client) disconnected (Cleanup).");
+			}
+			if (_rpcServerPeer != null)
+			{
+				_rpcServerPeer.Close();
+				_rpcServerPeer.Dispose();
+				_rpcServerPeer = null;
+				DebugIt("ENetMultiplayerPeer (Server) disconnected (Cleanup).");
+			}
+			GC.Collect();
 		}
 	}
 

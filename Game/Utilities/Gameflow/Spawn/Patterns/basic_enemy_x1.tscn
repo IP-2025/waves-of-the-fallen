@@ -5,5 +5,6 @@
 
 [node name="BasicEnemyX1" type="Node2D"]
 script = ExtResource("1_cmgye")
+maxWave = -1
 
 [node name="BasicEnemy" parent="." instance=ExtResource("2_cjn6m")]

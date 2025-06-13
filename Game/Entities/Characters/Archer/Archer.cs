@@ -13,15 +13,14 @@ public partial class Archer : DefaultPlayer
 
         base._Ready();
 
-        MaxHealth = CharacterManager.LoadHealthByID("1");
-        Speed = CharacterManager.LoadSpeedByID("1");
-        Strength = CharacterManager.LoadStrengthByID("1");
-        Dexterity = CharacterManager.LoadDexterityByID("1");
-        Intelligence = CharacterManager.LoadIntelligenceByID("1");
-
-        var healthNode = GetNode<Health>("Health");
-        healthNode.max_health = MaxHealth;
-        healthNode.ResetHealth();
+        if ( MaxHealth <= 0 && Speed <= 0)
+		{
+			MaxHealth = CharacterManager.LoadHealthByID("1");
+			Speed = CharacterManager.LoadSpeedByID("1");
+            Strength = CharacterManager.LoadStrengthByID("1");
+            Dexterity = CharacterManager.LoadDexterityByID("1");
+            Intelligence = CharacterManager.LoadIntelligenceByID("1");
+		}
 
         GD.Print($"Archer initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
     }

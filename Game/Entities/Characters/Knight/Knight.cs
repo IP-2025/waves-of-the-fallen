@@ -13,15 +13,14 @@ public partial class Knight : DefaultPlayer
 
 		base._Ready();
 
-		MaxHealth = CharacterManager.LoadHealthByID("3");
-		Speed = CharacterManager.LoadSpeedByID("3");
-		Strength = CharacterManager.LoadStrengthByID("3");
-		Dexterity = CharacterManager.LoadDexterityByID("3");
-		Intelligence = CharacterManager.LoadIntelligenceByID("3");
-
-		var healthNode = GetNode<Health>("Health");
-		healthNode.max_health = MaxHealth;
-		healthNode.ResetHealth();
+		if ( MaxHealth <= 0 && Speed <= 0)
+		{
+			MaxHealth = CharacterManager.LoadHealthByID("3");
+			Speed = CharacterManager.LoadSpeedByID("3");
+			Strength = CharacterManager.LoadStrengthByID("3");
+			Dexterity = CharacterManager.LoadDexterityByID("3");
+			Intelligence = CharacterManager.LoadIntelligenceByID("3");
+		}
 
 		GD.Print($"Knight initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
 	}

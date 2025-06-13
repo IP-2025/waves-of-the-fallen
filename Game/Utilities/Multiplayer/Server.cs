@@ -1,6 +1,6 @@
 namespace Game.Utilities.Multiplayer
 {
-
+	using Game.Utilities.Backend;
 	using Godot;
 	using System.Collections.Generic;
 	using System.Linq;
@@ -10,23 +10,23 @@ namespace Game.Utilities.Multiplayer
 	{
 		public static Server Instance;
 
-	private bool enableDebug = false;
-	public Dictionary<long, int> PlayerSelections = new Dictionary<long, int>();
-	public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
-	
-	private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
-	private PackedScene _crossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
-	private PackedScene _kunaiScene = GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn");
-	private PackedScene _fireStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn");
-	private PackedScene _lightningStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn");
-	private PackedScene _daggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
-	private PackedScene _swordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
-	private PackedScene _warHammerScene = GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn");
-	private PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
-	private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
-	private PackedScene _doubleBladeScene = GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn");
-	
-	private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
+		private bool enableDebug = false;
+		public Dictionary<long, PlayerCharacterData> PlayerSelections = new Dictionary<long, PlayerCharacterData>();
+		public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
+
+		private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
+		private PackedScene _crossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
+		private PackedScene _kunaiScene = GD.Load<PackedScene>("res://Weapons/Ranged/Kunai/kunai.tscn");
+		private PackedScene _fireStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Firestaff/firestaff.tscn");
+		private PackedScene _lightningStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightningstaff.tscn");
+		private PackedScene _daggerScene = GD.Load<PackedScene>("res://Weapons/Melee/Dagger/dagger.tscn");
+		private PackedScene _swordScene = GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn");
+		private PackedScene _warHammerScene = GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn");
+		private PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
+		private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
+		private PackedScene _doubleBladeScene = GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn");
+
+		private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
 	{
 		{ "res://Entities/Characters/Base/default_player.tscn", EntityType.DefaultPlayer },
 		{ "res://Entities/Characters/Archer/archer.tscn", EntityType.Archer },
@@ -79,47 +79,47 @@ namespace Game.Utilities.Multiplayer
 					dir = dir.Normalized();
 				}
 
-			var joystick = entity.GetNodeOrNull<Joystick>("Joystick");
-			if (joystick != null)
-			{
-				joystick.PosVector = dir;
-				DebugIt($"Set Joystick.PosVector = {dir} on EntityID {cmd.EntityId}");
+				var joystick = entity.GetNodeOrNull<Joystick>("Joystick");
+				if (joystick != null)
+				{
+					joystick.PosVector = dir;
+					DebugIt($"Set Joystick.PosVector = {dir} on EntityID {cmd.EntityId}");
+				}
 			}
-		}
-		else if (cmd.Type == CommandType.Shoot)
-		{
-			// Maybe we need, maybe we don't
-		}
-		else if (cmd.Type == CommandType.BossShop)
-		{
-			var scene = cmd.Weapon switch
+			else if (cmd.Type == CommandType.Shoot)
 			{
-				"Bow"               => _bowScene,
-				"Crossbow"          => _crossbowScene,
-				"FireStaff"         => _fireStaffScene,
-				"Kunai"             => _kunaiScene,
-				"Lightningstaff"    => _lightningStaffScene,
-				"Healstaff"         => _healStaffScene,
-				"Dagger"            => _daggerScene,
-				"Sword"             => _swordScene,
-				"WarHammer"         => _warHammerScene,
-				"DoubleBlade"         => _doubleBladeScene,
-				_            => null
-			};
-			if (scene == null) return;
-			var slot = entity.GetNode("WeaponSpawnPoints").GetChild(cmd.WeaponPos) as Node2D;
-			var weapon = scene.Instantiate<Area2D>();
-			slot?.AddChild(weapon);
-			weapon.Position = Vector2.Up;
-			
-			var id = weapon.GetInstanceId();
-			weapon.Name = $"Weapon_{id}";
-			weapon.SetMeta("OwnerId", cmd.EntityId);
-			weapon.SetMeta("SlotIndex", cmd.WeaponPos);
-			Instance.Entities.Add((long)id, weapon);
+				// Maybe we need, maybe we don't
+			}
+			else if (cmd.Type == CommandType.BossShop)
+			{
+				var scene = cmd.Weapon switch
+				{
+					"Bow" => _bowScene,
+					"Crossbow" => _crossbowScene,
+					"FireStaff" => _fireStaffScene,
+					"Kunai" => _kunaiScene,
+					"Lightningstaff" => _lightningStaffScene,
+					"Healstaff" => _healStaffScene,
+					"Dagger" => _daggerScene,
+					"Sword" => _swordScene,
+					"WarHammer" => _warHammerScene,
+					"DoubleBlade" => _doubleBladeScene,
+					_ => null
+				};
+				if (scene == null) return;
+				var slot = entity.GetNode("WeaponSpawnPoints").GetChild(cmd.WeaponPos) as Node2D;
+				var weapon = scene.Instantiate<Area2D>();
+				slot?.AddChild(weapon);
+				weapon.Position = Vector2.Up;
+
+				var id = weapon.GetInstanceId();
+				weapon.Name = $"Weapon_{id}";
+				weapon.SetMeta("OwnerId", cmd.EntityId);
+				weapon.SetMeta("SlotIndex", cmd.WeaponPos);
+				Instance.Entities.Add((long)id, weapon);
+			}
+
 		}
-		
-	}
 
 		public byte[] GetSnapshot(ulong tick)
 		{
@@ -183,7 +183,8 @@ namespace Game.Utilities.Multiplayer
 					secondsLeft,
 					graceTime,
 					owner,
-					slotIx
+					slotIx,
+					ScoreManager.PlayerScores
 				));
 			}
 
@@ -192,23 +193,65 @@ namespace Game.Utilities.Multiplayer
 				Entities.Remove(id);
 			}
 
-			int livingPlayers = Entities.Values
-		.OfType<DefaultPlayer>() // oder dein Basistyp für Spieler
-		.Count(player =>
-		{
-			var health = player.GetNodeOrNull<Health>("Health");
-			return health != null && health.health > 0;
-		});
+			int livingPlayers = Entities
+									.Values
+									.OfType<DefaultPlayer>() // oder dein Basistyp für Spieler
+									.Count(player =>
+										{
+											var health = player.GetNodeOrNull<Health>("Health");
+											return health != null && health.health > 0;
+										});
 
 			snap.livingPlayersCount = livingPlayers;
 
 			return Serializer.Serialize(snap);
 		}
 
+		public void syncHostWaveTimer()
+		{
+			// Get hosts WaveTimer (attached to Player_1 Camera2D)
+			WaveTimer loacalWT = GetTree()
+				.Root
+				.GetNodeOrNull<GameRoot>("GameRoot")
+				.GetNodeOrNull<DefaultPlayer>("Player_1")
+				.GetNodeOrNull<Camera2D>("Camera2D")
+				.GetNodeOrNull<WaveTimer>("WaveTimer");
+			if (loacalWT == null) return;
+
+			// Get global WaveTimer
+			WaveTimer globalWT = GetTree()
+				.Root
+				.GetNodeOrNull<GameRoot>("GameRoot")
+				.GetNodeOrNull<WaveTimer>("GlobalWaveTimer");
+			if (globalWT == null) return;
+
+			var gTimeLeftLabel = globalWT.GetNodeOrNull<Label>("TimeLeft");
+			var lTimeLeftLabel = loacalWT.GetNodeOrNull<Label>("TimeLeft");
+			lTimeLeftLabel.Text = gTimeLeftLabel.Text;
+
+			var gWaveCounterLabel = globalWT.GetNodeOrNull<Label>("WaveCounter");
+			var lWaveCounterLabel = loacalWT.GetNodeOrNull<Label>("WaveCounter");
+			lWaveCounterLabel.Text = gWaveCounterLabel.Text;
+		}
+
 		private void DebugIt(string message)
 		{
 			if (enableDebug)
 				GD.Print($"Server: {message}");
+		}
+
+		[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+		public void PlayerLeft(long playerId)
+		{
+			// remove entity from Entities dictionary if player left
+			if (Entities.TryGetValue(playerId, out var node))
+			{
+				if (IsInstanceValid(node))
+					node.QueueFree();
+				Entities.Remove(playerId);
+				GD.Print($"Player {playerId} has left the game and was removed.");
+			}
+			PlayerSelections.Remove(playerId);
 		}
 	}
 }
