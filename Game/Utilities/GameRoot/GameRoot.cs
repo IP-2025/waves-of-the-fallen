@@ -29,11 +29,14 @@ public partial class GameRoot : Node
 
 	private HttpRequest _sendScoreRequest;
 	private bool _soloMode = false;
+	private PauseMenu _pauseMenu;
 
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() // builds the game
 	{
+		ScoreManager.Reset();
+		GetTree().Paused = false;
 		Engine.MaxFps = 60; // important! performance...
 
 		// Score -------------------------------------------------------------------------------------------
@@ -58,10 +61,11 @@ public partial class GameRoot : Node
 		AddChild(_mainMap);
 
 		// HUD --------------------------------------------------------------------------------------------
+		CanvasLayer hud = null;
 		if (GetNodeOrNull<CanvasLayer>("HUD") == null)
 		{
 			var hudScene = GD.Load<PackedScene>("res://UI/HUD/HUD.tscn");
-			var hud = hudScene.Instantiate<CanvasLayer>();
+			hud = hudScene.Instantiate<CanvasLayer>();
 			AddChild(hud);
 		}
 		// -------------------------------------------------------------------------------------------------
@@ -106,13 +110,40 @@ public partial class GameRoot : Node
 		// Start enemy spawner
 		var spawner = GD.Load<PackedScene>("res://Utilities/Gameflow/Spawn/SpawnEnemies.tscn").Instantiate<SpawnEnemies>();
 		AddChild(spawner);
+
+		// HUD laden (wie bisher)
+		if (hud == null)
+		{
+			var hudScene = GD.Load<PackedScene>("res://UI/HUD/HUD.tscn");
+			hud = hudScene.Instantiate<CanvasLayer>();
+			AddChild(hud);
+		}
+		else
+		{
+			hud = GetNode<CanvasLayer>("HUD");
+		}
+
+		// PauseMenu attached to HUD!
+		if (_pauseMenu == null && hud != null)
+		{
+			var pauseMenuScene = GD.Load<PackedScene>("res://Menu/PauseMenu/pauseMenu.tscn");
+			_pauseMenu = pauseMenuScene.Instantiate<PauseMenu>();
+			hud.AddChild(_pauseMenu);
+			_pauseMenu.Visible = false;
+		}
 	}
 
 	public override void _Process(double delta)
 	{
-
 		if (NetworkManager.Instance.SoloMode && _soloPlayer is not { alive: true })
 			ShowGameOverScreen();
+
+		if (!NetworkManager.Instance.SoloMode && !NetworkManager.Instance._isLocalHost)
+		{
+			var localPlayer = GetNodeOrNull<DefaultPlayer>($"Player_{Multiplayer.GetUniqueId()}");
+			if (localPlayer != null && !localPlayer.alive)
+				ShowGameOverScreen();
+		}
 
 		if (NetworkManager.Instance._isLocalHost || NetworkManager.Instance.SoloMode)
 		{
@@ -180,74 +211,78 @@ public partial class GameRoot : Node
 		_shopInstance = null;
 	}
 
-    private void SpawnPlayer(long peerId)
-    {
-        var player = GD.Load<PackedScene>("res://Entities/Characters/Mage/mage.tscn").Instantiate<DefaultPlayer>();
-        player.OwnerPeerId = peerId;
-        player.Name = $"Player_{peerId}";
+	private void SpawnPlayer(long peerId)
+	{
+		// only solo mode cleanup
+		if (NetworkManager.Instance.SoloMode)
+			CleanupOldPlayers();
+
+		var player = GD.Load<PackedScene>("res://Entities/Characters/Mage/mage.tscn").Instantiate<DefaultPlayer>();
+		player.OwnerPeerId = peerId;
+		player.Name = $"Player_{peerId}";
 
 
-        PlayerCharacterData character = null;
-        var characterId = 1;
-        switch (NetworkManager.Instance.SoloMode)
-        {
-            case false when Server.Instance.PlayerSelections.TryGetValue(peerId, out character):
-                characterId = character.CharacterId;
-                break;
-            case true:
-                characterId = _soloSelectedCharacterId;
-                character = new PlayerCharacterData { CharacterId = characterId, Health = 0 };
-                break;
-        }
+		PlayerCharacterData character = null;
+		var characterId = 1;
+		switch (NetworkManager.Instance.SoloMode)
+		{
+			case false when Server.Instance.PlayerSelections.TryGetValue(peerId, out character):
+				characterId = character.CharacterId;
+				break;
+			case true:
+				characterId = _soloSelectedCharacterId;
+				character = new PlayerCharacterData { CharacterId = characterId, Health = 0 };
+				break;
+		}
 
-        player = characterId switch
-        {
-            1 => GD.Load<PackedScene>("res://Entities/Characters/Archer/archer.tscn").Instantiate<DefaultPlayer>(),
-            2 => GD.Load<PackedScene>("res://Entities/Characters/Assassin/assassin.tscn").Instantiate<DefaultPlayer>(),
-            3 => GD.Load<PackedScene>("res://Entities/Characters/Knight/knight.tscn").Instantiate<DefaultPlayer>(),
-            4 => GD.Load<PackedScene>("res://Entities/Characters/Mage/mage.tscn").Instantiate<DefaultPlayer>(),
-            _ => player
-        };
-        player.OwnerPeerId = peerId;
-        player.Name = $"Player_{peerId}";
-        player.MaxHealth = character?.Health ?? 0;
-        player.CurrentHealth = character?.Health ?? 0;
-        player.Speed = character?.Speed ?? 0;        
-        
-        player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
-            .OfType<Node2D>()
-            .ToList()
-            .FindAll(spawnPoint => int.Parse(spawnPoint.Name) == _playerIndex)
-            .FirstOrDefault()?.GlobalPosition ?? Vector2.Zero;
+		player = characterId switch
+		{
+			1 => GD.Load<PackedScene>("res://Entities/Characters/Archer/archer.tscn").Instantiate<DefaultPlayer>(),
+			2 => GD.Load<PackedScene>("res://Entities/Characters/Assassin/assassin.tscn").Instantiate<DefaultPlayer>(),
+			3 => GD.Load<PackedScene>("res://Entities/Characters/Knight/knight.tscn").Instantiate<DefaultPlayer>(),
+			4 => GD.Load<PackedScene>("res://Entities/Characters/Mage/mage.tscn").Instantiate<DefaultPlayer>(),
+			_ => player
+		};
+		player.OwnerPeerId = peerId;
+		player.Name = $"Player_{peerId}";
+		player.MaxHealth = character?.Health ?? 0;
+		player.CurrentHealth = character?.Health ?? 0;
+		player.Speed = character?.Speed ?? 0;        
+		
+		player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
+			.OfType<Node2D>()
+			.ToList()
+			.FindAll(spawnPoint => int.Parse(spawnPoint.Name) == _playerIndex)
+			.FirstOrDefault()?.GlobalPosition ?? Vector2.Zero;
 
-        // Add joystick to player
-        var joystick = GD.Load<PackedScene>("res://UI/Joystick/joystick.tscn").Instantiate<Node2D>();
-        if (peerId != 1)
-        {
-            joystick.Visible = false;
-        }
+		// Add joystick to player
+		var joystick = GD.Load<PackedScene>("res://UI/Joystick/joystick.tscn").Instantiate<Node2D>();
+		if (peerId != 1)
+		{
+			joystick.Visible = false;
+		}
 
-        player.AddChild(joystick);
-        player.Joystick = joystick;
-        AddChild(player);
+		player.AddChild(joystick);
+		player.Joystick = joystick;
+		AddChild(player);
 
-        if (!NetworkManager.Instance.SoloMode) Server.Instance.Entities[peerId] = player;
+		if (!NetworkManager.Instance.SoloMode) Server.Instance.Entities[peerId] = player;
 
-        // Connect health signal
-        var healthNode = player.GetNodeOrNull<Health>("Health");
-        if (healthNode != null)
-        {
-            healthNode.Connect(Health.SignalName.HealthDepleted, new Callable(this, nameof(OnPlayerDied)));
-            healthNode.max_health = player.MaxHealth;
-            healthNode.ResetHealth();
-        }
-        else
-        {
-            GD.PrintErr("Health node not found on player!");
-        }
+		// Connect health signal
+		var healthNode = player.GetNodeOrNull<Health>("Health");
+		if (healthNode != null)
+		{
+			healthNode.Connect(Health.SignalName.HealthDepleted, new Callable(this, nameof(OnPlayerDied)));
+			healthNode.max_health = player.MaxHealth;
+			healthNode.ResetHealth();
+		}
+		else
+		{
+			GD.PrintErr("Health node not found on player!");
+		}
 
-        _playerIndex++;
-    }
+		_playerIndex++;
+	}
 
 	private void SendScoreToBackend(int score)
 	{
@@ -352,5 +387,59 @@ public partial class GameRoot : Node
 	private void DebugIt(string message)
 	{
 		if (_enableDebug) Debug.Print("GameRoot: " + message);
+	}
+
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("ui_cancel"))
+		{
+			var hud = GetNodeOrNull<CanvasLayer>("HUD");
+			var pauseMenu = hud?.GetNodeOrNull<PauseMenu>("PauseMenu");
+			if (pauseMenu != null && !pauseMenu.Visible)
+			{
+				pauseMenu.OpenPauseMenu();
+			}
+		}
+	}
+
+	private void CleanupOldPlayers()
+	{
+		foreach (var node in GetChildren().OfType<DefaultPlayer>().ToList())
+		{
+			node.QueueFree();
+		}
+	}
+
+	public void CleanupAllLocal()
+	{
+		ScoreManager.PlayerScores.Clear();
+		
+		foreach (var node in GetChildren().OfType<DefaultPlayer>().ToList())
+			node.QueueFree();
+
+		foreach (var node in GetChildren().OfType<Node2D>().Where(n => n.Name.ToString().Contains("Joystick")).ToList())
+			node.QueueFree();
+
+		var hud = GetNodeOrNull<CanvasLayer>("HUD");
+		if (hud != null)
+			hud.QueueFree();
+
+		if (_gameOverScreen != null)
+		{
+			_gameOverScreen.QueueFree();
+			_gameOverScreen = null;
+		}
+
+		if (_pauseMenu != null)
+		{
+			_pauseMenu.QueueFree();
+			_pauseMenu = null;
+		}
+
+		if (_shopInstance != null)
+		{
+			_shopInstance.QueueFree();
+			_shopInstance = null;
+		}
 	}
 }

@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cs1vfpclwvvhm"]
+
+[node name="LeaveWarningDialog" type="ConfirmationDialog"]
+dialog_text = "Are you sure you want to leave the game?
+In multiplayer you will lose gold as a penalty!"

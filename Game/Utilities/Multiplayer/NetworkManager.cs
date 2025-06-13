@@ -211,6 +211,33 @@ namespace Game.Utilities.Multiplayer
 		{
 			DebugIt($"Peer disconnected: {id}");
 
+			// host (id == 1) is the server
+			if (!_isServer && id == 1)
+			{
+				GD.Print("Host disconnected. Returning to main menu.");
+
+				// cleanup UI, score, etc.
+				var root = GetTree().Root;
+				var hud = root.GetNodeOrNull<CanvasLayer>("HUD");
+				if (hud != null)
+					hud.QueueFree();
+
+				var gameRoot = root.GetNodeOrNull<GameRoot>("GameRoot");
+				gameRoot?.CleanupAllLocal();
+
+				GetTree().ChangeSceneToFile("res://Menu/Main/mainMenu.tscn");
+				return;
+			}
+
+			// if we are the server and a client disconnects, remove the player entity
+			if (_isServer && id != 1)
+			{
+				GD.Print($"Client {id} disconnected. Removing player entity, but game continues.");
+				// NO CLEANUP HERE! NO CHANGE SCENE! or it will crash the host game
+				return;
+			}
+
+			// If all players disconnect from the server, we shut it down
 			if (_isServer && GetTree().GetMultiplayer().GetPeers().Count() == 0)
 			{
 				// kill him!! if he is a lonely server, lost in the sad world of the web with no one to play with ;(
@@ -340,6 +367,7 @@ namespace Game.Utilities.Multiplayer
 		[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
 		public void NotifyGameStart()
 		{
+			SoloMode = false;
 			// change scene to game
 			var gameScene = GD.Load<PackedScene>("res://Utilities/GameRoot/GameRoot.tscn");
 			gameScene.Instantiate<Node>();
@@ -352,17 +380,11 @@ namespace Game.Utilities.Multiplayer
 		}
 
 		[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-		public void SelectCharacter(int selectedCharacterId, int health, int speed)
+		public void SelectCharacter(int selectedCharacterId)
 		{
 			long peerId = Multiplayer.GetRemoteSenderId();
-			// Speichere alle Werte pro Spieler
-			Server.Instance.PlayerSelections[peerId] = new PlayerCharacterData
-			{
-				CharacterId = selectedCharacterId,
-				Health = health,
-				Speed = speed
-			};
-			DebugIt($"Player {peerId} selected character {selectedCharacterId} (HP: {health}, Speed: {speed}, ...)");
+			Server.Instance.PlayerSelections[peerId] = new PlayerCharacterData { CharacterId = selectedCharacterId };
+			DebugIt("Player selectged: " + selectedCharacterId + " By PlayerID: " + peerId);
 		}
 
 		// maybe reactivate for online multiplayer
@@ -463,6 +485,61 @@ namespace Game.Utilities.Multiplayer
 		private void DebugIt(string message)
 		{
 			if (enableDebug) Debug.Print("Network Manager: " + message);
+		}
+
+		public void CleanupNetworkState()
+		{
+			_isServer = false;
+			_gameRunning = false;
+			_readyForUdp = false;
+			_udpPeers.Clear();
+
+			foreach (var child in GetChildren().ToList())
+			{
+				if (child is Server || child is Client)
+					RemoveChild(child);
+				if (child is Node node)
+					node.QueueFree();
+			}
+			server = null;
+			client = null;
+
+			var multiplayer = GetTree().GetMultiplayer();
+			if (multiplayer.MultiplayerPeer != null)
+			{
+				multiplayer.MultiplayerPeer.Close();
+				multiplayer.MultiplayerPeer = null;
+				DebugIt("MultiplayerPeer set to null (Cleanup).");
+			}
+
+			if (_udpClientPeer != null)
+			{
+				_udpClientPeer.Close();
+				_udpClientPeer = null;
+				DebugIt("UDP Client disconnected (Cleanup).");
+			}
+
+			if (_udpServer != null)
+			{
+				_udpServer = null;
+				DebugIt("UDP Server disconnected (Cleanup).");
+			}
+
+			if (_rpcClientPeer != null)
+			{
+				_rpcClientPeer.Close();
+				_rpcClientPeer.Dispose();
+				_rpcClientPeer = null;
+				DebugIt("ENetMultiplayerPeer (Client) disconnected (Cleanup).");
+			}
+			if (_rpcServerPeer != null)
+			{
+				_rpcServerPeer.Close();
+				_rpcServerPeer.Dispose();
+				_rpcServerPeer = null;
+				DebugIt("ENetMultiplayerPeer (Server) disconnected (Cleanup).");
+			}
+			GC.Collect();
 		}
 	}
 
