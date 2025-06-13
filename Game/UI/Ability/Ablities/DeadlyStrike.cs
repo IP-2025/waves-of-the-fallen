@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 public partial class DeadlyStrike : AbilityBase
 {
+	private AnimationPlayer SlashAnimationPlayer;
 	private float Damage { get; set; } = 200;
 	private float Range { get; set; } = 200;
 	bool killed = true;
@@ -13,6 +14,7 @@ public partial class DeadlyStrike : AbilityBase
 
 	public override void _Ready()
 	{
+		SlashAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		DoDeadlyStrikeAsync();
 	}
 

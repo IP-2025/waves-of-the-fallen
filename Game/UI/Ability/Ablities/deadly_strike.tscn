@@ -1,6 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://chouo37va5iwg"]
+[gd_scene load_steps=4 format=3 uid="uid://chouo37va5iwg"]
 
 [ext_resource type="Script" uid="uid://bjnwj3auvjle8" path="res://UI/Ability/Ablities/DeadlyStrike.cs" id="1_0kfum"]
 
+[sub_resource type="Animation" id="Animation_0kfum"]
+resource_name = "Slash"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uim45"]
+_data = {
+&"Slash": SubResource("Animation_0kfum")
+}
+
 [node name="DeadlyStrike" type="Node2D"]
 script = ExtResource("1_0kfum")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_uim45")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
