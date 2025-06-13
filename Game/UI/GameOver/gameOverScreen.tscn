@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckkabryqawp1l"]
+[gd_scene load_steps=11 format=3 uid="uid://ckkabryqawp1l"]
 
 [ext_resource type="Script" uid="uid://5qdnog2ipfp3" path="res://UI/GameOver/GameOverScreen.cs" id="1_8am08"]
+[ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="2_0tvqg"]
 
 [sub_resource type="Animation" id="Animation_j032u"]
 resource_name = "ButtonFadeIn"
@@ -169,6 +170,7 @@ theme_override_constants/margin_bottom = 60
 [node name="GameOverLabel" type="Label" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_0tvqg")
 theme_override_font_sizes/font_size = 1
 text = "Game Over"
 horizontal_alignment = 1
@@ -182,6 +184,7 @@ size_flags_vertical = 8
 [node name="ScoreLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_0tvqg")
 theme_override_font_sizes/font_size = 40
 text = "SCORE"
 
@@ -209,5 +212,6 @@ custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_0tvqg")
 theme_override_font_sizes/font_size = 40
 text = "Restart"
