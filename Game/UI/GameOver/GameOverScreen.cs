@@ -35,8 +35,7 @@ namespace Game.UI.GameOver{
 	private void OnMainMenuBtnPressed()
 {
 	EmitSignal(nameof(QuitPressed));
-	GetTree().Quit(); // Exit the game instead of trying to shutdown headless server (iOS cant use GetTree().Quit())
-	//GetTree().ChangeSceneToFile("res://Menu/Main/MainMenu.tscn");
+	GetTree().ChangeSceneToFile("res://Menu/Main/mainMenu.tscn");
 }
 }
 }
