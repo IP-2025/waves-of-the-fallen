@@ -14,9 +14,9 @@ namespace Game.Utilities.Multiplayer
 	// Autoload-Node: manages Netzwerk, Tick-Loop
 	public partial class NetworkManager : Node
 	{
-		public bool enableDebug = false;
-		[Export] public int RPC_PORT = 9999;   // ENet for RPC
-		[Export] public int UDP_PORT = 3000;   // PacketPeerUDP for game data
+		public bool enableDebug = true;
+		public int RPC_PORT = 9999;   // ENet for RPC
+		public int UDP_PORT = 3000;   // PacketPeerUDP for game data
 
 		// peers
 		private PacketPeerUdp _udpClientPeer;
@@ -152,17 +152,19 @@ namespace Game.Utilities.Multiplayer
 			DebugIt("Server startet on port: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + GetServerIPAddress());
 		}
 
-		public void InitClient(string code)
+		public void InitClient(string code, int UDP_PORT = 3000, int RPC_PORT = 9999)
 		{
-			string address = ResolveConnectionCode(code);
+			// string address = ResolveConnectionCode(code);
 			// add client node as child to NetworkManager
 			client = new Client();
 			AddChild(client);
 
+			string address = "127.0.0.1";
 
 			// RPC Client with ENet
 			_rpcClientPeer = new ENetMultiplayerPeer();
-			_rpcClientPeer.CreateClient(address, RPC_PORT);
+			var err1 = _rpcClientPeer.CreateClient(address, RPC_PORT);
+			GD.PrintErr($"fucking rpc peer result: {err1}");
 			GetTree().GetMultiplayer().MultiplayerPeer = _rpcClientPeer;
 
 			// UDP Client for game data
