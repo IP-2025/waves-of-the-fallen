@@ -12,7 +12,7 @@ using Game.UI.GameOver;
 
 public partial class Client : Node
 {
-	private bool _enableDebug;
+	private bool _enableDebug = true;
 	private Camera2D _camera;
 	private bool _hasJoystick;
 	private bool _waveTimerReady;
@@ -139,6 +139,7 @@ public partial class Client : Node
 	{
 		if (livingPlayersCount == 0)
 		{
+			DebugIt("Show Game Over screen, no one is alive");
 			var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
 			gameRoot.ShowGameOverScreen();
 		}
