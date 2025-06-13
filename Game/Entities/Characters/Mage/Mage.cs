@@ -14,8 +14,8 @@ public partial class Mage : DefaultPlayer
 		
 		if ( MaxHealth <= 0 && Speed <= 0)
 		{
-			MaxHealth = CharacterManager.LoadHealthByID("1");
-			Speed = CharacterManager.LoadSpeedByID("1");
+			MaxHealth = CharacterManager.LoadHealthByID("4");
+			Speed = CharacterManager.LoadSpeedByID("4");
 		}
 
 		GD.Print($"Mage initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");

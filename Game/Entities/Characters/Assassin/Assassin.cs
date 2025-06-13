@@ -17,8 +17,8 @@ public partial class Assassin : DefaultPlayer
 
 		if ( MaxHealth <= 0 && Speed <= 0)
 		{
-			MaxHealth = CharacterManager.LoadHealthByID("1");
-			Speed = CharacterManager.LoadSpeedByID("1");
+			MaxHealth = CharacterManager.LoadHealthByID("2");
+			Speed = CharacterManager.LoadSpeedByID("2");
 		}
 
 		GD.Print($"Assassin initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
