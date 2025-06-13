@@ -1,5 +1,6 @@
 using Godot;
 using Game.Utilities.Multiplayer;
+using Game.Utilities.Backend;
 
 namespace Game.UI.GameOver{
 	public partial class GameOverScreen : CanvasLayer
@@ -34,7 +35,23 @@ namespace Game.UI.GameOver{
 
 	private void OnMainMenuBtnPressed()
 {
-	EmitSignal(nameof(QuitPressed));
+	ScoreManager.Reset();
+	GameState.CurrentState = ConnectionState.Offline;
+
+	if (!NetworkManager.Instance.SoloMode)
+	{
+		RpcId(1, "PlayerLeft", Multiplayer.GetUniqueId());
+		GD.Print("Penalty: Player loses gold for leaving multiplayer!");
+	}
+
+	var gameRoot = GetTree().Root.GetNodeOrNull<GameRoot>("GameRoot");
+	gameRoot?.CleanupAllLocal();
+	NetworkManager.Instance.CleanupNetworkState();
+
+	var hud = GetTree().Root.GetNodeOrNull<CanvasLayer>("HUD");
+	if (hud != null)
+		hud.QueueFree();
+
 	GetTree().ChangeSceneToFile("res://Menu/Main/mainMenu.tscn");
 }
 }
