@@ -123,7 +123,7 @@ corner_radius_top_right = 22
 corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
-[node name="GameOverScreen" type="CanvasLayer" node_paths=PackedStringArray("ScoreLabel", "MainMenuBtn", "FadeRect", "GameOverLabel", "AnimationPlayerBackground", "AnimationPlayerForeground")]
+[node name="GameOverScreen" type="CanvasLayer" node_paths=PackedStringArray("ScoreLabel", "MainMenuBtn", "FadeRect", "GameOverLabel", "AnimationPlayerBackground", "AnimationPlayerForeground", "RestartButton")]
 layer = 10
 script = ExtResource("1_8am08")
 ScoreLabel = NodePath("MarginContainer/VBoxContainer/ScoreLabel")
@@ -132,6 +132,7 @@ FadeRect = NodePath("FadeRect")
 GameOverLabel = NodePath("MarginContainer/GameOverLabel")
 AnimationPlayerBackground = NodePath("AnimationPlayerBackground")
 AnimationPlayerForeground = NodePath("AnimationPlayerForeground")
+RestartButton = NodePath("MarginContainer/VBoxContainer/RestartButton")
 
 [node name="FadeRect" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -201,4 +202,12 @@ theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_pposm")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pposm")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_pposm")
 theme_override_styles/normal = SubResource("StyleBoxFlat_pposm")
-text = "Quit"
+text = "Return to Main Menu"
+
+[node name="RestartButton" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 40
+text = "Restart"

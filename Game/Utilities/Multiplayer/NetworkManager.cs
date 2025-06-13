@@ -48,6 +48,7 @@ namespace Game.Utilities.Multiplayer
 
 		public override void _Ready()
 		{
+			Engine.MaxFps = 60; // this is here because NetworkManager is an autoload (and it wont work in SettingsMenu for whatever reason). This means the whole game will be on 60 fps. Workaround but works
 			Instance = this;
 			// check if we are in headless server mode
 			var args = OS.GetCmdlineArgs();
@@ -63,6 +64,7 @@ namespace Game.Utilities.Multiplayer
 
 		public override void _PhysicsProcess(double delta)
 		{
+			
 			if (!_readyForUdp) return;
 
 			// UDP Networking
@@ -380,17 +382,11 @@ namespace Game.Utilities.Multiplayer
 		}
 
 		[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-		public void SelectCharacter(int selectedCharacterId, int health, int speed)
+		public void SelectCharacter(int selectedCharacterId)
 		{
 			long peerId = Multiplayer.GetRemoteSenderId();
-			// Speichere alle Werte pro Spieler
-			Server.Instance.PlayerSelections[peerId] = new PlayerCharacterData
-			{
-				CharacterId = selectedCharacterId,
-				Health = health,
-				Speed = speed
-			};
-			DebugIt($"Player {peerId} selected character {selectedCharacterId} (HP: {health}, Speed: {speed}, ...)");
+			Server.Instance.PlayerSelections[peerId] = new PlayerCharacterData { CharacterId = selectedCharacterId };
+			DebugIt("Player selectged: " + selectedCharacterId + " By PlayerID: " + peerId);
 		}
 
 		// maybe reactivate for online multiplayer
