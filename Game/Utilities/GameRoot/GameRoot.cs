@@ -34,8 +34,6 @@ public partial class GameRoot : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready() // builds the game
 	{
-		Engine.MaxFps = 60; // important! performance...
-
 		// Score -------------------------------------------------------------------------------------------
 		_sendScoreRequest = GetNodeOrNull<HttpRequest>("%SendScoreRequest");
 		if (_sendScoreRequest == null)
