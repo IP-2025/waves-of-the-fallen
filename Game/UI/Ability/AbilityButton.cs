@@ -82,7 +82,7 @@ public partial class AbilityButton : Node2D
 			{
 				Disable = true;
 				player.UseAbility();
-				Debug.Print(MaxTime.ToString());
+				//Debug.Print(MaxTime.ToString());
 			}
 			_abilityTimer.Start();
 			_timeLeftLabel.Show();

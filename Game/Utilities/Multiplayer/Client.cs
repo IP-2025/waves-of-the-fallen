@@ -16,6 +16,7 @@ public partial class Client : Node
 	private bool _enableDebug = false;
 	private Camera2D _camera;
 	private bool _hasJoystick;
+	private bool _hasAbilityButton;
 	private bool _waveTimerReady;
 	private WaveTimer _timer;
 	private bool _graceTimeTriggered;
@@ -261,6 +262,11 @@ public partial class Client : Node
 					AttachJoystick(inst, entity);
 				}
 
+				if (!_hasAbilityButton && entity.NetworkId == Multiplayer.GetUniqueId())
+				{
+					AttachAbilityButton(inst, entity);
+				}
+
 				if (_camera == null && entity.NetworkId == Multiplayer.GetUniqueId())
 				{
 					ChangeCamera(inst, entity);
@@ -474,6 +480,23 @@ public partial class Client : Node
 		var joystick = GD.Load<PackedScene>("res://UI/Joystick/joystick.tscn").Instantiate<Node2D>();
 		inst.AddChild(joystick);
 		DebugIt($"Joystick added to player with ID {entity.NetworkId}");
+	}
+
+	private void AttachAbilityButton(Node2D inst, EntitySnapshot entity)
+	{
+		// only for local / this clients player
+		bool isPlayerType = entity.Type is EntityType.DefaultPlayer or EntityType.Archer
+							|| entity.Type == EntityType.Knight
+							|| entity.Type == EntityType.Mage
+							|| entity.Type == EntityType.Assassin;
+		if (!isPlayerType || entity.NetworkId != Multiplayer.GetUniqueId())
+		{
+			return;
+		}
+
+		var abilityButton = GD.Load<PackedScene>("res://UI/Ability/abilityButton.tscn").Instantiate<Node2D>();
+		inst.AddChild(abilityButton);
+		DebugIt($"AbilityButton added to player with ID {entity.NetworkId}");
 	}
 
 	private void ChangeCamera(Node2D inst, EntitySnapshot entity)
