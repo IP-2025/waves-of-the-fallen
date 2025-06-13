@@ -55,7 +55,7 @@ public partial class AbilityButton : Node2D
 		_abilityTimer = GetNode<Timer>("AbilityTimer");
 		_abilityTimer.Timeout += OnTimerTimeout;
 		SecondCounter = MaxTime;
-		Disable = false;
+		Disable = true;
 	}
 
 	private void OnTimerTimeout()
@@ -89,5 +89,5 @@ public partial class AbilityButton : Node2D
 		}
 	}
 
-	
+
 }
