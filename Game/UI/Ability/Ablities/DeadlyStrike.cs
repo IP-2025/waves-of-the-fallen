@@ -10,12 +10,12 @@ public partial class DeadlyStrike : AbilityBase
 	private float Range { get; set; } = 200;
 	bool killed = true;
 	private int countAttacks = 5;
-	private int cooldown = 3;
+	private int cooldown = 15;
 
 	public override void _Ready()
 	{
 		SlashAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-		DoDeadlyStrikeAsync();
+		_ = DoDeadlyStrikeAsync();
 	}
 
 	public async Task DoDeadlyStrikeAsync()

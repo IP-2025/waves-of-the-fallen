@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://8cjfd2ck2mx2"]
+[gd_scene load_steps=4 format=3 uid="uid://8cjfd2ck2mx2"]
 
 [ext_resource type="Script" uid="uid://bi2iluh8nfk7r" path="res://UI/Ability/AbilityButton.cs" id="1_8t0y8"]
 [ext_resource type="Texture2D" uid="uid://bcbmddxdebtb2" path="res://UI/Joystick/Ressources/JoyBase.png" id="1_iofkx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8t0y8"]
+font_color = Color(0, 0, 0, 1)
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Ability" type="Node2D"]
 position = Vector2(234, 96)
@@ -34,6 +38,7 @@ offset_left = -20.0
 offset_top = -11.5
 offset_right = 20.0
 offset_bottom = 11.5
+label_settings = SubResource("LabelSettings_8t0y8")
 horizontal_alignment = 1
 vertical_alignment = 1
 
