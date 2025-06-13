@@ -5,6 +5,7 @@
 
 [node name="MountedEnemyX1" type="Node2D"]
 script = ExtResource("1_xfg1v")
-spawningCost = 1.5
+spawningCost = 2.0
+maxWave = -1
 
 [node name="MountedEnemy" parent="." instance=ExtResource("2_qnglb")]
