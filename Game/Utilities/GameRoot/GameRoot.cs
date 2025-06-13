@@ -78,15 +78,19 @@ public partial class GameRoot : Node
 		if (_isServer)
 		{
 			_globalWaveTimer.Name = "GlobalWaveTimer"; // is for sync with clients
-			_globalWaveTimer.Visible = false; // or would spawn somewhere on the map
+			_globalWaveTimer.Visible = true; // or would spawn somewhere on the map
 			AddChild(_globalWaveTimer);
 			// Players -------------------------------------------------------------------------------------
 			// spawn player for self
-			if (NetworkManager.Instance._isLocalHost) SpawnPlayer(1);
-			GetNodeOrNull<DefaultPlayer>("Player_1")
-				.GetNodeOrNull<Camera2D>("Camera2D")
-				.AddChild(waveTimerScene.Instantiate<WaveTimer>()); // player needs wave timer, is normaly added in Client.cs
-																	// Server spawns all players for peers
+			if (NetworkManager.Instance._isLocalHost)
+			{
+				var localWaveTimer = waveTimerScene.Instantiate<WaveTimer>();
+				localWaveTimer.Disable = true;
+				SpawnPlayer(1);
+				GetNodeOrNull<DefaultPlayer>("Player_1")
+					.GetNodeOrNull<Camera2D>("Camera2D")
+					.AddChild(localWaveTimer); // player needs wave timer, is normaly added in Client.cs
+			}                                                       // Server spawns all players for peers
 			foreach (var peerId in GetTree().GetMultiplayer().GetPeers())
 			{
 				DebugIt($"Server spawning player {peerId}");
@@ -135,6 +139,7 @@ public partial class GameRoot : Node
 
 	public override void _Process(double delta)
 	{
+		if (NetworkManager.Instance._isLocalHost) Server.Instance.syncHostWaveTimer();
 		if (NetworkManager.Instance.SoloMode && _soloPlayer is not { alive: true })
 			ShowGameOverScreen();
 
@@ -247,8 +252,8 @@ public partial class GameRoot : Node
 		player.Name = $"Player_{peerId}";
 		player.MaxHealth = character?.Health ?? 0;
 		player.CurrentHealth = character?.Health ?? 0;
-		player.Speed = character?.Speed ?? 0;        
-		
+		player.Speed = character?.Speed ?? 0;
+
 		player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
 			.OfType<Node2D>()
 			.ToList()
@@ -413,7 +418,7 @@ public partial class GameRoot : Node
 	public void CleanupAllLocal()
 	{
 		ScoreManager.PlayerScores.Clear();
-		
+
 		foreach (var node in GetChildren().OfType<DefaultPlayer>().ToList())
 			node.QueueFree();
 

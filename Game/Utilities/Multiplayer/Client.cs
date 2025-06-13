@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Game.UI.GameOver;
+using Game.Utilities.Backend;
 
 public partial class Client : Node
 {
@@ -94,7 +95,7 @@ public partial class Client : Node
 
 		bool executeCommand = weaponUpdated;
 		weaponUpdated = false;
-		
+
 		return executeCommand ? new Command(tick, eid, CommandType.BossShop, dir, _selectedWeapon, _newWeaponPos) : null;
 	}
 
@@ -124,6 +125,9 @@ public partial class Client : Node
 		// collect all network ids from the snapshot
 		var networkIds = snap.Entities.Select(e => e.NetworkId).ToHashSet();
 
+		// Update PlayerScores from the snapshot
+		UpdatePlayerScores(snap.Entities);
+
 		// instanciate or update entities
 		InstantiateOrUpdateEntities(snap.Entities);
 
@@ -134,7 +138,26 @@ public partial class Client : Node
 		_camera = null;
 		_hasJoystick = false;
 	}
-	
+
+	private void UpdatePlayerScores(IEnumerable<EntitySnapshot> entities)
+	{
+		foreach (var entity in entities)
+		{
+			if (entity.PlayerScores != null)
+			{
+				foreach (var score in entity.PlayerScores)
+				{
+					// update the ScoreManager with the scores from the snapshot
+					if (!ScoreManager.PlayerScores.ContainsKey(score.Key))
+					{
+						ScoreManager.PlayerScores[score.Key] = 0;
+					}
+					ScoreManager.PlayerScores[score.Key] = score.Value;
+				}
+			}
+		}
+	}
+
 	private void ShowGameOverScreen(int livingPlayersCount)
 	{
 		if (livingPlayersCount == 0)
@@ -154,7 +177,7 @@ public partial class Client : Node
 		_newWeaponPos++;
 		weaponUpdated = true;
 	}
-	
+
 	private void InstantiateOrUpdateEntities(IEnumerable<EntitySnapshot> entities)
 	{
 		// Kamera- und WaveTimer-Referenzen überprüfen und ggf. zurücksetzen
@@ -300,7 +323,7 @@ public partial class Client : Node
 			if (inst is DefaultPlayer dp)
 			{
 				dp.OwnerPeerId = entity.NetworkId;
-				
+
 				var healthNode = inst.GetNodeOrNull<Health>("Health");
 				if (healthNode != null)
 				{
