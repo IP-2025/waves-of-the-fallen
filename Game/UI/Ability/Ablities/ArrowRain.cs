@@ -28,7 +28,6 @@ public partial class ArrowRain : AbilityBase
 			if (target != null && TryGetPosition(target, out var position))
 				LookAt(position + vector1);
 			await ToSignal(GetTree().CreateTimer(0.1), "timeout");
-			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("bowFires"), GlobalPosition);
 			Shoot();
 		}
 	}
@@ -86,6 +85,7 @@ public partial class ArrowRain : AbilityBase
 		projectileInstance.GlobalRotation = shootingPoint.GlobalRotation;
 
 		GetTree().CurrentScene.AddChild(projectileInstance);
+		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("arrowAbility"), GlobalPosition);
 	}
 
 	public override int getCooldown()
