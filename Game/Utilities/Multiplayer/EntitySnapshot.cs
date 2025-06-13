@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 
 public class EntitySnapshot
 {
@@ -21,20 +22,24 @@ public class EntitySnapshot
 	public long? OwnerId;
 	public int? SlotIndex;
 
-	public EntitySnapshot() { }
+	// Scores
+	public Dictionary<long, int> PlayerScores;
+
+	public EntitySnapshot() { PlayerScores = new Dictionary<long, int>(); }
 
 	public EntitySnapshot(
-		long id, 
-		Vector2 pos, 
-		float rot, 
+		long id,
+		Vector2 pos,
+		float rot,
 		Vector2 scale,
-		float health, 
-		EntityType type, 
-		int waveCount = 0, 
+		float health,
+		EntityType type,
+		int waveCount = 0,
 		float waveTimeLeft = 0,
 		bool graceTime = false,
-		long? ownerId = null, 
-		int? slotIndex = null
+		long? ownerId = null,
+		int? slotIndex = null,
+		Dictionary<long, int> playerScores = null
 	)
 	{
 
@@ -49,5 +54,6 @@ public class EntitySnapshot
 		Health = health;
 		OwnerId = ownerId;
 		SlotIndex = slotIndex;
+		PlayerScores = playerScores ?? new Dictionary<long, int>();
 	}
 }
