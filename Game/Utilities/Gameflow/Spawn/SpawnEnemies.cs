@@ -186,11 +186,11 @@ public partial class SpawnEnemies : Node2D
 	private EnemyPattern GetPatternFromPool()
 	{
 
-		var spawnValue = GD.Randf() * _currentWave; // generate a random spawnValue to determine the difficulty of the selected enemies
+		var spawnValue = GD.Randf() * Math.Min(_currentWave,3); // generate a random spawnValue to determine the difficulty of the selected enemies, capped at 3 so a larger variety of enemies can spawn during later waves
 
 		var patternPoolCopy = _patternPool; // copy of patternPool so the loaded patterns don't get removed
 		patternPoolCopy = patternPoolCopy.
-			Where(i => i.Key.Instantiate<EnemyPattern>().minWave <= _currentWave && i.Key.Instantiate<EnemyPattern>().maxWave >= _currentWave). // look for patterns in the correct wave number range
+			Where(i => i.Key.Instantiate<EnemyPattern>().minWave <= _currentWave && (i.Key.Instantiate<EnemyPattern>().maxWave >= _currentWave | i.Key.Instantiate<EnemyPattern>().maxWave == -1)). // look for patterns in the correct wave number range. max -1 can allways spawn
 			ToDictionary(i => i.Key, i => i.Value);
 
 			patternPoolCopy = patternPoolCopy.
