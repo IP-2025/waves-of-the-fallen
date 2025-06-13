@@ -16,6 +16,15 @@ public partial class AbilityButton : Node2D
 	private Label _timeLeftLabel;
 	private CharacterManager _characterManager;
 	private AbilityBase abilityBase;
+	private BoostDexterity boostDexterity = new BoostDexterity();
+	private BoostIntelligence boostIntelligence = new BoostIntelligence();
+	private BoostStrength boostStrength = new BoostStrength();
+	private SpeedUp dash = new SpeedUp();
+	private Shield shield = new Shield();
+	private FireBlast fireBlast = new FireBlast();
+	private ArrowRain arrowRain = new ArrowRain();
+	private DeadlyStrike deadlyStrike = new DeadlyStrike();
+
 	public override void _Ready()
 	{
 		_timeLeftLabel = GetNode<Label>("TimeLeft");
@@ -27,15 +36,6 @@ public partial class AbilityButton : Node2D
 		if (_parent is DefaultPlayer player)
 		{
 			_abilityIndex = selectedId * 10 + _characterManager.LoadAbilityChosenByID(selectedId.ToString());
-
-			BoostDexterity boostDexterity = new BoostDexterity();
-			BoostIntelligence boostIntelligence = new BoostIntelligence();
-			BoostStrength boostStrength = new BoostStrength();
-			SpeedUp dash = new SpeedUp();
-			Shield shield = new Shield();
-			FireBlast fireBlast = new FireBlast();
-			ArrowRain arrowRain = new ArrowRain();
-			DeadlyStrike deadlyStrike = new DeadlyStrike();
 
 			MaxTime = _abilityIndex switch
 			{
@@ -82,9 +82,12 @@ public partial class AbilityButton : Node2D
 			{
 				Disable = true;
 				player.UseAbility();
+				Debug.Print(MaxTime.ToString());
 			}
 			_abilityTimer.Start();
 			_timeLeftLabel.Show();
 		}
 	}
+
+	
 }
