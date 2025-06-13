@@ -7,7 +7,7 @@ public partial class Medicine : Area2D
 	AnimatedSprite2D medicineSprite;
 
 	private Vector2 endPos;
-	protected int healValue = 10;
+	public const int healValue = 10;
 
 	public override void _Ready()
 	{
@@ -16,6 +16,7 @@ public partial class Medicine : Area2D
 		path.ProgressRatio = GD.Randf();
 		endPos = path.GlobalPosition;
 		_ = EnablePlayerCollision();
+
 	}
 
 	public override void _PhysicsProcess(double delta)
