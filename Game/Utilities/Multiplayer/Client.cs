@@ -12,7 +12,7 @@ using Game.UI.GameOver;
 
 public partial class Client : Node
 {
-	private bool _enableDebug = true;
+	private bool _enableDebug = false;
 	private Camera2D _camera;
 	private bool _hasJoystick;
 	private bool _waveTimerReady;
