@@ -24,7 +24,7 @@ public partial class OnlineLocalMenu : Control
 
 	private void _on_button_solo_pressed()
 	{
-		NetworkManager.Instance._soloMode = true;
+		NetworkManager.Instance.SoloMode = true;
 
 		Button soloButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2/Button_Solo");
 		soloButton.Disabled = true;

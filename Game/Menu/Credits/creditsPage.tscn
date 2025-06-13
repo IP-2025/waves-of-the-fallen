@@ -183,7 +183,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 18
-text = "Game engine:"
+text = "Map-Assets:"
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -192,6 +192,27 @@ theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 10
 
 [node name="Label2" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer2/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "https://cainos.itch.io/pixel-art-top-down-basic
+Created by Cainos  -  https://itch.io/profile/cainos"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 18
+text = "Game engine:"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="Label2" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer3/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Godot Engine  -  https://godotengine.org

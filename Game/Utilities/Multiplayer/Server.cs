@@ -11,7 +11,7 @@ namespace Game.Utilities.Multiplayer
 		public static Server Instance;
 
 	private bool enableDebug = false;
-	public Dictionary<long, int> PlayerSelections = new Dictionary<long, int>();
+	public Dictionary<long, PlayerCharacterData> PlayerSelections = new Dictionary<long, PlayerCharacterData>();
 	public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
 	
 	private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
@@ -210,5 +210,19 @@ namespace Game.Utilities.Multiplayer
 			if (enableDebug)
 				GD.Print($"Server: {message}");
 		}
+
+[Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+public void PlayerLeft(long playerId)
+{
+	// remove entity from Entities dictionary if player left
+	if (Entities.TryGetValue(playerId, out var node))
+	{
+		if (IsInstanceValid(node))
+			node.QueueFree();
+		Entities.Remove(playerId);
+		GD.Print($"Player {playerId} has left the game and was removed.");
+	}
+	PlayerSelections.Remove(playerId);
+}
 	}
 }

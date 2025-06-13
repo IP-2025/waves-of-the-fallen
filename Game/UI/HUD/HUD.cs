@@ -9,9 +9,9 @@ public partial class HUD : CanvasLayer
 	public override void _Process(double delta)
 	{
 		var sb = new StringBuilder();
-		long peerId = Multiplayer.GetUniqueId(); 
+		long peerId = NetworkManager.Instance.SoloMode ? 1 : Multiplayer.GetUniqueId(); 
 
-		if (NetworkManager.Instance != null && NetworkManager.Instance._soloMode)
+		if (NetworkManager.Instance != null && NetworkManager.Instance.SoloMode)
 		{
 			// Solo-Mode: score of the local player
 			int score = ScoreManager.PlayerScores.ContainsKey(peerId) ? ScoreManager.PlayerScores[peerId] : 0;			
@@ -63,5 +63,19 @@ public partial class HUD : CanvasLayer
 				comboLabel.Visible = false;
 			}
 		}
+	}
+
+	public override void _Ready()
+	{
+		var pauseButton = GetNodeOrNull<Button>("PauseButton");
+		if (pauseButton != null)
+			pauseButton.Pressed += OnPauseButtonPressed;
+	}
+
+	private void OnPauseButtonPressed()
+	{
+		var pauseMenu = GetNodeOrNull<PauseMenu>("PauseMenu");
+		if (pauseMenu != null)
+			pauseMenu.OpenPauseMenu();
 	}
 }

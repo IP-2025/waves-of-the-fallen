@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security;
 using System;
 using System.Threading;
-using System.Threading;
+using System.Threading.Tasks;
 using Game.UI.GameOver;
 
 public partial class Client : Node
@@ -241,6 +241,18 @@ public partial class Client : Node
 				{
 					ChangeCamera(inst, entity);
 				}
+
+				// check HUD for local player
+				if (entity.NetworkId == Multiplayer.GetUniqueId())
+				{
+					if (GetTree().Root.GetNodeOrNull("HUD") == null)
+					{
+						var hudScene = GD.Load<PackedScene>("res://UI/HUD/HUD.tscn");
+						var hud = hudScene.Instantiate();
+						hud.Name = "HUD";
+						GetTree().Root.AddChild(hud);
+					}
+				}
 			}
 
 			UpdateTransform(inst, entity);
@@ -258,6 +270,17 @@ public partial class Client : Node
 
 			_instances[entity.NetworkId] = inst;
 			DebugIt($"Instantiated weapon {entity.Type} with ID {entity.NetworkId} under owner {entity.OwnerId.Value}");
+		}
+
+		// guarantee that the PauseMenu for the local player ALWAYS exists
+		var hudNode = GetTree().Root.GetNodeOrNull<CanvasLayer>("HUD");
+		if (hudNode != null && hudNode.GetNodeOrNull<PauseMenu>("PauseMenu") == null)
+		{
+			var pauseMenuScene = GD.Load<PackedScene>("res://Menu/PauseMenu/pauseMenu.tscn");
+			var pauseMenu = pauseMenuScene.Instantiate<PauseMenu>();
+			pauseMenu.Name = "PauseMenu";
+			hudNode.AddChild(pauseMenu);
+			pauseMenu.Visible = false;
 		}
 	}
 
@@ -277,6 +300,15 @@ public partial class Client : Node
 			if (inst is DefaultPlayer dp)
 			{
 				dp.OwnerPeerId = entity.NetworkId;
+				
+				var healthNode = inst.GetNodeOrNull<Health>("Health");
+				if (healthNode != null)
+				{
+					healthNode.MaxHealth = entity.Health; // <- MaxHealth aus dem Snapshot setzen!
+					healthNode.max_health = entity.Health;
+					healthNode.health = entity.Health;
+					healthNode.ResetHealth();
+				}
 			}
 
 			// disable health for enemies because server handles it
