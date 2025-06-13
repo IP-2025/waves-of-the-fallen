@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security;
+using System;
+	using System.Threading;
 
-public partial class Client : Node
+	public partial class Client : Node
 {
 	bool enableDebug = false;
 	private Camera2D _camera;

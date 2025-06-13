@@ -15,10 +15,15 @@ public partial class DefaultPlayer : CharacterBody2D
 	public int CurrentHealth { get; set; }
 	public long OwnerPeerId { get; set; }
 
+	[Export] protected NodePath animationPath;
+
 	public Node2D Joystick { get; set; }
 	private Camera2D camera;
 	private MultiplayerSynchronizer multiplayerSynchronizer;
 	public bool enableDebug = false;
+
+	public AnimationHandler animationHandler;
+	public AnimatedSprite2D animation;
 	
 	public PackedScene BowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
 	public PackedScene CrossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
@@ -32,36 +37,9 @@ public partial class DefaultPlayer : CharacterBody2D
 	public override void _Ready()
 	{
 		AddToGroup("player");
-/* 		base._Ready(); */
 
 		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
- 
-/* 		GetNodeOrNull<Node2D>("Archer")?.Hide();
-		GetNodeOrNull<Node2D>("Assassin")?.Hide();
-		GetNodeOrNull<Node2D>("Knight")?.Hide();
-		GetNodeOrNull<Node2D>("Mage")?.Hide();
-
-		// Zeige nur den ausgewählten Charakter
-		string selectedClassNodeName = selectedCharacterId switch
-		{
-			1 => "Archer",
-			2 => "Assassin",
-			3 => "Knight",
-			4 => "Mage",
-			_ => "Archer" // Standardwert
-		}; */
-
- /* 		var selectedClassNode = GetNodeOrNull<Node2D>(selectedClassNodeName);
-		if (selectedClassNode != null)
-		{
-			selectedClassNode.Show();
-			GD.Print($"Selected class: {selectedClassNodeName}");
-		}
-		else
-		{
-			GD.PrintErr($"Class node '{selectedClassNodeName}' not found!");
-		}*/
 
 		object playerClass = selectedCharacterId switch
 		{
@@ -71,39 +49,19 @@ public partial class DefaultPlayer : CharacterBody2D
 			4 => new Mage(),
 			_ => new DefaultPlayer()
 		};
- 
-/* 		GD.Print($"Selected Character: {playerClass.GetType().Name}"); */
 
-		// Set attributes based on the selected class
-
-		//------------------
-/* 		if (playerClass is DefaultPlayer defaultPlayer)
-		{
-			Speed = defaultPlayer.Speed;
-			MaxHealth = defaultPlayer.MaxHealth;
-			CurrentHealth = defaultPlayer.MaxHealth;
-		}
- */
-/* 		AddToGroup("player");
-		CurrentHealth = MaxHealth;
-
-		OwnerPeerId = Multiplayer.GetUniqueId();
-		GD.Print($"OwnerPeerId set to: {OwnerPeerId}");
-
-		// Synchronize MaxHealth with the Health node
 		var healthNode = GetNodeOrNull<Health>("Health");
 		if (healthNode != null)
 		{
 			healthNode.max_health = MaxHealth;
-			healthNode.ResetHealth(); // Reset health to max_health
+			healthNode.ResetHealth();
 		}
 		else
 		{
 			GD.PrintErr("Health node not found!");
-		} */
+		} 
 
-		// Equip weapon for the selected class
- 		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
+		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(weaponsEquipped) as Node2D;
 		Area2D weapon = CreateWeaponForClass(playerClass);
 
 		if (weapon != null)
@@ -111,7 +69,6 @@ public partial class DefaultPlayer : CharacterBody2D
 			weaponSlot.AddChild(weapon);
 			weapon.Position = Vector2.Zero;
 
-			// for multiplayer
 			ulong id = weapon.GetInstanceId();
 			weapon.Name = $"Weapon_{id}";
 			weapon.SetMeta("OwnerId", OwnerPeerId);
@@ -120,6 +77,16 @@ public partial class DefaultPlayer : CharacterBody2D
 
 			weaponsEquipped++;
 		} 
+
+		if (animationPath != null && !animationPath.IsEmpty)
+		{
+			animation = GetNode<AnimatedSprite2D>(animationPath);
+			animationHandler = new AnimationHandler(animation);
+		}
+		else
+		{
+			GD.PushError($"{Name} has no animationPath set!");
+		}
 	}
 
 	private Area2D CreateWeaponForClass(object playerClass)
@@ -131,65 +98,39 @@ public partial class DefaultPlayer : CharacterBody2D
 			return KunaiScene.Instantiate() as Area2D;
 
 		if (playerClass is Mage) 
-			//return LightningStaffScene.Instantiate() as Area2D;
 			return FireStaffScene.Instantiate() as Area2D;
 		if (playerClass is Knight)
-			//return DaggerScene.Instantiate() as Area2D;
 			return SwordScene.Instantiate() as Area2D;
 		
 		return null;
 	}
 
-	public override void _Process(double delta)
-	{
-
-	}
+	public override void _Process(double delta) {}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector2 direction = Vector2.Zero;
-
-		// Check if joystick exists and if it's being used
-		if (Joystick != null)
+		if (animationHandler != null && animationHandler.IsDying)
 		{
-			Vector2 joystickDirection = (Vector2)Joystick.Get("PosVector");
-			if (joystickDirection != Vector2.Zero)
-			{
-				direction = joystickDirection;
-			}
+			Velocity = Vector2.Zero;
+			MoveAndSlide();
+			return;
 		}
 
-		// If no joystick input, fallback to keyboard
+		Vector2 direction = Vector2.Zero;
+
+		var joystick = GetNodeOrNull<Joystick>("Joystick");
+		if (joystick != null && joystick.PosVector != Vector2.Zero)
+		{
+			direction = joystick.PosVector;
+		}
+
 		if (direction == Vector2.Zero)
 		{
 			direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		}
-
+		
 		Velocity = direction * Speed;
 		MoveAndSlide();
-
-		// // Play Animations
-		// if (animationPlayer != null)
-		// {
-		// 	if (direction != Vector2.Zero)
-		// 	{
-		// 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "walk")
-		// 			animationPlayer.Play("walk");
-		// 	}
-		// 	else
-		// 	{
-		// 		if (!animationPlayer.IsPlaying() || animationPlayer.CurrentAnimation != "idle")
-		//
-		// 			animationPlayer.Play("idle");
-		//
-		//
-		// 	}
-		// }
-		//
-		// if (archerSprite != null && direction != Vector2.Zero)
-		// {
-		// 	archerSprite.FlipH = direction.X < 0;
-		// }
 	}
 
 	public virtual void UseAbility()
@@ -204,10 +145,21 @@ public partial class DefaultPlayer : CharacterBody2D
 			Debug.Print(message);
 		}
 	}
+
 	public virtual void Die()
 	{
+		GD.Print($"[DefaultPlayer.Die] Called on: {Name}");
+
+		Velocity = Vector2.Zero;
 		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerDies"), GlobalPosition);
-		GD.Print("Default death behavior – no animation");
+		animationHandler?.SetDeath();
 		QueueFree();
+		
+		GD.Print("DefaultPlayer.Die() called");
+	}
+	
+	public void OnHit()
+	{
+		animationHandler?.SetHit();
 	}
 }

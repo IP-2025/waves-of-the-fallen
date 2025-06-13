@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://dot6gj3kr2ul5"]
+
+[ext_resource type="Script" uid="uid://c54exatpk5j46" path="res://UI/Spectator/Spectator.cs" id="1_lktgq"]
+
+[node name="Spectator" type="CanvasLayer"]
+script = ExtResource("1_lktgq")
+
+[node name="Overlay" type="ColorRect" parent="."]
+z_index = 1000
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.313726)
+
+[node name="ButtonContainer" type="HBoxContainer" parent="."]
+z_index = 1000
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -30.0
+offset_top = -55.0
+offset_right = 30.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="LeftButton" type="Button" parent="ButtonContainer"]
+z_index = 1000
+layout_mode = 2
+text = "<"
+
+[node name="PlayerName" type="Label" parent="ButtonContainer"]
+z_index = 1000
+layout_mode = 2
+text = "---"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightButton" type="Button" parent="ButtonContainer"]
+z_index = 1000
+layout_mode = 2
+text = ">"
+
+[connection signal="pressed" from="ButtonContainer/LeftButton" to="." method="_on_left_button_pressed"]
+[connection signal="pressed" from="ButtonContainer/RightButton" to="." method="_on_right_button_pressed"]
