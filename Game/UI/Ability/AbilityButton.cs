@@ -73,7 +73,7 @@ public partial class AbilityButton : Node2D
 		IsPaused = _abilityTimer.Paused;
 	}
 
-	public void _on_ability_button_button_down()
+	public void _on_touch_ability_button_pressed()
 	{
 		if (!Disable)
 		{
@@ -88,6 +88,4 @@ public partial class AbilityButton : Node2D
 			_timeLeftLabel.Show();
 		}
 	}
-
-
 }

@@ -8,12 +8,8 @@ public partial class JoyHandle : Sprite2D
 
 	[Export]
 	public float MaxLength = 15.0f;
-	private bool isMouse = false;
 
 	private float _deadzone = 15.0f;
-	
-	private int? _activeTouchIndex = null;
-	private Vector2 _touchPosition;
 
 	public override void _Ready()
 	{
@@ -26,58 +22,12 @@ public partial class JoyHandle : Sprite2D
 		}
 	}
 
-
-	public override void _Input(InputEvent @event)
-	{
-		/*
-		if (@event is InputEventScreenTouch touch)
-		{
-			if (touch.Pressed && _activeTouchIndex == null)
-			{
-				_activeTouchIndex = touch.Index;
-				_touchPosition = GetGlobalMousePosition();
-			}
-		}
-		else if (@event is InputEventScreenDrag drag && drag.Index == _activeTouchIndex)
-		{
-			_touchPosition = GetGlobalMousePosition();
-		}
-		else if (@event is InputEventMouse mouse)
-		{
-			_touchPosition = GetGlobalMousePosition();
-		}
-		else
-		{
-			_touchPosition = GetGlobalMousePosition();
-		}*/
-		if (@event is InputEventScreenTouch touch)
-		{
-			if (touch.Pressed && _activeTouchIndex == null)
-			{
-				_activeTouchIndex = touch.Index;
-				_touchPosition = touch.Position;
-			}
-		}
-		else if (@event is InputEventScreenDrag drag && drag.Index == _activeTouchIndex)
-		{
-			_touchPosition = drag.Position;
-		}
-		else if (@event is InputEventMouse mouse)
-		{
-			isMouse = true;
-		}
-	}
-
 	public override void _Process(double delta)
 	{
 		if (_pressing)
 		{
-			if (isMouse)
-			{
-				_touchPosition = GetGlobalMousePosition();
-			}
 			Vector2 parentGlobalPos = _parent.GlobalPosition;
-			Vector2 mousePos = _touchPosition;
+			Vector2 mousePos = GetGlobalMousePosition();
 
 			if (mousePos.DistanceTo(parentGlobalPos) <= MaxLength)
 			{
