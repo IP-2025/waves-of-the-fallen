@@ -30,6 +30,3 @@ obj/
 # === Logs ===
 *.log
 /hello-pod/node_modules/
-
-
-test
