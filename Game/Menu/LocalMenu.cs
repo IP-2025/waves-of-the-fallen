@@ -20,11 +20,11 @@ public partial class LocalMenu : Control
 	public override void _Ready()
 	{
 		GD.Print("LocalMenu: Ready aufgerufen – isHost=" + _isHost);
-		_joinButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/join");
-		_hostButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/host");
-		_playButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/play");
-		_ipIo = GetNode<LineEdit>("IP_IO");
-		_currentPlayers = GetNode<RichTextLabel>("CurrentPlayers");
+		_joinButton = GetNode<Button>("%join");
+		_hostButton = GetNode<Button>("%host");
+		_playButton = GetNode<Button>("%play");
+		_ipIo = GetNode<LineEdit>("%IP_IO");
+		_currentPlayers = GetNode<RichTextLabel>("%CurrentPlayers");
 
 		// disable play button by default
 		_playButton.Visible = false;
@@ -107,6 +107,10 @@ public partial class LocalMenu : Control
 		//ipIO.Text = "Running";
 		_playButton.Visible = true;
 		_playButton.Disabled = false;
+
+		_currentPlayers.SizeFlagsVertical = Control.SizeFlags.Expand;
+		_currentPlayers.AutowrapMode = TextServer.AutowrapMode.Word;
+		_currentPlayers.CustomMinimumSize = new Vector2(0, 100); 
 
 		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 	}
