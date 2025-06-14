@@ -182,7 +182,7 @@ public partial class Client : Node
 	private void InstantiateOrUpdateEntities(IEnumerable<EntitySnapshot> entities)
 	{
 		// Kamera- und WaveTimer-Referenzen überprüfen und ggf. zurücksetzen
-		if (_camera != null && !GodotObject.IsInstanceValid(_camera))
+		if (_camera != null && !IsInstanceValid(_camera))
 		{
 			_camera = null;
 			_waveTimerReady = false;
@@ -335,7 +335,7 @@ public partial class Client : Node
 				}
 			}
 
-			// disable health for enemies because server handles it
+			// disable health for enemies / player because server handles it
 			if (entity.Type == EntityType.DefaultEnemy
 				|| entity.Type == EntityType.RangedEnemy
 				|| entity.Type == EntityType.MountedEnemy
@@ -408,6 +408,13 @@ public partial class Client : Node
 				return null;
 			}
 			var slot = slots.GetChild<Node2D>(idx);
+			// Remove all existing weapons from the slot before adding the new weapon instance
+			for (int i = slot.GetChildCount() - 1; i >= 0; i--)
+			{
+				var child = slot.GetChild(i);
+				if (IsInstanceValid(child))
+					child.QueueFree();
+			}
 			slot.AddChild(inst);
 			return inst;
 		}
