@@ -10,11 +10,14 @@ public partial class JoyHandle : Sprite2D
 	public float MaxLength = 15.0f;
 
 	private float _deadzone = 15.0f;
+	
+	private int? _activeTouchIndex = null;
+	private Vector2 _touchPosition;
 
 	public override void _Ready()
 	{
 		_parent = GetParent<Node2D>();
-		
+
 		if (_parent is Joystick joystick)
 		{
 			_deadzone = joystick.Deadzone;
@@ -22,12 +25,38 @@ public partial class JoyHandle : Sprite2D
 		}
 	}
 
+/*
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventScreenTouch touch)
+		{
+			if (touch.Pressed && _activeTouchIndex == null)
+			{
+				_activeTouchIndex = touch.Index;
+				_touchPosition = GetGlobalMousePosition();
+			}
+		}
+		else if (@event is InputEventScreenDrag drag && drag.Index == _activeTouchIndex)
+		{
+			_touchPosition = GetGlobalMousePosition();
+		}
+		else if (@event is InputEventMouse mouse)
+		{
+			_touchPosition = GetGlobalMousePosition();
+		}
+		else
+		{
+			_touchPosition = GetGlobalMousePosition();
+		}
+	}*/
+
 	public override void _Process(double delta)
 	{
 		if (_pressing)
 		{
+			_touchPosition = GetGlobalMousePosition();
 			Vector2 parentGlobalPos = _parent.GlobalPosition;
-			Vector2 mousePos = GetGlobalMousePosition();
+			Vector2 mousePos = _touchPosition;
 
 			if (mousePos.DistanceTo(parentGlobalPos) <= MaxLength)
 			{
