@@ -212,9 +212,9 @@ namespace Game.Utilities.Multiplayer
 			// Get hosts WaveTimer (attached to Player_1 Camera2D)
 			WaveTimer loacalWT = GetTree()
 				.Root
-				.GetNodeOrNull<GameRoot>("GameRoot")
-				.GetNodeOrNull<DefaultPlayer>("Player_1")
-				.GetNodeOrNull<Camera2D>("Camera2D")
+				.GetNodeOrNull<GameRoot>("GameRoot")?
+				.GetNodeOrNull<DefaultPlayer>("Player_1")?
+				.GetNodeOrNull<Camera2D>("Camera2D")?
 				.GetNodeOrNull<WaveTimer>("WaveTimer");
 			if (loacalWT == null) return;
 

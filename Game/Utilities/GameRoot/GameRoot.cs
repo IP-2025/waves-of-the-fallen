@@ -232,12 +232,14 @@ public partial class GameRoot : Node
 				characterId = character.CharacterId;
 				break;
 			case true:
-				var selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
-				var health = characterManager.LoadHealthByID(selectedCharacterId.ToString());
-				var speed = characterManager.LoadSpeedByID(selectedCharacterId.ToString());
-				character = new PlayerCharacterData { CharacterId = selectedCharacterId, Health = health, Speed = speed };
+				characterId = characterManager.LoadLastSelectedCharacterID();
+				var health = characterManager.LoadHealthByID(characterId.ToString());
+				var speed = characterManager.LoadSpeedByID(characterId.ToString());
+				character = new PlayerCharacterData { CharacterId = characterId, Health = health, Speed = speed };
 				break;
 		}
+
+		GD.Print("CharacterID: " + characterManager.LoadLastSelectedCharacterID());
 
 		player = characterId switch
 		{
