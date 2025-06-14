@@ -7,6 +7,7 @@
 script = ExtResource("1_0wms1")
 spawningCost = 2.0
 minWave = 2
+maxWave = -1
 
 [node name="BasicEnemy" parent="." instance=ExtResource("2_fbdw2")]
 position = Vector2(-103, -73)
