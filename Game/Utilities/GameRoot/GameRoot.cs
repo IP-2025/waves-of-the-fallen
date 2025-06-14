@@ -9,10 +9,10 @@ using Godot.Collections;
 // GameRoot is the main entry point for the game. It is responsible for loading the map, spawning the player, starting the enemy spawner and so on.
 public partial class GameRoot : Node
 {
+	private bool _enableDebug = true;
 	private Node2D _mainMap;
 	private int _playerIndex = 0; // player index for spawning players
 	private bool _isServer = false;
-	private bool _enableDebug = true;
 	private WaveTimer _globalWaveTimer;
 	private DefaultPlayer _soloPlayer;
 	private int _soloSelectedCharacterId = 1;
@@ -252,6 +252,7 @@ public partial class GameRoot : Node
 		player.MaxHealth = character?.Health ?? 0;
 		player.CurrentHealth = character?.Health ?? 0;
 		player.Speed = character?.Speed ?? 0;
+		DebugIt($"Spawned player {peerId} with characterId {characterId}, health {player.MaxHealth}, speed {player.Speed}");
 
 		player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
 			.OfType<Node2D>()

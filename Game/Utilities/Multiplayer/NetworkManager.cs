@@ -14,7 +14,7 @@ namespace Game.Utilities.Multiplayer
 	// Autoload-Node: manages Netzwerk, Tick-Loop
 	public partial class NetworkManager : Node
 	{
-		public bool enableDebug = false;
+		public bool enableDebug = true;
 		[Export] public int RPC_PORT = 9999;   // ENet for RPC
 		[Export] public int UDP_PORT = 3000;   // PacketPeerUDP for game data
 
