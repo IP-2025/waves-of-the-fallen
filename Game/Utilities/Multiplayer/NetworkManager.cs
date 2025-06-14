@@ -382,17 +382,11 @@ namespace Game.Utilities.Multiplayer
 		}
 
 		[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-		public void SelectCharacter(int selectedCharacterId, int health, int speed)
+		public void SelectCharacter(int selectedCharacterId)
 		{
 			long peerId = Multiplayer.GetRemoteSenderId();
-			// Speichere alle Werte pro Spieler
-			Server.Instance.PlayerSelections[peerId] = new PlayerCharacterData
-			{
-				CharacterId = selectedCharacterId,
-				Health = health,
-				Speed = speed
-			};
-			DebugIt($"Player {peerId} selected character {selectedCharacterId} (HP: {health}, Speed: {speed}, ...)");
+			Server.Instance.PlayerSelections[peerId] = new PlayerCharacterData { CharacterId = selectedCharacterId };
+			DebugIt("Player selectged: " + selectedCharacterId + " By PlayerID: " + peerId);
 		}
 
 		// maybe reactivate for online multiplayer

@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckkabryqawp1l"]
+[gd_scene load_steps=12 format=3 uid="uid://ckkabryqawp1l"]
 
 [ext_resource type="Script" uid="uid://5qdnog2ipfp3" path="res://UI/GameOver/GameOverScreen.cs" id="1_8am08"]
+[ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="2_0tvqg"]
 
 [sub_resource type="Animation" id="Animation_j032u"]
 resource_name = "ButtonFadeIn"
@@ -116,14 +117,21 @@ _data = {
 &"RESET": SubResource("Animation_w6qo0")
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pposm"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fantasy_btn_hover"]
+bg_color = Color(0.45, 0.33, 0.18, 1)
+border_color = Color(1, 0.85, 0.4, 1)
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
-[node name="GameOverScreen" type="CanvasLayer" node_paths=PackedStringArray("ScoreLabel", "MainMenuBtn", "FadeRect", "GameOverLabel", "AnimationPlayerBackground", "AnimationPlayerForeground")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fantasy_btn"]
+bg_color = Color(0.32, 0.23, 0.13, 1)
+border_color = Color(0.7, 0.6, 0.3, 1)
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="GameOverScreen" type="CanvasLayer" node_paths=PackedStringArray("ScoreLabel", "MainMenuBtn", "FadeRect", "GameOverLabel", "AnimationPlayerBackground", "AnimationPlayerForeground", "RestartButton")]
 layer = 10
 script = ExtResource("1_8am08")
 ScoreLabel = NodePath("MarginContainer/VBoxContainer/ScoreLabel")
@@ -132,6 +140,7 @@ FadeRect = NodePath("FadeRect")
 GameOverLabel = NodePath("MarginContainer/GameOverLabel")
 AnimationPlayerBackground = NodePath("AnimationPlayerBackground")
 AnimationPlayerForeground = NodePath("AnimationPlayerForeground")
+RestartButton = NodePath("MarginContainer/VBoxContainer/RestartButton")
 
 [node name="FadeRect" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -168,6 +177,7 @@ theme_override_constants/margin_bottom = 60
 [node name="GameOverLabel" type="Label" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_0tvqg")
 theme_override_font_sizes/font_size = 1
 text = "Game Over"
 horizontal_alignment = 1
@@ -181,24 +191,29 @@ size_flags_vertical = 8
 [node name="ScoreLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_0tvqg")
 theme_override_font_sizes/font_size = 40
 text = "SCORE"
 
 [node name="MainMenuButton" type="Button" parent="MarginContainer/VBoxContainer"]
 visible = false
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(220, 48)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_0tvqg")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/normal = SubResource("StyleBoxFlat_pposm")
-text = "Quit"
+theme_override_styles/hover = SubResource("StyleBoxFlat_fantasy_btn_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fantasy_btn")
+text = "Return to Main Menu"
+
+[node name="RestartButton" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(220, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_0tvqg")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/hover = SubResource("StyleBoxFlat_fantasy_btn_hover")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fantasy_btn")
+text = "Restart"
