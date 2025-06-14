@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://b8dcceo0us5r5"]
 
 [ext_resource type="Script" uid="uid://j5gcbrucnngq" path="res://UI/Shop/BossShop/BossShop.cs" id="1_cox2s"]
-[ext_resource type="Texture2D" uid="uid://cfsrh5vl38dw5" path="res://Weapons/Ranged/Bow/Resources/BowEmpty.png" id="2_vpdq8"]
+[ext_resource type="Texture2D" uid="uid://bqnmfa5aw4hjl" path="res://Weapons/Ranged/Bow/Resources/BowEmpty.png" id="2_vpdq8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpdq8"]
 bg_color = Color(0.309804, 0.309804, 0.309804, 1)
@@ -86,6 +86,7 @@ offset_left = 3.914
 offset_top = 0.200012
 offset_right = 4.052
 offset_bottom = 0.200012
+mouse_filter = 1
 text = "Waffenname"
 
 [node name="range" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon1"]
@@ -99,6 +100,7 @@ offset_left = 2.03
 offset_top = -25.0
 offset_right = 2.12
 offset_bottom = -25.0
+mouse_filter = 1
 text = "+ Vorteil"
 
 [node name="damage" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon1"]
@@ -112,6 +114,7 @@ offset_left = 2.03
 offset_top = 3.0
 offset_right = 2.12
 offset_bottom = 3.0
+mouse_filter = 1
 text = "+ Vorteil"
 
 [node name="delay" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon1"]
@@ -125,6 +128,7 @@ offset_left = 2.03
 offset_top = 28.0
 offset_right = 2.12
 offset_bottom = 28.0
+mouse_filter = 1
 text = "+ Vorteil"
 
 [node name="piercing" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon1"]
@@ -138,6 +142,7 @@ offset_left = 2.03
 offset_top = 56.0
 offset_right = 2.12
 offset_bottom = 56.0
+mouse_filter = 1
 text = "+ Vorteil"
 
 [node name="weapon2" type="Button" parent="MarginContainer/HBoxContainer"]
@@ -166,6 +171,7 @@ offset_left = -0.0860023
 offset_top = 0.200012
 offset_right = 0.052002
 offset_bottom = 0.200012
+mouse_filter = 1
 text = "Waffenname"
 
 [node name="range" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon2"]
@@ -179,6 +185,7 @@ offset_left = 2.03
 offset_top = -25.0
 offset_right = 2.12
 offset_bottom = -25.0
+mouse_filter = 1
 text = "+ Vorteil"
 
 [node name="damage" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon2"]
@@ -192,6 +199,7 @@ offset_left = 2.03
 offset_top = 3.0
 offset_right = 2.12
 offset_bottom = 3.0
+mouse_filter = 1
 text = "+ Vorteil"
 
 [node name="delay" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon2"]
@@ -205,6 +213,7 @@ offset_left = 2.03
 offset_top = 28.0
 offset_right = 2.12
 offset_bottom = 28.0
+mouse_filter = 1
 text = "+ Vorteil"
 
 [node name="piercing" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon2"]
@@ -218,6 +227,7 @@ offset_left = 2.03
 offset_top = 56.0
 offset_right = 2.12
 offset_bottom = 56.0
+mouse_filter = 1
 text = "+ Vorteil"
 
 [node name="weapon3" type="Button" parent="MarginContainer/HBoxContainer"]
@@ -246,6 +256,7 @@ offset_left = 3.914
 offset_top = 0.200012
 offset_right = 4.052
 offset_bottom = 0.200012
+mouse_filter = 1
 text = "Waffenname"
 
 [node name="range" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon3"]
@@ -259,6 +270,7 @@ offset_left = 2.03
 offset_top = -25.0
 offset_right = 2.12
 offset_bottom = -25.0
+mouse_filter = 1
 text = "+ Vorteil"
 
 [node name="damage" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon3"]
@@ -272,6 +284,7 @@ offset_left = 2.03
 offset_top = 3.0
 offset_right = 2.12
 offset_bottom = 3.0
+mouse_filter = 1
 text = "+ Vorteil"
 
 [node name="delay" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon3"]
@@ -285,6 +298,7 @@ offset_left = 2.03
 offset_top = 28.0
 offset_right = 2.12
 offset_bottom = 28.0
+mouse_filter = 1
 text = "+ Vorteil"
 
 [node name="piercing" type="RichTextLabel" parent="MarginContainer/HBoxContainer/weapon3"]
@@ -298,4 +312,5 @@ offset_left = 2.03
 offset_top = 56.0
 offset_right = 2.12
 offset_bottom = 56.0
+mouse_filter = 1
 text = "+ Vorteil"
