@@ -53,6 +53,8 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public override void _Ready()
 	{
+		CharacterManager = GetNode<CharacterManager>("/root/CharacterManager");
+		
 		alive = true;
 		_alreadyDead = false;
 		_requestSent = false;
