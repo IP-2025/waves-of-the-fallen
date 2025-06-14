@@ -9,13 +9,12 @@ using Godot.Collections;
 // GameRoot is the main entry point for the game. It is responsible for loading the map, spawning the player, starting the enemy spawner and so on.
 public partial class GameRoot : Node
 {
-	private bool _enableDebug = true;
+	private bool _enableDebug = false;
 	private Node2D _mainMap;
 	private int _playerIndex = 0; // player index for spawning players
 	private bool _isServer = false;
 	private WaveTimer _globalWaveTimer;
 	private DefaultPlayer _soloPlayer;
-	private int _soloSelectedCharacterId = 1;
 
 	// Shop dirty workaround
 	private int _lastLocalShopRound = 1;
@@ -30,6 +29,7 @@ public partial class GameRoot : Node
 	private HttpRequest _sendScoreRequest;
 	private bool _soloMode = false;
 	private PauseMenu _pauseMenu;
+	private CharacterManager characterManager;
 
 
 	// Called when the node enters the scene tree for the first time.
@@ -48,9 +48,7 @@ public partial class GameRoot : Node
 		_sendScoreRequest.Connect(HttpRequest.SignalName.RequestCompleted, new Callable(this, nameof(OnScoreRequestCompleted)));
 
 		// Character ---------------------------------------------------------------------------------------
-		// get selected character
-		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
-		_soloSelectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+		characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 
 		if (!NetworkManager.Instance.SoloMode) _isServer = GetTree().GetMultiplayer().IsServer();
 
@@ -77,7 +75,7 @@ public partial class GameRoot : Node
 		if (_isServer)
 		{
 			_globalWaveTimer.Name = "GlobalWaveTimer"; // is for sync with clients
-			_globalWaveTimer.Visible = true; // or would spawn somewhere on the map
+			_globalWaveTimer.Visible = false; // or would spawn somewhere on the map
 			AddChild(_globalWaveTimer);
 			// Players -------------------------------------------------------------------------------------
 			// spawn player for self
@@ -234,8 +232,10 @@ public partial class GameRoot : Node
 				characterId = character.CharacterId;
 				break;
 			case true:
-				characterId = _soloSelectedCharacterId;
-				character = new PlayerCharacterData { CharacterId = characterId, Health = 0 };
+				var selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+				var health = characterManager.LoadHealthByID(selectedCharacterId.ToString());
+				var speed = characterManager.LoadSpeedByID(selectedCharacterId.ToString());
+				character = new PlayerCharacterData { CharacterId = selectedCharacterId, Health = health, Speed = speed };
 				break;
 		}
 
@@ -252,7 +252,7 @@ public partial class GameRoot : Node
 		player.MaxHealth = character?.Health ?? 0;
 		player.CurrentHealth = character?.Health ?? 0;
 		player.Speed = character?.Speed ?? 0;
-		DebugIt($"Spawned player {peerId} with characterId {characterId}, health {player.MaxHealth}, speed {player.Speed}");
+		DebugIt($"Spawned player {peerId} with characterId {characterId}, max health {player.MaxHealth}, current health {player.CurrentHealth}, speed {player.Speed}, health should be: {character.Health}");
 
 		player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
 			.OfType<Node2D>()

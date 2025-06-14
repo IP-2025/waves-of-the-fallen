@@ -10,7 +10,7 @@ namespace Game.Utilities.Multiplayer
 	{
 		public static Server Instance;
 
-		private bool enableDebug = true;
+		private bool enableDebug = false;
 		public Dictionary<long, PlayerCharacterData> PlayerSelections = new Dictionary<long, PlayerCharacterData>();
 		public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
 

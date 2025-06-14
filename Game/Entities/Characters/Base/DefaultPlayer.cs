@@ -6,7 +6,7 @@ using Godot;
 
 public partial class DefaultPlayer : CharacterBody2D
 {
-	private bool _enableDebug = true;
+	private bool _enableDebug = false;
 
 	[Export] public float Speed { get; set; }
 
@@ -130,8 +130,6 @@ public partial class DefaultPlayer : CharacterBody2D
 		if (joystick != null && joystick.PosVector != Vector2.Zero)
 		{
 			direction = joystick.PosVector;
-			GD.Print($"Joystick Vector: {direction}");
-
 		}
 
 		// If no joystick input, fallback to keyboard
