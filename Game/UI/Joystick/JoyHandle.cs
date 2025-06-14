@@ -8,6 +8,7 @@ public partial class JoyHandle : Sprite2D
 
 	[Export]
 	public float MaxLength = 15.0f;
+	private bool isMouse = false;
 
 	private float _deadzone = 15.0f;
 	
@@ -25,9 +26,10 @@ public partial class JoyHandle : Sprite2D
 		}
 	}
 
-/*
+
 	public override void _Input(InputEvent @event)
 	{
+		/*
 		if (@event is InputEventScreenTouch touch)
 		{
 			if (touch.Pressed && _activeTouchIndex == null)
@@ -47,14 +49,33 @@ public partial class JoyHandle : Sprite2D
 		else
 		{
 			_touchPosition = GetGlobalMousePosition();
+		}*/
+		if (@event is InputEventScreenTouch touch)
+		{
+			if (touch.Pressed && _activeTouchIndex == null)
+			{
+				_activeTouchIndex = touch.Index;
+				_touchPosition = touch.Position;
+			}
 		}
-	}*/
+		else if (@event is InputEventScreenDrag drag && drag.Index == _activeTouchIndex)
+		{
+			_touchPosition = drag.Position;
+		}
+		else if (@event is InputEventMouse mouse)
+		{
+			isMouse = true;
+		}
+	}
 
 	public override void _Process(double delta)
 	{
 		if (_pressing)
 		{
-			_touchPosition = GetGlobalMousePosition();
+			if (isMouse)
+			{
+				_touchPosition = GetGlobalMousePosition();
+			}
 			Vector2 parentGlobalPos = _parent.GlobalPosition;
 			Vector2 mousePos = _touchPosition;
 

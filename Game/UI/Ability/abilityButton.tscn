@@ -8,6 +8,7 @@ font_color = Color(0, 0, 0, 1)
 outline_color = Color(0, 0, 0, 1)
 
 [node name="Ability" type="Node2D"]
+z_index = 1
 position = Vector2(234, 96)
 scale = Vector2(2, 2)
 script = ExtResource("1_8t0y8")
@@ -22,6 +23,7 @@ unique_name_in_owner = true
 
 [node name="AbilityButton" type="Button" parent="."]
 self_modulate = Color(1, 1, 1, 0)
+z_index = 1
 offset_left = -30.0
 offset_top = -30.0
 offset_right = 70.0
