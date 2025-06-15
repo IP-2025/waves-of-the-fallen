@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,6 +7,12 @@ public partial class BossShop : Control
 {
 	[Signal] 
 	public delegate void WeaponChosenEventHandler(Weapon weapon);
+
+	private List<Weapon> _shuffled;
+	private Weapon _selected = null;
+	private Timer _timer;
+	private RichTextLabel _timeLabel;
+
 
 	private static readonly List<Weapon> allWeapons = new()
 {
@@ -20,6 +27,8 @@ public partial class BossShop : Control
 	new WarHammer(),
 	new DoubleBlade()
 };
+	
+	
 
 	private void PopulateWeapon(string containerPath, Weapon weapon, int index)
 	{
@@ -46,23 +55,63 @@ public partial class BossShop : Control
 		var rng = new RandomNumberGenerator();
 		rng.Randomize();
 
-		var shuffled = new List<Weapon>(allWeapons);
-		for (int i = shuffled.Count - 1; i > 0; i--)
+		_shuffled = new List<Weapon>(allWeapons);
+		for (int i = _shuffled.Count - 1; i > 0; i--)
 		{
 			int j = rng.RandiRange(0, i);
-			(shuffled[i], shuffled[j]) = (shuffled[j], shuffled[i]);
+			(_shuffled[i], _shuffled[j]) = (_shuffled[j], _shuffled[i]);
 		}
 
-		for (int slot = 0; slot < 3 && slot < shuffled.Count; slot++)
+		for (int slot = 0; slot < 3 && slot < _shuffled.Count; slot++)
 		{
 			string path = $"MarginContainer/HBoxContainer/weapon{slot + 1}";
-			PopulateWeapon(path, shuffled[slot], slot + 1);
+			PopulateWeapon(path, _shuffled[slot], slot + 1);
+		}
+		
+		_timer = GetNode<Timer>("Timer");
+		_timeLabel = GetNode<RichTextLabel>("TimeLabel");
+		
+
+		// Timer starten
+		_timer.Start();
+	}
+	
+	public override void _Process(double delta)
+	{
+		// Nur anzeigen, wenn der Timer läuft
+		if (_timer != null && _timer.IsStopped() == false)
+		{
+			
+			double time = _timer.TimeLeft;
+			_timeLabel.Text = $"Time left: {time:F2}s";
 		}
 	}
 
 	public void OnWeaponButtonUp(Weapon chosen)
 	{
 		Debug.Print($"Du hast gewählt: {chosen.GetType().Name}");
-		EmitSignal(SignalName.WeaponChosen, chosen);
+		_selected = chosen;
+		
+	}
+
+	public void OnTimerTimeout()
+	{
+		
+		if (_selected == null)
+		{
+			var rng = new RandomNumberGenerator();
+			rng.Randomize();
+		
+			int displayCount = Math.Min(_shuffled.Count, 3);
+			int idx = rng.RandiRange(0, displayCount - 1);
+			_selected = _shuffled[idx];
+		
+			Debug.Print($"Zeit abgelaufen – zufällige Waffe: {_selected.GetType().Name}");
+			
+		}
+		
+		Debug.Print($"Waffe hinzugefügt: {_selected.GetType().Name}");
+		EmitSignal(SignalName.WeaponChosen, _selected);
+		
 	}
 }
