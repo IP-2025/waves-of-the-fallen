@@ -6,7 +6,7 @@ using Godot;
 
 public partial class DefaultPlayer : CharacterBody2D
 {
-
+	private bool _enableDebug = false;
 
 	[Export] public float Speed { get; set; }
 
@@ -30,8 +30,6 @@ public partial class DefaultPlayer : CharacterBody2D
 	public Node2D Ability { get; set; }
 	private Camera2D _camera;
 	private MultiplayerSynchronizer _multiplayerSynchronizer;
-	private bool _enableDebug;
-
 	public AnimationHandler animationHandler;
 	public AnimatedSprite2D animation;
 	public bool alive = false;
@@ -68,31 +66,22 @@ public partial class DefaultPlayer : CharacterBody2D
 
 	public override void _Ready()
 	{
+		CharacterManager = GetNode<CharacterManager>("/root/CharacterManager");
+		
 		alive = true;
 		_alreadyDead = false;
 		_requestSent = false;
 		AddToGroup("player");
 		/* 		base._Ready(); */
 
-		CharacterManager = GetNode<CharacterManager>("/root/CharacterManager");
-		var selectedCharacterId = CharacterManager.LoadLastSelectedCharacterID();
-
 		HttpRequest.Connect("request_completed", new Callable(this, nameof(OnRequestCompleted)));
 
-		object playerClass = selectedCharacterId switch
-		{
-			1 => new Archer(),
-			2 => new Assassin(),
-			3 => new Knight(),
-			4 => new Mage(),
-			_ => new DefaultPlayer()
-		};
-
-		_abilityScene = GetAbilityForPlayer(selectedCharacterId);
-
-		// Equip weapon for the selected class
+		// dynamically determine the class type and create the appropriate weapon
+		var playerClass = this.GetType(); // get the type of the current instance ( Archer, Assassin...)
+		_abilityScene = GetAbilityForPlayer(playerClass);
 		var weaponSlot = GetNode<Node2D>("WeaponSpawnPoints").GetChild(_weaponsEquipped) as Node2D;
 		var weapon = CreateWeaponForClass(playerClass);
+		DebugIt($"Created weapon for class: {playerClass}");
 
 		if (weapon == null) return;
 		weaponSlot?.AddChild(weapon);
@@ -121,14 +110,10 @@ public partial class DefaultPlayer : CharacterBody2D
 	{
 		return playerClass switch
 		{
-			Archer => _bowScene.Instantiate() as Area2D,
-			//Assassin => _kunaiScene.Instantiate() as Area2D,
-			//Assassin => _doubleBladeScene.Instantiate() as Area2D,
-			Assassin => _daggerScene.Instantiate() as Area2D,
-			//return _healStaffScene.Instantiate() as Area2D;
-			Mage => _fireStaffScene.Instantiate() as Area2D,
-			Knight => _swordScene.Instantiate() as Area2D,
-			//Knight => _warHammerScene.Instantiate() as Area2D,
+			Type t when t == typeof(Archer) => _bowScene.Instantiate() as Area2D,
+			Type t when t == typeof(Assassin) => _daggerScene.Instantiate() as Area2D,
+			Type t when t == typeof(Mage) => _fireStaffScene.Instantiate() as Area2D,
+			Type t when t == typeof(Knight) => _swordScene.Instantiate() as Area2D,
 			_ => null
 		};
 	}
@@ -147,6 +132,22 @@ public partial class DefaultPlayer : CharacterBody2D
 			32 => _shieldScene,
 			41 => _boostIntScene,
 			42 => _fireBlastScene,
+			_ => null
+		};
+	}
+
+	private PackedScene GetAbilityForPlayer(object playerClass)
+	{
+		return playerClass switch
+		{
+			Type t when t == typeof(Archer) && CharacterManager.LoadAbilityChosenByID("1") == 1 => _boostDexScene,
+			Type t when t == typeof(Archer) && CharacterManager.LoadAbilityChosenByID("1") == 2 => _arrowRainScene,
+			Type t when t == typeof(Assassin) && CharacterManager.LoadAbilityChosenByID("2") == 1 => _dashScene,
+			Type t when t == typeof(Assassin) && CharacterManager.LoadAbilityChosenByID("2") == 2 => _deadlyStrikeScene,
+			Type t when t == typeof(Mage) && CharacterManager.LoadAbilityChosenByID("3") == 1 => _boostStrScene,
+			Type t when t == typeof(Mage) && CharacterManager.LoadAbilityChosenByID("3") == 2 => _shieldScene,
+			Type t when t == typeof(Knight) && CharacterManager.LoadAbilityChosenByID("4") == 1 => _boostIntScene,
+			Type t when t == typeof(Knight) && CharacterManager.LoadAbilityChosenByID("4") == 2 => _fireBlastScene,
 			_ => null
 		};
 	}
@@ -208,7 +209,7 @@ public partial class DefaultPlayer : CharacterBody2D
 	{
 		if (_enableDebug)
 		{
-			Debug.Print(message);
+			Debug.Print("Default Player: " + message);
 		}
 	}
 
