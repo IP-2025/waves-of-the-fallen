@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8dcceo0us5r5"]
+[gd_scene load_steps=7 format=3 uid="uid://b8dcceo0us5r5"]
 
 [ext_resource type="Script" uid="uid://j5gcbrucnngq" path="res://UI/Shop/BossShop/BossShop.cs" id="1_cox2s"]
 [ext_resource type="Texture2D" uid="uid://bqnmfa5aw4hjl" path="res://Weapons/Ranged/Bow/Resources/BowEmpty.png" id="2_vpdq8"]
@@ -12,7 +12,16 @@ bg_color = Color(0.309804, 0.309804, 0.309804, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_grg02"]
 bg_color = Color(0.309804, 0.309804, 0.309804, 1)
 
+[sub_resource type="FontFile" id="FontFile_vpdq8"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
 [node name="BossShop" type="Control"]
+process_mode = 3
+z_index = 1
 layout_mode = 3
 anchors_preset = 0
 offset_left = -287.5
@@ -314,3 +323,22 @@ offset_right = 2.12
 offset_bottom = 56.0
 mouse_filter = 1
 text = "+ Vorteil"
+
+[node name="TimeLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.749
+anchor_right = 1.0
+anchor_bottom = 0.122
+offset_left = -0.350037
+offset_top = 11.0
+offset_right = -15.0
+offset_bottom = -0.300003
+theme_override_fonts/normal_font = SubResource("FontFile_vpdq8")
+theme_override_font_sizes/normal_font_size = 40
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]
