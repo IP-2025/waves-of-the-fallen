@@ -144,10 +144,10 @@ public partial class DefaultPlayer : CharacterBody2D
 			Type t when t == typeof(Archer) && CharacterManager.LoadAbilityChosenByID("1") == 2 => _arrowRainScene,
 			Type t when t == typeof(Assassin) && CharacterManager.LoadAbilityChosenByID("2") == 1 => _dashScene,
 			Type t when t == typeof(Assassin) && CharacterManager.LoadAbilityChosenByID("2") == 2 => _deadlyStrikeScene,
-			Type t when t == typeof(Mage) && CharacterManager.LoadAbilityChosenByID("3") == 1 => _boostStrScene,
-			Type t when t == typeof(Mage) && CharacterManager.LoadAbilityChosenByID("3") == 2 => _shieldScene,
-			Type t when t == typeof(Knight) && CharacterManager.LoadAbilityChosenByID("4") == 1 => _boostIntScene,
-			Type t when t == typeof(Knight) && CharacterManager.LoadAbilityChosenByID("4") == 2 => _fireBlastScene,
+			Type t when t == typeof(Knight) && CharacterManager.LoadAbilityChosenByID("3") == 1 => _boostStrScene,
+			Type t when t == typeof(Knight) && CharacterManager.LoadAbilityChosenByID("3") == 2 => _shieldScene,
+			Type t when t == typeof(Mage) && CharacterManager.LoadAbilityChosenByID("4") == 1 => _boostIntScene,
+			Type t when t == typeof(Mage) && CharacterManager.LoadAbilityChosenByID("4") == 2 => _fireBlastScene,
 			_ => null
 		};
 	}
