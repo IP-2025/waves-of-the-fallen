@@ -854,13 +854,7 @@ animations = [{
 collision_layer = 16
 collision_mask = 129
 script = ExtResource("1_script")
-stopDistance = 40.0
-attackRange = null
-speed = null
-damage = null
-attacksPerSecond = null
 animationPath = NodePath("AnimatedSprite2D")
-scoreValue = null
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("3_health")

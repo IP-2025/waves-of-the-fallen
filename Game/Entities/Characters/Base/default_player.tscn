@@ -29,24 +29,12 @@ position = Vector2(25, 15)
 position = Vector2(-25, 15)
 
 [node name="Archer" parent="." instance=ExtResource("3_kjvlq")]
-Speed = null
-MaxHealth = null
-CurrentHealth = null
 
 [node name="Assassin" parent="." instance=ExtResource("5_jig1i")]
-Speed = null
-MaxHealth = null
-CurrentHealth = null
 
 [node name="Knight" parent="." instance=ExtResource("6_ajyao")]
-Speed = null
-MaxHealth = null
-CurrentHealth = null
 
 [node name="Mage" parent="." instance=ExtResource("7_bdmc5")]
-Speed = null
-MaxHealth = null
-CurrentHealth = null
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
