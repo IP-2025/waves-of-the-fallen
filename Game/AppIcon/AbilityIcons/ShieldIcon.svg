@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100"
+   height="100"
+   viewBox="0 0 26.458333 26.458333"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   sodipodi:docname="ShieldIcon.svg"
+   inkscape:export-filename="PNG\Activated\ShieldIcon.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="5.5090348"
+     inkscape:cx="48.91964"
+     inkscape:cy="56.90652"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g5" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Activated"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline">
+    <circle
+       style="opacity:0.35;fill:#423c9d;fill-opacity:1;stroke-width:0.279754;paint-order:stroke fill markers"
+       id="path1"
+       cx="13.23105"
+       cy="13.193437"
+       r="13.20747" />
+    <g
+       id="layer5-7"
+       inkscape:label="Shield"
+       transform="matrix(0.87446824,0,0,0.82014279,-90.841747,-52.615689)"
+       style="display:inline">
+      <path
+         style="fill:#aca793;stroke-width:0.274994"
+         d="m 117.31524,67.551111 3.48415,1.595324 2.4229,-1.75107 2.22067,17.121939 -0.91524,4.583672 -2.85804,3.367538"
+         id="path11-61"
+         sodipodi:nodetypes="cccccc"
+         inkscape:label="Shield Back" />
+      <path
+         d="m 121.67101,92.467915 -5.47753,-2.291839 -3.33641,-4.11595 -2.06379,-16.552649 3.61066,0.340662 2.91405,-2.297688"
+         style="fill:#c8c4b7;stroke-width:0.274994"
+         id="path1-7-8"
+         inkscape:label="Shield Front"
+         sodipodi:nodetypes="cccccc" />
+      <path
+         style="fill:#918a6f;stroke-width:0.343897"
+         d="m 117.44003,76.039336 -0.94898,2.059366 0.24328,2.758072 2.37583,2.128398 2.58233,-0.478537 0.50048,-2.385538 -0.39785,-2.633078 -1.70555,-1.760558 z"
+         id="path12-9"
+         sodipodi:nodetypes="ccccccccc"
+         inkscape:label="Shield Middle" />
+    </g>
+  </g>
+  <g
+     inkscape:label="Deactivated"
+     inkscape:groupmode="layer"
+     id="g5"
+     style="display:none">
+    <circle
+       style="opacity:0.2;fill:#423c9d;fill-opacity:1;stroke-width:0.279754;paint-order:stroke fill markers"
+       id="circle1"
+       cx="13.23105"
+       cy="13.193437"
+       r="13.20747" />
+    <g
+       id="g4"
+       inkscape:label="Shield"
+       transform="matrix(0.87446824,0,0,0.82014279,-90.841747,-52.615689)"
+       style="display:inline;opacity:0.75">
+      <path
+         style="opacity:0.5;fill:#aca793;stroke-width:0.274994"
+         d="m 117.31524,67.551111 3.48415,1.595324 2.4229,-1.75107 2.22067,17.121939 -0.91524,4.583672 -2.85804,3.367538"
+         id="path2"
+         sodipodi:nodetypes="cccccc"
+         inkscape:label="Shield Back" />
+      <path
+         d="m 121.67101,92.467915 -5.47753,-2.291839 -3.33641,-4.11595 -2.06379,-16.552649 3.61066,0.340662 2.91405,-2.297688"
+         style="opacity:0.5;fill:#c8c4b7;stroke-width:0.274994"
+         id="path3"
+         inkscape:label="Shield Front"
+         sodipodi:nodetypes="cccccc" />
+      <path
+         style="opacity:0.5;fill:#918a6f;stroke-width:0.343897"
+         d="m 117.44003,76.039336 -0.94898,2.059366 0.24328,2.758072 2.37583,2.128398 2.58233,-0.478537 0.50048,-2.385538 -0.39785,-2.633078 -1.70555,-1.760558 z"
+         id="path4"
+         sodipodi:nodetypes="ccccccccc"
+         inkscape:label="Shield Middle" />
+    </g>
+  </g>
+</svg>
