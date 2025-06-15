@@ -119,6 +119,9 @@ animations = [{
 collision_mask = 384
 collision_priority = 2.0
 script = ExtResource("1_rpbpn")
+Speed = null
+MaxHealth = null
+CurrentHealth = null
 animationPath = NodePath("ArcherAnimation")
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
@@ -137,6 +140,7 @@ position = Vector2(-25, 15)
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_odyji")
+max_health = null
 
 [node name="HealthBar" type="ProgressBar" parent="Health"]
 offset_left = -50.0

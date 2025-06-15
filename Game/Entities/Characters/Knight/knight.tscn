@@ -112,6 +112,9 @@ animations = [{
 collision_mask = 384
 collision_priority = 2.0
 script = ExtResource("1_wbc0s")
+Speed = null
+MaxHealth = null
+CurrentHealth = null
 animationPath = NodePath("KnightAnimation")
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
@@ -131,6 +134,7 @@ position = Vector2(-25, 15)
 [node name="Health" type="Node2D" parent="."]
 position = Vector2(-3, 1)
 script = ExtResource("2_7stuo")
+max_health = null
 
 [node name="HealthBar" type="ProgressBar" parent="Health"]
 offset_left = -45.0

@@ -14,7 +14,7 @@ namespace Game.Utilities.Multiplayer
 	// Autoload-Node: manages Netzwerk, Tick-Loop
 	public partial class NetworkManager : Node
 	{
-		public bool enableDebug = false;
+		public bool enableDebug = true;
 		[Export] public int RPC_PORT = 9999;   // ENet for RPC
 		[Export] public int UDP_PORT = 3000;   // PacketPeerUDP for game data
 
@@ -382,11 +382,17 @@ namespace Game.Utilities.Multiplayer
 		}
 
 		[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-		public void SelectCharacter(int selectedCharacterId)
+		public void SelectCharacter(int selectedCharacterId, int health, int speed)
 		{
 			long peerId = Multiplayer.GetRemoteSenderId();
-			Server.Instance.PlayerSelections[peerId] = new PlayerCharacterData { CharacterId = selectedCharacterId };
-			DebugIt("Player selectged: " + selectedCharacterId + " By PlayerID: " + peerId);
+			// Speichere alle Werte pro Spieler
+			Server.Instance.PlayerSelections[peerId] = new PlayerCharacterData
+			{
+				CharacterId = selectedCharacterId,
+				Health = health,
+				Speed = speed
+			};
+			DebugIt($"Player {peerId} selected character {selectedCharacterId} (HP: {health}, Speed: {speed}, ...)");
 		}
 
 		// maybe reactivate for online multiplayer

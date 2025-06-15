@@ -13,7 +13,7 @@ using Game.Utilities.Backend;
 
 public partial class Client : Node
 {
-	private bool _enableDebug = false;
+	private bool _enableDebug = true;
 	private Camera2D _camera;
 	private bool _hasJoystick;
 	private bool _waveTimerReady;

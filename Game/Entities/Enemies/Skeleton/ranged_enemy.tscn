@@ -215,8 +215,14 @@ animations = [{
 collision_layer = 16
 collision_mask = 145
 script = ExtResource("1_1deiu")
+stopDistance = null
+attackRange = null
 EnemyProjectileScene = ExtResource("2_e5mcm")
+speed = null
+damage = null
+attacksPerSecond = null
 animationPath = NodePath("RangedEnemyAnimation")
+scoreValue = null
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_u2wu2")

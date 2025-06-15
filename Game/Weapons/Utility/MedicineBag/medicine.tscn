@@ -54,6 +54,7 @@ script = ExtResource("1_4wycq")
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_41hyg")
+max_health = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_4wycq")

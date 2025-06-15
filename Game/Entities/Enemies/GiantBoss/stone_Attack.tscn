@@ -115,6 +115,8 @@ size = Vector2(155, 173)
 [node name="stone_Attack" type="Area2D"]
 scale = Vector2(0.1, 0.1)
 script = ExtResource("1_gy8r0")
+Speed = null
+Lifetime = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-20, -87)
