@@ -13,7 +13,7 @@ using Game.Utilities.Backend;
 
 public partial class Client : Node
 {
-	private bool _enableDebug = false;
+	private bool _enableDebug = true;
 	private Camera2D _camera;
 	private bool _hasJoystick;
 	private bool _hasAbilityButton;
@@ -65,7 +65,15 @@ public partial class Client : Node
 		{ EntityType.HealStaff, GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn")},
 		{ EntityType.DoubleBlade, GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn")},
 		{ EntityType.MedicineBag, GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn")},
-		{ EntityType.Medicine, GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicine.tscn")}
+		{ EntityType.Medicine, GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicine.tscn")},
+		{ EntityType.BoostDexterity, GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_dexterity.tscn")},
+		{ EntityType.BoostStrength, GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_strength.tscn")},
+		{ EntityType.BoostIntelligence, GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_intelligence.tscn")},
+		{ EntityType.SpeedUp, GD.Load<PackedScene>("res://UI/Ability/Ablities/speed_up.tscn")},
+		{ EntityType.ArrowRain, GD.Load<PackedScene>("res://UI/Ability/Ablities/arrow_rain.tscn")},
+		{ EntityType.Shield, GD.Load<PackedScene>("res://UI/Ability/Ablities/shield.tscn")},
+		{ EntityType.FireBlast, GD.Load<PackedScene>("res://UI/Ability/Ablities/fire_blast.tscn")},
+		{ EntityType.DeadlyStrike, GD.Load<PackedScene>("res://UI/Ability/Ablities/deadly_strike.tscn")}
 	};
 
 	public override void _Ready()
@@ -80,9 +88,18 @@ public partial class Client : Node
 		var key = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		// decide between joystick and keyboard input, joystick has priority
 		var dir = joy != Vector2.Zero ? joy : key;
-
 		// nonly send move command if there is input
 		return dir != Vector2.Zero ? new Command(tick, eid, CommandType.Move, dir, _selectedWeapon, _newWeaponPos) : null;
+	}
+
+	public Command GetAbilityCommand(ulong tick)
+	{
+		long eid = Multiplayer.GetUniqueId();
+		DebugIt("bitee");
+
+		bool executeCommand = IsAbilityButtonPressed();
+
+		return executeCommand ? new Command(tick, eid, CommandType.Ability, null, _selectedWeapon, _newWeaponPos) : null;
 	}
 
 	public Command GetShopCommand(ulong tick)
@@ -114,8 +131,28 @@ public partial class Client : Node
 		if (joystick == null)
 			return Vector2.Zero;
 
-		DebugIt($"Joystick direction: {joystick.PosVector}");
+		//DebugIt($"Joystick direction: {joystick.PosVector}");
 		return joystick.PosVector;
+	}
+
+	private bool IsAbilityButtonPressed()
+	{
+		DebugIt("IsAbilityButtonPressed()");
+		var playerNodeName = $"E_{Multiplayer.GetUniqueId()}";
+		var playerNode = GetTree()
+			.Root.GetNodeOrNull<GameRoot>("GameRoot")
+			?.GetNodeOrNull<CharacterBody2D>(playerNodeName);
+
+		var abilityButton = playerNode?.GetNodeOrNull<Node2D>("Ability").GetNodeOrNull<TouchScreenButton>("TouchAbilityButton"); 
+		DebugIt(abilityButton.Name);
+		if (abilityButton.IsPressed())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	public void ApplySnapshot(Snapshot snap)
@@ -138,6 +175,7 @@ public partial class Client : Node
 		if (_camera == null || networkIds.Contains(Multiplayer.GetUniqueId())) return;
 		_camera = null;
 		_hasJoystick = false;
+		_hasAbilityButton = false;
 	}
 
 	private void UpdatePlayerScores(IEnumerable<EntitySnapshot> entities)
@@ -302,6 +340,7 @@ public partial class Client : Node
 			DebugIt($"Instantiated weapon {entity.Type} with ID {entity.NetworkId} under owner {entity.OwnerId.Value}");
 		}
 
+//hier vielleicht???
 		// guarantee that the PauseMenu for the local player ALWAYS exists
 		var hudNode = GetTree().Root.GetNodeOrNull<CanvasLayer>("HUD");
 		if (hudNode != null && hudNode.GetNodeOrNull<PauseMenu>("PauseMenu") == null)

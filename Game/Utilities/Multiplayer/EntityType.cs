@@ -27,5 +27,13 @@ public enum EntityType
 	HealStaff,
 	DoubleBlade,
 	MedicineBag,
-	Medicine
+	Medicine,
+	BoostDexterity,
+	BoostStrength,
+	BoostIntelligence,
+	SpeedUp,
+	ArrowRain,
+	Shield,
+	FireBlast,
+	DeadlyStrike,
 }

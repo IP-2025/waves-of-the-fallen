@@ -55,7 +55,15 @@ namespace Game.Utilities.Multiplayer
 		{ "res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn", EntityType.HealStaff },
 		{ "res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn", EntityType.DoubleBlade },
 		{ "res://Weapons/Utility/MedicineBag/medicineBag.tscn", EntityType.MedicineBag },
-		{ "res://Weapons/Utility/MedicineBag/medicine.tscn", EntityType.Medicine }
+		{ "res://Weapons/Utility/MedicineBag/medicine.tscn", EntityType.Medicine },
+		{ "res://UI/Ability/Ablities/boost_dexterity.tscn", EntityType.BoostDexterity},
+		{ "res://UI/Ability/Ablities/boost_strength.tscn", EntityType.BoostStrength},
+		{ "res://UI/Ability/Ablities/boost_intelligence.tscn", EntityType.BoostIntelligence},
+		{ "res://UI/Ability/Ablities/speed_up.tscn", EntityType.SpeedUp},
+		{ "res://UI/Ability/Ablities/arrow_rain.tscn", EntityType.ArrowRain},
+		{ "res://UI/Ability/Ablities/shield.tscn", EntityType.Shield},
+		{ "res://UI/Ability/Ablities/fire_blast.tscn", EntityType.FireBlast},
+		{ "res://UI/Ability/Ablities/deadly_strike.tscn", EntityType.DeadlyStrike}
 	};
 
 		public override void _Ready()
@@ -118,7 +126,13 @@ namespace Game.Utilities.Multiplayer
 				weapon.SetMeta("SlotIndex", cmd.WeaponPos);
 				Instance.Entities.Add((long)id, weapon);
 			}
-
+			else if (cmd.Type == CommandType.Ability)
+			{
+				if (entity is DefaultPlayer defaultPlayer)
+				{
+					defaultPlayer.UseAbility();
+				}
+			}
 		}
 
 		public byte[] GetSnapshot(ulong tick)

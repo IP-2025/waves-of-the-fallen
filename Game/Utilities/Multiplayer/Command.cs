@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public enum CommandType { Move, Shoot, BossShop }
+public enum CommandType { Move, Shoot, BossShop, Ability }
 
 [Serializable]
 public class Command
