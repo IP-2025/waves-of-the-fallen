@@ -9,7 +9,7 @@ using Godot.Collections;
 // GameRoot is the main entry point for the game. It is responsible for loading the map, spawning the player, starting the enemy spawner and so on.
 public partial class GameRoot : Node
 {
-	private bool _enableDebug = true;
+	private bool _enableDebug = false;
 	private Node2D _mainMap;
 	private int _playerIndex = 0; // player index for spawning players
 	private bool _isServer = false;
