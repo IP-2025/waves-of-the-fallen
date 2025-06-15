@@ -77,7 +77,7 @@ public partial class GameRoot : Node
 		if (_isServer)
 		{
 			_globalWaveTimer.Name = "GlobalWaveTimer"; // is for sync with clients
-			_globalWaveTimer.Visible = true; // or would spawn somewhere on the map
+			_globalWaveTimer.Visible = false; // or would spawn somewhere on the map
 			AddChild(_globalWaveTimer);
 			// Players -------------------------------------------------------------------------------------
 			// spawn player for self
