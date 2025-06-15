@@ -36,7 +36,7 @@ public partial class HUD : CanvasLayer
 			}
 		}
 
-		var label = GetNodeOrNull<RichTextLabel>("ScoreLabel");
+		var label = GetNodeOrNull<RichTextLabel>("%ScoreLabel");
 		if (label == null)
 			GD.PrintErr("ScoreLabel not found!");
 		else
@@ -45,7 +45,7 @@ public partial class HUD : CanvasLayer
 			label.Text = sb.ToString();
 		}
 		
-		var comboLabel = GetNodeOrNull<RichTextLabel>("ComboTimerLabel");
+		var comboLabel = GetNodeOrNull<RichTextLabel>("%ComboTimerLabel");
 		if (comboLabel != null)
 		{
 			int combo = ScoreManager.GetCombo(peerId);
@@ -67,7 +67,7 @@ public partial class HUD : CanvasLayer
 
 	public override void _Ready()
 	{
-		var pauseButton = GetNodeOrNull<Button>("PauseButton");
+		var pauseButton = GetNodeOrNull<Button>("%PauseButton");
 		if (pauseButton != null)
 			pauseButton.Pressed += OnPauseButtonPressed;
 	}

@@ -1,39 +1,69 @@
 [gd_scene load_steps=3 format=3 uid="uid://c6iedr3itagaf"]
 
 [ext_resource type="Script" uid="uid://c4j4rhf5hm3la" path="res://UI/HUD/HUD.cs" id="1_0ktxb"]
-[ext_resource type="FontFile" uid="uid://cbtai6ax18jyn" path="res://Assets/Fonts/Orbitron/Orbitron-VariableFont_wght.ttf" id="2_53dev"]
+[ext_resource type="FontFile" uid="uid://bxhd1p3tr8yyj" path="res://Assets/Fonts/Orbitron/Orbitron-VariableFont_wght.ttf" id="2_53dev"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_0ktxb")
 
-[node name="ScoreLabel" type="RichTextLabel" parent="."]
-anchors_preset = -1
-anchor_left = 0.214
-anchor_top = 0.211
-anchor_right = 0.441
-anchor_bottom = 0.459
-offset_left = -235.528
-offset_top = -130.728
-offset_right = 25.968
-offset_bottom = 29.568
-text = "Score:"
+[node name="MarginContainer3" type="MarginContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 221.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 160
+theme_override_constants/margin_right = 20
 
-[node name="ComboTimerLabel" type="RichTextLabel" parent="."]
-offset_left = 507.0
-offset_top = 129.0
-offset_right = 637.0
-offset_bottom = 194.0
+[node name="ComboTimerLabel" type="RichTextLabel" parent="MarginContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/outline_size = 2
 theme_override_fonts/normal_font = ExtResource("2_53dev")
+text = "
+"
+fit_content = true
 
-[node name="PauseButton" type="Button" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScoreLabel" type="RichTextLabel" parent="HBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+text = "Score: "
+fit_content = true
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="PauseButton" type="Button" parent="HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
 z_index = 100
 custom_minimum_size = Vector2(60, 60)
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -80.0
-offset_top = 40.0
-offset_right = -20.0
-offset_bottom = 100.0
+layout_mode = 2
 text = "X"
