@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cmn357oufy1a7"]
 
 [ext_resource type="Script" uid="uid://bejaiumhikvm1" path="res://Weapons/Ranged/Kunai/KunaiProjectile.cs" id="1_48rnb"]
-[ext_resource type="Texture2D" uid="uid://bl2q2k43op73d" path="res://Weapons/Ranged/Kunai/Resources/Kunai4.png" id="1_gvf8v"]
+[ext_resource type="Texture2D" uid="uid://c2bcfudoc05m" path="res://Weapons/Ranged/Kunai/Resources/Kunai4.png" id="1_gvf8v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yajln"]
 size = Vector2(45.4545, 13.6364)

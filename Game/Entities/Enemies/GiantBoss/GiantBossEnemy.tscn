@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://brsiga6vkoslu" path="res://Entities/Enemies/GiantBoss/GiantBossEnemy.cs" id="1_6h1re"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_hc420"]
 [ext_resource type="PackedScene" uid="uid://ceve0lpkg70ey" path="res://Entities/Enemies/GiantBoss/stone_Attack.tscn" id="2_oid3o"]
-[ext_resource type="Texture2D" uid="uid://bga0ocm5qi8h4" path="res://Entities/Enemies/GiantBoss/Resources/Giant_Spritesheet.png" id="3_o0ymr"]
+[ext_resource type="Texture2D" uid="uid://chct1em2yry2v" path="res://Entities/Enemies/GiantBoss/Resources/Giant_Spritesheet.png" id="3_o0ymr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hc420"]
 radius = 124.0

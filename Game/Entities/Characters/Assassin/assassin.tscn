@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://70abqg7ujgbf" path="res://Entities/Characters/Assassin/Assassin.cs" id="1_y3eth"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_slb6w"]
 [ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="3_pgiys"]
-[ext_resource type="Texture2D" uid="uid://by8lvg4hufhel" path="res://Entities/Characters/Assassin/Resources/AssassinSpritesheet.png" id="4_6ntyn"]
+[ext_resource type="Texture2D" uid="uid://61x3fbqeoddn" path="res://Entities/Characters/Assassin/Resources/AssassinSpritesheet.png" id="4_6ntyn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
@@ -119,6 +119,9 @@ animations = [{
 collision_mask = 384
 collision_priority = 2.0
 script = ExtResource("1_y3eth")
+Speed = null
+MaxHealth = null
+CurrentHealth = null
 animationPath = NodePath("AssassinAnimation")
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
@@ -137,6 +140,7 @@ position = Vector2(-25, 15)
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_slb6w")
+max_health = null
 
 [node name="HealthBar" type="ProgressBar" parent="Health"]
 offset_left = -46.0

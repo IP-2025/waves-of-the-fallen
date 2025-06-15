@@ -25,7 +25,6 @@ public partial class RangedEnemy : EnemyBase
 	public override void _Ready()
 	{
 		base._Ready();
-
 		if (enableDebug)
 		{
 			GD.Print($"RangedEnemy initialized with speed: {speed}, damage: {damage}, attacksPerSecond: {attacksPerSecond}");

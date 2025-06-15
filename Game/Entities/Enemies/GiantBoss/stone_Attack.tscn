@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://ceve0lpkg70ey"]
 
 [ext_resource type="Script" uid="uid://tap3qvwt6d8m" path="res://Entities/Enemies/GiantBoss/StoneAttack.cs" id="1_gy8r0"]
-[ext_resource type="Texture2D" uid="uid://bxenlttv3jc3v" path="res://Entities/Enemies/GiantBoss/Resources/stein.png" id="1_yme2j"]
+[ext_resource type="Texture2D" uid="uid://745tu0888j10" path="res://Entities/Enemies/GiantBoss/Resources/stein.png" id="1_yme2j"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gy8r0"]
 atlas = ExtResource("1_yme2j")

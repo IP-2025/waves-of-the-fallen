@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://no7ywnyyf73b"]
 
 [ext_resource type="Script" uid="uid://rxagoldtsay0" path="res://Weapons/Ranged/Kunai/Kunai.cs" id="1_w0dn1"]
-[ext_resource type="Texture2D" uid="uid://bw4lpmnhe6bju" path="res://Weapons/Ranged/Kunai/Resources/Kunai.png" id="2_rtpyf"]
+[ext_resource type="Texture2D" uid="uid://be0wwkswxl7ge" path="res://Weapons/Ranged/Kunai/Resources/Kunai.png" id="2_rtpyf"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_akes3"]
 animations = [{

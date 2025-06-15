@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://brpwgptxilodd"]
 
 [ext_resource type="Script" uid="uid://dxaxdcruvv5is" path="res://Entities/Enemies/Skeleton/EnemyProjectile.cs" id="1_hfree"]
-[ext_resource type="Texture2D" uid="uid://bo5c3plo2lbon" path="res://Entities/Enemies/Skeleton/Resources/Stone.png" id="2_gt5qh"]
+[ext_resource type="Texture2D" uid="uid://wbn0qgj8bgee" path="res://Entities/Enemies/Skeleton/Resources/Stone.png" id="2_gt5qh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v7l71"]
 size = Vector2(15, 11)
