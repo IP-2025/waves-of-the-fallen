@@ -5,7 +5,7 @@ namespace Game.Utilities.Backend
 	#if DEBUG
 		public const string BaseUrl = "http://localhost:3000";
 	#else
-		public const string BaseUrl = "https://hft-server.url:Port";
+		public const string BaseUrl = "http://waves-of-the-fallen.duckdns.org:32424";
 	#endif
 	}
 }
