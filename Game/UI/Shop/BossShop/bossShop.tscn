@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://b8dcceo0us5r5"]
 
 [ext_resource type="Script" uid="uid://j5gcbrucnngq" path="res://UI/Shop/BossShop/BossShop.cs" id="1_cox2s"]
-[ext_resource type="Texture2D" uid="uid://bqnmfa5aw4hjl" path="res://Weapons/Ranged/Bow/Resources/BowEmpty.png" id="2_vpdq8"]
+[ext_resource type="Texture2D" uid="uid://c1wtudeu06ucg" path="res://Weapons/Ranged/Bow/Resources/BowEmpty.png" id="2_vpdq8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpdq8"]
 bg_color = Color(0.309804, 0.309804, 0.309804, 1)
