@@ -35,7 +35,7 @@ namespace Game.Utilities.Multiplayer
 		private const float TICK_DELTA = 1f / 60f;
 		private Timer shutdownTimer; // for headless server if no one is connected
 		private const float ServerShutdownDelay = 5f; // seconds 
-		public static NetworkManager Instance { get; private set; }
+		public static NetworkManager Instance { get; set; }
 		private Client client;
 		private Server server;
 		public bool _isLocalHost = false;
