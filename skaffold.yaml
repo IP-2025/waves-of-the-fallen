@@ -28,8 +28,7 @@ profiles:
       local:
         push: true
       tagPolicy:
-        envTemplate:
-          template: "{{.VERSION}}"
+        dateTime: { }
       artifacts:
         - image: docker.io/kaprele/waves-of-the-fallen_backend
           context: backend

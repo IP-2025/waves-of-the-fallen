@@ -119,7 +119,7 @@ export function getPodManifest(
                 {
                     name: "game-container",
                     image,
-                    imagePullPolicy: "IfNotPresent", // Use local image if available
+                    imagePullPolicy: "Always", // Use local image if available
                     ports: [{ containerPort, protocol: 'UDP' }],
                     env: [{ name: "CODE", value: code }], // Pass the game code as an environment variable
                 },
