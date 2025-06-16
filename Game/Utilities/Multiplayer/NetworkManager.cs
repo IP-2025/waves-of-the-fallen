@@ -438,6 +438,12 @@ namespace Game.Utilities.Multiplayer
 
 			_udpClientPeer.PutPacket(Serializer.Serialize(cmd));
 			DebugIt($"Send MOVE cmd tick={_tick}, dir={cmd.MoveDir}");
+
+			Command cmdAbility = client.GetAbilityCommand(_tick);
+
+			if (cmdAbility == null) return;
+
+			_udpClientPeer.PutPacket(Serializer.Serialize(cmdAbility));
 		}
 
 		public string GetServerIPAddress()

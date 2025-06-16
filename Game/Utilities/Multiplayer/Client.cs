@@ -13,10 +13,12 @@ using Game.Utilities.Backend;
 
 public partial class Client : Node
 {
-	private bool _enableDebug = true;
+	private bool _enableDebug = false;
 	private Camera2D _camera;
 	private bool _hasJoystick;
 	private bool _hasAbilityButton;
+	private bool _pressedAbilityButton;
+	private int abilityId = 0;
 	private bool _waveTimerReady;
 	private WaveTimer _timer;
 	private bool _graceTimeTriggered;
@@ -95,11 +97,23 @@ public partial class Client : Node
 	public Command GetAbilityCommand(ulong tick)
 	{
 		long eid = Multiplayer.GetUniqueId();
-		DebugIt("bitee");
 
 		bool executeCommand = IsAbilityButtonPressed();
+		//Debug.Print(executeCommand.ToString());
+		var playerNodeName = $"E_{Multiplayer.GetUniqueId()}";
+		if (executeCommand)
+		{
+			var playerNode = GetTree()
+			.Root.GetNodeOrNull<GameRoot>("GameRoot")
+			?.GetNodeOrNull<CharacterBody2D>(playerNodeName);
 
-		return executeCommand ? new Command(tick, eid, CommandType.Ability, null, _selectedWeapon, _newWeaponPos) : null;
+			var button = playerNode.GetNodeOrNull<AbilityButton>("AbilityButton");
+			abilityId = button.AbilityIndex;
+		}
+		
+		//Debug.Print(abilityId.ToString());
+
+		return executeCommand ? new Command(tick, eid, CommandType.Ability, null, _selectedWeapon, _newWeaponPos, abilityId) : null;
 	}
 
 	public Command GetShopCommand(ulong tick)
@@ -137,20 +151,21 @@ public partial class Client : Node
 
 	private bool IsAbilityButtonPressed()
 	{
-		DebugIt("IsAbilityButtonPressed()");
+		//DebugIt("IsAbilityButtonPressed()");
 		var playerNodeName = $"E_{Multiplayer.GetUniqueId()}";
 		var playerNode = GetTree()
 			.Root.GetNodeOrNull<GameRoot>("GameRoot")
 			?.GetNodeOrNull<CharacterBody2D>(playerNodeName);
 
 		var abilityButton = playerNode?.GetNodeOrNull<Node2D>("Ability").GetNodeOrNull<TouchScreenButton>("TouchAbilityButton"); 
-		DebugIt(abilityButton.Name);
 		if (abilityButton.IsPressed())
 		{
+			Debug.Print("TRUUUUUUUUUUUUEEEEEEEEEEEEEEEE");
 			return true;
 		}
 		else
 		{
+			Debug.Print("FAAAAAAAAALSE");
 			return false;
 		}
 	}
@@ -546,6 +561,12 @@ public partial class Client : Node
 		var abilityButton = GD.Load<PackedScene>("res://UI/Ability/abilityButton.tscn").Instantiate<Node2D>();
 		inst.AddChild(abilityButton);
 		DebugIt($"AbilityButton added to player with ID {entity.NetworkId}");
+	}
+
+	private void _on_touch_ability_button_pressed()
+	{
+		Debug.Print("ON TOUCH FUNKTIONIERT");
+		_pressedAbilityButton = true;
 	}
 
 	private void ChangeCamera(Node2D inst, EntitySnapshot entity)

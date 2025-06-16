@@ -12,7 +12,7 @@ public partial class AbilityButton : Node2D
 	public bool IsPaused { get; private set; }
 	private Node2D _parent;
 	private Timer _abilityTimer;
-	private int _abilityIndex;
+	public int AbilityIndex { get; set; }
 	private TextureRect _abilityReadyPic;
 	private TextureRect _abilityNotReadyPic;
 	private TouchScreenButton _abilityButton;
@@ -44,10 +44,10 @@ public partial class AbilityButton : Node2D
 
 		if (_parent is DefaultPlayer player)
 		{
-			_abilityIndex = selectedId * 10 + _characterManager.LoadAbilityChosenByID(selectedId.ToString());
+			AbilityIndex = selectedId * 10 + _characterManager.LoadAbilityChosenByID(selectedId.ToString());
 
 			//I am sorry for this code
-			MaxTime = _abilityIndex switch
+			MaxTime = AbilityIndex switch
 			{
 				11 => boostDexterity.getCooldown(),
 				12 => arrowRain.getCooldown(),
@@ -59,7 +59,7 @@ public partial class AbilityButton : Node2D
 				42 => fireBlast.getCooldown(),
 				_ => 0
 			};
-			textureActivePath = _abilityIndex switch
+			textureActivePath = AbilityIndex switch
 			{
 				11 => "res://AppIcon/AbilityIcons/PNG/Activated/BoostDexterityIcon.png",
 				12 => "res://AppIcon/AbilityIcons/PNG/Activated/ArrowRainIcon.png",
@@ -71,7 +71,7 @@ public partial class AbilityButton : Node2D
 				42 => "res://AppIcon/AbilityIcons/PNG/Activated/FireBlastIcon.png",
 				_ => ""
 			};
-			textureNotActivePath = _abilityIndex switch
+			textureNotActivePath = AbilityIndex switch
 			{
 				11 => "res://AppIcon/AbilityIcons/PNG/Deactivated/BoostDexterityIcon.png",
 				12 => "res://AppIcon/AbilityIcons/PNG/Deactivated/ArrowRainIcon.png",
@@ -131,8 +131,8 @@ public partial class AbilityButton : Node2D
 		}
 	}
 
-	public int GetAbilityIndex()
+	/*public int GetAbilityIndex()
 	{
-		return _abilityIndex;
-	}
+		return AbilityIndex;
+	}*/
 }

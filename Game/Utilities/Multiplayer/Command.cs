@@ -12,9 +12,10 @@ public class Command
     public Vector2? MoveDir;
     public String Weapon;
     public int WeaponPos;
+    public int AbilityId;
 
     public Command() { }
-    public Command(ulong seq, long eid, CommandType type, Vector2? dir = null, String weapon = "", int weaponPos = 0)
+    public Command(ulong seq, long eid, CommandType type, Vector2? dir = null, String weapon = "", int weaponPos = 0, int abilityId = 0)
     {
         Sequence = seq;
         EntityId = eid;
@@ -22,5 +23,6 @@ public class Command
         MoveDir = dir;
         Weapon = weapon;
         WeaponPos = weaponPos;
+        AbilityId = abilityId;
     }
 }

@@ -3,6 +3,7 @@ namespace Game.Utilities.Multiplayer
 	using Game.Utilities.Backend;
 	using Godot;
 	using System.Collections.Generic;
+	using System.Diagnostics;
 	using System.Linq;
 	using System.Reflection.Metadata;
 
@@ -128,6 +129,23 @@ namespace Game.Utilities.Multiplayer
 			}
 			else if (cmd.Type == CommandType.Ability)
 			{
+				Debug.Print("ABILITY BEI SERVER ANGEKOMMEN");
+				/*
+				var scene = cmd.Weapon switch
+				{
+					"Bow" => _bowScene,
+					"Crossbow" => _crossbowScene,
+					"FireStaff" => _fireStaffScene,
+					"Kunai" => _kunaiScene,
+					"Lightningstaff" => _lightningStaffScene,
+					"Healstaff" => _healStaffScene,
+					"Dagger" => _daggerScene,
+					"Sword" => _swordScene,
+					"WarHammer" => _warHammerScene,
+					"DoubleBlade" => _doubleBladeScene,
+					_ => null
+				};
+				if (scene == null) return;*/
 				if (entity is DefaultPlayer defaultPlayer)
 				{
 					defaultPlayer.UseAbility();
