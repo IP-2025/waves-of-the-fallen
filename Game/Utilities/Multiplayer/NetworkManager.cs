@@ -196,7 +196,7 @@ namespace Game.Utilities.Multiplayer
 			{
 				if (GetTree().GetMultiplayer().GetPeers().Count() == 0)
 				{
-					DebugIt("No peers connected. Shutting down server.");
+					DebugIt("No peers connected. Shutting down server automatically.");
 					// GetTree().Quit();
 				}
 				else
@@ -247,8 +247,8 @@ namespace Game.Utilities.Multiplayer
 			if (_isServer && GetTree().GetMultiplayer().GetPeers().Count() == 0)
 			{
 				// kill him!! if he is a lonely server, lost in the sad world of the web with no one to play with ;(
-				DebugIt("No peers connected. Shutting down server.");
-				GetTree().Quit();
+				DebugIt("No peers connected due to disconnects. Shutting down server.");
+				// GetTree().Quit();
 			}
 		}
 
