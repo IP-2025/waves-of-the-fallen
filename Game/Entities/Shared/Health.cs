@@ -33,9 +33,9 @@ public partial class Health : Node2D
 		if (isDead) return;
 		if (!disable)
 			health -= damage; // reduce health by damage amount
-		
+
 		doAnimation(); // client has to do damage animations
-		
+
 		if (GetParent() is EnemyBase enemy)
 		{
 			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("enemyHurt"), ((Node2D)GetParent()).Position);
@@ -44,19 +44,19 @@ public partial class Health : Node2D
 		{
 			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("playerHit"), ((Node2D)GetParent()).Position, -10);
 		}
-		
+
 
 		// GD.Print($"Took damage: {damage}, current health: {health}");
 	}
-	
+
 	public void Heal(float heal)
 	{
 		if (!disable)
-			health += heal; 
-		
+			health += heal;
+
 		if (health > max_health)
 			health = max_health;
-		
+
 		doAnimation();
 		// TODO Sounds fehlen noch
 		//SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("enemyHurt"), ((Node2D)GetParent()).Position);
@@ -75,10 +75,11 @@ public partial class Health : Node2D
 		{
 			player.OnHit();
 		}
-			
-		
+
+
 		// death animation
-		if (health <= 0) {
+		if (health <= 0)
+		{
 			GD.Print("Player died, parent: " + GetParent().Name);
 			isDead = true;
 			// check if parent is DefaultPlayer
@@ -95,7 +96,7 @@ public partial class Health : Node2D
 			{
 				GetParent().QueueFree(); // otherwise, free the parent node
 			}
-				
+
 			EmitSignal(SignalName.HealthDepleted); // emit signal when health is depleted
 			}
 	}

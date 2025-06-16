@@ -50,7 +50,7 @@ custom_minimum_size = Vector2(82.145, 59.76)
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 30
-text = "Waffe wählen"
+text = "Choose weapon"
 horizontal_alignment = 1
 vertical_alignment = 1
 
