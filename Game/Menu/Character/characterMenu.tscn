@@ -132,6 +132,7 @@ theme_override_font_sizes/font_size = 40
 text = "Charactermenu"
 
 [node name="TempResetButton" type="Button" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 text = "reset data"
 
