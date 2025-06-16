@@ -216,7 +216,9 @@ public partial class Client : Node
 		_selectedWeapon = weaponType.GetType().Name;
 		_newWeaponPos++;
 		weaponUpdated = true;
+		GetTree().Paused = false;
 	}
+	
 
 	private void InstantiateOrUpdateEntities(IEnumerable<EntitySnapshot> entities)
 	{
@@ -241,11 +243,12 @@ public partial class Client : Node
 					_shopInstance = _shopScene.Instantiate();
 					_shopInstance.Connect(nameof(BossShop.WeaponChosen), new Callable(this, nameof(OnWeaponChosen)));
 					_camera.AddChild(_shopInstance);
-
+					GetTree().Paused = true;
+					
 					DebugIt($"Shop instantiated for wave {entity.WaveCount}");
 				}
 			}
-
+			
 			switch (_waveTimerReady)
 			{
 				// HUD / WaveCounter stuff

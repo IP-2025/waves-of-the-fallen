@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dvjyool0r7j0"]
 
 [ext_resource type="Script" uid="uid://ovccsntxxhkt" path="res://Weapons/Melee/Dagger/Dagger.cs" id="1_o7gox"]
-[ext_resource type="Texture2D" uid="uid://3yy0utlrjfe" path="res://Weapons/Melee/Dagger/Resources/DolchLeer.png" id="2_syi7e"]
+[ext_resource type="Texture2D" uid="uid://b1hs36c613gu6" path="res://Weapons/Melee/Dagger/Resources/DolchLeer.png" id="2_syi7e"]
 
 [sub_resource type="Animation" id="Animation_yi8m2"]
 length = 0.001
