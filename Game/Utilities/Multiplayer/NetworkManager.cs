@@ -189,6 +189,7 @@ namespace Game.Utilities.Multiplayer
 			if (shutdownTimer != null) return; // dont start twice
 
 			shutdownTimer = new Timer();
+			shutdownTimer.ProcessMode = Timer.ProcessModeEnum.Always;
 			shutdownTimer.OneShot = true;
 			shutdownTimer.WaitTime = ServerShutdownDelay;
 			shutdownTimer.Timeout += () =>
