@@ -27,8 +27,8 @@ public partial class AbilityButton : Node2D
 	private FireBlast fireBlast = new FireBlast();
 	private ArrowRain arrowRain = new ArrowRain();
 	private DeadlyStrike deadlyStrike = new DeadlyStrike();
-	private string textureActive = "res://AppIcon/AbilityIcons/PNG/Activated/BoostDexterityIcon.png";
-	private string textureNotActive = "res://AppIcon/AbilityIcons/PNG/Activated/BoostDexterityIcon.png";
+	private string textureActivePath = "res://AppIcon/AbilityIcons/PNG/Activated/BoostDexterityIcon.png";
+	private string textureNotActivePath = "res://AppIcon/AbilityIcons/PNG/Activated/BoostDexterityIcon.png";
 
 	public override void _Ready()
 	{
@@ -59,7 +59,7 @@ public partial class AbilityButton : Node2D
 				42 => fireBlast.getCooldown(),
 				_ => 0
 			};
-			textureActive = _abilityIndex switch
+			textureActivePath = _abilityIndex switch
 			{
 				11 => "res://AppIcon/AbilityIcons/PNG/Activated/BoostDexterityIcon.png",
 				12 => "res://AppIcon/AbilityIcons/PNG/Activated/ArrowRainIcon.png",
@@ -71,7 +71,7 @@ public partial class AbilityButton : Node2D
 				42 => "res://AppIcon/AbilityIcons/PNG/Activated/FireBlastIcon.png",
 				_ => ""
 			};
-			textureNotActive = _abilityIndex switch
+			textureNotActivePath = _abilityIndex switch
 			{
 				11 => "res://AppIcon/AbilityIcons/PNG/Deactivated/BoostDexterityIcon.png",
 				12 => "res://AppIcon/AbilityIcons/PNG/Deactivated/ArrowRainIcon.png",
@@ -84,13 +84,14 @@ public partial class AbilityButton : Node2D
 				_ => ""
 			};
 		}
-		Debug.Print(textureActive);
-		Debug.Print(textureNotActive);
-
+		Debug.Print(textureActivePath);
+		Debug.Print(textureNotActivePath);
+		var textureActive = (Texture2D) GD.Load(textureActivePath);
+		var textureNotActive = (Texture2D) GD.Load(textureNotActivePath);
 		_timeLeftLabel.Text = MaxTime.ToString();
 		_abilityTimer = GetNode<Timer>("AbilityTimer");
-		_abilityReadyPic.Texture.TakeOverPath(textureActive);
-		_abilityNotReadyPic.Texture.TakeOverPath(textureNotActive);
+		_abilityReadyPic.Texture = textureActive;
+		_abilityNotReadyPic.Texture = textureNotActive;
 		_abilityTimer.Timeout += OnTimerTimeout;
 		SecondCounter = MaxTime;
 		Disable = true;
@@ -128,5 +129,10 @@ public partial class AbilityButton : Node2D
 			_abilityTimer.Start();
 			_timeLeftLabel.Show();
 		}
+	}
+
+	public int GetAbilityIndex()
+	{
+		return _abilityIndex;
 	}
 }
