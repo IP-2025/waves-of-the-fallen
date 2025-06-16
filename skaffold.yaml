@@ -35,3 +35,7 @@ profiles:
           context: backend
           docker:
             dockerfile: Dockerfile
+        - image: kaprele/waves-of-the-fallen_game
+          context: Game
+          docker:
+            dockerfile: Dockerfile
