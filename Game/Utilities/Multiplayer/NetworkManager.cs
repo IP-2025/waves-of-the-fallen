@@ -34,8 +34,8 @@ namespace Game.Utilities.Multiplayer
 		private double _acc = 0;
 		private const float TICK_DELTA = 1f / 30;
 		private Timer shutdownTimer; // for headless server if no one is connected
-		private const float ServerShutdownDelay = 5f; // seconds 
-		public static NetworkManager Instance { get; set; }
+		private const float ServerShutdownDelay = 300f; // seconds
+		public static NetworkManager Instance { get; private set; }
 		private Client client;
 		private Server server;
 		public bool _isLocalHost = false;
@@ -395,6 +395,7 @@ namespace Game.Utilities.Multiplayer
 			gameScene.Instantiate<Node>();
 			GetTree().ChangeSceneToPacked(gameScene);
 			var peerId = GetTree().GetMultiplayer().GetUniqueId();
+			GD.PrintErr($"Game started by peer: {peerId}");
 			DebugIt($"NotifyGameStart called by (PeerID: {peerId})");
 
 			_gameRunning = true;
