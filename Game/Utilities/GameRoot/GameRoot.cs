@@ -147,8 +147,10 @@ public partial class GameRoot : Node
 				ShowGameOverScreen();
 		}
 
+		
 		if (NetworkManager.Instance._isLocalHost || NetworkManager.Instance.SoloMode)
 		{
+			
 			// Shop
 			var currentWave = _globalWaveTimer.WaveCounter;
 			if (currentWave > _lastLocalShopRound && currentWave < 5)
@@ -163,9 +165,13 @@ public partial class GameRoot : Node
 					GetNodeOrNull<DefaultPlayer>("Player_1")
 						.GetNodeOrNull<Camera2D>("Camera2D")
 						.AddChild(_shopInstance);
+					
+					GetTree().Paused = true;
+					
 				}
 			}
 		}
+		
 
 		// ScoreSystem
 		foreach (var playerId in ScoreManager.PlayerScores.Keys)
@@ -173,6 +179,8 @@ public partial class GameRoot : Node
 			ScoreManager.UpdateCombo(playerId, (float)delta);
 		}
 	}
+	
+	
 	private void OnWeaponChosen(Weapon weaponType)
 	{
 		_selectedWeapon = weaponType.GetType().Name;
@@ -211,6 +219,7 @@ public partial class GameRoot : Node
 
 		_shopInstance.QueueFree();
 		_shopInstance = null;
+		GetTree().Paused = false;
 	}
 
 	private void SpawnPlayer(long peerId)
