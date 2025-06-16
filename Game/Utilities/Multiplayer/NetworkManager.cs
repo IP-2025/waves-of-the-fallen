@@ -394,7 +394,6 @@ namespace Game.Utilities.Multiplayer
 			var gameScene = GD.Load<PackedScene>("res://Utilities/GameRoot/GameRoot.tscn");
 			gameScene.Instantiate<Node>();
 			GetTree().ChangeSceneToPacked(gameScene);
-
 			var peerId = GetTree().GetMultiplayer().GetUniqueId();
 			DebugIt($"NotifyGameStart called by (PeerID: {peerId})");
 
@@ -405,6 +404,10 @@ namespace Game.Utilities.Multiplayer
 		public void SelectCharacter(int selectedCharacterId, int health, int speed)
 		{
 			long peerId = Multiplayer.GetRemoteSenderId();
+//			Server.Instance.PlayerSelections[peerId] = new PlayerCharacterData { CharacterId = selectedCharacterId };
+			DebugIt("Player selectged: " + selectedCharacterId + " By PlayerID: " + peerId);
+			GD.PrintErr($"Game peer {peerId} selected character {selectedCharacterId}");
+
 			// Speichere alle Werte pro Spieler
 			Server.Instance.PlayerSelections[peerId] = new PlayerCharacterData
 			{

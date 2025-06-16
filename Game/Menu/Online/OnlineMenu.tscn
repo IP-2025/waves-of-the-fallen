@@ -286,5 +286,6 @@ offset_bottom = 660.0
 placeholder_text = "Enter Lobby Code"
 max_length = 4
 
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/JoinLobbyButton" to="." method="OnJoinLobbyPressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HostLobbyButton" to="." method="OnHostLobbyPressed"]

@@ -339,5 +339,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_8ycg7")
 text = "Start   
 Game "
 
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/_readyButton" to="." method="_on__ready_button_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/_startGameButton" to="." method="_on_start_game_pressed"]

@@ -9,13 +9,16 @@ public partial class LobbyScreen : Node
 	private Label lobbyCodeLabel;
 	private Button startGameButton;
 	private Button readyButton;
+	private Button backButton;
+
 	public override void _Ready()
 	{
 	   var lobbyCode = GameState.LobbyCode;
 	   lobbyCodeLabel =  GetNode<Label>("MarginContainer2/VBoxContainer/HBoxContainer/lobbyLabel");
 	   startGameButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/_startGameButton");
 	   readyButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/_readyButton");
-	GD.Print(lobbyCode);
+	   backButton = GetNode<Button>("MarginContainer2/VBoxContainer/HBoxContainer/Button_Back");
+
 	   lobbyCodeLabel.Text = "Label - " +lobbyCode;
 	}
 
@@ -32,6 +35,11 @@ public partial class LobbyScreen : Node
 		NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
 	}
 	
-	
+	private void _on_button_back_pressed()
+	{
+		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Main/mainMenu.tscn");
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
+		GetTree().ChangeSceneToPacked(scene);
+	}
 	
 }

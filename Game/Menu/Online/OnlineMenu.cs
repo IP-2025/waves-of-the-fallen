@@ -9,6 +9,7 @@ public partial class OnlineMenu : Node
 {
 	private Button joinLobbyButton;
 	private Button hostLobbyButton;
+	private Button backButton;
 	private LineEdit lobbyCodeInput;
 	private HttpRequest httpRequest;
 
@@ -16,12 +17,20 @@ public partial class OnlineMenu : Node
 	{
 		joinLobbyButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/JoinLobbyButton");
 		hostLobbyButton = GetNode<Button>("MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HostLobbyButton");
+		backButton = GetNode<Button>("MarginContainer2/VBoxContainer/HBoxContainer/Button_Back");
 		lobbyCodeInput = GetNode<LineEdit>("LobbyCodeInput");
 		httpRequest = GetNode<HttpRequest>("HTTPRequest");
 
 		joinLobbyButton.Pressed += OnJoinLobbyPressed;
 		hostLobbyButton.Pressed += OnHostLobbyPressed;
 		httpRequest.RequestCompleted += OnRequestCompleted;
+	}
+
+	private void _on_button_back_pressed()
+	{
+		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Main/mainMenu.tscn");
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
+		GetTree().ChangeSceneToPacked(scene);
 	}
 
 	private void OnJoinLobbyPressed()
@@ -33,7 +42,7 @@ public partial class OnlineMenu : Node
 			return;
 		}
 
-		string url = "http://localhost/api/v1/game/join";
+		string url = $"{ServerConfig.BaseUrl}/api/v1/game/join";
 		var body = new Godot.Collections.Dictionary{
 			{ "lobbyCode", code }
 		};
@@ -42,7 +51,7 @@ public partial class OnlineMenu : Node
 
 	private void OnHostLobbyPressed()
 	{
-		string url = "http://localhost/api/v1/game/start";
+		string url = $"{ServerConfig.BaseUrl}/api/v1/game/start";
 		var body =new Godot.Collections.Dictionary {
 			
 		};
