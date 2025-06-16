@@ -79,6 +79,7 @@ public partial class Health : Node2D
 		
 		// death animation
 		if (health <= 0) {
+			GD.Print("Player died, parent: " + GetParent().Name);
 			isDead = true;
 			// check if parent is DefaultPlayer
 			if (GetParent() is DefaultPlayer player)
@@ -95,7 +96,7 @@ public partial class Health : Node2D
 				GetParent().QueueFree(); // otherwise, free the parent node
 			}
 				
-			//EmitSignal(SignalName.HealthDepleted); // emit signal when health is depleted
+			EmitSignal(SignalName.HealthDepleted); // emit signal when health is depleted
 			}
 	}
 
