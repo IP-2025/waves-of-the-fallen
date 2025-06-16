@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://b8dcceo0us5r5"]
 
 [ext_resource type="Script" uid="uid://j5gcbrucnngq" path="res://UI/Shop/BossShop/BossShop.cs" id="1_cox2s"]
-[ext_resource type="Texture2D" uid="uid://cfsrh5vl38dw5" path="res://Weapons/Ranged/Bow/Resources/BowEmpty.png" id="2_vpdq8"]
+[ext_resource type="Texture2D" uid="uid://c1wtudeu06ucg" path="res://Weapons/Ranged/Bow/Resources/BowEmpty.png" id="2_vpdq8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpdq8"]
 bg_color = Color(0.309804, 0.309804, 0.309804, 1)
@@ -13,12 +13,13 @@ bg_color = Color(0.309804, 0.309804, 0.309804, 1)
 bg_color = Color(0.309804, 0.309804, 0.309804, 1)
 
 [node name="BossShop" type="Control"]
+z_index = 10
 layout_mode = 3
 anchors_preset = 0
-offset_left = -287.5
-offset_top = -162.5
-offset_right = 862.5
-offset_bottom = 487.5
+offset_left = -287.0
+offset_top = -148.0
+offset_right = 863.0
+offset_bottom = 473.0
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_cox2s")
 
