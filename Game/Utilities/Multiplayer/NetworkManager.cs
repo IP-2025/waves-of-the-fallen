@@ -196,7 +196,7 @@ namespace Game.Utilities.Multiplayer
 				if (GetTree().GetMultiplayer().GetPeers().Count() == 0)
 				{
 					DebugIt("No peers connected. Shutting down server.");
-					GetTree().Quit();
+					// GetTree().Quit();
 				}
 				else
 				{
