@@ -1,5 +1,6 @@
 using Godot;
 using Game.Utilities.Multiplayer;
+
 public partial class MedicineBag : Weapon
 {
 	private PackedScene medicine = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicine.tscn");
@@ -25,6 +26,12 @@ public partial class MedicineBag : Weapon
 
 		_shootCooldown = ShootDelay;
 		_timeUntilShoot = _shootCooldown;
+
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+		
+		DefaultDamage += (int)(dexdummy + strdummy/3 + intdummy/3)/10;
 	}
 
 		public override void _Process(double delta)

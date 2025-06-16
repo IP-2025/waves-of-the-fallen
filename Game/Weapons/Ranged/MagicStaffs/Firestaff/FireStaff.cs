@@ -26,9 +26,15 @@ public partial class FireStaff : RangedWeapon
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/FireStaffSprite");
 		projectileScene = _fireballPacked;
-		
-		_shootCooldown  = 1f / ShootDelay;
+
+		_shootCooldown = 1f / ShootDelay;
 		_timeUntilShoot = _shootCooldown;
+		
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+		
+		DefaultDamage += (int)(dexdummy/7 + strdummy/3.5 + intdummy)/3;
 	}
 	
 	public override void _Process(double delta)

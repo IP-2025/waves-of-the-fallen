@@ -14,8 +14,12 @@ public partial class HammerProjectile : Projectile
 
 	public override void _Ready()
 	{
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+
 		Speed    = DefaultSpeed;
-		Damage   = DefaultDamage;
+		Damage   = DefaultDamage + (int)(dexdummy/5 + strdummy + intdummy/7.5f)/3;
 		Piercing = DefaultPiercing;
 	}
 	

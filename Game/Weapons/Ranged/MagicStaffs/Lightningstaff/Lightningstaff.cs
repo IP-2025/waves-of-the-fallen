@@ -21,15 +21,21 @@ public partial class Lightningstaff : RangedWeapon
 	private float _timeUntilShoot;
 
 	private static readonly PackedScene _lightningPacked = GD.Load<PackedScene>(_projectilePath);
-	
+
 
 	public override void _Ready()
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/LightningStaffSprite");
 		projectileScene = _lightningPacked;
-		
-		_shootCooldown  = 1f / ShootDelay;
+
+		_shootCooldown = 1f / ShootDelay;
 		_timeUntilShoot = _shootCooldown;
+		
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+		
+		DefaultDamage += (int)(dexdummy/3.5f + strdummy/7 + intdummy)/3;
 	}
 	
 	public override void _Process(double delta)

@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using Godot.Collections;
 using System.Collections.Generic;
 using System.Linq;
 public partial class Lightning : Projectile
@@ -18,8 +16,12 @@ public partial class Lightning : Projectile
 
 	public override void _Ready()
 	{
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+		
 		Speed = 1000;
-		Damage = 60;
+		Damage = 60 + (int)(dexdummy/3.5f + strdummy/7 + intdummy)/3;
 	}
 	public override void OnBodyEntered(Node2D body)
 	{

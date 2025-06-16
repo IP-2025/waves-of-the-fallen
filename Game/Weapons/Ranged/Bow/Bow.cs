@@ -1,5 +1,5 @@
 using Godot;
-using System;
+
 
 public partial class Bow : RangedWeapon
 {
@@ -22,15 +22,21 @@ public partial class Bow : RangedWeapon
 	
 	
 	private static readonly PackedScene _arrowPacked = GD.Load<PackedScene>(_projectilePath);
-	
+
 
 	public override void _Ready()
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/BowSprite");
 		projectileScene = _arrowPacked;
 
-		_shootCooldown   = 1f/ShootDelay;
-		_timeUntilShoot  = _shootCooldown;
+		_shootCooldown = 1f / ShootDelay;
+		_timeUntilShoot = _shootCooldown;
+		
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+		
+		DefaultDamage += (int)(dexdummy + strdummy/3.5f + intdummy/7)/3;
 	}
 	
 	public override void _Process(double delta)

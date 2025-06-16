@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class Dagger : MeleeWeapon
 {
@@ -19,14 +18,20 @@ public partial class Dagger : MeleeWeapon
 	
 	private float _shootCooldown;
 	private float _timeUntilShoot;
-	
+
 	public override void _Ready()
 	{
 		DaggerAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/Stab");
-		
-		_shootCooldown   = 1f/ShootDelay;
-		_timeUntilShoot  = _shootCooldown;
+
+		_shootCooldown = 1f / ShootDelay;
+		_timeUntilShoot = _shootCooldown;
+
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+
+		DefaultDamage += (dexdummy + strdummy/3 + intdummy/3)/3;
 	}
 	
 	public override void _Process(double delta)

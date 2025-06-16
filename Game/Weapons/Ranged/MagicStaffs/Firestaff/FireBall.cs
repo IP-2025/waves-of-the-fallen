@@ -12,8 +12,12 @@ public partial class FireBall : Projectile
 
 	public override void _Ready()
 	{
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+
 		Speed = 600;
-		Damage = 120;
+		Damage = 120 + (int)(dexdummy/7 + strdummy/3.5 + intdummy)/3;
 	}
 	public override void OnBodyEntered(Node2D body)
 	{

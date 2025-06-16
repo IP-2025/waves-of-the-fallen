@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class WarHammer : RangedWeapon
 {
@@ -23,15 +22,21 @@ public partial class WarHammer : RangedWeapon
 	private static readonly PackedScene _throwHammerScene = GD.Load<PackedScene>(_projectilePath);
 
 	private AnimatedSprite2D animatedSprite;
-	
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/WarHammer");
 		projectileScene = _throwHammerScene;
-		
-		_shootCooldown  = 1f / ShootDelay;
+
+		_shootCooldown = 1f / ShootDelay;
 		_timeUntilShoot = _shootCooldown;
+		
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+
+		DefaultDamage += (int)(dexdummy/5 + strdummy + intdummy/7.5f)/3;
 	}
 	
 	public override void _Process(double delta)

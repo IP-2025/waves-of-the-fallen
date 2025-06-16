@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class DoubleBlade : MeleeWeapon
 {
@@ -26,8 +25,14 @@ public partial class DoubleBlade : MeleeWeapon
 		GD.Print("Start SwordAnimation");
 		leftBlade = GetNode<DoubleBladeL>("DoubleBladeL");
 		rightBlade = GetNode<DoubleBladeR>("DoubleBladeR");
-		_shootCooldown   = 1f/ShootDelay;
-		_timeUntilShoot  = _shootCooldown;
+		_shootCooldown = 1f / ShootDelay;
+		_timeUntilShoot = _shootCooldown;
+
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+		
+		DefaultDamage += (int)(dexdummy + strdummy + intdummy/4.5f)/3;
 	}
 	
 	public override void _Process(double delta)

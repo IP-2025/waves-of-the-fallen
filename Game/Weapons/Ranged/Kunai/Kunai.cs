@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 [GlobalClass]
 public partial class Kunai : RangedWeapon
@@ -27,9 +26,15 @@ public partial class Kunai : RangedWeapon
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/KunaiSprite");
 		projectileScene = _kunaiPacked;
-		
-		_shootCooldown  = 1f / ShootDelay;
+
+		_shootCooldown = 1f / ShootDelay;
 		_timeUntilShoot = _shootCooldown;
+		
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+		
+		DefaultDamage += (int)(dexdummy + strdummy/8 + intdummy/8)/3;
 	}
 
 	public override void _Process(double delta)

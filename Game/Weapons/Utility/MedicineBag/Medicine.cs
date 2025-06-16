@@ -9,6 +9,8 @@ public partial class Medicine : Area2D
 	private Vector2 endPos;
 	public const int healValue = 10;
 
+	public int healing = 0;
+
 	public override void _Ready()
 	{
 		medicineSprite = GetNode<AnimatedSprite2D>("MedicineSprite");
@@ -17,6 +19,11 @@ public partial class Medicine : Area2D
 		endPos = path.GlobalPosition;
 		_ = EnablePlayerCollision();
 
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+
+		healing = healValue + (int)(dexdummy + strdummy / 3 + intdummy / 3) / 10;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -38,7 +45,7 @@ public partial class Medicine : Area2D
 		var healthNode = body.GetNodeOrNull<Health>("Health");
 		if (healthNode != null)
 		{
-			healthNode.Heal(healValue);
+			healthNode.Heal(healing);
 			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("healItemPickUp"), GlobalPosition, -10);
 		}
 		QueueFree();

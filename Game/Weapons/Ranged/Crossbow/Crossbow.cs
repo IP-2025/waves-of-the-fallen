@@ -1,5 +1,5 @@
 using Godot;
-using System;
+
 
 [GlobalClass]
 public partial class Crossbow : RangedWeapon
@@ -26,9 +26,15 @@ public partial class Crossbow : RangedWeapon
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/CrossbowSprite");
 		projectileScene = _arrowPacked;
-		
-		_shootCooldown  = 1f / ShootDelay;
+
+		_shootCooldown = 1f / ShootDelay;
 		_timeUntilShoot = _shootCooldown;
+		
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+		
+		DefaultDamage += (int)(dexdummy/1.2f + strdummy + intdummy/5)/3;
 	}
 
 	public override void _Process(double delta)

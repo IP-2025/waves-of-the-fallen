@@ -1,5 +1,5 @@
 using Godot;
-using System;
+
 public partial class Sword : MeleeWeapon
 {
 	private AnimationPlayer SwordAnimationPlayer;
@@ -24,9 +24,15 @@ public partial class Sword : MeleeWeapon
 	{
 		SwordAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		SwordTrailTest = GetNode<Sprite2D>("SwordTrailTest");
-		_shootCooldown   = 1f/ShootDelay;
-		_timeUntilShoot  = _shootCooldown;
+		_shootCooldown = 1f / ShootDelay;
+		_timeUntilShoot = _shootCooldown;
 		SwordTrailTest.Visible = false;
+
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+		
+		DefaultDamage += (int)(dexdummy/1.3f + strdummy + intdummy/1.3f)/3;
 	}
 	
 	public override void _Process(double delta)

@@ -1,5 +1,5 @@
 using Godot;
-using System;
+
 public partial class DoubleBladeL : MeleeWeapon
 {
 	private AnimationPlayer DoubleBladeLAnimationPlayer;
@@ -21,6 +21,12 @@ public partial class DoubleBladeL : MeleeWeapon
 		DoubleBladeLAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayerL");
 		SwordTrailTest = GetNode<Sprite2D>("SwordTrailTest");
 		SwordTrailTest.Visible = false;
+
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+		
+		DefaultDamage += (int)(dexdummy + strdummy + intdummy/4.5f)/3;
 	}
 
 	public void StartAttack()

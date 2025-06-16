@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 public partial class Healstaff : Weapon
@@ -23,14 +22,20 @@ public partial class Healstaff : Weapon
 	private float _shootCooldown;
 	private float _timeUntilShoot;
 	private int _staffFiresFrame = 4;
-	
+
 	public override void _Ready()
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/HealStaffSprite");
 		healArea = GetNode<AnimatedSprite2D>("./Healcircle");
 
-		_shootCooldown  = 1f / ShootDelay;
+		_shootCooldown = 1f / ShootDelay;
 		_timeUntilShoot = _shootCooldown;
+		
+		int dexdummy = 100;
+		int strdummy = 100;
+		int intdummy = 100;
+		
+		DefaultDamage += (int)(dexdummy/3 + strdummy/3 + intdummy)/10;
 	}
 	
 	public override void _Process(double delta)
