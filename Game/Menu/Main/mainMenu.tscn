@@ -1,13 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://txkhl3hrcmdx"]
+[gd_scene load_steps=7 format=3 uid="uid://txkhl3hrcmdx"]
 
 [ext_resource type="Script" uid="uid://g7xprrcaye5v" path="res://Menu/Main/Mainmenu.cs" id="1_86uyx"]
+[ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="2_b8sra"]
+[ext_resource type="Texture2D" uid="uid://c0a7miobpljup" path="res://Assets/Menu_UI/FantasyMinimalPixelArtGUI/UI/RectangleBox_96x96.png" id="btn_box"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pposm"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
+[sub_resource type="StyleBoxTexture" id="ButtonStyleBox"]
+texture = ExtResource("btn_box")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h1kf5"]
 
@@ -52,6 +50,7 @@ size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/CenterContainer3"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_b8sra")
 theme_override_font_sizes/font_size = 100
 text = "Waves of the Fallen"
 
@@ -66,18 +65,19 @@ theme_override_constants/margin_bottom = 5
 [node name="Button_Play" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_b8sra")
 theme_override_font_sizes/font_size = 100
-theme_override_styles/focus = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/normal = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "PLAY!
 "
 icon_alignment = 1
@@ -98,17 +98,17 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/normal = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Charactermenu"
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
@@ -123,17 +123,17 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/normal = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Settings
 "
 
@@ -149,17 +149,17 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/normal = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Highscores
 "
 
@@ -233,17 +233,17 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 theme_override_font_sizes/font_size = 30
-theme_override_styles/focus = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_pposm")
-theme_override_styles/normal = SubResource("StyleBoxFlat_pposm")
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Credits
 "
 
