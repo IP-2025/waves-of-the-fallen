@@ -1,83 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://d2coob6g63jxs"]
+[gd_scene load_steps=4 format=3 uid="uid://d2coob6g63jxs"]
 
 [ext_resource type="Script" uid="uid://cys3fynk5hqns" path="res://Menu/Login/LoginScreen.cs" id="1_36i0f"]
+[ext_resource type="Texture2D" uid="uid://c0a7miobpljup" path="res://Assets/Menu_UI/FantasyMinimalPixelArtGUI/UI/RectangleBox_96x96.png" id="btn_box"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwt6s"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ri42l"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ttk5k"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fiyoi"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y1mls"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qtdfk"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ug441"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kn4ob"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5glfu"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nqid3"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qjo62"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
+[sub_resource type="StyleBoxTexture" id="ButtonStyleBox"]
+texture = ExtResource("btn_box")
 
 [node name="LoginScreen" type="Control"]
 layout_mode = 3
@@ -129,20 +56,21 @@ layout_mode = 2
 
 [node name="RegisterButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxFlat_jwt6s")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_ri42l")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_ttk5k")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_fiyoi")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_y1mls")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_qtdfk")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ug441")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_kn4ob")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_5glfu")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_nqid3")
-theme_override_styles/normal = SubResource("StyleBoxFlat_qjo62")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Create Account"
 
 [node name="LoginText" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
@@ -154,20 +82,21 @@ text = "Login"
 
 [node name="OfflineButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(270, 0)
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxFlat_jwt6s")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_ri42l")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_ttk5k")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_fiyoi")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_y1mls")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_qtdfk")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ug441")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_kn4ob")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_5glfu")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_nqid3")
-theme_override_styles/normal = SubResource("StyleBoxFlat_qjo62")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Play Offline"
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
@@ -212,15 +141,15 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxFlat_jwt6s")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_jwt6s")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_jwt6s")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_jwt6s")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_jwt6s")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_jwt6s")
-theme_override_styles/hover = SubResource("StyleBoxFlat_jwt6s")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_jwt6s")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jwt6s")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_jwt6s")
-theme_override_styles/normal = SubResource("StyleBoxFlat_jwt6s")
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Log In"
