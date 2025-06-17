@@ -11,7 +11,7 @@ public partial class Dagger : MeleeWeapon
 	public override int DefaultPiercing { get; set; } = 0;
 	public override float DefaultSpeed { get; set; } = 0f;
 	public override string ResourcePath => _resBase + "Resources/";
-	public override string IconPath => _resourcePath + "Dagger.png";
+	public override string IconPath => _resourcePath + "Dolch1.png";
 	public override float DefaultRange { get; set; } = 120f;
 	public override int DefaultDamage { get; set; } = 80;
 	
@@ -23,7 +23,6 @@ public partial class Dagger : MeleeWeapon
 	public override void _Ready()
 	{
 		DaggerAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/Stab");
 		
 		_shootCooldown   = 1f/ShootDelay;
 		_timeUntilShoot  = _shootCooldown;
