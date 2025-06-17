@@ -96,13 +96,15 @@ export function allocateNodePort(): number {
  * @param code
  * @param podName
  * @param image
- * @param containerPort
+ * @param containerUdpPort
  */
 export function getPodManifest(
     code: string,
     podName: string = `pod-${code.toLowerCase()}`,
     image: string = "kaprele/waves-of-the-fallen_game:v1.1",
-    containerPort: number = 3000
+    containerUdpPort: number = 3000,
+    containerRpcPort: number = 9999
+
 ) {
     return {
         apiVersion: "v1",
@@ -119,8 +121,8 @@ export function getPodManifest(
                 {
                     name: "game-container",
                     image,
-                    imagePullPolicy: "Always", // Use local image if available
-                    ports: [{ containerPort, protocol: 'UDP' }],
+                    imagePullPolicy: "Always",
+                    ports: [{ containerPort: containerUdpPort, protocol: 'UDP' }, { containerPort: containerRpcPort, protocol: 'UDP' }],
                     env: [{ name: "CODE", value: code }], // Pass the game code as an environment variable
                 },
             ],
