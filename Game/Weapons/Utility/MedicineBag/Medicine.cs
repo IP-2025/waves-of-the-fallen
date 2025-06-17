@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Godot;
 
@@ -11,6 +12,8 @@ public partial class Medicine : Area2D
 
 	public int healing = 0;
 
+	public float _throwSlowdown = 2;
+
 	public override void _Ready()
 	{
 		medicineSprite = GetNode<AnimatedSprite2D>("MedicineSprite");
@@ -23,13 +26,15 @@ public partial class Medicine : Area2D
 		int strdummy = 100;
 		int intdummy = 100;
 
-		healing = healValue + (int)(dexdummy + strdummy / 3 + intdummy / 3) / 10;
+		healing = healValue + (int)(dexdummy + strdummy / 3 + intdummy / 3) / 30;
+		_throwSlowdown *= Math.Max(Math.Min(Math.Max(dexdummy - 80,0) / 100, 1.5f), 1);
+
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		if (GlobalPosition.DistanceTo(endPos) > 10)
-			GlobalPosition += (endPos - GlobalPosition) / 2 * (float)delta;
+			GlobalPosition += (endPos - GlobalPosition) / _throwSlowdown * (float)delta;
 	}
 
 	private async Task EnablePlayerCollision()

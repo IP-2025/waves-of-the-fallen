@@ -1,5 +1,6 @@
 using Godot;
 using Game.Utilities.Multiplayer;
+using System;
 
 public partial class MedicineBag : Weapon
 {
@@ -24,14 +25,15 @@ public partial class MedicineBag : Weapon
 	{
 		medicineBagSprite = GetNode<AnimatedSprite2D>("MedicineBagSprite");
 
-		_shootCooldown = ShootDelay;
-		_timeUntilShoot = _shootCooldown;
-
 		int dexdummy = 100;
 		int strdummy = 100;
 		int intdummy = 100;
-		
-		DefaultDamage += (int)(dexdummy + strdummy/3 + intdummy/3)/10;
+
+		DefaultDamage += (int)(dexdummy + strdummy / 3 + intdummy / 3) / 10;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dexdummy - 80) / 50f, 1), 1f), 0.5f);
+
+		_shootCooldown = ShootDelay;
+		_timeUntilShoot = _shootCooldown;
 	}
 
 		public override void _Process(double delta)

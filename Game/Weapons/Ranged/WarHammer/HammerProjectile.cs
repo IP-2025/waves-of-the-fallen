@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Godot.Collections;
 
@@ -18,9 +19,10 @@ public partial class HammerProjectile : Projectile
 		int strdummy = 100;
 		int intdummy = 100;
 
-		Speed    = DefaultSpeed;
-		Damage   = DefaultDamage + (int)(dexdummy/5 + strdummy + intdummy/7.5f)/3;
+		Speed = DefaultSpeed;
+		Damage = DefaultDamage + (int)(dexdummy / 5 + strdummy + intdummy / 7.5f) / 3;
 		Piercing = DefaultPiercing;
+		Radius = Radius + Math.Max(Math.Min((strdummy-100f)/2f,50f),0); 
 	}
 	
 	public override void OnBodyEntered(Node2D body)

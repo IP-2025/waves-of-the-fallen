@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 [GlobalClass]
@@ -28,14 +29,15 @@ public partial class Lightningstaff : RangedWeapon
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/LightningStaffSprite");
 		projectileScene = _lightningPacked;
 
-		_shootCooldown = 1f / ShootDelay;
-		_timeUntilShoot = _shootCooldown;
-		
 		int dexdummy = 100;
 		int strdummy = 100;
 		int intdummy = 100;
-		
-		DefaultDamage += (int)(dexdummy/3.5f + strdummy/7 + intdummy)/3;
+
+		DefaultDamage += (int)(dexdummy / 3.5f + strdummy / 7 + intdummy) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dexdummy-80) / 50f, 1), 1f), 0.1f);
+
+		_shootCooldown = 1f / ShootDelay;
+		_timeUntilShoot = _shootCooldown;
 	}
 	
 	public override void _Process(double delta)

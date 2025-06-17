@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 public partial class Healstaff : Weapon
@@ -14,7 +15,7 @@ public partial class Healstaff : Weapon
 
 	public string ResourcePath => _resourcePath;
 	public override string IconPath => _resourcePath + "HealStaff1.png";
-	public override float DefaultRange { get; set; } = 220f;
+	public override float DefaultRange { get; set; } = 170f;
 	public override int DefaultDamage { get; set; } = 50;
 	public override float ShootDelay { get; set; } = 0.1f;
 	public int SoundFrame => 3;
@@ -28,14 +29,16 @@ public partial class Healstaff : Weapon
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/HealStaffSprite");
 		healArea = GetNode<AnimatedSprite2D>("./Healcircle");
 
-		_shootCooldown = 1f / ShootDelay;
-		_timeUntilShoot = _shootCooldown;
-		
 		int dexdummy = 100;
 		int strdummy = 100;
 		int intdummy = 100;
-		
-		DefaultDamage += (int)(dexdummy/3 + strdummy/3 + intdummy)/10;
+
+		DefaultDamage += (int)(dexdummy / 3 + strdummy / 3 + intdummy) / 30;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dexdummy-80) / 50f, 1), 1f), 0.5f);
+		DefaultRange = DefaultRange + Math.Max(Math.Min((intdummy-100f)/2f,50f),0);
+
+		_shootCooldown = ShootDelay;
+		_timeUntilShoot = _shootCooldown;
 	}
 	
 	public override void _Process(double delta)

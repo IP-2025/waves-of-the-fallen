@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class DoubleBlade : MeleeWeapon
@@ -12,7 +13,7 @@ public partial class DoubleBlade : MeleeWeapon
 	public override float DefaultSpeed { get; set; } = 0f;
 	public override string ResourcePath => _resBase + "Resources/";
 	public override string IconPath => ResourcePath + "DoubleBlades.png";
-	public override float DefaultRange { get; set; } = 120f;
+	public override float DefaultRange { get; set; } = 150f;
 	public override int DefaultDamage { get; set; } = 150;
 	
 	public override float ShootDelay{ get; set; } = 1f;
@@ -25,14 +26,16 @@ public partial class DoubleBlade : MeleeWeapon
 		GD.Print("Start SwordAnimation");
 		leftBlade = GetNode<DoubleBladeL>("DoubleBladeL");
 		rightBlade = GetNode<DoubleBladeR>("DoubleBladeR");
-		_shootCooldown = 1f / ShootDelay;
-		_timeUntilShoot = _shootCooldown;
 
 		int dexdummy = 100;
 		int strdummy = 100;
 		int intdummy = 100;
+
+		DefaultDamage += (int)(dexdummy + strdummy + intdummy / 4.5f) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dexdummy-80) / 50f, 1), 1f), 0.1f);
 		
-		DefaultDamage += (int)(dexdummy + strdummy + intdummy/4.5f)/3;
+		_shootCooldown = ShootDelay;
+		_timeUntilShoot = _shootCooldown;
 	}
 	
 	public override void _Process(double delta)

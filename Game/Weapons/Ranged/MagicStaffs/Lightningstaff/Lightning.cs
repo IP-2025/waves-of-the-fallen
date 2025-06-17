@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 public partial class Lightning : Projectile
@@ -19,9 +20,10 @@ public partial class Lightning : Projectile
 		int dexdummy = 100;
 		int strdummy = 100;
 		int intdummy = 100;
-		
+
 		Speed = 1000;
-		Damage = 60 + (int)(dexdummy/3.5f + strdummy/7 + intdummy)/3;
+		Damage = 60 + (int)(dexdummy / 3.5f + strdummy / 7 + intdummy) / 3;
+		Jumps = Jumps + Math.Max((int)((intdummy - 100) / 50f), 0);
 	}
 	public override void OnBodyEntered(Node2D body)
 	{

@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Godot.Collections;
 
@@ -17,7 +18,8 @@ public partial class FireBall : Projectile
 		int intdummy = 100;
 
 		Speed = 600;
-		Damage = 120 + (int)(dexdummy/7 + strdummy/3.5 + intdummy)/3;
+		Damage = 120 + (int)(dexdummy / 7 + strdummy / 3.5 + intdummy) / 3;
+		Radius = Radius + Math.Max(Math.Min((intdummy-100f)/2f,50f),0);
 	}
 	public override void OnBodyEntered(Node2D body)
 	{

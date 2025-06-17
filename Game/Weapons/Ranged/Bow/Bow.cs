@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 
@@ -29,14 +30,15 @@ public partial class Bow : RangedWeapon
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/BowSprite");
 		projectileScene = _arrowPacked;
 
-		_shootCooldown = 1f / ShootDelay;
-		_timeUntilShoot = _shootCooldown;
-		
 		int dexdummy = 100;
 		int strdummy = 100;
 		int intdummy = 100;
-		
-		DefaultDamage += (int)(dexdummy + strdummy/3.5f + intdummy/7)/3;
+
+		DefaultDamage = DefaultDamage + (int)(dexdummy + strdummy / 3.5f + intdummy / 7) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dexdummy-80) / 50f, 1), 1f), 0.1f);
+
+		_shootCooldown = ShootDelay;
+		_timeUntilShoot = _shootCooldown;
 	}
 	
 	public override void _Process(double delta)

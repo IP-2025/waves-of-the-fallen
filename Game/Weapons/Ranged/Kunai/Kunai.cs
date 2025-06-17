@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 [GlobalClass]
@@ -27,14 +28,15 @@ public partial class Kunai : RangedWeapon
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/KunaiSprite");
 		projectileScene = _kunaiPacked;
 
-		_shootCooldown = 1f / ShootDelay;
-		_timeUntilShoot = _shootCooldown;
-		
 		int dexdummy = 100;
 		int strdummy = 100;
 		int intdummy = 100;
-		
-		DefaultDamage += (int)(dexdummy + strdummy/8 + intdummy/8)/3;
+
+		DefaultDamage += (int)(dexdummy + strdummy / 8 + intdummy / 8) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dexdummy-80) / 50f, 1), 1f), 0.1f);
+
+		_shootCooldown = ShootDelay;
+		_timeUntilShoot = _shootCooldown;
 	}
 
 	public override void _Process(double delta)

@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 
@@ -27,14 +28,15 @@ public partial class Crossbow : RangedWeapon
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/CrossbowSprite");
 		projectileScene = _arrowPacked;
 
-		_shootCooldown = 1f / ShootDelay;
-		_timeUntilShoot = _shootCooldown;
-		
 		int dexdummy = 100;
 		int strdummy = 100;
 		int intdummy = 100;
-		
-		DefaultDamage += (int)(dexdummy/1.2f + strdummy + intdummy/5)/3;
+
+		DefaultDamage += (int)(dexdummy / 1.2f + strdummy + intdummy / 5) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((strdummy-80) / 50f, 1), 1f), 0.1f);
+
+		_shootCooldown = ShootDelay;
+		_timeUntilShoot = _shootCooldown;
 	}
 
 	public override void _Process(double delta)

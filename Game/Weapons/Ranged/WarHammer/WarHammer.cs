@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class WarHammer : RangedWeapon
@@ -31,12 +32,13 @@ public partial class WarHammer : RangedWeapon
 
 		_shootCooldown = 1f / ShootDelay;
 		_timeUntilShoot = _shootCooldown;
-		
+
 		int dexdummy = 100;
 		int strdummy = 100;
 		int intdummy = 100;
 
-		DefaultDamage += (int)(dexdummy/5 + strdummy + intdummy/7.5f)/3;
+		DefaultDamage += (int)(dexdummy / 5 + strdummy + intdummy / 7.5f) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((strdummy-80) / 50f, 1), 1f), 0.1f);
 	}
 	
 	public override void _Process(double delta)
