@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://b3t68y2ghoi8m"]
+[gd_scene load_steps=11 format=3 uid="uid://b3t68y2ghoi8m"]
 
 [ext_resource type="Script" uid="uid://dnwh8qvd8j2y7" path="res://Menu/Character/Charactermenu.cs" id="1_ivr4t"]
+[ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="2_b8qww"]
 [ext_resource type="Script" uid="uid://c57s2i06pw35o" path="res://Menu/Character/ButtonsCharacterSelection.cs" id="2_ch0j6"]
 [ext_resource type="Texture2D" uid="uid://2rejnl8ohqt8" path="res://Entities/Characters/Archer/Resources/ArcherCharacterPreview.png" id="2_u3wkp"]
 [ext_resource type="Texture2D" uid="uid://u7vpcxupiug1" path="res://Entities/Characters/Knight/Resources/KnightCharacterPreview.png" id="3_ch0j6"]
@@ -63,6 +64,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_b8qww")
 theme_override_font_sizes/font_size = 40
 text = "Charactermenu"
 

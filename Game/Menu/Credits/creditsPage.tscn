@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvv7xj4dmh4sa"]
+[gd_scene load_steps=5 format=3 uid="uid://dvv7xj4dmh4sa"]
 
 [ext_resource type="Script" uid="uid://p1wohhl845y8" path="res://Menu/Credits/CreditsPage.cs" id="1_v02xy"]
+[ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="2_pdxm5"]
 [ext_resource type="Texture2D" uid="uid://c0a7miobpljup" path="res://Assets/Menu_UI/FantasyMinimalPixelArtGUI/UI/RectangleBox_96x96.png" id="btn_box"]
 
 [sub_resource type="StyleBoxTexture" id="ButtonStyleBox"]
@@ -36,23 +37,94 @@ theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer2"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 24
 
-[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
+[node name="LabelTitle" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_pdxm5")
 theme_override_font_sizes/font_size = 60
 text = "Credits"
+horizontal_alignment = 1
 
-[node name="Button_Back" type="Button" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
+[node name="LabelMusic" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Backgroundmusic:"
+horizontal_alignment = 1
+
+[node name="LabelMusicInfo" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "\"Financial Obligations\"  -  https://www.youtube.com/watch?v=IAZacOlW7PA
+Conducted and composed by Philip Milman  -  https://pmmusic.pro/
+Copyright © 2025  -  Philip Milman  -  All Rights Reserved.
+Licensed under Attribution 3.0 Unported (CC BY 3.0)  -  https://creativecommons.org/licenses/by/3.0/"
+horizontal_alignment = 1
+
+[node name="LabelMap" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Map-Assets:"
+horizontal_alignment = 1
+
+[node name="LabelMapInfo" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "https://cainos.itch.io/pixel-art-top-down-basic
+Created by Cainos  -  https://itch.io/profile/cainos"
+horizontal_alignment = 1
+
+[node name="LabelEngine" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Game engine:"
+horizontal_alignment = 1
+
+[node name="LabelEngineInfo" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Godot Engine  -  https://godotengine.org
+Licensed under MIT-license  -  https://godotengine.org/license/"
+horizontal_alignment = 1
+
+[node name="LabelHealthbar" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Healthbar-Assets:"
+horizontal_alignment = 1
+
+[node name="LabelHealthbarInfo" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Androx - https://byandrox.itch.io/crimson-fantasy-gui"
+horizontal_alignment = 1
+
+[node name="LabelUI" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "UI-Assets:"
+horizontal_alignment = 1
+
+[node name="LabelUIInfo" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "etahoshi - https://etahoshi.itch.io/minimal-fantasy-gui-by-eta"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Button_Back" type="Button" parent="MarginContainer2/HBoxContainer"]
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
-size_flags_horizontal = 10
+size_flags_horizontal = 4
+size_flags_vertical = 0
 theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
@@ -71,96 +143,4 @@ theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
 theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Back"
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
-
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer2/VBoxContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 18
-text = "Backgroundmusic:"
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 10
-
-[node name="Label2" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer/MarginContainer"]
-layout_mode = 2
-text = "\"Financial Obligations\"  -  https://www.youtube.com/watch?v=IAZacOlW7PA
-Conducted and composed by Philip Milman  -  https://pmmusic.pro/
-Copyright © 2025  -  Philip Milman  -  All Rights Reserved.
-Licensed under Attribution 3.0 Unported (CC BY 3.0)  -  https://creativecommons.org/licenses/by/3.0/"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 18
-text = "Map-Assets:"
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 10
-
-[node name="Label2" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer2/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 1
-text = "https://cainos.itch.io/pixel-art-top-down-basic
-Created by Cainos  -  https://itch.io/profile/cainos"
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer3"]
-layout_mode = 2
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 18
-text = "Game engine:"
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer3"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 10
-
-[node name="Label2" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer3/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 1
-text = "Godot Engine  -  https://godotengine.org
-Licensed under MIT-license  -  https://godotengine.org/license/"
-
-[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer4"]
-layout_mode = 2
-text = "Healthbar-Assets:"
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer4"]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer4/MarginContainer"]
-layout_mode = 2
-text = "Androx - https://byandrox.itch.io/crimson-fantasy-gui"
-
-[connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_BackToMainMenu_pressed"]
+[connection signal="pressed" from="MarginContainer2/HBoxContainer/Button_Back" to="." method="_on_button_BackToMainMenu_pressed"]
