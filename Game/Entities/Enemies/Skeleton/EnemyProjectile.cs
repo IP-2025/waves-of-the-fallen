@@ -22,10 +22,11 @@ public partial class EnemyProjectile : Area2D
 	private Vector2 direction;
 	private float lifetimeTimer = 0.0f;
 
-	public void Initialize(Vector2 dir, float damage)
+	public void Initialize(Vector2 dir, float damage, float speed)
 	{
 		direction = dir.Normalized();
 		Damage = damage;
+		Speed = speed;
 
 		// Set rotation based on direction
 		Rotation = direction.Angle();
