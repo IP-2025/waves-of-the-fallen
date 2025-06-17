@@ -7,7 +7,7 @@ public partial class Medicine : Area2D
 	AnimatedSprite2D medicineSprite;
 
 	private Vector2 endPos;
-	protected int healValue = 10;
+	public const int healValue = 15;
 
 	public override void _Ready()
 	{
