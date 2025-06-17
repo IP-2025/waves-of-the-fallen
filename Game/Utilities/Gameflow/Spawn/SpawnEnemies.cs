@@ -177,6 +177,11 @@ public partial class SpawnEnemies : Node2D
 	}
 	private void OnWaveStart() 
 	{
+		_healthMultiplier = 1f + (_currentWave - 1) * 0.1f;
+		_damageMultiplier = 1f + (_currentWave - 1) * 0.5f;
+		_attackSpeedMultiplier = Math.Min(1f + (_currentWave - 1) * 0.05f , 2f);
+		_moveSpeedMultiplier = Math.Min(1f + (_currentWave - 1) * 0.05f , 2f);
+
 		if (_currentWave % 5 == 2) // the giant will spawn in wave 2 (Note: the normal enemies also spawn)
 		{
 			spawnGiantBoss();
