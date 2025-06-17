@@ -32,7 +32,7 @@ namespace Game.Utilities.Multiplayer
 		private Queue<Command> _incomingCommands = new();
 		private ulong _tick = 0;
 		private double _acc = 0;
-		private const float TICK_DELTA = 1f / 60f;
+		private const float TICK_DELTA = 1f / 30;
 		private Timer shutdownTimer; // for headless server if no one is connected
 		private const float ServerShutdownDelay = 5f; // seconds 
 		public static NetworkManager Instance { get; set; }
@@ -352,7 +352,7 @@ namespace Game.Utilities.Multiplayer
 				client.ApplySnapshot(snap);
 				DebugIt($"Received snapshot tick={snap.Tick}, entities={snap.Entities.Count}");
 				if (enableDebug) {
-					GD.Print($"[CLIENT][UDP] Received snapshot tick={snap.Tick}, entities={snap.Entities.Count}");
+                    GD.Print($"[CLIENT][UDP] Received snapshot tick={snap.Tick}, entities={snap.Entities.Count}");
 				}
 			}
 		}
