@@ -1,7 +1,5 @@
 using System;
 using System.Text.Json;
-
-
 using System.Text.Json.Serialization;
 
 [JsonSourceGenerationOptions(
@@ -33,7 +31,4 @@ public static class Serializer
                 ? MyJsonContext.Default.Command
                 : MyJsonContext.Default.Snapshot
         );
-}
-
-
-
+} 

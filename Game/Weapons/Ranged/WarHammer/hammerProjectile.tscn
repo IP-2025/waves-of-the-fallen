@@ -1,13 +1,13 @@
 [gd_scene load_steps=12 format=3 uid="uid://nmy1xjs14ux4"]
 
 [ext_resource type="Script" uid="uid://4dwbxvjmt0uq" path="res://Weapons/Ranged/WarHammer/HammerProjectile.cs" id="1_ynb48"]
-[ext_resource type="Texture2D" uid="uid://x4qnil5s6ma6" path="res://Weapons/Ranged/WarHammer/Resources/WarHammer.png" id="2_2thib"]
-[ext_resource type="Texture2D" uid="uid://cucwcbxchggbv" path="res://Weapons/Ranged/WarHammer/Resources/Leer.png" id="3_4oi0s"]
-[ext_resource type="Texture2D" uid="uid://bhplc5ddv4bfu" path="res://Weapons/Ranged/WarHammer/Resources/Riss1.png" id="4_1w756"]
-[ext_resource type="Texture2D" uid="uid://cpc7f25bq0fb8" path="res://Weapons/Ranged/WarHammer/Resources/Riss2.png" id="5_23ygf"]
-[ext_resource type="Texture2D" uid="uid://b7j4wa7tq0bwj" path="res://Weapons/Ranged/WarHammer/Resources/Riss3.png" id="6_eep1t"]
-[ext_resource type="Texture2D" uid="uid://dii2l6bgvgunw" path="res://Weapons/Ranged/WarHammer/Resources/Riss4.png" id="7_ed2i3"]
-[ext_resource type="Texture2D" uid="uid://b84pf7ubau70u" path="res://Weapons/Ranged/WarHammer/Resources/Riss5.png" id="8_epc0v"]
+[ext_resource type="Texture2D" uid="uid://bpovtdlmnfkqe" path="res://Weapons/Ranged/WarHammer/Resources/WarHammer.png" id="2_2thib"]
+[ext_resource type="Texture2D" uid="uid://tvrpfg8kg6un" path="res://Weapons/Ranged/WarHammer/Resources/Leer.png" id="3_4oi0s"]
+[ext_resource type="Texture2D" uid="uid://dljq5deh00ds4" path="res://Weapons/Ranged/WarHammer/Resources/Riss1.png" id="4_1w756"]
+[ext_resource type="Texture2D" uid="uid://dai4di04p2uo7" path="res://Weapons/Ranged/WarHammer/Resources/Riss2.png" id="5_23ygf"]
+[ext_resource type="Texture2D" uid="uid://br38cwuyw5djy" path="res://Weapons/Ranged/WarHammer/Resources/Riss3.png" id="6_eep1t"]
+[ext_resource type="Texture2D" uid="uid://xixsxj8ivlmk" path="res://Weapons/Ranged/WarHammer/Resources/Riss4.png" id="7_ed2i3"]
+[ext_resource type="Texture2D" uid="uid://dkkyq0sn62ls" path="res://Weapons/Ranged/WarHammer/Resources/Riss5.png" id="8_epc0v"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7yync"]
 animations = [{
