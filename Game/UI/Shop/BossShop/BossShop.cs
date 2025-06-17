@@ -25,7 +25,8 @@ public partial class BossShop : Control
 	new Dagger(),
 	new Sword(),
 	new WarHammer(),
-	new DoubleBlade()
+	new DoubleBlade(),
+	new MedicineBag()
 };
 	
 	
@@ -39,7 +40,7 @@ public partial class BossShop : Control
 		var stats = weapon.BaseStats();
 
 		box.GetNode<RichTextLabel>("name").Text = weapon.GetType().Name;
-		box.GetNode<RichTextLabel>("damage").Text = weapon is Healstaff ? $"Heal:   {stats.dmg}" : $"Damage:   {stats.dmg}";
+		box.GetNode<RichTextLabel>("damage").Text = weapon is Healstaff || weapon is MedicineBag ? $"Heal:   {stats.dmg}" : $"Damage:   {stats.dmg}";
 		box.GetNode<RichTextLabel>("range").Text = $"Range:    {(int)stats.range}";
 		box.GetNode<RichTextLabel>("delay").Text = $"Attacks/s:    {stats.delay}";
 		box.GetNode<RichTextLabel>("piercing").Text = weapon is RangedWeapon ? $"Piercing: {stats.piercing}" : "";
