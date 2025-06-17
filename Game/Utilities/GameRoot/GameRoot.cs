@@ -269,7 +269,7 @@ public partial class GameRoot : Node
 		player.MaxHealth = character?.Health ?? 0;
 		player.CurrentHealth = character?.Health ?? 0;
 		player.Speed = character?.Speed ?? 0;
-		DebugIt($"Spawned player {peerId} with characterId {characterId}, max health {player.MaxHealth}, current health {player.CurrentHealth}, speed {player.Speed}, health should be: {character.Health}");
+		// DebugIt($"Spawned player {peerId} with characterId {characterId}, max health {player.MaxHealth}, current health {player.CurrentHealth}, speed {player.Speed}, health should be: {character.Health}");
 
 		player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
 			.OfType<Node2D>()
