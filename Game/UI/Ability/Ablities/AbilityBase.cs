@@ -1,3 +1,4 @@
+using Game.Utilities.Multiplayer;
 using Godot;
 using System;
 using System.Diagnostics;
@@ -15,5 +16,12 @@ public partial class AbilityBase : Node2D
 	public virtual int getCooldown()
 	{
 		return cooldown;
+	}
+
+	public void forMuliplayer()
+	{
+		// for multiplayer
+		var id = GetInstanceId();
+		Server.Instance.Abilities.Add((long)id, this);
 	}
 }

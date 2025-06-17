@@ -15,7 +15,8 @@ public partial class ArrowRain : AbilityBase
 
 	public override void _Ready()
 	{
-		DoArrowRain(); 
+		DoArrowRain();
+		forMuliplayer();
 	}
 
 	public async void DoArrowRain()

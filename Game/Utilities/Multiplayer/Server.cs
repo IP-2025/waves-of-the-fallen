@@ -14,6 +14,7 @@ namespace Game.Utilities.Multiplayer
 		private bool enableDebug = false;
 		public Dictionary<long, PlayerCharacterData> PlayerSelections = new Dictionary<long, PlayerCharacterData>();
 		public Dictionary<long, Node2D> Entities = new Dictionary<long, Node2D>();
+		public Dictionary<long, Node> Abilities = new Dictionary<long, Node>();
 
 		private PackedScene _bowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Bow/bow.tscn");
 		private PackedScene _crossbowScene = GD.Load<PackedScene>("res://Weapons/Ranged/Crossbow/crossbow.tscn");
@@ -137,7 +138,7 @@ namespace Game.Utilities.Multiplayer
 			}
 			else if (cmd.Type == CommandType.Ability)
 			{
-				Debug.Print("ABILITY BEI SERVER ANGEKOMMEN");
+				//Debug.Print("ABILITY BEI SERVER ANGEKOMMEN");
 
 				var scene = cmd.AbilityId switch
 				{
@@ -152,10 +153,21 @@ namespace Game.Utilities.Multiplayer
 					_ => null
 				};
 				if (scene == null) return;
-				var ability = scene.Instantiate();
-				entity.AddChild(ability);
+				var ability = scene.Instantiate<Node>();
 
-				Instance.AddChild(ability);
+				var id = ability.GetInstanceId();
+				Instance.Abilities.Add((long)id, ability); 
+
+				
+				if (!entity.GetChildren().Contains(ability))
+				{
+					entity.AddChild(ability);
+				}
+				
+				if (!Instance.GetChildren().Contains(ability))
+				{
+					Instance.AddChild(ability);
+				}	
 				ability._Ready();
 				//entity.GetNode<AbilityButton>("Ability")._on_touch_ability_button_pressed();
 			}
@@ -228,10 +240,46 @@ namespace Game.Utilities.Multiplayer
 				));
 			}
 
-			foreach (var id in toRemove)
+			foreach (var kv in Abilities)
 			{
-				Entities.Remove(id);
+				var node = kv.Value;
+
+				if (node == null || !IsInstanceValid(node))
+				{
+					toRemove.Add(kv.Key);
+					continue;
+				}
+
+				string scenePath = node.SceneFilePath;
+				var id = kv.Key;
+
+				if (!ScenePathToEntityType.TryGetValue(scenePath, out var entityType))
+				{
+					GD.PrintErr($"Unknown ScenePath: {scenePath}");
+					continue;
+				}
+
+				var healthNode = node.GetNodeOrNull<Health>("Health");
+				float health = healthNode != null ? healthNode.health : 0f;
+
+				long? owner = null;
+				if (node.HasMeta("OwnerId"))
+				{
+					owner = (long)node.GetMeta("OwnerId");
+				}
+				
+				snap.Abilities.Add(new AbilitySnapshot(
+					id,
+					health,
+					entityType,
+					owner
+				));//((Node2D)node.GetParent()).Position,
 			}
+
+			foreach (var id in toRemove)
+				{
+					Entities.Remove(id);
+				}
 
 			int livingPlayers = Entities
 									.Values

@@ -95,15 +95,6 @@ public partial class AbilityButton : Node2D
 		_abilityTimer.Timeout += OnTimerTimeout;
 		SecondCounter = MaxTime;
 		Disable = true;
-		
-		/*
-		// for multiplayer
-		var id = weapon.GetInstanceId();
-		weapon.Name = $"Weapon_{id}";
-		weapon.SetMeta("OwnerId", OwnerPeerId);
-		weapon.SetMeta("SlotIndex", _weaponsEquipped);
-		Server.Instance.Entities.Add((long)id, weapon);
-		*/
 	}
 
 	private void OnTimerTimeout()

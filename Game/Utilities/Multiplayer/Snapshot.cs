@@ -8,5 +8,7 @@ public class Snapshot
     public ulong Tick;
     public int livingPlayersCount;
     public List<EntitySnapshot> Entities = new List<EntitySnapshot>();
+    public List<AbilitySnapshot> Abilities = new List<AbilitySnapshot>();
+
     public Snapshot(ulong tick) { Tick = tick; }
 }
