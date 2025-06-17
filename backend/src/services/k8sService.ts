@@ -122,7 +122,7 @@ export function getPodManifest(
                     name: "game-container",
                     image,
                     imagePullPolicy: "Always",
-                    ports: [{ containerPort: containerUdpPort, protocol: 'UDP' }, { containerPort: containerRpcPort, protocol: 'UDP' }],
+                    ports: [{name: 'gameplay', containerPort: containerUdpPort, protocol: 'UDP' }, {name: 'rpc', containerPort: containerRpcPort, protocol: 'UDP' }],
                     env: [{ name: "CODE", value: code }], // Pass the game code as an environment variable
                 },
             ],
