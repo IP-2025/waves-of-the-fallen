@@ -203,7 +203,7 @@ public partial class GameRoot : Node
 			"Sword" => GD.Load<PackedScene>("res://Weapons/Melee/MasterSword/Sword.tscn"),
 			"WarHammer" => GD.Load<PackedScene>("res://Weapons/Ranged/WarHammer/warHammer.tscn"),
 			"DoubleBlade" => GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn"),
-			"MedicineBag" => GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/MedicineBag.tscn"),
+			"MedicineBag" => GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn"),
 			_ => null
 		};
 		if (scene == null) return;
