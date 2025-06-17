@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dexwf12qh2cp0"]
+[gd_scene load_steps=5 format=3 uid="uid://dexwf12qh2cp0"]
 
 [ext_resource type="Script" uid="uid://bg2fjgpwyq7no" path="res://Menu/LocalMenu.cs" id="1_gol3u"]
+[ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="2_2ibv5"]
 [ext_resource type="Texture2D" uid="uid://c0a7miobpljup" path="res://Assets/Menu_UI/FantasyMinimalPixelArtGUI/UI/RectangleBox_96x96.png" id="btn_box"]
 
 [sub_resource type="StyleBoxTexture" id="ButtonStyleBox"]
@@ -46,6 +47,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_2ibv5")
 theme_override_font_sizes/font_size = 60
 text = "Local"
 
@@ -57,7 +59,7 @@ theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 45
 theme_override_styles/focus = SubResource("ButtonStyleBox")
 theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
 theme_override_styles/disabled = SubResource("ButtonStyleBox")
