@@ -1,3 +1,5 @@
+using System;
+
 public partial class CrossbowArrow : Projectile
 {
 	public const float DefaultSpeed    = 800f;
@@ -13,6 +15,6 @@ public partial class CrossbowArrow : Projectile
 		
 		Speed    = DefaultSpeed;
 		Damage   = DefaultDamage + (int)(dexdummy/1.2f + strdummy + intdummy/5)/3;
-		Piercing = DefaultPiercing;
+		Piercing = DefaultPiercing + Math.Max((int)((strdummy - 100) / 50f), 0);
 	}
 }
