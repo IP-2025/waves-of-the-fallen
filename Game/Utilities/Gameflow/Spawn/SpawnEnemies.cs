@@ -177,7 +177,7 @@ public partial class SpawnEnemies : Node2D
 	}
 	private void OnWaveStart() 
 	{
-		if (_currentWave == 2) // the giant will spawn in wave 2 (Note: the normal enemies also spawn)
+		if (_currentWave % 5 == 2) // the giant will spawn in wave 2 (Note: the normal enemies also spawn)
 		{
 			spawnGiantBoss();
 		}
