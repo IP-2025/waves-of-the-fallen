@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: mngmt
-          image: kaprele/waves-of-the-fallen_backend:latest # <<< Replace this with your built image name
+          image: kaprele/waves-of-the-fallen_backend:v1.1 # <<< Replace this with your built image name
           ports:
             - containerPort: 3000 # Or whatever your app uses
           env:
