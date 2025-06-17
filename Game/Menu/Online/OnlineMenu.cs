@@ -91,10 +91,10 @@ public partial class OnlineMenu : Node
 			string lobbyCode = json["lobbyCode"].AsString();
 			NetworkManager.Instance.InitClient("", udpPort, rpcPort, false);
 			GameState.LobbyCode = lobbyCode;
-			var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
-			int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
-			var erra = NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
-			GD.Print("Result " + erra);
+			// var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
+			// int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
+			// var erra = NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
+			// GD.Print("Result " + erra);
 			
 			
 			

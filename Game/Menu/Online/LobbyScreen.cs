@@ -33,7 +33,9 @@ public partial class LobbyScreen : Node
 	{
 		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
-		NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
+		var health = characterManager.LoadHealthByID(selectedCharacterId.ToString());
+		var speed = characterManager.LoadSpeedByID(selectedCharacterId.ToString());
+		NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId, health, speed);
 		GD.Print("Ready Button Pressed");
 	}
 	
