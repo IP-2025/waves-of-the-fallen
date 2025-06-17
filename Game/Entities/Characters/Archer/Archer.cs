@@ -2,25 +2,25 @@ using Godot;
 
 public partial class Archer : DefaultPlayer
 {
-    public override void _Ready()
-    {
-        HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
-        if (HttpRequest == null)
-        {
-            GD.PrintErr("HttpRequest node not found!");
-            return;
-        }
+	public override void _Ready()
+	{
+		HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
+		if (HttpRequest == null)
+		{
+			GD.PrintErr("HttpRequest node not found!");
+			return;
+		}
 
-        base._Ready();
+		base._Ready();
 
-        if ( MaxHealth <= 0 && Speed <= 0)
+		if ( MaxHealth <= 0 && Speed <= 0)
 		{
 			MaxHealth = CharacterManager.LoadHealthByID("1");
 			Speed = CharacterManager.LoadSpeedByID("1");
 		}
 
-        GD.Print($"Archer initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
-    }
+		GD.Print($"Archer initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
+	}
 
 	public void _on_archer_animation_frame_changed()
 	{

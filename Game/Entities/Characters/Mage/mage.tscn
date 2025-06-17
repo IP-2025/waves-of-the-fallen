@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dnv3ypcus8nxr" path="res://Entities/Characters/Mage/Mage.cs" id="1_shc7e"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_55mar"]
-[ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="3_dt24r"]
-[ext_resource type="Texture2D" uid="uid://bmkov0nuk3rbn" path="res://Entities/Characters/Mage/Resources/MageCharacterNormal.png" id="4_w7c0s"]
+[ext_resource type="PackedScene" uid="uid://cgg7dr3uijuwx" path="res://UI/Healthbar/healtBar.tscn" id="3_w7c0s"]
+[ext_resource type="Texture2D" uid="uid://d1mvksunxwvfo" path="res://Entities/Characters/Mage/Resources/MageCharacterNormal.png" id="4_w7c0s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
@@ -140,9 +140,6 @@ animations = [{
 collision_mask = 384
 collision_priority = 2.0
 script = ExtResource("1_shc7e")
-Speed = null
-MaxHealth = null
-CurrentHealth = null
 animationPath = NodePath("MageAnimation")
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
@@ -161,34 +158,8 @@ position = Vector2(-25, 15)
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_55mar")
-max_health = null
 
-[node name="HealthBar" type="ProgressBar" parent="Health"]
-offset_left = -47.0
-offset_top = -64.0
-offset_right = 51.0
-offset_bottom = -37.0
-show_percentage = false
-script = ExtResource("3_dt24r")
-metadata/_edit_use_anchors_ = true
-
-[node name="HealthLabel" type="Label" parent="Health/HealthBar"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -48.0
-offset_top = -12.5
-offset_right = 48.0
-offset_bottom = 12.5
-theme_type_variation = &"GraphNodeTitleLabel"
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-horizontal_alignment = 1
-metadata/_edit_use_anchors_ = true
+[node name="HealthBar" parent="Health" instance=ExtResource("3_w7c0s")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 15)
