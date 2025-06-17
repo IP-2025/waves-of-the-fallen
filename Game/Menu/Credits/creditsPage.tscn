@@ -218,4 +218,18 @@ size_flags_vertical = 1
 text = "Godot Engine  -  https://godotengine.org
 Licensed under MIT-license  -  https://godotengine.org/license/"
 
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Healthbar-Assets:"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/HBoxContainer4/MarginContainer"]
+layout_mode = 2
+text = "Androx - https://byandrox.itch.io/crimson-fantasy-gui"
+
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_BackToMainMenu_pressed"]
