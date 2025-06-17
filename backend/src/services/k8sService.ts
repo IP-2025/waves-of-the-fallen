@@ -102,7 +102,7 @@ export function allocateNodePort(): number {
 export function getPodManifest(
     code: string,
     podName: string = `pod-${code.toLowerCase()}`,
-    image: string = "kaprele/waves-of-the-fallen_game:v1.1",
+    image: string = "kaprele/waves-of-the-fallen_game:v1.2",
     containerUdpPort: number = 3000,
     containerRpcPort: number = 9999
 
