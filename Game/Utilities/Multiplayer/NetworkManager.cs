@@ -32,7 +32,7 @@ namespace Game.Utilities.Multiplayer
 		private Queue<Command> _incomingCommands = new();
 		private ulong _tick = 0;
 		private double _acc = 0;
-		private const float TICK_DELTA = 1f / 30f;
+		private const float TICK_DELTA = 1f / 60f;
 		private Timer shutdownTimer; // for headless server if no one is connected
 		private const float ServerShutdownDelay = 5f; // seconds 
 		public static NetworkManager Instance { get; set; }
@@ -48,7 +48,7 @@ namespace Game.Utilities.Multiplayer
 
 		public override void _Ready()
 		{
-			enableDebug = true; // Debugging aktivieren
+			enableDebug = false;
 			Engine.MaxFps = 60; // this is here because NetworkManager is an autoload (and it wont work in SettingsMenu for whatever reason). This means the whole game will be on 60 fps. Workaround but works
 			Instance = this;
 			// check if we are in headless server mode
@@ -351,7 +351,9 @@ namespace Game.Utilities.Multiplayer
 				var snap = Serializer.Deserialize<Snapshot>(data);
 				client.ApplySnapshot(snap);
 				DebugIt($"Received snapshot tick={snap.Tick}, entities={snap.Entities.Count}");
-				GD.Print($"[CLIENT][UDP] Received snapshot tick={snap.Tick}, entities={snap.Entities.Count}");
+				if (enableDebug) {
+					GD.Print($"[CLIENT][UDP] Received snapshot tick={snap.Tick}, entities={snap.Entities.Count}");
+				}
 			}
 		}
 
@@ -363,12 +365,18 @@ namespace Game.Utilities.Multiplayer
 				_acc -= TICK_DELTA;
 				if (_isServer)
 				{
-					GD.Print($"[SERVER][TICK] Tick={_tick}, Commands={_incomingCommands.Count}");
+					if (enableDebug)
+					{
+						GD.Print($"[SERVER][TICK] Tick={_tick}, Commands={_incomingCommands.Count}");
+					}
 					ProcessServerTick();
 				}
 				else
 				{
-					GD.Print($"[CLIENT][TICK] Tick={_tick}");
+					if (enableDebug)
+					{
+						GD.Print($"[CLIENT][TICK] Tick={_tick}");
+					}
 					SendClientCommand();
 				}
 				_tick++;
