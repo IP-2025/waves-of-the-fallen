@@ -6,11 +6,11 @@
 [ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="4_354os"]
 
 [node name="HealthBar" type="TextureProgressBar"]
-offset_left = -63.0
-offset_top = -71.0
-offset_right = 35.0
-offset_bottom = -44.0
-scale = Vector2(2, 2)
+offset_left = -74.0
+offset_top = -73.0
+offset_right = 24.0
+offset_bottom = -46.0
+scale = Vector2(2.3, 2.3)
 value = 100.0
 texture_under = ExtResource("1_sf4my")
 texture_progress = ExtResource("2_sf4my")
@@ -21,10 +21,10 @@ metadata/_edit_use_anchors_ = true
 [node name="HealthLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.438776
-anchor_top = 0.351852
-anchor_right = 0.438776
-anchor_bottom = 0.351852
+anchor_left = 0.556344
+anchor_top = 0.559581
+anchor_right = 0.556344
+anchor_bottom = 0.559581
 offset_left = -48.0
 offset_top = -12.5
 offset_right = 48.0
