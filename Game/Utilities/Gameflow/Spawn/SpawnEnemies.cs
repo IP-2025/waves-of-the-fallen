@@ -18,6 +18,10 @@ public partial class SpawnEnemies : Node2D
 	private int _enemyLimitMax = 30; // the maximum the enemy limit can reach
 	private DefaultPlayer Player { get; set; } // player instance 
 	private int _playerCount;
+	private float _healthMultiplier = 1;
+	private float _damageMultiplier = 1;
+	private float _attackSpeedMultiplier = 1;
+	private float _moveSpeedMultiplier = 1;
 
 	public override void _Ready()
 	{
@@ -34,11 +38,17 @@ public partial class SpawnEnemies : Node2D
 		//waveTimer = GetTree().Root.GetNode<WaveTimer>("GameRoot/WaveTimer"); // loads waveTimer for current wave
 		_waveTimer.WaveEnded += OnWaveEnd;
 		_currentWave = _waveTimer.WaveCounter;
-		_waveTimer.WaveStarted  += OnWaveStart;
+		_waveTimer.WaveStarted += OnWaveStart;
 
 		_enemyLimit = Math.Min(_enemyLimitIncrease * _currentWave, _enemyLimitMax); // sets enemy limit, so a custom starting wave can be used at the beginning
 		_enemyLimitMax += 5 * (_playerCount - 1); // increase max ammount of enemies with playerCount
-			
+
+		// initialize scaling values for higher wave start. all values scale additively (wave 1 health = *1 multiplier | wave 10 health = *1.9 multiplier)
+		_healthMultiplier = 1f + (_currentWave - 1) * 0.1f; // increases enemy health by 10%
+		_damageMultiplier = 1f + (_currentWave - 1) * 0.5f; // increases enemy damage by 20%
+		_attackSpeedMultiplier = Math.Min(1f + (_currentWave - 1) * 0.05f , 2f); // increases enemy attack speed by 5% until 200% is reached
+		_moveSpeedMultiplier = Math.Min(1f + (_currentWave - 1) * 0.05f , 2f); // increases enemy movement speed by 5% until 200% is reached
+
 	}
 	private void spawnGiantBoss()
 	{
@@ -111,9 +121,15 @@ public partial class SpawnEnemies : Node2D
 	}
 
 
-	public void SpawnEnemy(CharacterBody2D enemy, Vector2 spawnPosition) // gives enemy instanceid as name, instantiates on server and adds it to SpawnEnemy
+	public void SpawnEnemy(EnemyBase enemy, Vector2 spawnPosition) // gives enemy instanceid as name, instantiates on server and adds it to SpawnEnemy
 	{
 		enemy.GlobalPosition += spawnPosition;
+
+		// wavecount based scaling
+		enemy.GetNode<Health>("Health").max_health *= _healthMultiplier;
+		enemy.damage *= _damageMultiplier;
+		enemy.speed *= _moveSpeedMultiplier;
+		enemy.attacksPerSecond *= _attackSpeedMultiplier;
 
 		var id = enemy.GetInstanceId();
 		enemy.Name = $"Enemy_{id}";
@@ -123,7 +139,7 @@ public partial class SpawnEnemies : Node2D
 		enemy.AddToGroup("enemies"); // added to enemy group
 	}
 
-	private void SpawnEnemy(CharacterBody2D enemy) // Uses random spawnPath position if called without Vector2
+	private void SpawnEnemy(EnemyBase enemy) // Uses random spawnPath position if called without Vector2
 	{
 		PathFollow2D spawnPath = GetNode<PathFollow2D>("Path2D/PathFollow2D"); // gets a random starting position, where the enemies are spawned
 		spawnPath.ProgressRatio = GD.Randf();

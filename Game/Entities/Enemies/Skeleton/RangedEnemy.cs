@@ -44,7 +44,7 @@ public partial class RangedEnemy : EnemyBase
 			GetParent().AddChild(projectile);
 
 			projectile.GlobalPosition = GlobalPosition;
-			projectile.Initialize(player.GlobalPosition - GlobalPosition, damage);
+			projectile.Initialize(player.GlobalPosition - GlobalPosition, damage, speed+(speed/5f));
 
 			if (enableDebug)
 			{

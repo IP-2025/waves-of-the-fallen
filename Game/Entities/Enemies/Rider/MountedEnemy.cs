@@ -89,7 +89,7 @@ public partial class MountedEnemy : EnemyBase
 			return;
 		}
 
-		var riderInstance = riderScene.Instantiate<CharacterBody2D>();
+		var riderInstance = riderScene.Instantiate<EnemyBase>();
 		if (riderInstance == null)
 		{
 			GD.PrintErr("Failed to instantiate Rider!");
