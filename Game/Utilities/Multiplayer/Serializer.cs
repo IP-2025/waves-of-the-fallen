@@ -1,19 +1,34 @@
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
+[JsonSourceGenerationOptions(
+    GenerationMode = JsonSourceGenerationMode.Metadata,
+    IncludeFields = true,
+    PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase
+)]
+[JsonSerializable(typeof(Command))]
+[JsonSerializable(typeof(Snapshot))]
+internal partial class MyJsonContext : JsonSerializerContext
+{
+    // compiler fills this i think
+}
 
 public static class Serializer
 {
-    private static readonly JsonSerializerOptions _opts = new JsonSerializerOptions
-    {
-        IncludeFields = true,
-        PropertyNameCaseInsensitive = true
-    };
+    public static byte[] Serialize<T>(T obj) =>
+        JsonSerializer.SerializeToUtf8Bytes(
+            obj,
+            typeof(T) == typeof(Command)
+                ? MyJsonContext.Default.Command
+                : MyJsonContext.Default.Snapshot
+        );
 
-    public static byte[] Serialize<T>(T obj)
-        => JsonSerializer.SerializeToUtf8Bytes(obj, _opts);
-
-    public static T Deserialize<T>(byte[] data)
-        => JsonSerializer.Deserialize<T>(data, _opts);
-}
-
+    public static T Deserialize<T>(byte[] data) =>
+        (T)JsonSerializer.Deserialize(
+            data,
+            typeof(T) == typeof(Command)
+                ? MyJsonContext.Default.Command
+                : MyJsonContext.Default.Snapshot
+        );
+} 
