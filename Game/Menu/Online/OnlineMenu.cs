@@ -89,29 +89,13 @@ public partial class OnlineMenu : Node
 			int udpPort = int.Parse(json["udpPort"].AsString().Replace(".0", ""));
 			int rpcPort = int.Parse(json["rpcPort"].AsString().Replace(".0", ""));
 			string lobbyCode = json["lobbyCode"].AsString();
-			NetworkManager.Instance.InitClient("http://localhost", udpPort, rpcPort);
+			NetworkManager.Instance.InitClient("", udpPort, rpcPort, false);
 			GameState.LobbyCode = lobbyCode;
 			var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 			int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
 			var erra = NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
 			GD.Print("Result " + erra);
 			
-			
-			
-			
-			var timer2 = new Timer();
-			AddChild(timer2);
-			timer2.WaitTime = 10;
-			timer2.OneShot = true;
-			timer2.Timeout += () =>
-			{
-				GD.Print("Sending character from peer: "+ Multiplayer.GetUniqueId());
-				var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
-				int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
-				var erra = NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
-				GD.Print("Result " + erra);
-			};
-			timer2.Start();
 			
 			
 			// NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);

@@ -1,4 +1,7 @@
 //old one
+
+using Game.Utilities.Backend;
+
 namespace Game.Utilities.Multiplayer
 {
 	using Godot;
@@ -151,14 +154,22 @@ namespace Game.Utilities.Multiplayer
 			DebugIt("Server startet on port: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + GetServerIPAddress());
 		}
 
-		public void InitClient(string code, int UDP_PORT = 3000, int RPC_PORT = 9999)
+		public void InitClient(string code, int UDP_PORT = 3000, int RPC_PORT = 9999, bool isLocal = true)
 		{
-			// string address = ResolveConnectionCode(code);
+			string address;
+			if (isLocal)
+			{
+				address = ResolveConnectionCode(code);
+			}
+			else
+			{
+				address = ServerConfig.ServerAddress;
+			}
+
 			// add client node as child to NetworkManager
 			client = new Client();
 			AddChild(client);
 
-			string address = "127.0.0.1";
 
 			// RPC Client with ENet
 			_rpcClientPeer = new ENetMultiplayerPeer();
@@ -171,6 +182,7 @@ namespace Game.Utilities.Multiplayer
 			var err = _udpClientPeer.ConnectToHost(address, UDP_PORT);
 			if (err != Error.Ok)
 			{
+				GD.PrintErr($"Params: udp address: {address}, udp port: {UDP_PORT}");
 				GD.PrintErr($"UDP-Connect fehlgeschlagen: {err}");
 				return;
 			}
@@ -196,7 +208,7 @@ namespace Game.Utilities.Multiplayer
 				if (GetTree().GetMultiplayer().GetPeers().Count() == 0)
 				{
 					DebugIt("No peers connected. Shutting down server automatically.");
-					// GetTree().Quit();
+					GetTree().Quit();
 				}
 				else
 				{
@@ -247,7 +259,7 @@ namespace Game.Utilities.Multiplayer
 			{
 				// kill him!! if he is a lonely server, lost in the sad world of the web with no one to play with ;(
 				DebugIt("No peers connected due to disconnects. Shutting down server.");
-				// GetTree().Quit();
+				GetTree().Quit();
 			}
 		}
 
@@ -516,6 +528,7 @@ namespace Game.Utilities.Multiplayer
 				if (child is Node node)
 					node.QueueFree();
 			}
+
 			server = null;
 			client = null;
 
@@ -547,6 +560,7 @@ namespace Game.Utilities.Multiplayer
 				_rpcClientPeer = null;
 				DebugIt("ENetMultiplayerPeer (Client) disconnected (Cleanup).");
 			}
+
 			if (_rpcServerPeer != null)
 			{
 				_rpcServerPeer.Close();
@@ -554,8 +568,8 @@ namespace Game.Utilities.Multiplayer
 				_rpcServerPeer = null;
 				DebugIt("ENetMultiplayerPeer (Server) disconnected (Cleanup).");
 			}
+
 			GC.Collect();
 		}
 	}
-
 }

@@ -97,6 +97,7 @@ export function allocateNodePort(): number {
  * @param podName
  * @param image
  * @param containerUdpPort
+ * @param containerRpcPort
  */
 export function getPodManifest(
     code: string,
