@@ -100,18 +100,16 @@ public partial class Client : Node
 
 		bool executeCommand = IsAbilityButtonPressed();
 		//Debug.Print(executeCommand.ToString());
-		var playerNodeName = $"E_{Multiplayer.GetUniqueId()}";
 		if (executeCommand)
 		{
+			var playerNodeName = $"E_{Multiplayer.GetUniqueId()}";
 			var playerNode = GetTree()
 			.Root.GetNodeOrNull<GameRoot>("GameRoot")
 			?.GetNodeOrNull<CharacterBody2D>(playerNodeName);
 
-			var button = playerNode.GetNodeOrNull<AbilityButton>("AbilityButton");
+			var button = playerNode.GetNodeOrNull<AbilityButton>("Ability");
 			abilityId = button.AbilityIndex;
 		}
-		
-		//Debug.Print(abilityId.ToString());
 
 		return executeCommand ? new Command(tick, eid, CommandType.Ability, null, _selectedWeapon, _newWeaponPos, abilityId) : null;
 	}

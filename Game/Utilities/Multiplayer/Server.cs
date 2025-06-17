@@ -26,6 +26,14 @@ namespace Game.Utilities.Multiplayer
 		private PackedScene _medicineBagScene = GD.Load<PackedScene>("res://Weapons/Utility/MedicineBag/medicineBag.tscn");
 		private PackedScene _healStaffScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Healsftaff/healstaff.tscn");
 		private PackedScene _doubleBladeScene = GD.Load<PackedScene>("res://Weapons/Melee/DoubleBlades/DoubleBlade.tscn");
+		private PackedScene _boostStrScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_strength.tscn");
+		private PackedScene _boostDexScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_dexterity.tscn");
+		private PackedScene _boostIntScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/boost_intelligence.tscn");
+		private PackedScene _dashScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/speed_up.tscn");
+		private PackedScene _shieldScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/shield.tscn");
+		private PackedScene _fireBlastScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/fire_blast.tscn");
+		private PackedScene _arrowRainScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/arrow_rain.tscn");
+		private PackedScene _deadlyStrikeScene = GD.Load<PackedScene>("res://UI/Ability/Ablities/deadly_strike.tscn");
 
 		private static readonly Dictionary<string, EntityType> ScenePathToEntityType = new()
 	{
@@ -130,26 +138,26 @@ namespace Game.Utilities.Multiplayer
 			else if (cmd.Type == CommandType.Ability)
 			{
 				Debug.Print("ABILITY BEI SERVER ANGEKOMMEN");
-				/*
-				var scene = cmd.Weapon switch
+
+				var scene = cmd.AbilityId switch
 				{
-					"Bow" => _bowScene,
-					"Crossbow" => _crossbowScene,
-					"FireStaff" => _fireStaffScene,
-					"Kunai" => _kunaiScene,
-					"Lightningstaff" => _lightningStaffScene,
-					"Healstaff" => _healStaffScene,
-					"Dagger" => _daggerScene,
-					"Sword" => _swordScene,
-					"WarHammer" => _warHammerScene,
-					"DoubleBlade" => _doubleBladeScene,
+					11 => _boostDexScene,
+					12 => _arrowRainScene,
+					21 => _dashScene,
+					22 => _deadlyStrikeScene,
+					31 => _boostStrScene,
+					32 => _shieldScene,
+					41 => _boostIntScene,
+					42 => _fireBlastScene,
 					_ => null
 				};
-				if (scene == null) return;*/
-				if (entity is DefaultPlayer defaultPlayer)
-				{
-					defaultPlayer.UseAbility();
-				}
+				if (scene == null) return;
+				var ability = scene.Instantiate();
+				entity.AddChild(ability);
+				//if(entity.GetChildren().Contains())
+		
+				Instance.AddChild(ability);
+				entity.GetNode<AbilityButton>("Ability")._on_touch_ability_button_pressed();
 			}
 		}
 

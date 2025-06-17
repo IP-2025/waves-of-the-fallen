@@ -86,8 +86,8 @@ public partial class AbilityButton : Node2D
 		}
 		Debug.Print(textureActivePath);
 		Debug.Print(textureNotActivePath);
-		var textureActive = (Texture2D) GD.Load(textureActivePath);
-		var textureNotActive = (Texture2D) GD.Load(textureNotActivePath);
+		var textureActive = (Texture2D)GD.Load(textureActivePath);
+		var textureNotActive = (Texture2D)GD.Load(textureNotActivePath);
 		_timeLeftLabel.Text = MaxTime.ToString();
 		_abilityTimer = GetNode<Timer>("AbilityTimer");
 		_abilityReadyPic.Texture = textureActive;
@@ -95,6 +95,15 @@ public partial class AbilityButton : Node2D
 		_abilityTimer.Timeout += OnTimerTimeout;
 		SecondCounter = MaxTime;
 		Disable = true;
+		
+		/*
+		// for multiplayer
+		var id = weapon.GetInstanceId();
+		weapon.Name = $"Weapon_{id}";
+		weapon.SetMeta("OwnerId", OwnerPeerId);
+		weapon.SetMeta("SlotIndex", _weaponsEquipped);
+		Server.Instance.Entities.Add((long)id, weapon);
+		*/
 	}
 
 	private void OnTimerTimeout()
@@ -130,9 +139,4 @@ public partial class AbilityButton : Node2D
 			_timeLeftLabel.Show();
 		}
 	}
-
-	/*public int GetAbilityIndex()
-	{
-		return AbilityIndex;
-	}*/
 }
