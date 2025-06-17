@@ -19,6 +19,8 @@ public partial class LocalMenu : Control
 
 	public override void _Ready()
 	{
+		MultiplayerCleanup mc = new MultiplayerCleanup();
+		mc.StartFullCleanup(GetTree().GetMultiplayer());
 		GD.Print("LocalMenu: Ready aufgerufen – isHost=" + _isHost);
 		_joinButton = GetNode<Button>("%join");
 		_hostButton = GetNode<Button>("%host");
@@ -33,7 +35,7 @@ public partial class LocalMenu : Control
 
 	public override void _Process(double delta)
 	{
-		if (!_isHost) return;
+		if (!_isHost || Multiplayer.MultiplayerPeer == null) return;
 
 		var peers = Multiplayer.GetPeers().ToList();
 
@@ -42,15 +44,23 @@ public partial class LocalMenu : Control
 
 	private void _on_button_back_local_pressed()
 	{
-		// 1. Disconnect vom Server/Host
-		NetworkManager.Instance.DisconnectClient();
-		// 2. UI-Sound
+		MultiplayerCleanup mc = new MultiplayerCleanup();
+		mc.StartFullCleanup(GetTree().GetMultiplayer());
+		mc.QueueFree();
 		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
-		// 3. Neue Szene laden – Godot killt automatisch alle alten Nodes + Scripte
+		// Neue Szene laden – Godot killt automatisch alle alten Nodes + Scripte
 		var scene = ResourceLoader.Load<PackedScene>("res://Menu/online_localMenu.tscn");
-		var err = GetTree().ChangeSceneToPacked(scene);
-		if (err != Error.Ok)
-			GD.PrintErr($"Konnte Szene nicht wechseln: {err}");
+		var timer = new Timer();
+		AddChild(timer);
+		timer.WaitTime = 0.2f;
+		timer.OneShot = true;
+		timer.Timeout += () =>
+		{
+			var err = GetTree().ChangeSceneToPacked(scene);
+			if (err != Error.Ok)
+				GD.PrintErr($"Cant change scene: {err}");
+		};
+		timer.Start();
 	}
 
 

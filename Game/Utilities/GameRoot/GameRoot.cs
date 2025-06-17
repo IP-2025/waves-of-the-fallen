@@ -9,7 +9,7 @@ using Godot.Collections;
 // GameRoot is the main entry point for the game. It is responsible for loading the map, spawning the player, starting the enemy spawner and so on.
 public partial class GameRoot : Node
 {
-	private bool _enableDebug = true;
+	private bool _enableDebug = false;
 	private Node2D _mainMap;
 	private int _playerIndex = 0; // player index for spawning players
 	private bool _isServer = false;
@@ -138,17 +138,24 @@ public partial class GameRoot : Node
 	{
 		if (NetworkManager.Instance._isLocalHost) Server.Instance.syncHostWaveTimer();
 		if (NetworkManager.Instance.SoloMode && _soloPlayer is not { alive: true })
+		{
 			ShowGameOverScreen();
-
+			DebugIt($"ShowGameOverScreen called in _Process: SoloMode={NetworkManager.Instance.SoloMode}, _soloPlayer alive={_soloPlayer?.alive}, _gameOverScreen already shown={_gameOverScreen != null}");
+		}
 		if (!NetworkManager.Instance.SoloMode && !NetworkManager.Instance._isLocalHost)
 		{
 			var localPlayer = GetNodeOrNull<DefaultPlayer>($"Player_{Multiplayer.GetUniqueId()}");
 			if (localPlayer != null && !localPlayer.alive)
+			{
 				ShowGameOverScreen();
+				DebugIt($"ShowGameOverScreen called in _Process because local player is either null or not alive. localPlayer != null: {localPlayer != null}, localPlayer.alive: {localPlayer?.alive}. GameOverScreen currently shown: {_gameOverScreen != null}");
+			}
 		}
 
+		
 		if (NetworkManager.Instance._isLocalHost || NetworkManager.Instance.SoloMode)
 		{
+			
 			// Shop
 			var currentWave = _globalWaveTimer.WaveCounter;
 			if (currentWave > _lastLocalShopRound && currentWave < 5)
@@ -163,9 +170,13 @@ public partial class GameRoot : Node
 					GetNodeOrNull<DefaultPlayer>("Player_1")
 						.GetNodeOrNull<Camera2D>("Camera2D")
 						.AddChild(_shopInstance);
+					
+					GetTree().Paused = true;
+					
 				}
 			}
 		}
+		
 
 		// ScoreSystem
 		foreach (var playerId in ScoreManager.PlayerScores.Keys)
@@ -173,6 +184,8 @@ public partial class GameRoot : Node
 			ScoreManager.UpdateCombo(playerId, (float)delta);
 		}
 	}
+	
+	
 	private void OnWeaponChosen(Weapon weaponType)
 	{
 		_selectedWeapon = weaponType.GetType().Name;
@@ -212,6 +225,7 @@ public partial class GameRoot : Node
 
 		_shopInstance.QueueFree();
 		_shopInstance = null;
+		GetTree().Paused = false;
 	}
 
 	private void SpawnPlayer(long peerId)
@@ -338,6 +352,7 @@ public partial class GameRoot : Node
 		if (GameState.CurrentState == ConnectionState.Online)
 			SendScoreToBackend(score);
 
+		DebugIt("GameOverScreen shown with score: " + score + " for player " + Multiplayer.GetUniqueId());
 	}
 
 	public void OnPlayerDied(long peerId)
@@ -386,6 +401,7 @@ public partial class GameRoot : Node
 		{
 			DebugIt("No alive players left.");
 			ShowGameOverScreen();
+			DebugIt($"GameOverScreen is being shown because there are no alive players left in the game");
 			_gameOverScreen?.SetScore(score);
 		}
 	}
