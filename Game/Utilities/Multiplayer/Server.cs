@@ -154,10 +154,10 @@ namespace Game.Utilities.Multiplayer
 				if (scene == null) return;
 				var ability = scene.Instantiate();
 				entity.AddChild(ability);
-				//if(entity.GetChildren().Contains())
-		
+
 				Instance.AddChild(ability);
-				entity.GetNode<AbilityButton>("Ability")._on_touch_ability_button_pressed();
+				ability._Ready();
+				//entity.GetNode<AbilityButton>("Ability")._on_touch_ability_button_pressed();
 			}
 		}
 

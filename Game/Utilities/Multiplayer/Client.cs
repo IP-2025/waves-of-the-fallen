@@ -20,6 +20,7 @@ public partial class Client : Node
 	private bool _pressedAbilityButton;
 	private int abilityId = 0;
 	private bool _waveTimerReady;
+	private bool blockedAbility = false;
 	private WaveTimer _timer;
 	private bool _graceTimeTriggered;
 
@@ -97,8 +98,8 @@ public partial class Client : Node
 	public Command GetAbilityCommand(ulong tick)
 	{
 		long eid = Multiplayer.GetUniqueId();
-
 		bool executeCommand = IsAbilityButtonPressed();
+
 		//Debug.Print(executeCommand.ToString());
 		if (executeCommand)
 		{
@@ -110,7 +111,6 @@ public partial class Client : Node
 			var button = playerNode.GetNodeOrNull<AbilityButton>("Ability");
 			abilityId = button.AbilityIndex;
 		}
-
 		return executeCommand ? new Command(tick, eid, CommandType.Ability, null, _selectedWeapon, _newWeaponPos, abilityId) : null;
 	}
 
@@ -149,21 +149,22 @@ public partial class Client : Node
 
 	private bool IsAbilityButtonPressed()
 	{
-		//DebugIt("IsAbilityButtonPressed()");
 		var playerNodeName = $"E_{Multiplayer.GetUniqueId()}";
 		var playerNode = GetTree()
 			.Root.GetNodeOrNull<GameRoot>("GameRoot")
 			?.GetNodeOrNull<CharacterBody2D>(playerNodeName);
 
 		var abilityButton = playerNode?.GetNodeOrNull<Node2D>("Ability").GetNodeOrNull<TouchScreenButton>("TouchAbilityButton"); 
-		if (abilityButton.IsPressed())
+		if (!blockedAbility && abilityButton.IsPressed())
 		{
-			Debug.Print("TRUUUUUUUUUUUUEEEEEEEEEEEEEEEE");
+			blockedAbility = true; // bandaid solution for not using mulitple abilities at once
+			Debug.Print("!!! AbilityButton Pressed !!!");
 			return true;
 		}
 		else
 		{
-			Debug.Print("FAAAAAAAAALSE");
+			//Debug.Print("FAAAAAAAAALSE");
+			blockedAbility = false;
 			return false;
 		}
 	}

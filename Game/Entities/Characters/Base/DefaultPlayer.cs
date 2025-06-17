@@ -118,7 +118,8 @@ public partial class DefaultPlayer : CharacterBody2D
 		};
 	}
 
-	private PackedScene GetAbilityForPlayer(int id)
+	//Dont know if i will need it later
+	/*private PackedScene GetAbilityForPlayer(int id)
 	{
 		_abilityIndex = id * 10 + CharacterManager.LoadAbilityChosenByID(id.ToString());
 
@@ -134,7 +135,7 @@ public partial class DefaultPlayer : CharacterBody2D
 			42 => _fireBlastScene,
 			_ => null
 		};
-	}
+	}*/
 
 	private PackedScene GetAbilityForPlayer(object playerClass)
 	{
