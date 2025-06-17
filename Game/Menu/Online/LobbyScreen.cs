@@ -26,6 +26,7 @@ public partial class LobbyScreen : Node
 	{
 		
 		NetworkManager.Instance.Rpc("NotifyGameStart");
+		GD.Print("Start Game Pressed");
 	}
 	
 	public void _on__ready_button_pressed()
@@ -33,6 +34,7 @@ public partial class LobbyScreen : Node
 		var characterManager = GetNode<CharacterManager>("/root/CharacterManager");
 		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
 		NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId);
+		GD.Print("Ready Button Pressed");
 	}
 	
 	private void _on_button_back_pressed()
