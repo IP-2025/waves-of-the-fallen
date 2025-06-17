@@ -238,12 +238,12 @@ public partial class Charactermenu : Control
 	private void _resetButton(Button button)
 	{
 		if (button == null) return;
-		var style = new StyleBoxFlat();
-		style.BgColor = Color.Color8(0x4F, 0x4F, 0x4F);
+		// Setze wieder die StyleBoxTexture aus der Szene für alle States
+		var style = (StyleBoxTexture)button.GetThemeStylebox("normal");
 		button.AddThemeStyleboxOverride("normal", style);
-		button.AddThemeStyleboxOverride("hover", style);
-		button.AddThemeStyleboxOverride("pressed", style);
-		button.AddThemeStyleboxOverride("focus", style);
+		button.AddThemeStyleboxOverride("hover", GetNode<StyleBox>("../ButtonStyleBoxHover"));
+		button.AddThemeStyleboxOverride("pressed", GetNode<StyleBox>("../ButtonStyleBoxHover"));
+		button.AddThemeStyleboxOverride("focus", GetNode<StyleBox>("../ButtonStyleBoxHover"));
 	}
 
 	private void _on_button_upgrade_unlock_pressed()
