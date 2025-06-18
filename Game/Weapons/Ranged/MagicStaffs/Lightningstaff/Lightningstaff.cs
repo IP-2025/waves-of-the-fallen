@@ -15,7 +15,7 @@ public partial class Lightningstaff : RangedWeapon
 	public override int DefaultDamage { get; set; } = Lightning.DefaultDamage;
 	public override int DefaultPiercing { get; set; } = Lightning.DefaultPiercing;
 	public override float DefaultSpeed { get; set; } = Lightning.DefaultSpeed;
-	public override float ShootDelay { get; set; } = 0.8f;
+	public override float ShootDelay { get; set; } = 1.25f;
 	public override int SoundFrame => 3;
 	
 	private float _shootCooldown;
@@ -36,7 +36,7 @@ public partial class Lightningstaff : RangedWeapon
 		DefaultDamage += (int)(dexdummy / 3.5f + strdummy / 7 + intdummy) / 3;
 		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dexdummy-80) / 50f, 1), 1f), 0.1f);
 
-		_shootCooldown = 1f / ShootDelay;
+		_shootCooldown = ShootDelay;
 		_timeUntilShoot = _shootCooldown;
 	}
 	

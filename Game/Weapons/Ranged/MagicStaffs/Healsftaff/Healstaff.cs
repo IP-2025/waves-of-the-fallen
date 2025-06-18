@@ -17,7 +17,7 @@ public partial class Healstaff : Weapon
 	public override string IconPath => _resourcePath + "HealStaff1.png";
 	public override float DefaultRange { get; set; } = 170f;
 	public override int DefaultDamage { get; set; } = 50;
-	public override float ShootDelay { get; set; } = 0.1f;
+	public override float ShootDelay { get; set; } = 10f;
 	public int SoundFrame => 3;
 	
 	private float _shootCooldown;
