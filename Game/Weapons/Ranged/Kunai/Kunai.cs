@@ -24,22 +24,28 @@ public partial class Kunai : RangedWeapon
 	private static readonly PackedScene _kunaiPacked = GD.Load<PackedScene>(_projectilePath);
 
 	public override void _Ready()
-	{
-		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/KunaiSprite");
-		projectileScene = _kunaiPacked;
+    {
+        animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/KunaiSprite");
+        projectileScene = _kunaiPacked;
 
-		int dexdummy = 100;
-		int strdummy = 100;
-		int intdummy = 100;
+        _CalculateWeaponStats();
 
-		DefaultDamage += (int)(dexdummy + strdummy / 8 + intdummy / 8) / 3;
-		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dexdummy-80) / 50f, 1), 1f), 0.1f);
+        _shootCooldown = ShootDelay;
+        _timeUntilShoot = _shootCooldown;
+    }
 
-		_shootCooldown = ShootDelay;
-		_timeUntilShoot = _shootCooldown;
-	}
+    private void _CalculateWeaponStats()
+    {
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+        int dex = OwnerNode.Dexterity;
+        int str = OwnerNode.Strength;
+        int @int = OwnerNode.Intelligence;
 
-	public override void _Process(double delta)
+        DefaultDamage += (int)(dex + str / 8 + @int / 8) / 3;
+        ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.1f);
+    }
+
+    public override void _Process(double delta)
 	{
 		// Countdown verringern
 		_timeUntilShoot -= (float)delta;

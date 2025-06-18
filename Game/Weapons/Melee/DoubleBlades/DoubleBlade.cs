@@ -22,23 +22,29 @@ public partial class DoubleBlade : MeleeWeapon
 	private float _timeUntilShoot;
 
 	public override void _Ready()
-	{
-		GD.Print("Start SwordAnimation");
-		leftBlade = GetNode<DoubleBladeL>("DoubleBladeL");
-		rightBlade = GetNode<DoubleBladeR>("DoubleBladeR");
+    {
+        GD.Print("Start SwordAnimation");
+        leftBlade = GetNode<DoubleBladeL>("DoubleBladeL");
+        rightBlade = GetNode<DoubleBladeR>("DoubleBladeR");
 
-		int dexdummy = 100;
-		int strdummy = 100;
-		int intdummy = 100;
+        _CalculateWeaponStats();
 
-		DefaultDamage += (int)(dexdummy + strdummy + intdummy / 4.5f) / 3;
-		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dexdummy-80) / 50f, 1), 1f), 0.1f);
+        _shootCooldown = ShootDelay;
+        _timeUntilShoot = _shootCooldown;
+    }
+
+    private void _CalculateWeaponStats()
+    {
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+        int dex = OwnerNode.Dexterity;
+        int str = OwnerNode.Strength;
+        int @int = OwnerNode.Intelligence;
 		
-		_shootCooldown = ShootDelay;
-		_timeUntilShoot = _shootCooldown;
-	}
-	
-	public override void _Process(double delta)
+        DefaultDamage += (int)(dex + str + @int / 4.5f) / 3;
+        ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.1f);
+    }
+
+    public override void _Process(double delta)
 	{
 		_timeUntilShoot -= (float)delta;
 

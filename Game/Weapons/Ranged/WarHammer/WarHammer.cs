@@ -26,22 +26,28 @@ public partial class WarHammer : RangedWeapon
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
-	{
-		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/WarHammer");
-		projectileScene = _throwHammerScene;
+    {
+        animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/WarHammer");
+        projectileScene = _throwHammerScene;
 
-		_shootCooldown = 1f / ShootDelay;
-		_timeUntilShoot = _shootCooldown;
+        _shootCooldown = 1f / ShootDelay;
+        _timeUntilShoot = _shootCooldown;
 
-		int dexdummy = 100;
-		int strdummy = 100;
-		int intdummy = 100;
+        _CalculateWeaponStats();
+    }
 
-		DefaultDamage += (int)(dexdummy / 5 + strdummy + intdummy / 7.5f) / 3;
-		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((strdummy-80) / 50f, 1), 1f), 0.1f);
-	}
-	
-	public override void _Process(double delta)
+    private void _CalculateWeaponStats()
+    {
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+        int dex = OwnerNode.Dexterity;
+        int str = OwnerNode.Strength;
+        int @int = OwnerNode.Intelligence;
+
+        DefaultDamage += (int)(dex / 5 + str + @int / 7.5f) / 3;
+        ShootDelay *= Math.Max(Math.Min(1f / Math.Max((str - 80) / 50f, 1), 1f), 0.1f);
+    }
+
+    public override void _Process(double delta)
 	{
 		// Countdown verringern
 		_timeUntilShoot -= (float)delta;

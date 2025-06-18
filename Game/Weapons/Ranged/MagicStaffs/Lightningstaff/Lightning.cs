@@ -16,16 +16,23 @@ public partial class Lightning : Projectile
 	private Node2D _ignoredBody = null;
 
 	public override void _Ready()
-	{
-		int dexdummy = 100;
-		int strdummy = 100;
-		int intdummy = 100;
+    {
+        _CalculateWeaponStats();
+    }
 
-		Speed = 1000;
-		Damage = 60 + (int)(dexdummy / 3.5f + strdummy / 7 + intdummy) / 3;
-		Jumps = Jumps + Math.Max((int)((intdummy - 100) / 50f), 0);
-	}
-	public override void OnBodyEntered(Node2D body)
+    private void _CalculateWeaponStats()
+    {
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+        int dex = OwnerNode.Dexterity;
+        int str = OwnerNode.Strength;
+        int @int = OwnerNode.Intelligence;
+
+        Speed = 1000;
+        Damage = 60 + (int)(dex / 3.5f + str / 7 + @int) / 3;
+        Jumps = Jumps + Math.Max((int)((@int - 100) / 50f), 0);
+    }
+
+    public override void OnBodyEntered(Node2D body)
 	{
 		if (body == _ignoredBody)
 			return;

@@ -14,18 +14,24 @@ public partial class HammerProjectile : Projectile
 	private bool hasHit = false;
 
 	public override void _Ready()
-	{
-		int dexdummy = 100;
-		int strdummy = 100;
-		int intdummy = 100;
+    {
+        _CalculateWeaponStats();
+    }
 
-		Speed = DefaultSpeed;
-		Damage = DefaultDamage + (int)(dexdummy / 5 + strdummy + intdummy / 7.5f) / 3;
-		Piercing = DefaultPiercing;
-		Radius = Radius + Math.Max(Math.Min((strdummy-100f)/2f,50f),0); 
-	}
-	
-	public override void OnBodyEntered(Node2D body)
+    private void _CalculateWeaponStats()
+    {
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+        int dex = OwnerNode.Dexterity;
+        int str = OwnerNode.Strength;
+        int @int = OwnerNode.Intelligence;
+
+        Speed = DefaultSpeed;
+        Damage = DefaultDamage + (int)(dex / 5 + str + @int / 7.5f) / 3;
+        Piercing = DefaultPiercing;
+        Radius = Radius + Math.Max(Math.Min((str - 100f) / 2f, 50f), 0);
+    }
+
+    public override void OnBodyEntered(Node2D body)
 	{
 		Speed = 0;
 		SetDeferred("Monitoring", false);

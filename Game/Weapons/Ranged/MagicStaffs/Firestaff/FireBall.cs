@@ -12,16 +12,23 @@ public partial class FireBall : Projectile
 	private bool hasHit = false;
 
 	public override void _Ready()
-	{
-		int dexdummy = 100;
-		int strdummy = 100;
-		int intdummy = 100;
+    {
+        _CalculateWeaponStats();
+    }
 
-		Speed = 600;
-		Damage = 120 + (int)(dexdummy / 7 + strdummy / 3.5 + intdummy) / 3;
-		Radius = Radius + Math.Max(Math.Min((intdummy-100f)/2f,50f),0);
-	}
-	public override void OnBodyEntered(Node2D body)
+    private void _CalculateWeaponStats()
+    {
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+        int dex = OwnerNode.Dexterity;
+        int str = OwnerNode.Strength;
+        int @int = OwnerNode.Intelligence;
+
+        Speed = 600;
+        Damage = 120 + (int)(dex / 7 + str / 3.5 + @int) / 3;
+        Radius = Radius + Math.Max(Math.Min((@int - 100f) / 2f, 50f), 0);
+    }
+
+    public override void OnBodyEntered(Node2D body)
 	{
 		Speed = 0;
 		SetDeferred("Monitoring", false);

@@ -24,22 +24,28 @@ public partial class Crossbow : RangedWeapon
 	private static readonly PackedScene _arrowPacked = GD.Load<PackedScene>(_projectilePath);
 
 	public override void _Ready()
-	{
-		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/CrossbowSprite");
-		projectileScene = _arrowPacked;
+    {
+        animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/CrossbowSprite");
+        projectileScene = _arrowPacked;
 
-		int dexdummy = 100;
-		int strdummy = 100;
-		int intdummy = 100;
+        calculateWeaponStats();
 
-		DefaultDamage += (int)(dexdummy / 1.2f + strdummy + intdummy / 5) / 3;
-		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((strdummy-80) / 50f, 1), 1f), 0.1f);
+        _shootCooldown = ShootDelay;
+        _timeUntilShoot = _shootCooldown;
+    }
 
-		_shootCooldown = ShootDelay;
-		_timeUntilShoot = _shootCooldown;
-	}
+    private void calculateWeaponStats()
+    {
+        DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+        int dex = OwnerNode.Dexterity;
+        int str = OwnerNode.Strength;
+        int @int = OwnerNode.Intelligence;
 
-	public override void _Process(double delta)
+        DefaultDamage += (int)(dex / 1.2f + str + @int / 5) / 3;
+        ShootDelay *= Math.Max(Math.Min(1f / Math.Max((str - 80) / 50f, 1), 1f), 0.1f);
+    }
+
+    public override void _Process(double delta)
 	{
 		// Countdown verringern
 		_timeUntilShoot -= (float)delta;

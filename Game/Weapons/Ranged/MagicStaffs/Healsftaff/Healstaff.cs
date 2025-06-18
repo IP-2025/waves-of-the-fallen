@@ -25,23 +25,29 @@ public partial class Healstaff : Weapon
 	private int _staffFiresFrame = 4;
 
 	public override void _Ready()
-	{
-		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/HealStaffSprite");
-		healArea = GetNode<AnimatedSprite2D>("./Healcircle");
+    {
+        animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/HealStaffSprite");
+        healArea = GetNode<AnimatedSprite2D>("./Healcircle");
 
-		int dexdummy = 100;
-		int strdummy = 100;
-		int intdummy = 100;
+        _CalculateWeaponStats();
 
-		DefaultDamage += (int)(dexdummy / 3 + strdummy / 3 + intdummy) / 30;
-		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dexdummy-80) / 50f, 1), 1f), 0.5f);
-		DefaultRange = DefaultRange + Math.Max(Math.Min((intdummy-100f)/2f,50f),0);
+        _shootCooldown = ShootDelay;
+        _timeUntilShoot = _shootCooldown;
+    }
 
-		_shootCooldown = ShootDelay;
-		_timeUntilShoot = _shootCooldown;
-	}
-	
-	public override void _Process(double delta)
+    private void _CalculateWeaponStats()
+    {
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+        int dex = OwnerNode.Dexterity;
+        int str = OwnerNode.Strength;
+        int @int = OwnerNode.Intelligence;
+
+        DefaultDamage += (int)(dex / 3 + str / 3 + @int) / 30;
+        ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.5f);
+        DefaultRange = DefaultRange + Math.Max(Math.Min((@int - 100f) / 2f, 50f), 0);
+    }
+
+    public override void _Process(double delta)
 	{
 		// Countdown verringern
 		_timeUntilShoot -= (float)delta;

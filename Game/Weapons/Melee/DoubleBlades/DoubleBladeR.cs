@@ -11,29 +11,32 @@ public partial class DoubleBladeR : MeleeWeapon
 	public override string IconPath => ResourcePath + "DoubleBlades.png";
 	public override float DefaultRange { get; set; } = 150f;
 	public override int DefaultDamage { get; set; } = 150;
-	
-	public override float ShootDelay{ get; set; } = 1f;
+
+	public override float ShootDelay { get; set; } = 1f;
 
 	public override void _Ready()
 	{
 		DoubleBladeRAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayerR");
 		SwordTrailTest = GetNode<Sprite2D>("SwordTrailTest");
 		SwordTrailTest.Visible = false;
+	}
 
-		int dexdummy = 100;
-		int strdummy = 100;
-		int intdummy = 100;
-		
-		DefaultDamage += (int)(dexdummy + strdummy + intdummy/4.5f)/3;
+	private void _CalculateWeaponStats()
+	{
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+		int dex = OwnerNode.Dexterity;
+		int str = OwnerNode.Strength;
+		int @int = OwnerNode.Intelligence;
+		DefaultDamage += (int)(dex + str + @int / 4.5f) / 3;
 	}
 
 	public void StartAttack()
-	{ 
+	{
 		ShootMeleeVisual(() =>
 	{
 		DoubleBladeRAnimationPlayer.Play("BladeRAttack");
 		SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("swordSwings"), GlobalPosition, -5);
 	});
 	}
-	
+
 }

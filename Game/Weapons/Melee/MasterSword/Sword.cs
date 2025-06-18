@@ -22,23 +22,28 @@ public partial class Sword : MeleeWeapon
 	private float _timeUntilShoot;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
-	{
-		SwordAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-		SwordTrailTest = GetNode<Sprite2D>("SwordTrailTest");
-		SwordTrailTest.Visible = false;
+    {
+        SwordAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        SwordTrailTest = GetNode<Sprite2D>("SwordTrailTest");
+        SwordTrailTest.Visible = false;
 
-		int dexdummy = 100;
-		int strdummy = 100;
-		int intdummy = 100;
+        _CalculateWeaponStats();
 
-		DefaultDamage += (int)(dexdummy / 1.3f + strdummy + intdummy / 1.3f) / 3;
-		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dexdummy-80) / 50f, 1), 1f), 0.1f);
+        _shootCooldown = ShootDelay;
+        _timeUntilShoot = _shootCooldown;
+    }
 
-		_shootCooldown = ShootDelay;
-		_timeUntilShoot = _shootCooldown;
-	}
-	
-	public override void _Process(double delta)
+    private void _CalculateWeaponStats()
+    {
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+        int dex = OwnerNode.Dexterity;
+        int str = OwnerNode.Strength;
+        int @int = OwnerNode.Intelligence;
+        DefaultDamage += (int)(dex / 1.3f + str + @int / 1.3f) / 3;
+        ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.1f);
+    }
+
+    public override void _Process(double delta)
 	{
 		// Laufenden Countdown aktualisieren
 		_timeUntilShoot -= (float)delta;

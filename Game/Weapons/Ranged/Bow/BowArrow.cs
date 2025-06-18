@@ -7,12 +7,13 @@ public partial class BowArrow : Projectile
 	public override void _Ready()
 	{
 
-		int dexdummy = 100;
-		int strdummy = 100;
-		int intdummy = 100;
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+		int dex = OwnerNode.Dexterity;
+		int str = OwnerNode.Strength;
+		int @int = OwnerNode.Intelligence;
 		
 		Speed    = DefaultSpeed;
-		Damage   = DefaultDamage + (int)(dexdummy + strdummy/3.5f + intdummy/7)/3;
+		Damage   = DefaultDamage + (int)(dex + str/3.5f + @int/7)/3;
 		Piercing = DefaultPiercing;
 	}
 }
