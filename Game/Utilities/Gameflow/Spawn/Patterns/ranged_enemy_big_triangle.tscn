@@ -16,8 +16,7 @@ position = Vector2(50, 41)
 position = Vector2(-48, 40)
 
 [node name="RangedEnemy3" parent="." instance=ExtResource("2_lp3s2")]
-scale = Vector2(3, 3)
-speed = 120.0
+scale = Vector2(1.8, 1.8)
 
 [node name="RangedEnemy4" parent="." instance=ExtResource("2_lp3s2")]
 position = Vector2(-1, -63)

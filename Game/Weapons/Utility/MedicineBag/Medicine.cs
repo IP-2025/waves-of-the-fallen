@@ -8,7 +8,7 @@ public partial class Medicine : Area2D
 	AnimatedSprite2D medicineSprite;
 
 	private Vector2 endPos;
-	public const int healValue = 10;
+	public const int healValue = 15;
 
 	public int healing = 0;
 

@@ -69,10 +69,12 @@ public partial class MedicineBag : Weapon
 
 		GetTree().CurrentScene.AddChild(utilInstance);
 	}
-	
-	public void _on_medicine_bag_sprite_frame_changed() {
-		if(medicineBagFires == GetNode<AnimatedSprite2D>("MedicineBagSprite").Frame) {
+
+	public void _on_medicine_bag_sprite_frame_changed()
+	{
+		if (medicineBagFires == GetNode<AnimatedSprite2D>("MedicineBagSprite").Frame)
+		{
 			SoundManager.Instance.PlaySoundAtPosition(SoundManager.Instance.GetNode<AudioStreamPlayer2D>("medicineBagThrow"), GlobalPosition, -10);
 		}
 	}
-} 
+}
