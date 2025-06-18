@@ -38,5 +38,11 @@ export class Character {
     type: 'int',
     nullable: false,
   })
+  strength!: number;
+
+  @Column({
+    type: 'int',
+    nullable: false,
+  })
   intelligence!: number;
 }

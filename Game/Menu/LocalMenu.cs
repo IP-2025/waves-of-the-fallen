@@ -75,6 +75,9 @@ public partial class LocalMenu : Control
 		var selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
 		var health = characterManager.LoadHealthByID(selectedCharacterId.ToString());
 		var speed = characterManager.LoadSpeedByID(selectedCharacterId.ToString());
+		var dexterity = characterManager.LoadDexterityByID(selectedCharacterId.ToString());
+		var strength = characterManager.LoadStrengthByID(selectedCharacterId.ToString());
+		var intelligence = characterManager.LoadIntelligenceByID(selectedCharacterId.ToString());
 
 		var timer2 = new Timer();
 		AddChild(timer2);
