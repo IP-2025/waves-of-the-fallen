@@ -79,27 +79,15 @@
       These Terms are governed by the laws of Germany, without regard to its conflict of laws principles.
     </p>
   </main>
+  <Footer />
 </template>
 
 <script setup lang="ts">
 import Navbar from '@/components/Navbar.vue'
+import Footer from '@/components/Footer.vue'
 </script>
 
 <style scoped>
-html, body {
-  height: 100%;
-}
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-main.container {
-  flex: 1 0 auto;
-}
-.footer {
-  flex-shrink: 0;
-}
 .agb-content {
   padding-bottom: 2rem;
 }
