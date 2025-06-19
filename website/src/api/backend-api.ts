@@ -8,6 +8,6 @@ const axiosApi = axios.create({
 
 export default {
   deleteAccount(email: string, password: string): Promise<AxiosResponse<void>> {
-    return axiosApi.post('user/delete-account', { email, password })
+    return axiosApi.post('auth/user/delete-account', { email, password })
   }
 }

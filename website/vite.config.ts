@@ -23,6 +23,7 @@ export default defineConfig({
     proxy: {
       '/api/v1': {
         target: 'http://waves-of-the-fallen.duckdns.org:32424',
+        // target: 'http://localhost:3000',
         ws: true,
         changeOrigin: true,
         rewrite: (path) => path
