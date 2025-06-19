@@ -2,6 +2,8 @@ name: Deploy Vue to GitHub Pages
 
 on:
   push:
+    branches:
+      - main  # or your default branch
 
 jobs:
   build-and-deploy:
@@ -18,14 +20,14 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        working-directory: waves-of-the-fallen/website
+        working-directory: website
 
       - name: Build
         run: npm run build
-        working-directory: waves-of-the-fallen/website
+        working-directory: website
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: waves-of-the-fallen/website/dist
+          publish_dir: website/dist
