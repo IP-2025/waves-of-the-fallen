@@ -6,11 +6,12 @@
 [ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="4_354os"]
 
 [node name="HealthBar" type="TextureProgressBar"]
-offset_left = -74.0
-offset_top = -73.0
-offset_right = 24.0
-offset_bottom = -46.0
-scale = Vector2(2.3, 2.3)
+z_index = 10
+offset_left = -46.0
+offset_top = -59.0
+offset_right = 52.0
+offset_bottom = -32.0
+scale = Vector2(1.5, 1.5)
 value = 100.0
 texture_under = ExtResource("1_sf4my")
 texture_progress = ExtResource("2_sf4my")
