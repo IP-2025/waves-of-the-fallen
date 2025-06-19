@@ -2,11 +2,9 @@ name: Deploy Vue to GitHub Pages
 
 on:
   pull_request:
-    branches:
-      - master
-  push:
-    branches:
-      - master
+    paths:
+      - 'website/**'
+
 
 jobs:
   build-and-deploy:
