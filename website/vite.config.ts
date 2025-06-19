@@ -18,7 +18,7 @@ export default defineConfig({
       include: [/node_modules/]
     }
   },
-  base: './',
+  base: '/waves-of-the-fallen',
   server: {
     proxy: {
       '/api/v1': {
