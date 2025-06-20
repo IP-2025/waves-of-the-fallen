@@ -42,7 +42,7 @@ public partial class Kunai : RangedWeapon
         int @int = OwnerNode.Intelligence;
 
         DefaultDamage += (int)(dex + str / 8 + @int / 8) / 3;
-        ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.1f);
+        ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.2f);
     }
 
     public override void _Process(double delta)
