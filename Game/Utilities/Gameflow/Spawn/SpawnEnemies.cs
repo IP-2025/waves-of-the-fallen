@@ -14,8 +14,8 @@ public partial class SpawnEnemies : Node2D
 	private readonly Dictionary<PackedScene, float> _patternPool = new(); // dictionary to load and store enemyPatterns
 	private int _graceTime = 10; // graceTime after each wave
 	private int _enemyLimit = 10; // enemyLimit, which can scale with currentWave
-	private int _enemyLimitIncrease = 10; // how much the enemyLimit increases per wave
-	private int _enemyLimitMax = 30; // the maximum the enemy limit can reach
+	private int _enemyLimitIncrease = 5; // how much the enemyLimit increases per wave
+	private int _enemyLimitMax = 45; // the maximum the enemy limit can reach
 	private DefaultPlayer Player { get; set; } // player instance 
 	private int _playerCount;
 	private float _healthMultiplier = 1;
@@ -41,13 +41,13 @@ public partial class SpawnEnemies : Node2D
 		_waveTimer.WaveStarted += OnWaveStart;
 
 		_enemyLimit = Math.Min(_enemyLimitIncrease * _currentWave, _enemyLimitMax); // sets enemy limit, so a custom starting wave can be used at the beginning
-		_enemyLimitMax += 5 * (_playerCount - 1); // increase max ammount of enemies with playerCount
+		_enemyLimitMax += 10 * (_playerCount - 1); // increase max ammount of enemies with playerCount
 
 		// initialize scaling values for higher wave start. all values scale additively (wave 1 health = *1 multiplier | wave 10 health = *1.9 multiplier)
 		_healthMultiplier = 1f + (_currentWave - 1) * 0.1f; // increases enemy health by 10%
 		_damageMultiplier = 1f + (_currentWave - 1) * 0.5f; // increases enemy damage by 20%
 		_attackSpeedMultiplier = Math.Min(1f + (_currentWave - 1) * 0.05f , 2f); // increases enemy attack speed by 5% until 200% is reached
-		_moveSpeedMultiplier = Math.Min(1f + (_currentWave - 1) * 0.05f , 2f); // increases enemy movement speed by 5% until 200% is reached
+		_moveSpeedMultiplier = Math.Min(1f + (_currentWave - 1) * 0.0375f , 1.5f); // increases enemy movement speed by 5% until 200% is reached
 
 	}
 	private void spawnGiantBoss()
@@ -56,6 +56,8 @@ public partial class SpawnEnemies : Node2D
 		EnemyPattern pattern = packedScene.Instantiate<EnemyPattern>();
 		PathFollow2D spawnPath = GetNode<PathFollow2D>("Path2D/PathFollow2D"); // gets a random starting position, where the enemies are spawned
 		spawnPath.ProgressRatio = GD.Randf();
+
+		pattern.healthMultiplier = 1 + (_currentWave / 5);
 
 		spawnPattern(pattern);
 
@@ -180,11 +182,14 @@ public partial class SpawnEnemies : Node2D
 		_healthMultiplier = 1f + (_currentWave - 1) * 0.1f;
 		_damageMultiplier = 1f + (_currentWave - 1) * 0.5f;
 		_attackSpeedMultiplier = Math.Min(1f + (_currentWave - 1) * 0.05f , 2f);
-		_moveSpeedMultiplier = Math.Min(1f + (_currentWave - 1) * 0.05f , 2f);
+		_moveSpeedMultiplier = Math.Min(1f + (_currentWave - 1) * 0.0375f , 1.5f);
 
 		if (_currentWave % 5 == 2) // the giant will spawn in wave 2 (Note: the normal enemies also spawn)
 		{
-			spawnGiantBoss();
+			for (int i = 0; i < 1 + (_currentWave / 5); i++)
+			{
+				spawnGiantBoss();
+			}
 		}
 	}
 
