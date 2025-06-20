@@ -15,23 +15,29 @@ public partial class Medicine : Area2D
 	public float _throwSlowdown = 2;
 
 	public override void _Ready()
-	{
-		medicineSprite = GetNode<AnimatedSprite2D>("MedicineSprite");
-		PathFollow2D path = GetNode<PathFollow2D>("Path2D/PathFollow2D");
-		path.ProgressRatio = GD.Randf();
-		endPos = path.GlobalPosition;
-		_ = EnablePlayerCollision();
+    {
+        medicineSprite = GetNode<AnimatedSprite2D>("MedicineSprite");
+        PathFollow2D path = GetNode<PathFollow2D>("Path2D/PathFollow2D");
+        path.ProgressRatio = GD.Randf();
+        endPos = path.GlobalPosition;
+        _ = EnablePlayerCollision();
 
-		int dexdummy = 100;
-		int strdummy = 100;
-		int intdummy = 100;
+        _CalculateWeaponStats();
 
-		healing = healValue + (int)(dexdummy + strdummy / 3 + intdummy / 3) / 30;
-		_throwSlowdown *= Math.Max(Math.Min(Math.Max(dexdummy - 80,0) / 100, 1.5f), 1);
+    }
 
-	}
+    private void _CalculateWeaponStats()
+    {
+        DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+        int dex = OwnerNode.Dexterity;
+        int str = OwnerNode.Strength;
+        int @int = OwnerNode.Intelligence;
 
-	public override void _PhysicsProcess(double delta)
+        healing = healValue + (int)(dex + str / 3 + @int / 3) / 30;
+        _throwSlowdown *= Math.Max(Math.Min(Math.Max(dex - 80, 0) / 100, 1.5f), 1);
+    }
+
+    public override void _PhysicsProcess(double delta)
 	{
 		if (GlobalPosition.DistanceTo(endPos) > 10)
 			GlobalPosition += (endPos - GlobalPosition) / _throwSlowdown * (float)delta;

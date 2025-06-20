@@ -13,7 +13,7 @@ public partial class MedicineBag : Weapon
 	private const string _resourcePath = _resBase + "Resources/";
 	public override string IconPath => _resourcePath + "MedicineBag.png";
 
-	public override float ShootDelay { get; set; } = 3.5f;
+	public override float ShootDelay { get; set; } = 4f;
 	public override float DefaultRange { get; set; } = 0;
 	public override int DefaultDamage { get; set; } = Medicine.healValue;
 	public override int DefaultPiercing { get; set; } = 0;
@@ -29,7 +29,7 @@ public partial class MedicineBag : Weapon
 		int strdummy = 100;
 		int intdummy = 100;
 
-		DefaultDamage += (int)(dexdummy + strdummy / 3 + intdummy / 3) / 10;
+		DefaultDamage += (int)(dexdummy + strdummy / 3 + intdummy / 3) / 30;
 		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dexdummy - 80) / 50f, 1), 1f), 0.5f);
 
 		_shootCooldown = ShootDelay;

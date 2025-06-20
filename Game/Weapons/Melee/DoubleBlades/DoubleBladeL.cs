@@ -12,7 +12,7 @@ public partial class DoubleBladeL : MeleeWeapon
 	public override string ResourcePath => _resBase + "Resources/";
 	public override string IconPath => ResourcePath + "DoubleBlades.png";
 	public override float DefaultRange { get; set; } = 150f;
-	public override int DefaultDamage { get; set; } = 150;
+	public override int DefaultDamage { get; set; } = 100;
 	
 	public override float ShootDelay{ get; set; } = 1f;
 

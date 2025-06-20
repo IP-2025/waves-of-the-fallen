@@ -14,7 +14,7 @@ public partial class WarHammer : RangedWeapon
 	public override int DefaultDamage { get; set; } = HammerProjectile.DefaultDamage;
 	public override int DefaultPiercing { get; set; } = HammerProjectile.DefaultPiercing;
 	public override float DefaultSpeed { get; set; } = HammerProjectile.DefaultSpeed;
-	public override float ShootDelay { get; set; } = 1f;
+	public override float ShootDelay { get; set; } = 2f;
 	public override int SoundFrame => 2;
 
 	private float _shootCooldown;
@@ -30,10 +30,10 @@ public partial class WarHammer : RangedWeapon
         animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/WarHammer");
         projectileScene = _throwHammerScene;
 
-        _shootCooldown = 1f / ShootDelay;
-        _timeUntilShoot = _shootCooldown;
-
         _CalculateWeaponStats();
+
+        _shootCooldown = ShootDelay;
+        _timeUntilShoot = _shootCooldown;
     }
 
     private void _CalculateWeaponStats()

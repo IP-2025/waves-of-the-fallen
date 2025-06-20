@@ -15,7 +15,7 @@ public partial class Dagger : MeleeWeapon
 	public override float DefaultRange { get; set; } = 100f;
 	public override int DefaultDamage { get; set; } = 80;
 
-	public override float ShootDelay { get; set; } = 1.3f;
+	public override float ShootDelay { get; set; } = 1f;
 
 	private float _shootCooldown;
 	private float _timeUntilShoot;

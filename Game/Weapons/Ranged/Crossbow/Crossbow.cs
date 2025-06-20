@@ -15,7 +15,7 @@ public partial class Crossbow : RangedWeapon
 	public override int DefaultDamage { get; set; } = CrossbowArrow.DefaultDamage;
 	public override int DefaultPiercing { get; set; } = CrossbowArrow.DefaultPiercing;
 	public override float DefaultSpeed { get; set; } = CrossbowArrow.DefaultSpeed;
-	public override float ShootDelay { get; set; } = 0.5f;
+	public override float ShootDelay { get; set; } = 2f;
 	public override int SoundFrame => 3;
 	
 	private float _shootCooldown;

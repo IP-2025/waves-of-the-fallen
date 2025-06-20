@@ -13,10 +13,10 @@ public partial class DoubleBlade : MeleeWeapon
 	public override float DefaultSpeed { get; set; } = 0f;
 	public override string ResourcePath => _resBase + "Resources/";
 	public override string IconPath => ResourcePath + "DoubleBlades.png";
-	public override float DefaultRange { get; set; } = 150f;
+	public override float DefaultRange { get; set; } = 100f;
 	public override int DefaultDamage { get; set; } = 150;
 	
-	public override float ShootDelay{ get; set; } = 1f;
+	public override float ShootDelay{ get; set; } = 1.3f;
 	
 	private float _shootCooldown;
 	private float _timeUntilShoot;

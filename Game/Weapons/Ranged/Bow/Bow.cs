@@ -15,7 +15,7 @@ public partial class Bow : RangedWeapon
 	public override int DefaultDamage { get; set; } = BowArrow.DefaultDamage;
 	public override int DefaultPiercing { get; set; } = BowArrow.DefaultPiercing;
 	public override float DefaultSpeed { get; set; } = BowArrow.DefaultSpeed;
-	public override float ShootDelay{ get; set; } = 1.2f;
+	public override float ShootDelay{ get; set; } = 1.5f;
 	public override int SoundFrame => 2;
 	
 	private float _shootCooldown;

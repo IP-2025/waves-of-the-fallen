@@ -17,12 +17,7 @@ public partial class Lightning : Projectile
 
 	public override void _Ready()
     {
-        _CalculateWeaponStats();
-    }
-
-    private void _CalculateWeaponStats()
-    {
-		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+        		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
         int dex = OwnerNode.Dexterity;
         int str = OwnerNode.Strength;
         int @int = OwnerNode.Intelligence;
