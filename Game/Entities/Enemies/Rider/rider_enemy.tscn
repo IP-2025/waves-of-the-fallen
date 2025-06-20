@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://cwl1w7n2se2wd" path="res://Entities/Enemies/Rider/Rider.cs" id="1_k7dvb"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_ilr60"]
-[ext_resource type="Texture2D" uid="uid://bgnsha0jt2pb7" path="res://Entities/Enemies/Rider/Resources/RiderAttack.png" id="3_eq5rk"]
-[ext_resource type="Texture2D" uid="uid://cn87a5tejrtb4" path="res://Entities/Enemies/Rider/Resources/RiderDeath.png" id="4_mlik0"]
-[ext_resource type="Texture2D" uid="uid://ntd5y6i0j5ee" path="res://Entities/Enemies/Rider/Resources/RiderHit.png" id="5_sg4oh"]
-[ext_resource type="Texture2D" uid="uid://cvp5u08yyimxc" path="res://Entities/Enemies/Rider/Resources/RiderIdle.png" id="6_xreqn"]
-[ext_resource type="Texture2D" uid="uid://vk2s337biy8k" path="res://Entities/Enemies/Rider/Resources/RiderWalk.png" id="7_pxerp"]
+[ext_resource type="Texture2D" uid="uid://36vpo3c3igsq" path="res://Entities/Enemies/Rider/Resources/RiderAttack.png" id="3_eq5rk"]
+[ext_resource type="Texture2D" uid="uid://bymsrreahsgv" path="res://Entities/Enemies/Rider/Resources/RiderDeath.png" id="4_mlik0"]
+[ext_resource type="Texture2D" uid="uid://comfn0pwhh020" path="res://Entities/Enemies/Rider/Resources/RiderHit.png" id="5_sg4oh"]
+[ext_resource type="Texture2D" uid="uid://c2aclhkwjrd30" path="res://Entities/Enemies/Rider/Resources/RiderIdle.png" id="6_xreqn"]
+[ext_resource type="Texture2D" uid="uid://bweeh7ji26e46" path="res://Entities/Enemies/Rider/Resources/RiderWalk.png" id="7_pxerp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2xkst"]
 radius = 15.0
@@ -1323,6 +1323,7 @@ script = ExtResource("2_ilr60")
 max_health = 100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_2xkst")
 
 [node name="AttackRange" type="Area2D" parent="."]
