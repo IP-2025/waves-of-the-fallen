@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://txkhl3hrcmdx"]
+[gd_scene load_steps=4 format=3 uid="uid://txkhl3hrcmdx"]
 
 [ext_resource type="Script" uid="uid://g7xprrcaye5v" path="res://Menu/Main/Mainmenu.cs" id="1_86uyx"]
 
@@ -10,8 +10,11 @@ corner_radius_bottom_right = 22
 corner_radius_bottom_left = 22
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h1kf5"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jk4go"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
 
 [node name="Mainmenu" type="Control"]
 layout_mode = 3
@@ -21,6 +24,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_86uyx")
+metadata/_edit_horizontal_guides_ = [582.0]
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -172,45 +176,81 @@ unique_name_in_owner = true
 [node name="GreyedOut" type="ColorRect" parent="."]
 unique_name_in_owner = true
 visible = false
-layout_mode = 0
-offset_left = -1.0
-offset_top = 1.0
-offset_right = 1151.0
-offset_bottom = 645.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0, 0, 0, 0.705882)
-
-[node name="Label" type="Label" parent="GreyedOut"]
-layout_mode = 0
-offset_left = 212.0
-offset_top = 125.0
-offset_right = 944.0
-offset_bottom = 238.0
-theme_override_font_sizes/font_size = 20
-text = "The local progress does not match the online progres. Please select the one 
-you want to keep."
-
-[node name="LocalButton" type="Button" parent="GreyedOut"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 245.0
-offset_top = 278.0
-offset_right = 536.0
-offset_bottom = 367.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_h1kf5")
-text = "LOCAL"
-
-[node name="OnlineButton" type="Button" parent="GreyedOut"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 619.0
-offset_top = 279.0
-offset_right = 910.0
-offset_bottom = 368.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_jk4go")
-text = "ONLINE"
 
 [node name="SyncLocalOnServerRequest" type="HTTPRequest" parent="GreyedOut"]
 unique_name_in_owner = true
+
+[node name="MarginContainer" type="MarginContainer" parent="GreyedOut"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -224.5
+offset_top = -89.0
+offset_right = 224.5
+offset_bottom = 89.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GreyedOut/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="GreyedOut/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "The local progress does not match the online progres. Please select the one 
+you want to keep."
+
+[node name="LocalButton" type="Button" parent="GreyedOut/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/normal = SubResource("StyleBoxFlat_h1kf5")
+text = "Local"
+
+[node name="OnlineButton" type="Button" parent="GreyedOut/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_h1kf5")
+theme_override_styles/normal = SubResource("StyleBoxFlat_h1kf5")
+text = "Online"
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
 layout_mode = 1
