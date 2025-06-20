@@ -1,4 +1,4 @@
-apiVersion: skaffold/v4beta12
+apiVersion: skaffold/v4beta13
 kind: Config
 metadata:
   name: waves-of-the-fallen
@@ -10,14 +10,14 @@ build:
       context: backend
       docker:
         dockerfile: Dockerfile
-    - image: kaprele/k8s-hello-pod
-      context: hello-pod
-      docker:
-        dockerfile: Dockerfile
       sync:
         manual:
-          - src: './*.js'
-            dest: .
+          - src: "src/**/*.ts"
+            dest: "."
+    - image: kaprele/waves-of-the-fallen_game
+      context: Game
+      docker:
+        dockerfile: Dockerfile
 manifests:
   rawYaml:
     - k8s/*
@@ -28,10 +28,13 @@ profiles:
       local:
         push: true
       tagPolicy:
-        envTemplate:
-          template: "{{.VERSION}}"
+        dateTime: { }
       artifacts:
         - image: docker.io/kaprele/waves-of-the-fallen_backend
           context: backend
+          docker:
+            dockerfile: Dockerfile
+        - image: kaprele/waves-of-the-fallen_game
+          context: Game
           docker:
             dockerfile: Dockerfile

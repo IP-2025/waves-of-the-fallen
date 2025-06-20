@@ -67,3 +67,163 @@ export async function removeFromIngress(pathName: string, serviceName: string){
         console.error('❌ Failed to patch ingress:', err);
     }
 }
+
+// In-memory set of nodePorts that are already taken
+const usedNodePorts = new Set<number>();
+const games: {
+  [lobbyCode: string]: {
+    udpPort: number;
+    rpcPort: number;
+  };
+} ={};
+/**
+ * Allocate the next free nodePort in the Kubernetes default NodePort range (30000–32767).
+ */
+export function allocateNodePort(): number {
+    const MIN = 30000;
+    const MAX = 32767;
+    for (let port = MIN; port <= MAX; port++) {
+        if (!usedNodePorts.has(port)) {
+            usedNodePorts.add(port);
+            return port;
+        }
+    }
+    throw new Error("No free NodePort available");
+}
+
+/**
+ * Create a Pod manifest for a game server with the given `code`.
+ * @param code
+ * @param podName
+ * @param image
+ * @param containerUdpPort
+ * @param containerRpcPort
+ */
+export function getPodManifest(
+    code: string,
+    podName: string = `pod-${code.toLowerCase()}`,
+    image: string = "kaprele/waves-of-the-fallen_game:v1.2",
+    containerUdpPort: number = 3000,
+    containerRpcPort: number = 9999
+
+) {
+    return {
+        apiVersion: "v1",
+        kind: "Pod",
+        metadata: {
+            name: podName,
+            labels: {
+                app: "game-server",
+                code, // label used to select this Pod
+            },
+        },
+        spec: {
+            containers: [
+                {
+                    name: "game-container",
+                    image,
+                    imagePullPolicy: "Always",
+                    ports: [{name: 'gameplay', containerPort: containerUdpPort, protocol: 'UDP' }, {name: 'rpc', containerPort: containerRpcPort, protocol: 'UDP' }],
+                    env: [{ name: "CODE", value: code }], // Pass the game code as an environment variable
+                },
+            ],
+            restartPolicy: "Never", // Don't restart the Pod automatically
+        },
+    };
+}
+
+/**
+ * Create a NodePort Service manifest for a game server pod identified by `code`.
+ *
+ * @param code      The label value used to select the Pod (e.g. the game “code”)
+ * @param serviceName  The name to give the Service (must be unique per game)
+ * @param udpTargetPort   The port the Pod is listening on (e.g. 3000)
+ */
+export function getServiceManifest(code: string, serviceName: string, udpTargetPort: number = 3000, rpcTargetPort: number = 9999) {
+  // Grab a free port on the host
+  const [udpPort, rpcPort] = allocateNodePorts();
+
+  const serviceManifest = {
+    apiVersion: 'v1',
+    kind: 'Service',
+    metadata: {
+      name: serviceName,
+      labels: {
+        app: 'game-server',
+        gameCode: code,
+      },
+    },
+    spec: {
+      type: 'NodePort', // expose on the node
+      selector: {
+        code, // will match pods labeled { code: "<code>" }
+      },
+      ports: [
+        {
+          name: 'gameplay',
+          port: udpTargetPort, // in-cluster port the Pod listens on
+          targetPort: udpTargetPort, // forward to the Pod’s port
+          protocol: 'UDP',
+          nodePort: udpPort,
+        },
+        {
+          name: 'rpc',
+          port: rpcTargetPort, // in-cluster port the Pod listens on
+          targetPort: rpcTargetPort, // forward to the Pod’s port
+          protocol: 'UDP',
+          nodePort: rpcPort,
+        },
+      ],
+    },
+  };
+
+  return { serviceManifest, rpcPort, udpPort };
+}
+
+/**
+ * Allocate the next free nodePort in the Kubernetes default NodePort range (30000–32767).
+ */
+export function allocateNodePorts(): number[] {
+  const MIN = 30000;
+  const MAX = 32767;
+  const allocated: number[] = [];
+
+  for (let port = MIN; port <= MAX; port++) {
+    if (!usedNodePorts.has(port)) {
+      usedNodePorts.add(port);
+      allocated.push(port);
+      if (allocated.length === 2) {
+        return allocated;
+      }
+    }
+  }
+
+  throw new Error('No free NodePorts available');
+}
+
+
+export function freeNodePort(port: number) {
+    usedNodePorts.delete(port);
+}
+
+export function saveLobby(lobbyCode: string, udpPort: number, rpcPort: number) {
+  games[lobbyCode] = { udpPort: udpPort, rpcPort: rpcPort };
+  console.log(`Saved game ${lobbyCode}: ${games}`);
+  for (const code in games) {
+    console.log(`Lobby ${code} - UDP: ${games[code].udpPort}, RPC: ${games[code].rpcPort}`);
+  }
+}
+
+export function getLobbyPorts(lobbyCode: string){
+  const udp = games[lobbyCode]?.udpPort;
+  const rpc = games[lobbyCode]?.rpcPort;
+  if (udp === undefined || rpc === undefined) {
+    console.log(games[lobbyCode]);
+    throw new Error(`Lobby ${lobbyCode} not found`);
+  }
+  return { udpPort: udp, rpcPort: rpc };
+}
+
+export function removeLobby(lobbyCode: string){
+  delete games[lobbyCode];
+}

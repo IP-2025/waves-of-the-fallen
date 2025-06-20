@@ -1,0 +1,291 @@
+[gd_scene load_steps=24 format=3 uid="uid://bc4qx50buj7kq"]
+
+[ext_resource type="Script" uid="uid://2s2aelwrsblk" path="res://Menu/Online/OnlineMenu.cs" id="1_qs4ul"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6mp4x"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qs4ul"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8hjnw"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7qur8"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j18e1"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sliei"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l6nn7"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1exp8"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hx8u2"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iout0"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g5giu"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ed733"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x00dv"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_riveb"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_61p4g"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ed58b"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_80bxd"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_es41n"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q7w17"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqq4p"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s8ag0"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hwlt7"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[node name="OnlineMenu" type="Control"]
+custom_minimum_size = Vector2(1280, 720)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -68.0
+offset_top = -33.0
+offset_right = 60.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qs4ul")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 36.0
+offset_right = 1220.0
+offset_bottom = 684.0
+color = Color(0.152941, 0.152941, 0.152941, 1)
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.049
+anchor_right = 0.976
+anchor_bottom = 1.0
+offset_left = 52.0
+offset_top = -1.28
+offset_right = -20.28
+offset_bottom = -39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 60
+text = "Play Online"
+
+[node name="Button_Back" type="Button" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_font_sizes/font_size = 60
+theme_override_styles/focus = SubResource("StyleBoxFlat_6mp4x")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_qs4ul")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_8hjnw")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_7qur8")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_j18e1")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_sliei")
+theme_override_styles/hover = SubResource("StyleBoxFlat_l6nn7")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_1exp8")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hx8u2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_iout0")
+theme_override_styles/normal = SubResource("StyleBoxFlat_g5giu")
+text = "Back"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 80
+
+[node name="JoinLobbyButton" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 80
+theme_override_styles/focus = SubResource("StyleBoxFlat_ed733")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_x00dv")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_riveb")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_61p4g")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_ed58b")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_80bxd")
+theme_override_styles/hover = SubResource("StyleBoxFlat_es41n")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_q7w17")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_aqq4p")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_s8ag0")
+theme_override_styles/normal = SubResource("StyleBoxFlat_hwlt7")
+text = "Join 
+Lobby"
+
+[node name="HostLobbyButton" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 80
+theme_override_styles/focus = SubResource("StyleBoxFlat_ed733")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_x00dv")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_riveb")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_61p4g")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_ed58b")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_80bxd")
+theme_override_styles/hover = SubResource("StyleBoxFlat_es41n")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_q7w17")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_aqq4p")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_s8ag0")
+theme_override_styles/normal = SubResource("StyleBoxFlat_hwlt7")
+text = "Host 
+Lobby
+"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="LobbyCodeInput" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 186.0
+offset_top = 569.0
+offset_right = 1101.0
+offset_bottom = 660.0
+placeholder_text = "Enter Lobby Code"
+max_length = 4
+
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_pressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/JoinLobbyButton" to="." method="OnJoinLobbyPressed"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/HostLobbyButton" to="." method="OnHostLobbyPressed"]
