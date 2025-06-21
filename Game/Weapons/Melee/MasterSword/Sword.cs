@@ -1,5 +1,6 @@
-using Godot;
 using System;
+using Godot;
+
 public partial class Sword : MeleeWeapon
 {
 	private AnimationPlayer SwordAnimationPlayer;
@@ -13,23 +14,36 @@ public partial class Sword : MeleeWeapon
 	public override string ResourcePath => _resBase + "Resources/";
 	public override string IconPath => _resourcePath + "MasterSword1.png";
 	public override float DefaultRange { get; set; } = 140f;
-	public override int DefaultDamage { get; set; } = 100;
+	public override int DefaultDamage { get; set; } = 80;
 	
-	public override float ShootDelay{ get; set; } = 1.2f;
+	public override float ShootDelay{ get; set; } = 1.4f;
 	
 	private float _shootCooldown;
 	private float _timeUntilShoot;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
+    {
+        SwordAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        SwordTrailTest = GetNode<Sprite2D>("SwordTrailTest");
+        SwordTrailTest.Visible = false;
+
+        _CalculateWeaponStats();
+
+        _shootCooldown = ShootDelay;
+        _timeUntilShoot = _shootCooldown;
+    }
+
+	private void _CalculateWeaponStats()
 	{
-		SwordAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-		SwordTrailTest = GetNode<Sprite2D>("SwordTrailTest");
-		_shootCooldown   = 1f/ShootDelay;
-		_timeUntilShoot  = _shootCooldown;
-		SwordTrailTest.Visible = false;
-	}
-	
-	public override void _Process(double delta)
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+		int dex = OwnerNode.Dexterity;
+		int str = OwnerNode.Strength;
+		int @int = OwnerNode.Intelligence;
+		DefaultDamage += (int)(dex / 1.3f + str + @int / 1.3f) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.5f);
+    }
+
+    public override void _Process(double delta)
 	{
 		// Laufenden Countdown aktualisieren
 		_timeUntilShoot -= (float)delta;

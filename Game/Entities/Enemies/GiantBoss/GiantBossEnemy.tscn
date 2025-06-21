@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://brsiga6vkoslu" path="res://Entities/Enemies/GiantBoss/GiantBossEnemy.cs" id="1_6h1re"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_hc420"]
 [ext_resource type="PackedScene" uid="uid://ceve0lpkg70ey" path="res://Entities/Enemies/GiantBoss/stone_Attack.tscn" id="2_oid3o"]
-[ext_resource type="Texture2D" uid="uid://chct1em2yry2v" path="res://Entities/Enemies/GiantBoss/Resources/Giant_Spritesheet.png" id="3_o0ymr"]
+[ext_resource type="Texture2D" uid="uid://bndg53mj1v6lq" path="res://Entities/Enemies/GiantBoss/Resources/Giant_Spritesheet.png" id="3_o0ymr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hc420"]
 radius = 124.0
@@ -378,7 +378,7 @@ animationPath = NodePath("GiantAnimantion")
 
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_hc420")
-max_health = 500.0
+max_health = 750.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_hc420")

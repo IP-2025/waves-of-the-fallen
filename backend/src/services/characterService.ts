@@ -51,6 +51,7 @@ function readCharacters(): Character[] {
     newCharacter.speed = character.speed;
     newCharacter.health = character.health;
     newCharacter.dexterity = character.dexterity;
+    newCharacter.strength = character.strength
     newCharacter.intelligence = character.intelligence;
     toInsertList.push(newCharacter);
   }

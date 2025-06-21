@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Linq;
 
 public abstract partial class MeleeWeapon : Weapon
 {

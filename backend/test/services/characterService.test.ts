@@ -12,6 +12,7 @@ describe('Character tests', () => {
                 speed: 10,
                 health: 100,
                 dexterity: 20,
+                strength: 40,
                 intelligence: 30
             }
         ];
@@ -26,6 +27,7 @@ describe('Character tests', () => {
         expect(allCharacters[0].speed).toBe(mockCharacters[0].speed);
         expect(allCharacters[0].health).toBe(mockCharacters[0].health);
         expect(allCharacters[0].dexterity).toBe(mockCharacters[0].dexterity);
+        expect(allCharacters[0].strength).toBe(mockCharacters[0].strength);
         expect(allCharacters[0].intelligence).toBe(mockCharacters[0].intelligence);
     });
 
@@ -37,6 +39,7 @@ describe('Character tests', () => {
                 speed: 10,
                 health: 100,
                 dexterity: 20,
+                strength: 40,
                 intelligence: 30
             }
         ];
@@ -51,6 +54,7 @@ describe('Character tests', () => {
         expect(allCharacters[0].speed).toBe(mockCharacters[0].speed);
         expect(allCharacters[0].health).toBe(mockCharacters[0].health);
         expect(allCharacters[0].dexterity).toBe(mockCharacters[0].dexterity);
+        expect(allCharacters[0].strength).toBe(mockCharacters[0].strength);
         expect(allCharacters[0].intelligence).toBe(mockCharacters[0].intelligence);
 
        mockCharacters = [
@@ -60,6 +64,7 @@ describe('Character tests', () => {
                 speed: 20,
                 health: 200,
                 dexterity: 30,
+                strength: 20,
                 intelligence: 40
             }
         ];
@@ -74,6 +79,7 @@ describe('Character tests', () => {
         expect(allCharacters2[0].speed).toBe(mockCharacters[0].speed);
         expect(allCharacters2[0].health).toBe(mockCharacters[0].health);
         expect(allCharacters2[0].dexterity).toBe(mockCharacters[0].dexterity);
+        expect(allCharacters2[0].strength).toBe(mockCharacters[0].strength);
         expect(allCharacters2[0].intelligence).toBe(mockCharacters[0].intelligence);
     });
 })

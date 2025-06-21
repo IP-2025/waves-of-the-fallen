@@ -1,5 +1,5 @@
-using Godot;
 using System;
+using Godot;
 
 [GlobalClass]
 public partial class Kunai : RangedWeapon
@@ -15,7 +15,7 @@ public partial class Kunai : RangedWeapon
 	public override int DefaultPiercing { get; set; } = KunaiProjectile.DefaultPiercing;
 	public override float DefaultSpeed { get; set; } = KunaiProjectile.DefaultSpeed;
 
-	public override float ShootDelay { get; set; } = 2.5f;
+	public override float ShootDelay { get; set; } = 0.8f;
 	public override int SoundFrame => 1;
 	
 	private float _shootCooldown;
@@ -24,15 +24,28 @@ public partial class Kunai : RangedWeapon
 	private static readonly PackedScene _kunaiPacked = GD.Load<PackedScene>(_projectilePath);
 
 	public override void _Ready()
-	{
-		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/KunaiSprite");
-		projectileScene = _kunaiPacked;
-		
-		_shootCooldown  = 1f / ShootDelay;
-		_timeUntilShoot = _shootCooldown;
-	}
+    {
+        animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/KunaiSprite");
+        projectileScene = _kunaiPacked;
 
-	public override void _Process(double delta)
+        _CalculateWeaponStats();
+
+        _shootCooldown = ShootDelay;
+        _timeUntilShoot = _shootCooldown;
+    }
+
+	private void _CalculateWeaponStats()
+	{
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+		dex = OwnerNode.Dexterity;
+		str = OwnerNode.Strength;
+		@int = OwnerNode.Intelligence;
+
+		DefaultDamage += (int)(dex + str / 8 + @int / 8) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.5f);
+    }
+
+    public override void _Process(double delta)
 	{
 		// Countdown verringern
 		_timeUntilShoot -= (float)delta;

@@ -51,7 +51,7 @@ public partial class Health : Node2D
 
 	public void Heal(float heal)
 	{
-		if (!disable)
+		if (!disable && health > 0)
 			health += heal;
 
 		if (health > max_health)

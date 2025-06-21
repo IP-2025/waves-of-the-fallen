@@ -15,13 +15,16 @@ public partial class Assassin : DefaultPlayer
 
 		base._Ready();
 
-		if ( MaxHealth <= 0 && Speed <= 0)
+		if (MaxHealth <= 0 && Speed <= 0)
 		{
 			MaxHealth = CharacterManager.LoadHealthByID("2");
 			Speed = CharacterManager.LoadSpeedByID("2");
+			Dexterity = CharacterManager.LoadDexterityByID("2");
+			Strength = CharacterManager.LoadStrengthByID("2");
+			Intelligence = CharacterManager.LoadIntelligenceByID("2");
 		}
 
-		GD.Print($"Assassin initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
+		GD.Print($"Assassin initialized. Speed: {Speed}, MaxHealth: {MaxHealth}, Dex: {Dexterity}, Str: {Strength}, Int: {Intelligence}");
 	}
 
 	public void _on_assassin_animation_frame_changed()

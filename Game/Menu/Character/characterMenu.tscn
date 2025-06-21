@@ -335,6 +335,18 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 
+[node name="HBoxContainerStrength" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label_strength" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainerStrength"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label_StrengthUpgrade" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer/HBoxContainerStrength"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+
 [node name="HBoxContainerIntelligence" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 

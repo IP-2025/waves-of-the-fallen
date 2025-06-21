@@ -20,12 +20,14 @@ public partial class Charactermenu : Control
 	private Label _labelHealth;
 	private Label _labelSpeed;
 	private Label _labelDexterity;
+	private Label _labelStrength;
 	private Label _labelIntelligence;
 	private Label _goldLabel;
 
 	private Label _labelHealthUpgrade;
 	private Label _labelSpeedUpgrade;
 	private Label _labelDexterityUpgrade;
+	private Label _labelStrengthUpgrade;
 	private Label _labelIntelligenceUpgrade;
 
 	private HttpRequest _unlockRequest;
@@ -41,11 +43,13 @@ public partial class Charactermenu : Control
 		_labelHealth = GetNode<Label>("%Label_health");
 		_labelSpeed = GetNode<Label>("%Label_speed");
 		_labelDexterity = GetNode<Label>("%Label_dexterity");
+		_labelStrength = GetNode<Label>("%Label_strength");
 		_labelIntelligence = GetNode<Label>("%Label_intelligence");
 
 		_labelHealthUpgrade = GetNode<Label>("%Label_HealthUpgrade");
 		_labelSpeedUpgrade = GetNode<Label>("%Label_SpeedUpgrade");
 		_labelDexterityUpgrade = GetNode<Label>("%Label_DexterityUpgrade");
+		_labelStrengthUpgrade = GetNode<Label>("%Label_StrengthUpgrade");
 		_labelIntelligenceUpgrade = GetNode<Label>("%Label_IntelligenceUpgrade");
 
 		_labelCharacterName = GetNode<Label>("%Label_SelectedCharacterName");
@@ -117,6 +121,7 @@ public partial class Charactermenu : Control
 		_labelHealth.Text = $"Health {_characterManager.LoadHealthByID(characterId)}";
 		_labelSpeed.Text = $"Speed {_characterManager.LoadSpeedByID(characterId)}";
 		_labelDexterity.Text = $"Dexterity {_characterManager.LoadDexterityByID(characterId)}";
+		_labelStrength.Text = $"Strength {_characterManager.LoadStrengthByID(characterId)}";
 		_labelIntelligence.Text = $"Intelligence {_characterManager.LoadIntelligenceByID(characterId)}";
 		UpdateUpgradeUnlockButtonState();
 		UpdateGoldLabel();
@@ -127,6 +132,7 @@ public partial class Charactermenu : Control
 			_labelHealthUpgrade.Text = $"   +{upgradeAmount}";
 			_labelSpeedUpgrade.Text = $"   +{upgradeAmount}";
 			_labelDexterityUpgrade.Text = $"   +{upgradeAmount}";
+			_labelStrengthUpgrade.Text = $"   +{upgradeAmount}";
 			_labelIntelligenceUpgrade.Text = $"   +{upgradeAmount}";
 		}
 	}
@@ -346,6 +352,7 @@ public partial class Charactermenu : Control
 		_labelHealthUpgrade.Text = "";
 		_labelSpeedUpgrade.Text = "";
 		_labelDexterityUpgrade.Text = "";
+		_labelStrengthUpgrade.Text = "";
 		_labelIntelligenceUpgrade.Text = "";
 	}
 
@@ -405,10 +412,10 @@ public partial class Charactermenu : Control
 
 	private void ResetCharacters()
 	{
-		_characterManager.SaveCharacterData(1, "Archer", 85, 200, 100, 110, 1, 1);
-		_characterManager.SaveCharacterData(2, "Assassin", 70, 220, 100, 110, 1, 0);
-		_characterManager.SaveCharacterData(3, "Knight", 125, 180, 125, 85, 1, 0);
-		_characterManager.SaveCharacterData(4, "Mage", 100, 200, 110, 110, 1, 0);
+		_characterManager.SaveCharacterData(1, "Archer", 85, 200, 100, 100, 110, 1, 1);
+		_characterManager.SaveCharacterData(2, "Assassin", 70, 220, 100, 85, 110, 1, 0);
+		_characterManager.SaveCharacterData(3, "Knight", 125, 180, 125, 120, 85, 1, 0);
+		_characterManager.SaveCharacterData(4, "Mage", 100, 200, 50, 110, 110, 1, 0);
 		var blackAndWhiteShader = GD.Load<Shader>("res://Menu/Character/characterMenuIconShader.gdshader");
 		var material = new ShaderMaterial { Shader = blackAndWhiteShader };
 

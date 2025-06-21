@@ -89,10 +89,10 @@ public partial class SettingsMenu : Control
 		SecureStorage.DeleteToken();
 		if (FileAccess.FileExists("user://character_settings.cfg"))
 		{
-			_characterManager.SaveCharacterData(1, "Archer", 85, 200, 100, 110, 1, 1);
-			_characterManager.SaveCharacterData(2, "Assassin", 70, 220, 100, 110, 1, 0);
-			_characterManager.SaveCharacterData(3, "Knight", 125, 180, 125, 85, 1, 0);
-			_characterManager.SaveCharacterData(4, "Mage", 100, 200, 110, 110, 1, 0);
+			_characterManager.SaveCharacterData(1, "Archer", 85, 200, 100, 100, 110, 1, 1);
+			_characterManager.SaveCharacterData(2, "Assassin", 70, 220, 100, 85, 110, 1, 0);
+			_characterManager.SaveCharacterData(3, "Knight", 125, 180, 125, 120, 85, 1, 0);
+			_characterManager.SaveCharacterData(4, "Mage", 100, 200, 110, 50, 110, 1, 0);
 			_characterManager.SetGold(0);
 		}
 		else

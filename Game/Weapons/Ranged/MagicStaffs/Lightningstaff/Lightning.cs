@@ -1,12 +1,11 @@
 using Godot;
 using System;
-using Godot.Collections;
 using System.Collections.Generic;
 using System.Linq;
 public partial class Lightning : Projectile
 {
 	public const float DefaultSpeed = 1000f;
-	public const int DefaultDamage = 60;
+	public const int DefaultDamage = 40;
 	public const int DefaultPiercing = 1;
 	
 	private PackedScene _lightningScene = GD.Load<PackedScene>("res://Weapons/Ranged/MagicStaffs/Lightningstaff/lightning.tscn");
@@ -19,8 +18,10 @@ public partial class Lightning : Projectile
 	public override void _Ready()
 	{
 		Speed = 1000;
-		Damage = 60;
+		Damage = DefaultDamage + (int)(dex / 3.5f + str / 7 + @int) / 3;
+		Jumps = Jumps + Math.Max((int)((@int - 100) / 50f), 0);
 	}
+
 	public override void OnBodyEntered(Node2D body)
 	{
 		if (body == _ignoredBody)

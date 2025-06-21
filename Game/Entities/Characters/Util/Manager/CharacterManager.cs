@@ -23,11 +23,11 @@ public partial class CharacterManager : Node
             _config.SetValue(Section, Key, 1);
 
             //Standart Character und Stats setzen
-            //health, speed, dexterity, intelligence,
-            SaveCharacterData(1, "Archer",   85, 200, 100, 110, 1, 1);
-            SaveCharacterData(2, "Assassin", 70, 220, 100, 110, 1, 0);
-            SaveCharacterData(3, "Knight",  125,  180, 125,  85, 1, 0);
-            SaveCharacterData(4, "Mage",    100, 200, 110, 110, 1, 0);
+            //health, speed, dexterity, strength, intelligence,
+            SaveCharacterData(1, "Archer",   85, 200, 100, 100, 110, 1, 1);
+            SaveCharacterData(2, "Assassin", 70, 220, 100, 85, 110, 1, 0);
+            SaveCharacterData(3, "Knight",  125,  180, 125, 120,  85, 1, 0);
+            SaveCharacterData(4, "Mage",    100, 200, 110, 50, 110, 1, 0);
 
             _config.Save(SettingsPath);
         }
@@ -47,6 +47,7 @@ public partial class CharacterManager : Node
         _config.SetValue(characterId, "health", LoadHealthByID(characterId) + levelUpAmount);
         _config.SetValue(characterId, "speed", LoadSpeedByID(characterId) + levelUpAmount);
         _config.SetValue(characterId, "dexterity", LoadDexterityByID(characterId) + levelUpAmount);
+        _config.SetValue(characterId, "strength", LoadStrengthByID(characterId) + levelUpAmount);
         _config.SetValue(characterId, "intelligence", LoadIntelligenceByID(characterId) + levelUpAmount);
         _config.SetValue(characterId, "level", LoadLevelByID(characterId) + 1);
 
@@ -66,13 +67,14 @@ public partial class CharacterManager : Node
         _config.Save(SettingsPath);
     }
 
-    public void SaveCharacterData(int characterId, string name, int health, int speed, int dexterity, int intelligence,
+    public void SaveCharacterData(int characterId, string name, int health, int speed, int dexterity, int strength, int intelligence,
         int level, int unlocked)
     {
         _config.SetValue($"{characterId}", "name", name);
         _config.SetValue($"{characterId}", "health", health);
         _config.SetValue($"{characterId}", "speed", speed);
         _config.SetValue($"{characterId}", "dexterity", dexterity);
+        _config.SetValue($"{characterId}", "strength", strength);
         _config.SetValue($"{characterId}", "intelligence", intelligence);
         _config.SetValue($"{characterId}", "level", level);
         _config.SetValue($"{characterId}", "unlocked", unlocked);
@@ -103,6 +105,11 @@ public partial class CharacterManager : Node
     public int LoadDexterityByID(string id)
     {
         return (int)_config.GetValue(id, "dexterity");
+    }
+
+       public int LoadStrengthByID(string id)
+    {
+        return (int)_config.GetValue(id, "strength");
     }
 
     public int LoadIntelligenceByID(string id)

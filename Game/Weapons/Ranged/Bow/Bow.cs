@@ -1,5 +1,6 @@
-using Godot;
 using System;
+using Godot;
+
 
 public partial class Bow : RangedWeapon
 {
@@ -14,7 +15,7 @@ public partial class Bow : RangedWeapon
 	public override int DefaultDamage { get; set; } = BowArrow.DefaultDamage;
 	public override int DefaultPiercing { get; set; } = BowArrow.DefaultPiercing;
 	public override float DefaultSpeed { get; set; } = BowArrow.DefaultSpeed;
-	public override float ShootDelay{ get; set; } = 1.2f;
+	public override float ShootDelay{ get; set; } = 1.5f;
 	public override int SoundFrame => 2;
 	
 	private float _shootCooldown;
@@ -22,15 +23,27 @@ public partial class Bow : RangedWeapon
 	
 	
 	private static readonly PackedScene _arrowPacked = GD.Load<PackedScene>(_projectilePath);
-	
+
 
 	public override void _Ready()
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/BowSprite");
 		projectileScene = _arrowPacked;
 
-		_shootCooldown   = 1f/ShootDelay;
-		_timeUntilShoot  = _shootCooldown;
+		calculateWeaponStats();
+
+		_shootCooldown = ShootDelay;
+		_timeUntilShoot = _shootCooldown;
+	}
+
+	private void calculateWeaponStats()
+	{
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+		dex = OwnerNode.Dexterity;
+		str = OwnerNode.Strength;
+		@int = OwnerNode.Intelligence;
+		DefaultDamage = DefaultDamage + (int)(dex + str / 3.5f + @int / 7) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80f) / 50f, 1f), 1f), 0.5f);
 	}
 	
 	public override void _Process(double delta)

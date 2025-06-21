@@ -1,5 +1,5 @@
 using Godot;
-using System;
+
 public partial class DoubleBladeL : MeleeWeapon
 {
 	private AnimationPlayer DoubleBladeLAnimationPlayer;
@@ -12,18 +12,29 @@ public partial class DoubleBladeL : MeleeWeapon
 	public override string ResourcePath => _resBase + "Resources/";
 	public override string IconPath => ResourcePath + "DoubleBlades.png";
 	public override float DefaultRange { get; set; } = 150f;
-	public override int DefaultDamage { get; set; } = 150;
+	public override int DefaultDamage { get; set; } = 100;
 	
 	public override float ShootDelay{ get; set; } = 1f;
 
 	public override void _Ready()
-	{
-		DoubleBladeLAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayerL");
-		SwordTrailTest = GetNode<Sprite2D>("SwordTrailTest");
-		SwordTrailTest.Visible = false;
-	}
+    {
+        DoubleBladeLAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayerL");
+        SwordTrailTest = GetNode<Sprite2D>("SwordTrailTest");
+        SwordTrailTest.Visible = false;
 
-	public void StartAttack()
+        _CalculateWeaponStats();
+    }
+
+    private void _CalculateWeaponStats()
+    {
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+        int dex = OwnerNode.Dexterity;
+        int str = OwnerNode.Strength;
+        int @int = OwnerNode.Intelligence;
+        DefaultDamage += (int)(dex + str + @int / 4.5f) / 3;
+    }
+
+    public void StartAttack()
 	{ 
 		ShootMeleeVisual(() =>
 	{

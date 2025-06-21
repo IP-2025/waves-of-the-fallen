@@ -7,6 +7,8 @@ public abstract partial class Projectile : Area2D
 	protected int Piercing { get; set; } = 1;
 	protected int Damage { get; set; } = 100;
 
+	public int dex, str, @int;
+
 	public override void _PhysicsProcess(double delta)
 	{
 		var direction = Vector2.Right.Rotated(Rotation);

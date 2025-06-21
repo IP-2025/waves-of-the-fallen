@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 [GlobalClass]
@@ -14,7 +15,7 @@ public partial class FireStaff : RangedWeapon
 	public override int DefaultDamage { get; set; } = FireBall.DefaultDamage;
 	public override int DefaultPiercing { get; set; } = FireBall.DefaultPiercing;
 	public override float DefaultSpeed { get; set; } = FireBall.DefaultSpeed;
-	public override float ShootDelay { get; set; } = 0.5f;
+	public override float ShootDelay { get; set; } = 2f;
 	public override int SoundFrame => 5;
 
 	private static readonly PackedScene _fireballPacked = GD.Load<PackedScene>(_projectilePath);
@@ -26,11 +27,24 @@ public partial class FireStaff : RangedWeapon
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/FireStaffSprite");
 		projectileScene = _fireballPacked;
-		
-		_shootCooldown  = 1f / ShootDelay;
+
+		_CalculateWeaponStats();
+
+		_shootCooldown = ShootDelay;
 		_timeUntilShoot = _shootCooldown;
 	}
-	
+
+	private void _CalculateWeaponStats()
+	{
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+		dex = OwnerNode.Dexterity;
+		str = OwnerNode.Strength;
+		@int = OwnerNode.Intelligence;
+
+		DefaultDamage += (int)(dex / 7 + str / 3.5 + @int) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80f) / 50f, 1), 1f), 0.7f);
+	}
+
 	public override void _Process(double delta)
 	{
 		// Countdown verringern
