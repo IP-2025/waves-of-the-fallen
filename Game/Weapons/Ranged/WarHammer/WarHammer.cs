@@ -36,15 +36,15 @@ public partial class WarHammer : RangedWeapon
         _timeUntilShoot = _shootCooldown;
     }
 
-    private void _CalculateWeaponStats()
-    {
+	private void _CalculateWeaponStats()
+	{
 		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
-        int dex = OwnerNode.Dexterity;
-        int str = OwnerNode.Strength;
-        int @int = OwnerNode.Intelligence;
+		dex = OwnerNode.Dexterity;
+		str = OwnerNode.Strength;
+		@int = OwnerNode.Intelligence;
 
-        DefaultDamage += (int)(dex / 5 + str + @int / 7.5f) / 3;
-        ShootDelay *= Math.Max(Math.Min(1f / Math.Max((str - 80) / 50f, 1), 1f), 0.1f);
+		DefaultDamage += (int)(dex / 5 + str + @int / 7.5f) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((str - 80) / 50f, 1), 1f), 0.6f);
     }
 
     public override void _Process(double delta)

@@ -14,9 +14,9 @@ public partial class Sword : MeleeWeapon
 	public override string ResourcePath => _resBase + "Resources/";
 	public override string IconPath => _resourcePath + "MasterSword1.png";
 	public override float DefaultRange { get; set; } = 140f;
-	public override int DefaultDamage { get; set; } = 100;
+	public override int DefaultDamage { get; set; } = 80;
 	
-	public override float ShootDelay{ get; set; } = 1.2f;
+	public override float ShootDelay{ get; set; } = 1.4f;
 	
 	private float _shootCooldown;
 	private float _timeUntilShoot;
@@ -33,14 +33,14 @@ public partial class Sword : MeleeWeapon
         _timeUntilShoot = _shootCooldown;
     }
 
-    private void _CalculateWeaponStats()
-    {
+	private void _CalculateWeaponStats()
+	{
 		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
-        int dex = OwnerNode.Dexterity;
-        int str = OwnerNode.Strength;
-        int @int = OwnerNode.Intelligence;
-        DefaultDamage += (int)(dex / 1.3f + str + @int / 1.3f) / 3;
-        ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.1f);
+		int dex = OwnerNode.Dexterity;
+		int str = OwnerNode.Strength;
+		int @int = OwnerNode.Intelligence;
+		DefaultDamage += (int)(dex / 1.3f + str + @int / 1.3f) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.5f);
     }
 
     public override void _Process(double delta)

@@ -1,6 +1,7 @@
 using Godot;
 using Game.Utilities.Multiplayer;
 using System;
+using System.Data.Common;
 
 public partial class MedicineBag : Weapon
 {
@@ -20,17 +21,20 @@ public partial class MedicineBag : Weapon
 	public override float DefaultSpeed { get; set; } = 0;
 	private float _shootCooldown;
 	private float _timeUntilShoot;
+	private int dex, str, @int;
 
 	public override void _Ready()
 	{
+
 		medicineBagSprite = GetNode<AnimatedSprite2D>("MedicineBagSprite");
 
-		int dexdummy = 100;
-		int strdummy = 100;
-		int intdummy = 100;
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+		dex = OwnerNode.Dexterity;
+		str = OwnerNode.Strength;
+		@int = OwnerNode.Intelligence;
 
-		DefaultDamage += (int)(dexdummy + strdummy / 3 + intdummy / 3) / 30;
-		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dexdummy - 80) / 50f, 1), 1f), 0.5f);
+		DefaultDamage += (int)(dex + str / 3 + @int / 3) / 30;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.5f);
 
 		_shootCooldown = ShootDelay;
 		_timeUntilShoot = _shootCooldown;
@@ -59,13 +63,17 @@ public partial class MedicineBag : Weapon
 
 	protected void Use()
 	{
-		Area2D utilInstance = medicine.Instantiate() as Area2D;
+		Projectile utilInstance = medicine.Instantiate<Projectile>();
 
 		utilInstance.GlobalPosition = GlobalPosition;
 
 		ulong id = utilInstance.GetInstanceId();
 		utilInstance.Name = $"Medicine_{id}";
 		Server.Instance.Entities[(long)id] = utilInstance;
+
+		utilInstance.dex = dex;
+		utilInstance.str = str;
+		utilInstance.@int = @int;
 
 		GetTree().CurrentScene.AddChild(utilInstance);
 	}

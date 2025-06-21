@@ -25,28 +25,28 @@ public partial class Lightningstaff : RangedWeapon
 
 
 	public override void _Ready()
-    {
-        animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/LightningStaffSprite");
-        projectileScene = _lightningPacked;
+	{
+		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/LightningStaffSprite");
+		projectileScene = _lightningPacked;
 
-        _CalculateWeaponStats();
+		_CalculateWeaponStats();
 
-        _shootCooldown = ShootDelay;
-        _timeUntilShoot = _shootCooldown;
-    }
+		_shootCooldown = ShootDelay;
+		_timeUntilShoot = _shootCooldown;
+	}
 
-    private void _CalculateWeaponStats()
-    {
+	private void _CalculateWeaponStats()
+	{
 		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
-        int dex = OwnerNode.Dexterity;
-        int str = OwnerNode.Strength;
-        int @int = OwnerNode.Intelligence;
+		dex = OwnerNode.Dexterity;
+		str = OwnerNode.Strength;
+		@int = OwnerNode.Intelligence;
 
-        DefaultDamage += (int)(dex / 3.5f + str / 7 + @int) / 3;
-        ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.1f);
-    }
+		DefaultDamage += (int)(dex / 3.5f + str / 7 + @int) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.7f);
+	}
 
-    public override void _Process(double delta)
+	public override void _Process(double delta)
 	{
 		// Countdown verringern
 		_timeUntilShoot -= (float)delta;

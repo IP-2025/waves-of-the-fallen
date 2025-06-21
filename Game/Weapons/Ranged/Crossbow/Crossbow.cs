@@ -34,15 +34,15 @@ public partial class Crossbow : RangedWeapon
         _timeUntilShoot = _shootCooldown;
     }
 
-    private void calculateWeaponStats()
-    {
-        DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
-        int dex = OwnerNode.Dexterity;
-        int str = OwnerNode.Strength;
-        int @int = OwnerNode.Intelligence;
+	private void calculateWeaponStats()
+	{
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+		dex = OwnerNode.Dexterity;
+		str = OwnerNode.Strength;
+		@int = OwnerNode.Intelligence;
 
-        DefaultDamage += (int)(dex / 1.2f + str + @int / 5) / 3;
-        ShootDelay *= Math.Max(Math.Min(1f / Math.Max((str - 80) / 50f, 1), 1f), 0.1f);
+		DefaultDamage += (int)(dex / 1.2f + str + @int / 5) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((str - 80) / 50f, 1), 1f), 0.5f);
     }
 
     public override void _Process(double delta)

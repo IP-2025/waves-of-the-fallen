@@ -24,28 +24,28 @@ public partial class FireStaff : RangedWeapon
 	private float _timeUntilShoot;
 
 	public override void _Ready()
-    {
-        animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/FireStaffSprite");
-        projectileScene = _fireballPacked;
+	{
+		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/FireStaffSprite");
+		projectileScene = _fireballPacked;
 
-        _CalculateWeaponStats();
+		_CalculateWeaponStats();
 
-        _shootCooldown = ShootDelay;
-        _timeUntilShoot = _shootCooldown;
-    }
+		_shootCooldown = ShootDelay;
+		_timeUntilShoot = _shootCooldown;
+	}
 
-    private void _CalculateWeaponStats()
-    {
+	private void _CalculateWeaponStats()
+	{
 		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
-        int dex = OwnerNode.Dexterity;
-        int str = OwnerNode.Strength;
-        int @int = OwnerNode.Intelligence;
+		dex = OwnerNode.Dexterity;
+		str = OwnerNode.Strength;
+		@int = OwnerNode.Intelligence;
 
-        DefaultDamage += (int)(dex / 7 + str / 3.5 + @int) / 3;
-        ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80f) / 50f, 1), 1f), 0.5f);
-    }
+		DefaultDamage += (int)(dex / 7 + str / 3.5 + @int) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80f) / 50f, 1), 1f), 0.7f);
+	}
 
-    public override void _Process(double delta)
+	public override void _Process(double delta)
 	{
 		// Countdown verringern
 		_timeUntilShoot -= (float)delta;

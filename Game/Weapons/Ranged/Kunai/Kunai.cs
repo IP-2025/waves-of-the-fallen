@@ -15,7 +15,7 @@ public partial class Kunai : RangedWeapon
 	public override int DefaultPiercing { get; set; } = KunaiProjectile.DefaultPiercing;
 	public override float DefaultSpeed { get; set; } = KunaiProjectile.DefaultSpeed;
 
-	public override float ShootDelay { get; set; } = 0.4f;
+	public override float ShootDelay { get; set; } = 0.8f;
 	public override int SoundFrame => 1;
 	
 	private float _shootCooldown;
@@ -34,15 +34,15 @@ public partial class Kunai : RangedWeapon
         _timeUntilShoot = _shootCooldown;
     }
 
-    private void _CalculateWeaponStats()
-    {
+	private void _CalculateWeaponStats()
+	{
 		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
-        int dex = OwnerNode.Dexterity;
-        int str = OwnerNode.Strength;
-        int @int = OwnerNode.Intelligence;
+		dex = OwnerNode.Dexterity;
+		str = OwnerNode.Strength;
+		@int = OwnerNode.Intelligence;
 
-        DefaultDamage += (int)(dex + str / 8 + @int / 8) / 3;
-        ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.2f);
+		DefaultDamage += (int)(dex + str / 8 + @int / 8) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.5f);
     }
 
     public override void _Process(double delta)

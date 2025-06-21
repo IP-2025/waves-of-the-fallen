@@ -30,7 +30,7 @@ public partial class Bow : RangedWeapon
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/BowSprite");
 		projectileScene = _arrowPacked;
 
-		calculateWeaponStats();		
+		calculateWeaponStats();
 
 		_shootCooldown = ShootDelay;
 		_timeUntilShoot = _shootCooldown;
@@ -39,14 +39,11 @@ public partial class Bow : RangedWeapon
 	private void calculateWeaponStats()
 	{
 		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
-		int dex = OwnerNode.Dexterity;
-		int str = OwnerNode.Strength;
-		int @int = OwnerNode.Intelligence;
+		dex = OwnerNode.Dexterity;
+		str = OwnerNode.Strength;
+		@int = OwnerNode.Intelligence;
 		DefaultDamage = DefaultDamage + (int)(dex + str / 3.5f + @int / 7) / 3;
-		GD.Print(Math.Max((dex-80f) / 50f, 1f));
-		GD.Print(Math.Min(1f / Math.Max((dex-80f) / 50f, 1f), 1f));
-		GD.Print(Math.Max(Math.Min(1f / Math.Max((dex - 80f) / 50f, 1f), 1f), 0.1f));
-		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex-80f) / 50f, 1f), 1f), 0.1f);
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80f) / 50f, 1f), 1f), 0.5f);
 	}
 	
 	public override void _Process(double delta)

@@ -15,11 +15,6 @@ public partial class HammerProjectile : Projectile
 
 	public override void _Ready()
     {
-		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
-        int dex = OwnerNode.Dexterity;
-        int str = OwnerNode.Strength;
-        int @int = OwnerNode.Intelligence;
-
         Speed = DefaultSpeed;
         Damage = DefaultDamage + (int)(dex / 5 + str + @int / 7.5f) / 3;
         Piercing = DefaultPiercing;

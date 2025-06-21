@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Godot;
 
-public partial class Medicine : Area2D
+public partial class Medicine : Projectile
 {
 
 	AnimatedSprite2D medicineSprite;
@@ -15,29 +15,24 @@ public partial class Medicine : Area2D
 	public float _throwSlowdown = 2;
 
 	public override void _Ready()
-    {
-        medicineSprite = GetNode<AnimatedSprite2D>("MedicineSprite");
-        PathFollow2D path = GetNode<PathFollow2D>("Path2D/PathFollow2D");
-        path.ProgressRatio = GD.Randf();
-        endPos = path.GlobalPosition;
-        _ = EnablePlayerCollision();
+	{
+		medicineSprite = GetNode<AnimatedSprite2D>("MedicineSprite");
+		PathFollow2D path = GetNode<PathFollow2D>("Path2D/PathFollow2D");
+		path.ProgressRatio = GD.Randf();
+		endPos = path.GlobalPosition;
+		_ = EnablePlayerCollision();
 
-        _CalculateWeaponStats();
+		_CalculateWeaponStats();
 
-    }
+	}
 
-    private void _CalculateWeaponStats()
-    {
-        DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
-        int dex = OwnerNode.Dexterity;
-        int str = OwnerNode.Strength;
-        int @int = OwnerNode.Intelligence;
+	private void _CalculateWeaponStats()
+	{
+		healing = healValue + (int)(dex + str / 3 + @int / 3) / 30;
+		_throwSlowdown *= Math.Max(Math.Min(Math.Max(dex - 80, 0) / 100, 1.5f), 1);
+	}
 
-        healing = healValue + (int)(dex + str / 3 + @int / 3) / 30;
-        _throwSlowdown *= Math.Max(Math.Min(Math.Max(dex - 80, 0) / 100, 1.5f), 1);
-    }
-
-    public override void _PhysicsProcess(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		if (GlobalPosition.DistanceTo(endPos) > 10)
 			GlobalPosition += (endPos - GlobalPosition) / _throwSlowdown * (float)delta;

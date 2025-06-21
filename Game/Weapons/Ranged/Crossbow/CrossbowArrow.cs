@@ -7,13 +7,7 @@ public partial class CrossbowArrow : Projectile
 	public const int   DefaultPiercing = 3;
 
 	public override void _Ready()
-	{
-
-		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
-        int dex = OwnerNode.Dexterity;
-        int str = OwnerNode.Strength;
-        int @int = OwnerNode.Intelligence;
-		
+	{	
 		Speed    = DefaultSpeed;
 		Damage   = DefaultDamage + (int)(dex/1.2f + str + @int/5)/3;
 		Piercing = DefaultPiercing + Math.Max((int)((str - 100) / 50f), 0);
