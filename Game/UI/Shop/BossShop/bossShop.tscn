@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b8dcceo0us5r5"]
+[gd_scene load_steps=8 format=3 uid="uid://b8dcceo0us5r5"]
 
 [ext_resource type="Script" uid="uid://j5gcbrucnngq" path="res://UI/Shop/BossShop/BossShop.cs" id="1_cox2s"]
-[ext_resource type="Texture2D" uid="uid://c1wtudeu06ucg" path="res://Weapons/Ranged/Bow/Resources/BowEmpty.png" id="2_vpdq8"]
+[ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="2_uv5u4"]
+[ext_resource type="Texture2D" uid="uid://cfsrh5vl38dw5" path="res://Weapons/Ranged/Bow/Resources/BowEmpty.png" id="2_vpdq8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpdq8"]
 bg_color = Color(0.309804, 0.309804, 0.309804, 1)
@@ -21,7 +22,7 @@ cache/0/16/0/scale = 1.0
 
 [node name="BossShop" type="Control"]
 process_mode = 3
-z_index = 1
+z_index = 20
 layout_mode = 3
 anchors_preset = 0
 offset_left = -287.5
@@ -49,8 +50,9 @@ offset_bottom = 60.79
 custom_minimum_size = Vector2(82.145, 59.76)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 30
-text = "Choose weapon"
+theme_override_fonts/font = ExtResource("2_uv5u4")
+theme_override_font_sizes/font_size = 60
+text = "Choose a weapon"
 horizontal_alignment = 1
 vertical_alignment = 1
 
