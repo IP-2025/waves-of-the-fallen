@@ -16,6 +16,7 @@ export_presets.cfg
 k8s/db-secret.yaml
 .DS_Store
 .godot
+Game/project.godot
 
 # === .NET build output ===
 bin/
