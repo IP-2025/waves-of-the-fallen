@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://d2coob6g63jxs"]
+[gd_scene load_steps=5 format=3 uid="uid://d2coob6g63jxs"]
 
 [ext_resource type="Script" uid="uid://cys3fynk5hqns" path="res://Menu/Login/LoginScreen.cs" id="1_36i0f"]
+[ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="3_ttk5k"]
 [ext_resource type="Texture2D" uid="uid://c0a7miobpljup" path="res://Assets/Menu_UI/FantasyMinimalPixelArtGUI/UI/RectangleBox_96x96.png" id="btn_box"]
 
 [sub_resource type="StyleBoxTexture" id="ButtonStyleBox"]
@@ -77,7 +78,8 @@ text = "Create Account"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
-theme_override_font_sizes/font_size = 40
+theme_override_fonts/font = ExtResource("3_ttk5k")
+theme_override_font_sizes/font_size = 60
 text = "Login"
 
 [node name="OfflineButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]

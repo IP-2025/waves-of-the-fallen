@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://txkhl3hrcmdx"]
+[gd_scene load_steps=6 format=3 uid="uid://txkhl3hrcmdx"]
 
 [ext_resource type="Script" uid="uid://g7xprrcaye5v" path="res://Menu/Main/Mainmenu.cs" id="1_86uyx"]
 [ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="2_b8sra"]
@@ -109,6 +109,7 @@ theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_b8sra")
 theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("ButtonStyleBox")
 theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
@@ -138,6 +139,7 @@ theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_b8sra")
 theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("ButtonStyleBox")
 theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
@@ -168,6 +170,7 @@ theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_b8sra")
 theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("ButtonStyleBox")
 theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
@@ -292,6 +295,7 @@ theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_b8sra")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/focus = SubResource("ButtonStyleBox")
 theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
