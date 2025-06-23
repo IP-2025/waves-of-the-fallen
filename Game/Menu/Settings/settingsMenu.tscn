@@ -68,6 +68,7 @@ theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_jou32")
 theme_override_font_sizes/font_size = 45
 theme_override_styles/focus = SubResource("ButtonStyleBox")
 theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
@@ -101,6 +102,7 @@ theme_override_constants/separation = 32
 [node name="LabelMusicVolume" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jou32")
 theme_override_font_sizes/font_size = 40
 text = "Music"
 
@@ -116,6 +118,7 @@ theme_override_constants/separation = 32
 [node name="LabelMusicVolume" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jou32")
 theme_override_font_sizes/font_size = 40
 text = "Music Volume"
 
@@ -149,6 +152,7 @@ theme_override_constants/separation = 32
 [node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer5"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jou32")
 theme_override_font_sizes/font_size = 40
 text = "Sound"
 
@@ -164,6 +168,7 @@ theme_override_constants/separation = 32
 [node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer6"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jou32")
 theme_override_font_sizes/font_size = 40
 text = "Sound Volume"
 
@@ -189,6 +194,7 @@ theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_jou32")
 theme_override_font_sizes/font_size = 28
 theme_override_styles/focus = SubResource("ButtonStyleBox")
 theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")

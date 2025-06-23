@@ -10,6 +10,7 @@ public partial class HighscoreScreen : Control
 	private HttpRequest _topPlayerRequest;
 	private Button _backButton;
 	private Button _mainMenuButton;
+	private Font _font;
 
 	public override void _Ready()
 	{
@@ -23,7 +24,8 @@ public partial class HighscoreScreen : Control
 		_backButton.Connect("pressed", new Callable(this, nameof(OnBackButtonPressed)));
 		_mainMenuButton.Connect("pressed", new Callable(this, nameof(OnMainMenuButtonPressed)));
 
-	
+		_font = GD.Load<Font>("res://Assets/Fonts/Orbitron/Orbitron-VariableFont_wght.ttf");
+
 		if (GameState.CurrentState == ConnectionState.Online)
 		{
 			var headers = new[]
@@ -121,13 +123,20 @@ public partial class HighscoreScreen : Control
 					entry.GetNode<Label>("HBoxContainer/Name").Text = player["username"].ToString();
 					entry.GetNode<Label>("HBoxContainer/Score").Text = scoreDict["highScore"].ToString();
 
-
 					var rawTimestamp = scoreDict["timeStamp"].ToString();
 					var formattedTime = rawTimestamp;
 					if (DateTime.TryParse(rawTimestamp, out var dt))
 						formattedTime = dt.ToLocalTime().ToString("dd.MM.yyyy HH:mm");
 
 					entry.GetNode<Label>("HBoxContainer/Time").Text = formattedTime;
+
+					// set font and size for labels 
+					foreach (Label label in entry.GetNode("HBoxContainer").GetChildren())
+					{
+						label.AddThemeFontOverride("font", _font);
+						label.AddThemeFontSizeOverride("font_size", 20);
+					}
+
 					vbox.AddChild(entry);
 				}
 			}

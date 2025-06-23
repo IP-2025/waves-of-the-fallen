@@ -56,7 +56,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("2_jrukd")
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 40
 text = "Settings"
 
 [node name="ButtonBack" type="Button" parent="Control/MarginContainer2/VBoxContainer/HBoxContainer"]
@@ -68,6 +68,7 @@ theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_jrukd")
 theme_override_font_sizes/font_size = 36
 theme_override_styles/focus = SubResource("ButtonStyleBox")
 theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
@@ -100,6 +101,7 @@ theme_override_constants/separation = 20
 [node name="LabelMusicVolume" type="Label" parent="Control/MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jrukd")
 theme_override_font_sizes/font_size = 40
 text = "Music"
 
@@ -115,6 +117,7 @@ theme_override_constants/separation = 20
 [node name="LabelMusicVolume" type="Label" parent="Control/MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jrukd")
 theme_override_font_sizes/font_size = 40
 text = "Music Volume"
 
@@ -148,6 +151,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Control/MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer5"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jrukd")
 theme_override_font_sizes/font_size = 40
 text = "Sound"
 
@@ -162,6 +166,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Control/MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer6"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jrukd")
 theme_override_font_sizes/font_size = 40
 text = "Sound Volume"
 

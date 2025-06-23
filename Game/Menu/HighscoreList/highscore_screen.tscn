@@ -1,83 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://bpia4v0vcnbsd"]
+[gd_scene load_steps=13 format=3 uid="uid://bpia4v0vcnbsd"]
 
 [ext_resource type="Script" uid="uid://x04jr0y0dvux" path="res://Menu/HighscoreList/HighscoreScreen.cs" id="1_iii7p"]
+[ext_resource type="FontFile" uid="uid://cbtai6ax18jyn" path="res://Assets/Fonts/Orbitron/Orbitron-VariableFont_wght.ttf" id="2_sqnvv"]
+[ext_resource type="Texture2D" uid="uid://c0a7miobpljup" path="res://Assets/Menu_UI/FantasyMinimalPixelArtGUI/UI/RectangleBox_96x96.png" id="btn_box"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iii7p"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sqnvv"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8n6uq"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_reb52"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ljv6o"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8pha"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xob4a"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_66bwn"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2fio3"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4p8wq"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t8ixp"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
+[sub_resource type="StyleBoxTexture" id="ButtonStyleBox"]
+texture = ExtResource("btn_box")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_iii7p"]
 
@@ -97,6 +25,13 @@ VScrollBar/styles/scroll = SubResource("StyleBoxEmpty_reb52")
 VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_ljv6o")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_iii7p"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sqnvv"]
+bg_color = Color(0.172549, 0.780392, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -143,7 +78,8 @@ layout_mode = 2
 [node name="Title" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
-theme_override_font_sizes/font_size = 40
+theme_override_fonts/font = ExtResource("2_sqnvv")
+theme_override_font_sizes/font_size = 60
 text = "Highscores"
 
 [node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
@@ -152,18 +88,23 @@ custom_minimum_size = Vector2(140, 50)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
+theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_sqnvv")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxFlat_iii7p")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_sqnvv")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_8n6uq")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_reb52")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_ljv6o")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_t8pha")
-theme_override_styles/hover = SubResource("StyleBoxFlat_xob4a")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_66bwn")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_2fio3")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_4p8wq")
-theme_override_styles/normal = SubResource("StyleBoxFlat_t8ixp")
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Back"
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
@@ -180,21 +121,25 @@ theme_override_constants/separation = 0
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 2
+theme_override_fonts/font = ExtResource("2_sqnvv")
 text = "Position"
 
 [node name="Label3" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 2
+theme_override_fonts/font = ExtResource("2_sqnvv")
 text = "Name"
 
 [node name="Label4" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 2
+theme_override_fonts/font = ExtResource("2_sqnvv")
 text = "Date"
 
 [node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 2
+theme_override_fonts/font = ExtResource("2_sqnvv")
 text = "Score"
 
 [node name="List" type="ScrollContainer" parent="MarginContainer/VBoxContainer"]
@@ -240,28 +185,31 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_sqnvv")
 
 [node name="Name" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2/PlayerScore/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_sqnvv")
 
 [node name="Time" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2/PlayerScore/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_sqnvv")
 
 [node name="Score" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2/PlayerScore/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_sqnvv")
 
 [node name="MarginContainerOffline" type="MarginContainer" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -300,6 +248,7 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_sqnvv")
 theme_override_font_sizes/font_size = 20
 text = "No Highscores visisble becuase you are offline.
 Go online to view the highscores of other players and yourself."
@@ -313,20 +262,25 @@ theme_override_constants/margin_bottom = 10
 
 [node name="Button" type="Button" parent="MarginContainerOffline/Offline/VBoxContainer/MarginContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(240, 0)
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("2_sqnvv")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxFlat_sqnvv")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_sqnvv")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_sqnvv")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_sqnvv")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_sqnvv")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_sqnvv")
-theme_override_styles/hover = SubResource("StyleBoxFlat_sqnvv")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_sqnvv")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_sqnvv")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_sqnvv")
-theme_override_styles/normal = SubResource("StyleBoxFlat_sqnvv")
+theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Main Menu"
