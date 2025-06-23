@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bpia4v0vcnbsd"]
+[gd_scene load_steps=12 format=3 uid="uid://bpia4v0vcnbsd"]
 
 [ext_resource type="Script" uid="uid://x04jr0y0dvux" path="res://Menu/HighscoreList/HighscoreScreen.cs" id="1_iii7p"]
 [ext_resource type="FontFile" uid="uid://cbtai6ax18jyn" path="res://Assets/Fonts/Orbitron/Orbitron-VariableFont_wght.ttf" id="2_sqnvv"]
@@ -25,13 +25,6 @@ VScrollBar/styles/scroll = SubResource("StyleBoxEmpty_reb52")
 VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_ljv6o")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_iii7p"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sqnvv"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -210,6 +203,7 @@ theme_override_fonts/font = ExtResource("2_sqnvv")
 
 [node name="MarginContainerOffline" type="MarginContainer" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -266,12 +260,12 @@ custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_fonts/font = ExtResource("2_sqnvv")
-theme_override_font_sizes/font_size = 40
 theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_sqnvv")
+theme_override_font_sizes/font_size = 40
 theme_override_styles/focus = SubResource("ButtonStyleBox")
 theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
 theme_override_styles/disabled = SubResource("ButtonStyleBox")
