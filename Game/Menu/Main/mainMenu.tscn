@@ -288,6 +288,7 @@ theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
 [node name="Button_Credits" type="Button" parent="MarginContainer2"]
+custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
