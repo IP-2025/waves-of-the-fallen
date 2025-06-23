@@ -59,6 +59,7 @@ theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_lxdiu")
 theme_override_font_sizes/font_size = 45
 theme_override_styles/focus = SubResource("ButtonStyleBox")
 theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
@@ -87,12 +88,14 @@ size_flags_vertical = 3
 theme_override_constants/separation = 80
 
 [node name="Button_Online" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_lxdiu")
 theme_override_font_sizes/font_size = 80
 theme_override_styles/focus = SubResource("ButtonStyleBox")
 theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
@@ -109,12 +112,14 @@ text = "Online
 "
 
 [node name="Button_Local" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_lxdiu")
 theme_override_font_sizes/font_size = 80
 theme_override_styles/focus = SubResource("ButtonStyleBox")
 theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
@@ -131,12 +136,14 @@ text = "Local
 "
 
 [node name="Button_Solo" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
 theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_lxdiu")
 theme_override_font_sizes/font_size = 80
 theme_override_styles/focus = SubResource("ButtonStyleBox")
 theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
