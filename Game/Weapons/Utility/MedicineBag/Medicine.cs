@@ -8,7 +8,7 @@ public partial class Medicine : Projectile
 	AnimatedSprite2D medicineSprite;
 
 	private Vector2 endPos;
-	public const int healValue = 15;
+	public const int healValue = 10;
 
 	public int healing = 0;
 
@@ -28,7 +28,7 @@ public partial class Medicine : Projectile
 
 	private void _CalculateWeaponStats()
 	{
-		healing = healValue + (int)(dex + str / 3 + @int / 3) / 30;
+		healing = healValue + (int)(dex + str / 3 + @int / 3) / 50;
 		_throwSlowdown *= Math.Max(Math.Min(Math.Max(dex - 80, 0) / 100, 1.5f), 1);
 	}
 

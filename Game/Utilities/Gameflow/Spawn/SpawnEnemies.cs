@@ -44,8 +44,8 @@ public partial class SpawnEnemies : Node2D
 		_enemyLimitMax += 10 * (_playerCount - 1); // increase max ammount of enemies with playerCount
 
 		// initialize scaling values for higher wave start. all values scale additively (wave 1 health = *1 multiplier | wave 10 health = *1.9 multiplier)
-		_healthMultiplier = 1f + (_currentWave - 1) * 0.1f; // increases enemy health by 10%
-		_damageMultiplier = 1f + (_currentWave - 1) * 0.5f; // increases enemy damage by 20%
+		_healthMultiplier = 1f + (_currentWave - 1) * (0.1f + (_playerCount-1)*0.05f); // increases enemy health by 10%
+		_damageMultiplier = 1f + (_currentWave - 1) * (0.2f + (_playerCount-1)*0.1f); // increases enemy damage by 20%
 		_attackSpeedMultiplier = Math.Min(1f + (_currentWave - 1) * 0.05f , 2f); // increases enemy attack speed by 5% until 200% is reached
 		_moveSpeedMultiplier = Math.Min(1f + (_currentWave - 1) * 0.0375f , 1.5f); // increases enemy movement speed by 5% until 200% is reached
 
@@ -179,8 +179,8 @@ public partial class SpawnEnemies : Node2D
 	}
 	private void OnWaveStart() 
 	{
-		_healthMultiplier = 1f + (_currentWave - 1) * 0.1f;
-		_damageMultiplier = 1f + (_currentWave - 1) * 0.5f;
+		_healthMultiplier = 1f + (_currentWave - 1) * (0.1f + (_playerCount-1)*0.05f);
+		_damageMultiplier = 1f + (_currentWave - 1) * (0.2f + (_playerCount-1)*0.1f);
 		_attackSpeedMultiplier = Math.Min(1f + (_currentWave - 1) * 0.05f , 2f);
 		_moveSpeedMultiplier = Math.Min(1f + (_currentWave - 1) * 0.0375f , 1.5f);
 

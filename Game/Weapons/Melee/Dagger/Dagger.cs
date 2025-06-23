@@ -12,7 +12,7 @@ public partial class Dagger : MeleeWeapon
 	public override float DefaultSpeed { get; set; } = 0f;
 	public override string ResourcePath => _resBase + "Resources/";
 	public override string IconPath => _resourcePath + "Dolch1.png";
-	public override float DefaultRange { get; set; } = 80f;
+	public override float DefaultRange { get; set; } = 120f;
 	public override int DefaultDamage { get; set; } = 80;
 
 	public override float ShootDelay { get; set; } = 0.9f;

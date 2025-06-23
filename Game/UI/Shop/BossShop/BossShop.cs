@@ -3,7 +3,7 @@ using Godot;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-public partial class BossShop : Control
+public partial class BossShop : CanvasLayer
 {
 	[Signal] 
 	public delegate void WeaponChosenEventHandler(Weapon weapon);
@@ -42,7 +42,7 @@ public partial class BossShop : Control
 		box.GetNode<RichTextLabel>("name").Text = weapon.GetType().Name;
 		box.GetNode<RichTextLabel>("damage").Text = weapon is Healstaff || weapon is MedicineBag ? $"Heal:   {stats.dmg}" : $"Damage:   {stats.dmg}";
 		box.GetNode<RichTextLabel>("range").Text = $"Range:    {(int)stats.range}";
-		box.GetNode<RichTextLabel>("delay").Text = $"Attacks/s:    {stats.delay}";
+		box.GetNode<RichTextLabel>("delay").Text = $"Attacks/s:    {Math.Round(1f/stats.delay, 2)}";
 		box.GetNode<RichTextLabel>("piercing").Text = weapon is RangedWeapon ? $"Piercing: {stats.piercing}" : "";
 		
 		var btn = GetNode<Button>(containerPath);

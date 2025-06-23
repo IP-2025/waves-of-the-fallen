@@ -24,10 +24,10 @@ public partial class CharacterManager : Node
 
             //Standart Character und Stats setzen
             //health, speed, dexterity, strength, intelligence,
-            SaveCharacterData(1, "Archer",   85, 200, 100, 100, 110, 1, 1);
-            SaveCharacterData(2, "Assassin", 70, 220, 100, 85, 110, 1, 0);
-            SaveCharacterData(3, "Knight",  125,  180, 125, 120,  85, 1, 0);
-            SaveCharacterData(4, "Mage",    100, 200, 110, 50, 110, 1, 0);
+            SaveCharacterData(1, "Archer",   100, 200, 100, 100, 100, 1, 1);
+            SaveCharacterData(2, "Assassin", 70, 220, 150, 75, 75, 1, 0);
+            SaveCharacterData(3, "Knight",  130,  180, 80, 150,  70, 1, 0);
+            SaveCharacterData(4, "Mage",    85, 210, 85, 65, 150, 1, 0);
 
             _config.Save(SettingsPath);
         }

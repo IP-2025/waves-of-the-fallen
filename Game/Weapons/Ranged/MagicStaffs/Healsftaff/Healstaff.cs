@@ -16,7 +16,7 @@ public partial class Healstaff : Weapon
 	public string ResourcePath => _resourcePath;
 	public override string IconPath => _resourcePath + "HealStaff1.png";
 	public override float DefaultRange { get; set; } = 170f;
-	public override int DefaultDamage { get; set; } = 25;
+	public override int DefaultDamage { get; set; } = 20;
 	public override float ShootDelay { get; set; } = 10f;
 	public int SoundFrame => 3;
 	
@@ -43,8 +43,8 @@ public partial class Healstaff : Weapon
 		str = OwnerNode.Strength;
 		@int = OwnerNode.Intelligence;
 
-		DefaultDamage += (int)(dex / 3 + str / 3 + @int) / 30;
-		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.5f);
+		DefaultDamage += (int)(dex / 3 + str / 3 + @int) / 50;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.7f);
 		DefaultRange = DefaultRange + Math.Max(Math.Min((@int - 100f) / 2f, 50f), 0);
 	}
 

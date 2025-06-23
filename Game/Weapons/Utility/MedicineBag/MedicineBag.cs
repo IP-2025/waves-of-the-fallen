@@ -14,7 +14,7 @@ public partial class MedicineBag : Weapon
 	private const string _resourcePath = _resBase + "Resources/";
 	public override string IconPath => _resourcePath + "MedicineBag.png";
 
-	public override float ShootDelay { get; set; } = 4f;
+	public override float ShootDelay { get; set; } = 5f;
 	public override float DefaultRange { get; set; } = 0;
 	public override int DefaultDamage { get; set; } = Medicine.healValue;
 	public override int DefaultPiercing { get; set; } = 0;
@@ -25,7 +25,6 @@ public partial class MedicineBag : Weapon
 
 	public override void _Ready()
 	{
-
 		medicineBagSprite = GetNode<AnimatedSprite2D>("MedicineBagSprite");
 
 		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
@@ -34,7 +33,7 @@ public partial class MedicineBag : Weapon
 		@int = OwnerNode.Intelligence;
 
 		DefaultDamage += (int)(dex + str / 3 + @int / 3) / 30;
-		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.5f);
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.7f);
 
 		_shootCooldown = ShootDelay;
 		_timeUntilShoot = _shootCooldown;
