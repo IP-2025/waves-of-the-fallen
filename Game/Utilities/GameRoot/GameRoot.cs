@@ -275,7 +275,7 @@ public partial class GameRoot : Node
 		player.Dexterity = character?.Dexterity ?? 0;
 		player.Strength = character?.Strength ?? 0;
 		player.Intelligence = character?.Intelligence ?? 0;
-		DebugIt($"Spawned player {peerId} with characterId {characterId}, max health {player.MaxHealth}, current health {player.CurrentHealth}, speed {player.Speed}, health should be: {character.Health}, dex {player.Dexterity}, str {character.Strength}, int {character.Intelligence}");
+		// DebugIt($"Spawned player {peerId} with characterId {characterId}, max health {player.MaxHealth}, current health {player.CurrentHealth}, speed {player.Speed}, health should be: {character.Health}, dex {player.Dexterity}, str {character.Strength}, int {character.Intelligence}");
 
 		player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
 			.OfType<Node2D>()
