@@ -20,6 +20,9 @@ public partial class OnlineLocalMenu : Control
 	private void _on_button_online_pressed()
 	{
 
+		var scene = ResourceLoader.Load<PackedScene>("res://Menu/Online/OnlineMenu.tscn");
+		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
+		GetTree().ChangeSceneToPacked(scene);
 	}
 
 	private void _on_button_solo_pressed()
@@ -39,6 +42,6 @@ public partial class OnlineLocalMenu : Control
 		{
 			_on_button_back_onlineLocal_pressed();
 		}
-        
+		
 	}
 }

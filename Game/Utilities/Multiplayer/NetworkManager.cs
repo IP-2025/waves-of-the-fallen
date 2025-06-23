@@ -1,4 +1,7 @@
 //old one
+
+using Game.Utilities.Backend;
+
 namespace Game.Utilities.Multiplayer
 {
 	using Godot;
@@ -14,9 +17,9 @@ namespace Game.Utilities.Multiplayer
 	// Autoload-Node: manages Netzwerk, Tick-Loop
 	public partial class NetworkManager : Node
 	{
-		public bool enableDebug = false;
-		[Export] public int RPC_PORT = 9999;   // ENet for RPC
-		[Export] public int UDP_PORT = 3000;   // PacketPeerUDP for game data
+		public bool enableDebug = true;
+		public int RPC_PORT = 9999;   // ENet for RPC
+		public int UDP_PORT = 3000;   // PacketPeerUDP for game data
 
 		// peers
 		private PacketPeerUdp _udpClientPeer;
@@ -34,8 +37,8 @@ namespace Game.Utilities.Multiplayer
 		private double _acc = 0;
 		private const float TICK_DELTA = 1f / 30;
 		private Timer shutdownTimer; // for headless server if no one is connected
-		private const float ServerShutdownDelay = 5f; // seconds 
-		public static NetworkManager Instance { get; set; }
+		private const float ServerShutdownDelay = 300f; // seconds
+		public static NetworkManager Instance { get; private set; }
 		private Client client;
 		private Server server;
 		public bool _isLocalHost = false;
@@ -152,9 +155,18 @@ namespace Game.Utilities.Multiplayer
 			DebugIt("Server startet on port: RPC " + RPC_PORT + " + UDP " + UDP_PORT + " IP: " + GetServerIPAddress());
 		}
 
-		public void InitClient(string code)
+		public void InitClient(string code, int UDP_PORT = 3000, int RPC_PORT = 9999, bool isLocal = true)
 		{
-			string address = ResolveConnectionCode(code);
+			string address;
+			if (isLocal)
+			{
+				address = ResolveConnectionCode(code);
+			}
+			else
+			{
+				address = ServerConfig.ServerAddress;
+			}
+
 			// add client node as child to NetworkManager
 			client = new Client();
 			AddChild(client);
@@ -162,7 +174,8 @@ namespace Game.Utilities.Multiplayer
 
 			// RPC Client with ENet
 			_rpcClientPeer = new ENetMultiplayerPeer();
-			_rpcClientPeer.CreateClient(address, RPC_PORT);
+			var err1 = _rpcClientPeer.CreateClient(address, RPC_PORT);
+			GD.PrintErr($"fucking rpc peer result: {err1}");
 			GetTree().GetMultiplayer().MultiplayerPeer = _rpcClientPeer;
 
 			// UDP Client for game data
@@ -170,6 +183,7 @@ namespace Game.Utilities.Multiplayer
 			var err = _udpClientPeer.ConnectToHost(address, UDP_PORT);
 			if (err != Error.Ok)
 			{
+				GD.PrintErr($"Params: udp address: {address}, udp port: {UDP_PORT}");
 				GD.PrintErr($"UDP-Connect fehlgeschlagen: {err}");
 				return;
 			}
@@ -187,13 +201,14 @@ namespace Game.Utilities.Multiplayer
 			if (shutdownTimer != null) return; // dont start twice
 
 			shutdownTimer = new Timer();
+			shutdownTimer.ProcessMode = Timer.ProcessModeEnum.Always;
 			shutdownTimer.OneShot = true;
 			shutdownTimer.WaitTime = ServerShutdownDelay;
 			shutdownTimer.Timeout += () =>
 			{
 				if (GetTree().GetMultiplayer().GetPeers().Count() == 0)
 				{
-					DebugIt("No peers connected. Shutting down server.");
+					DebugIt("No peers connected. Shutting down server automatically.");
 					GetTree().Quit();
 				}
 				else
@@ -244,7 +259,7 @@ namespace Game.Utilities.Multiplayer
 			if (_isServer && GetTree().GetMultiplayer().GetPeers().Count() == 0)
 			{
 				// kill him!! if he is a lonely server, lost in the sad world of the web with no one to play with ;(
-				DebugIt("No peers connected. Shutting down server.");
+				DebugIt("No peers connected due to disconnects. Shutting down server.");
 				GetTree().Quit();
 			}
 		}
@@ -392,8 +407,8 @@ namespace Game.Utilities.Multiplayer
 			var gameScene = GD.Load<PackedScene>("res://Utilities/GameRoot/GameRoot.tscn");
 			gameScene.Instantiate<Node>();
 			GetTree().ChangeSceneToPacked(gameScene);
-
 			var peerId = GetTree().GetMultiplayer().GetUniqueId();
+			GD.PrintErr($"Game started by peer: {peerId}");
 			DebugIt($"NotifyGameStart called by (PeerID: {peerId})");
 
 			_gameRunning = true;
@@ -403,6 +418,10 @@ namespace Game.Utilities.Multiplayer
 		public void SelectCharacter(int selectedCharacterId, int health, int speed)
 		{
 			long peerId = Multiplayer.GetRemoteSenderId();
+//			Server.Instance.PlayerSelections[peerId] = new PlayerCharacterData { CharacterId = selectedCharacterId };
+			DebugIt("Player selectged: " + selectedCharacterId + " By PlayerID: " + peerId);
+			GD.PrintErr($"Game peer {peerId} selected character {selectedCharacterId}");
+
 			// Speichere alle Werte pro Spieler
 			Server.Instance.PlayerSelections[peerId] = new PlayerCharacterData
 			{
@@ -527,6 +546,7 @@ namespace Game.Utilities.Multiplayer
 				if (child is Node node)
 					node.QueueFree();
 			}
+
 			server = null;
 			client = null;
 
@@ -558,6 +578,7 @@ namespace Game.Utilities.Multiplayer
 				_rpcClientPeer = null;
 				DebugIt("ENetMultiplayerPeer (Client) disconnected (Cleanup).");
 			}
+
 			if (_rpcServerPeer != null)
 			{
 				_rpcServerPeer.Close();
@@ -565,8 +586,8 @@ namespace Game.Utilities.Multiplayer
 				_rpcServerPeer = null;
 				DebugIt("ENetMultiplayerPeer (Server) disconnected (Cleanup).");
 			}
+
 			GC.Collect();
 		}
 	}
-
 }
