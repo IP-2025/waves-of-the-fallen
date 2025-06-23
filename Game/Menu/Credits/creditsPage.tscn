@@ -57,7 +57,7 @@ horizontal_alignment = 1
 
 [node name="LabelMusic" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 30
 text = "Backgroundmusic:"
 horizontal_alignment = 1
 
@@ -71,7 +71,7 @@ horizontal_alignment = 1
 
 [node name="LabelMap" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 30
 text = "Map-Assets:"
 horizontal_alignment = 1
 
@@ -83,7 +83,7 @@ horizontal_alignment = 1
 
 [node name="LabelEngine" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 30
 text = "Game engine:"
 horizontal_alignment = 1
 
@@ -95,7 +95,7 @@ horizontal_alignment = 1
 
 [node name="LabelHealthbar" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 30
 text = "Healthbar-Assets:"
 horizontal_alignment = 1
 
@@ -106,7 +106,7 @@ horizontal_alignment = 1
 
 [node name="LabelUI" type="Label" parent="MarginContainer2/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
+theme_override_font_sizes/font_size = 30
 text = "UI-Assets:"
 horizontal_alignment = 1
 
