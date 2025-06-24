@@ -20,31 +20,30 @@ cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
 
-[node name="BossShop" type="Control"]
+[node name="BossShop" type="CanvasLayer"]
 process_mode = 3
-z_index = 20
-layout_mode = 3
-anchors_preset = 0
-offset_left = -287.5
-offset_top = -162.5
-offset_right = 862.5
-offset_bottom = 487.5
-scale = Vector2(0.5, 0.5)
+layer = 2
+scale = Vector2(0.85, 0.85)
+transform = Transform2D(0.85, 0, 0, 0.85, 0, 0)
 script = ExtResource("1_cox2s")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 101.176
+offset_top = 69.4117
+offset_right = 101.177
+offset_bottom = 69.4117
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.151276, 0.151276, 0.151276, 1)
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 0
-offset_right = 1150.0
-offset_bottom = 60.79
+offset_left = 101.176
+offset_top = 69.4117
+offset_right = 1251.18
+offset_bottom = 130.202
 
 [node name="Label" type="Label" parent="CenterContainer"]
 custom_minimum_size = Vector2(82.145, 59.76)
@@ -57,10 +56,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 2
-offset_top = 63.0
-offset_right = 1150.0
-offset_bottom = 63.0
+offset_left = 101.176
+offset_top = 132.412
+offset_right = 1251.18
+offset_bottom = 712.412
 size_flags_horizontal = 0
 theme_override_constants/margin_left = 100
 theme_override_constants/margin_top = 80
@@ -327,15 +326,14 @@ mouse_filter = 1
 text = "+ Vorteil"
 
 [node name="TimeLabel" type="RichTextLabel" parent="."]
-layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.749
 anchor_right = 1.0
 anchor_bottom = 0.122
-offset_left = -0.350037
-offset_top = 11.0
-offset_right = -15.0
-offset_bottom = -0.300003
+offset_left = 100.826
+offset_top = 80.4118
+offset_right = 86.1761
+offset_bottom = 69.1118
 theme_override_fonts/normal_font = SubResource("FontFile_vpdq8")
 theme_override_font_sizes/normal_font_size = 40
 

@@ -13,13 +13,16 @@ public partial class Archer : DefaultPlayer
 
 		base._Ready();
 
-		if ( MaxHealth <= 0 && Speed <= 0)
+		if (MaxHealth <= 0 && Speed <= 0)
 		{
 			MaxHealth = CharacterManager.LoadHealthByID("1");
 			Speed = CharacterManager.LoadSpeedByID("1");
+			Dexterity = CharacterManager.LoadDexterityByID("1");
+			Strength = CharacterManager.LoadStrengthByID("1");
+			Intelligence = CharacterManager.LoadIntelligenceByID("1");
 		}
 
-		GD.Print($"Archer initialized. Speed: {Speed}, MaxHealth: {MaxHealth}");
+		GD.Print($"Archer initialized. Speed: {Speed}, MaxHealth: {MaxHealth}, Dex: {Dexterity}, Str: {Strength}, Int: {Intelligence}");
 	}
 
 	public void _on_archer_animation_frame_changed()

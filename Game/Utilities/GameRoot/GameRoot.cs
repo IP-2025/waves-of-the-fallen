@@ -250,7 +250,10 @@ public partial class GameRoot : Node
 				characterId = characterManager.LoadLastSelectedCharacterID();
 				var health = characterManager.LoadHealthByID(characterId.ToString());
 				var speed = characterManager.LoadSpeedByID(characterId.ToString());
-				character = new PlayerCharacterData { CharacterId = characterId, Health = health, Speed = speed };
+				var dexterity = characterManager.LoadDexterityByID(characterId.ToString());
+				var strength = characterManager.LoadStrengthByID(characterId.ToString());
+				var intelligence = characterManager.LoadIntelligenceByID(characterId.ToString());
+				character = new PlayerCharacterData { CharacterId = characterId, Health = health, Speed = speed, Dexterity = dexterity, Strength = strength, Intelligence = intelligence };
 				break;
 		}
 
@@ -269,7 +272,10 @@ public partial class GameRoot : Node
 		player.MaxHealth = character?.Health ?? 0;
 		player.CurrentHealth = character?.Health ?? 0;
 		player.Speed = character?.Speed ?? 0;
-		// DebugIt($"Spawned player {peerId} with characterId {characterId}, max health {player.MaxHealth}, current health {player.CurrentHealth}, speed {player.Speed}, health should be: {character.Health}");
+		player.Dexterity = character?.Dexterity ?? 0;
+		player.Strength = character?.Strength ?? 0;
+		player.Intelligence = character?.Intelligence ?? 0;
+		// DebugIt($"Spawned player {peerId} with characterId {characterId}, max health {player.MaxHealth}, current health {player.CurrentHealth}, speed {player.Speed}, health should be: {character.Health}, dex {player.Dexterity}, str {character.Strength}, int {character.Intelligence}");
 
 		player.GlobalPosition = GetTree().GetNodesInGroup("PlayerSpawnPoints")
 			.OfType<Node2D>()

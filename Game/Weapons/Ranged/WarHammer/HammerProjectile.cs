@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Godot.Collections;
 
@@ -13,13 +14,14 @@ public partial class HammerProjectile : Projectile
 	private bool hasHit = false;
 
 	public override void _Ready()
-	{
-		Speed    = DefaultSpeed;
-		Damage   = DefaultDamage;
-		Piercing = DefaultPiercing;
-	}
-	
-	public override void OnBodyEntered(Node2D body)
+    {
+        Speed = DefaultSpeed;
+        Damage = DefaultDamage + (int)(dex / 5 + str + @int / 7.5f) / 3;
+        Piercing = DefaultPiercing;
+        Radius = Radius + Math.Max(Math.Min((str - 100f) / 2f, 50f), 0);
+    }
+
+    public override void OnBodyEntered(Node2D body)
 	{
 		Speed = 0;
 		SetDeferred("Monitoring", false);
