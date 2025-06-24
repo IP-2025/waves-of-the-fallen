@@ -9,35 +9,28 @@
 texture = ExtResource("btn_box")
 
 [node name="OnlineMenu" type="Control"]
-custom_minimum_size = Vector2(1280, 720)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -68.0
-offset_top = -33.0
-offset_right = 60.0
-offset_bottom = 39.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qs4ul")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.152941, 0.152941, 0.152941, 1)
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.049
-anchor_right = 0.976
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 52.0
-offset_top = -1.28
-offset_right = -20.28
-offset_bottom = -39.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 30
@@ -144,10 +137,10 @@ text = "Host Lobby"
 
 [node name="LobbyCodeInput" type="LineEdit" parent="."]
 layout_mode = 0
-offset_left = 186.0
-offset_top = 569.0
-offset_right = 1101.0
-offset_bottom = 660.0
+offset_left = 124.0
+offset_top = 535.0
+offset_right = 1039.0
+offset_bottom = 626.0
 theme_override_fonts/font = ExtResource("4_j18e1")
 placeholder_text = "Enter Lobby Code"
 max_length = 4
