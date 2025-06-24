@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://bgdvq76tq2l1o"]
 
-[ext_resource type="Texture2D" uid="uid://h5mmnsy6wjji" path="res://UI/Joystick/Ressources/JoyBase.png" id="1_b3blk"]
+[ext_resource type="Texture2D" uid="uid://d244vywy38ayr" path="res://UI/Joystick/Ressources/JoyBase.png" id="1_b3blk"]
 [ext_resource type="Script" uid="uid://lxkxojr07wx5" path="res://UI/Joystick/Joystick.cs" id="1_s6674"]
-[ext_resource type="Texture2D" uid="uid://bugfohtwu33co" path="res://UI/Joystick/Ressources/JoyHandle.png" id="2_s6674"]
+[ext_resource type="Texture2D" uid="uid://vw6ge6tbebwi" path="res://UI/Joystick/Ressources/JoyHandle.png" id="2_s6674"]
 [ext_resource type="Script" uid="uid://d3c1yc1fix2yy" path="res://UI/Joystick/JoyHandle.cs" id="4_fc7hi"]
 
 [node name="Joystick" type="Node2D"]
