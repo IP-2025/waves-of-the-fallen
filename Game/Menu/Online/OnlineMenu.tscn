@@ -24,10 +24,8 @@ script = ExtResource("1_qs4ul")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = 64.0
-offset_top = 36.0
-offset_right = 1220.0
-offset_bottom = 684.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 color = Color(0.152941, 0.152941, 0.152941, 1)
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
