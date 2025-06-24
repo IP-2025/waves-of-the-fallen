@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://drpw3l1n3pqvj"]
 
 [ext_resource type="Script" uid="uid://dwndu863qc4hw" path="res://UI/Joystick/JoystickControl.cs" id="1_o5hfc"]
-[ext_resource type="Texture2D" uid="uid://h5mmnsy6wjji" path="res://UI/Joystick/Ressources/JoyBase.png" id="2_mcbmx"]
+[ext_resource type="Texture2D" uid="uid://d244vywy38ayr" path="res://UI/Joystick/Ressources/JoyBase.png" id="2_mcbmx"]
 [ext_resource type="Script" uid="uid://d3c1yc1fix2yy" path="res://UI/Joystick/JoyHandle.cs" id="3_c08kj"]
-[ext_resource type="Texture2D" uid="uid://bugfohtwu33co" path="res://UI/Joystick/Ressources/JoyHandle.png" id="3_dc5lc"]
+[ext_resource type="Texture2D" uid="uid://vw6ge6tbebwi" path="res://UI/Joystick/Ressources/JoyHandle.png" id="3_dc5lc"]
 
 [node name="JoystickControl" type="Control"]
 custom_minimum_size = Vector2(40, 40)

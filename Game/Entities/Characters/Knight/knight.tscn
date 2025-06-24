@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cydobr6cu0ytl" path="res://Entities/Characters/Knight/Knight.cs" id="1_wbc0s"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_7stuo"]
-[ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="3_e8lxy"]
-[ext_resource type="Texture2D" uid="uid://uo4dw0yofgin" path="res://Entities/Characters/Knight/Resources/KnightCharacterSprites.png" id="4_35qrc"]
+[ext_resource type="PackedScene" uid="uid://cgg7dr3uijuwx" path="res://UI/Healthbar/healtBar.tscn" id="3_35qrc"]
+[ext_resource type="Texture2D" uid="uid://3med0xv084o1" path="res://Entities/Characters/Knight/Resources/KnightCharacterSprites.png" id="4_35qrc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
@@ -112,9 +112,6 @@ animations = [{
 collision_mask = 384
 collision_priority = 2.0
 script = ExtResource("1_wbc0s")
-Speed = null
-MaxHealth = null
-CurrentHealth = null
 animationPath = NodePath("KnightAnimation")
 
 [node name="WeaponSpawnPoints" type="Node2D" parent="."]
@@ -134,34 +131,8 @@ position = Vector2(-25, 15)
 [node name="Health" type="Node2D" parent="."]
 position = Vector2(-3, 1)
 script = ExtResource("2_7stuo")
-max_health = null
 
-[node name="HealthBar" type="ProgressBar" parent="Health"]
-offset_left = -45.0
-offset_top = -59.0
-offset_right = 53.0
-offset_bottom = -32.0
-show_percentage = false
-script = ExtResource("3_e8lxy")
-metadata/_edit_use_anchors_ = true
-
-[node name="HealthLabel" type="Label" parent="Health/HealthBar"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -48.0
-offset_top = -12.5
-offset_right = 48.0
-offset_bottom = 12.5
-theme_type_variation = &"GraphNodeTitleLabel"
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-horizontal_alignment = 1
-metadata/_edit_use_anchors_ = true
+[node name="HealthBar" parent="Health" instance=ExtResource("3_35qrc")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 15)

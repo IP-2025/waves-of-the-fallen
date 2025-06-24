@@ -1,260 +1,41 @@
-[gd_scene load_steps=35 format=3 uid="uid://c4d01iw4ax2du"]
+[gd_scene load_steps=5 format=3 uid="uid://c4d01iw4ax2du"]
 
 [ext_resource type="Script" uid="uid://cyvducn7dcshw" path="res://Menu/Online/LobbyScreen.cs" id="1_u6ugv"]
+[ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="2_b8sra"]
+[ext_resource type="Texture2D" uid="uid://c0a7miobpljup" path="res://Assets/Menu_UI/FantasyMinimalPixelArtGUI/UI/RectangleBox_96x96.png" id="btn_box"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u6ugv"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
+[sub_resource type="StyleBoxTexture" id="ButtonStyleBox"]
+content_margin_left = 32.0
+content_margin_top = 16.0
+content_margin_right = 32.0
+content_margin_bottom = 16.0
+texture = ExtResource("btn_box")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f17qk"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xba68"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hgwip"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7tt8t"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ymd75"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phakh"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ys0y"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1lwj8"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fn1j8"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s1tlo"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hjxdl"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pl4q1"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7qd1t"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0mtxx"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ort6j"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x1xjb"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kbdq5"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6qkyy"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kd6p4"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gemag"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_snpri"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_762e4"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b7x51"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uijmm"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phuub"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vh5mn"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_duqb1"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ag8ll"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_djufy"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eh62l"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ucs8q"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ycg7"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[node name="LobbyScreen" type="Node2D"]
+[node name="LobbyScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_u6ugv")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_top = 1.0
-offset_right = 1156.0
-offset_bottom = 649.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.152941, 0.152941, 0.152941, 1)
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
-anchors_preset = -1
-anchor_top = 0.049
-anchor_right = 0.976
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 224.0
-offset_top = 99.0
-offset_right = 920.0
-offset_bottom = 556.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
@@ -270,25 +51,31 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_b8sra")
 theme_override_font_sizes/font_size = 60
 text = "Lobby"
 
 [node name="Button_Back" type="Button" parent="MarginContainer2/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(140, 0)
+custom_minimum_size = Vector2(140, 60)
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_font_sizes/font_size = 60
-theme_override_styles/focus = SubResource("StyleBoxFlat_u6ugv")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_f17qk")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_xba68")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_hgwip")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_7tt8t")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_ymd75")
-theme_override_styles/hover = SubResource("StyleBoxFlat_phakh")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_6ys0y")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_1lwj8")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_fn1j8")
-theme_override_styles/normal = SubResource("StyleBoxFlat_s1tlo")
+theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_b8sra")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Back"
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer"]
@@ -304,40 +91,52 @@ layout_mode = 2
 theme_override_constants/separation = 80
 
 [node name="_readyButton" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(260, 80)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 80
-theme_override_styles/focus = SubResource("StyleBoxFlat_hjxdl")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_pl4q1")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_7qd1t")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_0mtxx")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_ort6j")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_x1xjb")
-theme_override_styles/hover = SubResource("StyleBoxFlat_kbdq5")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_6qkyy")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kd6p4")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_gemag")
-theme_override_styles/normal = SubResource("StyleBoxFlat_snpri")
+theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_b8sra")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Ready
 Up"
 
 [node name="_startGameButton" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(260, 80)
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 80
-theme_override_styles/focus = SubResource("StyleBoxFlat_762e4")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_b7x51")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_uijmm")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_phuub")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_vh5mn")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_duqb1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ag8ll")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_djufy")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_eh62l")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_ucs8q")
-theme_override_styles/normal = SubResource("StyleBoxFlat_8ycg7")
-text = "Start   
-Game "
+theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_b8sra")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
+text = "Start
+Game"
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/_readyButton" to="." method="_on__ready_button_pressed"]

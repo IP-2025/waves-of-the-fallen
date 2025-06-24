@@ -1,83 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://dj7j4ns1clpnx"]
+[gd_scene load_steps=7 format=3 uid="uid://dj7j4ns1clpnx"]
 
 [ext_resource type="Script" uid="uid://bou8cv1blf3w8" path="res://Menu/Settings/SettingsMenu.cs" id="1_ifxnj"]
+[ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="2_jou32"]
+[ext_resource type="FontFile" uid="uid://cbtai6ax18jyn" path="res://Assets/Fonts/Orbitron/Orbitron-VariableFont_wght.ttf" id="4_g3gcg"]
+[ext_resource type="Texture2D" uid="uid://c0a7miobpljup" path="res://Assets/Menu_UI/FantasyMinimalPixelArtGUI/UI/RectangleBox_96x96.png" id="btn_box"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eyi13"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4geyq"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i44u3"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhmql"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aaqfp"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2dne"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6kysc"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6vr2p"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f60ng"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bismi"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rgw85"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
+[sub_resource type="StyleBoxTexture" id="ButtonStyleBox"]
+texture = ExtResource("btn_box")
 
 [sub_resource type="Theme" id="Theme_wwagv"]
 
@@ -106,10 +35,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 30
-theme_override_constants/margin_bottom = 30
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 60
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
 layout_mode = 2
@@ -121,6 +50,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_jou32")
 theme_override_font_sizes/font_size = 60
 text = "Settings"
 
@@ -128,18 +58,23 @@ text = "Settings"
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_font_sizes/font_size = 60
-theme_override_styles/focus = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_4geyq")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_i44u3")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_lhmql")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_aaqfp")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_j2dne")
-theme_override_styles/hover = SubResource("StyleBoxFlat_6kysc")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_6vr2p")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_f60ng")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_bismi")
-theme_override_styles/normal = SubResource("StyleBoxFlat_rgw85")
+theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_jou32")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Back"
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer"]
@@ -152,14 +87,16 @@ theme_override_constants/margin_bottom = 50
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 32
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 32
 
 [node name="LabelMusicVolume" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jou32")
 theme_override_font_sizes/font_size = 40
 text = "Music"
 
@@ -170,11 +107,12 @@ button_pressed = true
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 32
 
 [node name="LabelMusicVolume" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jou32")
 theme_override_font_sizes/font_size = 40
 text = "Music Volume"
 
@@ -189,7 +127,7 @@ step = 0.005
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 32
 
 [node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(200, 0)
@@ -203,10 +141,12 @@ layout_mode = 2
 
 [node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 32
 
 [node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer5"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jou32")
 theme_override_font_sizes/font_size = 40
 text = "Sound"
 
@@ -217,10 +157,12 @@ button_pressed = true
 
 [node name="HBoxContainer6" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 32
 
 [node name="Label" type="Label" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer6"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_jou32")
 theme_override_font_sizes/font_size = 40
 text = "Sound Volume"
 
@@ -233,14 +175,32 @@ max_value = 1.0
 step = 0.005
 
 [node name="HBoxContainer7" type="HBoxContainer" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 32
 
 [node name="ButtonDeleteAccount" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/VBoxContainer/HBoxContainer7"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 theme = SubResource("Theme_wwagv")
-theme_override_font_sizes/font_size = 40
+theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_jou32")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Delete Account"
 
 [node name="ColorRect2" type="ColorRect" parent="."]
@@ -277,49 +237,64 @@ theme_override_constants/separation = 20
 
 [node name="Label" type="Label" parent="ColorRect2/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(1000, 0)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_g3gcg")
 theme_override_font_sizes/font_size = 30
 text = "Are you sure you want to delete your account?"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="CancleButton" type="Button" parent="ColorRect2/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 0)
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("4_g3gcg")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/normal = SubResource("StyleBoxFlat_eyi13")
-text = "CANCLE"
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
+text = "CANCEL"
 
 [node name="YesButton" type="Button" parent="ColorRect2/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(180, 0)
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("4_g3gcg")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/normal = SubResource("StyleBoxFlat_eyi13")
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "YES"
 
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HBoxContainer/Button_Back" to="." method="_on_button_back_settings_pressed"]

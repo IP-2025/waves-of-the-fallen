@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://cgg7dr3uijuwx"]
+
+[ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="1_a3p81"]
+[ext_resource type="Texture2D" uid="uid://b30xxmfjmyxms" path="res://Assets/Menu_UI/Healthbar/CrimsonFantasyGUI/healthBarRahmen.tres" id="1_sf4my"]
+[ext_resource type="Texture2D" uid="uid://dygv46c1bn2gw" path="res://Assets/Menu_UI/Healthbar/CrimsonFantasyGUI/healthBarFullBar.tres" id="2_sf4my"]
+[ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="4_354os"]
+
+[node name="HealthBar" type="TextureProgressBar"]
+z_index = 10
+offset_left = -50.0
+offset_top = -51.0
+offset_right = 48.0
+offset_bottom = -24.0
+scale = Vector2(1.5, 2)
+value = 100.0
+texture_under = ExtResource("1_sf4my")
+texture_progress = ExtResource("2_sf4my")
+texture_progress_offset = Vector2(1, 1)
+script = ExtResource("1_a3p81")
+metadata/_edit_use_anchors_ = true
+
+[node name="HealthLabel" type="Label" parent="."]
+layout_direction = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.496599
+anchor_top = 0.425926
+anchor_right = 0.496599
+anchor_bottom = 0.425926
+offset_left = -48.0
+offset_top = -12.5
+offset_right = 48.0
+offset_bottom = 12.5
+scale = Vector2(0.667, 0.5)
+theme_type_variation = &"GraphNodeTitleLabel"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("4_354os")
+text = "test"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true

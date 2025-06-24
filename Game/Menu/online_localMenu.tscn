@@ -1,83 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://cpsq8n5bs3xxw"]
+[gd_scene load_steps=5 format=3 uid="uid://cpsq8n5bs3xxw"]
 
 [ext_resource type="Script" uid="uid://do0ee05yy3ydn" path="res://Menu/OnlineLocalMenu.cs" id="1_dpe8f"]
+[ext_resource type="FontFile" uid="uid://cskjsiu0q3je8" path="res://Assets/Fonts/Blackchancery/BLKCHCRY.TTF" id="2_lxdiu"]
+[ext_resource type="Texture2D" uid="uid://c0a7miobpljup" path="res://Assets/Menu_UI/FantasyMinimalPixelArtGUI/UI/RectangleBox_96x96.png" id="btn_box"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eyi13"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4geyq"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i44u3"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lhmql"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aaqfp"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2dne"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6kysc"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6vr2p"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f60ng"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bismi"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rgw85"]
-bg_color = Color(0.172549, 0.780392, 1, 1)
-corner_radius_top_left = 22
-corner_radius_top_right = 22
-corner_radius_bottom_right = 22
-corner_radius_bottom_left = 22
+[sub_resource type="StyleBoxTexture" id="ButtonStyleBox"]
+texture = ExtResource("btn_box")
 
 [node name="online_local" type="Control"]
 layout_mode = 3
@@ -119,6 +47,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("2_lxdiu")
 theme_override_font_sizes/font_size = 60
 text = "Play"
 
@@ -126,18 +55,23 @@ text = "Play"
 custom_minimum_size = Vector2(140, 0)
 layout_mode = 2
 size_flags_horizontal = 10
-theme_override_font_sizes/font_size = 60
-theme_override_styles/focus = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_4geyq")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_i44u3")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_lhmql")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_aaqfp")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_j2dne")
-theme_override_styles/hover = SubResource("StyleBoxFlat_6kysc")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_6vr2p")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_f60ng")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_bismi")
-theme_override_styles/normal = SubResource("StyleBoxFlat_rgw85")
+theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_lxdiu")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Back"
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer2/VBoxContainer"]
@@ -154,56 +88,74 @@ size_flags_vertical = 3
 theme_override_constants/separation = 80
 
 [node name="Button_Online" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_lxdiu")
 theme_override_font_sizes/font_size = 80
-theme_override_styles/focus = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/normal = SubResource("StyleBoxFlat_eyi13")
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Online
 "
 
 [node name="Button_Local" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_lxdiu")
 theme_override_font_sizes/font_size = 80
-theme_override_styles/focus = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/normal = SubResource("StyleBoxFlat_eyi13")
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Local
 "
 
 [node name="Button_Solo" type="Button" parent="MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_hover_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_colors/font_pressed_color = Color(0.2, 0.2, 0.2, 1)
+theme_override_fonts/font = ExtResource("2_lxdiu")
 theme_override_font_sizes/font_size = 80
-theme_override_styles/focus = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/hover = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_eyi13")
-theme_override_styles/normal = SubResource("StyleBoxFlat_eyi13")
+theme_override_styles/focus = SubResource("ButtonStyleBox")
+theme_override_styles/disabled_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/disabled = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover_pressed = SubResource("ButtonStyleBox")
+theme_override_styles/hover_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/hover = SubResource("ButtonStyleBox")
+theme_override_styles/pressed_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/pressed = SubResource("ButtonStyleBox")
+theme_override_styles/normal_mirrored = SubResource("ButtonStyleBox")
+theme_override_styles/normal = SubResource("ButtonStyleBox")
 text = "Solo
 "
 

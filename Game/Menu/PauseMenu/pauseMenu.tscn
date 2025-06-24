@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://crwcks87pa34x"]
 
 [ext_resource type="Script" uid="uid://dyuhwd40863aq" path="res://Menu/PauseMenu/PauseMenu.cs" id="1_82pb6"]
-[ext_resource type="Texture2D" uid="uid://g8icn3aa8exw" path="res://Assets/Menu/Scroll/scroll.png" id="2_8in3a"]
+[ext_resource type="Texture2D" uid="uid://g8icn3aa8exw" path="res://Assets/Menu_UI/Scroll/scroll.png" id="2_8in3a"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_scroll"]
 content_margin_left = 64.0

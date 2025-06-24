@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://fhtm3161dyce" path="res://Entities/Characters/Archer/Archer.cs" id="1_rpbpn"]
 [ext_resource type="Script" uid="uid://c4qt4myebmju3" path="res://Entities/Shared/Health.cs" id="2_odyji"]
-[ext_resource type="Script" uid="uid://conhuo50y5h08" path="res://UI/Healthbar/HealthBar.cs" id="3_ledbc"]
-[ext_resource type="Texture2D" uid="uid://cgokxldn5t2gl" path="res://Entities/Characters/Archer/Resources/ArcherSpreadsheet.png" id="4_odyji"]
+[ext_resource type="PackedScene" uid="uid://cgg7dr3uijuwx" path="res://UI/Healthbar/healtBar.tscn" id="3_odyji"]
+[ext_resource type="Texture2D" uid="uid://rnp4raqswff7" path="res://Entities/Characters/Archer/Resources/ArcherSpreadsheet.png" id="4_odyji"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vh0fs"]
 size = Vector2(25, 36.2188)
@@ -138,32 +138,7 @@ position = Vector2(-25, 15)
 [node name="Health" type="Node2D" parent="."]
 script = ExtResource("2_odyji")
 
-[node name="HealthBar" type="ProgressBar" parent="Health"]
-offset_left = -50.0
-offset_top = -58.0
-offset_right = 48.0
-offset_bottom = -31.0
-show_percentage = false
-script = ExtResource("3_ledbc")
-metadata/_edit_use_anchors_ = true
-
-[node name="HealthLabel" type="Label" parent="Health/HealthBar"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -48.0
-offset_top = -12.5
-offset_right = 48.0
-offset_bottom = 12.5
-theme_type_variation = &"GraphNodeTitleLabel"
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
-horizontal_alignment = 1
-metadata/_edit_use_anchors_ = true
+[node name="HealthBar" parent="Health" instance=ExtResource("3_odyji")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 15)

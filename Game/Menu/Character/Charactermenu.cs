@@ -152,7 +152,7 @@ public partial class Charactermenu : Control
 		SetCharacterPageValuesFromFile(button.Text);
 		_currentlySelectedCharacter = button;
 
-		SetButtonStyle(_currentlySelectedCharacter, Color.Color8(0x2C, 0xC7, 0xFF), false);
+		SetButtonStyle(_currentlySelectedCharacter, Color.Color8(92, 56, 33), false);
 
 		if (!_characterManager.LoadIsUnlocked(button.Text))
 		{
@@ -207,7 +207,7 @@ public partial class Charactermenu : Control
 		var style = _buttonUpgradeUnlock.GetThemeStylebox("normal") as StyleBoxFlat;
 		if (style == null) return;
 		var newStyle = (StyleBoxFlat)style.Duplicate();
-		newStyle.BgColor = canAfford ? Color.Color8(0x2C, 0xC7, 0xFF) : Color.Color8(0x80, 0x80, 0x80);
+		newStyle.BgColor = canAfford ? Color.Color8(92, 56, 33) : Color.Color8(0x80, 0x80, 0x80);
 		_buttonUpgradeUnlock.AddThemeStyleboxOverride("normal", newStyle);
 		_buttonUpgradeUnlock.AddThemeStyleboxOverride("hover", newStyle);
 		_buttonUpgradeUnlock.AddThemeStyleboxOverride("pressed", newStyle);
@@ -227,7 +227,7 @@ public partial class Charactermenu : Control
 		{
 			_characterManager.SaveLastSelectedCharacterID(int.Parse(characterId));
 
-			SetButtonStyle(_currentlySelectedCharacter, Color.Color8(0x2C, 0xC7, 0xFF), true);
+			SetButtonStyle(_currentlySelectedCharacter, Color.Color8(92, 56, 33), true);
 
 			if (_oldSelectedCharacter != _currentlySelectedCharacter)
 			{

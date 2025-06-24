@@ -2,16 +2,16 @@ using Godot;
 
 public partial class Archer : DefaultPlayer
 {
-    public override void _Ready()
-    {
-        HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
-        if (HttpRequest == null)
-        {
-            GD.PrintErr("HttpRequest node not found!");
-            return;
-        }
+	public override void _Ready()
+	{
+		HttpRequest = GetNodeOrNull<HttpRequest>("HttpRequest");
+		if (HttpRequest == null)
+		{
+			GD.PrintErr("HttpRequest node not found!");
+			return;
+		}
 
-        base._Ready();
+		base._Ready();
 
 		if (MaxHealth <= 0 && Speed <= 0)
 		{
@@ -22,8 +22,8 @@ public partial class Archer : DefaultPlayer
 			Intelligence = CharacterManager.LoadIntelligenceByID("1");
 		}
 
-        GD.Print($"Archer initialized. Speed: {Speed}, MaxHealth: {MaxHealth}, Dex: {Dexterity}, Str: {Strength}, Int: {Intelligence}");
-    }
+		GD.Print($"Archer initialized. Speed: {Speed}, MaxHealth: {MaxHealth}, Dex: {Dexterity}, Str: {Strength}, Int: {Intelligence}");
+	}
 
 	public void _on_archer_animation_frame_changed()
 	{

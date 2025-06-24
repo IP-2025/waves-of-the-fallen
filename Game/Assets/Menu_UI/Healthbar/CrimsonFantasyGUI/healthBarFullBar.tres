@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://dygv46c1bn2gw"]
+
+[ext_resource type="Texture2D" uid="uid://kbv6euwf47p8" path="res://Assets/Menu_UI/Healthbar/CrimsonFantasyGUI/GUISprite.png" id="1_jvo26"]
+
+[resource]
+atlas = ExtResource("1_jvo26")
+region = Rect2(18.0714, 38.0439, 60.6385, 5.16858)

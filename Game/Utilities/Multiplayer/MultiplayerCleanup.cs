@@ -10,36 +10,36 @@ public partial class MultiplayerCleanup : Node
 {
 	private bool _enableDebug = false;
 
-    public void StartFullCleanup(MultiplayerApi multiplayer)
-    {
-        DebugIt("performing complete network cleanup...");
+	public void StartFullCleanup(MultiplayerApi multiplayer)
+	{
+		DebugIt("performing complete network cleanup...");
 
-        // cleanup netork manager
-        if (NetworkManager.Instance != null)
-        {
-            NetworkManager.Instance.DisconnectClient();
-            NetworkManager.Instance.CleanupNetworkState();
-            ForceCleanupNetworkManager();
-        }
+		// cleanup netork manager
+		if (NetworkManager.Instance != null)
+		{
+			NetworkManager.Instance.DisconnectClient();
+			NetworkManager.Instance.CleanupNetworkState();
+			ForceCleanupNetworkManager();
+		}
 
-        CleanupServerInstance();
-        CleanupClientInstance();
+		CleanupServerInstance();
+		CleanupClientInstance();
 
-        // multiplayer peers cleanup
-        if (multiplayer.MultiplayerPeer != null)
-        {
-            multiplayer.MultiplayerPeer.Close();
-            multiplayer.MultiplayerPeer = null;
-            DebugIt("multiplayerPeer forced to null");
-        }
+		// multiplayer peers cleanup
+		if (multiplayer.MultiplayerPeer != null)
+		{
+			multiplayer.MultiplayerPeer.Close();
+			multiplayer.MultiplayerPeer = null;
+			DebugIt("multiplayerPeer forced to null");
+		}
 
-        // garbage collection cleanup
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-        GC.Collect();
+		// garbage collection cleanup
+		GC.Collect();
+		GC.WaitForPendingFinalizers();
+		GC.Collect();
 
-        DebugIt("complete network cleanup finished");
-        
+		DebugIt("complete network cleanup finished");
+		
 	}
 
 	private void ForceCleanupNetworkManager()
@@ -139,25 +139,25 @@ public partial class MultiplayerCleanup : Node
 	{
 		// client cleanup
 		var networkManager = NetworkManager.Instance;
-        if (networkManager != null)
-        {
-            // remove all client server child nodes from NetworkManager
-            var childrenToRemove = new List<Node>();
-            foreach (Node child in networkManager.GetChildren())
-            {
-                if (child.GetType().Name == "Client" || child.GetType().Name == "Server")
-                {
-                    childrenToRemove.Add(child);
-                }
-            }
+		if (networkManager != null)
+		{
+			// remove all client server child nodes from NetworkManager
+			var childrenToRemove = new List<Node>();
+			foreach (Node child in networkManager.GetChildren())
+			{
+				if (child.GetType().Name == "Client" || child.GetType().Name == "Server")
+				{
+					childrenToRemove.Add(child);
+				}
+			}
 
-            foreach (var child in childrenToRemove)
-            {
-                networkManager.RemoveChild(child);
-                child.QueueFree();
-                DebugIt($"Removed and freed {child.GetType().Name} from NetworkManager");
-            }
-            DebugIt("Client cleanup completed");
+			foreach (var child in childrenToRemove)
+			{
+				networkManager.RemoveChild(child);
+				child.QueueFree();
+				DebugIt($"Removed and freed {child.GetType().Name} from NetworkManager");
+			}
+			DebugIt("Client cleanup completed");
 		}
 	}
 
