@@ -75,12 +75,15 @@ public partial class LocalMenu : Control
 		var selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
 		var health = characterManager.LoadHealthByID(selectedCharacterId.ToString());
 		var speed = characterManager.LoadSpeedByID(selectedCharacterId.ToString());
+		var dexterity = characterManager.LoadDexterityByID(selectedCharacterId.ToString());
+		var strength = characterManager.LoadStrengthByID(selectedCharacterId.ToString());
+		var intelligence = characterManager.LoadIntelligenceByID(selectedCharacterId.ToString());
 
 		var timer2 = new Timer();
 		AddChild(timer2);
 		timer2.WaitTime = 0.5f;
 		timer2.OneShot = true;
-		timer2.Timeout += () => NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId, health, speed);
+		timer2.Timeout += () => NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId, health, speed, dexterity, strength, intelligence);
 		timer2.Start();
 
 		// disable join and host button
@@ -131,7 +134,10 @@ public partial class LocalMenu : Control
 		int selectedCharacterId = characterManager.LoadLastSelectedCharacterID();
 		var health = characterManager.LoadHealthByID(selectedCharacterId.ToString());
 		var speed = characterManager.LoadSpeedByID(selectedCharacterId.ToString());
-		NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId, health, speed);
+		var dexterity = characterManager.LoadDexterityByID(selectedCharacterId.ToString());
+		var strength = characterManager.LoadStrengthByID(selectedCharacterId.ToString());
+		var intelligence = characterManager.LoadIntelligenceByID(selectedCharacterId.ToString());
+		NetworkManager.Instance.RpcId(1, "SelectCharacter", selectedCharacterId, health, speed, dexterity, strength, intelligence);
 		NetworkManager.Instance.Rpc("NotifyGameStart");
 		SoundManager.Instance.PlaySound(SoundManager.Instance.GetNode<AudioStreamPlayer>("buttonPress"));
 	}

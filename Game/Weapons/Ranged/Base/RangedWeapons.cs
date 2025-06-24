@@ -8,7 +8,8 @@ public abstract partial class RangedWeapon : Weapon
 	public abstract string ResourcePath { get; }
 
 	public abstract int SoundFrame { get; }
-	
+
+	public int dex, str, @int;
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -63,11 +64,15 @@ public abstract partial class RangedWeapon : Weapon
 	{
 		if (projectileScene == null) return;
 
-		var projectileInstance = projectileScene.Instantiate<Area2D>();
+		var projectileInstance = projectileScene.Instantiate<Projectile>();
 		var shootingPoint = GetNode<Marker2D>("ShootingPoint");
 
 		projectileInstance.GlobalPosition = shootingPoint.GlobalPosition;
 		projectileInstance.GlobalRotation = shootingPoint.GlobalRotation;
+
+		projectileInstance.dex = dex;
+		projectileInstance.str = str;
+		projectileInstance.@int = @int;
 
 		GetTree().CurrentScene.AddChild(projectileInstance);
 	}

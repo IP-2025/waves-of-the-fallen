@@ -15,24 +15,39 @@ public partial class Healstaff : Weapon
 
 	public string ResourcePath => _resourcePath;
 	public override string IconPath => _resourcePath + "HealStaff1.png";
-	public override float DefaultRange { get; set; } = 220f;
-	public override int DefaultDamage { get; set; } = 50;
-	public override float ShootDelay { get; set; } = 0.1f;
+	public override float DefaultRange { get; set; } = 170f;
+	public override int DefaultDamage { get; set; } = 20;
+	public override float ShootDelay { get; set; } = 10f;
 	public int SoundFrame => 3;
 	
 	private float _shootCooldown;
 	private float _timeUntilShoot;
 	private int _staffFiresFrame = 4;
-	
+	private int dex, str, @int;
+
 	public override void _Ready()
 	{
 		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/HealStaffSprite");
 		healArea = GetNode<AnimatedSprite2D>("./Healcircle");
 
-		_shootCooldown  = 1f / ShootDelay;
+		_CalculateWeaponStats();
+
+		_shootCooldown = ShootDelay;
 		_timeUntilShoot = _shootCooldown;
 	}
-	
+
+	private void _CalculateWeaponStats()
+	{
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+		dex = OwnerNode.Dexterity;
+		str = OwnerNode.Strength;
+		@int = OwnerNode.Intelligence;
+
+		DefaultDamage += (int)(dex / 3 + str / 3 + @int) / 50;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((dex - 80) / 50f, 1), 1f), 0.7f);
+		DefaultRange = DefaultRange + Math.Max(Math.Min((@int - 100f) / 2f, 50f), 0);
+	}
+
 	public override void _Process(double delta)
 	{
 		// Countdown verringern

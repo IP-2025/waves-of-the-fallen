@@ -1,5 +1,6 @@
-using Godot;
 using System;
+using Godot;
+
 
 [GlobalClass]
 public partial class Crossbow : RangedWeapon
@@ -14,7 +15,7 @@ public partial class Crossbow : RangedWeapon
 	public override int DefaultDamage { get; set; } = CrossbowArrow.DefaultDamage;
 	public override int DefaultPiercing { get; set; } = CrossbowArrow.DefaultPiercing;
 	public override float DefaultSpeed { get; set; } = CrossbowArrow.DefaultSpeed;
-	public override float ShootDelay { get; set; } = 0.5f;
+	public override float ShootDelay { get; set; } = 2f;
 	public override int SoundFrame => 3;
 	
 	private float _shootCooldown;
@@ -23,15 +24,28 @@ public partial class Crossbow : RangedWeapon
 	private static readonly PackedScene _arrowPacked = GD.Load<PackedScene>(_projectilePath);
 
 	public override void _Ready()
-	{
-		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/CrossbowSprite");
-		projectileScene = _arrowPacked;
-		
-		_shootCooldown  = 1f / ShootDelay;
-		_timeUntilShoot = _shootCooldown;
-	}
+    {
+        animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/CrossbowSprite");
+        projectileScene = _arrowPacked;
 
-	public override void _Process(double delta)
+        calculateWeaponStats();
+
+        _shootCooldown = ShootDelay;
+        _timeUntilShoot = _shootCooldown;
+    }
+
+	private void calculateWeaponStats()
+	{
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+		dex = OwnerNode.Dexterity;
+		str = OwnerNode.Strength;
+		@int = OwnerNode.Intelligence;
+
+		DefaultDamage += (int)(dex / 1.2f + str + @int / 5) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((str - 80) / 50f, 1), 1f), 0.5f);
+    }
+
+    public override void _Process(double delta)
 	{
 		// Countdown verringern
 		_timeUntilShoot -= (float)delta;

@@ -1,5 +1,5 @@
-using Godot;
 using System;
+using Godot;
 
 public partial class WarHammer : RangedWeapon
 {
@@ -14,7 +14,7 @@ public partial class WarHammer : RangedWeapon
 	public override int DefaultDamage { get; set; } = HammerProjectile.DefaultDamage;
 	public override int DefaultPiercing { get; set; } = HammerProjectile.DefaultPiercing;
 	public override float DefaultSpeed { get; set; } = HammerProjectile.DefaultSpeed;
-	public override float ShootDelay { get; set; } = 1f;
+	public override float ShootDelay { get; set; } = 2f;
 	public override int SoundFrame => 2;
 
 	private float _shootCooldown;
@@ -23,18 +23,31 @@ public partial class WarHammer : RangedWeapon
 	private static readonly PackedScene _throwHammerScene = GD.Load<PackedScene>(_projectilePath);
 
 	private AnimatedSprite2D animatedSprite;
-	
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
+    {
+        animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/WarHammer");
+        projectileScene = _throwHammerScene;
+
+        _CalculateWeaponStats();
+
+        _shootCooldown = ShootDelay;
+        _timeUntilShoot = _shootCooldown;
+    }
+
+	private void _CalculateWeaponStats()
 	{
-		animatedSprite = GetNode<AnimatedSprite2D>("./WeaponPivot/WarHammer");
-		projectileScene = _throwHammerScene;
-		
-		_shootCooldown  = 1f / ShootDelay;
-		_timeUntilShoot = _shootCooldown;
-	}
-	
-	public override void _Process(double delta)
+		DefaultPlayer OwnerNode = GetNode("../../").GetParentOrNull<DefaultPlayer>();
+		dex = OwnerNode.Dexterity;
+		str = OwnerNode.Strength;
+		@int = OwnerNode.Intelligence;
+
+		DefaultDamage += (int)(dex / 5 + str + @int / 7.5f) / 3;
+		ShootDelay *= Math.Max(Math.Min(1f / Math.Max((str - 80) / 50f, 1), 1f), 0.6f);
+    }
+
+    public override void _Process(double delta)
 	{
 		// Countdown verringern
 		_timeUntilShoot -= (float)delta;
