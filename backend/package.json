@@ -26,7 +26,7 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.14.1",
     "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.22",
+    "typeorm": "^0.3.26",
     "winston": "^3.17.0"
   },
   "devDependencies": {
